@@ -1,0 +1,47 @@
+# ─────────────────────────────────────────────────────────────
+# Training & Certification Portal — .gitignore
+#
+# Technology-neutral. No stack has been approved yet, so this
+# file deliberately contains NO framework- or build-specific
+# exclusions. Add those only after the stack is approved.
+# ─────────────────────────────────────────────────────────────
+
+# ─── Operating system metadata ───
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+desktop.ini
+
+# ─── Virtual environments (generic) ───
+.venv/
+venv/
+ENV/
+
+# ─── Environment files and secrets ───
+.env
+.env.*
+!.env.example
+
+# ─── Editor and IDE temporary files ───
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+.*.sw?
+*~
+*.bak
+*.orig
+
+# ─── Logs ───
+*.log
+logs/
+
+# ─── Temporary files ───
+tmp/
+temp/
+*.tmp
+*.pid

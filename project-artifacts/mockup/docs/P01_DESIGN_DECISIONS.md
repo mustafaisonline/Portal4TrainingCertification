@@ -96,6 +96,58 @@ either future emphasis (`HO-1`).
 - **Header at mobile:** "Sign in" hides below `sm` so the wordmark + CTA
   fit at 375px without horizontal scroll.
 
+## Visual redesign — premium navy identity (2026-08-31, later the same day)
+
+A separately authorized visual pass, using a founder-supplied reference
+image **as inspiration only**. Nothing was copied from it: no text, no
+layout, no logo, no icons, no illustrations, no assets. What was extracted
+were *principles* — premium dark/light contrast, editorial serif display
+typography, restrained data-inspired atmosphere, structured section
+rhythm — and re-expressed as an original design. Notably, the reference
+carried a brand name ("SkillMeter"); it was **deliberately not adopted**,
+because naming is an open decision (`HO-4`) and copying the reference's
+brand is prohibited. The wordmark remains the "Data & AI Academy"
+placeholder.
+
+**Principles extracted and how they were originally realised:**
+
+- **Navy/cream editorial alternation.** A scoped `.night` class in
+  `globals.css` redefines the full token set for its subtree, so
+  Button/Card/Chip restyle themselves inside dark sections with zero
+  component changes. Night sections: hero, capability-areas/who-teaches
+  band, the H7 rubric card, the pre-footer diagnostic band, header and
+  footer. Night is identity, not theming — it holds in light *and* dark
+  themes.
+- **Editorial serif display.** Newsreader (display) + Inter (UI) via
+  next/font — self-hosted at build time, no runtime font service, no new
+  package. This supersedes DESIGN_FOUNDATION's "system fonts only"
+  simplification (updated there).
+- **Indigo replaces teal** as the global primary (light `#3d43b8`, night
+  `#9aa3ff`), with the proficiency ramp re-derived on the same hue.
+  P05/P06 inherit palette and type through the token system — an intended
+  design-system evolution, not a redesign of those screens.
+- **Original data atmosphere.** `DotField` — a deterministic masked dot
+  grid with falling node streams, plus the logo mark, pathway glyphs and
+  check glyphs — all hand-written inline SVG. No cliché AI imagery.
+- **Hero composition.** Genuine photograph in a bordered frame with a
+  navy gradient tie-in and an overlapping credibility card hanging off the
+  bottom-left corner. The same genuine photo appears once more, small and
+  CSS-grayscaled, in the who-teaches band (a style treatment; the asset is
+  untouched).
+- **Credibility descriptor strip** under the hero — positioning facts
+  (24+ years in practice · practitioner-led · …), never metrics.
+
+**Diagnostic placement (supersedes the §9 note above):** under this
+authorization the CTA appears **three** times — hero secondary, the
+assess-pathway card, and the pre-footer band — wording unchanged. The
+root P01 spec's "at most twice" guidance (§9.2) is superseded on this
+point by the founder's visual direction for this stage.
+
+**Preserved:** all strategic content, State-A honesty, the plural
+practitioner model, HO-1 neutrality (H5 still describes programmes and
+scheduled offerings without leading with either), and every
+anti-fabrication rule.
+
 ## Rejected alternatives
 
 - **Leading the hero with an offerings board** ("Direction A") — rejected:

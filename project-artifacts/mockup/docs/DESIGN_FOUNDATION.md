@@ -38,13 +38,24 @@ they can't drift apart.
   components. `.text-display-lg`/`.text-display` step down at ≤640px (see
   Findings — the fixed size otherwise overruns a phone screen).
 
-### Known simplification — system fonts, not a licensed typeface
+### Typography (updated 2026-08-31 — visual redesign)
 
-§16.5 calls for "a precise, slightly condensed grotesque" for display text.
-This milestone uses the system UI font stack for both display and body
-instead of loading a specific typeface, to avoid adding an external font
-service as a dependency (network fonts were judged out of scope for a
-disposable, local-only mockup). Revisit when a real typeface is chosen.
+Display roles now use **Newsreader** (editorial serif, weight 500) and
+UI/body uses **Inter**, both self-hosted at build time via `next/font` in
+`app/layout.tsx` — no runtime font service and no new package. The system
+stacks remain as fallbacks in `--font-display` / `--font-body`. The
+earlier "system fonts only" simplification is superseded. Mono stays a
+system stack.
+
+### Palette (updated 2026-08-31 — visual redesign)
+
+The primary family moved from blue-teal to **capability indigo** (light
+`#3d43b8` / night+dark `#9aa3ff`), and the proficiency ramp was re-derived
+on the same hue. A scoped **`.night` class** in `globals.css` redefines
+the token set for deep-navy editorial sections (used by P01, the header
+and the footer); because components read tokens, everything restyles
+automatically inside it. Night sections hold in both light and dark
+themes — identity, not theming.
 
 ## Components
 

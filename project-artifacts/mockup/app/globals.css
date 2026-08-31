@@ -31,10 +31,12 @@
   --color-line: #e2ded3;
   --color-line-strong: #c9c3b3;
 
-  /* Primary — deep blue-teal */
-  --color-primary: #0f5d66;
-  --color-primary-strong: #0b454c;
-  --color-primary-ink: #f7fbfb;
+  /* Primary — deep capability indigo (visual redesign 2026-08-31; was
+     blue-teal). Reads as data/AI without neon cliché; pairs with the warm
+     paper ground for an editorial navy-and-cream identity. */
+  --color-primary: #3d43b8;
+  --color-primary-strong: #2f3494;
+  --color-primary-ink: #f7f8ff;
 
   /* Accent — warm ember. Reserved for credential/achievement moments only.
      Not used on P01/P05/P06 in this milestone. */
@@ -47,13 +49,13 @@
   --color-info: #3f6a8d;
 
   /* Proficiency scale — a dedicated 5-step family, separate from semantic.
-     Perceptually ordered, colour-blind safe (single blue-teal hue ramp,
+     Perceptually ordered, colour-blind safe (single indigo hue ramp,
      not a red-to-green traffic light — low proficiency is not "an error"). */
-  --color-prof-1: #d8e6e4;
-  --color-prof-2: #a9c9c5;
-  --color-prof-3: #6fa8a2;
-  --color-prof-4: #327f78;
-  --color-prof-5: #0f5d66;
+  --color-prof-1: #e4e6f7;
+  --color-prof-2: #bcc1ec;
+  --color-prof-3: #8d95dd;
+  --color-prof-4: #5c65cb;
+  --color-prof-5: #3d43b8;
 
   /* Radius — one per card type (§16.3) */
   --radius-plate: 0.5rem; /* 8px */
@@ -62,10 +64,16 @@
 
   /* Type families — system stacks only (no external font service in this
      mockup; see DESIGN_FOUNDATION.md "Known simplifications"). */
+  /* Editorial serif for display headings (visual redesign 2026-08-31),
+     self-hosted at build time via next/font in app/layout.tsx — no runtime
+     font service. Falls back to the system serif stack if the variable is
+     absent. UI/body stays sans. */
   --font-display:
-    -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    var(--font-newsreader), ui-serif, Georgia, Cambria, "Times New Roman",
+    serif;
   --font-body:
-    -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    var(--font-inter), -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
   --font-mono:
     ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
 }
@@ -76,49 +84,75 @@
    (see components/ThemeToggle.tsx) always wins. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --color-ground: #14171c;
-    --color-ground-raised: #1b1f27;
-    --color-ink: #eef0f3;
-    --color-ink-quiet: #b6bcc8;
-    --color-ink-faint: #838a99;
-    --color-line: #2b303b;
-    --color-line-strong: #3c4351;
-    --color-primary: #4fb3ab;
-    --color-primary-strong: #6fc9c1;
-    --color-primary-ink: #0b1414;
+    --color-ground: #0c101f;
+    --color-ground-raised: #131a30;
+    --color-ink: #eef0f8;
+    --color-ink-quiet: #aab3d2;
+    --color-ink-faint: #7a83aa;
+    --color-line: #232a44;
+    --color-line-strong: #364065;
+    --color-primary: #9aa3ff;
+    --color-primary-strong: #b4bbff;
+    --color-primary-ink: #0b0f22;
     --color-accent: #d98a4c;
     --color-success: #6fb890;
     --color-warning: #d1a25f;
     --color-danger: #d1786c;
     --color-info: #7fa9c9;
-    --color-prof-1: #232e2d;
-    --color-prof-2: #2c4744;
-    --color-prof-3: #386f69;
-    --color-prof-4: #4fa89f;
-    --color-prof-5: #7fd0c7;
+    --color-prof-1: #232741;
+    --color-prof-2: #3a4070;
+    --color-prof-3: #565fa4;
+    --color-prof-4: #7c86d9;
+    --color-prof-5: #a7b0ff;
   }
 }
 :root[data-theme="dark"] {
-  --color-ground: #14171c;
-  --color-ground-raised: #1b1f27;
-  --color-ink: #eef0f3;
-  --color-ink-quiet: #b6bcc8;
-  --color-ink-faint: #838a99;
-  --color-line: #2b303b;
-  --color-line-strong: #3c4351;
-  --color-primary: #4fb3ab;
-  --color-primary-strong: #6fc9c1;
-  --color-primary-ink: #0b1414;
+  --color-ground: #0c101f;
+  --color-ground-raised: #131a30;
+  --color-ink: #eef0f8;
+  --color-ink-quiet: #aab3d2;
+  --color-ink-faint: #7a83aa;
+  --color-line: #232a44;
+  --color-line-strong: #364065;
+  --color-primary: #9aa3ff;
+  --color-primary-strong: #b4bbff;
+  --color-primary-ink: #0b0f22;
   --color-accent: #d98a4c;
   --color-success: #6fb890;
   --color-warning: #d1a25f;
   --color-danger: #d1786c;
   --color-info: #7fa9c9;
-  --color-prof-1: #232e2d;
-  --color-prof-2: #2c4744;
-  --color-prof-3: #386f69;
-  --color-prof-4: #4fa89f;
-  --color-prof-5: #7fd0c7;
+  --color-prof-1: #232741;
+  --color-prof-2: #3a4070;
+  --color-prof-3: #565fa4;
+  --color-prof-4: #7c86d9;
+  --color-prof-5: #a7b0ff;
+}
+
+/* Night scope — deep-navy editorial sections (P01 visual redesign,
+   2026-08-31). A `.night` wrapper redefines the token set for its subtree,
+   so Button/Card/Chip and all token-driven styling restyle themselves
+   automatically inside dark sections with zero component changes. These
+   sections stay night in BOTH light and dark themes — they are identity,
+   not theming — which is why this is a class, not a media query. */
+.night {
+  --color-ground: #0a0e1f;
+  --color-ground-raised: #12182e;
+  --color-ink: #eef0f8;
+  --color-ink-quiet: #aab3d2;
+  --color-ink-faint: #7a83aa;
+  --color-line: rgba(148, 160, 220, 0.18);
+  --color-line-strong: rgba(148, 160, 220, 0.34);
+  --color-primary: #9aa3ff;
+  --color-primary-strong: #b4bbff;
+  --color-primary-ink: #0b0f22;
+  --color-prof-1: #232741;
+  --color-prof-2: #3a4070;
+  --color-prof-3: #565fa4;
+  --color-prof-4: #7c86d9;
+  --color-prof-5: #a7b0ff;
+  background: var(--color-ground);
+  color: var(--color-ink);
 }
 
 html {
@@ -133,24 +167,33 @@ body {
   line-height: 1.6;
 }
 
-/* Named type scale (§16.5) — utility classes so screens don't invent sizes. */
+/* Named type scale (§16.5) — utility classes so screens don't invent sizes.
+   Display roles are serif since the 2026-08-31 visual redesign; weights sit
+   at 500 because serifs carry authority without bolding. */
+.text-display-xl {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 4.25rem;
+  line-height: 1.06;
+  letter-spacing: -0.01em;
+}
 .text-display-lg {
   font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 3rem;
-  line-height: 1.15;
-  letter-spacing: -0.01em;
+  font-weight: 500;
+  font-size: 3.25rem;
+  line-height: 1.1;
+  letter-spacing: -0.008em;
 }
 .text-display {
   font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 2.25rem;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+  font-weight: 500;
+  font-size: 2.375rem;
+  line-height: 1.15;
+  letter-spacing: -0.005em;
 }
 .text-h1 {
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 1.75rem;
   line-height: 1.25;
 }
@@ -165,6 +208,9 @@ body {
    otherwise push a small viewport's hero text past a full screen height
    (found reviewing P01 at the mobile preset). */
 @media (max-width: 640px) {
+  .text-display-xl {
+    font-size: 2.625rem;
+  }
   .text-display-lg {
     font-size: 2.25rem;
   }

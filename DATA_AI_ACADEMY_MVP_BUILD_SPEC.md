@@ -5,6 +5,7 @@
 **Date:** 2026-08-29
 **Owner:** Mustafa Qizilbash — Your Partner Technologies
 **Supersedes for build purposes:** the scope sections of `DATA_AI_ACADEMY_PORTAL_BLUEPRINT.md` (§19–21) and `DATA_AI_ACADEMY_PORTAL_MOCKUP_SPECIFICATION.md` (§13–14). Those documents remain authoritative for **vision, architecture direction, and design language**. This document is authoritative for **what gets built first**.
+**Corrected by:** [`DR-02_EXPERT_LED_DELIVERY_MODEL.md`](DR-02_EXPERT_LED_DELIVERY_MODEL.md), approved 2026-08-31. **DR-02 outranks this document** on organisation identity, delivery model, portal role, programme model, certification relationship, the expert model and the corporate model. This revision reconciles the specification with it.
 
 ---
 
@@ -66,6 +67,8 @@ Three documents said three different things. This was a real defect, not a wordi
 
 **L1 Foundation and L2 Practitioner are NOT shipped as separate functional offerings.** The four-level ladder (L1–L4) remains the product vision and stays in `BLUEPRINT.md` §12. It is not built, not designed, not priced, and not described as available anywhere in V1.
 
+> **Note added by DR-02 (2026-08-31) — DR-01 itself is unchanged.** DR-01's discipline concerns the **credential**, and it stands. Its "one learning path" row must **not** be read as a fixed programme count: under DR-02 §4.1, programme count and credential count are separate concerns, and V1 supports a deliberately small and credible portfolio of programmes and scheduled offerings. The "path" in that row is now the expert-led programme.
+
 ## Why this is the right call — beyond simplification
 
 The obvious argument is scope. The real argument is measurement integrity.
@@ -90,16 +93,38 @@ Applied concretely:
 
 Adding domain #2 or credential #2 must be a **data operation plus content**, not a schema migration and not a redesign. That is the test. See **§16** for the specific rules, and **§15** for exactly what this decision removes from the build.
 
+---
+
+# DECISION RECORD DR-02 — EXPERT-LED DELIVERY MODEL
+
+**Status:** Approved, 2026-08-31. Binding on all three documents. **Held in full at [`DR-02_EXPERT_LED_DELIVERY_MODEL.md`](DR-02_EXPERT_LED_DELIVERY_MODEL.md)** — deliberately standalone, because it is cross-cutting and is not bound to any single specification.
+
+**Read DR-02 before using this document.** It is not summarised here, and its §12 lists every statement in this specification that it supersedes. In outline:
+
+| DR-02 establishes | Consequence for this specification |
+|---|---|
+| An independent professional **training and certification organisation** | Not a course platform, not an association |
+| **Expert-led delivery** — face-to-face, live online, corporate/private, international/on-site | Delivery is scheduled and human, not consumed |
+| **The portal supports the ecosystem**; it is not where learning happens | Content delivery is the *fifth* of five portal priorities |
+| The **programme** is the unit of the product | Programme → scheduled offering/cohort → session → supporting materials |
+| Certification requires **participation + required learning activities + meaningful assessment + applied evidence** | Attendance alone never earns a credential; nor does content plus an exam |
+| Experts shown **honestly today**, supported as a **network** tomorrow | No fabricated experts; no founder-bound design |
+
+**What DR-02 did not change:** DR-01 · the artifact brief, rubric and exemplars · the assessor workbench · human judgement on every credential · the verification page · requirements-as-data · every Retrofit Test shape · every architecture decision.
+
+---
 
 # 1. MVP PRODUCT DEFINITION
 
-**Version 1 is a single professional credential, in a single pilot domain, delivered end-to-end.** A visitor takes a free diagnostic that names — specifically, in plain language — what they cannot yet do in the pilot domain (Data Foundations at launch, held as seeded data and never hardcoded); they enrol in one curated learning path built from existing Data Blueprint material; they work through it with an AI tutor grounded in a small knowledge library; they sit one knowledge assessment; they then produce a real applied artifact against a published brief, rubric, and worked exemplars; a qualified human being reads that artifact, grades it against the rubric, and writes reasoned feedback; and on success the learner receives a credential with a permanent public verification page they can put in front of any employer. Running alongside it is the thinnest possible corporate layer — invite a cohort, track their progress, capture attendance, and generate the HRD Corp evidence pack in one click — because that is how the first customers will actually buy. There is **one** of each thing that can be counted: one domain, one path, one certification, one artifact brief, one rubric, one credential (see **DR-01**). **That is the entire product.** No credential ladder, no levels, no community, no chapters, no events, no marketplace, no badges standard, no proctoring vendor, no adaptive engine, no second domain, no CPD, no renewal, no mobile app.
+**Version 1 is a single professional credential, earned through a single expert-led programme in a single pilot domain, delivered end-to-end.** A visitor discovers a programme — what they will be able to do afterwards, who delivers it, in what format, and on what date — and registers for a scheduled offering, or an organisation engages us for a private cohort. They take part in expert-led delivery: live online or face-to-face, with the interaction, questions, discussion and expert feedback that constitute the learning. Supporting materials prepare, extend and reinforce that experience without replacing it. They sit one knowledge assessment; they then produce a real applied artifact against a published brief, rubric, and worked exemplars; a qualified human being reads that artifact, grades it against the rubric, and writes reasoned feedback; and on success the participant receives a credential with a permanent public verification page they can put in front of any employer. A free diagnostic runs alongside as a capability assessment — for an individual deciding where they stand, and as the entry offer for an organisation. Corporate and private delivery is a **first-class pathway, not a layer**: invite a cohort, capture attendance, track progress, and generate the HRD Corp evidence pack in one click — because that is how the first customers actually buy. There is **one** of each thing that can be counted: one domain, one certification, one artifact brief, one rubric, one credential (see **DR-01**). **That is the entire product.** No credential ladder, no levels, no course catalogue, no self-paced route to the credential, no community, no chapters, no events, no marketplace, no badges standard, no proctoring vendor, no adaptive engine, no second domain, no CPD, no renewal, no mobile app.
+
+**Programme count is deliberately not fixed** (DR-02 §4.1). V1 supports a deliberately small and credible portfolio of genuine flagship programmes and scheduled offerings. Launch inventory is a commercial and content decision, never an architectural constraint, and nothing in this document encodes a number.
 
 ---
 
 # 2. WHAT WE ARE BUILDING
 
-Nine modules. Each is listed with the *minimum* implementation — not the specced one.
+Nine module slots, of which **eight are built in V1** — `M8` is deferred by DR-02. Each is listed with the *minimum* implementation — not the specced one. Module identifiers are stable and are not renumbered.
 
 ### M1 — Identity & Accounts `must`
 Email/password + Google sign-in. Email verification. Password reset. Profile (name, photo, headline, country, target role). **Scoped many-to-many roles from day one** (`user_roles` with `scope_type` / `scope_id`) — this is a Retrofit Test item; a single `role` column will cost you a rewrite. Roles needed at launch: `learner`, `assessor`, `instructor`, `org_admin`, `platform_admin`.
@@ -107,19 +132,22 @@ Email/password + Google sign-in. Email verification. Password reset. Profile (na
 ### M2 — Skills & Diagnostic `must` — *proves clause 1*
 - **A flat skill list, not a graph.** ~35 skills in the pilot domain, grouped by area. **No prerequisite DAG. No decay. No altitude matrix.** A `skills` table with `domain_id`, `area` and `display_order` is sufficient and does not block the graph later. `domain_id` comes from the `domains` table, never from a constant.
 - **A fixed diagnostic**: 20 scenario questions, each mapped to 1–2 skills, with "I'm not sure" as an equal-weight unpenalised option. Branching allowed at two points (by self-declared experience) — that is enough to feel personal. **No item-response-theory, no adaptive selection.**
-- **Gap report**: per-skill proficiency 1–5, ranked named gaps in plain language, and an explicit "you can skip these modules" list.
+- **Gap report**: per-skill proficiency 1–5, ranked named gaps in plain language, and an explicit "here is what you already have" list. The report resolves to **a programme that closes the named gaps, and when it next runs** — not to a self-serve enrolment.
 - **Append-only `skill_assertions`** with `source`, `evidence_ref`, `asserted_at`. Retrofit Test item.
 
-### M3 — Content & Learning `must`
-- One curated path → 6–8 courses → modules → lessons → blocks (video, rich text, image/diagram, download, knowledge check).
-- Course landing, course home, lesson player with resume, notes, transcript.
-- Knowledge checks: unlimited attempts, explanation always shown, non-blocking.
+### M3 — Programmes, Scheduling & Supporting Materials `must` — *reframed by DR-02*
+- **The programme is the unit of the product.** Programme → scheduled offering / cohort → session → supporting materials (DR-02 §4). A programme states what a participant will be able to do; a scheduled offering states format, dates, location or platform, capacity, and the expert delivering it; sessions are what attendance is captured against (`M9`).
+- **Public programme discovery and scheduling.** Programme detail, and a listing of upcoming scheduled offerings with real dates and formats. This is the primary public pathway and it did not previously exist. **No catalogue, no faceted browse, no course counts, no depth-as-value-signal.**
+- **Registration** into a scheduled offering — individually, or by invitation into a private cohort (`M9`).
+- **Supporting materials**, bounded by DR-02 §5: presentation materials, reading resources, templates, exercises, case studies, reference resources, practice activities, session preparation, post-session reinforcement, and selected recordings of live sessions where appropriate. They **prepare, extend, reinforce or document** expert-led learning. **They must not silently replace it.** A recording documents a session that happened; it is never presented, priced or navigated as a pre-recorded course.
+- Knowledge checks where they serve a programme: unlimited attempts, explanation always shown, non-blocking. Never a gate, never a substitute for delivery.
+- **Retired from V1:** the browsable course catalogue · the lesson player as the screen where participants spend most of their time · sequential video consumption · completion-by-watching · any self-paced route to the credential. *Retired from the MVP and from the current product identity — not declared permanently impossible. Supplementary pre-recorded material may return later under the DR-02 §5 boundary, with separate justification.*
 - **Content authored by the team through a simple admin CRUD or MDX files in the repo.** No authoring studio. No WYSIWYG. No review workflow — one person publishes.
-- **Version fields on content records** (`version`, `status`, `reviewed_at`) even though nothing reads them yet. Retrofit Test item.
+- **Version fields on content records** (`version`, `status`, `reviewed_at`) even though nothing reads them yet. Retrofit Test item — unchanged.
 
 ### M4 — Knowledge Library `must (thin)`
 20–30 articles covering the Data Foundations canon. Public, SEO-indexed, three-depth progressive disclosure, version stamp displayed. A glossary of ~60 terms. **A simple changelog page** (a list — an afternoon's work, and it is a visible differentiator). No frameworks library, no templates library, no case studies, no prompt library, no cross-link graph.
-**Second job:** this is the corpus the AI tutor retrieves from. It has to exist before M8 can.
+**Second job:** it is a credibility surface and a reference for participants during and after a programme. *(Its former second job — serving as the AI tutor's retrieval corpus — lapses with `M8`. The library stands on its own for SEO, credibility and participant reference, and would be the corpus again if a tutor were ever justified.)*
 
 ### M5 — Assessment `must` — *proves clause 2, part one*
 - One knowledge assessment: 60 fixed items, 60 minutes, randomised order, **one pass threshold** (70%). Not banded — bands existed only to place candidates onto a ladder, and there is no ladder in V1. The score and a per-skill breakdown are always shown; the threshold is a gate, not a placement. Highest score across attempts is retained.
@@ -144,12 +172,24 @@ Email/password + Google sign-in. Email verification. Password reset. Profile (na
 - **Deferred:** cryptographic W3C Verifiable Credentials, wallet export, third-party issuer integration, revocation UI, renewal, CPD.
 - **Be honest publicly:** V1 delivers *practical* portability — a permanent URL anyone can check. Cryptographic verifiability ships in Phase 1C or Phase 2. Do not claim OB3.0 conformance before it is true; on a trust product that is the one lie you cannot afford.
 
-### M8 — AI Tutor `must (one feature only)`
-RAG over the M4 knowledge library. Answers only from the corpus. **Citations with version stamps on every substantive answer.** "I don't have a sourced answer for that" when out of corpus. **Visibly disabled during assessment, with the reason shown.** Available as a right-side panel in the lesson player and as a page.
-That is the *only* AI feature in the functional MVP. Everything else on the §12 list of the mockup spec is faked in the prototype or deferred.
+### M8 — AI Tutor `DEFERRED FROM MVP` — *DR-02, Decision 2*
 
-### M9 — Corporate Thin Slice `must` — *this is how V1 gets paid*
-- Organisation account, seat invites (single + CSV), cohort creation, roster.
+**Not built in V1. Not retired.**
+
+Its original rationale was to unblock an isolated, self-paced learner with nobody to ask. Under the expert-led model the participant has an expert, a cohort and a session, so that rationale no longer describes the product. A differentiator or a feature must not survive on documentation continuity alone.
+
+**Retained for the record, as the deferred design:** RAG over the `M4` library; answers only from the corpus; citations with version stamps on every substantive answer; "I don't have a sourced answer for that" when out of corpus; visibly disabled during assessment with the reason shown.
+
+**Returning it requires separate strategic justification against the expert-led delivery model.** That "AI" is part of this organisation's subject domain is explicitly **not** a reason to force an AI tutor into the product. **It is not replaced by another AI feature**; V1 ships no learner-facing AI feature.
+
+**Scope released by this deferral:** the embeddings provider, the AI data-processing agreement, RAG cost control and tutor rate-limiting all leave the MVP.
+
+### M9 — Corporate & Private Delivery `must` — *a first-class pathway; this is how V1 gets paid*
+
+*Reframed by DR-02 §8. Corporate training is a significant part of the business model, not an optional feature, and the earlier description of this module as a "thin slice running alongside" is superseded. **Strategic status changes; MVP workflow complexity does not.***
+
+- **A credible corporate entry path**: the corporate offering explained, engagement formats, and a qualifying enquiry. **Not** a B2B sales lifecycle — no CRM, no proposal automation, no contract management, no complex self-service corporate portal. Any of those requires separate justification.
+- Organisation account, seat invites (single + CSV), private cohort creation, roster.
 - **Attendance capture** per session — bulk marking grid, retrospective correction with an audit trail.
 - **Simple team progress table**: person × (diagnostic done / path % / assessment result / artifact status / credential). A sortable table, **not an interactive heatmap with drill-through**.
 - **HRD Corp evidence pack generator**: one button producing a zipped, indexed bundle (attendance registers, participant list, trainer profile, course outline, learning outcomes, certificates, evaluation summary). This is templating plus a zip — low build cost, disproportionate commercial value, and it makes the platform structurally hard to leave.
@@ -164,6 +204,8 @@ Payments (Stripe + FPX/DuitNow, MYR + USD only) · transactional email · basic 
 
 Grouped by *why* it is cut, because the reason determines when it comes back.
 
+> **Escalated by DR-02.** Three entries below were previously *deferred* — cut on timing. They are now **retired as strategic destinations**: the standards council, chapters and the accredited-partner programme. They may hold legitimate future value, but they no longer define the MVP identity, the primary strategic destination, or the product model. The organisation builds its own independent identity (DR-02 §1). Rows are marked **⊘ retired as destination** where this applies.
+
 ## 3.1 Cut because it needs people and process we do not have
 These are **not engineering problems**. Building the screens would not make them work. This is the most important category in the document and the one most often missed.
 
@@ -172,13 +214,13 @@ These are **not engineering problems**. Building the screens would not make them
 | Moderation sampling & inter-assessor calibration | Requires 6+ assessors to be meaningful. With 3, it is a conversation. |
 | Appeals workflow | Requires an independent second assessor and a published policy. |
 | Defence interviews (L3/L4) | Requires senior assessor availability and scheduling ops. |
-| Standards council / governance workflows | Requires an actual council. |
+| Standards council / governance workflows **⊘ retired as destination** | Requires an actual council — and DR-02 removes a standards body as the strategic destination. Independent, credible assessment integrity is retained as an operating principle; becoming a standards authority is not the goal. |
 | Integrity casework & credential revocation UI | Requires an Integrity Officer and a two-person process. |
 | Content review board & approval workflow | One author, one publisher. A workflow with one person in it is bureaucracy. |
 | Benchmarking & industry comparison | Requires data from many organisations. Fabricating it is fraud. |
 | Ratings & reviews | Requires ~50 reviews per course to be credible; 3 reviews reads as fabricated. |
-| Chapters, events, mentoring, forums | Requires a population. **An empty community damages a trust product more than no community.** |
-| Accredited training partner programme | Requires the credential to have market value first. |
+| Chapters, events, mentoring, forums **⊘ retired as destination** | Requires a population. **An empty community damages a trust product more than no community.** DR-02 additionally retires chapters as a *core structural assumption* — including their documented role as the assessor-supply engine (see `M6` and DR-02 §7.2). Cohort-private groups and alumni may emerge from real delivery. |
+| Accredited training partner programme **⊘ retired as destination** | Requires the credential to have market value first — and DR-02 inverts the model it belonged to. We deliver; we do not license others to teach toward our credential while we examine. Reframed as a curated expert / associate-trainer network (DR-02 §7). |
 | Live chat support | Creates a response SLA a small team cannot meet. |
 
 ## 3.2 Cut because it is cheap to add later (fails the Retrofit Test in our favour)
@@ -191,7 +233,7 @@ Skill graph DAG with prerequisites · skill decay display · adaptive/IRT diagno
 | **Specialism / elective composition** | Requires ≥4 specialism exams to exist. |
 | **Micro-credentials** | Actively harmful now: they dilute the credential's meaning at exactly the moment it must be sharp. |
 | **Domains DE, AI, GT** | Ship DF (owned) + Literacy. GA (GenAI) is the highest-value second domain — Phase 2, not MVP. |
-| **The 4-altitude matrix in the UI** | 5 domains × 4 altitudes = 20 catalogue cells against ~8 courses. **An IA that advertises emptiness is worse than a smaller one that looks complete.** Keep altitude as a data field; do not render it as a filter until there is content behind it. |
+| **The 4-altitude matrix in the UI** | *Superseded in its reasoning by DR-02, same outcome.* The catalogue this entry was arguing about is itself retired. **Domain survives** as subject scope, capability structure, and seeded data required by the approved expansion shape (`ADR-023`, §16). **Domain × altitude as a catalogue faceting device, and per-domain course counts, do not survive** — there is no browsable catalogue for them to face. Keep altitude as a data field; do not render it. |
 | **Three AI-use policy tiers** | Only two are used at launch. Ship `Restricted` (exam) and `Disclosed` (artifact). |
 | **Workspace switcher with 5 workspaces** | Four of five would have one user. Ship Learning + one role workspace. |
 
@@ -206,52 +248,74 @@ Skill graph DAG with prerequisites · skill decay display · adaptive/IRT diagno
 
 # 4. CORE USER TYPES
 
-**Five. Not fourteen.**
+**Six. Not fourteen.** *(Five previously — DR-02 §7 restores the expert as a real role.)*
 
 | # | Role | Why it exists in V1 | Screens |
 |---|---|---|---|
-| **U1** | **Visitor** | The funnel starts here. Diagnostic + credential verification are both anonymous. | Public + `P05`/`P06` |
-| **U2** | **Learner / Candidate** | The whole promise. **Candidate is a *state*, not a separate role** — one person, one account, a `candidacy` record. | Learner portal |
-| **U3** | **Assessor** | Without a human judging artifacts, the differentiator does not exist. **The single hardest role to staff — treat it as a launch dependency, not a feature.** | `A01`, `A03` |
-| **U4** | **Corporate Admin** | How V1 gets paid. Runs cohorts, needs attendance and the HRD Corp pack. | `O01`, `O02`, `O07`, `O10` |
-| **U5** | **Platform Admin** | Publishes content, manages users, issues credentials manually if needed, generates packs. Internal-only; may be an ugly CRUD. | `X01`-thin |
+| **U1** | **Visitor** | The funnel starts here. Programme discovery, the diagnostic, and credential verification are all anonymous. | Public + `P05`/`P06` |
+| **U2** | **Participant / Candidate** | The whole promise. **Candidate is a *state*, not a separate role** — one person, one account, a `candidacy` record. *"Participant" replaces "learner" where a person is in a programme: presence is the point, and the vocabulary should carry it.* | Participant portal |
+| **U3** | **Expert / Trainer** | **Expert-led delivery is the product.** The expert is publicly visible — a real, honest profile — and operationally needs exactly two screens: roster and attendance. | `P23`, `O07` |
+| **U4** | **Assessor** | Without a human judging artifacts, the differentiator does not exist. **The single hardest role to staff — treat it as a launch dependency, not a feature.** | `A01`, `A03` |
+| **U5** | **Corporate Admin** | How V1 gets paid. Runs private cohorts, needs attendance and the HRD Corp pack. | `O01`, `O02`, `O07`, `O10` |
+| **U6** | **Platform Admin** | Publishes content and programmes, manages users, issues credentials manually if needed, generates packs. Internal-only; may be an ugly CRUD. | `X00` |
 
-**Instructor** is deliberately *not* a distinct V1 role. At launch there is one instructor, who is also the platform admin. Model the role in `user_roles` so it exists in the schema; do not build an instructor portal. Cohort delivery needs exactly two instructor-shaped screens — roster and attendance — and those live in the corporate module (`O07`).
+**On the expert role — the earlier instruction is superseded.** This document previously read: *"Instructor is deliberately not a distinct V1 role… do not build an instructor portal."* Under DR-02 the expert is a real role with a **public profile**, because expert practitioners and expert-led delivery are core product value. Two obligations hold together:
 
-**Enforce in code from day one**, even with three users: an assessor cannot decide on an artifact submitted by a learner in a cohort they taught. It is a one-line check now and a credibility crisis later.
+- **Honest representation.** If one genuine expert delivers at launch, the product shows one. **No fabricated expert profiles, ever** — not for visual balance, not for marketing, not to appear larger.
+- **Expandable model.** Adding a lead trainer, associate trainer, facilitator or guest expert must be **a data operation plus content, never a redesign**. No founder-bound design.
+
+There is still **no instructor portal** in V1 — the role needs a public profile plus roster and attendance, nothing more.
+
+**Enforce in code from day one**, even with three users: an assessor cannot decide on an artifact submitted by a participant in a cohort they taught (`BR-1`). It is a one-line check now and a credibility crisis later.
+
+> **Two things DR-02 §7.1 requires be kept apart here.** The **principle** — that meaningful credentials involve credible, qualified assessment and never collapse into content consumption plus certificate generation — is strategically durable and is not weakened. The **operating model** for supplying and scaling assessor capacity is **evolvable**. Under expert-led delivery the practical consequence of `BR-1` becomes more visible, because experts teach the cohorts: an expert who delivers a cohort does not assess it. Plan around it. **Do not record it as a permanent constraint on the business** — and note that the chapter-based contributor ladder that previously answered assessor supply has been retired (§3.1), leaving this an openly tracked issue (DR-02 §7.2).
 
 ---
 
 # 5. MVP USER JOURNEY
 
-**One journey. Everything in the build serves it.** If a proposed feature does not appear on this line, it is not in V1.
+**Two journeys, both first-class.** Journey A is the individual professional; Journey B is the corporate client. They converge at delivery and share every module — **no separate product**. If a proposed feature does not appear on one of these lines, it is not in V1.
+
+**What changed.** The previous single journey ran `diagnostic → account → dashboard → lesson player (repeat) → exam → artifact`. That is a self-serve digital funnel, and it is superseded by DR-02. **Expert-led participation now sits at the centre of the line** — it is the step the portal exists to support, not one it replaces. The diagnostic moves from mandatory gateway to optional accelerator and capability-assessment entry offer.
+
+### Journey A — the individual professional
 
 ```
- VISITOR                                                        CLAUSE 1
-    │                                                    "learn what you're
-    ├─ arrives (search · LinkedIn badge · cohort invite)      actually missing"
+ VISITOR
+    │  arrives (search · a colleague's credential · knowledge article · referral)
+    ▼
+ [P10] PROGRAMME — what you'll be able to do · who delivers it · format · duration
+    │
+    ├── optional ──▶ [P05] CAPABILITY ASSESSMENT · 20 questions · ~10 min
+    │                   ▼
+    │                [P06] GAP REPORT — "You can explain what metadata is.
+    │                   │   You cannot yet design a lineage capability."
+    │                   │   → resolves to a programme, and when it next runs
+    │                   ◀───┘
+    ▼
+ [P24] SCHEDULED OFFERINGS — choose format and date
+    │   face-to-face · live online       ⚑ a real, populated calendar is required;
+    │                                      an empty calendar fails the same way an
+    │                                      empty catalogue would
+    ▼
+ [K03] REGISTER — confirm · accept the integrity undertaking · pay
     │
     ▼
- [P05] FREE DIAGNOSTIC · 20 questions · ~10 min · "I'm not sure" allowed
+ ★ EXPERT-LED PROGRAMME — live online or face-to-face
+    │   interaction · questions · discussion · practical examples ·
+    │   expert feedback · peers from real organisations
     │
-    ▼
- [P06] GAP REPORT — the conversion moment
-    │   "You can explain what metadata is. You cannot yet design a
-    │    lineage capability." + what you can SKIP
+    │   THIS IS THE PRODUCT. The portal supports it — schedule, joining
+    │   details, roster, attendance, materials — and does not replace it.
     │
-    ▼  create account (modal) ─────────────────────────────────────┐
- [L01] DASHBOARD · one curated path · milestone 1 of 7             │
-    │                                                              │
-    ▼                                                              │
- [C05] LEARN — lessons · knowledge checks · AI tutor with citations │
-    │   ↺ repeat through the path                                  │
-    │                                                        CLAUSE 2
+    │   [L01] shows the participant their next session and what is due.
+    │   Supporting materials prepare, extend and reinforce (DR-02 §5).
     ▼                                                    "prove it by doing
  [K05] KNOWLEDGE ASSESSMENT · 60 items · 60 min · one threshold      the work"
     │        < 70 → score + per-skill gap report + retake  ↺
     │        ≥ 70 → knowledge requirement met ✔
     ▼
- [K06] ★★ APPLIED ARTIFACT — the product
+ [K06] ★★ APPLIED ARTIFACT — the evidence gate
     │   real brief (1 of 3 variants) · rubric always visible ·
     │   3 exemplars · deliverable checklist · AI-use disclosure ·
     │   self-check · submit
@@ -260,16 +324,15 @@ Skill graph DAG with prerequisites · skill decay display · adaptive/IRT diagno
     │     someone to this point; everything below only matters if
     │     they submit. Instrument it from candidate one.
     ▼
- [A03] HUMAN ASSESSOR reads it, grades against the rubric,
+ [A03] QUALIFIED ASSESSOR reads it, grades against the rubric,
     │   writes reasoned feedback per criterion · 10 working day SLA
     ▼
  [K08] RESULT
     │      ├─ NOT YET → rubric + reasoning + specific remediation +
     │      │            one free resubmission. Never the word "failed".  ↺
     │      └─ AWARDED
-    ▼                                                          CLAUSE 3
- [K10] CREDENTIAL AWARDED — full-screen moment              "carry the proof
-    │                                                            anywhere"
+    ▼                                                          "carry the proof
+ [K10] CREDENTIAL AWARDED — full-screen moment                       anywhere"
     ▼
  [P16] PUBLIC VERIFICATION PAGE — permanent URL
     │   an employer checks it without an account
@@ -278,33 +341,70 @@ Skill graph DAG with prerequisites · skill decay display · adaptive/IRT diagno
                                                           (the growth loop)
 ```
 
-**The corporate variant** runs the same journey with three differences: the learner is invited into a cohort rather than self-enrolling; sessions are instructor-led with attendance captured; and the org admin sees progress and generates the HRD Corp evidence pack at the end. **No separate product — the same nine modules with a different entry point.**
+### Journey B — the corporate client
+
+```
+ DISCOVER  [P17] the corporate offering · engagement formats · funding
+    │
+    ▼
+ ENQUIRE   [P19] qualifying enquiry — team, size, sector, timeline, funding
+    │
+    ▼
+ DIAGNOSE  [P05]/[P06] team capability assessment → the gap picture
+    │        ⚑ the land motion: sell the diagnosis first
+    ▼
+ AGREE     programme, format, dates, location          ← OUTSIDE the portal.
+    │                                                    No CRM, no proposal
+    │                                                    automation, no contract
+    │                                                    management in V1.
+    ▼
+ SCHEDULE  [O07] private cohort created · roster invited · seats activated
+    │
+    ▼
+ ★ DELIVER — on-site or live online, expert-led, attendance captured
+    │
+    ▼
+ EVIDENCE  participants sit the assessment, produce artifacts → assessed →
+    │      credentials issued
+    ▼
+ PROVE     [O01] progress · [O10] HRD Corp evidence pack in one click
+    │
+    ▼
+ EXPAND    next team, next programme
+```
+
+**Both journeys run on the same eight modules.** The corporate participant's experience from delivery onward is identical to Journey A; only the entry, the scheduling and the reporting differ.
 
 ---
 
 # 6. MVP SCREEN LIST
 
-**44 screens** for the functional MVP — down from 71 MVP-tagged in the mockup specification, and 133 in the full inventory.
+**44 screens** for the functional MVP — re-derived from the corrected journeys in §5, and still well below the 71 MVP-tagged in the mockup specification and the 133 in the full inventory. The count is unchanged; its composition is not.
 
-**Priority key:** `P0` = the journey in §5 breaks without it · `P1` = required to operate commercially, can land in Phase 1C.
+> **Re-derived by DR-02.** Net scope is **lower**, not higher: the catalogue, the AI tutor and video-first content leave; programme scheduling, an expert profile and a corporate entry path arrive. Two new identifiers are introduced — **`P23`** expert profile and **`P24`** scheduled offerings — chosen beyond the existing `P01`–`P22` range so that nothing is renumbered. **The Mockup Specification must adopt these in propagation Stage 3**; until then its inventory is stale on this point.
+
+**Priority key:** `P0` = a journey in §5 breaks without it · `P1` = required to operate commercially, can land in Phase 1C.
 
 **Merges already applied** (each saves design *and* build time):
 `P14`+`P15` → one page (there is only one credential) · `P17`+`P18` → one corporate page · `P04` → a section of `P15` · `C06`/`C07`/`C10` → block states of `C05` · `K05c`/`K07` → states of `K01` · `K02` → a card on `K01` · `K03b` accommodations → a field in `K03` + an admin flag · `L02`+`L03` → `L04` · `L06`+`L07`+`L08` → one **My Work** screen · `A01`+`A02` → one queue screen · `C12` → a state of `C02` · all `X` screens → one tabbed admin console.
 
-## Public — 11
+## Public — 12
 | ID | Screen | Purpose | Pri |
 |---|---|---|---|
-| P01 | Homepage | Segment the visitor in 30s; drive the diagnostic | **P0** |
+| P01 | Homepage | Establish an expert-led training and certification organisation; route to the three pathways — **explore upcoming programmes** (primary) · **train your team** (major secondary) · **assess your capability** (supporting) | **P0** |
 | P02 | About | Establish a real, accountable organisation stands behind the credential | P1 |
-| P05 | Free Diagnostic | Deliver value before asking for anything; the conversion asset | **P0** |
-| P06 | Diagnostic Result | Name the gap specifically → account creation → enrolment | **P0** |
-| P10 | Path Detail | The learning offer: milestones, outcomes, hours, price | **P0** |
-| P12 | Course Landing | Per-course detail and free preview lesson | P1 |
+| P05 | Capability Assessment *(diagnostic)* | Deliver value before asking for anything; the individual readiness check **and** the corporate land motion | **P0** |
+| P06 | Assessment Result | Name the gap specifically → **resolve to a programme and when it next runs** | **P0** |
+| P10 | **Programme Detail** | The offer: outcomes as capabilities, **who delivers it**, formats, duration, what happens in the room, fees | **P0** |
+| P24 | **Scheduled Offerings** *(new)* | Upcoming cohorts with real dates, formats and locations. **The primary public pathway; did not previously exist** | **P0** |
+| P23 | **Expert Profile** *(new)* | Who teaches, and what they have actually built. **Honest — genuine experts only, never fabricated** | **P0** |
 | P15 | Credential Detail *(incl. integrity & AI policy)* | Requirements, **rubric, exemplars**, fees, timeline | **P0** |
 | P16 | Public Credential Verification | Where an employer first meets the brand; the growth loop | **P0** |
-| P17 | Corporate & Funding | Sell cohorts; explain the HRD Corp evidence pack | P1 |
-| P19 | Contact / Book a Cohort | Qualifying enquiry form | P1 |
+| P17 | Corporate & Funding | The corporate offering, engagement formats, the HRD Corp evidence pack. **Promoted to `P0` — Journey B starts here** | **P0** |
+| P19 | Corporate Enquiry | Qualifying enquiry. **Promoted to `P0` — the corporate entry path, and the boundary: an enquiry, not a sales lifecycle** | **P0** |
 | P99 | Legal *(terms, privacy, accessibility)* | Required to transact | P1 |
+
+**Retired from the public surface:** `P12` Course Landing — there is no course to land on. Its useful content (outcomes, what you will be able to do, who teaches it) is absorbed into `P10` Programme Detail. Any faceted course catalogue is retired outright (§3.3).
 
 ## Shared / System — 5
 | ID | Screen | Purpose | Pri |
@@ -315,22 +415,23 @@ Skill graph DAG with prerequisites · skill decay display · adaptive/IRT diagno
 | S06 | Profile & Settings *(incl. refund request, data export/delete)* | Self-service; PDPA obligation | P1 |
 | S10 | Error, empty & loading states | Never a dead end | P1 |
 
-## Learner — 6
+## Participant — 5
 | ID | Screen | Purpose | Pri |
 |---|---|---|---|
-| L01 | Dashboard | *What should I do next, and am I on track?* | **P0** |
-| L04 | My Path | The milestone journey; makes learning feel like becoming | **P0** |
+| L01 | Dashboard | *What is my next session, and what is due?* — led by the next scheduled session, **not** by a "continue your lesson" card | **P0** |
+| L04 | **My Programme** | Where the participant is in the programme: sessions, attendance, materials, what comes next | **P0** |
 | L05 | Skills Profile | Capability truth + the evidence behind every claim | **P0** |
-| L06 | My Work *(assessments · assignments · artifacts)* | One place for everything submitted or due | P1 |
+| L06 | My Work *(assessments · artifacts)* | One place for everything submitted or due | P1 |
 | L09 | My Credentials | Hold, view, share the proof | **P0** |
-| L14 | AI Tutor *(panel + page)* | Unblock a stuck learner at 11pm, with citations | **P0** |
 
-## Course — 3
+**Retired:** `L14` AI Tutor — deferred with `M8`. **V1 ships no learner-facing AI feature and does not substitute another.**
+
+## Programme materials — 3
 | ID | Screen | Purpose | Pri |
 |---|---|---|---|
-| C02 | Course Home *(incl. completion state)* | Base inside a course; curriculum and progress | **P0** |
-| C03 | Curriculum / Syllabus *(printable)* | Learner orientation **and** the HRD Corp course-outline document | P1 |
-| C05 | Lesson Player *(video · reading · knowledge check states)* | Where learners spend most of their time | **P0** |
+| C02 | **Programme Home** *(incl. completion state)* | Base inside a programme: sessions, materials, progress | **P0** |
+| C03 | Curriculum / Syllabus *(printable)* | Participant orientation **and** the HRD Corp course-outline document | P1 |
+| C05 | **Materials Viewer** *(reading · downloads · knowledge check · session recording where appropriate)* | **Demoted from ★ `P0`.** Supporting materials under the DR-02 §5 boundary — it prepares, extends, reinforces or documents. It is **not** where participants spend most of their time, and it is not a video-first lesson player | P1 |
 
 ## Certification — 7
 | ID | Screen | Purpose | Pri |
@@ -347,7 +448,7 @@ Skill graph DAG with prerequisites · skill decay display · adaptive/IRT diagno
 | ID | Screen | Purpose | Pri |
 |---|---|---|---|
 | N01 | Library Home | Entry to the corpus; SEO surface | P1 |
-| N03 | Knowledge Article | SEO landing + citation target + tutor corpus | **P0** |
+| N03 | Knowledge Article | SEO landing · credibility surface · participant reference | **P0** |
 | N04 | Glossary *(index + term)* | Highest SEO return per unit of effort | P1 |
 | N10 | Changelog | Proof that the knowledge is living, not static | P1 |
 
@@ -363,7 +464,7 @@ Skill graph DAG with prerequisites · skill decay display · adaptive/IRT diagno
 | O01 | Org Dashboard *(simple table, not a heatmap)* | Is my cohort progressing, and who is stuck | **P0** |
 | O02 | People & Seats | Invite, activate, chase | **P0** |
 | O03 | Individual Learner View | Manager detail with an explicit privacy boundary | P1 |
-| O07 | Cohort Detail + Attendance Grid | The most-used screen in a claimable programme | **P0** |
+| O07 | Cohort Detail + Attendance Grid | The most-used screen in a claimable programme; also the expert's delivery surface (`U3`) | **P0** |
 | O10 | Compliance & HRD Corp Evidence Pack | One click replaces hours of admin; hard to leave | **P0** |
 
 ## Admin — 1
@@ -371,13 +472,17 @@ Skill graph DAG with prerequisites · skill decay display · adaptive/IRT diagno
 |---|---|---|---|
 | X00 | Admin Console *(tabs: content · users · orgs · credentials · items · packs)* | Internal operations. **May be ugly. Nobody outside the team sees it.** | P1 |
 
-**Totals: 44 screens · 30 at `P0` · 14 at `P1`.**
+**Totals: 44 screens · 32 at `P0` · 12 at `P1`.**
+
+**Net effect of the DR-02 re-derivation:** out go `P12` Course Landing, `L14` AI Tutor and the faceted catalogue; in come `P23` Expert Profile and `P24` Scheduled Offerings; `P17` and `P19` rise to `P0` because Journey B begins there; `C05` falls to `P1` as a materials surface. **Same screen count, materially less build** — a scheduling listing and an expert profile cost far less than a lesson player, a video pipeline and a RAG tutor.
 
 ---
 
 # 7. FIRST MOCKUP SCOPE
 
-**Exactly 15 screens.** These must form a complete clickable prototype that tells the entire product story with no narration.
+**Exactly 16 screens.** These must form a complete clickable prototype that tells the entire product story with no narration.
+
+> **Re-derived by DR-02.** The lesson player is out; scheduled offerings and programme detail are in. The story the prototype must now tell is *expert-led training whose outcome is provable* — if a viewer comes away thinking "online course platform", the prototype has failed no matter how good it looks.
 
 **Selection test:** *would removing this screen break the story?* Not "is it useful" — every screen is useful.
 
@@ -386,9 +491,10 @@ Skill graph DAG with prerequisites · skill decay display · adaptive/IRT diagno
 | 1 | `P01` | Homepage | The promise, stated once, with three doors |
 | 2 | `P05` | Diagnostic *(one question state)* | We ask before we sell |
 | 3 | `P06` | **Diagnostic Result** ★ | **Clause 1 delivered.** The "how did you know that?" moment |
-| 4 | `P15` | Credential Detail | The offer — with the **rubric and exemplars visible before purchase**. This is D1 on the public site |
-| 5 | `L01` | **Learner Dashboard** ★ | The workspace. Contains the path milestone strip and candidacy tracker as *components* |
-| 6 | `C05` | **Lesson Player** ★ | Learning, with the AI tutor panel and its citations visible |
+| 4 | `P10` | **Programme Detail** | The offer — outcomes as capabilities, **who delivers it**, formats, what happens in the room |
+| 4b | `P15` | Credential Detail | The proof of outcome — with the **rubric and exemplars visible before purchase**. This is D1 on the public site |
+| 5 | `L01` | **Participant Dashboard** ★ | The workspace. Led by the next session; contains the programme strip and candidacy tracker as *components* |
+| 6 | `P24` | **Scheduled Offerings** ★ | *Replaces the lesson player in the mockup.* Real dates, formats and locations — the moment the product reads as expert-led rather than self-paced |
 | 7 | `L05` | **Skills Profile** ★ | Capability made visible; evidence behind every claim |
 | 8 | `K05b` | Assessment Runner | The knowledge half of proving |
 | 9 | `K06` | **Artifact Workspace** ★★ | **Clause 2 delivered.** The single most important screen in the product |
@@ -403,18 +509,24 @@ Skill graph DAG with prerequisites · skill decay display · adaptive/IRT diagno
 
 **The clickable path through the prototype:**
 ```
-P01 → P05 → P06 → [signup modal] → L01 → C05 → L05 → L01
-    → P15 → [register modal] → K05b → K06 → K08 → K10 → P16
+P01 → P10 → P24 → [register modal] → L01 → L05 → L01
+    → P05 → P06 → P15 → K05b → K06 → K08 → K10 → P16
     → [switch persona] → A03 → [switch persona] → O01 → O10
 ```
 
-**Done means:** a viewer who has never heard of this platform clicks that path and, unprompted, can say what makes it different from a course marketplace. If they cannot, the prototype has failed regardless of how good it looks — go back to screens 3, 9, 10 and 12, because those four carry the entire argument.
+**Done means:** a viewer who has never heard of this organisation clicks that path and, unprompted, can say that this is **expert-led professional training with a credential that has to be earned** — and can say what makes it different from a course marketplace. If they cannot, the prototype has failed regardless of how good it looks — go back to `P01`, `P10`/`P24`, `K06`, `K08` and `P16`, because those carry the entire argument.
 
 ---
 
 # 8. MVP DATA MODEL
 
 **17 tables.** Deliberately boring. Retrofit Test decisions are marked ⚑ — those shapes cost nothing now and a rewrite later. Expansion columns required by **DR-01** are marked ⊕: present, populated with a single value, and read by nothing in V1. See §16.1.
+
+> **⚠ Reconciliation deferred — read before using this section.** DR-02 introduces **programme**, **scheduled offering**, **delivery format**, **location** and **individual registration** as product concepts (DR-02 §4). Some of what they need already exists below — `cohorts`, `sessions` and `attendance` are in row 16 — but the model as written is still course-shaped and has no public, individually-registerable scheduled offering.
+>
+> **This section is deliberately left unchanged.** No table, column, type or relationship is added, altered or removed here. Physical data-model change is a RED gate under `CLAUDE.md` Rule 1, and DR-02 §6 explicitly holds the implementation question open — including how programme participation is represented in the credential model, which is a *policy* decision (§6 below) before it is a schema one.
+>
+> **The reconciliation belongs to controlled downstream architecture work, not to this propagation stage.** Until then, treat this section as accurate for everything it lists and **incomplete** for the DR-02 concepts. It must not be read as evidence that those concepts are out of scope.
 
 ```
 users ──< user_roles >── (role, scope_type, scope_id)          ⚑ scoped RBAC
@@ -474,11 +586,11 @@ audit_log                                                      ⚑ credential & 
 | ORM | Prisma or Drizzle | Migrations you can read |
 | Auth | Auth.js or Clerk | **Do not build auth.** SSO comes later via the same provider |
 | Files | S3-compatible (R2/S3) + signed URLs | Artifacts, evidence packs, badge images |
-| Video | Managed (Mux / Cloudflare Stream / Bunny) | **Never build video** |
+| Video | **Not required in V1** — deferred with the lesson player (DR-02). If session recordings are offered later as supporting material (DR-02 §5), use a managed provider | **Never build video** — and in V1, do not buy one either |
 | Email | Resend / Postmark | |
 | Payments | **Stripe + a Malaysian rail (FPX/DuitNow)**, MYR + USD only | Local payment materially affects conversion in the primary market |
 | Background work | **A `jobs` table + a cron route.** Not a queue service | Only three jobs exist: send email, generate evidence pack, index article |
-| AI | Claude via a thin server-side service; **pgvector in the same Postgres** | One datastore. Model routing behind one function so models are swappable |
+| AI | **None in V1** — deferred with `M8`. Retained as the design if a tutor is ever justified: Claude via a thin server-side service, **pgvector in the same Postgres**, model routing behind one function | Releases the embeddings provider, the data-processing agreement, RAG cost control and rate-limiting from MVP scope |
 | Search | Postgres full-text | ~30 articles. OpenSearch would be absurd |
 | Hosting | Vercel (or a single container on any managed host) | |
 | Observability | Sentry + a product analytics tool | The funnel must be measurable from day one |
@@ -514,15 +626,15 @@ This is buildable by **1–2 developers plus a designer, AI-assisted, in roughly
 | Week | Work |
 |---|---|
 | 1 | **Design tokens + the five signature components**: `CredentialCard`, `SkillMeter`, `MilestoneTimeline`, `RubricPanel`, plus the diagnostic question canvas. Light + dark. Nothing else starts until these exist |
-| 2 | `P01` · `P05` · `P06` — the promise and the gap |
-| 3 | `L01` · `C05` · `L05` — the workspace and learning |
-| 4 | `P15` · `K05b` · `K06` — the offer and the evidence gate. **`K06` gets the most iteration of any screen** |
+| 2 | `P01` · `P10` · `P24` — the organisation, the programme, and when it runs |
+| 3 | `L01` · `L05` · `P05`/`P06` — the participant workspace and the capability assessment |
+| 4 | `P15` · `K05b` · `K06` — the credential and the evidence gate. **`K06` gets the most iteration of any screen** |
 | 5 | `K08` · `K10` · `P16` · `A03` — judgement, award, verification |
 | 6 | `O01` · `O10` — the commercial story · responsive passes · modal states |
 | 7 | Prototype wiring · **test with 8–10 real people** · revise |
 
 **Exit criteria — all four must hold:**
-1. Five strangers click the path unprompted and articulate the difference from a course marketplace.
+1. Five strangers click the path unprompted and articulate that this is **expert-led professional training with an earned credential** — and the difference from a course marketplace.
 2. Three target-persona learners say the gap report in `P06` told them something they did not know.
 3. One corporate buyer looks at `O01` + `O10` and asks what it costs.
 4. **You are willing to be judged on `K06`.** If it still feels intimidating rather than achievable, do not proceed — fix it here, where fixing is free.
@@ -537,13 +649,13 @@ Build the 30 `P0` screens against real data. Sequence by dependency, not by scre
 | Block | Weeks | Contents |
 |---|---|---|
 | Foundations | 1–2 | Auth, scoped roles, schema, admin CRUD, payments |
-| Content & learning | 3–5 | Content model, `C02`, `C05`, progress, `P10`, `P12` |
-| Skills & diagnostic | 5–6 | Skills, `P05`, `P06`, `skill_assertions`, `L05`, `L01`, `L04` |
+| **Programmes & scheduling** | 3–5 | Programme model, scheduled offerings, registration, `P10`, `P24`, `P23`, `C02`, materials |
+| Skills & capability assessment | 5–6 | Skills, `P05`, `P06`, `skill_assertions`, `L05`, `L01`, `L04` |
 | Assessment | 7–8 | Items, forms, `K05a/b`, threshold scoring, `K01`, `K03` |
 | **Evidence** | 8–10 | **`K06`, `A01`, `A03`, `K08`** — the core; do not compress this |
 | Credentials | 10–11 | `credential_defs`, requirement rules, issuance, `K10`, `L09`, **`P16`** |
-| Corporate | 11–12 | `O01`, `O02`, `O07`, **`O10`** |
-| Knowledge + tutor | throughout | `N03`, article corpus, then the RAG tutor `L14` |
+| **Corporate & delivery** | 11–12 | `P17`, `P19`, `O01`, `O02`, `O07`, **`O10`** |
+| Knowledge library | throughout | `N03`, article corpus, glossary, changelog. **No tutor — `M8` is deferred** |
 
 **Exit criteria:** one person can complete §5 end to end on production, and one internal cohort has run through it fully.
 
@@ -570,13 +682,13 @@ Faking is not cheating — it is how you test an expensive idea cheaply. The rul
 
 | Feature | How to fake it | Why faking is safe |
 |---|---|---|
-| **AI tutor responses** | 6–8 scripted exchanges with **real citations to real articles** | What we're testing is whether citations feel trustworthy, not whether retrieval works |
-| **Diagnostic adaptivity** | 20 fixed questions, one visible branch | Learners cannot perceive adaptivity anyway; they perceive relevance |
+| **Diagnostic adaptivity** | 20 fixed questions, one visible branch | Participants cannot perceive adaptivity anyway; they perceive relevance |
+| **Scheduled offerings** | A small, realistic set of dates and formats, **clearly identified as fixture data** | Testing whether "this is expert-led and it runs on a date" reads. **Never publish fabricated dates outside the prototype** (DR-02 §4.1) |
 | **Skill proficiency numbers** | Hand-authored persona fixture | We're testing whether the *gap statement* lands, not the scoring maths |
-| **Path generation** | One curated path presented as personalised, with a real "you can skip these" list | The skip list is the perceived personalisation |
+| **Programme recommendation** | The gap report resolving to one real programme and its next date, presented as personalised | The specificity of the gap statement is the perceived personalisation, not any generation engine |
 | **Corporate dashboard & progress table** | Seeded fixture data for one fictional org, 24 people | Testing whether a buyer reacts, not whether aggregation works |
 | **AI pre-assessment on `A03`** | A static collapsed suggestion block with a confidence score | Tests the interaction pattern — where it sits, whether assessors ignore or over-trust it |
-| **Video** | One real 3-minute lesson; the rest as posters with duration | One real video proves the player |
+| ~~Video~~ | **Removed.** There is no lesson player to prove | Deferred with `M8` and the lesson player |
 | **Search, notifications, calendar** | Static populated states | Pure chrome |
 | **Payments** | Fake checkout → success | |
 | **Badge cryptographic verification** | `P16` shows a verification seal; nothing is signed | Testing the *employer's* reaction to the page |
@@ -593,8 +705,10 @@ These carry the argument. Faking them means testing nothing.
 | **The three exemplars** | The highest-impact asset for getting candidates through the evidence gate. A fake exemplar tests nothing |
 | **The assessor's written feedback on `K08`** | Real reasoning against real criteria. This is what makes the credential feel judged rather than scored |
 | **The gap statements in `P06`** | Real, specific, plain-language sentences. "You scored 2.4 on Metadata" is worthless; "You can explain what metadata is but not design a lineage capability" is the product |
-| **Knowledge article content on `N03`** | It is also the tutor's corpus and the SEO surface. Write it once, properly |
+| **Knowledge article content on `N03`** | It is the SEO surface, the credibility surface and a participant reference. Write it once, properly |
 | **The HRD Corp evidence pack contents** | You already produce these documents by hand. Use the real ones |
+| **The experts on `P23` and `P10`** | **No fabricated expert profiles, ever** — not in the prototype, not for visual balance, not to appear larger. If one genuine expert delivers, show one. Expert-led is the claim; a fake expert falsifies the claim itself (DR-02 §7) |
+| **What actually happens in the room on `P10`** | The programme's real shape — the sessions, the discussion, the practical work. This is what a participant is buying |
 
 **The pattern:** fake the *machinery*, never the *judgement*. Every item in 11.1 is plumbing. Every item in 11.2 is the thing being sold.
 
@@ -624,13 +738,19 @@ Phase 2 begins only when these are met. Ordered by how decisively each would kil
 
 ## 12.3 Product validation
 
+*Re-derived by DR-02: the previous measures — diagnostic-to-account conversion, path completion, first lesson within 24h — were self-serve funnel metrics for a product we are no longer building.*
+
 | Criterion | Target |
 |---|---|
-| Diagnostic → account conversion | ≥ 25% |
-| Path completion among enrolled learners | ≥ 50% (vs 8–13% MOOC baseline — cohort accountability is the mechanism) |
-| First lesson started within 24h of enrolment | ≥ 60% |
+| Scheduled offerings that fill to a viable cohort size | ≥ 70% — an unfilled cohort is the expert-led equivalent of an abandoned funnel |
+| Programme **attendance** across scheduled sessions | ≥ 85% — the participant showed up, which is the whole premise |
+| Programme completion among registered participants | ≥ 80% (vs the 8–13% MOOC baseline the old target was benchmarked against — presence and a fixed date are the mechanism) |
+| Participants proceeding from programme completion to candidacy | ≥ 50% |
+| Capability assessment → programme enquiry or registration | ≥ 20% |
 | Candidates rating the artifact requirement a *strength* rather than a barrier | ≥ 70% |
-| Verification page views per issued credential | ≥ 3 (proves Loop 1 works) |
+| Verification page views per issued credential | ≥ 3 (proves the growth loop works) |
+
+**Targets are indicative and unvalidated.** No cohort has run. They exist so the first cohort is measured rather than felt, and they should be re-baselined against real delivery.
 
 ## 12.4 Trust validation
 
@@ -644,7 +764,7 @@ Phase 2 begins only when these are met. Ordered by how decisively each would kil
 
 State these now, before there is emotional investment. If any occurs, **stop and redesign rather than adding features**:
 
-- **G1 below 40%** → the evidence gate is too hard or too vague. Lighten the L2 artifact, add scaffolding, or reconsider the model. Do not build a second domain.
+- **G1 below 40%** → the evidence gate is too hard or too vague. Lighten the artifact, add scaffolding within the programme, or reconsider the model. Do not build a second domain. **Do not resolve it by lowering the credential to attendance** — that is the failure mode DR-02 §6 exists to prevent.
 - **G3 below 70%** → the assessment model does not scale. Cap intake, recruit assessors, or reduce artifact complexity. Do not launch publicly.
 - **Zero employer recognition after 6 months of trying** → the credential thesis is wrong for this market. Pivot toward corporate capability-building where *you* are the recognised authority, and drop the external credential claim.
 - **Assessor cost > 40% of fee** → the unit economics are broken. Raise price, shorten the artifact, or move to AI-assisted pre-assessment sooner than planned.
@@ -661,7 +781,7 @@ A line-by-line audit of `DATA_AI_ACADEMY_PORTAL_MOCKUP_SPECIFICATION.md`. The sp
 |---|---|---|
 | **Skill graph as a DAG** with prerequisites, cycle detection, decay parameters, role weights (§18.2 blueprint) | **Over-engineered by 3×** | A flat `skills` table with an `area` column. 35 rows. The DAG earns its complexity at ~200 skills across 5 domains, not at 35 in one |
 | **Skill decay & confidence display** (§5 `L05`) | **Too early, and actively harmful now** | Every learner's skills are new in year one. A decay bar on a freshly-earned skill is demoralising and dishonest. Keep the `asserted_at` column; show nothing until a skill is 12+ months old |
-| **4 altitudes × 5 domains as a UI filter** (§1.7, §4 `P11`) | **Over-engineered for the content volume** | 20 catalogue cells against ~8 courses means most filters return nothing. Keep altitude as a data field; do not render it |
+| **4 altitudes × 5 domains as a UI filter** (§1.7, §4 `P11`) | **Superseded — the catalogue itself is retired (DR-02)** | The filter's host no longer exists. **Domain survives** as subject scope and seeded data (`ADR-023`); domain × altitude as a faceting device, and per-domain course counts, do not |
 | **4-level credential ladder + bands + specialisms + micro-credentials** (§12 blueprint) | **Four parallel concepts; a genuine conversion risk** | Ship **one credential, no levels, no bands** (DR-01). The ladder becomes a single forward-looking paragraph on `P15`. All grade differentiation lives in the artifact rubric |
 | **Open Badges 3.0 / W3C Verifiable Credentials** (§12.6 blueprint) | **Right destination, wrong phase** | A `public_uid` + a verification page + OB 2.0 metadata baked into a PNG. Cryptographic VCs in 1C or Phase 2. **Do not claim OB3.0 conformance before it is true** |
 | **Online proctoring vendor** (§13.5 blueprint) | **Wrong for V1 on four counts** | Cost per exam, conversion friction, accessibility hostility, and integration burden — for a control that is *not the real one*. The artifact is. Use honour undertaking + randomised order + in-room invigilation for cohorts, and say so openly |
@@ -681,7 +801,7 @@ A line-by-line audit of `DATA_AI_ACADEMY_PORTAL_MOCKUP_SPECIFICATION.md`. The sp
 | `P14` Certification Overview + `P15` Credential Detail | 2 → 1 | **There is only one credential.** An overview page of one item is a landing page for nothing |
 | `P04` Integrity & AI Policy → a section of `P15` | 2 → 1 | Important content, does not need its own route until there is more than one credential |
 | `P17` Corporate + `P18` Funding | 2 → 1 | The funding argument *is* the corporate argument in Malaysia |
-| `P09` Paths Index + `P11` Catalogue | 2 → 1 | One path and 8 courses. These are the same page with a filter |
+| ~~`P09` Paths Index + `P11` Catalogue~~ | **Both retired** | *Superseded by DR-02 — this was a merge argument for a catalogue that no longer exists.* Replaced by `P10` Programme Detail + `P24` Scheduled Offerings |
 | `L06` Assessments + `L07` Assignments + `L08` Portfolio → **My Work** | 3 → 1 | Three hubs fragment one mental model. The learner thinks "my work", not "my assignment objects" |
 | `L02` My Learning + `L03` Paths → `L04` My Path | 3 → 1 | With one path, "my learning" and "my path" are the same screen |
 | `C06` Video + `C07` Reading + `C10` Quiz → states of `C05` | 4 → 1 | These are **block types**, not screens. Counting them inflated the inventory and invites redundant design |
@@ -701,8 +821,8 @@ A line-by-line audit of `DATA_AI_ACADEMY_PORTAL_MOCKUP_SPECIFICATION.md`. The sp
 | **L3 Professional** | Phase 2. Requires defence interviews, experience verification, and senior assessor capacity |
 | **Specialism / elective composition** | When ≥4 specialism exams exist |
 | **Micro-credentials** | Possibly never. They dilute the credential's meaning at the exact moment it must be sharp |
-| **Accredited training partner programme** | When the credential has demonstrable market value — you cannot license credibility you do not yet have |
-| **Chapters, events, mentoring, forums** | With cohort one at the earliest, and only the cohort-private group. **A visibly empty community is worse than none on a trust product** |
+| ~~**Accredited training partner programme**~~ | **⊘ Not "too early" — retired as a destination (DR-02).** We deliver; we do not license others to teach toward our credential while we examine. A curated expert / associate-trainer network replaces it |
+| **Chapters, events, mentoring, forums** | **⊘ Retired as a core structural assumption (DR-02).** If anything emerges, it emerges from real delivery — a cohort-private group or programme alumni. **A visibly empty community is worse than none on a trust product** |
 | **CPD, renewal, currency assessment** | Year 3. The first credential expires in 2029. Designing a screen no user opens for 36 months is waste |
 | **Appeals workflow** | When there is a second independent assessor to appeal *to* |
 | **Skill decay display** | Month 13 |
@@ -754,14 +874,14 @@ Under schedule pressure these will be the first things suggested for cutting. Re
 
 | | Vision (2030) | Long-term architecture | **MVP (V1)** | **First mockup** |
 |---|---|---|---|---|
-| **Scope** | 5 domains, 4 credential levels, global | Modular services, event-driven | **1 domain, 1 credential, 1 path** | 15 screens |
-| **Learn** | Adaptive paths on a skill DAG | Graph traversal, IRT | **1 curated path, 35 flat skills, fixed diagnostic** | `P05` `P06` `L01` `C05` `L05` |
+| **Scope** | 5 domains, 4 credential levels, global | Modular services, event-driven | **1 domain, 1 credential, a small deliberate programme portfolio** | 16 screens |
+| **Learn** | Adaptive paths on a skill DAG | Graph traversal, IRT | **Expert-led programmes on scheduled dates · 35 flat skills · fixed capability assessment** | `P10` `P24` `P05` `P06` `L01` `L05` |
 | **Prove** | Simulation assessment, continuous credentialing | Item bank + psychometrics + AI pre-assessment | **1 exam (one threshold), 1 artifact, 1 rubric, human assessor, 3 exemplars** | `K05b` `K06` `K08` `A03` |
 | **Carry** | W3C VCs, employer verification API | Signing infrastructure, wallets | **Permanent verification URL + PNG badge + PDF** | `K10` `P16` |
-| **Corporate** | Skills intelligence, benchmarking, SSO | Multi-tenant analytics | **Cohort + attendance + progress table + HRD Corp pack** | `O01` `O10` |
-| **Community** | Chapters, events, contributor ladder | Federated | **None** | — |
-| **AI** | 20 features across 3 surfaces | Model routing, evals, guardrails | **1: grounded tutor with citations** | faked in `C05` |
-| **Screens** | 133 | — | **44 (30 P0)** | **15** |
+| **Corporate** | Skills intelligence, benchmarking, SSO | Multi-tenant analytics | **A first-class pathway: entry path + private cohort + attendance + progress + HRD Corp pack** | `P17` `P19` `O01` `O10` |
+| **Community** | Chapters, events, contributor ladder | Federated | **None — and retired as a strategic destination (DR-02)** | — |
+| **AI** | 20 features across 3 surfaces | Model routing, evals, guardrails | **None. `M8` deferred; not replaced** | — |
+| **Screens** | 133 | — | **44 (32 P0)** | **16** |
 | **Team** | — | — | **1–2 devs + designer, 14–18 weeks** | 5–7 weeks |
 
 **What survives every cut, because it is the promise:**

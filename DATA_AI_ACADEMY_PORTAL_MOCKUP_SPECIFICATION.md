@@ -6,6 +6,29 @@
 **Owner:** Mustafa Qizilbash — Your Partner Technologies
 **Companion document:** `DATA_AI_ACADEMY_PORTAL_BLUEPRINT.md` (strategy). This document does not repeat strategy; it translates it into screens.
 **Intended consumer:** An AI UI/UX design agent or AI coding agent producing the first complete portal mockup.
+**Corrected by:** [`DR-02_EXPERT_LED_DELIVERY_MODEL.md`](DR-02_EXPERT_LED_DELIVERY_MODEL.md), approved 2026-08-31 — see the reconciliation notice below.
+
+---
+
+> # ⚠ RECONCILIATION NOTICE — DR-02, 2026-08-31
+>
+> **This document was written for a product we are no longer building.** It specified a portal organised around browsing a catalogue, consuming lessons in a player, and community structures. [`DR-02`](DR-02_EXPERT_LED_DELIVERY_MODEL.md) is the authoritative strategic correction and **outranks this document**; [`DATA_AI_ACADEMY_MVP_BUILD_SPEC.md`](DATA_AI_ACADEMY_MVP_BUILD_SPEC.md) §6 is authoritative for the screen list and priorities; the [Blueprint](DATA_AI_ACADEMY_PORTAL_BLUEPRINT.md) has been reconciled in turn.
+>
+> **What the portal supports:**
+>
+> ```
+> Expert-led learning  +  scheduled programmes  +  live / face-to-face delivery
+>       +  corporate & private engagements  +  meaningful assessment
+>       +  applied evidence      →      credible certification
+> ```
+>
+> **The critical design principle for everyone using this document.** The portal is an important part of the experience, but **it is not the primary place where learning happens.** Learning happens in the room and in the live session. The portal supports discovery, scheduling, participation, preparation, evidence, assessment, progress and verification.
+>
+> **The model this document must never silently return to:** *browse course → watch content → complete lessons → take quiz → get certificate.* That is explicitly incompatible with the strategy. Any screen that reintroduces it is a defect regardless of how well it is designed.
+>
+> **How corrections are marked.** Superseded passages carry **`⊘ RETIRED`**, **`↻ REFRAMED`** or **`⏸ DEFERRED`** in place with a one-line reason. Surrounding analysis is deliberately left intact — much of the interaction and accessibility thinking here remains excellent and survives the correction untouched. Where a marker and the original text disagree, **the marker wins**, and DR-02 wins over both.
+>
+> **This notice authorises no design or implementation work.** The `P01` Homepage redesign is a separate, later, dedicated exercise; nothing here begins it.
 
 ---
 
@@ -18,6 +41,34 @@
 | A human reviewing the design | §1 → §20 (critical review) → §14 |
 
 **Screen ID convention.** Every screen has a stable ID used throughout. Never renumber.
+
+> ## 🔒 BINDING RULE — screen identifiers are never reused
+> *Approved 2026-08-31. This is a traceability rule, and it outranks tidiness.*
+>
+> ```
+>   Allocated screen ID
+>          ↓
+>     Active   OR   Retired
+>          ↓
+>   NEVER reused for a different concept
+> ```
+>
+> - Once an identifier has been allocated, it is **permanently bound to the screen it was allocated to** — including after that screen is retired.
+> - A retired ID is **not** recycled for a new screen, however convenient the gap looks.
+> - **Historical IDs are never renumbered to close gaps.** Gaps are evidence, not untidiness.
+> - A genuinely new screen receives **the next identifier beyond the highest already allocated** in its prefix.
+>
+> **Currently affected by DR-02:**
+>
+> | ID | Historical screen | Status |
+> |---|---|---|
+> | `P03` | The Capability Standard | **⊘ RETIRED** — a standards-body surface; the organisation is not one. *(Credential transparency survives independently — see `P15`.)* |
+> | `P11` | Course Catalogue | **⊘ RETIRED** — there is no catalogue. Discovery is `P10` + `P24`. |
+> | `P12` | Course Landing | **⊘ RETIRED** — absorbed into `P10` Programme Detail. |
+> | `P23` | **Expert Profile** | **Active — new.** |
+> | `P24` | **Scheduled Offerings** | **Active — new.** |
+>
+> **`P03` and `P11` must not be reused for the expert profile, scheduled offerings, or anything else.** `P23` and `P24` were allocated beyond the previous high-water mark (`P22`) precisely to honour this rule. The highest allocated `P` identifier is now **`P24`** (excluding `P99` Legal, which is a reserved sentinel).
 
 | Prefix | Area |
 |---|---|
@@ -41,9 +92,15 @@
 
 ## 1.1 What the platform is
 
-**Data & AI Academy** is a professional development ecosystem for data and AI capability. It is deliberately **not** a generic LMS. An LMS answers *"did they complete the course?"*. This platform answers a harder and far more valuable question: **"can this person actually do the work, and can they prove it to an employer?"**
+*↻ REFRAMED (DR-02). "Data & AI Academy" remains a **temporary working name**, not a final one — it must not be allowed to imply a self-paced content library.*
 
-It combines seven things that normally live in seven separate products, into one coherent system built around a single shared spine — the **skill graph**:
+**We are an independent professional training and certification organisation** for data and AI capability development. Our core value comes from **expert practitioners and expert-led delivery** — face-to-face programmes, live online programmes, and tailored corporate engagements.
+
+**The portal is not the product.** It supports the ecosystem: discovery, scheduling, registration, participation, preparation, evidence, assessment, progress and verification. The learning itself happens in the room and in the live session.
+
+It is deliberately **not** a generic LMS and **not** a course marketplace. An LMS answers *"did they complete the course?"*; a marketplace answers *"what can I buy?"* This organisation answers a harder and far more valuable question: **"can this person actually do the work, and can they prove it to an employer?"**
+
+> **⊘ RETIRED — the "seven products in one" framing below.** It described a platform that *contains* everything, and two of its seven pillars (community/chapters, the AI layer) are retired or deferred by DR-02. **The skill spine survives and remains valuable** — reframed by DR-02 as the shared vocabulary linking programme outcomes, assessment, evidence, the credential and the team capability view, rather than as the engine of a personalised content platform. Read the diagram for the spine, not for the seven columns.
 
 ```
                           ┌─────────────────────┐
@@ -72,21 +129,25 @@ To make data and AI capability **legible** — provable by the individual who ha
 
 Three claims, each with a visible product mechanism behind it. Every mockup screen should trace to one of these.
 
+*↻ REFRAMED (DR-02) — the three claims stand; the mechanism behind the first is now expert-led delivery rather than a self-serve path.*
+
 | Claim | Mechanism | Where it shows up in the UI |
 |---|---|---|
-| **Learn what you're actually missing** | Free adaptive diagnostic → skill gap map → shortest honest path | `P05` Diagnostic, `P06` Diagnostic Result, `L04` My Path, `L05` Skills Profile |
-| **Prove it by doing the work** | Knowledge exam **plus** an assessed, defended applied artifact | `K06` Assignment Workspace, `K08` Result & Feedback, `A03` Assessor Review |
-| **Carry the proof anywhere** | Open Badges 3.0 / W3C Verifiable Credentials, public verification | `L09` My Credentials, `P16` Public Verification |
+| **Learn what you're actually missing** | Capability assessment names the gap → **an expert-led programme closes it**, on a real date, in a real format | `P05` Capability Assessment, `P06` Result, `P10` Programme Detail, `P24` Scheduled Offerings, `L05` Skills Profile |
+| **Prove it by doing the work** | Knowledge assessment **plus** an assessed applied artifact, following programme participation | `K06` Artifact Workspace, `K08` Result & Feedback, `A03` Assessor Review |
+| **Carry the proof anywhere** | Permanent public verification (OB 2.0 metadata in V1; cryptographic VCs deferred — see `MVP_BUILD_SPEC.md` M7) | `L09` My Credentials, `P16` Public Verification |
 
 ## 1.4 What makes it different — and what the mockup must communicate
 
-The mockup is not just a layout exercise. It has to make three differentiators *visible on screen*, because these are the reasons someone chooses this over a course marketplace.
+The mockup is not just a layout exercise. It has to make the differentiators *visible on screen*, because these are the reasons someone chooses this over a course marketplace.
 
-**D1 — Evidence over recall.** No credential above foundation is awarded on a multiple-choice score alone. *The mockup must show the rubric, the exemplars, and the assessor's written reasoning as first-class UI.* A course marketplace cannot show these screens because it does not have them.
+**D0 — Expert-led, live, and scheduled.** *(Added by DR-02 as the foundational differentiator.)* A practitioner who has built these systems teaches you, in the room or live, alongside peers from real organisations. *The mockup must show a named genuine expert, a real delivery format, and a real date — early and unmistakably.* A marketplace has none of these, and no amount of content can imitate presence.
+
+**D1 — Evidence over recall.** No credential is awarded on a multiple-choice score alone. *The mockup must show the rubric, the exemplars, and the assessor's written reasoning as first-class UI.* A course marketplace cannot show these screens because it does not have them. **Nor is the credential earned by attendance** — participation is part of the pathway, never the whole of it.
 
 **D2 — Living, versioned knowledge.** The knowledge base is a versioned product with a public changelog. *The mockup must show version stamps, "last reviewed" dates, and a changelog page.* This is a trust surface no competitor has.
 
-**D3 — AI-native, not AI-flavoured.** *The mockup must show the AI tutor grounded in cited sources, the AI-use policy declared per assessment, and explained recommendations.* Generic "Ask AI" buttons do not communicate this; citations and policy chips do.
+**~~D3 — AI-native, not AI-flavoured.~~ ⏸ UNDER REASSESSMENT — not an active design requirement.** Its evidence was the AI tutor, which DR-02 defers. **Do not design for it, do not show it in the mockup, and do not invent a replacement.** DR-02 §9 holds the question open; any revised third differentiator will be evaluated later against the clarified strengths — expert-led delivery, practitioner expertise, live interaction, practical learning, applied evidence, meaningful assessment, credible certification. *(D0 above is the corrected foundational differentiator, not the D3 replacement; that decision remains open.)*
 
 ## 1.5 Primary users
 
@@ -119,6 +180,15 @@ Six user types the mockup must serve. Full role definitions in §2.
 
 ## 1.7 Domain and altitude model (needed to read every catalogue screen)
 
+> **↻ SPLIT by DR-02 — read this before using either axis.**
+>
+> | | Status |
+> |---|---|
+> | **Domain** as **subject scope and capability structure** — what a programme is about, what a skill belongs to, how the knowledge library is organised | **✅ Preserved.** Also required as seeded data by the approved expansion shape (`ADR-023`) |
+> | **Domain × altitude as a catalogue faceting device**, and **per-domain course counts** | **⊘ Retired.** The catalogue they faced no longer exists, and a course count is a marketplace credibility signal we do not use |
+>
+> The sentence below — *"every filter, chip, and badge in the mockup uses these"* — is **superseded**. Altitude remains a useful *data* field for describing depth of engagement; it is not a browsing mechanism, and it must not reappear as one.
+
 Two orthogonal axes used consistently across the entire UI. Every filter, chip, and badge in the mockup uses these.
 
 **Domains (5):** `DF` Data Foundations · `DE` Data Platforms & Engineering · `AI` AI & Machine Learning · `GA` Generative & Agentic AI · `GT` Governance, Trust & Risk
@@ -134,6 +204,10 @@ Altitude is **not** difficulty. A4 executive content is short and dense, not eas
 ---
 
 # 2. USER ROLES
+
+> **↻ RECONCILED (DR-02).** The scoped, combinable role model is sound and is preserved. Three corrections: **R6 Instructor is promoted** — the **Expert/Trainer** is core product value with a **public profile** (`P23`) from V1, not a back-office `[P2]` role; **R8 Mentor, R11 Training Partner Admin and R13 Chapter Lead are ⊘ retired as core**, with chapters and the accredited-partner model; and terminology moves from *learner* toward **participant** where a person is in a programme, because presence is the point. `MVP_BUILD_SPEC.md` §4 is authoritative for the V1 role set (six roles).
+>
+> **On experts, binding:** represent **only genuine experts**. No fabricated profiles, no invented biographies, no fake testimonials or credentials — not even as mockup fixture data. If one expert delivers at launch, show one. The model must support a growing network without assuming one exists.
 
 Roles are **capability sets**, assignable in combination and scoped. One person is routinely a Learner *and* an Instructor *and* a Chapter Lead. The UI expresses this through a **workspace switcher**, never through duplicated navigation.
 
@@ -255,6 +329,14 @@ The two bolded cells are the integrity core of the product: **instructors never 
 ---
 
 # 3. COMPLETE INFORMATION ARCHITECTURE
+
+> **↻ REFRAMED (DR-02) — the route tree below is the pre-correction IA and is not authoritative.** `MVP_BUILD_SPEC.md` §6 holds the corrected screen list and priorities.
+>
+> **Routes retired:** `/learn/catalog` (the faceted catalogue) · `/learn/courses/[course]` as a course page · `/about/standard` (`P03`) · the entire `/community/*` tree · `/partners/*` · `/app/tutor` (`L14`).
+> **Routes required by the corrected model and absent below:** programme detail · **scheduled offerings** (`P24`) · **expert profile** (`P23`) · a participant view of their programme and next session.
+> **Routes that stand:** `/certify/verify/[uid]`, the knowledge library, `/organisations/*`, the assessor and org portals, auth and settings.
+>
+> **A note for whoever scaffolds this later:** route *shapes* are not being redesigned here, and no naming is fixed. The parameterised-route discipline in `ADR-023` still applies. **This stage corrects what the IA must express, not what the URLs will be.**
 
 Routes given as URL paths so a coding agent can scaffold directly.
 
@@ -432,6 +514,49 @@ Routes given as URL paths so a coding agent can scaffold directly.
 
 ### P01 — Homepage `[MVP]`
 
+> # ↻ REWRITTEN BRIEF — DR-02
+>
+> **This specification is replaced by the brief below.** The original section — retained beneath it for reference — produced a homepage that reads as a self-serve assessment-and-credential product: no human, no date, no format, five domain tiles with course counts, and a diagnostic CTA repeated four times. **The implementation was faithful to it; the specification was the defect.**
+>
+> **Scope of this correction:** *what the Homepage must communicate and enable.* **Not** what it should look like. Visual identity, typography, layout, imagery and interaction design are deliberately **out of scope here** and belong to the dedicated Homepage redesign exercise that follows the corrected documentation baseline. **Nothing in this brief authorises design or implementation work.**
+>
+> ## What it must communicate
+>
+> | # | The visitor must understand | Why it matters |
+> |---|---|---|
+> | 1 | **This is an independent professional training and certification organisation** — not a course platform, not an association | The identity problem this correction exists to fix |
+> | 2 | **Real experts teach this, and they are named and shown** | `D0`. Presence is the differentiator a marketplace cannot copy. **Genuine experts only** |
+> | 3 | **Programmes run live — face-to-face and online — on real dates** | A page with no time and no place silently announces asynchronous content |
+> | 4 | **Organisations can engage us for private and on-site delivery** | Corporate is a first-class pathway, not a feature |
+> | 5 | **The credential has to be earned** — assessed applied work, judged by a qualified human | `D1`, and the proof that outcome is real |
+> | 6 | **Selective, not overwhelming** | Quality and credibility over breadth. Scarcity here is honest, not a tactic |
+>
+> ## What it must enable — the three pathways
+>
+> | Priority | Pathway | Intent served |
+> |---|---|---|
+> | **Primary** | **Explore upcoming programmes** | *"What can I attend, and when?"* → `P10` / `P24` |
+> | **Major secondary** | **Train your team** | *"Can you deliver this for my organisation?"* → `P17` / `P19` |
+> | **Supporting** | **Assess your capability** | *"Where do I actually stand?"* → `P05` / `P06` |
+>
+> The diagnostic **remains valuable and is not removed** — it moves from dominant CTA to a supporting entry point, and doubles as the corporate land motion.
+>
+> ## Trust signals — all must be genuine
+>
+> Named experts with real delivery history · real programme dates and formats · the published rubric and exemplars as evidence the credential is earned · an honest position on what exists today. **Do not fabricate experts, testimonials, employer logos, participant numbers or dates** — including in fixture data. On a trust product, a padded proof band is worse than an empty one, and the original specification was right about that.
+>
+> ## What must not appear
+>
+> Course counts or catalogue depth as a credibility signal · "browse our courses" framing · a video-first or lesson-progression narrative · standards-council, accreditation-body or membership signalling *(including in the footer — the current implementation carries exactly this)* · community or chapter promotion · any AI feature presented as a product differentiator.
+>
+> ## Deliberately left open
+>
+> Which pathway leads visually · the working name *"Data & AI Academy"* · launch programme inventory · pricing presentation. **Do not resolve these here.**
+
+---
+
+*Original specification, retained for reference. Superseded by the brief above.*
+
 **Purpose.** Answer "is this for someone like me?" in under 30 seconds, then route to the right door.
 
 **Key sections, in order:**
@@ -465,7 +590,13 @@ Routes given as URL paths so a coding agent can scaffold directly.
 
 ---
 
-### P03 — The Capability Standard `[P2]`
+### P03 — The Capability Standard `⊘ RETIRED (DR-02)`
+
+> **Retired.** A published, governed "capability standard" is a standards-body surface, and the organisation is not one. **`P03` remains permanently allocated to this retired screen and must never be reused.**
+>
+> **What survives, and must not be lost with it: credential transparency.** Participants and employers should still be able to understand what a credential represents, what it requires, what evidence is expected, how assessment works, and how to verify it. That is a trust practice, and it lives on **`P15`** Credential Detail and **`P16`** Public Verification — not in a standards-council apparatus.
+
+*Original specification, retained for reference:*
 
 **Purpose.** Publish the standard openly. Open standard, proprietary assessment — this is the structural moat.
 
@@ -561,7 +692,14 @@ Routes given as URL paths so a coding agent can scaffold directly.
 
 ---
 
-### P11 — Course Catalogue `[MVP]`
+### P11 — Course Catalogue `⊘ RETIRED (DR-02)`
+
+> **Retired outright — not merged, not deferred.** A faceted catalogue sorted by "most enrolled", with course cards and ratings, is the defining surface of a course marketplace. It is incompatible with a selective, expert-led organisation, and it invites the one question we lose: *"how many courses do you have?"*
+>
+> **Replaced by:** `P10` Programme Detail and `P24` Scheduled Offerings — a short, honest list of what runs and when.
+> **`P11` remains permanently allocated to this retired screen and must never be reused.**
+
+*Original specification, retained for reference:*
 
 **Purpose.** Browse and filter the full library.
 
@@ -930,7 +1068,19 @@ Module orientation screen. Why this module matters · the outcome · the lesson 
 
 ---
 
-### C05 — Lesson Player `[MVP]` ★ priority screen
+### C05 — ~~Lesson Player~~ → **Materials Viewer** `↻ DEMOTED (DR-02)`
+
+> **No longer a ★ priority screen, and no longer "where learners spend most of their time."** Participants spend most of their time **in the session with an expert**. This screen becomes a **supporting-materials surface** governed by the DR-02 §5 boundary: materials **prepare, extend, reinforce or document** expert-led learning and must never silently replace it.
+>
+> **What it carries:** preparation material, readings, templates, exercises, case studies, references, practice activities, post-session reinforcement, and **recordings of live sessions where appropriate**. *A recording documents a session that happened — it is not a pre-recorded course, and must never be presented, priced or navigated as one.*
+>
+> **What goes:** the video-first framing, sequential lesson progression, completion-by-watching, "62% · 3h left" progress-through-content, auto-advance, and the AI tutor panel (deferred with `M8`).
+>
+> **What survives and should be kept:** the accessibility work — captions, transcripts, keyboard completeness — and the knowledge-base references with version stamps, which remain a genuine trust surface.
+>
+> Priority is now `P1` per `MVP_BUILD_SPEC.md` §6.
+
+*Original specification, retained for reference:*
 
 **Purpose.** Distraction-free consumption with everything needed one click away.
 
@@ -1436,6 +1586,14 @@ A public, reverse-chronological feed of what changed in the Body of Practice: no
 
 # 11. COMMUNITY
 
+> # ⊘ RETIRED AS A CORE MODEL — DR-02
+>
+> **Chapters, the contribution ladder, and a federated community structure are not part of this organisation's model.** They are association machinery. `M01`–`M09` are **not** MVP, **not** the strategic destination, and — critically — **no longer the mechanism for assessor supply**, which DR-02 §7.2 records as a **high-priority tracked strategic issue requiring a dedicated future decision**. It is deliberately unsolved here, and must not be answered by quietly restoring this section.
+>
+> **What may still emerge, organically:** a cohort-private group during a programme, and programme alumni afterwards. Both arise **from** real delivery. Neither may be assumed as a dependency for MVP viability, and neither justifies building community infrastructure in advance.
+>
+> **Community is not prohibited — it is simply not the model.** The cold-start analysis in §11.6 remains sound and should be read by anyone who ever proposes community features.
+
 **Design stance: lightweight but scalable.** The failure mode is a graveyard — an over-built community with empty rooms, which damages trust more than having no community at all. Therefore: **launch few spaces, launch late, seed heavily, guarantee responses.**
 
 **Sequencing rule:** do not launch community before the first cohort exists. Ship it *with* cohort one, so there are real people in it on day one.
@@ -1472,6 +1630,22 @@ Each shows criteria, what you get (CPD weighting — highest for contribution, f
 ---
 
 # 12. AI-FIRST FEATURES
+
+> # ⏸ DEFERRED — DR-02, Decision 2
+>
+> **V1 ships no learner-facing AI feature.** `AI-1` the AI Learning Assistant and `L14` are deferred; the rationale — *"learners get stuck at 11pm with nobody to ask"* — describes an isolated self-paced learner, and under expert-led delivery the participant has an expert, a cohort and a scheduled session.
+>
+> **Nothing replaces it.** Do not restore it as a signature feature, do not substitute another AI capability, and do not add AI to the interface because AI is one of our subject domains:
+>
+> ```
+>          AI is something we teach
+>                    ≠
+>     AI must dominate the product experience
+> ```
+>
+> **Retained without change:** the AI *governance* surfaces in §12.4 that are not features — the **AI-use policy chip on every assessment** (`Restricted` for the exam, `Disclosed` for the artifact) and the **AI-use disclosure field** as a required artifact deliverable, whose critique is itself assessed. Those belong to assessment integrity, not to an AI product layer, and they stay.
+>
+> The rest of this section is the deferred specification, retained for the record.
 
 **Governing rule.** Every AI feature must solve a named user problem. Features that exist to say "AI-powered" are excluded deliberately — restraint is itself a differentiator in 2026, when every competitor is adding an "Ask AI" button to everything.
 
@@ -1532,6 +1706,19 @@ We are selling AI governance credentials; our own AI use will be scrutinised. Th
 ---
 
 # 13. COMPLETE SCREEN INVENTORY
+
+> **↻ RE-DERIVED (DR-02) — `MVP_BUILD_SPEC.md` §6 is authoritative for MVP scope and priorities.** The inventory below is retained as the long-term catalogue of screen concepts; its `[MVP]` tags are **superseded** wherever they conflict. Changes, by disposition:
+>
+> | Disposition | Screens |
+> |---|---|
+> | **⊘ Retired** | `P03` Capability Standard · `P11` Course Catalogue · `P12` Course Landing · `M01`–`M09` community and chapters · `P22` training partners · `P20`/`P21` contributor and instructor recruitment *(as association-shaped surfaces; genuine expert recruitment is a business process, not a portal feature at MVP)* |
+> | **⏸ Deferred** | `L14` AI Learning Assistant · `C06` Video Content · `C07` Reading Material as separate screens · `C09` Labs |
+> | **↻ Reframed** | `P10` → **Programme Detail** · `C01` → absorbed into `P10` · `C02` → **Programme Home** · `C05` → **Materials Viewer** (`P1`) · `L01` → led by the next session · `L02`/`L04` → programme participation · `P05`/`P06` → capability assessment resolving to a programme · `I06`/`I07` → the expert's delivery surfaces |
+> | **➕ Added** | **`P23` Expert Profile** · **`P24` Scheduled Offerings** — both allocated beyond `P22`, per the binding never-reuse rule |
+> | **↑ Promoted** | `P17` Corporate & Funding and `P19` Corporate Enquiry to `P0` — Journey B begins there |
+> | **✅ Preserved unchanged** | The whole certification and assessment spine: `K01`–`K10`, `A01`–`A03`, `P15`, `P16`, `L05`, `L09` · knowledge library `N01`–`N10` · corporate `O01`–`O10` · auth and settings `S01`–`S10` · admin `X00` |
+>
+> **Net effect: fewer screens, not more.** The correction retires more than it adds — deliberately, and scope must not be allowed to grow simply because the strategy changed.
 
 **133 screens total.** Scope tags mark the **product** phase a screen belongs to: `[MVP]` = MVP product scope (71) · `[P2]` = phase 2 (53) · `[FUT]` = future (9).
 
@@ -1718,9 +1905,17 @@ We are selling AI governance credentials; our own AI use will be scrutinised. Th
 
 # 14. MVP MOCKUP SCOPE
 
+> **↻ RE-DERIVED (DR-02) — and the scope does not grow.** `MVP_BUILD_SPEC.md` §7 is authoritative: **16 screens**, one more than before, because the lesson player leaves and programme detail plus scheduled offerings arrive.
+>
+> **What the prototype must now prove**, unprompted and without narration: *this is expert-led professional training, delivered live by named practitioners on real dates, with a credential that has to be earned.* If a viewer comes away thinking "online course platform", the prototype has failed regardless of how good it looks.
+>
+> **Changes to the 30-screen mockup set:** `C05` Lesson Player and `L14` AI Tutor **out** · `P10` Programme Detail and `P24` Scheduled Offerings **in** · `P11` Catalogue and `P12` Course Landing **out** · `P17`/`P19` corporate pathway **in** · the certification spine (`K05b`, `K06`, `K08`, `K10`, `A03`, `P15`, `P16`) and the corporate story (`O01`, `O10`) **unchanged**.
+>
+> **Discipline:** add only screens the corrected `MVP_BUILD_SPEC.md` already justifies. **Do not begin implementing any of them** — this document specifies; it does not authorise.
+
 ## 14.1 Selection principle
 
-The first mockup must **demonstrate the complete ecosystem, not the complete feature set**. It has to prove to a viewer — an investor, a corporate buyer, a design partner, a developer — that this is a coherent professional development ecosystem and not a course marketplace.
+The first mockup must **demonstrate the complete ecosystem, not the complete feature set**. It has to prove to a viewer — an investor, a corporate buyer, a design partner, a developer — that this is a coherent professional **training and certification** organisation and not a course marketplace.
 
 Selection test applied to every screen: *does removing this screen make the ecosystem story incomplete?* If a screen is merely useful, it waits.
 
@@ -1784,10 +1979,15 @@ Defence sessions (K09, A04) · renewal & currency (K12) · appeals workbench (A0
 
 Six items maximum, **intent-led** (what am I trying to do), not content-type-led.
 
+> **↻ REFRAMED (DR-02).** The **intent-led principle stands** — it is one of the better ideas in this document. Its *contents* change: **Community is retired** as a destination; **Learn** becomes programme discovery rather than a catalogue and mega-menu of domains; the header CTA is no longer the diagnostic, because the primary pathway is now **explore upcoming programmes** (`MVP_BUILD_SPEC.md` §6, and the `P01` brief in §4).
+>
+> **The single-CTA rule survives and should be defended** — competing calls to action reduce total conversion, and that was true before the correction and remains true after it. **Which** CTA leads is deliberately left open for the Homepage redesign.
+
 ```
 [ logo ]   Learn   Get Certified   For Organisations   Knowledge   Community   About
                                          [ 🔍 ]  [ Sign in ]  [ Start free diagnostic ]
 ```
+*(⊘ The nav bar above is superseded — retained to show what changed.)*
 
 | Item | Intent | Mega-menu contents |
 |---|---|---|
@@ -1886,8 +2086,10 @@ The visual language draws on the **technical drawing / architectural blueprint**
 
 We need the intersection: **the credibility of a standards body with the clarity of a modern software product.** Precision-drawing is that intersection.
 
-**Character keywords:** precise · clear · confident · warm · substantive.
-**Anti-keywords:** playful · corporate-generic · futuristic · gamified · glossy.
+**Character keywords:** precise · clear · confident · warm · substantive · **human** · **expert-led**.
+**Anti-keywords:** playful · corporate-generic · futuristic · gamified · glossy · **marketplace-generic**.
+
+> **✅ PRESERVED (DR-02) — §16 survives the correction almost intact**, and that is a genuine finding rather than a courtesy. "Precision, not decoration" already resolves toward premium, credible and professional, and the existing anti-keywords already exclude the marketplace aesthetic. **Two keywords are added** — *human* and *expert-led* — because the design must now carry people, not only systems. The visual direction itself is **not** decided here; that belongs to the dedicated Homepage redesign exercise.
 
 **What this means concretely:**
 - Hairline rules and measured spacing instead of heavy shadows and cards-on-cards.
@@ -2002,6 +2204,14 @@ WCAG 2.2 AA minimum, verified per component. Keyboard-complete — the assessmen
 ---
 
 # 17. USER FLOWS
+
+> **↻ REFRAMED (DR-02) — `MVP_BUILD_SPEC.md` §5 holds the two authoritative journeys.** The flows below describe the self-serve funnel and are superseded on their spine, though their **drop-off analysis remains valuable and should be carried forward**.
+>
+> **What changes.** Flow 1's `diagnostic → account → catalogue → enrol` becomes **programme → format and date → register**, with the capability assessment as an optional accelerator rather than the gateway. Flow 2's `lesson → knowledge check → module complete` is replaced by **participation in scheduled sessions**, supported by materials. Flow 5's authoring flow is reframed around programme and session design. Flow 3 (certification) and Flow 6 (assessor) **stand essentially unchanged** — they were always about evidence and judgement.
+>
+> **What survives and must not be lost:** the identification of the **evidence gate as the critical drop-off** (`⚑⚑` in Flow 3) with its mitigations — exemplars, the visible rubric, staged checkpoints, self-check — and the **re-entry ramp** principle for a stalled participant, which applies just as well to someone who misses a session as to one who abandons a lesson.
+>
+> **Deliberately not redesigned here.** These flows are marked, not rewritten; a full flow redesign belongs with the screens they describe.
 
 Notation: `→` next step · `⟨ ⟩` decision · `[ID]` screen · `↺` loop back · `⚑` critical drop-off point.
 
@@ -2585,12 +2795,16 @@ Six open questions that materially change the mockup. Each is a business decisio
 
 **Non-negotiables that must survive any scope cut:**
 1. No credential is awarded without human judgement.
-2. Instructors never decide credential outcomes for their own learners.
-3. Every AI answer carries citations.
+2. Experts never decide credential outcomes for participants in a cohort they delivered (`BR-1`).
+3. ~~Every AI answer carries citations.~~ *(⏸ Moot in V1 — no learner-facing AI feature ships. Reinstate with any future AI capability.)*
 4. Every assessment declares its AI-use policy.
-5. Credentials are portable and remain verifiable if the learner leaves.
+5. Credentials are portable and remain verifiable if the participant leaves.
 6. Colour is never the sole carrier of meaning.
 7. Assessment SLA is displayed publicly to candidates — which means it must be operationally real.
+8. **Attendance alone never earns a credential** — participation is part of the pathway, not the whole of it *(DR-02 §6)*.
+9. **Only genuine experts are ever shown** — no fabricated profiles, biographies, testimonials or credentials, including in fixture data *(DR-02 §7)*.
+
+> **⚠ Reading this document after the correction.** Start with `DR-02_EXPERT_LED_DELIVERY_MODEL.md`, then `MVP_BUILD_SPEC.md` §5–§7 for the authoritative journeys, screen list and mockup scope. **This document is authoritative for design language, interaction patterns and accessibility — not for scope or product model.** Where it and the corrected specifications disagree, they win.
 
 **What "done" looks like for the first mockup:** a viewer who has never heard of the platform can click through steps 1→8 of §19 and, without narration, articulate what makes this different from a course marketplace. If they cannot, the mockup has not succeeded regardless of how good it looks.
 

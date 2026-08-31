@@ -6,8 +6,9 @@
 |---|---|---|
 | [`architecture/`](architecture/README.md) | **Decisions** — principles, ADRs, technology choices, data/security/integration/deployment architecture. The frozen baseline | [Architecture index](architecture/README.md) |
 | [`execution/`](execution/README.md) | **Delivery** — milestone plans, RED-gate action lists, verification criteria, completion reports | [Execution index](execution/README.md) |
+| [`design/`](design/) | **Screen-level design specifications** — what a given screen must communicate, contain and enable, below the Mockup Specification and above any visual design work | [`P01_HOMEPAGE_REDESIGN_SPECIFICATION.md`](design/P01_HOMEPAGE_REDESIGN_SPECIFICATION.md) — **also the durable record of the Homepage Design Strategy decisions** (its §3) |
 
-**The test for where something belongs:** if it would still be true after the current milestone ships, it is architecture. If it describes *this* piece of work, it is execution.
+**The test for where something belongs:** if it would still be true after the current milestone ships, it is architecture. If it describes *this* piece of work, it is execution. If it defines what a specific screen must become, it is design.
 
 ## Authoritative sources above this folder
 

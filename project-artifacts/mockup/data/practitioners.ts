@@ -8,17 +8,19 @@
  * - The structure is deliberately plural and drives the trainer cards,
  *   the /trainers index and the /trainers/[slug] profile pages: adding a
  *   real practitioner is a data operation plus content, never a redesign.
+ *   Profile sections render only when their (optional) data exists, so a
+ *   future trainer without books or a podcast gets a correct page.
  *
- * Every fact below comes from the founder's own résumé in the repository,
- * his authorized public profiles (P01 spec §8.4/§18), and — added
- * 2026-08-31 at the founder's direction — his published bio at
- * yourpartnertechnologies.com/team/mustafa-qizilbash.html. Because that
- * bio publicly names his past engagements (PETRONAS Digital, Hong Leong
- * Bank), those names now appear in achievements as his own published
- * claims; the earlier sector-level-only caution is superseded for THOSE
- * items. Still deliberately omitted: current employer/role (§8.6, open
- * item HO-14 — sources conflict) and volatile counts (episodes,
- * followers, members — §8.4 Tier 2).
+ * Sources: the founder's own résumé in the repository, his authorized
+ * public profiles (P01 spec §8.4/§18), and — at the founder's direction,
+ * 2026-08-31 — his published bio at
+ * yourpartnertechnologies.com/team/mustafa-qizilbash.html, including its
+ * embedded URLs (Amazon book links, Medium frameworks article, podcast
+ * channels, social profiles) and his own published community metrics,
+ * reproduced as published. Book covers in public/books/ are his own
+ * cover artwork from that bio.
+ * Still deliberately omitted: current employer/role (open item HO-14 —
+ * sources conflict).
  * No Academy programme-delivery history is listed because no Academy
  * programme has run yet (State A) — that history appears only when real.
  */
@@ -41,25 +43,37 @@ export type Practitioner = {
   expertise: string[];
   /** Profile — introduction paragraphs. */
   about: string[];
-  /** Profile — professional background, sector-level (no employer names). */
+  /** Profile — professional background, career-arc bullets. */
   background: string[];
   /** Profile — training specialisations. */
   specialisations: string[];
-  /** Profile — selected achievements, as published in the founder's own
-   *  public bio. */
-  achievements: string[];
-  /** Profile — proprietary frameworks and methodologies he authored. */
-  frameworks: string[];
-  /** Profile — published books, by title. */
-  books: string[];
+  /** Profile — career achievements, per engagement, as published in the
+   *  founder's own bio. */
+  careerAchievements?: { org: string; description: string }[];
+  /** Profile — published books, with the exact Amazon URLs and the
+   *  author's own cover artwork. */
+  books?: { title: string; subtitle: string; url: string; cover: string }[];
+  /** Profile — proprietary frameworks and methodologies. */
+  frameworks?: { abbr: string; name: string; description: string }[];
+  /** Deep-dive link for the frameworks section. */
+  frameworksUrl?: string;
+  /** Profile — podcast / media presence. */
+  podcast?: {
+    name: string;
+    description: string;
+    youtube: string;
+    spotify: string;
+  };
+  /** Profile — community impact, metrics as published by the founder. */
+  communityImpact?: { metric: string; label: string; description: string }[];
+  /** Profile — professional online presence, exact published URLs. */
+  socialLinks?: { platform: string; handle: string; url: string }[];
   /** Profile — platforms and tooling taught/practised. */
   technologies: string[];
   /** Profile — certifications, from the founder's own résumé. */
   certifications: string[];
   /** Profile — formal education. */
   education: string[];
-  /** Profile — publishing, podcast, community. */
-  beyond: string[];
   /** Genuine public professional profile. */
   linkedin?: string;
 };
@@ -99,23 +113,149 @@ export const practitioners: Practitioner[] = [
       "Practical, applied AI adoption for the enterprise",
       "Generative and agentic AI for the enterprise",
     ],
-    achievements: [
-      "Led the first Teradata migration in Southeast Asia, at Hong Leong Bank",
-      "Modernised PETRONAS Digital's enterprise data ecosystem to a Databricks lakehouse — with zero SLA breaches across two years",
-      "Secured approval for a federated enterprise data architecture at national scale",
-      "Won pioneering big-data consulting engagements in Pakistan",
-    ],
-    frameworks: [
-      "Four 4s Formula (4×4) — a structured approach to implementing data practices",
-      "DAC — Data & AI Cognitive Architecture for intelligent systems",
-      "PVP — the Productionizable Viable Product methodology",
+    careerAchievements: [
+      {
+        org: "Hong Leong Bank",
+        description:
+          "Led the first Teradata migration project in Southeast Asia, establishing a new benchmark in the region.",
+      },
+      {
+        org: "PETRONAS",
+        description:
+          "Led the team with zero SLA breaches over two years; migrated the data ecosystem to a unified Databricks Lakehouse; secured approval for a federated data architecture.",
+      },
+      {
+        org: "Big-data consulting, Pakistan",
+        description:
+          "Led the Big Data practice, securing the first-ever big-data wins by any consulting company in the country.",
+      },
     ],
     books: [
-      "Agentic AI and the Rise of Autonomous Intelligence",
-      "I Am Datapedia! — co-authored with Bill Inmon and Marco Wobben",
-      "Lakebase: The Databricks-Powered Future of OLTP, Analytics, and Agentic AI",
-      "Four 4s Formula (I Am Data! series)",
-      "Data Engineering Technical Standards and Best Practices",
+      {
+        title: "Agentic AI and the Rise of Autonomous Intelligence",
+        subtitle:
+          "How autonomous systems are redefining work, strategy, and intelligence",
+        url: "https://www.amazon.com/dp/B0F46TJ5YN",
+        cover: "/books/agentic-ai.jpg",
+      },
+      {
+        title: "I Am Datapedia!",
+        subtitle:
+          "Series of ‘I Am Data!’ — co-authored with Bill Inmon & Marco Wobben",
+        url: "https://www.amazon.com/dp/B0F1NT87CL",
+        cover: "/books/i-am-datapedia.jpg",
+      },
+      {
+        title: "Lakebase",
+        subtitle:
+          "The Databricks-powered future of OLTP, analytics, and agentic AI",
+        url: "https://www.amazon.com/dp/B0FDKDST38",
+        cover: "/books/lakebase.jpg",
+      },
+      {
+        title: "Four 4s Formula",
+        subtitle:
+          "Series of ‘I Am Data!’ — a structured approach for data practices",
+        url: "https://www.amazon.com/dp/B0FGTR7Z1N",
+        cover: "/books/four-4s-formula.jpg",
+      },
+      {
+        title: "Data Engineering Technical Standards and Best Practices",
+        subtitle: "Series of ‘I Am Data!’",
+        url: "https://www.amazon.com/dp/B0FB2MKZPK",
+        cover: "/books/data-engineering-standards.jpg",
+      },
+    ],
+    frameworks: [
+      {
+        abbr: "4×4",
+        name: "Four 4s Formula",
+        description:
+          "A structured approach (4×4×4×4) for implementing data practices that breaks complex initiatives down into manageable components.",
+      },
+      {
+        abbr: "DAC",
+        name: "DAC Architecture",
+        description:
+          "Data & AI Cognitive Architecture — a comprehensive framework for building intelligent systems that combine data management with AI capabilities.",
+      },
+      {
+        abbr: "PVP",
+        name: "PVP Approach",
+        description:
+          "Productionizable Viable Product — a methodology for taking data and AI initiatives from proof-of-concept to production-ready products.",
+      },
+    ],
+    frameworksUrl:
+      "https://medium.com/@mustafaisonline/innovations-frameworks-methodologies-f38d1cc6b044",
+    podcast: {
+      name: "Let’s Talk About Data!",
+      description:
+        "Insightful conversations with data & AI leaders from around the world — 80+ episodes featuring industry experts, thought leaders and practitioners sharing their experiences and insights.",
+      youtube: "https://www.youtube.com/@letstalkaboutdata",
+      spotify: "https://open.spotify.com/playlist/703KmQouYdqqxwTz7KPdmf",
+    },
+    communityImpact: [
+      {
+        metric: "40,000+",
+        label: "Big Data community",
+        description:
+          "Founder and administrator for 12+ years of a thriving global Facebook community of data professionals.",
+      },
+      {
+        metric: "5,000+",
+        label: "LinkedIn followers",
+        description:
+          "600+ posts and articles on data architectures, AI adoption and industry thought leadership.",
+      },
+      {
+        metric: "80+",
+        label: "Podcast episodes",
+        description:
+          "Bringing global perspectives to practitioners through Let’s Talk About Data!",
+      },
+    ],
+    socialLinks: [
+      {
+        platform: "LinkedIn",
+        handle: "@mustafaisonline",
+        url: "https://linkedin.com/in/mustafaisonline",
+      },
+      {
+        platform: "YouTube",
+        handle: "Let’s Talk About Data",
+        url: "https://www.youtube.com/@letstalkaboutdata",
+      },
+      {
+        platform: "Medium",
+        handle: "Articles & blogs",
+        url: "https://medium.com/@mustafaisonline",
+      },
+      {
+        platform: "Substack",
+        handle: "Newsletter",
+        url: "https://mustafaqizilbash.substack.com",
+      },
+      {
+        platform: "X / Twitter",
+        handle: "@MustafaQiz",
+        url: "https://x.com/MustafaQiz",
+      },
+      {
+        platform: "Spotify",
+        handle: "Podcast playlist",
+        url: "https://open.spotify.com/playlist/703KmQouYdqqxwTz7KPdmf",
+      },
+      {
+        platform: "Bluesky",
+        handle: "@mustafaqiz",
+        url: "https://bsky.app/profile/mustafaqiz.bsky.social",
+      },
+      {
+        platform: "Instagram",
+        handle: "@mustafaisonline",
+        url: "https://www.instagram.com/mustafaisonline",
+      },
     ],
     technologies: [
       "Databricks",
@@ -140,11 +280,6 @@ export const practitioners: Practitioner[] = [
     education: [
       "Master's degree in Information Technology",
       "Bachelor's degree in Commerce",
-    ],
-    beyond: [
-      "Host of the Let's Talk About Data! podcast — conversations with global data & AI leaders, on YouTube and Spotify",
-      "Founder and long-time administrator of one of the largest global online communities of data practitioners",
-      "Writes regularly on data architecture, governance and AI adoption",
     ],
     linkedin: "https://www.linkedin.com/in/mustafaisonline",
   },

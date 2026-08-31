@@ -56,7 +56,8 @@ depth — the mockup has no real course counts behind any tile regardless of
 how many are shown. §20.2's concern is about launching an IA that
 *advertises real emptiness*, which doesn't apply to a fixture-data mockup.
 
-**Status:** Not a conflict requiring resolution now — a launch-scope
-decision (how many domains to populate for real) versus a mockup-scope
-decision (how many tiles to show while validating the concept). Flag for
-the founder before this becomes a production catalogue decision.
+**Status:** ⊘ **SUPERSEDED (2026-08-31).** DR-02 §4.1 retired the
+catalogue framing this finding argued within, and the P01 redesign
+replaced domain tiles with count-free capability areas whose launch scope
+is an explicitly open decision (P01 spec `HO-3`). Retained for
+traceability only.

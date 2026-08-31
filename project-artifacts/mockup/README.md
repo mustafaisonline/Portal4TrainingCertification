@@ -1,22 +1,22 @@
 # Mockup / Wireframe — Data & AI Academy Portal
 
-> ## ⚠ THIS IMPLEMENTATION PREDATES THE CORRECTED PRODUCT DIRECTION — read before changing anything
+> ## ⚠ RECONCILIATION STATUS — read before changing anything
 >
-> **The product direction was corrected on 2026-08-31** by [`DR-02_EXPERT_LED_DELIVERY_MODEL.md`](../../DR-02_EXPERT_LED_DELIVERY_MODEL.md), and all three root specifications were reconciled with it. **This mockup was built before that correction and has not been reconciled.**
+> **The product direction was corrected on 2026-08-31** by [`DR-02_EXPERT_LED_DELIVERY_MODEL.md`](../../DR-02_EXPERT_LED_DELIVERY_MODEL.md), and all three root specifications were reconciled with it. This mockup is now **partially reconciled**:
 >
 > | | |
 > |---|---|
-> | **What this code represents** | An **earlier baseline** — the pre-DR-02 product model |
+> | **`P01` Homepage + `PublicShell`** | ✅ **Redesigned 2026-08-31** under the corrected model, following [`docs/design/P01_HOMEPAGE_REDESIGN_SPECIFICATION.md`](../../docs/design/P01_HOMEPAGE_REDESIGN_SPECIFICATION.md). Decisions recorded in [`docs/P01_DESIGN_DECISIONS.md`](docs/P01_DESIGN_DECISIONS.md) |
+> | **`P05`/`P06` Diagnostic + placeholder** | ⚠ Still the **pre-DR-02 baseline** — `P06` in particular still renders retired path/milestone vocabulary. **Intentional and expected**; reconciling them is a separate stage requiring its own authorization |
 > | **What is current** | [`DATA_AI_ACADEMY_PORTAL_MOCKUP_SPECIFICATION.md`](../../DATA_AI_ACADEMY_PORTAL_MOCKUP_SPECIFICATION.md), as corrected. It is the specification; this is not |
-> | **Is the mismatch a defect?** | **No — it is intentional and expected.** Implementation reconciliation is a **separate stage requiring its own authorization** |
 >
-> **Do not silently "fix" this divergence as a side effect of an unrelated task.** Bringing the mockup into line with the corrected specification is deliberate, authorized work — not tidying.
+> **Do not silently "fix" the remaining divergence as a side effect of an unrelated task.** Bringing `P05`/`P06` into line with the corrected specification is deliberate, authorized work — not tidying.
 >
 > ### ⚑ Specifically: the Diagnostic is NOT retired
 >
 > `P05`/`P06` and the **"Start free diagnostic (10 min)"** CTA on `P01` **remain valid and must not be removed.** DR-02 retired the *self-paced learning model*; it did **not** retire the diagnostic. The capability survives with a **reframed role** — a capability assessment that can lead toward relevant programmes and scheduled offerings, and the entry offer for a corporate engagement.
 >
-> **Do not infer "self-paced was retired, therefore the diagnostic should go."** That inference is explicitly unauthorized. How the diagnostic is positioned and what it leads to belongs to the separately authorized **Homepage Design Strategy** and **Mockup Reconciliation** stages, where it is to be deliberately evaluated — not casually dropped.
+> **Do not infer "self-paced was retired, therefore the diagnostic should go."** That inference is explicitly unauthorized. On the redesigned `P01` the CTA appears exactly twice — as the third pathway ("Assess your capability") and in a supporting band — per the P01 specification §9.
 
 **This is a disposable, isolated artifact. It is not the production application.**
 
@@ -38,11 +38,14 @@ are not connected.
   computation, no credential rules. See [`docs/MOCK_DATA_REGISTER.md`](docs/MOCK_DATA_REGISTER.md)
   for exactly what is simulated and how.
 
-## Status: Mockup Milestone 1
+## Status: Mockup Milestone 1 + P01 redesign
 
-Scope: `P01` Homepage → `P05` Diagnostic → `P06` Diagnostic Result → a
+Scope: `P01` Homepage (redesigned 2026-08-31 for the expert-led model) →
+`P05` Diagnostic → `P06` Diagnostic Result (both pre-DR-02 baseline) → a
 labelled next-stage placeholder. See [`docs/DESIGN_FOUNDATION.md`](docs/DESIGN_FOUNDATION.md)
-for the token/component contract these screens are built on.
+for the token/component contract these screens are built on, and
+[`docs/P01_DESIGN_DECISIONS.md`](docs/P01_DESIGN_DECISIONS.md) for why the
+homepage looks the way it does.
 
 ## Running it locally
 
@@ -62,8 +65,9 @@ app/                      Next.js App Router pages (P01, P05, P06, placeholder)
 components/ui/            Button, Chip, Card (the three card types)
 components/signature/     DiagnosticQuestionCanvas, SkillMeter (scoped to this milestone)
 components/PublicShell.tsx  Global public header/footer (§4)
-data/                     Mock fixtures — domains, diagnostic questions, result fixtures, role targets
-docs/                     DESIGN_FOUNDATION.md, MOCK_DATA_REGISTER.md, FINDINGS.md
+data/                     Fixtures — capability areas, practitioners (REAL data only), diagnostic questions, result fixtures, role targets
+public/experts/           Genuine practitioner photography (never AI-generated or stock)
+docs/                     DESIGN_FOUNDATION.md, MOCK_DATA_REGISTER.md, FINDINGS.md, P01_DESIGN_DECISIONS.md
 ```
 
 ## Continuing this work in a new session

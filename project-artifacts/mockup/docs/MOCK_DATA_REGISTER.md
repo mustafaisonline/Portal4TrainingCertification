@@ -5,24 +5,40 @@ adjustment — not a log of trivial simulated UI behaviour. If it's not
 listed here, assume any number, name, or outcome shown on `P01`/`P05`/`P06`
 is illustrative placeholder content, not a claim about the real product.
 
+*Updated 2026-08-31 for the P01 redesign (expert-led model). `P05`/`P06`
+rows describe the still-unreconciled pre-DR-02 baseline.*
+
 | Behaviour | Status | What's actually happening |
 |---|---|---|
-| Diagnostic question sequence (`P05`) | **FAKED** | A fixed, linear list of 10 hand-written questions (`data/questions.ts`). Not adaptive, not branching. Real adaptive/branching logic is production business logic and is explicitly out of scope for a mockup. |
-| Diagnostic scoring / result personalisation (`P06`) | **FAKED** | Two canned result fixtures (`data/results.ts`, `resultFixtures.A` / `.B`). The diagnostic does not compute a score. Which fixture is shown is picked by `selectFixture()` — a single, visible, non-authoritative rule (≥3 "I'm not sure" answers → fixture B, otherwise A) that exists only to make the walkthrough feel responsive. **This must never be mistaken for or evolved into a real scoring engine without an explicit decision to build one.** |
-| Domain course counts (`P01`) | **FAKED** | Placeholder integers in `data/domains.ts`. No course catalogue exists yet. |
-| Proof band numbers (`P01`) | **Not shown** | Deliberately replaced with an honest empty-state message ("first cohorts are being assembled") rather than any number, real or fake — per §4 P01's own warning that a padded stat band destroys trust. |
-| Skills heatmap teaser (`P01`) | **FAKED / illustrative** | A static grid of proficiency-scale colours with no underlying data, explicitly labelled "Illustrative" in the UI. Not the `HeatmapGrid` signature component. |
-| "Compared to your target role" targets (`P06`) | **FAKED** | Three illustrative role profiles in `data/roles.ts`. Not derived from any real role-profile data. |
-| Knowledge library article cards (`P01`) | **FAKED** | Three hand-written titles with invented version stamps. No knowledge library exists yet. |
-| Diagnostic in-progress persistence | **Simulated, approved boundary** | `localStorage` under the key `mockup:diagnostic:in-progress`, holding only the raw in-progress answers — never a computed result, never read anywhere as authoritative. This is the one approved use of `localStorage` in this milestone (approval message, adjustment #3): prototype UX continuity only (resuming an in-progress diagnostic), not business state. Cleared on completion. |
-| Theme toggle | **Ephemeral, not persisted** | Sets `data-theme` on `<html>` in memory only. Deliberately does **not** touch `localStorage`, to stay unambiguously outside the approved boundary above — it's a review affordance, not a product feature. |
-| "Save results" / "Email me the report" / nav links beyond the diagnostic CTA | **Inert** | Rendered for layout completeness; they don't do anything. No page exists behind them in this milestone. |
+| **Practitioner shown on `P01`** (`data/practitioners.ts`, `public/experts/`) | **REAL** | Genuine person, genuine photograph (from the founder's own résumé materials), and facts drawn only from the P01 specification's cross-source-verified Tier 1 list. **No practitioner may ever be fabricated, including in fixture data** (DR-02 §7). The AI-generated portrait in `Reference Material/` is prohibited and unused |
+| Programme inventory on `P01` | **None shown — deliberately** | State A of the P01 specification §10: no programme names, dates, capacities, locations or prices exist yet, so none are displayed or faked. "The first programmes are being finalised" is the honest claim |
+| Rubric fragment on `P01` (`H7`) | **Illustrative — format only** | Mirrors the `K06` wireframe in the approved Mockup Specification (criterion + the four level names). The real rubric is not yet authored; when it is, the fragment must come from it (`MVP_BUILD_SPEC` §11.2 — never fake the rubric) |
+| Team capability heatmap on `P01` (`H8`) | **FAKED / illustrative** | A static grid of proficiency-scale colours with no underlying data, labelled "Illustrative" in the UI and hidden from assistive tech |
+| Inert CTAs on `P01` ("Register your interest" · "Talk to us about your team" · "Sign in") | **Inert** | `href="#"` — no destination exists yet (`P19`, auth, and registration are unbuilt). Rendered for journey completeness per mockup convention |
+| Nav anchors (`/#programmes` etc.) | **Simulated navigation** | `P24`/`P10`/`P17`/`P15` do not exist; navigation routes to the P01 sections that represent those concepts |
+| Diagnostic question sequence (`P05`) | **FAKED** | A fixed, linear list of 10 hand-written questions (`data/questions.ts`). Not adaptive, not branching. Real adaptive/branching logic is production business logic and out of scope for a mockup |
+| Diagnostic scoring / result personalisation (`P06`) | **FAKED** | Two canned result fixtures (`data/results.ts`). Which is shown is picked by `selectFixture()` — a visible, trivial rule that exists only to make the walkthrough feel responsive. **Must never be mistaken for or evolved into a real scoring engine.** ⚠ `P06` also still renders retired path/milestone vocabulary — pre-DR-02 baseline, pending separately authorized reconciliation |
+| "Compared to your target role" targets (`P06`) | **FAKED** | Three illustrative role profiles in `data/roles.ts` |
+| Diagnostic in-progress persistence | **Simulated, approved boundary** | `localStorage` key `mockup:diagnostic:in-progress`, raw answers only, never authoritative, cleared on completion. The one approved localStorage use |
+| Theme toggle | **Ephemeral, not persisted** | Sets `data-theme` in memory only; deliberately avoids localStorage. A review affordance, not a product feature |
 
 ## What is real
 
+- The **practitioner** — see the first row. This is the register's most
+  important entry: on an expert-led product, the expert is the one thing
+  that must never be simulated.
 - The design tokens, type scale, and component contract (`components/`,
-  `app/globals.css`) — this is the actual proposed foundation, not a
-  simulation of one.
-- The screen structure and content hierarchy — built directly from
-  `DATA_AI_ACADEMY_PORTAL_MOCKUP_SPECIFICATION.md` §4 (`P01`, `P05`, `P06`),
-  not invented.
+  `app/globals.css`).
+- The screen structure and content hierarchy — `P01` from
+  `docs/design/P01_HOMEPAGE_REDESIGN_SPECIFICATION.md`; `P05`/`P06` from
+  the (pre-correction) Mockup Specification §4.
+
+## Removed from this register
+
+- *Domain course counts* — the counts themselves were retired from the
+  product (DR-02); `data/domains.ts` no longer carries them.
+- *Knowledge library article cards* — the three fabricated titles were
+  removed from `P01` (omit-rather-than-fill); no article surface remains
+  in the mockup.
+- *Proof band numbers* — the honest empty-state survives as `H9`; still
+  no numbers, real or fake.

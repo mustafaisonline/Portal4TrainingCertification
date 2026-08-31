@@ -96,6 +96,18 @@ export default async function TrainerProfilePage({
               </p>
             ))}
 
+            <h2 className="text-h1 mb-5 mt-12">Selected achievements</h2>
+            <ul>
+              {person.achievements.map((item, i) => (
+                <li
+                  key={i}
+                  className="border-t border-[var(--color-line)] py-3.5 text-body-sm text-[var(--color-ink-quiet)]"
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+
             <h2 className="text-h1 mb-5 mt-12">Professional background</h2>
             <ul>
               {person.background.map((item, i) => (
@@ -120,6 +132,20 @@ export default async function TrainerProfilePage({
               ))}
             </ul>
 
+            <h2 className="text-h1 mb-5 mt-12">
+              Frameworks &amp; methodologies
+            </h2>
+            <ul>
+              {person.frameworks.map((item, i) => (
+                <li
+                  key={i}
+                  className="border-t border-[var(--color-line)] py-3.5 text-body-sm text-[var(--color-ink-quiet)]"
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+
             <p className="mt-12 border-t border-[var(--color-line)] pt-6 text-body-sm text-[var(--color-ink-faint)]">
               Programme delivery history at the Academy will appear here as
               cohorts are delivered — genuinely, never padded.
@@ -127,6 +153,19 @@ export default async function TrainerProfilePage({
           </div>
 
           <div className="flex flex-col gap-6">
+            <Card variant="panel">
+              <p className="text-label mb-4">Publications</p>
+              <ul className="flex flex-col gap-3">
+                {person.books.map((title) => (
+                  <li
+                    key={title}
+                    className="border-t border-[var(--color-line)] pt-3 text-body-sm text-[var(--color-ink-quiet)] first:border-t-0 first:pt-0"
+                  >
+                    {title}
+                  </li>
+                ))}
+              </ul>
+            </Card>
             <Card variant="panel">
               <p className="text-label mb-4">Certifications</p>
               <ul className="flex flex-col gap-2">
@@ -150,6 +189,14 @@ export default async function TrainerProfilePage({
                   </li>
                 ))}
               </ul>
+            </Card>
+            <Card variant="panel">
+              <p className="text-label mb-4">Platforms &amp; tools</p>
+              <div className="flex flex-wrap gap-2">
+                {person.technologies.map((tech) => (
+                  <Chip key={tech}>{tech}</Chip>
+                ))}
+              </div>
             </Card>
             <Card variant="panel">
               <p className="text-label mb-4">Beyond the classroom</p>

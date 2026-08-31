@@ -9,13 +9,18 @@
  *   the /trainers index and the /trainers/[slug] profile pages: adding a
  *   real practitioner is a data operation plus content, never a redesign.
  *
- * Every fact below comes from the founder's own résumé in the repository
- * and his authorized public profiles (P01 spec §8.4/§18). Deliberately
- * omitted: current employer (§8.6, open item HO-14), employer/client
- *   names (sector-level only), and volatile counts (books, episodes,
- *   followers — §8.4 Tier 2).
- * No programme-delivery history is listed because no Academy programme
- * has run yet (State A) — that history appears only when it is real.
+ * Every fact below comes from the founder's own résumé in the repository,
+ * his authorized public profiles (P01 spec §8.4/§18), and — added
+ * 2026-08-31 at the founder's direction — his published bio at
+ * yourpartnertechnologies.com/team/mustafa-qizilbash.html. Because that
+ * bio publicly names his past engagements (PETRONAS Digital, Hong Leong
+ * Bank), those names now appear in achievements as his own published
+ * claims; the earlier sector-level-only caution is superseded for THOSE
+ * items. Still deliberately omitted: current employer/role (§8.6, open
+ * item HO-14 — sources conflict) and volatile counts (episodes,
+ * followers, members — §8.4 Tier 2).
+ * No Academy programme-delivery history is listed because no Academy
+ * programme has run yet (State A) — that history appears only when real.
  */
 export type Practitioner = {
   slug: string;
@@ -40,6 +45,15 @@ export type Practitioner = {
   background: string[];
   /** Profile — training specialisations. */
   specialisations: string[];
+  /** Profile — selected achievements, as published in the founder's own
+   *  public bio. */
+  achievements: string[];
+  /** Profile — proprietary frameworks and methodologies he authored. */
+  frameworks: string[];
+  /** Profile — published books, by title. */
+  books: string[];
+  /** Profile — platforms and tooling taught/practised. */
+  technologies: string[];
   /** Profile — certifications, from the founder's own résumé. */
   certifications: string[];
   /** Profile — formal education. */
@@ -83,6 +97,37 @@ export const practitioners: Practitioner[] = [
       "Data platform and lakehouse modernisation",
       "Enterprise analytics and self-service enablement",
       "Practical, applied AI adoption for the enterprise",
+      "Generative and agentic AI for the enterprise",
+    ],
+    achievements: [
+      "Led the first Teradata migration in Southeast Asia, at Hong Leong Bank",
+      "Modernised PETRONAS Digital's enterprise data ecosystem to a Databricks lakehouse — with zero SLA breaches across two years",
+      "Secured approval for a federated enterprise data architecture at national scale",
+      "Won pioneering big-data consulting engagements in Pakistan",
+    ],
+    frameworks: [
+      "Four 4s Formula (4×4) — a structured approach to implementing data practices",
+      "DAC — Data & AI Cognitive Architecture for intelligent systems",
+      "PVP — the Productionizable Viable Product methodology",
+    ],
+    books: [
+      "Agentic AI and the Rise of Autonomous Intelligence",
+      "I Am Datapedia! — co-authored with Bill Inmon and Marco Wobben",
+      "Lakebase: The Databricks-Powered Future of OLTP, Analytics, and Agentic AI",
+      "Four 4s Formula (I Am Data! series)",
+      "Data Engineering Technical Standards and Best Practices",
+    ],
+    technologies: [
+      "Databricks",
+      "Snowflake",
+      "Microsoft Fabric",
+      "Azure",
+      "AWS",
+      "Azure Data Factory",
+      "Talend",
+      "Informatica",
+      "Power BI",
+      "Tableau",
     ],
     certifications: [
       "DAMA CDMP",
@@ -97,9 +142,9 @@ export const practitioners: Practitioner[] = [
       "Bachelor's degree in Commerce",
     ],
     beyond: [
-      "Author of books on data engineering, AI and enterprise architecture",
-      "Host of the Let's Talk About Data! podcast, in conversation with global data & AI leaders",
-      "Founder of a long-running global community of data practitioners",
+      "Host of the Let's Talk About Data! podcast — conversations with global data & AI leaders, on YouTube and Spotify",
+      "Founder and long-time administrator of one of the largest global online communities of data practitioners",
+      "Writes regularly on data architecture, governance and AI adoption",
     ],
     linkedin: "https://www.linkedin.com/in/mustafaisonline",
   },

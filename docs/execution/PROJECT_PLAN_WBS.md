@@ -48,17 +48,26 @@ docs/architecture/ (frozen baseline) ─┘
 > **Orientation checkpoint — read this section first in every new session.**
 > Verified against documented evidence on 2026-08-30. Do not act on it without confirming the source documents it cites still say what it reports.
 
+> ## 🔄 EXECUTION LAYER RECONCILED WITH DR-02 — 2026-08-31
+>
+> The product model was corrected by [`DR-02_EXPERT_LED_DELIVERY_MODEL.md`](../../DR-02_EXPERT_LED_DELIVERY_MODEL.md) and propagated through the three root specifications and the architecture layer. **This execution plan has now been reconciled with that baseline.** The organisation is an independent professional **training and certification organisation** built on **expert-led delivery**; the portal supports that ecosystem rather than being where learning happens.
+>
+> **What changed here:** the Track B slice · Track A screen sequence · the `4.3` authoring outputs · Phase 5 blocks `5.2` and `5.8` · the deferred register triggers for AI and video.
+> **What did not:** **Milestone 1**, every RED gate, the Retrofit Test discipline, the certification and assessment sequencing, and the architecture principles.
+>
+> **Reconciliation commits:** `0f0b98e` MVP Spec · `fea11bb` Blueprint · `212ca8c` Mockup Spec · `dc0f4c6` architecture.
+
 ### 1.1 Position at a glance
 
-| Question | Answer as at 2026-08-30 |
+| Question | Answer as at **2026-08-31** |
 |---|---|
 | **Current overall phase** | **Pre-execution.** WBS Phases 1–3 (governance, specification, architecture baseline) are complete or substantially complete. **No implementation phase has begun.** |
-| **Current milestone** | **None in execution.** The next milestone is **Milestone 1 — Walking Skeleton**: scope accepted, **execution not authorized** |
+| **Current milestone** | **None in execution.** The next milestone is **Milestone 1 — Walking Skeleton**: scope accepted, **execution not authorized**. *Unaffected by the `DR-02` correction — a `domains`-table walking skeleton is delivery-model-agnostic* |
 | **Last completed activity** | Architecture baseline **frozen** 2026-08-30; the 2026-08-30 approval round (24 ADR records approved in whole or in stated part); documentation separated into `docs/architecture/` and `docs/execution/` |
 | **Current active work** | **Planning and documentation only.** No code, no framework, no packages, no database, no infrastructure, no external accounts |
 | **Immediate blockers** | (a) **Execution authorization** — blocks all implementation; (b) **ADR-006 (B1/B2/B3)** — blocks Milestone 2 and Track B step 1; (c) **the six business decisions** in Mockup Spec §20.6 — see the sequencing conflict at §1.4; (d) **ADR-032 residency answer** — blocks production data infrastructure only |
 | **Codebase state** | No application code exists. `.gitignore` deliberately technology-neutral |
-| **Repository state** | ⚠️ **`docs/` is entirely untracked.** Every architecture and execution document is **drafted, partly approved, and NOT committed** — `D·A·—` at best. The frozen baseline exists only in the working tree. See §2.3, the register at §2.4, and WP **1.4** |
+| **Repository state** | ✅ **Resolved 2026-08-31.** The documentation baseline was committed (`6fa5437`), followed by the mockup artifact (`d83fac4`), `DR-02` (`e64f7a9`) and the four reconciliation commits (`0f0b98e`, `fea11bb`, `212ca8c`, `dc0f4c6`). WP **1.4** is complete. `Reference Material/` remains deliberately untracked |
 
 ### 1.2 Next recommended actions, in order
 
@@ -66,7 +75,7 @@ Each is a **recommendation for the owner's decision**, not an action an AI sessi
 
 | # | Action | Why now | Gate |
 |---|---|---|---|
-| **1** | **Authorize committing the documentation baseline** (`docs/architecture/`, `docs/execution/`), staged file-by-file | The frozen baseline is not in version control. Guardrail Rule 9 (traceability) and AP-09 (persistent documentation) are not yet actually satisfied by git | 🔴 Repository operation |
+| ~~1~~ | ~~Authorize committing the documentation baseline~~ | ✅ **DONE 2026-08-31** — committed at `6fa5437`, staged file-by-file, `Reference Material/` untouched. WP **1.4** complete | — |
 | **2** | **Decide ADR-006 — B1 (specification deviation) · B2 (provider) · B3 (five binding conditions)** | The only architectural decision blocking Track B beyond Milestone 1. Can be settled in parallel with everything else | 🔴 Yours alone (B1) |
 | **3** | **Decide the six business decisions** (Mockup Spec §20.6) **and rule on the unresolved Track A start-condition conflict (§1.4)** | Naming is stated as *"decide before step 0"* of design; pricing, corporate-vs-individual and assessor sourcing shape Track A and the authoring work. **Track A cannot be treated as ready until the §1.4 conflict is answered** | 🔴 Product decisions · 🔴 conflict ruling |
 | **4** | **Start the expert authoring critical path (4.3)** | Requires no pending architecture decision and is unaffected by the §1.4 conflict; the specification names it the real critical path | 🟢 Owner's discretion |
@@ -314,27 +323,37 @@ Notation used below: `D·—·—` means drafted only; `D·A·—` means drafted
 |---|---|---|---|---|---|---|
 | **4.1.0** | 🔴 **Resolve the unresolved Track A start-condition conflict** — the approval package's *"blocks on nothing"* against Mockup Spec §20.6's *"before design begins"*. **Not to be resolved by AI interpretation** | ⏳ **Pending decision — conflict UNRESOLVED** | — | **Human direction required** | **§1.4** | An explicit recorded human ruling on which condition governs Track A's start; the losing source document corrected in its own folder |
 | **4.1.1** | Design tokens + the five signature components — `CredentialCard`, `SkillMeter`, `MilestoneTimeline`, `RubricPanel`, diagnostic question canvas; light + dark | ⏳ Pending decision | 4.1.0 | 2.5 #1 naming | MVP Spec §10 wk1; ADR-003 (direction only) | The five exist before any screen. **Any UI package remains individually gated** |
-| **4.1.2** | Screens `P01` · `P05` · `P06` — the promise and the gap | ◻ Future | 4.1.1 | — | MVP Spec §10 wk2 | Screens produced to the §7 scope |
-| **4.1.3** | Screens `L01` · `C05` · `L05` — workspace and learning | ◻ Future | 4.1.1 | — | MVP Spec §10 wk3 | As above |
-| **4.1.4** | Screens `P15` · `K05b` · `K06` — the offer and the evidence gate. **`K06` gets the most iteration of any screen** | ◻ Future | 4.1.1, 4.3.4, 4.3.5 | — | MVP Spec §10 wk4 | `K06` iterated against the **real** brief and rubric |
+| **4.1.2** | Screens `P01` · `P10` · `P24` — the organisation, the programme, and when it runs *(re-derived by `DR-02`)* | ◻ Future | 4.1.1 | — | MVP Spec §7, §10 wk2 | Screens produced to the corrected §7 scope. **`P01` follows the rewritten brief in Mockup Spec §4 — communication and enablement only; the visual redesign is a separate future exercise** |
+| **4.1.3** | Screens `L01` · `L05` · `P05`/`P06` — the participant workspace and the capability assessment *(⊘ `C05` removed: the lesson player is demoted to `P1` by `DR-02` and is **not** mockup scope)* | ◻ Future | 4.1.1 | — | MVP Spec §7, §10 wk3 | `L01` is led by the participant's **next session**, not by a continue-your-lesson card |
+| **4.1.4** | Screens `P15` · `K05b` · `K06` — the credential and the evidence gate. **`K06` gets the most iteration of any screen** | ◻ Future | 4.1.1, 4.3.4, 4.3.5 | — | MVP Spec §10 wk4 | `K06` iterated against the **real** brief and rubric |
 | **4.1.5** | Screens `K08` · `K10` · `P16` · `A03` — judgement, award, verification | ◻ Future | 4.1.1 | — | MVP Spec §10 wk5 | As above |
-| **4.1.6** | Screens `O01` · `O10` · responsive passes · modal states | ◻ Future | 4.1.1 | 2.5 #6 HRD scope | MVP Spec §10 wk6 | `O10` reflects the real evidence-pack contents |
+| **4.1.6** | Screens `O01` · `O10` · `P17`/`P19` corporate entry · `P23` expert profile · responsive passes · modal states | ◻ Future | 4.1.1 | 2.5 #6 HRD scope | MVP Spec §7, §10 wk6 | `O10` reflects the real evidence-pack contents. **`P23` shows only genuine experts — no fabricated profiles, ever, including in fixture data** (`DR-02` §7) |
 | **4.1.7** | Prototype wiring · **test with 8–10 real people** · revise | ◻ Future | 4.1.2–4.1.6 | — | MVP Spec §10 wk7 | The §7 clickable path runs end to end |
 | **4.1.8** | **Track A exit gate** | ◻ Future | 4.1.7 | — | MVP Spec §10; ADR-040 | All four hold: 5 strangers articulate the difference unprompted · 3 target-persona learners say `P06` told them something new · 1 corporate buyer asks the price · **the owner is willing to be judged on `K06`** |
 
-**Faking discipline (AP-07, MVP Spec §11).** In Phase 1A, fake the *machinery* — tutor responses, adaptivity, proficiency numbers, path generation, corporate fixtures, AI pre-assessment, video, search, payments, badge verification, exam timer. **Never fake the judgement** — the artifact brief, the rubric, the three exemplars, the assessor's written feedback, the `P06` gap statements, article content, HRD Corp pack contents. Anything stubbed is visibly labelled and structurally isolated.
+**Faking discipline (AP-07, MVP Spec §11).** In Phase 1A, fake the *machinery* — adaptivity, proficiency numbers, programme recommendation, corporate fixtures, search, payments, badge verification, exam timer, and **scheduled offerings** *(a small realistic set, clearly labelled fixture data — never publish fabricated dates outside the prototype)*. *(⊘ Tutor responses and video are no longer fakeable items: both are deferred, so there is nothing to fake.)* **Never fake the judgement** — the artifact brief, the rubric, the three exemplars, the assessor's written feedback, the `P06` gap statements, article content, HRD Corp pack contents. Anything stubbed is visibly labelled and structurally isolated.
 
 ### 6.2 Workstream 4.2 — Track B · Technical vertical slice
 
 **Purpose (ADR-036, scoped by ADR-040).** Prove the production architecture through the smallest meaningful real end-to-end workflow, ending in **verified restart resilience** and **automated tests**.
 
-**The documented slice** (`../architecture/ARCHITECTURE_OVERVIEW.md` §2.14):
+**The documented slice** — restated 2026-08-31 by founder decision and recorded in ADR-036/ADR-040 (`../architecture/ARCHITECTURE_OVERVIEW.md` §2.14):
 
 ```
-authentication → authorization → dashboard → training discovery / selection
-  → enrolment → access to a real lesson → progress persistence
-  → SERVICE RESTART RESILIENCE → APPROPRIATE AUTOMATED TESTING
+authentication → authorisation → programme discovery
+  → scheduled offering selection → registration
+  → access to programme and session details
+  → participation / state persistence → supporting materials access
+  → SERVICE RESTART / RECOVERY → APPROPRIATE AUTOMATED TESTING
 ```
+
+> **⊘ Superseded wording, retained for traceability — not current direction:**
+> *"authentication → authorization → dashboard → training discovery / selection → enrolment → access to a real lesson → progress persistence → SERVICE RESTART RESILIENCE → APPROPRIATE AUTOMATED TESTING"*
+> That framing came from the self-paced lesson-consumption model retired by `DR-02`.
+
+**Binding boundaries on the restatement (ADR-036).** The slice **must not** recreate a lesson-player journey, introduce video-progress semantics, or assume self-paced learning. **"Participation / state persistence" is deliberately neutral** — it means the participant's position in the workflow survives a restart, and nothing more. **Nothing in Track B may be read as inferring attendance, completion or enrolment as a certification requirement** (`OQ-21` remains open).
+
+**What the slice still proves is unchanged:** authentication, authorisation at the data-access layer, real transactional persistence, and restart resilience on the approved architecture. Only the domain objects it exercises have changed.
 
 > **Scope discipline is Track B's main risk.** A vertical slice that grows sideways stops being a slice. The line above is the boundary. Scope expansion **stops work** and returns to planning.
 
@@ -370,11 +389,13 @@ authentication → authorization → dashboard → training discovery / selectio
 
 | WBS | Work package | Status | Depends on | Blocking decision | Reference | Exit criterion |
 |---|---|---|---|---|---|---|
-| **4.2.3** | Training discovery / selection — content read through a `domainId` parameter, rendered from data, **no domain literal anywhere** | ❓ Not planned in detail | 4.2.2 | — | ADR-023; Overview §2.14 | Grep proof returns zero hits outside seed files and content |
-| **4.2.4** | Enrolment — a real transactional write; the first business record | ❓ Not planned in detail | 4.2.3 | — | ADR-005; AP-02 | Record persists and is reconcilable |
-| **4.2.5** | Access to a real lesson — content model with a **provider-neutral video reference**, degrading transcript-first | ❓ Not planned in detail | 4.2.4 | ADR-009 stays **deferred** — no provider is selected here | ADR-002; ADR-009 | A lesson renders without any video provider being chosen |
-| **4.2.6** | Progress persistence — resume from the database, never from browser storage | ❓ Not planned in detail | 4.2.5 | — | AP-05 | Resume verified from a cold client |
-| **4.2.7** | **Service restart resilience** — drive to a partial state, restart with caches cleared, assert correct resumption and that queued work still executes | ❓ Not planned in detail | 4.2.6 | Autosave tolerance **OQ-11** informs the assertion | Testing Arch §6; AP-02/03/05 | The Service Restart Test is **executable**, not asserted |
+| **4.2.3** | **Programme discovery** — programmes read through a `domainId` parameter, rendered from data, **no domain literal anywhere** *(reframed from "training discovery / selection")* | ❓ Not planned in detail | 4.2.2 | — | ADR-023; **ADR-043**; Overview §2.14 | Grep proof returns zero hits outside seed files and content |
+| **4.2.3b** | **Scheduled offering selection** — a programme's dated instances are readable: modality, location or online context, capacity, assigned expert *(new; the delivery model had no execution representation before ADR-043)* | ❓ Not planned in detail | 4.2.3 | — | **ADR-043** | An offering's details render from data. **No booking engine, no calendar engine, no allocation algorithm** |
+| **4.2.4** | **Registration** — a real transactional write binding a person to a **specific scheduled offering**; the first business record. **Capacity is a recognised business concern** *(reframed from "enrolment")* | ❓ Not planned in detail | 4.2.3b | Individual online payment **remains open** — registration may be modelled without it | ADR-005; AP-02; **ADR-043** | Record persists and is reconcilable. **The capacity *mechanism* is deliberately undesigned** (ADR-043) |
+| **4.2.5** | **Access to programme and session details** — session information and **joining details** are held and presented by the portal *(replaces "access to a real lesson")* | ❓ Not planned in detail | 4.2.4 | **ADR-044** — live delivery is external; **no vendor, no conferencing built, no integration designed** | **ADR-044**; ADR-002 | Session details and joining information render. **No video provider is chosen and none is needed** |
+| **4.2.5b** | **Supporting materials access** — materials attached to a programme, under the `DR-02` §5 boundary *(new)* | ❓ Not planned in detail | 4.2.5 | ADR-009 stays **deferred** | **DR-02 §5**; ADR-026; ADR-009 | Materials render. **No lesson player, no video pipeline, no progression-through-content, no completion-by-watching** |
+| **4.2.6** | **Participation / state persistence** — the participant's position in the programme workflow resumes from the database, never from browser storage *(reframed from "progress persistence"; "resume-to-the-second" was a media assertion)* | ❓ Not planned in detail | 4.2.5b | — | AP-05; Testing Arch Tier 1 #9 | Resumption verified from a cold client. **Deliberately neutral — proves durability, defines no certification requirement** (`OQ-21`) |
+| **4.2.7** | **Service restart / recovery** — drive to a partial state, restart with caches cleared, assert correct resumption and that queued work still executes | ❓ Not planned in detail | 4.2.6 | Autosave tolerance **OQ-11** informs the assertion | Testing Arch §6; AP-02/03/05 | The Service Restart Test is **executable**, not asserted |
 | **4.2.8** | Automated testing across the slice at the layer that can prove each rule | ❓ Not planned in detail | 4.2.7 | — | ADR-038; ADR-025 | Tier 1 rules touched by the slice are covered |
 | **4.2.9** | **Track B exit gate** | ❓ Not planned in detail | 4.2.8 | — | ADR-040 | The workflow runs end to end on real infrastructure, survives a full restart, and is covered by appropriate automated tests |
 
@@ -390,17 +411,17 @@ authentication → authorization → dashboard → training discovery / selectio
 | **4.3.4** | **Artifact brief + 3 hand-written industry variants** | 🟢 Ready — may proceed | 4.3.1 | — | MVP Spec M6, §11.2 | Real, not lorem ipsum. **Never faked** |
 | **4.3.5** | **The rubric** — 5 criteria × 4 achievement levels; carries all grade differentiation in V1 | 🟢 Ready — may proceed | 4.3.4 | — | MVP Spec M6, §11.2 | Real descriptors. *"The hardest product work in the project and it cannot be deferred"* |
 | **4.3.6** | **Three real exemplar artifacts** at Competent / Proficient / Distinguished | 🟢 Ready — may proceed | 4.3.5 | — | MVP Spec M6, §11.2 | *Non-negotiable. Cannot be faked and cannot be deferred* |
-| **4.3.7** | **20–30 knowledge articles** — the Data Foundations canon; also the tutor's corpus and the SEO surface | 🟢 Ready — may proceed | 4.3.1 | — | MVP Spec M4, §11.2 | Written once, properly. **Must exist before M8 can** |
+| **4.3.7** | **20–30 knowledge articles** — the Data Foundations canon; the SEO surface, the credibility surface and a participant reference | 🟢 Ready — may proceed | 4.3.1 | — | MVP Spec M4, §11.2 | Written once, properly. *(⊘ Its former role as the tutor's corpus lapses while `M8` is deferred. **Corpus existence is not a trigger to build an AI capability** — ADR-013)* |
 | **4.3.8** | Glossary — ~60 terms | 🟢 Ready — may proceed | 4.3.7 | — | MVP Spec M4 | Authored |
-| **4.3.9** | **Restructure the 8 Data Blueprint modules** into the curated path — 6–8 courses → modules → lessons → blocks | 🟢 Ready — may proceed | 4.3.1 | — | MVP Spec M3, §10 | Path structure defined against existing material |
-| **4.3.10** | **Recruit and onboard 3–5 assessors** — *"the launch dependency, started in 1A, not here"* | ⏳ Pending decision | — | 2.5 #5 assessor sourcing | MVP Spec §10 Phase 1C item 1 | 3–5 identified; ≥2 other than the founder calibrated by 1C exit (§12.4) |
+| **4.3.9** | **Design the programme(s) from the 8 Data Blueprint modules** — programme outcomes, **session design (what happens in the room, session by session)**, and the supporting materials each session needs | 🟢 Ready — may proceed | 4.3.1 | — | MVP Spec M3, §10; `DR-02` §4 | Programme and session structure defined against existing material. *Reframed by `DR-02`: the output is a **delivered programme design**, not a self-paced course structure. **Launch programme inventory remains open** — this defines shape, not count* |
+| **4.3.10** | **Recruit and onboard 3–5 assessors** *(see also `OQ-22` — the assessor supply and scaling **operating model** is a high-priority tracked strategic risk, deliberately unresolved; this work package is recruitment, not the model)* — *"the launch dependency, started in 1A, not here"* | ⏳ Pending decision | — | 2.5 #5 assessor sourcing | MVP Spec §10 Phase 1C item 1 | 3–5 identified; ≥2 other than the founder calibrated by 1C exit (§12.4) |
 
 ### 6.4 Workstream 4.4 — Business & product decisions
 
 | WBS | Work package | Status | Depends on | Blocking decision | Reference | Blocks |
 |---|---|---|---|---|---|---|
 | **4.4.1** | Platform and credential naming | ⏳ Pending | — | Owner | Mockup §20.6 #1 | 4.1.1 design start · permanent verification identity presentation (ADR-039) |
-| **4.4.2** | Launch domain scope | ⏳ Pending | — | Owner | Mockup §20.6 #2 | Homepage, catalogue, navigation |
+| **4.4.2** | Launch domain scope | ⏳ Pending | — | Owner | Mockup §20.6 #2 | Homepage, **programme discovery**, navigation. *(⊘ The catalogue this once shaped is retired by `DR-02`; **domain survives** as subject scope and seeded data — `ADR-023`)* |
 | **4.4.3** | Individual vs corporate first | ⏳ Pending | — | Owner | Mockup §20.6 #3 | Track A screen emphasis; commercial sequencing |
 | **4.4.4** | Credential pricing and the exam/artifact fee split | ⏳ Pending | — | Owner | Mockup §20.6 #4 | `P15`, `K03`; commerce model; the §12.2 assessor-cost ratio |
 | **4.4.5** | Assessor sourcing | ⏳ Pending | — | Owner | Mockup §20.6 #5 | 4.3.10; whether the 10-day SLA is a promise or a liability |
@@ -427,13 +448,13 @@ Sequencing follows `../architecture/ARCHITECTURE_OVERVIEW.md` §1.7 and MVP Spec
 | WBS | Block / module | Indicative weeks | Status | Depends on | Blocking decisions | Reference |
 |---|---|---|---|---|---|---|
 | **5.1** | **Foundations** — M1 identity, scoped roles from day one, schema, admin CRUD, payments | 1–2 | ◻ Future | 4.2 (slice proves the foundation) | **ADR-006** · **ADR-014 payments (deferred, trigger reached here)** · **OQ-2** payment rail · **OQ-9** refunds | MVP Spec M1, §10 |
-| **5.2** | **Content & learning** — M3 content model, `C02`, `C05`, progress, `P10`, `P12` | 3–5 | ◻ Future | 5.1, 4.3.9 | **ADR-009 video (trigger: real lesson content exists)** · ADR-026 content versioning | MVP Spec M3 |
+| **5.2** | **Programmes, scheduling & supporting materials** — M3 programme model, **scheduled offerings**, **registration**, `P10`, `P24`, `P23`, `C02`, materials | 3–5 | ◻ Future | 5.1, 4.3.9 | **ADR-043** conceptual delivery model · **ADR-044** live-session boundary · ADR-026 content versioning · ⚠️ **ADR-009 video stays deferred — its trigger may never fire** | MVP Spec M3; `DR-02` §4 |
 | **5.3** | **Skills & diagnostic** — M2 skills, `P05`, `P06`, `skill_assertions` (insert-only), `L05`, `L01`, `L04` | 5–6 | ◻ Future | 5.1, 4.3.1, 4.3.2 | — | MVP Spec M2; ADR-022 |
 | **5.4** | **Assessment** — M5 items, forms, `K05a/b`, threshold scoring at 70%, `K01`, `K03` | 7–8 | ◻ Future | 5.3, 4.3.3 | **ADR-021 server-authoritative exam clock — analysed, not yet reviewed** · ADR-019 integrity model · **OQ-11** autosave tolerance | MVP Spec M5 |
 | **5.5** | **Evidence** ★ — M6 `K06`, `A01`, `A03`, `K08`. **The core — do not compress this** | 8–10 | ◻ Future | 5.4, 4.3.4, 4.3.5, 4.3.6 | **ADR-008 object storage (trigger: artifact submission is built)** | MVP Spec M6 |
 | **5.6** | **Credentials** — M7 `credential_defs`, requirements-as-data, issuance, `K10`, `L09`, **`P16`** | 10–11 | ◻ Future | 5.4, 5.5 | **ADR-018 verification model** · **OQ-5** verification domain · **OQ-12** deletion vs permanence | MVP Spec M7; ADR-039 |
 | **5.7** | **Corporate** — M9 `O01`, `O02`, `O07`, **`O10`** evidence pack | 11–12 | ◻ Future | 5.1, 5.2, 5.4, 5.5, 5.6 | **ADR-033 evidence pack as a job** · **OQ-8** verified HRD Corp / e-TRIS requirements · 4.4.6 | MVP Spec M9 |
-| **5.8** | **Knowledge library + AI tutor** — M4 `N03` corpus and changelog, then the RAG tutor `L14` | throughout | ◻ Future | 4.3.7, 4.3.8; **M4 before M8** | **ADR-012 search** · **ADR-013 AI provider (trigger: the corpus exists)** · **OQ-4** data-processing agreement | MVP Spec M4, M8 |
+| **5.8** | **Knowledge library** — M4 `N03` articles, glossary and changelog. **⊘ No AI tutor: `M8`/`L14` deferred by `DR-02` and not replaced** | throughout | ◻ Future | 4.3.7, 4.3.8 | **ADR-012 search** · ⚠️ **ADR-013 trigger corrected** — an AI capability requires separate strategic authorisation; **corpus existence is not a trigger**. `OQ-4` leaves MVP scope with the deferral | MVP Spec M4; ADR-013 |
 | **5.9** | **Cross-cutting** — transactional email · basic admin CRUD · **audit log on credential and assessment actions** · error tracking · funnel analytics · **externalised UI strings** | throughout | ◻ Future | 5.1 | **ADR-015 email** · **ADR-034 notifications** · **ADR-017 vendors** · ADR-035 · ADR-027 · **OQ-3** sending domain · **OQ-16** audit scope | MVP Spec §2 cross-cutting |
 | **5.10** | **Non-negotiable engineering rules** enforced from commit one — `organisation_id` on every org-scoped table · insert-only `skill_assertions` and `responses` · audit row per credential/assessment mutation · single home for UI strings · assessor conflict-of-interest check in code · **no domain or credential-level literal anywhere** · assessment content unreadable at the query layer by non-assessor roles | throughout | ◻ Future | 5.1 | — | MVP Spec §9; ADR-020, 022, 023 |
 | **5.11** | **Tier 1 critical-workflow test coverage** — the nine named workflows plus the two recommended additions (artifact submission and assessor evaluation; evidence pack generation) | throughout | ◻ Future | each owning block | **OQ-18** release gate · **OQ-19** coverage expectation | Testing Arch §5; ADR-038 |
@@ -476,7 +497,7 @@ Sequencing follows `../architecture/ARCHITECTURE_OVERVIEW.md` §1.7 and MVP Spec
 | Category | Criteria |
 |---|---|
 | **Commercial** | ≥1 paying corporate cohort delivered end to end (2 is better) · ≥25 individual paying learners · 1 HRD Corp claim submitted **and accepted** using a generated pack · 1 customer commits to a second cohort · assessor cost **< 25%** of credential fee |
-| **Product** | Diagnostic→account ≥25% · path completion ≥50% · first lesson within 24h ≥60% · ≥70% rate the artifact requirement a strength · ≥3 verification page views per issued credential |
+| **Product** | *Re-derived by `DR-02` — see MVP Spec §12.3, which is authoritative.* Cohort fill ≥70% · programme attendance ≥85% · programme completion ≥80% · completion→candidacy ≥50% · capability assessment→enquiry or registration ≥20% · ≥70% rate the artifact requirement a strength · ≥3 verification page views per issued credential. **Targets are indicative and unvalidated** — no cohort has run. *(⊘ The former self-serve funnel metrics — diagnostic→account, path completion, first lesson within 24h — measured a product we are no longer building)* |
 | **Trust** | **≥2 assessors other than the founder**, calibrated and active · ≥95% decisions accepted without dispute · 0 unresolved integrity incidents |
 
 **Honest failure conditions (§12.5) — if any occurs, stop and redesign rather than adding features:** G1 below 40% · G3 below 70% · zero employer recognition after six months · assessor cost above 40% of fee.
@@ -511,7 +532,9 @@ Sequencing follows `../architecture/ARCHITECTURE_OVERVIEW.md` §1.7 and MVP Spec
 
 **Not planned. Recorded so it is not accidentally started.** Phase 2 begins **only** when the §12 MVP success criteria are met.
 
-Everything the specifications defer sits behind this boundary: a second domain · a credential ladder or levels · CPD and renewal · community, chapters, events, marketplace · mobile app · SSO/SCIM/HRIS · LTI · xAPI/LRS/SCORM · Open Badges 3.0 / W3C Verifiable Credentials · proctoring · adaptive engine · service extraction · notification centre · heatmaps and benchmarking. **Each remains governed by AP-10 and AP-11: it returns only with a current functional requirement, a demonstrated limitation, or a measurable operational need — never because it is next on a list.**
+Everything the specifications defer sits behind this boundary: a second domain · a credential ladder or levels · CPD and renewal · events · mobile app · SSO/SCIM/HRIS · LTI · xAPI/LRS/SCORM · Open Badges 3.0 / W3C Verifiable Credentials · proctoring · adaptive engine · service extraction · notification centre · heatmaps and benchmarking · **the AI tutor** *(deferred, and **not replaced** — `DR-02` Decision 2)*.
+
+**⊘ A distinct category — retired, not deferred (`DR-02` §1).** These are **not** waiting behind the Phase 2 boundary; they were removed as strategic destinations and do not return on a schedule: **chapters and a chapter-based community structure** · **the contributor ladder** · **the standards council** · **accredited-partner delivery** · **the course catalogue, lesson player, video-first content and any self-paced route to the credential**. A cohort-private group or programme alumni may emerge organically *from real delivery*; that is not the same thing as reinstating community infrastructure. **Each remains governed by AP-10 and AP-11: it returns only with a current functional requirement, a demonstrated limitation, or a measurable operational need — never because it is next on a list.**
 
 ---
 
@@ -546,7 +569,7 @@ Everything the specifications defer sits behind this boundary: a second domain �
 From `../architecture/ARCHITECTURE_OVERVIEW.md` §1.7 (`[INFERENCE]` from MVP Spec §10):
 
 1. **M1 before everything** — scoped roles and tenancy are foundational.
-2. **M4 before M8** — the tutor cannot retrieve from a corpus that does not exist.
+2. ~~**M4 before M8**~~ — **⊘ moot while `M8` is deferred** (`DR-02` Decision 2). The dependency was real and would return with any future AI capability; it constrains nothing today, and **corpus existence is explicitly not a trigger to build one** (ADR-013).
 3. **M2 skill list before M3 content mapping** — skills are the spine content, items and requirements attach to.
 4. **M5 and M6 before M7** — issuance evaluates their outputs as requirement rows.
 5. **M9 depends on all of the above** for its progress table and evidence pack, but on **none** of them for orgs, seats, cohorts and attendance — which can be built in parallel.
@@ -567,7 +590,7 @@ From `../architecture/ARCHITECTURE_OVERVIEW.md` §1.7 (`[INFERENCE]` from MVP Sp
 | **ADR-032 residency** → ADR-016 hosting → ADR-005a production host → 7.4 environments → 7.6 backups → Phase 5 exit → Phase 1C | Residency is no longer the *first* blocker, but it is the *head* of the production chain |
 | **Mockup §20.6 #1 naming** → Track A design → every header, badge, verification page | Stated as *"decide before step 0"* |
 | **§20.6 #5 assessor sourcing** → 4.3.10 → 6.1 → G3 SLA → §12.4 trust validation | Determines whether the published 10-day SLA is a promise or a liability |
-| **4.3.7 knowledge articles** → 5.8 corpus → ADR-013 trigger → M8 tutor | The corpus must precede the tutor; the AI provider decision has no trigger until it exists |
+| ~~4.3.7 knowledge articles → 5.8 corpus → ADR-013 trigger → M8 tutor~~ | **⊘ Chain broken by `DR-02`.** `M8` is deferred and not replaced, and **ADR-013's trigger was corrected** precisely because corpus existence would otherwise have re-opened an AI decision on its own. The articles are now built for SEO, credibility and participant reference — **they lead nowhere else** |
 
 ---
 
@@ -588,6 +611,9 @@ Everything that cannot proceed today, in one place. **Nothing in this table may 
 | Remaining Track B slice steps (discovery → restart proof) | 4.2.3–4.2.9 | Milestone 2; **no milestone defined and no execution plan exists** | ❓ Define milestone structure, then plan |
 | Assessor recruitment | 4.3.10 | 2.5 #5 | ⏳ Decision |
 | Refund / cancellation / withdrawal policy | 4.4.7 | **OQ-9** — legally required, absent from the specifications | ⏳ Decision |
+| **Programme participation in the credential model** | 5.6 | **OQ-21** — policy before schema. **Attendance alone must never earn a credential.** Blocks `D7` reconciliation only | ⏳ Decision |
+| **Assessor supply and scaling operating model** | 4.3.10 → 6.1 | **OQ-22** — the retired contributor ladder was the documented mechanism and **nothing replaces it**. A high-priority tracked strategic risk | ⏳ Decision |
+| **Launch programme inventory** | 4.3.9, 4.1.2 | Commercial/content decision. `DR-02` §4.1 forbids encoding a programme count architecturally | ⏳ Decision |
 | Accommodations policy and ownership | 4.4.8 | **OQ-15** — *"the most serious omission"* | ⏳ Decision |
 | Payment rail and tax treatment | 5.1 | **ADR-014 · OQ-2** | 🕓 Deferred + ⏳ |
 | Exam clock model review | 5.4 | **ADR-021** analysed, not yet reviewed; **OQ-11** | ⏳ Decision |
@@ -616,10 +642,12 @@ Everything that cannot proceed today, in one place. **Nothing in this table may 
 
 | Deferred | ADR | Trigger that reopens it | Cost of deferring |
 |---|---|---|---|
-| Video provider | 009 | Real lesson video content exists | None, given a provider-neutral video reference. Largest variable cost in the platform |
+| **Lesson player · course catalogue · video-first content · self-paced journey** | — | **⊘ Retired by `DR-02`, not deferred.** No trigger. They belonged to a product model we are not building | **Negative** — this is scope *removed*, not postponed |
+| **AI tutor / AI learning assistant (`M8`, `L14`)** | 013 | **Separate strategic authorisation against the expert-led model.** Corpus existence is **not** a trigger | None. **Not replaced by another AI feature** |
+| Video provider | 009 | Real lesson video content exists — ⚠️ **may never fire**: the lesson player is retired by `DR-02` | None. **The platform's largest variable cost leaves MVP scope entirely.** Session recordings as supporting material would be a *new* trigger |
 | Object storage (R2 vs S3) | 008 | Artifact submission or evidence packs are built | None — Track B stores no files |
 | Payments (Stripe + Malaysian rail) | 014 | Candidacy registration is built — **answer OQ-2 first** | None. Corporate may buy on invoice |
-| AI provider | 013 | The knowledge library corpus exists | None — the corpus must precede the tutor |
+| AI provider | 013 | ⚠️ **Trigger corrected 2026-08-31.** An AI capability is **separately authorised on its own strategic justification**. The old trigger (*the corpus exists*) would have fired on its own, because `M4` still ships | None. `M8` is deferred and **not replaced**; the embeddings provider, `OQ-4`, RAG cost control and rate limiting all leave MVP scope |
 | Transactional email | 015 | Real email verification is required (Milestone 2+) | None yet |
 | Analytics product | 017 | Real users exist | Low — design the instrumentation points now |
 | Production hosting · production DB host | 016 · 005a | First deployment | None — local development needs neither |

@@ -37,7 +37,8 @@ It is deliberately separate from [`../architecture/`](../architecture/README.md)
 
 | Document | Purpose | Status |
 |---|---|---|
-| [`MILESTONE_1_EXECUTION_PLAN.md`](MILESTONE_1_EXECUTION_PLAN.md) | The "Walking Skeleton" — the proposed first executable milestone: scope, approved decisions relied on, RED-gate actions, deliverables, verification criteria | ⛔ **SCOPE ACCEPTED — EXECUTION NOT AUTHORIZED** |
+| [`MILESTONE_1_EXECUTION_PLAN.md`](MILESTONE_1_EXECUTION_PLAN.md) | The "Walking Skeleton" — the proposed first executable milestone: scope, approved decisions relied on, RED-gate actions, deliverables, verification criteria. **Unaffected by the `DR-02` correction** | ⛔ **SCOPE ACCEPTED — EXECUTION NOT AUTHORIZED** |
+| [`PROJECT_PLAN_WBS.md`](PROJECT_PLAN_WBS.md) | The master execution navigation layer: phases, workstreams, milestones, work packages, dependencies and status. **Reconciled with `DR-02` on 2026-08-31** | DRAFT — pending review |
 
 ## 4. Milestone status
 
@@ -47,6 +48,8 @@ It is deliberately separate from [`../architecture/`](../architecture/README.md)
 | **2** | Authentication → authorization → dashboard | The first real steps of the Track B vertical slice | **ADR-006** — B1 deviation · B2 provider · B3 conditions | Not planned in detail |
 
 **Milestone 1 requires no decision that is not already approved.** The authentication decision (ADR-006) blocks Milestone 2 and can be settled in parallel.
+
+> **Reconciled with `DR-02`, 2026-08-31.** The Track B vertical slice these milestones belong to was **restated** away from the retired lesson-consumption model — see `PROJECT_PLAN_WBS.md` §6.2 and ADR-036/ADR-040. **Milestone 1 is unaffected**: a `domains`-table walking skeleton is delivery-model-agnostic, and its plan needed no change. Milestone 2 (authentication → authorisation → dashboard) is likewise unaffected in substance; the steps *after* it are what changed.
 
 ## 5. How execution documents are used
 

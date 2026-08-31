@@ -1,5 +1,23 @@
 # Mockup / Wireframe — Data & AI Academy Portal
 
+> ## ⚠ THIS IMPLEMENTATION PREDATES THE CORRECTED PRODUCT DIRECTION — read before changing anything
+>
+> **The product direction was corrected on 2026-08-31** by [`DR-02_EXPERT_LED_DELIVERY_MODEL.md`](../../DR-02_EXPERT_LED_DELIVERY_MODEL.md), and all three root specifications were reconciled with it. **This mockup was built before that correction and has not been reconciled.**
+>
+> | | |
+> |---|---|
+> | **What this code represents** | An **earlier baseline** — the pre-DR-02 product model |
+> | **What is current** | [`DATA_AI_ACADEMY_PORTAL_MOCKUP_SPECIFICATION.md`](../../DATA_AI_ACADEMY_PORTAL_MOCKUP_SPECIFICATION.md), as corrected. It is the specification; this is not |
+> | **Is the mismatch a defect?** | **No — it is intentional and expected.** Implementation reconciliation is a **separate stage requiring its own authorization** |
+>
+> **Do not silently "fix" this divergence as a side effect of an unrelated task.** Bringing the mockup into line with the corrected specification is deliberate, authorized work — not tidying.
+>
+> ### ⚑ Specifically: the Diagnostic is NOT retired
+>
+> `P05`/`P06` and the **"Start free diagnostic (10 min)"** CTA on `P01` **remain valid and must not be removed.** DR-02 retired the *self-paced learning model*; it did **not** retire the diagnostic. The capability survives with a **reframed role** — a capability assessment that can lead toward relevant programmes and scheduled offerings, and the entry offer for a corporate engagement.
+>
+> **Do not infer "self-paced was retired, therefore the diagnostic should go."** That inference is explicitly unauthorized. How the diagnostic is positioned and what it leads to belongs to the separately authorized **Homepage Design Strategy** and **Mockup Reconciliation** stages, where it is to be deliberately evaluated — not casually dropped.
+
 **This is a disposable, isolated artifact. It is not the production application.**
 
 It exists to validate product structure, user journeys, navigation, information

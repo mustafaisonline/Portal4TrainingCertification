@@ -1923,9 +1923,13 @@ Selection test applied to every screen: *does removing this screen make the ecos
 
 ## 14.2 MVP Mockup — 30 screens
 
+> **⚠ The Act lists below are the PRE-CORRECTION set and are NOT the current mockup scope.** `MVP_BUILD_SPEC.md` §7 is authoritative — **16 screens**, re-derived by `DR-02`.
+>
+> **A screen appearing in an Act list below is not thereby active.** Several are retired or deferred, and the lists were deliberately left unedited so the change remains traceable. Before treating any screen here as in scope, check it against §13's disposition table and `MVP_BUILD_SPEC.md` §7. In particular: **`P11` Course Catalogue and `P12`/`C01` Course Landing are ⊘ RETIRED** (see §4), and **`C05` Lesson Player and `L14` AI Tutor have left the mockup set**. `P10` Programme Detail and `P24` Scheduled Offerings replace them.
+
 Grouped by the ecosystem story they tell.
 
-**Act 1 — Discovery & the promise (6)**
+**Act 1 — Discovery & the promise (6)** *(pre-correction — contains retired screens; see the notice above)*
 `P01` Homepage · `P05` Diagnostic · `P06` Diagnostic Result · `P11` Course Catalogue · `P10` Path Detail · `P12/C01` Course Landing
 
 **Act 2 — Learning (6)**
@@ -2263,10 +2267,10 @@ Entry (search / badge / referral / ad)
   Checkout ─ ⟨ funding? ⟩ ─ yes ─▶ Corporate/HRD Corp route [P18] → [P19]
        │
        ▼
-  Enrolled → Dashboard [L01] → first lesson within 24h  ← the key activation metric
+  Enrolled → Dashboard [L01] → first lesson within 24h  ← ⊘ RETIRED metric (see below)
 ```
 
-**Success metric:** first lesson started within 24 hours. It is the single strongest predictor of completion.
+**~~Success metric:~~ ⊘ RETIRED (DR-02) — no longer authoritative.** *"First lesson started within 24 hours"* measured activation into a self-paced product that is no longer being built, and it is one of the funnel metrics `MVP_BUILD_SPEC.md` §12.3 explicitly retires — alongside diagnostic→account conversion and path completion. **Do not use it, cite it, or instrument it.** `MVP_BUILD_SPEC.md` §12.3 is authoritative for success metrics; **no replacement metric is introduced here.**
 
 ---
 

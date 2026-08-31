@@ -269,7 +269,7 @@ Notation used below: `D·—·—` means drafted only; `D·A·—` means drafted
 |---|---|---|---|---|---|
 | **3.1** | Architecture principles **AP-01…AP-12** | ✅ Complete — **APPROVED** (ADR-041, ADR-042) | 2.1–2.3 | `../architecture/ARCHITECTURE_PRINCIPLES.md` | Twelve principles adopted as durable project principles |
 | **3.2** | System architecture overview, component model, module dependency order, dual-track model | ✅ Complete — DRAFT status | 3.1 | `../architecture/ARCHITECTURE_OVERVIEW.md` | Documented; §2.14 dual track approved as ADR-040 |
-| **3.3** | Architecture Decision Register — ADR-001…ADR-042 | ✅ Complete — **partially approved** | 3.1, 3.2 | `../architecture/ARCHITECTURE_DECISION_REGISTER.md` | Every decision carries a state and, where approved, an approval record with scope |
+| **3.3** | Architecture Decision Register — ADR-001…ADR-044 *(ADR-043 and ADR-044 added by the architecture reconciliation, `dc0f4c6`)* | ✅ Complete — **partially approved** | 3.1, 3.2 | `../architecture/ARCHITECTURE_DECISION_REGISTER.md` | Every decision carries a state and, where approved, an approval record with scope |
 | **3.4** | Conceptual data architecture — domains, entities, ownership, classification, Service Restart Test analysis | ✅ Complete — DRAFT | 3.3 | `../architecture/DATA_ARCHITECTURE.md` | Conceptual only. **No physical schema exists and none may be created there** |
 | **3.5** | Security & compliance architecture | ✅ Complete — DRAFT | 3.3 | `../architecture/SECURITY_ARCHITECTURE.md` | Documented; residency inputs enumerated for verification |
 | **3.6** | Integration architecture — I-1…I-20, boundaries, failure handling | ✅ Complete — DRAFT | 3.3 | `../architecture/INTEGRATION_ARCHITECTURE.md` | Documented; providers deliberately open |

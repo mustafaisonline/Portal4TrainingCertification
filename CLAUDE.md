@@ -47,9 +47,20 @@ Optimize for: **product integrity over speed. Understanding before modification.
 
 Use the existing approved project documentation as the source of product requirements — currently `DATA_AI_ACADEMY_MVP_BUILD_SPEC.md`, `DATA_AI_ACADEMY_PORTAL_BLUEPRINT.md`, `DATA_AI_ACADEMY_PORTAL_MOCKUP_SPECIFICATION.md`, and other approved documentation and reference materials.
 
+**Approved decision records outrank the specifications where they conflict.** Read these before the specifications:
+
+| Record | Status |
+|---|---|
+| **`DR-02_EXPERT_LED_DELIVERY_MODEL.md`** (repository root) | **Approved 2026-08-31. Binding on all three specifications.** Establishes an independent professional **training and certification organisation** built on **expert-led delivery** — face-to-face, live online and corporate/private — with the portal *supporting* that ecosystem rather than being where learning happens. Its §12 lists every superseded statement, by document and location |
+| **`DR-01`** (inside `DATA_AI_ACADEMY_MVP_BUILD_SPEC.md`) | Approved. One credential, no ladder, no bands |
+
+**The three specifications remain authoritative except where a decision record supersedes or reframes them.** They have been reconciled with DR-02 and carry **reconciliation notices** at the top and **in-place markers** — `⊘ RETIRED`, `↻ REFRAMED`, `⏸ DEFERRED` — with a reason. **Respect those markers: where a marker and the surrounding text disagree, the marker wins.**
+
+**Superseded material is deliberately retained for traceability. Do not mistake it for an active requirement.** Original wording is preserved beneath retirement notices, inside supersession blocks, and as historical rationale, precisely so a future reader can see what changed and why. If a passage is marked retired, deferred or superseded, it is a record — not an instruction.
+
 Do not consolidate, reinterpret, replace, or create a new authoritative product specification unless explicitly instructed. If specifications conflict, identify the conflict and request clarification before implementing a decision that depends on it.
 
-**Authority hierarchy:** 1) Explicit current human instruction → 2) Approved project specification documents → 3) Approved architecture and technical documentation → 4) Existing working implementation → 5) Other approved reference materials → 6) Previous AI assumptions → 7) General AI knowledge.
+**Authority hierarchy:** 1) Explicit current human instruction → 2) **Approved decision records (`DR-02`, `DR-01`)** → 3) Approved project specification documents → 4) Approved architecture and technical documentation → 5) Existing working implementation → 6) Other approved reference materials → 7) Previous AI assumptions → 8) General AI knowledge.
 
 ---
 

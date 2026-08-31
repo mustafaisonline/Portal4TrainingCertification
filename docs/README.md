@@ -11,10 +11,13 @@
 
 ## Authoritative sources above this folder
 
-Product requirements come from the approved specifications in the repository root, which outrank everything here:
+Product requirements come from the repository root, which outranks everything here — in this order:
 
+- **`DR-02_EXPERT_LED_DELIVERY_MODEL.md`** — the approved strategic correction of 2026-08-31. **Outranks the three specifications where they conflict**, on organisation identity, delivery model, portal role, programme model, certification relationship, expert model and corporate model. Its §12 lists every superseded statement by document and location. *(`DR-01`, inside the MVP Build Spec, carries the same standing.)*
 - `DATA_AI_ACADEMY_MVP_BUILD_SPEC.md` — authoritative for **what gets built first**
 - `DATA_AI_ACADEMY_PORTAL_BLUEPRINT.md` — authoritative for **vision and architecture direction**
 - `DATA_AI_ACADEMY_PORTAL_MOCKUP_SPECIFICATION.md` — authoritative for **design language and information architecture**
+
+All three specifications have been reconciled with DR-02 and carry reconciliation notices plus in-place `⊘ RETIRED` / `↻ REFRAMED` / `⏸ DEFERRED` markers. **Superseded wording is retained deliberately for traceability — where a marker and the surrounding text disagree, the marker wins.**
 
 Governance comes from `CLAUDE.md` and `AI_DEVELOPMENT_GUARDRAILS.md`. Where this folder and any of the above conflict, **the above wins and this folder is wrong**.

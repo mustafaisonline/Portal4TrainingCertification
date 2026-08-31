@@ -1,0 +1,194 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens — Mockup Milestone 1.
+ * See ../docs/DESIGN_FOUNDATION.md for the rationale behind every value here.
+ * Do not add one-off colours/spacing in components — extend this file instead.
+ *
+ * Deliberately plain `:root`, not Tailwind's `@theme`: Tailwind v4 only
+ * keeps an `@theme` custom property in its compiled output when its
+ * scanner sees that property referenced inside a utility-class candidate
+ * string (e.g. `bg-[var(--color-primary)]`). A token referenced only from
+ * an inline `style` (as the proficiency scale is, in components that plot
+ * it) is invisible to that scanner and gets silently dropped — found while
+ * building P01's heatmap teaser, where --color-prof-* rendered as
+ * transparent. Plain `:root` is ordinary CSS, never purged, and every
+ * token below remains just as usable via `var(--token)` in either a
+ * Tailwind arbitrary value or a plain inline style. See
+ * docs/DESIGN_FOUNDATION.md "Known issues and fixes".
+ */
+:root {
+  /* Ground (page/base surfaces) */
+  --color-ground: #faf8f4; /* warm off-white, never pure #fff */
+  --color-ground-raised: #f2efe8; /* Panel card surface */
+
+  /* Ink (text), 3 steps */
+  --color-ink: #1b1f27; /* near-black, slight blue-grey cast */
+  --color-ink-quiet: #4b5160;
+  --color-ink-faint: #7a8091;
+
+  /* Line (hairlines/borders), 2 steps */
+  --color-line: #e2ded3;
+  --color-line-strong: #c9c3b3;
+
+  /* Primary — deep blue-teal */
+  --color-primary: #0f5d66;
+  --color-primary-strong: #0b454c;
+  --color-primary-ink: #f7fbfb;
+
+  /* Accent — warm ember. Reserved for credential/achievement moments only.
+     Not used on P01/P05/P06 in this milestone. */
+  --color-accent: #b5652b;
+
+  /* Semantic — muted, never fluorescent */
+  --color-success: #3f7d5c;
+  --color-warning: #a8752c;
+  --color-danger: #a1493f;
+  --color-info: #3f6a8d;
+
+  /* Proficiency scale — a dedicated 5-step family, separate from semantic.
+     Perceptually ordered, colour-blind safe (single blue-teal hue ramp,
+     not a red-to-green traffic light — low proficiency is not "an error"). */
+  --color-prof-1: #d8e6e4;
+  --color-prof-2: #a9c9c5;
+  --color-prof-3: #6fa8a2;
+  --color-prof-4: #327f78;
+  --color-prof-5: #0f5d66;
+
+  /* Radius — one per card type (§16.3) */
+  --radius-plate: 0.5rem; /* 8px */
+  --radius-panel: 0.75rem; /* 12px */
+  --radius-feature: 1rem; /* 16px */
+
+  /* Type families — system stacks only (no external font service in this
+     mockup; see DESIGN_FOUNDATION.md "Known simplifications"). */
+  --font-display:
+    -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-body:
+    -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono:
+    ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+}
+
+/* Dark theme — first-class, not an afterthought (§16.6).
+   Follows the artifact-style contract: redefine tokens only, under a
+   system-preference guard and an explicit override, so a manual toggle
+   (see components/ThemeToggle.tsx) always wins. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-ground: #14171c;
+    --color-ground-raised: #1b1f27;
+    --color-ink: #eef0f3;
+    --color-ink-quiet: #b6bcc8;
+    --color-ink-faint: #838a99;
+    --color-line: #2b303b;
+    --color-line-strong: #3c4351;
+    --color-primary: #4fb3ab;
+    --color-primary-strong: #6fc9c1;
+    --color-primary-ink: #0b1414;
+    --color-accent: #d98a4c;
+    --color-success: #6fb890;
+    --color-warning: #d1a25f;
+    --color-danger: #d1786c;
+    --color-info: #7fa9c9;
+    --color-prof-1: #232e2d;
+    --color-prof-2: #2c4744;
+    --color-prof-3: #386f69;
+    --color-prof-4: #4fa89f;
+    --color-prof-5: #7fd0c7;
+  }
+}
+:root[data-theme="dark"] {
+  --color-ground: #14171c;
+  --color-ground-raised: #1b1f27;
+  --color-ink: #eef0f3;
+  --color-ink-quiet: #b6bcc8;
+  --color-ink-faint: #838a99;
+  --color-line: #2b303b;
+  --color-line-strong: #3c4351;
+  --color-primary: #4fb3ab;
+  --color-primary-strong: #6fc9c1;
+  --color-primary-ink: #0b1414;
+  --color-accent: #d98a4c;
+  --color-success: #6fb890;
+  --color-warning: #d1a25f;
+  --color-danger: #d1786c;
+  --color-info: #7fa9c9;
+  --color-prof-1: #232e2d;
+  --color-prof-2: #2c4744;
+  --color-prof-3: #386f69;
+  --color-prof-4: #4fa89f;
+  --color-prof-5: #7fd0c7;
+}
+
+html {
+  color-scheme: light dark;
+}
+
+body {
+  background: var(--color-ground);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Named type scale (§16.5) — utility classes so screens don't invent sizes. */
+.text-display-lg {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 3rem;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+.text-display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 2.25rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+.text-h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.75rem;
+  line-height: 1.25;
+}
+.text-h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.375rem;
+  line-height: 1.3;
+}
+
+/* Scale display sizes down below ~640px — the fixed 3rem/2.25rem sizes
+   otherwise push a small viewport's hero text past a full screen height
+   (found reviewing P01 at the mobile preset). */
+@media (max-width: 640px) {
+  .text-display-lg {
+    font-size: 2.25rem;
+  }
+  .text-display {
+    font-size: 1.75rem;
+  }
+}
+.text-body-lg {
+  font-size: 1.125rem;
+  line-height: 1.6;
+}
+.text-body-sm {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+.text-label {
+  font-size: 0.75rem;
+  line-height: 1.4;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+}
+.text-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}

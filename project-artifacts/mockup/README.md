@@ -61,14 +61,16 @@ registered as the `mockup` configuration in `.claude/launch.json`.
 ## Structure
 
 ```
-app/                      Next.js App Router pages (P01, P05, P06, trainers index + profile, placeholder)
+app/                      Next.js App Router pages (P01, P05, P06, programmes hub + detail, trainers index + profile, placeholder)
 components/ui/            Button, Chip, Card (the three card types)
 components/signature/     DiagnosticQuestionCanvas, SkillMeter (scoped to this milestone)
 components/PublicShell.tsx  Global public header/footer (§4)
 components/TrainerCard.tsx  Reusable trainer card (P01 + /trainers; genuine people only)
+components/ProgrammeCard.tsx Reusable programme card (P01 + /programmes + related rails)
 data/                     Fixtures — capability areas, practitioners (REAL data only), diagnostic questions, result fixtures, role targets
 public/experts/           Genuine practitioner photography (never AI-generated or stock)
-docs/                     DESIGN_FOUNDATION.md, MOCK_DATA_REGISTER.md, FINDINGS.md, P01_DESIGN_DECISIONS.md
+docs/                     DESIGN_FOUNDATION.md, MOCK_DATA_REGISTER.md, FINDINGS.md,
+                          P01_DESIGN_DECISIONS.md, PROGRAMME_CONTENT_MIGRATION.md
 ```
 
 ## Continuing this work in a new session

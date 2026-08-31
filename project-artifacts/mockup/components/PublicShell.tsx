@@ -70,7 +70,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
             aria-label="Primary"
             className="hidden items-center gap-7 text-body-sm text-[var(--color-ink-quiet)] lg:flex"
           >
-            <Link href="/#programmes" className="hover:text-[var(--color-ink)]">
+            <Link href="/programmes" className="hover:text-[var(--color-ink)]">
               Programmes
             </Link>
             <Link href="/#delivery" className="hover:text-[var(--color-ink)]">
@@ -95,7 +95,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
                 Sign in
               </Button>
             </span>
-            <Button href="/#programmes">Explore programmes</Button>
+            <Button href="/programmes">Explore programmes</Button>
           </div>
         </div>
       </header>
@@ -117,7 +117,13 @@ export function PublicShell({ children }: { children: ReactNode }) {
           <div>
             <p className="text-label mb-3">Explore</p>
             <p>
-              Programmes ·{" "}
+              <Link
+                href="/programmes"
+                className="underline underline-offset-4 hover:text-[var(--color-ink)]"
+              >
+                Programmes
+              </Link>{" "}
+              ·{" "}
               <Link
                 href="/trainers"
                 className="underline underline-offset-4 hover:text-[var(--color-ink)]"

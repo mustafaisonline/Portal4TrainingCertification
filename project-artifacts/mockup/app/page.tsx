@@ -1,10 +1,20 @@
 import { PublicShell } from "@/components/PublicShell";
+import { ProgrammeCard } from "@/components/ProgrammeCard";
 import { TrainerCard } from "@/components/TrainerCard";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Chip } from "@/components/ui/Chip";
 import { domains } from "@/data/domains";
 import { practitioners } from "@/data/practitioners";
+import { programmes } from "@/data/programmes";
+
+/** Homepage preview: the flagship plus the two entry-level programmes —
+ *  discovery, not the catalogue. Exploration lives at /programmes. */
+const featuredProgrammes = [
+  programmes.find((p) => p.flagship),
+  programmes.find((p) => p.slug === "data-ai-essentials"),
+  programmes.find((p) => p.slug === "data-blueprint"),
+].filter((p): p is NonNullable<typeof p> => Boolean(p));
 
 /**
  * P01 — Homepage. Content per docs/design/P01_HOMEPAGE_REDESIGN_SPECIFICATION.md
@@ -407,62 +417,42 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ============ H5 — Programmes (light, State A) ============ */}
+      {/* ============ H5 — Programmes (light) ============
+          The real portfolio now exists (migrated from the founder's training
+          ecosystem), so the homepage previews it and routes to /programmes:
+          discovery here, exploration there, depth on the detail pages.
+          Still no dates — scheduled offerings remain State A, which keeps
+          the programmes-vs-offerings emphasis (HO-1) open. */}
       <section
         id="programmes"
         className="mx-auto max-w-[1280px] scroll-mt-24 px-6 py-20"
       >
-        <div className="grid gap-12 lg:grid-cols-[1fr_420px]">
+        <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-[620px]">
             <p className="text-label mb-3 text-[var(--color-primary)]">
               Programmes
             </p>
-            <h2 className="text-display mb-6">
-              A deliberately small set of programmes, built properly
+            <h2 className="text-display mb-5">
+              A deliberately structured portfolio, built properly
             </h2>
-            <p className="text-body-lg mb-4 text-[var(--color-ink-quiet)]">
+            <p className="text-body-lg text-[var(--color-ink-quiet)]">
               A programme here is a designed, expert-led learning experience
               with stated outcomes — what you will actually be able to do
-              afterwards. Each programme runs as scheduled offerings: a
-              specific format, dates and location you register for.
+              afterwards. Each runs as scheduled offerings: a specific format,
+              dates and location you register for.
             </p>
-            <p className="text-body-sm mb-9 text-[var(--color-ink-quiet)]">
-              The first public programmes and their dates are being finalised
-              now. When they are published, they will be real — a small,
-              genuine schedule, never a padded catalogue.
-            </p>
-            <div className="flex flex-wrap items-center gap-4">
-              <Button variant="secondary" href="#">
-                Register your interest
-              </Button>
-              <Button variant="text" href="#organisations">
-                Or talk to us about a private cohort
-              </Button>
-            </div>
           </div>
-          <Card variant="panel">
-            <p className="text-label mb-5">Every programme includes</p>
-            <ul>
-              {[
-                "Capability outcomes stated up front — what you will be able to do",
-                "Live, expert-led sessions — face-to-face or online",
-                "Applied work on realistic enterprise problems",
-                "Supporting materials that prepare and reinforce each session",
-                "An assessed path toward the credential, judged by a qualified assessor",
-              ].map((item, i) => (
-                <li
-                  key={i}
-                  className="flex items-baseline gap-4 border-t border-[var(--color-line)] py-3 text-body-sm text-[var(--color-ink-quiet)]"
-                >
-                  <span className="text-mono text-[var(--color-primary)]">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </Card>
+          <Button href="/programmes">All programmes</Button>
         </div>
+        <div className="grid gap-6 md:grid-cols-3">
+          {featuredProgrammes.map((programme) => (
+            <ProgrammeCard key={programme.slug} programme={programme} />
+          ))}
+        </div>
+        <p className="text-body-sm mt-8 text-[var(--color-ink-faint)]">
+          Public dates are not yet published. When they are, they will be real
+          — a small, genuine schedule, never a padded catalogue.
+        </p>
       </section>
 
       {/* ============ H7 — Certification (light + night rubric card) ============ */}

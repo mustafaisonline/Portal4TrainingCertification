@@ -5,6 +5,19 @@
 **Date:** 2026-08-29
 **Owner:** Mustafa Qizilbash — Your Partner Technologies
 **Status:** Pre-design. Intended as the single input brief for a UI/UX design AI or an AI coding agent producing the first complete portal mockup.
+**Corrected by:** [`DR-02_EXPERT_LED_DELIVERY_MODEL.md`](DR-02_EXPERT_LED_DELIVERY_MODEL.md), approved 2026-08-31 — see the reconciliation notice below.
+
+---
+
+> # ⚠ RECONCILIATION NOTICE — DR-02, 2026-08-31
+>
+> **This document was written before the organisation's identity was clarified, and parts of it describe a business we are not building.** [`DR-02`](DR-02_EXPERT_LED_DELIVERY_MODEL.md) is the authoritative strategic correction and **outranks this document** on organisation identity, delivery model, portal role, programme model, certification relationship, the expert model and the corporate model. [`DATA_AI_ACADEMY_MVP_BUILD_SPEC.md`](DATA_AI_ACADEMY_MVP_BUILD_SPEC.md) has already been reconciled with it and is the consistency reference for build scope.
+>
+> **What we are:** an independent professional **training and certification organisation** focused on data and AI capability development, whose core value comes from **expert practitioners and expert-led delivery** — face-to-face, live online, and tailored corporate engagements. The portal supports that ecosystem; **it is not where learning happens.**
+>
+> **What we are not:** a professional membership association · a standards body · a chapter-based organisation · an accredited-partner ecosystem as the primary business model · a course marketplace · a video-first or self-paced learning platform · a generic LMS.
+>
+> **How this document has been corrected.** Passages that would otherwise mislead are marked in place with **`⊘ RETIRED`**, **`↻ REFRAMED`** or **`⏸ DEFERRED`** and a one-line reason. The surrounding analysis is deliberately **left intact** — much of it remains valuable, and a strategic correction is not a licence to flatten the thinking that produced it. Where a marker and the original text disagree, **the marker wins**, and DR-02 wins over both.
 
 ---
 
@@ -20,6 +33,8 @@
 ---
 
 # PART A — REFERENCE ECOSYSTEM ANALYSIS
+
+> **↻ REFRAMED (DR-02).** Part A is retained as a **study of credentialing mechanics** — how a credential is designed, scored, made portable, and kept meaningful. It is **not an organisational template**, and it is not a description of a competitor to displace. We are not building another association, and the structural patterns below (federated chapters, accredited delivery partners, a standards council, membership tiers) are **not adopted**. Read Part A for the mechanics in §A3 and the weaknesses in §A6, both of which remain useful. Do not read it as a model for what this organisation should become.
 
 ## A1. What the reference ecosystem actually is
 
@@ -59,6 +74,8 @@ The most important architectural insight is that the ecosystem is **not one prod
         │      ↺ feeds candidates back into 1–4            │
         └──────────────────────────────────────────────────┘
 ```
+
+> **⊘ RETIRED AS STRATEGY (DR-02) — retained as analysis of the reference ecosystem only.** The paragraph below describes *their* model: examine centrally, license others to teach. **Ours is the inverse.** Expert-led delivery *is* our product and our differentiator; we do not license third parties to teach toward our credential while we hold the exam. Read this as an accurate description of how the reference ecosystem scaled, not as a move available to us.
 
 **The strategic move is #2.** The organisation deliberately does *not* monopolise teaching. It accredits independent providers under an annual licence, requires their instructors to hold the top-tier credential, requires their materials to track the current canon version, and lists them publicly. This is the highest-leverage decision in the entire model:
 
@@ -124,8 +141,11 @@ Critical assessment. Each weakness below is an explicit design input to Part B.
 
 ## 1. EXECUTIVE VISION
 
-**The one-sentence vision.**
-A global, AI-native academy where any professional — from a final-year student to a Chief Data Officer — can find exactly the data and AI capability they are missing, learn it in the shortest honest path, **prove it by doing the work rather than by recognising the answer**, and carry that proof as a portable, cryptographically verifiable credential that employers actually trust.
+**The one-sentence vision.** *(↻ REFRAMED by DR-02 §1 — this replaces the previous "global, AI-native academy" formulation, which read as a content platform and carried the marketplace implication the correction removes.)*
+
+An independent professional **training and certification organisation** for data and AI capability, where any professional — from a final-year student to a Chief Data Officer — can find exactly the capability they are missing, **build it with expert practitioners in the room, live**, **prove it by doing the work rather than by recognising the answer**, and carry that proof as a portable credential that employers actually trust.
+
+**The two halves, held together.** Expert-led delivery is the *product*; the credential is the *proof of its outcome*. Neither works alone: training without assessment is unprovable, and a credential without the learning behind it is the exam-only certificate this entire strategy exists to avoid.
 
 **Why now.** Three forces converge in 2026:
 
@@ -133,17 +153,19 @@ A global, AI-native academy where any professional — from a final-year student
 2. **Multiple-choice testing is collapsing as a signal.** When a model can pass any recall exam instantly, an exam that only tests recall proves nothing about the human. The entire assessment industry must move to *evidence of applied work*. This is a discontinuity, and discontinuities are where challengers win.
 3. **Literacy demand has gone horizontal.** Organisations no longer want to train the data team; they want to raise the floor across finance, HR, operations, marketing, and the board. That is a volume market that legacy certification bodies, built for specialists, are not shaped to serve.
 
-**The strategic bet.** We do not compete on "more courses". We compete on **the integrity and usefulness of the proof**. Content is commoditised; trusted, defensible evidence of capability is not. Every architectural decision in this document is downstream of that bet.
+**The strategic bet.** We do not compete on "more courses" — we do not compete on courses at all. We compete on **the quality of the expert-led learning experience and the integrity of the proof that follows it**. Content is commoditised; a practitioner in the room, and trusted defensible evidence of capability, are not. Every architectural decision in this document is downstream of that bet.
 
-**Three non-negotiable differentiators.**
+**Differentiators.**
 
-| | Differentiator | What it means concretely |
-|---|---|---|
-| **D1** | **Evidence over recall** | No credential is awarded on a multiple-choice score alone. Every credential above foundation level requires a submitted, assessed, and defended applied artifact. |
-| **D2** | **Living knowledge, versioned** | The knowledge base is a semantically-versioned product with changelogs. Credentials reference the version they were earned against. Currency is visible, not assumed. |
-| **D3** | **AI-native, not AI-flavoured** | An AI tutor grounded in our own corpus, adaptive path generation from a real skill graph, AI-assisted (human-moderated) assessment of artifacts, and explicit AI-use policy per assessment. |
+| | Differentiator | What it means concretely | Status |
+|---|---|---|---|
+| **D1** | **Evidence over recall** | No credential is awarded on a multiple-choice score alone. The credential requires a submitted and assessed applied artifact. *DR-02 strengthens this: participation in an expert-led programme plus required learning activities plus meaningful assessment plus applied evidence — and **attendance alone never earns a credential**.* | **Active — strengthened** |
+| **D2** | **Living knowledge, versioned** | The knowledge base is a semantically-versioned product with changelogs. Credentials reference the version they were earned against. Currency is visible, not assumed. | **Active** |
+| **D3** | ~~AI-native, not AI-flavoured~~ | **⏸ UNDER REASSESSMENT — do not use as an active differentiator.** Its evidence was the AI tutor, which DR-02 defers; a differentiator must not rest on functionality that is not in the product. **Its replacement is deliberately not invented here.** DR-02 §9 records that any revised third differentiator is to be evaluated against the clarified strengths — expert-led delivery, practitioner expertise, live interaction, practical learning, applied evidence, meaningful assessment, credible certification — during downstream correction, not now. | **⏸ Open** |
 
-**Twelve-month success definition.** Not revenue, at first. Success is: (a) 3+ employers publicly stating they use the credential as a hiring filter, (b) >70% of Level-2 candidates submitting an applied artifact rather than dropping at the evidence gate, (c) a corporate customer renewing a second cohort, and (d) the knowledge base shipping at least one substantive version update.
+*Two differentiators are active. That is an honest position, and a stronger one than a third that points at a deferred feature.*
+
+**Twelve-month success definition.** Not revenue, at first. Success is: (a) 3+ employers publicly stating they use the credential as a hiring filter, (b) a high proportion of candidates submitting an applied artifact rather than dropping at the evidence gate, (c) a corporate customer commissioning a second cohort, and (d) the knowledge base shipping at least one substantive version update. *(Numeric targets are held in `MVP_BUILD_SPEC.md` §12, which is authoritative for them; the "Level-2" reference is void under DR-01.)*
 
 ---
 
@@ -218,6 +240,8 @@ Nine personas. Each is written as: who → the pain → what they need from us �
 - **Success metric:** Renews the cohort next intake; cites credential in programme marketing.
 - **Design implication:** LTI 1.3 integration so our content appears inside *their* LMS; an academic console with cohort analytics.
 
+> **↻ REFRAMED — the three supply-side personas (DR-02 §7).** **P7 Instructor/SME is promoted**: expert practitioners are not "supply side", they are the product, and the expert is a real role with a public profile from V1. The persona is also **deliberately not one person** — it stands for lead trainers, associate trainers, facilitators, subject-matter specialists and guest experts. Represent honestly what exists today; **never fabricate an expert**, and never build a founder-bound model. **P8 Assessor stands** — its analysis of what makes assessment sustainable is preserved. **P9 Chapter Lead is ⊘ retired**, with chapters as a core structural model.
+
 ### P7 — Mustafa, Instructor / Subject-Matter Expert *(supply side)*
 - **Who:** Practising expert who teaches — you, and eventually a roster of others.
 - **Pain:** Content production is slow; scheduling, attendance, materials, and assessment admin consume the hours that should go into teaching.
@@ -285,7 +309,11 @@ The platform is a **six-sided ecosystem**, deliberately designed so that each si
 - **Loop 3 — Enterprise land-and-expand.** One team trained → skills-gap dashboard reveals adjacent gaps → L&D expands to another department → employees continue individually after the corporate programme ends. *Instrument: seats-per-account over time, individual conversions from corporate cohorts.*
 - **Loop 4 — Knowledge compounding.** Learner questions and assessment failures reveal gaps in the knowledge base → gaps become authoring backlog → knowledge base improves → learning outcomes improve → better credentials → more trust. *Instrument: unanswered-question rate, per-topic failure clustering.*
 
-**Content supply strategy.** Three tiers, deliberately: (1) **First-party** — your existing Data Blueprint modules and AI material, the quality benchmark and the credential-bearing core. (2) **Accredited partners** — independent providers licensed to teach toward our credentials under published standards, with instructor credential requirements. This is the scaling mechanism; do not attempt to teach the world yourself. (3) **Community** — articles, talks, and case studies, clearly labelled as non-canonical.
+**Delivery and content supply strategy.** *(↻ REFRAMED by DR-02 — the accredited-partner tier is retired as the scaling mechanism, because it inverts the corrected model.)*
+
+Two tiers, deliberately: (1) **First-party, expert-led delivery** — programmes designed and delivered by expert practitioners, in person or live online. This is the product, the quality benchmark and the credential-bearing core. (2) **Supporting materials and the knowledge library** — the reference layer that prepares, extends, reinforces and documents expert-led learning, plus the public knowledge base that carries credibility and search reach.
+
+**Scaling is by expert network, not by licensed delivery.** Growth comes from lead trainers, associate trainers, facilitators, subject-matter specialists and guest experts delivering under our own quality standard — **not** from licensing independent providers to teach toward our credential while we hold the exam. *(⊘ RETIRED: "Accredited partners — independent providers licensed to teach toward our credentials… This is the scaling mechanism; do not attempt to teach the world yourself." Teaching is precisely what we do.)* **The economics, contracts, onboarding and quality governance of that expert network are deliberately not designed here** — DR-02 §7.2 records them as open.
 
 **Critically: we keep assessment in-house, permanently.** Delivery may be federated. The bar may not be. This is the single most important governance rule in the platform.
 
@@ -296,7 +324,9 @@ The platform is a **six-sided ecosystem**, deliberately designed so that each si
 Six pillars. Every feature in this document maps to exactly one. If a proposed feature maps to none, it does not get built.
 
 ### Pillar 1 — LEARN
-Structured capability acquisition. Courses, modules, learning paths, cohort programmes, live sessions, labs, and micro-learning. Multiple modalities against one skill graph: self-paced, instructor-led virtual, in-person, blended, and drip-scheduled cohort.
+*(↻ REFRAMED by DR-02 — live-first, and the modality list reordered accordingly.)*
+
+Structured capability acquisition, **delivered by expert practitioners**. Programmes run **face-to-face**, **live online**, and as **private corporate cohorts**, including at a client's location where the engagement calls for it. Supporting materials — preparation, resources, practice, reference, and recordings of live sessions where appropriate — **prepare, extend, reinforce and document** that delivery. **They do not replace it, and there is no self-paced route to the credential.** Labs and micro-learning remain future possibilities, not current shape.
 
 ### Pillar 2 — PROVE
 Everything that produces trustworthy signal: diagnostics, quizzes, knowledge exams, practical assignments, portfolio artifacts, defence interviews, peer review, proctoring, and credential issuance. **This pillar is the product's core asset and receives the highest engineering and governance investment.**
@@ -305,7 +335,11 @@ Everything that produces trustworthy signal: diagnostics, quizzes, knowledge exa
 The living Body of Practice: a semantically versioned, cross-linked, searchable knowledge base plus a glossary, a pattern and template library, case studies, and a curated external reading map. It is the ground truth for courses, for exam questions, and for the AI tutor's retrieval.
 
 ### Pillar 4 — BELONG
-Community: profiles, discussion spaces, local and virtual chapters, events, mentoring, study groups, and interest circles. Converts a transactional purchase into an ongoing professional identity — and is the primary defence against one-and-done churn.
+> **⊘ RETIRED AS A CORE PILLAR (DR-02).** Chapters, interest circles and a federated community structure are association machinery and are **not** foundational to this organisation. Critically, this pillar must **no longer be relied on as the supply mechanism for assessors** — see §15.3 and Appendix B.
+>
+> **What may remain, later and organically:** a cohort-private group during delivery, and programme alumni afterwards. Both emerge *from* real delivery; neither is a prerequisite for it, and neither may be assumed as a dependency for MVP viability.
+
+Community as originally conceived: profiles, discussion spaces, local and virtual chapters, events, mentoring, study groups, and interest circles.
 
 ### Pillar 5 — GROW
 The career layer: skills profile, skill graph position, gap analysis, role targets, recommended next steps, CPD tracking, credential renewal, and a public verifiable professional profile. This is what makes an annual membership rational rather than sentimental.
@@ -358,6 +392,12 @@ Altitude is **not** the same as difficulty. A4 executive content is short and hi
 ### 6.2 The skill graph underneath
 
 Beneath the three axes sits a directed acyclic graph of **skills** (see §10.2). Domains and altitudes are *views* onto that graph. Courses, assessments, credentials, job roles, and knowledge articles all attach to skill nodes. This single decision is what makes personalisation, gap analysis, credit-for-prior-learning, and corporate heatmaps possible — and it must be built before the catalogue grows, because retrofitting a skill graph onto 200 existing courses is brutal.
+
+> **↻ REFRAMED — §6.3 and §7 together (DR-02).** The navigation and sitemap below describe the pre-correction product and are **not authoritative**. `MVP_BUILD_SPEC.md` §6 holds the corrected screen list and priorities.
+>
+> **What changes:** a **Community** top-level destination and the `/community/*` tree go (chapters are retired as a core model) · `/learn/catalog` and the faceted catalogue go (retired outright) · `/learn/courses/[course]` becomes **programme detail** · new surfaces are needed for **scheduled offerings** and **expert profiles**, which the tree below has no equivalent of · the corporate entry path rises in prominence.
+>
+> **What survives intact and should not be lost:** the *principle* that navigation is organised by **user intent** rather than content type; that public and authenticated navigation are different systems; and the verification, knowledge and about surfaces. **Domain remains a valid organising concept** — as subject scope and capability structure — even though domain × altitude as a catalogue faceting device does not.
 
 ### 6.3 Navigation model
 
@@ -725,22 +765,36 @@ MODULE
 
 ### 10.5 Modalities and the blended model
 
-| Modality | Shape | Best for | Commercial note |
-|---|---|---|---|
-| Self-paced | On-demand, async | Scale, individuals, literacy | Highest margin, lowest completion |
-| Cohort | Fixed start, weekly live sessions, peer group | Practitioner depth, accountability | Best completion rates; premium price |
-| Live workshop | 1–3 days, virtual or in-person | Corporate, executive, funding-scheme claims | Highest price; matches your existing 2-day format |
-| Blended | Pre-work → live → post-work → assessment | Corporate flagship | **Recommended default for corporate** |
-| Lab | Hands-on sandbox environment | Engineering and GenAI skills | Highest build cost; phase carefully |
-| Micro | Under 15 min, single concept | Literacy, reinforcement, mobile | Excellent top-of-funnel and retention |
+*↻ REORDERED by DR-02 — live-first. The previous ordering led with self-paced and treated live delivery as an accountability layer on top of it. That is inverted.*
 
-**Recommendation:** lead commercially with **blended corporate** (it matches your proven 2-day workshop delivery and satisfies funding-scheme attendance requirements) while building self-paced as the scalable asset underneath. Use the live sessions as the accountability layer that self-paced learning lacks.
+| Modality | Shape | Best for | Commercial note | Status |
+|---|---|---|---|---|
+| **Face-to-face programme** | 1–3 days, in person, at our venue or the client's | Corporate, executive, funding-scheme claims; depth and discussion | Highest price; matches the proven 2-day delivery format | **Core** |
+| **Live online programme** | Real-time, instructor-led, scheduled sessions | Reach without losing interaction | **Not video** — interaction, questions, discussion, expert feedback | **Core** |
+| **Private / corporate cohort** | Either format, delivered for one organisation, tailored to its context | Team capability development | The largest engagements on the platform | **Core** |
+| **Blended** | Pre-work → live → post-work → assessment | Corporate flagship | **The recommended default for corporate** | **Core** |
+| ~~Self-paced~~ | On-demand, async | — | ⊘ **Retired as a modality for the credential.** Supporting materials exist under the DR-02 §5 boundary; there is no self-paced route to a credential | **⊘ Retired** |
+| Lab | Hands-on sandbox environment | Engineering and GenAI skills | Highest build cost | ⏸ Deferred |
+| Micro | Under 15 min, single concept | Literacy, reinforcement | Useful later; not current shape | ⏸ Deferred |
+
+**Recommendation:** lead commercially with **blended corporate** — it matches the proven 2-day delivery format and satisfies funding-scheme attendance requirements — with **public scheduled programmes**, face-to-face and live online, as the individual pathway. **Supporting materials carry the learning between sessions; they are not a scalable asset to be built underneath.** *(International and on-site delivery is a real part of the model; its commercial terms — travel, accommodation, logistics, venue — are agreed per engagement and are deliberately not specified anywhere in this document.)*
 
 ---
 
 ## 11. COURSE ARCHITECTURE
 
 ### 11.1 Content object model
+
+> **↻ REFRAMED by DR-02 §4 — subordinated, not destroyed.** The hierarchy below is no longer *the product*. It is the **curriculum structure of a programme and the materials that support it**, sitting beneath the delivery model:
+>
+> ```
+> Programme                    a designed, expert-led learning experience with stated outcomes
+>  └─ Scheduled offering       format · dates · location or platform · capacity · assigned expert
+>      └─ Session              a single delivery occasion; the unit attendance is captured against
+>          └─ Supporting materials   prepare · extend · reinforce · document  (never replace)
+> ```
+>
+> **Programme count is deliberately unfixed** (DR-02 §4.1) — a deliberately small, credible portfolio, decided commercially rather than architecturally. **"One learning path" in DR-01 is not "one programme".** The conceptual model is established here only to the extent the Blueprint's role requires: **no schema, no scheduling mechanics, no operational workflows.**
 
 ```
 Program                  # e.g. an academic semester or corporate curriculum
@@ -798,6 +852,18 @@ Do **not** build all five domains at once. Build **DF (exists) + GA (differentia
 ---
 
 ## 12. CERTIFICATION FRAMEWORK
+
+> **↻ RECONCILED (DR-02 §6) — the evidence-based philosophy is preserved and strengthened, not weakened.** Everything this section says about assessing capability rather than recall stands. What DR-02 adds is the front of the chain:
+>
+> ```
+> Expert-led programme participation  +  required learning activities
+>        +  meaningful assessment  +  applied evidence / artifact   →   CREDENTIAL
+> ```
+>
+> **Two models are explicitly rejected, and the second is the new one to guard against:**
+> `watch videos → exam → certificate` · `attend training → certificate`
+>
+> **Participation is part of the pathway; participation alone never earns the credential.** A weak certification model built on attendance would do the same damage as the exam-only certificate this strategy was created to avoid. **Preserved without change:** the applied artifact, the published rubric, the three exemplars, qualified human judgement on every credential, per-criterion written reasoning, permanent public verification, and auditability. **Deliberately left open:** exactly *how* programme participation is represented in the credential model — a policy question before a technical one, held open by DR-02 §6 and not resolved anywhere in this document.
 
 ### 12.1 Design principles
 
@@ -942,6 +1008,10 @@ This is a **required field** on every assessment object and must be visible to t
 
 ## 14. CORPORATE TRAINING MODEL
 
+> **↻ PROMOTED (DR-02 §8).** Corporate and private delivery is a **first-class strategic pathway**, not an optional feature and not a layer running alongside the product. This section's thinking is preserved in full and its standing is raised.
+>
+> **The MVP boundary, stated so this section is not over-read.** Strategic importance does **not** license workflow complexity. V1 establishes a **credible corporate entry path** — the offering explained, engagement formats, a qualifying enquiry, then a private cohort — and it does **not** automate a B2B sales and engagement lifecycle. **No CRM, no proposal automation, no contract workflow, no enterprise account infrastructure.** Agreement happens in conversation, outside the portal. The consoles, integrations and analytics described later in this section remain the long-term shape, not the MVP.
+
 ### 14.1 Why this is a distinct product, not a discount
 
 The corporate buyer is not buying learning. They are buying **provable capability change, defensible spend, and reduced risk.** The individual learner is buying career advancement. Different job-to-be-done, different value proposition, different UI, different pricing, different sales motion. Building corporate as "the same platform with seats" is the most common way academies leave money on the table.
@@ -987,6 +1057,16 @@ A structured 60-day activation plan (kickoff, baseline diagnostic, path assignme
 
 ## 15. COMMUNITY MODEL
 
+> # ⊘ RETIRED AS A CORE STRATEGIC MODEL (DR-02)
+>
+> **Section 15 no longer describes a foundational assumption of this organisation.** Chapters, tiered chapter status, the contributor ladder and the federated community structure are association machinery, and DR-02 retires them as a core model. They are **not** part of the MVP, **not** the strategic destination, and — most importantly — **no longer the answer to assessor supply**.
+>
+> **The dependency this creates, stated plainly.** §15.3 below asserts that the contribution ladder *"is how the evidence-based credential model becomes economically viable"*, and Appendix B names it as the mitigation for the single critical risk. **Retiring it withdraws that mechanism, and its replacement is not yet designed.** DR-02 §7.2 records the directional hypothesis — lead expert capacity → qualified expert network → approved assessors governed by credential quality standards — as **a hypothesis, not a solution**, and keeps assessor scalability as an explicitly tracked open issue. Assessor economics, compensation, accreditation processes and governance workflows are deliberately **not** invented.
+>
+> **What may still emerge, organically and from real delivery:** a cohort-private group during a programme, and programme alumni afterwards. Neither may be treated as a hidden dependency for MVP viability.
+>
+> **The rest of this section is retained as thinking, not as plan.** The cold-start analysis in §15.6 in particular remains sound and applies to anything community-shaped that is ever attempted.
+
 ### 15.1 Purpose
 Community is not a feature; it is the **retention and supply engine**. It converts a transaction into an identity, and consumers into contributors. Without it, every learner is a one-time purchase and every assessor must be hired.
 
@@ -1012,7 +1092,11 @@ Consumer → Participant → Contributor → Recognised Expert → Steward
                            mentors        author             Fellow
 ```
 
-Each step has explicit criteria, a visible profile marker, and real benefits (CPD points weighted highest for contribution, revenue share where applicable, fee waivers, early access, and standing). **This ladder is how the evidence-based credential model becomes economically viable** — the binding constraint on credential throughput is qualified assessor hours, and the ladder is the machine that manufactures assessors from credential holders.
+Each step has explicit criteria, a visible profile marker, and real benefits (CPD points weighted highest for contribution, revenue share where applicable, fee waivers, early access, and standing).
+
+> **⊘ RETIRED (DR-02) — and this is the single most consequential retirement in the document.** The original text continued: *"This ladder is how the evidence-based credential model becomes economically viable — the binding constraint on credential throughput is qualified assessor hours, and the ladder is the machine that manufactures assessors from credential holders."*
+>
+> **That machine no longer exists in the model, and nothing has replaced it yet.** The observation it rested on remains true — qualified assessor hours are the real constraint on credential throughput — but the chapter-and-contributor mechanism for solving it is retired. **Do not treat this section as a live answer to assessor supply.** DR-02 §7.2 holds the question open; see also the correction in Appendix B.
 
 ### 15.4 Events
 Types: webinars · virtual and in-person chapter meetups · workshops · study sessions · an annual online summit · office hours with instructors · exam-prep clinics.
@@ -1080,6 +1164,14 @@ Priority sequence: English → Bahasa Malaysia → Arabic → Mandarin → Spani
 
 Every AI feature below is justified by a specific learner or operator problem. Features that exist only to say "AI-powered" are excluded deliberately — that noise is itself a differentiator when everyone else is adding it.
 
+> **⏸ DEFERRED (DR-02, Decision 2) — the AI Tutor is not an MVP capability, and nothing replaces it.**
+>
+> Its stated rationale was *"learners get stuck at 11pm with nobody to ask."* Under expert-led delivery the participant has an expert, a cohort and a scheduled session — so the premise no longer holds. **V1 ships no learner-facing AI feature, and the tutor is not substituted by another one.** Returning it requires separate strategic justification against the expert-led delivery model.
+>
+> **Hold this distinction firmly.** AI is our *subject matter*, and programmes teach it. That is not a reason to put AI *into the portal*. The restraint this section opens with applies to us most of all: **"AI" being part of what we teach must never become the argument for a feature we cannot otherwise justify.**
+>
+> The designs below are retained as the deferred specification, not as commitments.
+
 ### 17.1 Learner-facing
 
 | Feature | Problem solved | Mechanism | Guardrails |
@@ -1123,6 +1215,8 @@ This section is a product feature, not compliance overhead. We are selling AI go
 ## 18. PORTAL MODULES
 
 Each module is a bounded functional area with an owner, a data domain, and defined interfaces. Suitable as a service decomposition or as modules within a modular monolith (recommended for phase 1 — see §26).
+
+> **↻ REFRAMED (DR-02) — this is the long-term module map, not the build.** `MVP_BUILD_SPEC.md` §2 is authoritative for what is built. Against the corrected model: **18.4 Catalog & Content** becomes programmes, scheduled offerings and supporting materials rather than a catalogue · **18.15 Instructor Studio** is reframed around a genuine expert role, at MVP no more than a public profile plus roster and attendance · **18.18 Community**, **18.19 Events** and the partner-provider console are **⊘ retired as core** · **18.23 AI Services** is **⏸ deferred** with the tutor · **a scheduling capability is missing from this map entirely** and is required by the corrected model. **No architecture, schema or technical decision is made here** — module reconciliation is downstream work, gated separately.
 
 | # | Module | Responsibility | Key entities |
 |---|---|---|---|
@@ -1272,12 +1366,16 @@ Roughly months 7–18. Sequenced by dependency and by commercial return.
 
 Years 2–5. Directional, deliberately fewer commitments, ordered by strategic weight rather than by ease.
 
-1. **Become the reference standard for AI capability.** Publish the capability standard openly, governed by an independent standards council with practitioner, employer, and academic representation. **Open standard, proprietary assessment** — this is the correct structural position, and it is exactly how the reference ecosystem built its moat.
+> **⊘ TWO DESTINATIONS RETIRED (DR-02 §1).** Items 1 and 6 below described becoming a standards body with federated licensed operators. **That is not the destination.** We are building an independent professional training and certification organisation with its own identity — not a replica of an existing association, and not a licensing authority over other people's delivery. Both items are retained as recorded reasoning about how the *reference ecosystem* built its position, and both are struck as goals for us.
+>
+> **What survives the retirement, and should not be lost with it:** publishing openly what a credential requires — the rubric, the exemplars, the criteria — remains right and is already V1 behaviour. **Transparency about the standard is a trust practice; becoming the standards body is an organisational ambition.** DR-02 keeps the first and drops the second. Advisory relationships, expert boards and external subject-matter input may still emerge later **in support of our own organisation**, never as a step toward reconstituting an association.
+
+1. ~~**Become the reference standard for AI capability.**~~ **⊘ Retired as a destination.** Publish the capability standard openly, governed by an independent standards council with practitioner, employer, and academic representation. **Open standard, proprietary assessment** — this is the correct structural position, and it is exactly how the reference ecosystem built its moat. *(Accurate about them; not our goal. Open publication of credential requirements survives on its own merits — see the note above.)*
 2. **Employer-side verification API.** Let ATS and HR systems verify credentials and query skill assertions programmatically, with holder consent. When the credential becomes machine-readable to hiring systems, it becomes infrastructure rather than a certificate.
 3. **Continuous credentialing.** Move from a three-year cycle to a *continuously refreshed* proficiency signal driven by ongoing micro-assessment, verified work evidence, and contribution. The credential becomes a live signal rather than a snapshot — this is the natural endpoint of skill decay modelling and nobody in the market is close to it.
 4. **Simulation-based assessment.** Realistic environments where candidates operate on a synthetic enterprise data estate under time and constraint pressure — the strongest possible evidence of capability, and effectively impossible to fake.
 5. **AI capability observatory.** Publish anonymised, aggregated skills data as an industry benchmark report. A powerful trust, PR, and enterprise-sales asset, and it compounds with scale.
-6. **Federated regional academies.** Licensed regional operators delivering in local language under the global standard. Scales delivery without scaling headcount; assessment stays central. Directly reuses the pattern identified in §A2.
+6. ~~**Federated regional academies.**~~ **⊘ Retired as a destination.** Licensed regional operators delivering in local language under the global standard. Scales delivery without scaling headcount; assessment stays central. Directly reuses the pattern identified in §A2. *(Retired for the same reason as §A2 itself: licensing others to deliver inverts the corrected model. **Regional reach comes instead from the expert network and from international/on-site delivery** — we travel, or a trusted expert delivers under our own standard.)*
 7. **Adjacent standards.** Extend the capability standard into AI governance and AI safety roles as regulation matures — regulatory pressure will manufacture demand for exactly this credential.
 8. **Employer-embedded learning.** Meet learners inside the tools where they work rather than requiring them to visit a portal.
 
@@ -1346,7 +1444,7 @@ Mobile-first, fast, unambiguous. *This screen is where a hiring manager forms th
 
 **S9 — Learner Dashboard.** See §24.1.
 
-**S10 — Course Player.** Content pane · collapsible module navigation with progress · notes · transcript · **AI tutor side panel with lesson context** · knowledge-base references · next/previous with autosave and resume.
+**S10 — ~~Course Player~~ ⊘ RETIRED (DR-02).** A course player is the centrepiece of a self-paced product, and there is no self-paced product. What V1 needs instead is a **supporting-materials surface** and a **participant view of the programme and its next session**; both are in `MVP_BUILD_SPEC.md` §6, and **`P24` Scheduled Offerings takes this slot's former prominence**. Original specification, retained: content pane · collapsible module navigation with progress · notes · transcript · AI tutor side panel with lesson context · knowledge-base references · next/previous with autosave and resume.
 *Primary action:* continue.
 
 **S11 — My Path (skill graph view).** The signature visual. Path as a milestone journey with the learner's current position clearly marked · completed / current / locked states · **skills unlocked shown as capabilities, not topic names** · time to credential · re-plan control.
@@ -1535,7 +1633,7 @@ Design tokens (colour, type, space, radius, shadow, motion) as the single source
 | Vector | pgvector | Avoids a second datastore for RAG at this scale |
 | Cache/queue | Redis + a durable job queue | Sessions, rate limits, background jobs, assessment timers |
 | Object storage | S3-compatible, with signed URLs | Video, artifacts, evidence packs |
-| Video | Managed provider (Mux or similar) with adaptive streaming, captions, DRM where needed | Never build video infrastructure |
+| Video | **⏸ Not required — deferred with the lesson player (DR-02).** If session recordings are ever offered as supporting material, use a managed provider (Mux or similar) with captions | Never build video infrastructure — and in V1, do not buy one either |
 | Search | Postgres FTS + pgvector hybrid; OpenSearch/Typesense at scale | Start simple |
 | Auth | Managed provider supporting OIDC/SAML/SCIM | SSO is an enterprise gate; do not build it |
 | Payments | Stripe + local rails (FPX/DuitNow for Malaysia), multi-currency, tax handling | Local payment methods materially affect conversion in your primary market |
@@ -1623,7 +1721,7 @@ The rule: **build what constitutes the trust asset and the differentiation; buy 
 
 | Risk | Severity | Mitigation |
 |---|---|---|
-| **Assessor supply cannot meet credential demand** | **Critical** — this is the binding constraint on the whole model | Contribution ladder (§15.3) as a deliberate supply machine; AI pre-assessment to cut assessor time; cap credential intake to protect the SLA rather than degrading quality; pay assessors properly |
+| **Assessor supply cannot meet credential demand** | **Critical — and the mitigation has changed** | ⚠️ **The original mitigation is withdrawn.** It read: *"Contribution ladder (§15.3) as a deliberate supply machine; AI pre-assessment to cut assessor time…"* — but DR-02 retires the contribution ladder and defers AI pre-assessment, so **two of the four mitigations no longer exist**. What remains valid: **cap credential intake to protect the SLA rather than degrading quality**, and **pay assessors properly**. What replaces the rest is **not yet designed** — DR-02 §7.2 records a directional hypothesis (lead expert capacity → qualified expert network → approved assessors under credential quality standards) and keeps this **openly tracked and unresolved**. Note also that under expert-led delivery, `BR-1` means an expert who delivers a cohort does not assess it — a real consequence to plan around, **not a permanent limit on the business** |
 | **Evidence gate suppresses conversion** | High | Exemplars, published rubrics, scaffolded workspace, artifact coach, free resubmission; measure submission rate obsessively; be willing to lighten the L2 artifact while holding the line at L3 |
 | **Credential has no employer recognition** | **Critical** — a credential nobody recognises is worthless | Employer advisory board *before* launch; publish the standard openly; case studies; free verification API; target 3 named employers pre-launch |
 | **Content goes stale in AI domains** | High | 6-month review cycle for GA/AI; changelog-driven; review-due backlog as a tracked admin metric |

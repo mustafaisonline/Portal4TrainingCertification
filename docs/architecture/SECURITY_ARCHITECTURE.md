@@ -34,7 +34,7 @@ Security failures here are not only technical incidents; they are product failur
 ## 3. Authorisation strategy
 
 ### 3.1 Model
-**`[PRODUCT REQUIREMENT]`** Scoped, many-to-many roles: `(user, role, scope_type, scope_id)`. **Never a `role` column on the user.** Both specifications call this the most common and most expensive early data-model mistake. Launch roles: `learner`, `assessor`, `instructor`, `org_admin`, `platform_admin`.
+**`[PRODUCT REQUIREMENT]`** Scoped, many-to-many roles: `(user, role, scope_type, scope_id)`. **Never a `role` column on the user.** Both specifications call this the most common and most expensive early data-model mistake. Launch roles: `participant` *(formerly `learner` — DR-02 terminology)*, `expert` *(the trainer/instructor role, **promoted by DR-02** to a real role with a public profile)*, `assessor`, `org_admin`, `platform_admin`. **The authorisation model itself is unchanged and sufficient** — only the role set grows; see ADR-020.
 
 ### 3.2 Enforcement point
 **`[PRODUCT REQUIREMENT]`** MVP Spec §9 rule 7: *"Assessment content is not readable by non-assessor, non-admin roles at the query layer. Not just hidden in the UI."*
@@ -153,7 +153,7 @@ All `[BEST PRACTICE]`, formalised as ADR-030.
   PUBLIC (no auth)                    │  AUTHENTICATED                │  PRIVILEGED
   ──────────────────────────────────  │  ───────────────────────────  │  ──────────────────────
   marketing · knowledge · glossary    │  learner workspace            │  assessor workbench
-  diagnostic (anonymous)              │  lesson player · tutor        │  (item + submission access)
+  diagnostic (anonymous)              │  programme · session · mat'ls │  (item + submission access)
   credential detail · rubric          │  candidacy · exam · artifact  │  org console (own tenant)
   PUBLIC VERIFICATION PAGE            │                               │  platform admin (break-glass,
                                       │                               │   MFA, fully audit-logged)

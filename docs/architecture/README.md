@@ -7,6 +7,20 @@
 
 ---
 
+> ## 🔄 ARCHITECTURE RECONCILED WITH DR-02 — 2026-08-31
+>
+> **Start here if you are new to this repository.** The product model was corrected on 2026-08-31 by [`DR-02_EXPERT_LED_DELIVERY_MODEL.md`](../../DR-02_EXPERT_LED_DELIVERY_MODEL.md), after the vision alignment audit found the specifications describing a self-paced course platform rather than the **expert-led professional training and certification organisation** being built. The three root specifications were corrected in three propagation stages, and this architecture layer was reconciled last.
+>
+> **What the correction did NOT change:** the modular monolith · PostgreSQL as sole source of truth · scoped RBAC at the data-access layer · append-only evidence · audit-in-transaction · the `jobs` table · the server-authoritative exam clock · requirements-as-data · permanent credential identity · all twelve principles `AP-01`…`AP-12` · **35 of 42 ADRs**. The architecture was built on generic shapes and survived a product-model correction largely intact.
+>
+> **What it did change:** the Track B slice (ADR-036/040) · the delivery model (**ADR-043**, new) · the live-session boundary (**ADR-044**, new, closing `OQ-13`) · deferral of the AI tutor (ADR-013, **with a corrected trigger**) and video (ADR-009) · `D3`/`D9`/`D10` in the data architecture · Tier 1 workflows 3 and 9 in testing.
+>
+> **Read in this order:** `DR-02` → `ARCHITECTURE_OVERVIEW.md` Part 1 → `DATA_ARCHITECTURE.md` §1.1 → ADR-043 and ADR-044 → `EXTERNAL_ARCHITECTURE_REVIEW_2026-08-30.md` for the review that started it.
+>
+> **No implementation followed.** No code, schema, migration, API or vendor exists. Physical data-model creation remains a RED gate.
+
+---
+
 ## 1. Purpose of this documentation
 
 Architecture decisions on this project must not exist only inside an AI conversation. This directory is the **persistent, version-controlled record** of:
@@ -24,6 +38,7 @@ These documents are **derived from**, and subordinate to, the authoritative prod
 | Authority level | Document |
 |---|---|
 | 1 | Explicit current human instruction |
+| 2 | **`DR-02_EXPERT_LED_DELIVERY_MODEL.md`** — the authoritative strategic correction of 2026-08-31. **Outranks the specifications** on organisation identity, delivery model, portal role, programme model, certification relationship, expert model and corporate model |
 | 2 | `DATA_AI_ACADEMY_MVP_BUILD_SPEC.md` (authoritative for **what gets built first**) |
 | 2 | `DATA_AI_ACADEMY_PORTAL_BLUEPRINT.md` (authoritative for **vision and architecture direction**) |
 | 2 | `DATA_AI_ACADEMY_PORTAL_MOCKUP_SPECIFICATION.md` (authoritative for **design language and IA**) |
@@ -56,6 +71,7 @@ Where this directory and a specification conflict, **the specification wins** an
 | [`TECHNOLOGY_DECISION_FRAMEWORK.md`](TECHNOLOGY_DECISION_FRAMEWORK.md) | The repeatable 8-step process and comparison template for **all** significant technology and vendor selections | DRAFT — PENDING HUMAN APPROVAL |
 | [`TECHNOLOGY_DECISION_PACKAGE_PHASE_1.md`](TECHNOLOGY_DECISION_PACKAGE_PHASE_1.md) | The four Track B prerequisites evaluated under the framework: ORM · authentication · testing · local PostgreSQL | Partly approved 2026-08-30 |
 | [`DECISION_B_AUTHENTICATION.md`](DECISION_B_AUTHENTICATION.md) | Full authentication analysis — cost/AP-12 fit · identity architecture · portability and exit · maturity and security history · complexity | **RECOMMENDATION ONLY — PENDING HUMAN APPROVAL** |
+| [`EXTERNAL_ARCHITECTURE_REVIEW_2026-08-30.md`](EXTERNAL_ARCHITECTURE_REVIEW_2026-08-30.md) | Independent pre-implementation review. **Advisory record — never rewritten.** The review that led to the vision alignment audit and `DR-02` | Record |
 
 **No physical database schema exists in this directory and none may be created here.** Schema creation is a RED-gate decision (`CLAUDE.md` Rule 1).
 
@@ -157,7 +173,7 @@ Questions that **cannot reasonably be inferred from the specifications** and req
 | **OQ-10** | What are the **RPO and RTO** targets? | ADR-031 | `DATA_ARCHITECTURE.md` §7.2 |
 | **OQ-11** | What is the acceptable **maximum loss window** for unsaved exam and artifact keystrokes (the autosave interval)? | ADR-021; a real user consequence | `DATA_ARCHITECTURE.md` §6.1 |
 | **OQ-12** | On **account deletion**, exactly what survives on the public verification page? | PDPA obligation vs the permanence promise | `DATA_ARCHITECTURE.md` §7.1 |
-| **OQ-13** | Are **live cohort sessions** run on tooling outside the platform, with the platform only recording attendance? | Whether any meeting integration is in scope | `INTEGRATION_ARCHITECTURE.md` I-20 |
+| ~~OQ-13~~ | ~~Are **live cohort sessions** run on tooling outside the platform?~~ | — | **CLOSED 2026-08-31** by founder decision, recorded as **ADR-044**: the portal does not build or operate conferencing; sessions are delivered externally; the portal holds joining details, session information and attendance; provider-neutral, no vendor selected |
 | **OQ-14** | Is **MFA** in scope for V1 admin accounts? | ADR-006 configuration | `SECURITY_ARCHITECTURE.md` §12 |
 | **OQ-15** | Who owns the **accommodations approval** decision, and what is the published policy? | `K03`; called "the most serious omission" in the specifications | `SECURITY_ARCHITECTURE.md` §12 |
 | **OQ-16** | Should the V1 **audit log** extend beyond credential and assessment actions to payments, seat changes and data-subject requests? | ADR-022 scope | `SECURITY_ARCHITECTURE.md` §8 |
@@ -165,6 +181,11 @@ Questions that **cannot reasonably be inferred from the specifications** and req
 | **OQ-18** | What is the release gate — must the Tier 1 critical-workflow set pass before **every** production deploy, or only at phase milestones? | Definition of Done | `TESTING_ARCHITECTURE.md` §10 |
 | **OQ-19** | Is there a coverage expectation, or is coverage deliberately not a target? *(Recommendation: risk-based judgement, not a percentage)* | Testing policy | `TESTING_ARCHITECTURE.md` §10 |
 | ~~OQ-20~~ | ~~Does the technical slice defer, replace, or run separately from the MVP Spec's product-validation criteria?~~ | — | **CLOSED 2026-08-30** by human direction: **two parallel tracks, neither replaces the other.** See ADR-040 and `ARCHITECTURE_OVERVIEW.md` §2.14 |
+
+| **OQ-21** | **How is programme participation represented in the credential requirement model** — and is it enrolment, attendance, or completion of required activities? *Policy before schema.* **Attendance alone must never earn a credential** (DR-02 §6) | `D7` reconciliation; any future requirement-type work. **Blocks nothing else** | `DR-02` §6, §14.2; `DATA_ARCHITECTURE.md` §1.1 |
+| **OQ-22** | **What is the assessor supply and scaling operating model?** The chapter-based contributor ladder that previously answered this was retired by DR-02, and **nothing replaces it**. Directional hypothesis only: lead expert capacity → qualified expert network → approved assessors under credential quality standards | **A high-priority tracked strategic risk requiring a dedicated future decision.** No architectural coupling found — it is an operating-model question first | `DR-02` §7.2; Blueprint §15.3, Appendix B; `EXTERNAL_ARCHITECTURE_REVIEW_2026-08-30.md` |
+
+> **Do not resolve OQ-21 or OQ-22 by assumption.** Neither may be answered by adding a requirement type, restoring the contributor ladder, or introducing AI assessment. Both need a deliberate human decision.
 
 **Also outstanding — the six business decisions the specifications themselves flag** (`DATA_AI_ACADEMY_PORTAL_MOCKUP_SPECIFICATION.md` §20.6): platform and credential naming · launch domain scope · individual-vs-corporate-first · credential pricing and the exam/artifact fee split · assessor sourcing · HRD Corp programme scope. These are product decisions, not architecture, but **naming and pricing both have architectural consequences** (permanent verification URLs, commerce model), so they are tracked here as dependencies rather than restated as new questions.
 

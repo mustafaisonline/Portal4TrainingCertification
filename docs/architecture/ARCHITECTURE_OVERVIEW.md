@@ -9,70 +9,105 @@
 
 # PART 1 — PRODUCT UNDERSTANDING
 
+> ## ⚠ RECONCILED WITH DR-02 — 2026-08-31
+>
+> **[`DR-02_EXPERT_LED_DELIVERY_MODEL.md`](../../DR-02_EXPERT_LED_DELIVERY_MODEL.md) is the authoritative strategic correction and outranks this document.** Part 1 previously restated a self-paced product: a journey ending in a lesson player, an AI tutor as an MVP module, and corporate as a "thin slice". All three are superseded.
+>
+> **The organisation is an independent professional training and certification organisation. Its core value is expert-led delivery — face-to-face, live online, and tailored corporate engagements. The portal supports that ecosystem; it is not where learning happens.**
+>
+> **Part 2 (the recommended architecture) is materially unaffected** by the correction — the modular monolith, PostgreSQL, scoped RBAC, append-only evidence, audit-in-transaction, the jobs table and the exam clock all stand. The correction lands in *what the architecture serves*, not in *how it is built*. See `EXTERNAL_ARCHITECTURE_REVIEW_2026-08-30.md` for the review that preceded this, and ADR-043/ADR-044 for the two decisions it produced.
+
 ## 1.1 What is being built
 
-**`[SPEC]`** A **single professional credential, in a single pilot domain, delivered end to end** (MVP Spec §1). A visitor takes a free diagnostic that names, in plain language, what they cannot yet do; enrols in one curated learning path; learns with an AI tutor grounded in a small knowledge library; sits one knowledge assessment; produces a real applied artifact against a published brief, rubric and worked exemplars; **a qualified human reads that artifact, grades it against the rubric, and writes reasoned feedback**; on success a credential is issued with a permanent public verification page. A thin corporate layer runs alongside: invite a cohort, track progress, capture attendance, generate the HRD Corp evidence pack.
+**`[SPEC]`** A **single professional credential, earned through an expert-led programme in a single pilot domain, delivered end to end** (MVP Spec §1, as corrected by DR-02). A visitor discovers a programme — what they will be able to do, who delivers it, in what format, on what date — and registers for a scheduled offering, or an organisation engages us for a private cohort. **Delivery is expert-led: live online or face-to-face.** Supporting materials prepare, extend and reinforce that delivery without replacing it. The participant sits one knowledge assessment; produces a real applied artifact against a published brief, rubric and worked exemplars; **a qualified human reads that artifact, grades it against the rubric, and writes reasoned feedback**; on success a credential is issued with a permanent public verification page. A free capability assessment runs alongside — an individual readiness check, and the corporate land motion. **Corporate and private delivery is a first-class pathway, not a layer**: invite a cohort, capture attendance, track progress, generate the HRD Corp evidence pack.
+
+**`[SPEC]`** **Programme count is deliberately not fixed** (DR-02 §4.1) — a deliberately small, credible portfolio. Launch inventory is a commercial and content decision and **is never encoded architecturally**.
 
 **`[SPEC]`** The promise is three sentences (MVP Spec §14): *learn what you're actually missing · prove it by doing the work · carry the proof anywhere.* Any decision that does not make one of those more true is not a V1 decision.
 
-**`[SPEC]` DR-01 — one of each countable thing:** one pilot domain (Data Foundations, **as seeded data, never hardcoded**), one learning path, one certification, one artifact brief (3 industry variants), one rubric (5 criteria × 4 levels), one credential.
+**`[SPEC]` DR-01 — one of each countable thing:** one pilot domain (Data Foundations, **as seeded data, never hardcoded**), one certification, one artifact brief (3 industry variants), one rubric (5 criteria × 4 levels), one credential. *(DR-01's "one learning path" concerned the **credential**; under DR-02 §4.1 it is not a fixed programme count.)*
 
-**`[SPEC]`** Deliberately **not** built in V1: credential ladder/levels/bands, community, chapters, events, marketplace, W3C Verifiable Credentials, proctoring vendor, adaptive engine, second domain, CPD, renewal, native mobile apps, SSO/SCIM/HRIS, LTI/SCORM/LRS, benchmarking, heatmaps.
+**`[SPEC]`** Deliberately **not** built in V1: credential ladder/levels/bands, **course catalogue**, **self-paced route to the credential**, **AI tutor** (deferred, DR-02 Decision 2), **video-first content**, community, chapters, events, marketplace, W3C Verifiable Credentials, proctoring vendor, adaptive engine, second domain, CPD, renewal, native mobile apps, SSO/SCIM/HRIS, LTI/SCORM/LRS, benchmarking, heatmaps. **Additionally retired as strategic destinations** (DR-02 §1): standards council, chapter-based structure, accredited-partner delivery.
 
 **Architectural consequence — the governing principle (`[SPEC]` MVP Spec §16):**
 > **Architect for expansion. Build only what needs validation.** Adding domain #2 or credential #2 must be a *data operation plus content* — never a schema migration and never a redesign.
 
 ## 1.2 Primary user groups
 
-**`[SPEC]`** Five, not fourteen (MVP Spec §4):
+**`[SPEC]`** Six, not fourteen (MVP Spec §4, as corrected by DR-02 — five previously; the expert is restored as a real role):
 
 | Code | User group | Why it exists in V1 | Architectural weight |
 |---|---|---|---|
-| U1 | **Visitor** (anonymous) | Funnel entry; diagnostic and credential verification are both anonymous | Public, SEO-indexed, cacheable, no session required |
-| U2 | **Learner / Candidate** | The whole promise. *Candidate is a **state**, not a role* — one account, a `candidacy` record | Authenticated workspace; the bulk of transactional state |
-| U3 | **Assessor** | Without a human judging artifacts the differentiator does not exist. **A launch dependency, not a feature** | Elevated, conflict-of-interest-constrained access; separate integrity rules |
-| U4 | **Corporate Admin** | How V1 gets paid | Tenant-scoped access; must never see other organisations |
-| U5 | **Platform Admin** | Content, users, orgs, credentials, packs. Internal-only; **may be an ugly CRUD** | Break-glass, fully audit-logged |
+| U1 | **Visitor** (anonymous) | Funnel entry; programme discovery, the capability assessment and credential verification are all anonymous | Public, SEO-indexed, cacheable, no session required |
+| U2 | **Participant / Candidate** | The whole promise. *Candidate is a **state**, not a role* — one account, a `candidacy` record. *("Participant" replaces "learner" where a person is in a programme — DR-02 terminology)* | Authenticated workspace; the bulk of transactional state |
+| U3 | **Expert / Trainer** *(promoted by DR-02)* | **Expert-led delivery is the product.** Publicly visible via a real, honest profile; operationally needs roster and attendance only | Association to a scheduled offering is what makes **BR-1** computable for public offerings `[INFERENCE]`. **No instructor portal** |
+| U4 | **Assessor** | Without a human judging artifacts the differentiator does not exist. **A launch dependency, not a feature** | Elevated, conflict-of-interest-constrained access; separate integrity rules |
+| U5 | **Corporate Admin** | How V1 gets paid | Tenant-scoped access; must never see other organisations |
+| U6 | **Platform Admin** | Content, programmes, users, orgs, credentials, packs. Internal-only; **may be an ugly CRUD** | Break-glass, fully audit-logged |
 
-**`[SPEC]`** **Instructor** is modelled in `user_roles` from day one but has **no portal in V1** — at launch the instructor is also the platform admin. Cohort delivery needs only roster and attendance, which live in the corporate module.
+**`[SPEC]`** The earlier position — *"Instructor is modelled in `user_roles` but has no portal in V1"* — is **superseded on the role, not on the portal**. The expert is a real role with a **public profile**; there is still **no instructor portal**, only roster and attendance. **Honest representation is binding: no fabricated expert profiles, ever**, and the model must accommodate a growing expert network without redesign (DR-02 §7).
+
+**`[INFERENCE]`** The authorisation model itself is **unchanged and sufficient** — scoped many-to-many RBAC (ADR-020) already accommodates the new role. Only the role *set* grows.
 
 **`[INFERENCE]`** Because a person is routinely a learner *and* an assessor *and* an org admin, **roles must be scoped many-to-many from the first commit** — this is stated as a Retrofit Test item in `[SPEC]` and is the single most expensive identity mistake available to this project.
 
 ## 1.3 Major functional modules
 
-**`[SPEC]`** Nine modules (MVP Spec §2), each with a *minimum* implementation:
+**`[SPEC]`** Nine module slots, of which **eight are built in V1** — `M8` is deferred by DR-02. Identifiers are stable and are not renumbered. Each is listed with a *minimum* implementation:
 
 | ID | Module | Minimum V1 responsibility |
 |---|---|---|
 | **M1** | Identity & Accounts | Email/password + Google sign-in, verification, reset, profile, **scoped many-to-many roles** |
 | **M2** | Skills & Diagnostic | ~35 **flat** skills (no DAG), 20-question fixed diagnostic with 2 branches, gap report, **append-only skill assertions** |
-| **M3** | Content & Learning | One path → 6–8 courses → modules → lessons → blocks; lesson player with resume; non-blocking knowledge checks; **version fields present but unread** |
-| **M4** | Knowledge Library | 20–30 public SEO articles + ~60-term glossary + changelog. **Also the AI tutor's corpus — must exist before M8** |
+| **M3** | **Programmes, Scheduling & Supporting Materials** *(renamed by DR-02)* | Programme → scheduled offering/cohort → session → supporting materials; **public programme discovery and scheduled offerings**; registration; materials that prepare, extend, reinforce or document delivery; non-blocking knowledge checks; **version fields present but unread**. **No catalogue, no lesson player, no video-first content** |
+| **M4** | Knowledge Library | 20–30 public SEO articles + ~60-term glossary + changelog. Credibility surface and participant reference. *(Its former second job — the AI tutor's retrieval corpus — lapses with M8's deferral)* |
 | **M5** | Assessment | One fixed 60-item / 60-minute form, randomised order, **one pass threshold (70%)**, highest score retained, no proctoring vendor |
 | **M6** | **Evidence & Assessor Workflow ★** | Brief + 3 variants, published rubric, 3 real exemplars, submission workspace with autosave and AI-use disclosure, **assessor workbench**, result with per-criterion reasoning |
 | **M7** | Credentials | One `credential_def` with **requirements as data rows**, issuance, **permanent public verification page**, OB 2.0 PNG + PDF, LinkedIn share |
-| **M8** | AI Tutor | RAG over M4 only; **citations with version stamps**; refuses out-of-corpus; **visibly disabled during assessment** |
-| **M9** | Corporate Thin Slice | Org account, seat invites (single + CSV), cohorts, **attendance grid with correction audit trail**, simple progress table, **HRD Corp evidence pack generator** |
+| **M8** | **AI Tutor — ⏸ DEFERRED FROM MVP** *(DR-02 Decision 2)* | **Not built in V1; not retired; not replaced by another AI feature.** Retained design: RAG over M4 only, citations with version stamps, refuses out-of-corpus, visibly disabled during assessment. **Returning it requires separate strategic justification against the expert-led model** — that AI is our subject matter is explicitly not such a justification |
+| **M9** | **Corporate & Private Delivery** *(promoted from "Thin Slice")* | Corporate entry path (offering, engagement formats, qualifying enquiry), org account, seat invites (single + CSV), private cohorts, **attendance grid with correction audit trail**, progress table, **HRD Corp evidence pack generator**. **Strategic status raised; MVP workflow complexity unchanged — no CRM, no proposal automation, no contract workflow** |
 | — | Cross-cutting | Payments (Stripe + FPX/DuitNow, MYR + USD), transactional email, admin CRUD, **audit log on credential and assessment actions**, error tracking, funnel analytics, **externalised UI strings** |
 
 ## 1.4 Core business workflows
 
-**`[SPEC]`** One journey (MVP Spec §5). Everything in the build serves it:
+**`[SPEC]`** **Two journeys, both first-class** (MVP Spec §5, as corrected by DR-02). They converge at delivery and share every module — no separate product. *The previous single journey — `diagnostic → account → dashboard → lesson player (repeat) → exam → artifact` — was a self-serve digital funnel and is superseded.*
+
+**Journey A — the individual professional:**
 
 ```
-Visitor → [P05] Diagnostic (20q, "I'm not sure" unpenalised)
-        → [P06] Gap report  ── the conversion moment ── → account creation
-        → [L01] Dashboard → [C05] Learn (tutor + citations)  ↺
-        → [K05b] Knowledge assessment  ── <70% → score + per-skill gaps + retake ↺
-        → [K06] ★★ Applied artifact  ── THE CRITICAL DROP-OFF (instrument from candidate one)
-        → [A03] Human assessor grades against rubric, writes reasoning · 10 working day SLA
+Visitor → [P10] Programme  (what you'll be able to do · who delivers it · format)
+        → optional: [P05] Capability assessment → [P06] Gap report
+                    ── resolves to a programme and when it next runs
+        → [P24] Scheduled offerings — choose format and date
+        → [K03] Register · integrity undertaking · pay
+        → ★ EXPERT-LED PROGRAMME — live online or face-to-face
+             THE PRODUCT. The portal supports it (schedule, joining details,
+             roster, attendance, materials) and does not replace it.
+        → [K05b] Knowledge assessment ── <70% → score + per-skill gaps + retake ↺
+        → [K06] ★★ Applied artifact ── THE CRITICAL DROP-OFF (instrument from candidate one)
+        → [A03] Qualified assessor grades against rubric, writes reasoning · 10 working day SLA
         → [K08] Result ── NOT YET → feedback + remediation + one free resubmission ↺
                        └─ AWARDED
         → [K10] Credential awarded → [P16] Permanent public verification page
         → shared → a stranger clicks the badge → Visitor ↺   (growth loop)
 ```
 
-**`[SPEC]`** The **corporate variant is not a separate product** — the same nine modules with a different entry point: invited into a cohort rather than self-enrolling, instructor-led sessions with attendance captured, and an org admin who generates the evidence pack at the end.
+**Journey B — the corporate client:**
+
+```
+[P17] Corporate offering → [P19] Qualifying enquiry
+        → [P05]/[P06] Team capability assessment — the land motion
+        → AGREEMENT — programme, format, dates, location.  OUTSIDE THE PORTAL.
+                      No CRM, no proposal automation, no contract workflow in V1.
+        → [O07] Private cohort created · roster invited · seats activated
+        → ★ DELIVER — on-site or live online, attendance captured
+        → participants assessed → credentials issued
+        → [O01] progress · [O10] HRD Corp evidence pack
+```
+
+**`[INFERENCE]`** The architectural consequence of both journeys is the same: **expert-led participation sits between registration and assessment**, and the portal's obligation across that span is to hold schedule, joining details, roster, attendance and materials — not to deliver content.
+
+**`[SPEC]`** The **corporate journey is not a separate product** — the same modules with a different entry point: invited into a private cohort rather than registering individually, expert-led sessions with attendance captured, and an org admin who generates the evidence pack at the end. *(Corporate is now a **first-class pathway**, not a variant — DR-02 §8.)*
 
 **Secondary workflows that are still first-class:**
 
@@ -101,7 +136,7 @@ Rules that must be enforced **in code, not policy**:
 | BR-8 | **Assessment content is not readable by non-assessor, non-admin roles at the query layer** — not merely hidden in the UI | `[SPEC]` MVP §9 rule 7 | Repository/service layer, not the component layer |
 | BR-9 | **`organisation_id` on every org-scoped table from commit one** | `[SPEC]` MVP §9 rule 1 | Schema + every query path |
 | BR-10 | **One pass threshold (70%), no bands, no levels**; highest score across attempts retained | `[SPEC]` MVP §M5, DR-01 | Single comparison; `MAX()` across attempts |
-| BR-11 | **AI tutor answers only from the corpus, always cites with a version stamp, and is disabled during assessment with the reason shown** | `[SPEC]` M8, Blueprint §17.4 | AI service layer + assessment-context check |
+| BR-11 | **⏸ DORMANT — no learner-facing AI feature ships in V1.** Retained governance requirement: any AI answering capability answers only from the corpus, always cites with a version stamp, and is disabled during assessment with the reason shown | `[SPEC]` M8, Blueprint §17.4 · deferred by DR-02 Decision 2 | AI service layer + assessment-context check — **when and if an AI capability is separately authorised.** This rule remaining documented is **not** a reason to build one |
 | BR-12 | **Assessor approval requires verified experience + a calibration exercise + a signed conflict-of-interest undertaking**, recorded as an `assessor` role scoped to `credential_def` | `[SPEC]` MVP §15.5 | Replaces the unimplementable "one level above" rule |
 | BR-13 | **Every assessment declares its AI-use policy**, visible before starting. V1 ships two tiers: `Restricted` (exam) and `Disclosed` (artifact) | `[SPEC]` MVP §3.3, Blueprint §13.6 | Required field on the assessment object |
 | BR-14 | **Credentials are personally owned and portable** — they leave with the employee | `[SPEC]` Blueprint §14.4 | Credential ownership is the user, never the organisation |
@@ -122,7 +157,7 @@ Rules that must be enforced **in code, not policy**:
 | NFR-9 | **Concurrency shape** | Read-heavy overall; **assessment is the spiky, latency-sensitive workload** because cohort exams concentrate load into narrow windows | `[SPEC]` Blueprint §26.6 |
 | NFR-10 | **Restart resilience** | Guardrails Service Restart Test: all services restart, all caches cleared — the product and its data continue functioning | `[SPEC]` `CLAUDE.md` / Guardrails §13 |
 | NFR-11 | **Team reality** | Buildable by **1–2 developers plus a designer, AI-assisted, in ~14–18 weeks**. Architecture must be sized for that team, not for a platform organisation | `[SPEC]` MVP §9 |
-| NFR-12 | **Low-bandwidth tolerance** | A real and large regional segment; `C05` must degrade well | `[SPEC]` Mockup §20.1 #10 (tagged P2, *design for it now*) |
+| NFR-12 | **Low-bandwidth tolerance** | A real and large regional segment. *(Its former anchor `C05` is demoted by DR-02; the requirement stands and now applies to programme, session and materials surfaces — and, `[INFERENCE]`, matters more for live online delivery than it did for pre-recorded content)* | `[SPEC]` Mockup §20.1 #10 (tagged P2, *design for it now*) |
 
 ## 1.7 Dependencies between major modules
 
@@ -139,7 +174,7 @@ Rules that must be enforced **in code, not policy**:
         │                           │                            │ corpus
         │ assertions                │ progress                   ▼
         │                           │                   ┌──────────────────┐
-        │                           │                   │ M8 AI Tutor (RAG)│
+        │                           │                   │ M8 AI Tutor ⏸ DEF│
         │                           │                   └──────────────────┘
         ▼                           ▼
 ┌────────────────────────────────────────────┐
@@ -163,10 +198,11 @@ Rules that must be enforced **in code, not policy**:
 **Hard build-order dependencies `[INFERENCE]` from `[SPEC]` MVP §10:**
 
 1. **M1 before everything** — scoped roles and tenancy are foundational.
-2. **M4 before M8** — the tutor cannot retrieve from a corpus that does not exist. The spec states this explicitly.
-3. **M2 skill list before M3 content mapping** — skills are the spine that content, items and requirements all attach to (`[SPEC]` Mockup §18.3).
+2. ~~**M4 before M8**~~ — **⏸ moot while M8 is deferred.** The dependency was real and would return with any future tutor; it constrains nothing today.
+3. **M2 skill list before M3 programme mapping** — skills are the spine that programmes, items and requirements all attach to (`[SPEC]` Mockup §18.3).
 4. **M5 and M6 before M7** — credential issuance evaluates their outputs as requirement rows.
 5. **M9 depends on all of the above** for its progress table and evidence pack, but on none of them for orgs/seats/cohorts/attendance, which can be built in parallel.
+6. **`[INFERENCE]` M3's programme and scheduled-offering concepts precede registration, and registration precedes attendance capture.** This ordering did not exist before DR-02 and is now the spine of both journeys — see ADR-043.
 6. **The real critical path is not engineering** — the skill list, diagnostic questions, item bank, brief + 3 variants, the rubric, and the 3 exemplars are expert authoring work that must run *in parallel*, not after (`[SPEC]` MVP §10).
 
 ---
@@ -203,7 +239,7 @@ Rules that must be enforced **in code, not policy**:
 │  ┌───────────────────────┐   ┌──────────────────────────────────────────┐  │
 │  │ PUBLIC SURFACE        │   │ AUTHENTICATED APPLICATION                │  │
 │  │ SSR/SSG · cacheable   │   │ Learner · Assessor · Corp · Admin        │  │
-│  │ home · diagnostic ·   │   │ dashboard · path · lesson player ·       │  │
+│  │ home · diagnostic ·   │   │ dashboard · programme · session view ·   │  │
 │  │ knowledge · glossary ·│   │ candidacy · artifact workspace ·         │  │
 │  │ credential detail ·   │   │ assessor workbench · org console ·       │  │
 │  │ VERIFICATION PAGE     │   │ admin console                            │  │
@@ -351,7 +387,9 @@ Rules that must be enforced **in code, not policy**:
 
 `[SPEC]` MVP §3.2 defers the notifications centre; §2 cross-cutting requires transactional email. In-app, push and Slack/Teams are Blueprint §18.21 scope, deferred.
 
-Minimum V1 email set `[INFERENCE]` from the journey: email verification · password reset · purchase receipt · candidacy window opened · submission received · **assessor assignment** · **decision issued** · credential awarded · seat invitation · cohort session reminder `[ASSUMPTION]`.
+Minimum V1 email set `[INFERENCE]` from the journey: email verification · password reset · purchase receipt · candidacy window opened · submission received · **assessor assignment** · **decision issued** · credential awarded · seat invitation.
+
+**Added by DR-02 `[INFERENCE]`** — scheduled delivery makes several messages operationally load-bearing rather than optional: **registration confirmation** · **joining details for a scheduled offering** *(the participant cannot attend without them — see ADR-044)* · **session reminder** · **schedule change or cancellation notice**. These are a genuine consequence of the corrected model and are recorded here rather than discovered during implementation. **No provider is selected** (ADR-015 remains deferred), and **`[ASSUMPTION]`** the exact message set is confirmed when the notification work is scoped.
 
 **`[INFERENCE]`** Because the 10-working-day SLA is publicly displayed (NFR-6), assessor-facing notification is not cosmetic — it is part of the SLA mechanism and must be reliable and observable.
 
@@ -392,11 +430,17 @@ Summarised here; full detail in `DEPLOYMENT_ARCHITECTURE.md`.
 
 ### Track B — the slice
 
+*Restated 2026-08-31 by founder decision (ADR-036). The superseded wording — "…enrolment → access to a real lesson → progress persistence…" — came from the self-paced model retired by `DR-02`.*
+
 ```
-authentication → authorization → dashboard → training discovery / selection
-  → enrolment → access to a real lesson → progress persistence
-  → SERVICE RESTART RESILIENCE → APPROPRIATE AUTOMATED TESTING
+authentication → authorisation → programme discovery
+  → scheduled offering selection → registration
+  → access to programme and session details
+  → participation / state persistence → supporting materials access
+  → SERVICE RESTART / RECOVERY → APPROPRIATE AUTOMATED TESTING
 ```
+
+**Boundaries (binding, per ADR-036):** no lesson-player journey · no video-progress semantics · no self-paced assumption · **"participation / state persistence" is deliberately neutral** and means only that workflow position survives a restart · **nothing here infers attendance, completion or enrolment as a certification requirement** — that remains open (`OQ-21`).
 
 **What each step actually proves about the architecture:**
 
@@ -405,10 +449,12 @@ authentication → authorization → dashboard → training discovery / selectio
 | Authentication | ADR-006 — the bought provider works, and **identity attributes and roles live in our database, not the vendor's** |
 | Authorization | ADR-020 / AP-04 — scoped RBAC enforced at the service and data-access layer, not in the UI. The first real test of the model both specifications call the most expensive thing to get wrong |
 | Dashboard | ADR-002/003 — server rendering, design tokens, light and dark, accessible primitives |
-| Training discovery / selection | ADR-023 / AS-6 — content read through a **`domainId` parameter**, rendered from data, **no domain literal anywhere**. Directly verifiable by grep |
-| Enrolment | ADR-005 / AP-02 — a real transactional write; the first business record |
-| Access to a real lesson | ADR-002 + ADR-009 — the content model with a **provider-neutral video reference**, degrading transcript-first |
-| Progress persistence | AP-05 — resume from the database, never from browser storage |
+| Programme discovery | ADR-023 / AS-6 — programmes read through a **`domainId` parameter**, rendered from data, **no domain literal anywhere**. Directly verifiable by grep |
+| Scheduled offering selection | ADR-043 — the conceptual delivery model holds: a programme has dated, formatted instances, and they are readable |
+| Registration | ADR-005 / AP-02 — a real transactional write; the first business record. **Capacity is a recognised business concern**, not an implementation detail *(mechanism deliberately undesigned — ADR-043)* |
+| Access to programme and session details | ADR-002 / ADR-044 — session information and joining details are held and presented by the portal; **live delivery infrastructure is external and no vendor is chosen** |
+| Participation / state persistence | AP-05 — the participant's workflow position resumes from the database, never from browser storage. **Deliberately neutral: it proves durability, and defines no certification requirement** (`OQ-21`) |
+| Supporting materials access | ADR-026 / `DR-02` §5 — materials attach to a programme and **prepare, extend, reinforce or document** delivery. **No video pipeline, no lesson progression, no completion-by-watching** |
 | **Service restart resilience** | **AP-02, AP-03, AP-05 made executable rather than asserted** (`TESTING_ARCHITECTURE.md` §6) |
 | **Automated testing** | ADR-038 — the Tier 1 rules are covered at the layer that can actually prove them |
 

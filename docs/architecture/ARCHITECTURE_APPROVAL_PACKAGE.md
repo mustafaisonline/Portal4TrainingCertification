@@ -141,6 +141,8 @@ Five categories, as directed. Authoritative status lives in `ARCHITECTURE_DECISI
 | **ADR-038** | Testing philosophy — five layers, risk tiers, Tier 1 workflows | Principle |
 | **ADR-039** | Permanent credential identity | Requirement |
 | **ADR-040** | Dual-track validation — Track A and Track B, neither replaces the other | Model |
+| **ADR-043** | **Programme / scheduled offering / session — conceptual delivery model** (2026-08-31) | **Conceptual only — no physical schema; RED gate intact** |
+| **ADR-044** | **Live-session delivery boundary** — the portal does not build or operate conferencing (2026-08-31) | Boundary; **no vendor, no integration** |
 
 ## 3.2 PENDING HUMAN DECISION
 
@@ -166,7 +168,7 @@ Also awaiting confirmation: the ten conflicts in [`CONFLICT_RESOLUTION_REGISTER.
 
 | Item | Deferred until | Cost of deferring |
 |---|---|---|
-| **Video provider** (ADR-009) | Real lesson content exists | None, given a provider-neutral video reference. Largest variable cost in the platform |
+| **Video provider** (ADR-009) | Real lesson content exists — ⚠️ **may never fire**; the lesson player is retired (DR-02) | None. **The platform's largest variable cost leaves MVP scope entirely** |
 | **Object storage** (ADR-008) | Artifact submission is built | None — Track B stores no files |
 | **Payments** (ADR-014) | Candidacy registration is built | None. Answer OQ-2 first — corporate may buy on invoice |
 | **AI provider** (ADR-013) | The knowledge library exists | None — the corpus must precede the tutor |

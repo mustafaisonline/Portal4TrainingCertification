@@ -36,22 +36,22 @@ Statuses in use: `PROPOSED` (recommended by analysis, not yet reviewed) · `PEND
 | ADR-006 | Authentication | **Better Auth**, with five binding conditions — **requires an approved deviation from `[SPEC]` MVP §9**. Runner-up **Clerk** | Auth.js v4 (legacy line); Auth.js v5 (never released stable); build in-house (rejected by spec) | Full analysis in `DECISION_B_AUTHENTICATION.md`. **Neither spec-named option satisfies the approved principles cleanly** | Identity, all access | 🔴 Yes — **B1 deviation, B2 provider, B3 conditions** | PENDING HUMAN APPROVAL |
 | ADR-007 | ORM / migrations | **Prisma ORM + Migrate**, pinned to the 7.x stable line. Paid Prisma products explicitly excluded | Drizzle; Kysely + node-pg-migrate; raw SQL | Apache-2.0, free forever, no account required; stable line actively shipping | Data access layer | 🔴 Yes | **APPROVED (direction only)** 2026-08-30 |
 | ADR-008 | Object storage | S3-compatible with signed URLs; **provider open** (R2 vs S3) | Database blobs (rejected); provider-native file APIs | Artifacts, evidence packs, badges must not live in Postgres | Evidence integrity | 🔴 Yes | **DEFERRED** — trigger: artifact submission or evidence packs are built |
-| ADR-009 | Video | Managed provider; **defer selection to Phase 1B** | Mux; Cloudflare Stream; Bunny; self-host (rejected) | Largest variable cost; decision is late-binding if the block model is provider-neutral | Content cost | 🔴 Yes (when made) | **DEFERRED** — trigger: real lesson video content exists |
+| ADR-009 | Video | Managed provider; **defer selection to Phase 1B** | Mux; Cloudflare Stream; Bunny; self-host (rejected) | Largest variable cost; decision is late-binding if the block model is provider-neutral | Content cost | 🔴 Yes (when made) | **DEFERRED** — trigger: real lesson video content exists. ⚠️ **Note 2026-08-31:** with the lesson player retired by DR-02, **this trigger may never fire.** Harmless; recorded so its silence is not mistaken for an oversight. Session recordings as supporting material would be a *new* trigger |
 | ADR-010 | Background work | `jobs` table + scheduled invocation route | Redis + durable queue (Blueprint §26.2); managed queue service | Only three jobs exist; resolves CONF-1; job state survives restart | Email, packs, indexing | 🟡 Yes | **APPROVED** 2026-08-30 |
 | ADR-011 | Caching | No Redis. Cache only where rebuildable; never a source of truth | Redis for sessions/timers/rate limits | Guardrails Rule 6 + Service Restart Test; resolves CONF-2 | Correctness guarantee | 🟡 Report | **DEFERRED** — trigger: a measured need for rate limiting or shared cache |
 | ADR-012 | Search | Postgres full-text search | OpenSearch; Typesense; Algolia | ~30 articles; spec calls alternatives absurd at this scale | Knowledge library | 🟢 | **DEFERRED** — trigger: the knowledge library is built |
-| ADR-013 | AI services | Claude behind one routing function; pgvector in the same Postgres | Other LLM vendors; self-hosted models; dedicated vector DB | Model swappability is the requirement; one datastore is explicit | Tutor (M8) | 🔴 Yes | **DEFERRED** — trigger: the knowledge library corpus exists |
+| ADR-013 | AI services | Claude behind one routing function; pgvector in the same Postgres | Other LLM vendors; self-hosted models; dedicated vector DB | Model swappability is the requirement; one datastore is explicit | Tutor (M8) | 🔴 Yes | **DEFERRED (M8 deferred by DR-02)** — ⚠️ **trigger corrected 2026-08-31.** The old trigger *"the knowledge library corpus exists"* would fire spuriously: M4 still ships, so the corpus **will** exist while the tutor stays deferred. **New trigger: an AI capability is separately authorised on its own strategic justification** — never merely because the corpus exists |
 | ADR-014 | Payments | Stripe + a Malaysian rail; **rail provider open** | Paddle (merchant of record); Adyen; local gateways; invoice-only | Local rail materially affects conversion; corporate may buy on invoice | Revenue path | 🔴 Yes | **DEFERRED** — trigger: candidacy registration is built; answer OQ-2 first |
 | ADR-015 | Transactional email | **Open** — Resend vs Postmark | AWS SES; provider-bundled email | Deliverability is on the SLA path, not cosmetic | SLA, verification | 🔴 Yes | **DEFERRED** — trigger: real email verification is required (Milestone 2+) |
 | ADR-016 | Hosting | **Open** — Vercel vs a single container on a managed host | Self-managed VM/Kubernetes (rejected as oversized) | Evidence-pack duration limits and residency drive the choice | Ops, cost, residency | 🔴 Yes | **DEFERRED** — trigger: first deployment |
 | ADR-017 | Observability | Error tracker + product analytics + uptime + job health | Logs only (rejected — SLA must be measurable) | NFR-5/NFR-6 require measurement from day one | Operations | 🔴 Yes (analytics) | **APPROVED (principles only)** 2026-08-30 |
 | ADR-018 | Credential verification | Permanent credential **identifier** + verification page + OB **2.0** metadata in PNG + PDF | OB 3.0 / W3C VC at MVP; third-party issuer | Resolves CONF-5. **Do not claim OB3.0 conformance before it is true.** Identifier-vs-URL permanence refined by ADR-039 | Trust claim | 🟡 Report | **DEFERRED** — trigger: the credential module is built |
 | ADR-019 | Exam integrity | No proctoring vendor. Honour undertaking + time limit + randomised order + in-room invigilation for cohorts | Online proctoring vendor (Blueprint §26.2) | Resolves CONF-6; the artifact is the real integrity control | Integrity posture | 🟡 Report | **DEFERRED** — trigger: the assessment module is built |
-| ADR-020 | Authorisation | Scoped many-to-many RBAC; tenancy + integrity rules enforced at the data-access layer | `role` column on users (rejected by spec); UI-level checks (rejected) | Retrofit Test item; BR-1/BR-8/BR-9 must be unavoidable | All access | 🔴 Yes | **APPROVED** 2026-08-30 |
+| ADR-020 | Authorisation | Scoped many-to-many RBAC; tenancy + integrity rules enforced at the data-access layer | `role` column on users (rejected by spec); UI-level checks (rejected) | Retrofit Test item; BR-1/BR-8/BR-9 must be unavoidable | All access | 🔴 Yes | **APPROVED** 2026-08-30 · *recontextualised 2026-08-31: the model is unchanged and sufficient; only the **role set** grows (expert/trainer with a public surface). No amendment required* |
 | ADR-021 | Assessment durability | Server-authoritative clock (`started_at` in Postgres) + per-answer server persistence | Client timer; cache-held timer; batch submit at the end | "A lost exam is a refund, a support case, and a reputational hit" | Exam correctness | 🟡 Report | **DEFERRED** — trigger: the assessment module is built |
 | ADR-022 | Immutability & audit | `skill_assertions` and `responses` insert-only; audit row in the same transaction as every credential/assessment mutation | Mutable rows with history tables; async audit | Defensibility years later; spec calls it non-negotiable | Credential defence | 🟡 Report | **APPROVED** 2026-08-30 |
 | ADR-023 | Expansion shape | Requirements-as-data; no domain literal; no level branch; parameterised routes from day one | Hardcode the pilot domain and revisit later | Domain #2 must be a data operation, not a migration or redesign | Future cost | 🟡 Report | **APPROVED** 2026-08-30 |
-| ADR-024 | Learning records | An `events` table only; no LRS, no xAPI, no SCORM in V1 | xAPI emit at MVP (Blueprint §26.3) | Resolves CONF-7; xAPI-shaped payloads can be emitted later from the same rows | Analytics, interop | 🟡 Report | **DEFERRED** — trigger: learning-event capture is built |
+| ADR-024 | Learning records | An `events` table only; no LRS, no xAPI, no SCORM in V1 | xAPI emit at MVP (Blueprint §26.3) | Resolves CONF-7; xAPI-shaped payloads can be emitted later from the same rows | Analytics, interop | 🟡 Report | **DEFERRED** — trigger: learning-event capture is built. *Recontextualised 2026-08-31: the table stands; **what constitutes an event** shifts from lesson progression to registration, session participation and attendance* `[INFERENCE]` |
 | ADR-025 | Testing framework selection | **Vitest · Playwright · @axe-core/playwright.** Paid platforms, hosted grids, visual-regression SaaS and Testcontainers excluded | Jest; Cypress; Testcontainers now | All Tier 1 — free, open source, local. Minimum toolset for ADR-038's five layers | Validation capability | 🔴 Yes | **APPROVED (scoped)** 2026-08-30 |
 | ADR-026 | Content versioning | `version`, `status`, `reviewed_at` present from the first schema, read by nothing in V1 | Add versioning when the changelog needs it | Retrofitting versioning is a rewrite | Content lifecycle | 🟡 Report | **DEFERRED** — trigger: the content model is built |
 | ADR-027 | Localisation readiness | UI strings externalised from the first commit; no user-visible literals in components | Localise later and refactor then | Extraction later touches every file | Every component | 🟢 | PENDING — follows from `[SPEC]` MVP §2; no separate decision needed to comply |
@@ -70,6 +70,8 @@ Statuses in use: `PROPOSED` (recommended by analysis, not yet reviewed) · `PEND
 | ADR-040 | **Phase 1 dual-track validation** | **Track A** product experience validation **and** **Track B** technical vertical slice, as parallel objectives — neither replaces the other | Track B only (silently drops the MVP Spec's validation intent); Track A only (superseded) | The tracks validate **different risks**: does anyone want it, versus does the architecture hold | Phase 1 plan and exit criteria | 🔴 Yes | **APPROVED** 2026-08-30 |
 | ADR-041 | **Adopt the architecture principles set** | AP-01…AP-11 in `ARCHITECTURE_PRINCIPLES.md` as durable, technology-independent principles | No formal principles; intent left embedded in individual ADRs | Principles must outlive the technologies. ADRs record decisions; principles record durable intent | All future architecture work | 🔴 Yes | **APPROVED** 2026-08-30 |
 | ADR-042 | **AP-12 Zero-Cost Development and Free-First Technology** | Adopt AP-12: zero mandatory technology cost during development and MVP validation; three-tier preference; mandatory free-alternative analysis and cost assessment | Case-by-case cost judgement; accept small recurring costs for convenience | Issued as human direction 2026-08-30. Removes the failure mode where paid services are adopted for convenience and the cost recurs forever | **All technology selection**; changes Decision B and the hosting decision | 🔴 Issued by direction | **APPROVED** 2026-08-30 |
+| **ADR-043** | **Programme / scheduled offering / session — conceptual delivery model** | Nine concepts: programme · scheduled offering · session · modality · location or online context · expert association · registration · capacity as a business concern · participation/attendance. **Conceptual only** | Extend `enrolments` (insufficient); keep delivery in D9 (encodes the wrong framing); design scheduling properly now (rejected under AP-11) | The corrected model's primary public pathway had **no representation anywhere in the architecture** | D3, D9, registration, payments, notifications | 🔴 Yes | **APPROVED** 2026-08-31 — **no physical schema; RED gate intact** |
+| **ADR-044** | **Live-session delivery boundary** | **The portal does not build or operate video conferencing.** Sessions delivered externally; portal holds joining details, session information and attendance; **provider-neutral, no vendor selected** | Build/operate conferencing (rejected); select a provider now (premature); deep integration (a separate future decision) | Live online delivery is core; the prior "assumed" footnote is not a boundary | Integration boundary; closes **OQ-13** | 🔴 Yes | **APPROVED** 2026-08-31 |
 
 ---
 
@@ -104,7 +106,7 @@ Each record: **Context · Decision/Recommendation · Alternatives considered · 
 ### ADR-002 — Application framework: Next.js App Router + TypeScript
 **Date:** 2026-08-30 · **Status:** APPROVED — 2026-08-30 
 
-**Context.** The product needs server-rendered indexable pages (knowledge library, glossary, credential detail, and the public verification page that carries the growth loop — NFR-4) *and* a heavily interactive authenticated app (lesson player, artifact workspace, assessor workbench). Both specifications name Next.js.
+**Context.** The product needs server-rendered indexable pages (knowledge library, glossary, credential detail, and the public verification page that carries the growth loop — NFR-4) *and* a heavily interactive authenticated app (artifact workspace, assessor workbench, assessment runner). Both specifications name Next.js. *(The original text cited the lesson player, retired by DR-02; the rationale is unaffected — the interactive surfaces that justified the choice remain.)*
 
 **Decision.** Next.js App Router + React + TypeScript as the single application framework, with server components by default and business logic held in framework-agnostic service modules.
 
@@ -337,9 +339,25 @@ Each record: **Context · Decision/Recommendation · Alternatives considered · 
 ---
 
 ### ADR-013 — AI services: Claude behind one routing function
-**Date:** 2026-08-30 · **Status:** PENDING HUMAN APPROVAL
+**Date:** 2026-08-30 · **Status:** **DEFERRED — 2026-08-31** (was PENDING HUMAN APPROVAL) · **Trigger corrected 2026-08-31**
 
-**Context.** M8 is the only AI feature in the functional MVP: RAG over the knowledge library, citations with version stamps on every substantive answer, refusal when out of corpus, and **visibly disabled during assessment with the reason shown**.
+> **⏸ DEFERRED BY DR-02 (Decision 2). `M8` is not built in V1, and no AI feature replaces it.**
+>
+> The rationale — unblocking an isolated, self-paced learner — does not describe the corrected product, where the participant has an expert, a cohort and a scheduled session. **That AI is this organisation's subject matter is explicitly not a justification for putting AI in the portal.**
+>
+> ### ⚠️ Trigger defect, corrected
+>
+> | | |
+> |---|---|
+> | **Old trigger** | *"the knowledge library corpus exists"* |
+> | **Why it was defective** | `M4` still ships. The corpus **will** exist — so the trigger would fire and present an AI-provider decision as due, for a capability deliberately deferred. A deferral whose trigger fires on its own is not a deferral |
+> | **New trigger** | **An AI capability is separately authorised on its own strategic justification, assessed against the expert-led delivery model.** Corpus existence is a *precondition*, never a trigger |
+>
+> **Scope released by this deferral:** the embeddings provider, the AI data-processing agreement (`OQ-4`), RAG cost control, and tutor rate-limiting all leave MVP scope.
+>
+> **Retained at zero cost:** `pgvector` is a PostgreSQL extension and costs nothing dormant; the single-routing-function constraint below remains the right shape if an AI capability is ever authorised. **Do not remove the design — and do not treat its presence as permission.**
+
+**Context.** M8 was the only AI feature in the functional MVP: RAG over the knowledge library, citations with version stamps on every substantive answer, refusal when out of corpus, and **visibly disabled during assessment with the reason shown**.
 
 **Decision.** A thin server-side AI service module with **all model access behind a single function** so models are swappable; embeddings and retrieval in the same Postgres via pgvector; a maintained eval set covering answer accuracy, refusal correctness and citation validity, run on every model or prompt change.
 
@@ -720,13 +738,28 @@ Residency **does** block:
 
 > *"Phase 1A should be a real production-grade vertical slice built using the approved production architecture, rather than a disconnected design-only prototype. The purpose of Phase 1A is to validate the actual architecture with the smallest meaningful end-to-end workflow."*
 
-**Decision / recommendation.** Phase 1A builds the **smallest meaningful end-to-end workflow on the approved production architecture** — real authentication, real authorisation, real database persistence, real deployment — rather than a fixture-driven or design-tool artefact. The indicative slice:
+**Decision / recommendation.** Phase 1A builds the **smallest meaningful end-to-end workflow on the approved production architecture** — real authentication, real authorisation, real database persistence, real deployment — rather than a fixture-driven or design-tool artefact.
+
+**The slice — restated 2026-08-31 by founder decision, following the Architecture Impact Analysis:**
 
 ```
-authentication → authorised access → dashboard → browse/select training
-   → enrolment → access a real lesson → progress persistence
-   → SERVICE RESTART RESILIENCE VERIFIED
+authentication → authorisation → programme discovery
+   → scheduled offering selection → registration
+   → access to programme and session details
+   → participation / state persistence → supporting materials access
+   → SERVICE RESTART / RECOVERY VERIFIED → APPROPRIATE AUTOMATED TESTING
 ```
+
+**Superseded framing, retained so the change is traceable:** *"…browse/select training → enrolment → access a real lesson → progress persistence…"*. That wording derived from the self-paced lesson-consumption model retired by `DR-02`, and it must not remain authoritative.
+
+**Binding boundaries on this restatement:**
+
+- It **must not recreate a lesson-player journey**, and must not introduce **video-progress semantics** or assume **self-paced learning**.
+- The portal supports an **expert-led programme journey**; it is not the primary place where learning content is consumed.
+- **"Participation / state persistence" is deliberately neutral.** It means *the participant's position in the workflow survives a restart* — nothing more. It does **not** define, imply or prefigure any certification participation requirement.
+- **Nothing here may be read as inferring attendance, completion or enrolment as a certification requirement.** That policy decision is explicitly open (`OQ-21`), and this slice does not touch it.
+
+**What the slice still proves, unchanged:** that authentication, authorisation at the data-access layer, real transactional persistence, and restart resilience hold on the approved architecture. Those were always the point; only the domain objects it exercises have changed.
 
 **What this changes.**
 
@@ -749,7 +782,7 @@ authentication → authorised access → dashboard → browse/select training
 **Approval record.**
 - **Approved:** 2026-08-30, by the project owner.
 - **Approval scope:** **Track B direction**, not execution.
-- **What is approved:** That Track B is a production-grade vertical slice on the approved architecture — authentication → authorization → dashboard → training discovery/selection → enrolment → real lesson → progress persistence → **verified restart resilience** → **appropriate automated testing** — rather than a fixture-driven or design-tool artefact.
+- **What is approved:** That Track B is a production-grade vertical slice on the approved architecture — authentication → authorisation → programme discovery → scheduled offering selection → registration → access to programme and session details → participation/state persistence → supporting materials access → **verified restart/recovery** → **appropriate automated testing** — rather than a fixture-driven or design-tool artefact. *(Slice restated 2026-08-31; see the decision body for the superseded wording and the binding boundaries.)*
 - **What this approval does NOT authorize:** **Beginning the slice.** Track B cannot start until its blocking decisions are resolved (see the Approval Package). AP-07 applies throughout: anything stubbed inside the slice must be visibly identified as temporary and structurally isolated. Nothing here authorises framework initialisation · package installation · database provisioning · schema creation · infrastructure provisioning · external service account creation · deployment · commits or pushes.
 
 ---
@@ -862,7 +895,7 @@ This is the property that makes a credential portable. It is non-negotiable and 
 
 #### Track B — Technical Vertical Slice
 **Validates:** the production architecture, through the smallest meaningful real end-to-end workflow (ADR-036).
-**Workflow:** authentication → authorization → dashboard → training discovery or selection → enrolment → access to a real lesson → progress persistence → **service restart resilience** → **appropriate automated testing**.
+**Workflow (restated 2026-08-31 — see ADR-036 for the superseded wording and the binding boundaries):** authentication → authorisation → programme discovery → scheduled offering selection → registration → access to programme and session details → participation/state persistence → supporting materials access → **service restart / recovery** → **appropriate automated testing**.
 **The risk it addresses:** *building it on foundations that do not hold.* No amount of user enthusiasm answers this.
 
 **Why both are required.** These are the two independent ways this project fails, and they fail invisibly to each other. A beautiful prototype validated by delighted users tells you nothing about whether exam responses survive a restart. A flawless vertical slice tells you nothing about whether anyone will submit an artifact — and MVP Spec §12.1 names artifact submission rate as *the single most important number in the business*.
@@ -960,3 +993,66 @@ This is the property that makes a credential portable. It is non-negotiable and 
 - **Approval scope:** AP-12 as a binding architectural principle governing all technology and vendor selection.
 - **What is approved:** The principle, the three tiers, the mandatory free-alternative analysis, the local-first baseline, the lock-in evaluation, the no-paid-convenience rule, the complexity counterweight, and the mandatory cost-assessment table.
 - **What this approval does NOT authorize:** Any technology selection or implementation. AP-12 constrains *how* technologies are chosen; it selects none. Nothing here authorises framework initialisation · package installation · database provisioning · schema creation · infrastructure provisioning · external service account creation · deployment · commits or pushes.
+
+---
+
+### ADR-043 — Programme, scheduled offering and session: the conceptual delivery model
+**Date:** 2026-08-31 · **Status:** APPROVED — 2026-08-31 · **Arises from:** `DR-02` · the Architecture Impact Analysis of 2026-08-31
+
+**Context.** `DR-02` makes the **programme** the unit of the product and expert-led delivery the primary learning experience. The Architecture Impact Analysis established, by exhaustive search of `docs/architecture/`, that **no programme-scheduling concept existed anywhere in the architecture** — every occurrence of "schedul\*" was job invocation, retention, deploy windows, exam windows or project schedule. Cohorts, sessions and attendance *did* exist, but only inside `D9` Organisations & Compliance, scoped to corporate delivery. Nothing supported a **public, individually-registerable, dated offering**, which the corrected model makes the primary public pathway.
+
+**Decision.** Adopt the conceptual delivery model documented in `DATA_ARCHITECTURE.md` §1.1:
+
+```
+PROGRAMME → SCHEDULED OFFERING (modality · location/online context · capacity ·
+            assigned expert · organisation scope where private)
+          → SESSION → ATTENDANCE
+            ├── REGISTRATION binds a person to an offering
+            └── SUPPORTING MATERIALS attach to the programme
+```
+
+Nine concepts, and nothing more: programme · scheduled offering · session · delivery modality · location or online delivery context · expert association · participant registration · **capacity as a recognised business concern** · participation/attendance.
+
+**Boundaries — binding.**
+- **Conceptual only. No physical schema.** No table, column, type, key, index or migration is defined. Physical data-model creation remains a **RED gate** under `CLAUDE.md` Rule 1, unaffected by this record.
+- **Deliberately not designed, per AP-11:** scheduling engine · calendar system · booking workflow · seat-allocation algorithm · optimisation · recurrence rules · waitlist mechanics · logistics or travel model. **Capacity is *named*; the mechanism enforcing it is not designed.**
+- **A private cohort is a scheduled offering scoped to an organisation** — not a parallel concept. The approved `organisation_id` tenancy model already covers it.
+- **Programme count is never encoded** (DR-02 §4.1). Launch inventory is a commercial and content decision.
+- **Participation is a delivery fact, not a certification input.** Nothing here resolves `OQ-21`; **attendance, completion and enrolment must not be inferred as certification requirements** from this model.
+
+**Alternatives considered.** (a) *Extend `enrolments`* — insufficient: it binds a person to a path/course, not to a dated instance with capacity `[INFERENCE]`. (b) *Keep delivery objects in `D9`* — would encode "delivery is a corporate concern", which is exactly the framing DR-02 corrects. (c) *Design scheduling properly now* — rejected under AP-11: no measured need justifies an engine, and the requirement is a **current functional requirement** (AP-11 criterion 1) satisfied by concepts alone.
+
+**Consequences.** `D3` is renamed and re-scoped; delivery objects move from `D9` to `D3` while organisation scoping stays a `D9` concern. `BR-1` becomes computable for public offerings once expert-to-offering association exists `[INFERENCE]` — the rule itself is unchanged and is **not weakened**. Registration creates a second payment surface (ADR-014's trigger widens) and new transactional messages (ADR-015/034). Capacity introduces the project's first concurrency-sensitive business rule — **flagged, not solved.**
+
+**Approval record.**
+- **Approved:** 2026-08-31, by the project owner, as part of Architecture Reconciliation.
+- **What is approved:** The nine conceptual delivery concepts and their relationships, as a conceptual model only.
+- **What this approval does NOT authorize:** **Any physical schema, migration, table, column or index.** Any scheduling, booking or calendar implementation. Any vendor. Any resolution of `OQ-21`. Nothing here authorises framework initialisation · package installation · database provisioning · schema creation · infrastructure provisioning · external service account creation · deployment · commits or pushes.
+
+---
+
+### ADR-044 — Live-session delivery boundary: the portal does not deliver video
+**Date:** 2026-08-31 · **Status:** APPROVED — 2026-08-31 · **Closes:** `OQ-13` · **Arises from:** `DR-02` · founder Decision 2 of 2026-08-31
+
+**Context.** `DR-02` makes **live online delivery** a core modality. `INTEGRATION_ARCHITECTURE.md` I-20 previously recorded live-session tooling as *"Not integrated… cohorts are instructor-led; is any meeting tooling in scope? **The former is assumed here**"* — an assumption made when live delivery was a corporate variant. With live online delivery core, the assumption needs to be an explicit boundary rather than a footnote.
+
+**Decision.**
+
+> **The portal will not build or operate its own video conferencing infrastructure.**
+
+- Live online sessions **may be delivered through external live-session / meeting platforms**.
+- **The portal remains the system supporting the programme and the scheduled offering.** It may hold and present **joining details, session information, and participation/attendance records**.
+- **The actual live video delivery infrastructure remains external.**
+- **The architecture stays provider-neutral.** **No vendor is selected** — not Zoom, not Microsoft Teams, not any other.
+- **No integration is designed or implemented** unless and until separately authorised.
+
+**This is a conceptual architecture boundary only.**
+
+**Alternatives considered.** (a) *Build or operate conferencing* — never justified: enormous reliability, scale and regulatory burden for a capability that is a commodity, and squarely the "do not build undifferentiated infrastructure" position already taken for video, auth and payments (`IP-1`). (b) *Select a provider now* — premature; the boundary is what matters, and provider choice is late-binding and reversible while the architecture holds only joining details. (c) *Deep integration (auto-provisioned meetings, attendance sync)* — a real future option, deliberately **not** designed; it would be a new decision with its own cost and dependency analysis.
+
+**Consequences.** Joining details become a data concern the portal owns (`ADR-043`) and an operationally load-bearing notification `[INFERENCE]` — a participant who cannot find the link cannot attend. Attendance remains captured in the portal regardless of where delivery happens, which keeps the HRD Corp evidence pack (ADR-033) intact. `OQ-13` is **closed**. This decision is consistent with ADR-019 (no proctoring vendor) and ADR-009 (no video provider) — the same principle applied a third time.
+
+**Approval record.**
+- **Approved:** 2026-08-31, by the project owner (founder Decision 2).
+- **What is approved:** The boundary — no owned conferencing infrastructure; external delivery; portal holds joining details, session information and attendance; provider-neutral.
+- **What this approval does NOT authorize:** **Selecting any vendor. Building any integration.** Nothing here authorises framework initialisation · package installation · database provisioning · schema creation · infrastructure provisioning · external service account creation · deployment · commits or pushes.

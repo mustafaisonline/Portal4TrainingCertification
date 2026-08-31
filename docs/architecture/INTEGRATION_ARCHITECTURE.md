@@ -29,8 +29,8 @@
 | I-3 | Payments — Malaysian rail | **Required by spec; priority questionable** | Stripe local methods · Billplz · iPay88 · Razer MS · bank FPX | PENDING + **OQ-2** |
 | I-4 | Transactional email | **Required** | Resend · Postmark | PENDING (ADR-015) |
 | I-5 | Object storage | **Required** | Cloudflare R2 · AWS S3 | PENDING (ADR-008) |
-| I-6 | Video hosting | **Required (thin)** — one real lesson in 1A | Mux · Cloudflare Stream · Bunny | DEFERRED to 1B (ADR-009) |
-| I-7 | AI model provider | **Required** | Claude (Anthropic) | PENDING (ADR-013) |
+| I-6 | Video hosting | **⏸ Not required in V1** — the lesson player is retired (DR-02) | Mux · Cloudflare Stream · Bunny | DEFERRED (ADR-009) — **trigger may never fire**; session recordings as supporting material would be a *new* trigger |
+| I-7 | AI model provider | **⏸ Not required in V1** — `M8` deferred, **not replaced** (DR-02 Decision 2) | Claude (Anthropic) | DEFERRED (ADR-013) — ⚠️ **trigger corrected**: authorisation of an AI capability, **not** mere corpus existence |
 | I-8 | Error tracking | **Required** | Sentry or equivalent | PENDING (ADR-017) |
 | I-9 | Product analytics | **Required** | PostHog · Plausible/Fathom · Amplitude/Mixpanel | PENDING (ADR-017/035) |
 | I-10 | Certificate & badge generation | **Required — built in-house** | — (PDF + PNG generation libraries) | PROPOSED |
@@ -43,7 +43,7 @@
 | I-17 | LTI 1.3 / SCORM / LRS | **NOT in MVP** | — | DEFERRED (ADR-024) |
 | I-18 | Slack / Teams / calendar | **NOT in MVP** | — | DEFERRED |
 | I-19 | Open Badges 3.0 / VC issuer | **NOT in MVP** | Third-party issuer in 1C/Phase 2 | DEFERRED (ADR-018) |
-| I-20 | Virtual meetings (live sessions) | **Not integrated** | — | **OQ-13** — cohorts are instructor-led; is any meeting tooling in scope? |
+| I-20 | Live-session delivery | **Boundary set — not integrated** | **No vendor selected** | ✅ **OQ-13 CLOSED by ADR-044.** The portal does **not** build or operate conferencing. Sessions are delivered on external platforms; the portal holds **joining details, session information and attendance**. Provider-neutral; **no integration designed or authorised** |
 
 ---
 
@@ -115,8 +115,8 @@ Rejected for V1 on four grounds (cost, conversion friction, accessibility hostil
 ### I-16 to I-19 Enterprise and standards integrations — **deferred**
 SSO/SCIM/HRIS, LTI 1.3, SCORM/xAPI/LRS, Slack/Teams/calendar, and Open Badges 3.0 / W3C VC issuance are all explicitly deferred. The architectural obligation today is only that **none of them require a rewrite later**: the auth provider should make SSO a configuration; the `events` table should make xAPI a projection; the credential model should make a signed VC an additional representation of an existing record.
 
-### I-20 Live session tooling — **OPEN**
-Cohorts are instructor-led with attendance captured, and the corporate motion is blended delivery. The MVP Spec does not mention any virtual meeting integration, and the Blueprint lists it only under community events. **OQ-13:** are live sessions run on tooling outside the platform (with the platform only recording attendance), or is any integration expected? The former is assumed here.
+### I-20 Live-session delivery — **BOUNDARY SET (ADR-044); OQ-13 CLOSED**
+Cohorts are expert-led with attendance captured, and live online delivery is a **core modality** (DR-02 §2). **✅ OQ-13 is CLOSED by ADR-044 (2026-08-31):** the portal does **not** build or operate video conferencing. Sessions are delivered on **external** live-session platforms; the portal holds **joining details, session information and attendance records**; the architecture stays **provider-neutral** and **no vendor is selected**. **No integration is designed or authorised** — a deeper integration (auto-provisioned meetings, attendance sync) would be a separate decision with its own cost and dependency analysis.
 
 ---
 

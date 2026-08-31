@@ -85,13 +85,13 @@ These are Tier 1. Each is listed with what makes it critical, so the list can be
 |---|---|---|
 | 1 | **Registration and authentication** | The entry to everything; account integrity underpins credential attribution |
 | 2 | **Role and authorisation enforcement** | Includes tenancy isolation and the assessor conflict-of-interest rule (BR-1). A failure here is a credibility crisis, not a bug |
-| 3 | **Enrolment** | The commercial and learning path both begin here |
+| 3 | **Registration into a scheduled offering** | The commercial and learning journeys both begin here. *Restated 2026-08-31 (DR-02/ADR-043): registration binds a person to a **dated offering with capacity**, which is a stronger assertion than enrolment was* |
 | 4 | **Payment flow** | Money, plus entitlement. Our records must remain authoritative and reconcilable after any provider outage |
 | 5 | **Examination submission** | "A lost exam is a refund, a support case, and a reputational hit." Must be verified **across a simulated interruption**, not only on the happy path |
 | 6 | **Examination result processing** | Threshold evaluation, per-skill breakdown, highest-score retention — the gate into the evidence stage |
 | 7 | **Certificate / credential issuance** | Irreversible and public. Must verify that issuance cannot occur without a human decision (BR-2) |
 | 8 | **Certificate verification** | The permanent public URL; the first brand impression for every employer and the growth loop (NFR-2) |
-| 9 | **Progress persistence and recovery** | Resume-to-the-second, and the Service Restart Test made executable |
+| 9 | **Participation state persistence and recovery** | *Restated 2026-08-31 (DR-02/ADR-036). "Resume-to-the-second" was a media-playback assertion from the retired lesson player.* What must now be proven: **the participant's position in the programme workflow survives a restart with caches cleared.** The layer, the tier and the Service Restart Test are unchanged; only the assertion is corrected. **This tests durability and defines no certification requirement** (`OQ-21`) |
 
 **Additions recommended by this analysis** (`[INFERENCE]`, for your consideration):
 
@@ -108,7 +108,7 @@ The Service Restart Test is currently a design question answered on paper in `DA
 
 Proposed shape `[INFERENCE]`:
 
-1. Drive a workflow to a partial state — mid-lesson, mid-exam, mid-artifact-draft, job queued but not run.
+1. Drive a workflow to a partial state — **mid-registration, part-way through a programme, mid-exam, mid-artifact-draft**, job queued but not run. *("Mid-lesson" is superseded — there is no lesson player; DR-02.)*
 2. Restart the application and clear every cache.
 3. Assert the user resumes correctly, no data is lost beyond the stated autosave window (OQ-11), and queued work still executes.
 

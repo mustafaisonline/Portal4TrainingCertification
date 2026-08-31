@@ -15,17 +15,61 @@ Eleven conceptual domains. These are the module boundaries of ADR-001 — folder
 |---|---|---|---|
 | D1 | **Identity & Access** | People, credentials-to-sign-in, scoped role assignments, consent | — |
 | D2 | **Skills & Diagnostics** | The skill list, diagnostic instruments, skill assertions | D1 |
-| D3 | **Content & Learning Delivery** | Path/course/module/lesson/block hierarchy, enrolments, progress | D1, D2 (skill mappings) |
+| D3 | **Programmes, Delivery & Supporting Materials** *(renamed by DR-02)* | **Programmes, scheduled offerings, sessions, registrations**, delivery modality and location context, expert association, capacity; supporting-materials hierarchy; participation state | D1, D2 (skill mappings), D9 (organisation scoping for private cohorts) |
 | D4 | **Knowledge (Body of Practice)** | Articles, article versions, glossary terms, changelog | D2 (skill links) |
 | D5 | **Knowledge Assessment** | Item bank, forms, attempts, responses, scoring | D1, D2 |
 | D6 | **Evidence & Assessor Workflow** ★ | Assignments, brief variants, rubrics, submissions, evaluations | D1, D5 (readiness), D9 (cohort conflict check) |
 | D7 | **Credentialing & Verification** | Credential definitions, requirements, candidacies, issued credentials, public verification | D5, D6 (requirement outcomes) |
 | D8 | **Commerce & Payments** | Products/prices, orders, payment records, refunds | D1, D7 (candidacy fee), D9 (org invoices) |
-| D9 | **Organisations & Compliance** | Organisations, memberships, seats, cohorts, sessions, attendance, evidence packs | D1, D3, D5, D6, D7 (read-only) |
-| D10 | **AI Services** | Tutor sessions, retrieval context, prompt versions, eval runs | D4 (corpus only) |
+| D9 | **Organisations & Compliance** | Organisations, memberships, seats, **private-cohort scoping**, attendance records, evidence packs | D1, D3, D5, D6, D7 (read-only) |
+| D10 | **AI Services — ⏸ DEFERRED** | *(Not built in V1. Retained design: tutor sessions, retrieval context, prompt versions, eval runs.)* **No AI capability ships; none is substituted** | D4 (corpus only) — dormant |
 | D11 | **Platform Administration** | Settings, feature configuration, jobs, notifications, **audit log**, data-subject requests | all (writes audit for) |
 
 **Ownership rule `[INFERENCE]`:** a domain reads another domain's data **through that domain's interface**, never by reaching into its tables. This is what makes the eventual extraction of D5/D6/D7 (Blueprint §26.1's "assessment & credentialing service") a day's work rather than a rewrite.
+
+### 1.1 The delivery model — conceptual, added by DR-02 (ADR-043)
+
+> **⚠ Conceptual only. No physical schema exists, none is proposed here, and creating one remains a RED gate under `CLAUDE.md` Rule 1.** No table, column, type, key, index or migration is defined anywhere in this section. The concepts below name *what the business is about*; how they are stored is a separate, separately-approved act.
+
+Before DR-02 the architecture had no representation of scheduled, expert-led delivery. Cohorts, sessions and attendance existed **only inside D9**, scoped to organisations — appropriate when corporate was a "thin slice", misleading now that delivery is the product.
+
+```
+    PROGRAMME                    a designed, expert-led learning experience with stated
+        │                        outcomes. The thing a person chooses.
+        │                        Domain-scoped. Count is NOT fixed (DR-02 §4.1).
+        ▼
+    SCHEDULED OFFERING           a specific dated instance of a programme.
+        │                        Carries: delivery modality · location or online
+        │                        delivery context · capacity · assigned expert(s) ·
+        │                        organisation scope where private.
+        │                        The thing a person registers for.
+        ├──< REGISTRATION >──── a person's place in a specific offering
+        │                        (individually, or by invitation into a private cohort)
+        ▼
+    SESSION                      a single delivery occasion within an offering.
+        │                        The unit ATTENDANCE is captured against.
+        └──< ATTENDANCE >────── existing concept; unchanged; correction trail required
+
+    SUPPORTING MATERIALS         attach to a programme (and optionally to a session).
+                                 Prepare · extend · reinforce · document.
+                                 They never replace delivery (DR-02 §5).
+```
+
+**The nine concepts this establishes, and nothing more:** programme · scheduled offering · session · delivery modality · location or online delivery context · expert association · participant registration · **capacity as a recognised business concern** · participation/attendance. Supporting materials attach to the first.
+
+**Deliberately NOT designed here, per AP-11 (simplicity before scale):** no scheduling engine · no calendar system · no booking workflow · no seat-allocation algorithm · no optimisation · no recurrence rules · no waitlist mechanics · no logistics or travel model. **Capacity is named as a business concern; the mechanism for enforcing it is not designed.**
+
+**Relationship to existing concepts:**
+
+| Existing | Disposition |
+|---|---|
+| `cohorts`, `sessions`, `attendance` (D9) | **Already exist.** A private cohort is a scheduled offering scoped to an organisation — not a separate concept. Re-homed to D3 as delivery objects; organisation scoping stays a D9 concern |
+| `enrolments` (D3) | **Insufficient alone.** It binds a person to a path/course, not to a *dated instance with capacity*. Registration is the missing relationship `[INFERENCE]` |
+| Content hierarchy (path/course/module/lesson/block) | **Subordinated, not destroyed.** Becomes programme curriculum and supporting materials |
+| `organisation_id` tenancy | **Unchanged and sufficient.** Private cohorts are already covered by the approved tenancy model |
+| `BR-1` assessor conflict of interest | **Unchanged.** `D6 → D9 (cohort conflict check)` already existed; expert-to-offering association is what makes it computable for public offerings `[INFERENCE]` |
+
+**`[OPEN — OQ-21]` Participation and certification.** Whether, and how, programme participation forms part of the credential requirement model is **deliberately unresolved** (DR-02 §6). Nothing in this section resolves it: **participation is modelled here as a delivery fact, not as a certification input.** No third requirement type is proposed, requirements-as-data is untouched, and **attendance, completion and enrolment must not be inferred as certification requirements** from anything above.
 
 **Critical boundary `[SPEC]`:** D5's item content and D6's evaluations-in-progress are **not readable** by D3, D9 or D10 at the query layer — not merely hidden in the UI (BR-8). D10 (AI) may retrieve **only** from D4, and must be inert during an active D5 session (BR-11).
 
@@ -48,7 +92,8 @@ mapping                              ARTICLE     question       (append-only,
    ┌──────┐                                                           │
    │ USER │──< role assignment (scoped) >── role                      │
    └──┬───┘──< skill assertion >───────────────────────────────────────┘
-      ├──< enrolment >── path / course ──< module ── lesson ── block
+      ├──< registration >── SCHEDULED OFFERING ──< session >──< attendance >
+      │                          └── of a PROGRAMME ──< supporting materials >
       ├──< progress >── lesson
       ├──< candidacy >── credential definition ──< requirement >
       │        └──▶ CREDENTIAL (issued) ──▶ public verification (permanent uid)
@@ -79,7 +124,7 @@ The things the business is *about*. Long-lived, referenced everywhere, and their
 | **Credential definition** | D7 | Exactly one in V1; carries inert `level`, `sort_order`, `version` |
 | **Issued credential** | D7 | The product's output. Carries a **globally unique, persistent identifier that never changes for the life of the credential** (ADR-039) — independent of any URL, domain or presentation format. Personally owned and portable; never owned by an organisation (BR-14) |
 | **Content hierarchy** (path → course → module → lesson → block) | D3 | Five levels, one hierarchy; each independently addressable and versioned |
-| **Knowledge article** | D4 | Public SEO surface, citation target, **and** the AI tutor's corpus |
+| **Knowledge article** | D4 | Public SEO surface, credibility surface and participant reference. *(Its former role as the AI tutor's corpus lapses while `M8` is deferred)* |
 
 ### 3.2 Supporting entities
 Structure and definition around the core. Change rarely; authored rather than generated.
@@ -95,7 +140,10 @@ Structure and definition around the core. Change rarely; authored rather than ge
 | Rubric (criteria × levels) | D6 | 5 × 4, published *before* purchase; carries all grade differentiation in V1 |
 | Exemplar artifact | D6 | Three real exemplars — un-fakeable, per `[SPEC]` §11.2 |
 | Credential requirement | D7 | **Rows, not code.** `exam_threshold` \| `artifact` |
-| Cohort / session | D9 | Instructor-led delivery |
+| **Programme** | D3 | Added by DR-02. Domain-scoped. **Count deliberately not fixed** (DR-02 §4.1) |
+| **Scheduled offering / cohort** | D3 | Added by DR-02. Dated instance: modality · location or online context · capacity · assigned expert · organisation scope where private. *A private cohort is an offering scoped to an organisation, not a separate concept* |
+| Session | D3 *(was D9)* | A single delivery occasion; the unit attendance is captured against |
+| **Expert association** | D1/D3 | Which expert delivers which offering. Makes `BR-1` computable for public offerings `[INFERENCE]` |
 | Seat / invitation | D9 | Single and CSV invite |
 | Product / price | D8 | MYR + USD only |
 | Glossary term | D4 | ~60 terms |
@@ -107,6 +155,8 @@ Generated by user activity; the highest-volume and most operationally critical d
 | Entity | Domain | Volume shape | Special property |
 |---|---|---|---|
 | Enrolment | D3 | Low | |
+| **Registration** | D3 | Low | Added by DR-02. A person's place in a specific scheduled offering. **Capacity is a recognised business concern; no allocation mechanism is designed** (ADR-043) |
+| **Participation state** | D3 | Medium | Added by DR-02. The participant's position in the programme workflow. **Deliberately neutral — a delivery fact, not a certification input** (`OQ-21`) |
 | Progress record | D3 | High | Resume-to-the-second `[SPEC]` |
 | **Skill assertion** | D2 | Medium | **Append-only with provenance** (source, evidence reference, asserted_at). Never updated |
 | Diagnostic result | D2 | Medium | Anonymous results held for a limited period `[SPEC]` Blueprint §8 R1 (30 days) |
@@ -118,7 +168,7 @@ Generated by user activity; the highest-volume and most operationally critical d
 | Order / payment record | D8 | Low | Our record is authoritative for entitlement, not the provider's |
 | Attendance record | D9 | Medium | **Retrospective correction requires an audit trail** `[SPEC]` |
 | Evidence pack | D9 | Low | Generated artifact + a record of what it contained |
-| Tutor session / message | D10 | Medium | Must record the citations given |
+| ~~Tutor session / message~~ | D10 | ⏸ **Not in V1** | Deferred with `M8`; retained as the design |
 | Job | D11 | Medium | State in the database so restarts lose nothing |
 | Learning event | D11 | High | The `events` table; xAPI-shaped payloads derivable later (ADR-024) |
 
@@ -128,13 +178,13 @@ Values the product reads to decide behaviour. **All must be persistent — confi
 | Entity | Domain | Notes |
 |---|---|---|
 | Knowledge domain rows | D2 | Seeded, not constants |
-| Role definitions | D1 | Roles needed at launch: learner, assessor, instructor, org_admin, platform_admin |
+| Role definitions | D1 | Roles at launch (DR-02): **participant** *(was learner)*, **expert** *(the trainer role, promoted to a real role with a public profile)*, assessor, org_admin, platform_admin |
 | Requirement type values | D7 | `exam_threshold`, `artifact` |
 | AI-use policy values | D5/D6 | Two tiers in V1: `Restricted` (exam), `Disclosed` (artifact) `[SPEC]` |
 | Pass threshold (70%) | D5 | **`[INFERENCE]` Should be configuration data, not a constant** — the specification treats banding as removable and thresholds as product policy |
 | Funding scheme profile (HRD Corp) | D9 | Defines pack contents; **must be verifiable against current e-TRIS rules** (OQ-8) |
 | Platform settings / feature configuration | D11 | Database-backed, survives restart |
-| Prompt version registry | D10 | So a tutor answer can be explained after the fact |
+| ~~Prompt version registry~~ | D10 | ⏸ **Not in V1** — deferred with `M8` |
 
 ### 3.5 Audit and history entities
 Existence is the point; they are written once and never edited.
@@ -191,7 +241,7 @@ Applied to every category of state the product holds. **Every row below must ans
 | # | State category | Where it must live | Survives restart | Notes |
 |---|---|---|---|---|
 | 1 | Business records (users, orgs, content, credential definitions) | PostgreSQL | ✅ | |
-| 2 | User progress (lesson position, resume point) | PostgreSQL, written as it changes | ✅ | Resume-to-the-second is a `[SPEC]` requirement |
+| 2 | **Participation state** (position in the programme workflow; resume point) | PostgreSQL, written as it changes | ✅ | *Reframed by DR-02: this was "lesson position, resume-to-the-second", a media concept. The durability requirement is unchanged; what is persisted is programme/session position, not playback position* |
 | 3 | Enrolments | PostgreSQL | ✅ | |
 | 4 | **Examination attempts, including the clock** | PostgreSQL — `started_at` is the authoritative clock | ✅ | ADR-021. A client or cache timer would fail this test |
 | 5 | **Examination responses** | PostgreSQL, insert-only, written per answer | ✅ | Never batched to the end of the session (NFR-1) |
@@ -209,7 +259,7 @@ Applied to every category of state the product holds. **Every row below must ans
 | 17 | Feature configuration / flags | PostgreSQL | ✅ | |
 | 18 | Attendance and corrections | PostgreSQL with a correction trail | ✅ | |
 | 19 | Evidence packs | Object storage + a database record of contents | ✅ | Reproducible (ADR-033) |
-| 20 | AI tutor conversation and citations given | PostgreSQL | ✅ | Needed to explain an answer after the fact |
+| 20 | ~~AI tutor conversation and citations given~~ | ⏸ **N/A in V1** | — | Deferred with `M8`. Retained as the design if an AI capability is ever separately authorised |
 | 21 | Sessions (sign-in) | Provider- or database-backed | ✅ for business state | **`[INFERENCE]`** Losing sessions logs users out — an inconvenience, not data loss. Acceptable, and must be *stated* rather than assumed |
 
 ### 6.1 Proposed use of cache and temporary memory — and why each is safe
@@ -219,7 +269,7 @@ Applied to every category of state the product holds. **Every row below must ans
 | Static / ISR page cache | Public marketing, knowledge articles, glossary, credential detail | Regenerated from PostgreSQL on demand. Loss costs latency only |
 | CDN / HTTP cache | Static assets, badge images | Immutable or revalidated; the origin object is authoritative |
 | In-request memoisation | Repeated reads within one request | Lifetime is a single request; nothing survives it by design |
-| RAG retrieval cache | Recent tutor retrieval results | Recomputable from `pgvector`; loss costs money and latency, never correctness |
+| ~~RAG retrieval cache~~ | ⏸ **N/A in V1** — deferred with `M8`. Retained: recomputable from `pgvector`; loss would cost money and latency, never correctness |
 | Client component state | Current exam item on screen, unsaved keystrokes between autosaves | **Bounded by the autosave interval**, which must be short. This is the only place where a small loss window exists, and it must be an explicit, stated design parameter |
 | Browser storage | Theme preference for first paint | A mirror of a database value, never the source |
 
@@ -244,7 +294,7 @@ The specifications require documented retention schedules (Blueprint §26.5, §1
 | Audit log | Indefinite, or a stated long period | Its purpose is retrospective defensibility |
 | Attendance and evidence packs | The funding-claim audit period | **Requires verification against HRD Corp rules** (OQ-8) |
 | Personal profile data | Until deletion is requested | PDPA data-subject right |
-| Tutor conversations | Short, with a stated purpose | Minimise; they contain learner-authored content |
+| ~~Tutor conversations~~ | ⏸ **N/A in V1** | Deferred with `M8`; the retention position stands if an AI capability is ever authorised |
 
 **`[SPEC]` tension to resolve:** account deletion must be honoured (PDPA) **while issued credentials remain verifiable** (Mockup §20.1 #7 proposes anonymised survival). The conceptual answer is that a verification page can present a credential without exposing a deleted person's full profile — but **the exact policy is a human decision (OQ-12)**, not an AI inference, because it sits between a legal obligation and a public trust claim.
 

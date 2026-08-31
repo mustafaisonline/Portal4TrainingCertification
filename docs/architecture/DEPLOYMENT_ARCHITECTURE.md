@@ -123,8 +123,8 @@ Exactly three things in the deployment hold state that matters:
 | **Assessment** | **Spiky and latency-sensitive** — cohort exams concentrate load into narrow windows | Isolate the code path; per-answer writes are small; **load-test to 10× expected concurrency** `[PRODUCT REQUIREMENT]` Blueprint §26.6 |
 | Artifact submission | Low volume, large files | Direct-to-object-storage uploads with signed URLs `[BEST PRACTICE]` |
 | Evidence pack generation | Low volume, long-running | Background job (ADR-033) |
-| AI tutor | Usage-priced, variable | Model routing, retrieval caching, per-user rate limits, per-feature budgets with alerting `[PRODUCT REQUIREMENT]` |
-| Video | Largest variable cost | Fully offloaded to a managed provider |
+| ~~AI tutor~~ | ⏸ **Not in V1** — `M8` deferred, not replaced (DR-02) | Retained design if ever authorised: model routing, retrieval caching, per-user rate limits, per-feature budgets with alerting |
+| ~~Video~~ | ⏸ **Not in V1** — the lesson player is retired (DR-02); **the platform's largest variable cost leaves MVP scope entirely.** Live delivery runs on external platforms and is **not** hosted by us (ADR-044) | If session recordings are ever offered as supporting material, offload fully to a managed provider |
 | Database connections | The classic serverless failure mode | Pooling; a selection criterion for ADR-005a/ADR-016 `[BEST PRACTICE]` |
 | Actual MVP volume | One cohort of 15–25, ~25 individual learners, 3–5 assessors | **The architecture is not volume-constrained. It is constrained by qualified assessor hours** — `[PRODUCT REQUIREMENT]` MVP §13.4 |
 

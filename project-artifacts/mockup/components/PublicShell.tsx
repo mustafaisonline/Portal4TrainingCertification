@@ -76,6 +76,9 @@ export function PublicShell({ children }: { children: ReactNode }) {
             <Link href="/#delivery" className="hover:text-[var(--color-ink)]">
               How it works
             </Link>
+            <Link href="/trainers" className="hover:text-[var(--color-ink)]">
+              Trainers
+            </Link>
             <Link href="/#credential" className="hover:text-[var(--color-ink)]">
               Certification
             </Link>
@@ -113,7 +116,16 @@ export function PublicShell({ children }: { children: ReactNode }) {
           </div>
           <div>
             <p className="text-label mb-3">Explore</p>
-            <p>Programmes · Certification · For organisations</p>
+            <p>
+              Programmes ·{" "}
+              <Link
+                href="/trainers"
+                className="underline underline-offset-4 hover:text-[var(--color-ink)]"
+              >
+                Trainers
+              </Link>{" "}
+              · Certification · For organisations
+            </p>
           </div>
           <div>
             <p className="text-label mb-3">Legal</p>

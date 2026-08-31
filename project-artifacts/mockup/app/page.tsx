@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { PublicShell } from "@/components/PublicShell";
+import { TrainerCard } from "@/components/TrainerCard";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Chip } from "@/components/ui/Chip";
@@ -110,27 +110,6 @@ function GlyphTarget() {
     </svg>
   );
 }
-function GlyphCheck() {
-  return (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 14 14"
-      fill="none"
-      aria-hidden="true"
-      className="mt-1.5 shrink-0 text-[var(--color-primary)]"
-    >
-      <path
-        d="M2.5 7.5 L5.5 10.5 L11.5 3.5"
-        stroke="currentColor"
-        strokeWidth="1.7"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 const heroChips = [
   "24+ years in practice",
   "Practitioner-led",
@@ -140,8 +119,6 @@ const heroChips = [
 ];
 
 export default function HomePage() {
-  const founder = practitioners[0];
-
   return (
     <PublicShell>
       {/* ============ H1 — Hero (night) ============
@@ -187,42 +164,65 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Genuine photograph, editorial treatment: navy gradient tie-in
-                plus an overlapping credibility card. */}
-            <div className="relative mx-auto w-full max-w-[400px] pb-10 lg:pb-0">
-              <div className="relative overflow-hidden rounded-[var(--radius-feature)] border border-[var(--color-line-strong)]">
-                <Image
-                  src={founder.photo}
-                  alt={`Photograph of ${founder.name}`}
-                  width={800}
-                  height={800}
-                  priority
-                  className="w-full"
-                />
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0"
-                  style={{
-                    background:
-                      "linear-gradient(to top, rgba(10,14,31,0.62) 0%, rgba(10,14,31,0.08) 38%, rgba(10,14,31,0.12) 100%)",
-                  }}
-                />
-              </div>
-              <Card
-                variant="panel"
-                className="relative -mt-14 ml-4 mr-[-0.5rem] border border-[var(--color-line-strong)] sm:ml-8 lg:absolute lg:-bottom-9 lg:-left-12 lg:ml-0 lg:mr-0 lg:mt-0 lg:w-[290px]"
+            {/* The learning journey — an original, academy-first visual:
+                three ascending steps from live delivery to an earned
+                credential (2026-08-31 direction: no individual trainer
+                profile dominates the hero; trainers live at /trainers and
+                in the "Learn from practitioners" section below). */}
+            <div className="relative mx-auto w-full max-w-[400px]">
+              <svg
+                aria-hidden="true"
+                width="150"
+                height="150"
+                viewBox="0 0 150 150"
+                fill="none"
+                className="pointer-events-none absolute -right-6 -top-10 text-[var(--color-primary)] opacity-25"
               >
-                <p className="text-label mb-2">Founder &amp; Lead Trainer</p>
-                <p className="text-h1">{founder.name}</p>
-                <div className="mt-3 border-t border-[var(--color-line)] pt-3">
-                  <p className="text-mono text-body-sm text-[var(--color-ink-quiet)]">
-                    24+ years · enterprise data &amp; AI
-                  </p>
-                  <p className="text-mono text-body-sm text-[var(--color-ink-faint)]">
-                    {founder.location}
-                  </p>
-                </div>
-              </Card>
+                <circle cx="75" cy="75" r="60" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 7" />
+                <circle cx="75" cy="75" r="38" stroke="currentColor" strokeWidth="1.5" />
+                <path d="M62 76 L71 85 L90 62" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <ol className="relative flex flex-col gap-5">
+                {[
+                  [
+                    "01",
+                    "Live programmes",
+                    "Taught face-to-face and live online — never a video library.",
+                    "",
+                  ],
+                  [
+                    "02",
+                    "Applied work",
+                    "Real deliverables, judged by a qualified assessor against a published rubric.",
+                    "sm:ml-8",
+                  ],
+                  [
+                    "03",
+                    "Earned credential",
+                    "Recognition that stands for demonstrated capability — publicly verifiable.",
+                    "sm:ml-16",
+                  ],
+                ].map(([num, title, body, offset]) => (
+                  <li key={num} className={offset}>
+                    <Card
+                      variant="panel"
+                      className="border border-[var(--color-line-strong)]"
+                    >
+                      <div className="flex items-baseline gap-4">
+                        <span className="text-mono text-body-sm text-[var(--color-primary)]">
+                          {num}
+                        </span>
+                        <div>
+                          <p className="text-h2 mb-1">{title}</p>
+                          <p className="text-body-sm text-[var(--color-ink-quiet)]">
+                            {body}
+                          </p>
+                        </div>
+                      </div>
+                    </Card>
+                  </li>
+                ))}
+              </ol>
             </div>
           </div>
 
@@ -377,49 +377,32 @@ export default function HomePage() {
             </ul>
           </div>
 
-          {/* Who teaches — founder-led, structurally plural (a data change
-              adds a practitioner, never a redesign). Grayscale treatment is
-              CSS only; the photograph itself is untouched and genuine. */}
+          {/* Learn from practitioners — featured trainer cards, rendered
+              from the plural practitioners array (a data change adds a
+              trainer, never a redesign). Full profiles live at /trainers. */}
           <div id="practitioner" className="scroll-mt-24">
             <p className="text-label mb-3 text-[var(--color-primary)]">
               Who teaches
             </p>
-            <h2 className="text-display mb-6">
-              Learn from someone who has done the work
-            </h2>
-            {practitioners.map((person) => (
-              <div key={person.slug}>
-                <div className="mb-6 flex items-center gap-5">
-                  <Image
-                    src={person.photo}
-                    alt=""
-                    width={800}
-                    height={800}
-                    className="h-20 w-20 rounded-[var(--radius-plate)] object-cover grayscale"
-                  />
-                  <div>
-                    <p className="text-h2">{person.name}</p>
-                    <p className="text-body-sm text-[var(--color-ink-quiet)]">
-                      {person.role} · {person.location}
-                    </p>
-                  </div>
-                </div>
-                <ul className="mb-6 flex flex-col gap-2.5">
-                  {person.facts.map((fact, i) => (
-                    <li key={i} className="flex items-start gap-3">
-                      <GlyphCheck />
-                      <span className="text-body-sm text-[var(--color-ink-quiet)]">
-                        {fact}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-            <p className="text-body-sm text-[var(--color-ink-faint)]">
-              The platform is founder-led today. As it grows, additional
-              practitioners will be introduced here — only ever real ones.
+            <h2 className="text-display mb-5">Learn from practitioners</h2>
+            <p className="text-body-lg mb-8 text-[var(--color-ink-quiet)]">
+              Programmes are designed and delivered by people who have built
+              these systems in real organisations — and can respond to yours.
             </p>
+            <div className="mb-6 flex flex-col gap-6">
+              {practitioners.slice(0, 3).map((person) => (
+                <TrainerCard key={person.slug} person={person} />
+              ))}
+            </div>
+            <div className="flex flex-wrap items-center gap-5">
+              <Button variant="secondary" href="/trainers">
+                Meet the trainers
+              </Button>
+              <p className="text-body-sm text-[var(--color-ink-faint)]">
+                Founder-led today — additional trainers will be real ones,
+                never placeholders.
+              </p>
+            </div>
           </div>
         </div>
       </section>

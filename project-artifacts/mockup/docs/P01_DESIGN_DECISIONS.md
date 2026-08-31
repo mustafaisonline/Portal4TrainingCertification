@@ -148,6 +148,35 @@ practitioner model, HO-1 neutrality (H5 still describes programmes and
 scheduled offerings without leading with either), and every
 anti-fabrication rule.
 
+## Academy-first hero + Trainers experience (2026-08-31, third pass)
+
+Founder direction: the homepage must represent a scalable Academy, not be
+centred on one individual — the trainer photo and floating credibility
+card were removed from the hero. **This supersedes the earlier note that
+the hero carries the named expert**: D0's "named genuine expert" now
+lives in the "Learn from practitioners" section (`H3`, with a
+`TrainerCard`) and in a dedicated Trainers experience, not the hero.
+
+- **Hero right side** is now an original "learning journey" composition:
+  three ascending night panels — 01 Live programmes → 02 Applied work →
+  03 Earned credential — with a faint credential-ring SVG. It states the
+  model in one glance, needs no inventory, and fabricates nothing.
+- **Trainers architecture** (the `P23` Expert Profile concept realised
+  for the mockup): `/trainers` (index — page hero + `TrainerCard` list +
+  honest growth note) and `/trainers/[slug]` (full expert biography:
+  about, background at sector level, specialisations, certifications,
+  education, publishing/podcast/community, genuine LinkedIn link).
+  Everything renders from the plural `data/practitioners.ts`; adding a
+  trainer is a data change. **No placeholder profiles, ghost cards or
+  "coming soon" slots — the index shows exactly the people who exist.**
+- **Navigation**: "Trainers" added to the header (five items, within the
+  six-max rule) and the footer Explore column.
+- **Profile truthfulness**: content from the founder's résumé and
+  authorized public profiles only; employer names omitted (sector-level
+  descriptions); current employer omitted (`HO-14`); volatile counts
+  omitted; **no Academy programme-delivery history is claimed** — the
+  profile says so explicitly until cohorts have genuinely run (State A).
+
 ## Rejected alternatives
 
 - **Leading the hero with an offerings board** ("Direction A") — rejected:

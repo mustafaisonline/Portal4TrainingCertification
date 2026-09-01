@@ -38,12 +38,23 @@ are not connected.
   computation, no credential rules. See [`docs/MOCK_DATA_REGISTER.md`](docs/MOCK_DATA_REGISTER.md)
   for exactly what is simulated and how.
 
-## Status: Mockup Milestone 1 + P01 redesign
+## Status: Mockup Milestone 1 + P01 redesign + programmes/trainers
 
-Scope: `P01` Homepage (redesigned 2026-08-31 for the expert-led model) →
-`P05` Diagnostic → `P06` Diagnostic Result (both pre-DR-02 baseline) → a
-labelled next-stage placeholder. See [`docs/DESIGN_FOUNDATION.md`](docs/DESIGN_FOUNDATION.md)
-for the token/component contract these screens are built on, and
+Screens now built:
+
+| Route | State |
+|---|---|
+| `/` (`P01` Homepage) | Redesigned 2026-08-31 for the expert-led model; typography adopted 2026-09-02 |
+| `/programmes`, `/programmes/[slug]` | Seven **genuine** programmes migrated from the founder's existing training ecosystem, with his published pricing |
+| `/trainers`, `/trainers/[slug]` | Plural trainer architecture; **genuine people only**, no placeholder profiles |
+| `/diagnostic`, `/diagnostic/result` (`P05`/`P06`) | ⚠ Still the **pre-DR-02 baseline** — see the reconciliation notice above |
+| `/journey-placeholder` | Labelled next-stage placeholder |
+
+The whole portal is set in **IBM Plex** (adopted 2026-09-02, sans-led — the
+serif is reserved for the P01 hero and the masthead alone).
+
+See [`docs/DESIGN_FOUNDATION.md`](docs/DESIGN_FOUNDATION.md) for the
+token/component contract these screens are built on, and
 [`docs/P01_DESIGN_DECISIONS.md`](docs/P01_DESIGN_DECISIONS.md) for why the
 homepage looks the way it does.
 
@@ -67,8 +78,9 @@ components/signature/     DiagnosticQuestionCanvas, SkillMeter (scoped to this m
 components/PublicShell.tsx  Global public header/footer (§4)
 components/TrainerCard.tsx  Reusable trainer card (P01 + /trainers; genuine people only)
 components/ProgrammeCard.tsx Reusable programme card (P01 + /programmes + related rails)
-data/                     Fixtures — capability areas, practitioners (REAL data only), diagnostic questions, result fixtures, role targets
+data/                     Fixtures — programmes (REAL, incl. pricing), practitioners (REAL data only), capability areas, diagnostic questions, result fixtures, role targets
 public/experts/           Genuine practitioner photography (never AI-generated or stock)
+public/books/             The founder's own published book-cover artwork
 docs/                     DESIGN_FOUNDATION.md, MOCK_DATA_REGISTER.md, FINDINGS.md,
                           P01_DESIGN_DECISIONS.md, PROGRAMME_CONTENT_MIGRATION.md
 ```
@@ -76,7 +88,20 @@ docs/                     DESIGN_FOUNDATION.md, MOCK_DATA_REGISTER.md, FINDINGS.
 ## Continuing this work in a new session
 
 Read, in order: this file → `docs/DESIGN_FOUNDATION.md` →
-`docs/MOCK_DATA_REGISTER.md` → `docs/FINDINGS.md`. Together they explain what
-exists, what every token and component means, what is simulated, and what
-was discovered and decided along the way — without needing this
-conversation's history.
+`docs/MOCK_DATA_REGISTER.md` → `docs/FINDINGS.md` →
+`docs/P01_DESIGN_DECISIONS.md` → `docs/PROGRAMME_CONTENT_MIGRATION.md`.
+Together they explain what exists, what every token and component means,
+what is simulated, and what was discovered and decided along the way —
+without needing this conversation's history.
+
+At the repository root, `docs/design/` adds the governing layer:
+`P01_HOMEPAGE_REDESIGN_SPECIFICATION.md` (what P01 must communicate, plus
+the `HD-*`/`HO-*` registers), `VISUAL_REFINEMENT_GOVERNANCE.md` (the design
+rules and the binding lesson from the reverted audit batch) and
+`TYPOGRAPHY_STRATEGY.md` (the faces, why, and the adoption record).
+
+**Two things a new session should know immediately:** `--color-ink-faint`
+**fails WCAG AA** and the fix is still unapplied (`DESIGN_FOUNDATION.md`,
+"Known issues and fixes"); and visual/taste changes are **founder-gated in
+small, revertible diffs** — a batch of ten was implemented once and
+rejected wholesale.

@@ -2,12 +2,22 @@
 ## Visual Refinement Strategy & Design Governance Blueprint
 
 **Document type:** Design governance. Strategy only — authorises no implementation.
-**Version:** 1.0 · **Created:** 2026-09-01
+**Version:** 1.1 · **Created:** 2026-09-01 · **Reconciled:** 2026-09-02
 **Scope:** the mockup portal (`project-artifacts/mockup/`) and any future production surfaces
-**Companion:** [`P01_HOMEPAGE_REDESIGN_SPECIFICATION.md`](P01_HOMEPAGE_REDESIGN_SPECIFICATION.md) (content/IA), `project-artifacts/mockup/docs/DESIGN_FOUNDATION.md` (tokens/components)
+**Companion:** [`P01_HOMEPAGE_REDESIGN_SPECIFICATION.md`](P01_HOMEPAGE_REDESIGN_SPECIFICATION.md) (content/IA), [`TYPOGRAPHY_STRATEGY.md`](TYPOGRAPHY_STRATEGY.md) (faces/allocation), `project-artifacts/mockup/docs/DESIGN_FOUNDATION.md` (tokens/components)
 
 > ## ⛔ This document authorises no code, CSS, font or component change.
 > It establishes the rules **before** implementation. Each roadmap phase in §18 requires its own authorisation and — critically — its own founder visual review before the next phase begins (§1.2).
+
+> ## ↻ RECONCILIATION NOTICE — 2026-09-02
+>
+> **§4 (Typography Governance) was written on the premise that the fonts were settled and no font change was in prospect. That premise no longer holds.** A typography exploration was authorised the same day this document was written, ran as a controlled single-route experiment, and was **approved and rolled out portal-wide** on 2026-09-02: Newsreader + Inter → the **IBM Plex** superfamily, with a **sans-led** allocation that reserves the serif for the P01 hero and the masthead wordmark alone. See [`TYPOGRAPHY_STRATEGY.md`](TYPOGRAPHY_STRATEGY.md) §15.
+>
+> Affected sections are marked in place: **§4 / §4.1 / §4.2 / §4.4** (faces and weights) and **§14** (the wordmark, now typographically resolved in the serif). **§4.3 (eyebrow governance) is unaffected and remains live.**
+>
+> Everything else in this document — the §1.2 process lesson, the seven principles, rhythm, composition, colour, decoration, photography and the §18 roadmap — **stands unchanged.** In particular **Phase 0, the `--ink-faint` contrast fix, is still outstanding** and is still the one change exempt from the taste gate.
+>
+> Original wording is preserved beneath each marker. Where a marker and the surrounding text disagree, **the marker wins.**
 
 ---
 
@@ -70,9 +80,19 @@ Moving **away from**: generic AI-startup, SaaS template, over-designed concept s
 
 ## 4. Typography Governance
 
-**Fonts are settled: Newsreader (display) · Inter (UI/body) · system mono (measured voice).** No font change is proposed. The refinement is in *deployment*.
+> ### ↻ REFRAMED 2026-09-02 — the faces changed, the *governance* did not
+>
+> **Current state, authoritative:** IBM Plex Serif · IBM Plex Sans · IBM Plex Mono, self-hosted via `next/font`. The allocation is **sans-led**: every display role is Plex Sans 600 **except `.text-display-xl`** — used on exactly one element in the portal, the P01 hero — plus the `.wordmark`. Those two are the serif's entire footprint.
+>
+> **What this means for §4.1's rules:** the serif no longer "belongs at" `display-lg` / `display` / `h1`; the card-title trial is moot (all card titles are sans); and "unify display roles at 500" is superseded — display roles are 600, and `.text-display-xl` alone stays 500.
+>
+> **What survives intact, and matters more:** the *principle* behind §4.1 — that a serif signals only if it is rare (**P4, scarcity**) — is exactly what the new allocation implements, and far more strictly than the ≤6-per-viewport frequency cap proposed here. §4.1's cap is now structurally unreachable rather than policed.
+>
+> **Still open:** the **italic** rule below. Plex Serif *and* Plex Sans are both loaded with italics, and no pull-quote / citation treatment has been introduced yet. That remains a live, unimplemented recommendation.
+>
+> Original §4 premise, preserved: *"Fonts are settled: Newsreader (display) · Inter (UI/body) · system mono (measured voice). No font change is proposed. The refinement is in deployment."*
 
-### 4.1 Display serif (Newsreader)
+### 4.1 Display serif ~~(Newsreader)~~ → Plex Serif, reserved *(rules below reframed — see notice)*
 
 | Rule | Detail |
 |---|---|
@@ -83,9 +103,9 @@ Moving **away from**: generic AI-startup, SaaS template, over-designed concept s
 | **Italic** | Introduce Newsreader italic for **pull-quotes, the founder's professional philosophy, and citation lines only**. ≤1 italic passage per page. An editorial serif with no italic is being used as a shape, not as typography. |
 | **Frequency cap** | ≤6 serif headings visible per viewport-height of normal scrolling; a page that reads serif-everywhere has failed the cap |
 
-### 4.2 UI / body font (Inter)
+### 4.2 UI / body font ~~(Inter)~~ → Plex Sans
 
-Navigation, body, metadata, buttons, forms, chips, tables, programme meta strips, dense information. Nothing changes. One addition: **body text max reading measure 68ch** everywhere (already mostly honoured via `max-w-[620–680px]`; make it a rule).
+Navigation, body, metadata, buttons, forms, chips, tables, programme meta strips, dense information — **and, since 2026-09-02, every display role except the P01 hero.** The **68ch max reading measure** addition below is unaffected and still to be made a rule.
 
 ### 4.3 Eyebrow labels — the 77-instance problem
 
@@ -103,7 +123,31 @@ An eyebrow is **wayfinding**, not punctuation.
 
 Removal is **incremental and per-page** (Phase 2+), not a global sweep — the global sweep was the rejected move.
 
-### 4.4 Typography scale (governed ranges)
+### 4.4 Typography scale (governed ranges) — ↻ **superseded table below; this is current as of 2026-09-02**
+
+| Role | Class | Face | Weight | Size | Notes |
+|---|---|---|---:|---:|---|
+| **Hero display** | `.text-display-xl` | **Plex Serif** | 500 | 68px | **The only serif heading in the portal.** One element total (P01 hero). Steps to 42px <640px |
+| Page title | `.text-display-lg` | Plex Sans | 600 | 52px | Detail/hub heroes. Steps to 36px <640px |
+| Major section heading | `.text-display` | Plex Sans | 600 | 38px | The workhorse. Steps to 28px <640px |
+| Sub-section heading | `.text-h1` | Plex Sans | 600 | 28px | |
+| Card title | `.text-h2` | Plex Sans | 600 | 22px | The §4.1 serif-card-title trial is moot — resolved by allocation |
+| Body large | — | Plex Sans | 400 | 18px / 1.6 | Section intros |
+| Body | — | Plex Sans | 400 | 16px / 1.6 | Default |
+| Body small | `.text-body-sm` | Plex Sans | 400 | 15px / 1.6 | Cards, metadata prose |
+| Metadata / labels | `.text-label` | Plex Sans | 600 | 12px | Uppercase; +0.08em. **Hard-codes `--color-ink-faint`** |
+| Measured voice | `.text-mono` | Plex Mono | 400–600 | *inherited* | Numerals, IDs, prices, rubric. Sets family + tabular-nums only |
+| **Wordmark** | `.wordmark` | **Plex Serif** | 500 | 21px | 17px <640px. The serif's second and last home |
+
+**Tracking:** −0.018em on `display-lg`/`display`, −0.012em on `h1`, −0.006em on `h2`, −0.01em on `display-xl`; +0.08em on uppercase labels. Plex Sans needs marginally more weight and tighter tracking than a serif to hold authority at display sizes.
+
+**Two implementation invariants — both were hit in practice and are easy to break:**
+- `.text-mono` is defined **after** the display roles at **equal specificity**, so `text-mono text-display` (pricing figures, trainer stats) resolves to mono. **Never add a more specific display rule** — it breaks those silently.
+- `.text-label` sets its own colour and is **unlayered** CSS, so it outranks any Tailwind `text-*` utility. Recolouring a label needs an inline style or higher specificity.
+
+**Uppercase:** labels and `dt` elements only — never headings, never buttons. **No new levels** without amending this table.
+
+<details><summary>⊘ Superseded 2026-09-02 — original Newsreader/Inter table, retained for traceability</summary>
 
 | Role | Face | Weight | Size | Notes |
 |---|---|---:|---:|---|
@@ -118,7 +162,7 @@ Removal is **incremental and per-page** (Phase 2+), not a global sweep — the g
 | Metadata / labels | Inter | 500–600 | 12–13px | Uppercase reserved for true labels |
 | Measured voice | Mono | 400 | 13–15px | Numerals, IDs, versions, rubric |
 
-**Letter-spacing:** negative only on display sizes (current values fine); +0.08em uppercase labels unchanged. **Uppercase:** labels and `dt` elements only — never headings, never buttons. **No new levels** without amending this table.
+</details>
 
 ---
 
@@ -263,6 +307,16 @@ Thirteen three-column grids make three-up the reflex. Decision table:
 
 ## 14. Wordmark & Brand Identity Direction
 
+> ### ↻ PARTIALLY RESOLVED 2026-09-02 — a serif treatment is live
+>
+> The masthead is now **Plex Serif 500 at 21px** (17px <640px), carried by a `.wordmark` class in `globals.css` so it is defined in exactly one place and applies to `PublicShell` and the diagnostic's own shell alike.
+>
+> **How this differs from the rejected attempt:** the reverted change (`93217e0`) replaced the wordmark unilaterally inside a ten-item batch. This one arrived as part of a founder-reviewed experiment on a single route, was seen in context before adoption, and is one line to revert.
+>
+> **Not resolved:** the "2–3 side-by-side candidates" exercise below never happened — one treatment was adopted, not chosen from a set. If you want the comparison, it is still worth running, and the recommendation below stands.
+>
+> **Also unchanged:** naming (`HO-4`) is still open, so the full identity exercise is still correctly deferred. And the masthead **wraps to two lines at 375px on every page** — pre-existing, a layout problem rather than a type one, and still open.
+
 **Strategy only — explicitly not implemented here.** The audit correctly found the Inter-set masthead weak; the unilateral serif replacement was **reverted with the batch**, confirming identity is founder-taste territory.
 
 - The mark should remain **typographic** — an institution's authority is its name set properly; a startup-style symbol is not required and the geometric glyph should not be *assumed* either way.
@@ -332,6 +386,12 @@ Before shipping any new or modified section:
 
 **Process rules (binding, from §1.2):** one page or one concern per commit · founder visual review gates each phase · identity-sensitive changes ship as side-by-side candidates · any phase is independently revertible.
 
+> **↻ Roadmap status, 2026-09-02.** An **unlisted typography phase** ran between Phase 0 and Phase 1 and completed: Direction C adopted portal-wide (§4 notice, `TYPOGRAPHY_STRATEGY.md` §15). It followed the process rules above — single route, founder review in browser, revertible — but it was **not** a phase in this table, and it partially consumed Phase 2's masthead item (§14) without the side-by-side comparison that item specified.
+>
+> **Phase 0 is still outstanding.** `--color-ink-faint` remains `#7a8091` (3.72:1 against the warm ground — **fails WCAG 2.2 AA**). It has now been deferred past a full typography rollout, which is precisely the wrong order for a defect that is *exempt from the taste gate*. It should ship next, alone, in one line.
+>
+> Phases 1 and 3–6 are unstarted. Phase 6 remains blocked on genuine photography — a content dependency, not a design one.
+
 | Phase | Scope | Contents | Impact/Effort | Risk |
 |---|---|---|---|---|
 | **0 · Mandatory correction** | Global, 1-line | Re-apply the `--ink-faint` contrast fix standalone (§9). Not taste-gated | High/Trivial | None |
@@ -376,4 +436,4 @@ Measured against the §1.1 baseline, evaluated per phase:
 
 ---
 
-*Governance blueprint v1.0 · 2026-09-01 · Strategy only — each roadmap phase requires separate authorisation.*
+*Governance blueprint v1.1 · created 2026-09-01, reconciled 2026-09-02 with the adopted typography (`TYPOGRAPHY_STRATEGY.md` §15) · Strategy only — each roadmap phase requires separate authorisation.*

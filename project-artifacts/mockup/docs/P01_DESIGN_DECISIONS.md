@@ -118,10 +118,14 @@ placeholder.
   band, the H7 rubric card, the pre-footer diagnostic band, header and
   footer. Night is identity, not theming — it holds in light *and* dark
   themes.
-- **Editorial serif display.** Newsreader (display) + Inter (UI) via
-  next/font — self-hosted at build time, no runtime font service, no new
-  package. This supersedes DESIGN_FOUNDATION's "system fonts only"
-  simplification (updated there).
+- **Editorial serif display.** ↻ **REFRAMED 2026-09-02 — see "Typography
+  adopted portal-wide" below.** The typefaces changed (Newsreader + Inter
+  → IBM Plex) and the serif is no longer the display voice; the
+  *mechanism* described here is unchanged. Original wording: "Newsreader
+  (display) + Inter (UI) via next/font — self-hosted at build time, no
+  runtime font service, no new package. This supersedes
+  DESIGN_FOUNDATION's 'system fonts only' simplification (updated
+  there)."
 - **Indigo replaces teal** as the global primary (light `#3d43b8`, night
   `#9aa3ff`), with the proficiency ramp re-derived on the same hue.
   P05/P06 inherit palette and type through the token system — an intended
@@ -176,6 +180,71 @@ lives in the "Learn from practitioners" section (`H3`, with a
   descriptions); current employer omitted (`HO-14`); volatile counts
   omitted; **no Academy programme-delivery history is claimed** — the
   profile says so explicitly until cohorts have genuinely run (State A).
+
+## Typography adopted portal-wide + card/rubric refinements (2026-09-02, fourth pass)
+
+Two separately authorized pieces of work, both founder-reviewed in the
+browser before adoption.
+
+### Typography — IBM Plex, sans-led
+
+A design audit (2026-09-01) found the portal reads as AI-generated. The
+first response — implementing all ten audit recommendations at once
+(`93217e0`) — was **rejected and reverted in full** (`f7f826a`): *"the
+previous version was much better."* That reversal is the reason the
+typography work was run as a **controlled, single-route experiment**
+rather than another batch: fonts swapped on P01 only, via a `.type-plex`
+scope class, with layout, colour, spacing and content held constant. The
+founder reviewed it live and approved adoption.
+
+- **Newsreader + Inter → the IBM Plex superfamily** (Serif, Sans, Mono),
+  self-hosted via `next/font` in `app/layout.tsx`. One superfamily means
+  the product's three voices — editorial, interface, measured — were
+  drawn together and finally relate.
+- **The allocation inverted: sans-led, serif reserved.** Every display
+  role moved to Plex Sans 600 except `.text-display-xl`, which is used on
+  exactly one element in the portal — this page's hero. With the masthead
+  wordmark, that is the serif's entire footprint.
+- **Consequence to watch:** every *other* page title in the portal
+  (`/programmes`, `/trainers`, detail pages, `/diagnostic/result`) is now
+  sans. Those pages were reviewed after rollout but were **not** part of
+  the approved experiment surface. If the serif is missed there, the
+  cheap correction is promoting selected titles to `.text-display-xl` —
+  **not** re-serifing `.text-display`, which would undo the thesis.
+- Full record, including the rejected directions: `docs/design/TYPOGRAPHY_STRATEGY.md` §15.
+
+### H7 rubric block — rebuilt as an instrument
+
+Founder report: *"below text looks very machine genereated."* The block
+was a single monospace `<p>` using `<br />` breaks, non-breaking spaces
+and `○`/`◉` characters standing in for radio buttons — **ASCII art
+imitating a form, set in a terminal face.** That was the cause; the
+wording was not.
+
+Rebuilt as a real four-point scale: an `<ol>` grid with CSS-drawn level
+bars, the criterion named in the UI face, and a caption. The awarded
+level is carried by **weight + a filled bar + the word "Awarded"**, so
+colour is never the sole signal. **No assessor prose was invented** — the
+real rubric is unwritten, and this is labelled as illustrative of format
+only.
+
+### Programme card specification rows
+
+Founder report, twice, with a screenshot. Two genuine causes, both
+measured rather than guessed:
+
+1. **Mixed treatments** — `Duration` and `From` used mono at 0.8rem while
+   `For` and `Delivery` inherited sans at 0.9375rem. One list, two faces,
+   two sizes.
+2. **Baseline and cross-card drift** — a flex row with `align-items:
+   stretch` left 12px labels sitting ~3.6px above their 15px values, and
+   auto-height rows meant row 1 of a card whose value wrapped did not
+   line up with row 1 of its neighbours.
+
+Fixed with a real grid: `items-baseline` plus
+`grid-auto-rows: minmax(2.75rem, auto)`, sized for two wrapped lines so a
+wrap no longer changes row height. Verified aligned at 1440px, 820px and
+375px.
 
 ## Rejected alternatives
 

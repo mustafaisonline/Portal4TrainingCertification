@@ -61,3 +61,64 @@ catalogue framing this finding argued within, and the P01 redesign
 replaced domain tiles with count-free capability areas whose launch scope
 is an explicitly open decision (P01 spec `HO-3`). Retained for
 traceability only.
+
+---
+
+## F4 — Programme card specification rows read ragged and misaligned
+
+**Found:** Reported twice by the founder, with a screenshot, after the
+first fix proved incomplete. Two independent causes, both measured in the
+browser rather than inferred:
+
+1. **Mixed treatments in one list.** `Duration` and `From` used
+   `text-mono` at an off-scale `0.8rem` (12.8px) while `For` and
+   `Delivery` inherited sans at `0.9375rem` (15px). One `<dl>`, two faces,
+   two sizes.
+2. **Baseline and cross-card drift.** The rows were a flex layout at
+   `align-items: normal`, so 12px/16.8px labels sat ~3.6px above their
+   15px/24px values. And because rows were auto-height, a card whose "For"
+   value wrapped to two lines pushed its later rows out of step with its
+   neighbours' — measured at y=3519/3549/3579 on card 1 against
+   3495/3525/3579 on cards 2–3.
+
+**Resolution:** Replaced the flex rows with a CSS grid —
+`grid-cols-[68px_minmax(0,1fr)]`, `items-baseline`, and
+`[grid-auto-rows:minmax(2.75rem,auto)]` sized for two wrapped lines at the
+value's `leading-snug`, so a wrap no longer changes row height. All
+values now use one face at one scale size; the price earns emphasis
+through colour and weight alone. Verified aligned at 1440px, 820px and
+375px.
+
+**Status:** Fixed (`e83fa09`). The pattern — *uniform minimum row height
+whenever equivalent rows must line up across sibling cards* — should carry
+to any future card with a specification block. The mono "measured voice"
+stays reserved for the rubric, IDs and full pricing figures, where its
+scarcity means something.
+
+---
+
+## F5 — The rubric block read as machine output
+
+**Found:** Founder report on the `H7` certification section: *"below text
+looks very machine genereated."* The cause was construction, not wording.
+The block was a single monospace `<p>` built from `<br />` line breaks,
+`&nbsp;&nbsp;` for column spacing, and `○` / `◉` characters standing in
+for radio buttons — **ASCII art imitating a form, set in a terminal
+face.** Every signal it sent said "terminal output", so no amount of
+rewriting the sentence would have fixed it.
+
+**Resolution:** Rebuilt as an actual assessment instrument: an `<ol>` grid
+of the four levels with CSS-drawn bars, the criterion named in the UI
+face, and a caption. The awarded level is carried by **weight + a filled
+bar + the word "Awarded"**, so colour is never the sole carrier of
+meaning.
+
+**Status:** Fixed (`dc39dc8`). **No assessor prose was invented** — the
+real rubric is still unwritten and must never be faked (MVP spec §11.2).
+The block is framed as illustrative of *format* only, and must be
+replaced by the genuine published rubric when it exists.
+
+**General lesson:** when something "looks AI-generated", check what the
+markup *is* before rewriting what it *says*. Characters imitating UI
+controls, and monospace used decoratively rather than for genuinely
+tabular or machine content, are reliable tells.

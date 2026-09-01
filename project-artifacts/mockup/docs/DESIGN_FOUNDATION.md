@@ -22,7 +22,9 @@ they can't drift apart.
 
 - **Ground / Ink / Line** — 2–4 steps each, warm off-white / near-black, never
   pure `#fff`/`#000` (§16.6).
-- **Primary** — deep blue-teal, used for all actions/links.
+- **Primary** — deep **capability indigo** (light `#3d43b8` / night+dark
+  `#9aa3ff`), used for all actions/links. *(Was blue-teal until the
+  2026-08-31 visual redesign — see Palette below.)*
 - **Accent** — warm ember. Defined but **not used anywhere in this
   milestone** — it's reserved for credential/achievement moments (`K10`
   and similar), which are out of scope here.
@@ -38,14 +40,42 @@ they can't drift apart.
   components. `.text-display-lg`/`.text-display` step down at ≤640px (see
   Findings — the fixed size otherwise overruns a phone screen).
 
-### Typography (updated 2026-08-31 — visual redesign)
+### Typography (updated 2026-09-02 — IBM Plex adopted portal-wide)
 
-Display roles now use **Newsreader** (editorial serif, weight 500) and
-UI/body uses **Inter**, both self-hosted at build time via `next/font` in
-`app/layout.tsx` — no runtime font service and no new package. The system
-stacks remain as fallbacks in `--font-display` / `--font-body`. The
-earlier "system fonts only" simplification is superseded. Mono stays a
-system stack.
+The portal is set in the **IBM Plex superfamily** — Plex Serif, Plex Sans
+and Plex Mono — self-hosted at build time via `next/font` in
+`app/layout.tsx`. No runtime font service and no new package. System
+stacks remain as fallbacks in `--font-display` / `--font-body` /
+`--font-mono`.
+
+**The allocation is sans-led, and the serif is reserved.** This is
+deliberate and it inverts the 2026-08-31 arrangement, where every display
+role was serif: a serif on every heading of every page spends its
+authority until it carries none. The serif now appears in exactly two
+places —
+
+| Serif (`--font-display`) | Everything else |
+|---|---|
+| `.text-display-xl` — used on **one element in the whole portal**, the P01 hero | `.text-display-lg`, `.text-display`, `.text-h1`, `.text-h2` → Plex Sans 600 |
+| `.wordmark` — the masthead, on every page | Body, labels → Plex Sans |
+
+Rationale and the rejected directions: `docs/design/TYPOGRAPHY_STRATEGY.md`
+(Direction C); the adoption record is §15 of that document.
+
+**Two traps here, both hit in practice:**
+
+1. The sans-led allocation is written **into the base type-scale
+   definitions**, not layered on top as override rules. `.text-mono` is
+   defined *after* the display roles at *equal* specificity, so
+   `text-mono text-display` (the pricing figure, the trainer
+   community-impact stats) still resolves to mono. A more specific
+   override would break those silently.
+2. Plex Mono is loaded at **600** only because that same combination
+   inherits the display weight. Without the 600 cut the browser
+   synthesises a faux bold, which smears a monospace face.
+
+Superseded: the original "system fonts only" simplification, and the
+Newsreader + Inter pairing that replaced it.
 
 ### Palette (updated 2026-08-31 — visual redesign)
 
@@ -116,3 +146,38 @@ token block is now plain `:root { … }` CSS (see `app/globals.css`), which
 Tailwind never purges, while remaining just as usable via `var(--token)` in
 both inline styles and Tailwind arbitrary values. Any future addition to the
 token set should go in that same `:root` block, not a new `@theme` block.
+
+**CSS layer/specificity traps in the type scale.** Three related gotchas,
+all found by measuring rather than reading — each produces a *silent*
+wrong result, never an error:
+
+1. **`.text-label` outranks Tailwind colour utilities.** It sets
+   `color: var(--color-ink-faint)` itself, and because `globals.css`
+   declares it outside any cascade layer while Tailwind's utilities live
+   *inside* one, the unlayered rule wins regardless of source order.
+   `className="text-label text-[var(--color-primary)]"` renders faint,
+   not primary. Recolour with an inline `style` or a more specific rule.
+   The same applies to any other custom class here that sets a property a
+   utility might also set.
+2. **`.text-mono` and the display roles are order-dependent.**
+   `.text-mono` is declared *after* `.text-display*` at *equal*
+   specificity, so `text-mono text-display` resolves to mono — which is
+   what the pricing figures and the trainer community-impact stats rely
+   on. Adding a more specific display rule (e.g. a scope class) inverts
+   that and silently turns them sans. The 2026-09-02 typography rollout
+   deliberately edited the base definitions in place rather than layering
+   overrides, for exactly this reason.
+3. **Combined classes inherit weight across families.** `text-mono
+   text-display` takes the display role's weight 600, so Plex Mono must
+   be *loaded* at 600 or the browser synthesises a faux bold — which
+   smears a monospace face. Check the `next/font` weight array whenever a
+   role's weight changes.
+
+**`--color-ink-faint` fails WCAG 2.2 AA.** `#7a8091` on `--color-ground`
+`#faf8f4` measures **3.72:1**, below the 4.5:1 required for body-size
+text. It is used for `.text-label`, captions and de-emphasised metadata.
+A fix to `#6b7183` (4.59:1) was implemented once and lost when an
+unrelated batch was reverted (`93217e0` → `f7f826a`); it has not been
+re-applied. **This is a defect, not a style preference** — it is Phase 0
+of the governance roadmap and is explicitly exempt from founder taste
+review. Fix it standalone.

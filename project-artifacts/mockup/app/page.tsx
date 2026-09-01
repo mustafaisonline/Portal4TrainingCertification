@@ -564,9 +564,20 @@ export default function HomePage() {
                   >
                     {level}
                   </span>
+                  {/* One word, not a phrase: "assessor's mark" set in the
+                      tracked uppercase label wrapped to two lines inside a
+                      quarter-width column and read as clutter. This carries
+                      the same meaning without colour being the sole
+                      signal, and never wraps. */}
                   {awarded && (
-                    <span className="text-label mt-1 block text-[var(--color-primary)]">
-                      assessor&rsquo;s mark
+                    <span
+                      className="text-label mt-1 block"
+                      // `.text-label` sets its own colour and is unlayered
+                      // CSS, so it outranks a Tailwind text-* utility. Set
+                      // it here rather than fight specificity.
+                      style={{ color: "var(--color-primary)" }}
+                    >
+                      Awarded
                     </span>
                   )}
                 </li>

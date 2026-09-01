@@ -219,6 +219,18 @@
   font-size: 1.3125rem;
   letter-spacing: 0.004em;
 }
+/* The masthead already wraps to two lines at 375px on EVERY page (measured
+   on /programmes: 16.8px, 42px tall) — that is a pre-existing issue, not
+   one this experiment introduced, and fixing it portal-wide is out of the
+   homepage-only scope. But at 21px the two wrapped lines make the homepage
+   header ~11px taller than every other page's. Step the size back near the
+   baseline below 640px so header height stays consistent while the
+   experiment runs. Open item: the mobile masthead wrap itself. */
+@media (max-width: 640px) {
+  .type-plex .wordmark {
+    font-size: 1.0625rem;
+  }
+}
 
 html {
   color-scheme: light dark;

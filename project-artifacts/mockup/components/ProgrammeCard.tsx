@@ -34,33 +34,53 @@ export function ProgrammeCard({ programme }: { programme: Programme }) {
       <p className="text-body-sm mb-5 flex-1 text-[var(--color-ink-quiet)]">
         {programme.summary}
       </p>
-      <dl className="mb-5 flex flex-col gap-1.5 border-t border-[var(--color-line)] pt-4">
-        <div className="flex gap-3 text-body-sm">
-          <dt className="text-label w-[86px] shrink-0">Duration</dt>
-          <dd className="text-mono text-[0.8rem] text-[var(--color-ink-quiet)]">
-            {programme.duration}
-          </dd>
-        </div>
-        <div className="flex gap-3 text-body-sm">
-          <dt className="text-label w-[86px] shrink-0">For</dt>
-          <dd className="text-[var(--color-ink-quiet)]">
-            {programme.audienceSummary}
-          </dd>
-        </div>
-        <div className="flex gap-3 text-body-sm">
-          <dt className="text-label w-[86px] shrink-0">Delivery</dt>
-          <dd className="text-[var(--color-ink-quiet)]">
-            {programme.formats.join(" · ")}
-          </dd>
-        </div>
+      {/* Metadata list — every value uses ONE treatment: the same face and
+          the same size, so the rows align optically. Two of these four
+          previously used mono at 0.8rem while the other two inherited sans
+          at 0.9375rem, which made the list read ragged (fixed 2026-09-02).
+          This now matches the programme detail page's meta strip, which
+          already had it right. The price earns emphasis through colour and
+          weight alone — one axis, not three. The mono "measured voice"
+          stays reserved for the rubric, IDs and the full pricing figures,
+          where its scarcity means something. */}
+      {/* Specification grid. Two problems fixed here (2026-09-02):
+          1. BASELINES — this was a flex row with `align-items: stretch`.
+             Labels are 12px/16.8px and values 15px/24px, so the label text
+             sat ~3.6px above its value's baseline and the pair read as
+             mismatched. `items-baseline` puts them on one line.
+          2. CROSS-CARD ALIGNMENT — rows were auto-height, so a card whose
+             "For" value fit on one line had its rows land at different
+             y-positions from a card whose value wrapped to two. A real
+             grid with a uniform minimum row height makes row 1 of every
+             card sit at the same height as row 1 of every other card.
+          `grid-auto-rows` min is sized for two wrapped lines at the value's
+          snug leading, so a wrap no longer changes the row height. */}
+      <dl className="text-body-sm mb-5 grid grid-cols-[68px_minmax(0,1fr)] items-baseline gap-x-3 border-t border-[var(--color-line)] pt-4 [grid-auto-rows:minmax(2.75rem,auto)]">
+        <dt className="text-label">Duration</dt>
+        <dd className="leading-snug text-[var(--color-ink-quiet)]">
+          {programme.duration}
+        </dd>
+
+        <dt className="text-label">For</dt>
+        <dd className="leading-snug text-[var(--color-ink-quiet)]">
+          {programme.audienceSummary}
+        </dd>
+
+        <dt className="text-label">Delivery</dt>
+        <dd className="leading-snug text-[var(--color-ink-quiet)]">
+          {programme.formats.join(" · ")}
+        </dd>
+
         {fromPrice && (
-          <div className="flex gap-3 text-body-sm">
-            <dt className="text-label w-[86px] shrink-0">From</dt>
-            <dd className="text-mono text-[0.8rem] text-[var(--color-primary)]">
+          <>
+            <dt className="text-label">From</dt>
+            <dd className="font-medium leading-snug text-[var(--color-primary)]">
               {fromPrice}{" "}
-              <span className="text-[var(--color-ink-faint)]">(MY)</span>
+              <span className="font-normal text-[var(--color-ink-faint)]">
+                (MY)
+              </span>
             </dd>
-          </div>
+          </>
         )}
       </dl>
       <Link

@@ -155,6 +155,71 @@
   color: var(--color-ink);
 }
 
+/* ─────────────────────────────────────────────────────────────────────
+ * TYPOGRAPHY EXPERIMENT 1 — Direction C (IBM Plex). HOMEPAGE ONLY.
+ *
+ * Strategy: docs/design/TYPOGRAPHY_STRATEGY.md §9–§13. Applied via a
+ * scope class (the same mechanism as `.night`) so exactly one route
+ * changes and every other page keeps Newsreader/Inter untouched.
+ *
+ * Direction C's thesis is an INVERSION of the current hierarchy:
+ * sans-led, with the serif reserved for moments of consequence. So the
+ * serif survives only at `.text-display-xl` (the hero — one instance on
+ * the page), and every other heading role moves to Plex Sans. Sizes,
+ * line-heights, tracking, layout, colour and spacing are all UNCHANGED —
+ * this isolates the typeface variable and nothing else.
+ *
+ * REVERT = delete this block + the three loaders and wrapper in
+ * app/page.tsx.
+ * ───────────────────────────────────────────────────────────────────── */
+.type-plex {
+  --font-display:
+    var(--font-plex-serif), ui-serif, Georgia, Cambria, "Times New Roman",
+    serif;
+  --font-body:
+    var(--font-plex-sans), -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-mono:
+    var(--font-plex-mono), ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-family: var(--font-body);
+}
+
+/* Sans-led allocation. `.text-display-xl` deliberately omitted — the hero
+   keeps the serif, and is the page's only serif moment. */
+.type-plex .text-display-lg,
+.type-plex .text-display,
+.type-plex .text-h1,
+.type-plex .text-h2 {
+  font-family: var(--font-body);
+}
+
+/* Plex Sans needs marginally more weight than a serif to hold authority
+   at display sizes, and slightly tighter tracking. Sizes are untouched. */
+.type-plex .text-display-lg,
+.type-plex .text-display {
+  font-weight: 600;
+  letter-spacing: -0.018em;
+}
+.type-plex .text-h1 {
+  font-weight: 600;
+  letter-spacing: -0.012em;
+}
+.type-plex .text-h2 {
+  font-weight: 600;
+  letter-spacing: -0.006em;
+}
+
+/* Wordmark candidate — Plex Serif, so the masthead stops being set in the
+   interface font (strategy §2.5, §7). Scoped to the homepage: the
+   `wordmark` hook in PublicShell is unstyled elsewhere, so every other
+   page's masthead is pixel-identical. */
+.type-plex .wordmark {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.3125rem;
+  letter-spacing: 0.004em;
+}
+
 html {
   color-scheme: light dark;
 }

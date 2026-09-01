@@ -26,7 +26,10 @@ export function TrainerCard({ person }: { person: Practitioner }) {
         <p className="text-body-sm mb-1 text-[var(--color-ink-quiet)]">
           {person.role}
         </p>
-        <p className="text-mono mb-3 text-[0.8rem] text-[var(--color-ink-faint)]">
+        {/* Standalone stat line, so mono is kept as the "measured voice" —
+            but the arbitrary 0.8rem sat outside the type scale. Now uses
+            the scale's body-sm size (2026-09-02). */}
+        <p className="text-mono text-body-sm mb-3 text-[var(--color-ink-faint)]">
           {person.experienceLine}
         </p>
         <p className="text-body-sm mb-4 text-[var(--color-ink-quiet)]">

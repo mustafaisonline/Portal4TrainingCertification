@@ -1,3 +1,4 @@
+import { IBM_Plex_Mono, IBM_Plex_Sans, IBM_Plex_Serif } from "next/font/google";
 import { PublicShell } from "@/components/PublicShell";
 import { ProgrammeCard } from "@/components/ProgrammeCard";
 import { TrainerCard } from "@/components/TrainerCard";
@@ -7,6 +8,42 @@ import { Chip } from "@/components/ui/Chip";
 import { domains } from "@/data/domains";
 import { practitioners } from "@/data/practitioners";
 import { programmes } from "@/data/programmes";
+
+/* ─────────────────────────────────────────────────────────────────────
+ * TYPOGRAPHY EXPERIMENT 1 — Direction C (IBM Plex), HOMEPAGE ONLY.
+ *
+ * See docs/design/TYPOGRAPHY_STRATEGY.md. Loaded here rather than in
+ * app/layout.tsx so the fonts download on this route only — every other
+ * page keeps Newsreader/Inter and is byte-for-byte unaffected.
+ *
+ * The `.type-plex` class in globals.css redefines --font-display /
+ * --font-body / --font-mono for this subtree and applies Direction C's
+ * sans-led allocation. Nothing else about the page changes: no layout,
+ * no colour, no spacing, no size, no content.
+ *
+ * REVERT = delete these three loaders, the wrapper <div>, and the
+ * `.type-plex` block in globals.css.
+ * ───────────────────────────────────────────────────────────────────── */
+const plexSerif = IBM_Plex_Serif({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-plex-serif",
+  display: "swap",
+});
+const plexSans = IBM_Plex_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-plex-sans",
+  display: "swap",
+});
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-plex-mono",
+  display: "swap",
+});
 
 /** Homepage preview: the flagship plus the two entry-level programmes —
  *  discovery, not the catalogue. Exploration lives at /programmes. */
@@ -130,7 +167,10 @@ const heroChips = [
 
 export default function HomePage() {
   return (
-    <PublicShell>
+    <div
+      className={`type-plex ${plexSerif.variable} ${plexSans.variable} ${plexMono.variable}`}
+    >
+      <PublicShell>
       {/* ============ H1 — Hero (night) ============
           The D0 compound proof: named genuine practitioner + live delivery
           formats in one eyeline. No date exists yet, so none is shown
@@ -480,18 +520,62 @@ export default function HomePage() {
               credential means something to an employer.
             </p>
           </div>
+          {/* Rubric excerpt — rebuilt 2026-09-02.
+              It previously rendered as a single monospace paragraph with
+              <br> breaks and ○/◉ characters standing in for form controls,
+              which read as terminal output rather than an assessment
+              instrument. It is now laid out as the scale it actually is:
+              prose in the UI face, the four levels as a real four-point
+              scale, and the assessor's mark carried by a drawn indicator.
+              The selected level is signalled by weight, a marker and a
+              caption as well as colour — colour is never the sole carrier
+              of meaning here. Still illustrative of FORMAT only: the real
+              rubric is unwritten and must never be faked. */}
           <div className="night rounded-[var(--radius-panel)] border border-[var(--color-line-strong)] p-7">
-            <p className="text-label mb-4">From the assessment rubric</p>
-            <p className="text-mono text-body-sm text-[var(--color-ink-quiet)]">
-              Criterion 2 — Justification
-              <br />
-              ○ Not yet&nbsp;&nbsp;◉ Competent&nbsp;&nbsp;○
-              Proficient&nbsp;&nbsp;○ Distinguished
-              <br />
-              <br />
-              Assessor reasoning: written for every criterion,
-              <br />
-              and shown to the candidate in full.
+            <p className="text-label mb-5">From the assessment rubric</p>
+
+            <p className="text-h2">Justification</p>
+            <p className="text-body-sm mb-7 text-[var(--color-ink-faint)]">
+              Criterion 2 of 5 · assessed on every submission
+            </p>
+
+            <ol className="mb-7 grid grid-cols-2 gap-x-5 gap-y-5 sm:grid-cols-4">
+              {[
+                { level: "Not yet", awarded: false },
+                { level: "Competent", awarded: true },
+                { level: "Proficient", awarded: false },
+                { level: "Distinguished", awarded: false },
+              ].map(({ level, awarded }) => (
+                <li key={level}>
+                  <span
+                    aria-hidden="true"
+                    className={`mb-2.5 block h-[3px] rounded-full ${
+                      awarded
+                        ? "bg-[var(--color-primary)]"
+                        : "bg-[var(--color-line-strong)]"
+                    }`}
+                  />
+                  <span
+                    className={`block text-body-sm ${
+                      awarded
+                        ? "font-semibold text-[var(--color-ink)]"
+                        : "text-[var(--color-ink-faint)]"
+                    }`}
+                  >
+                    {level}
+                  </span>
+                  {awarded && (
+                    <span className="text-label mt-1 block text-[var(--color-primary)]">
+                      assessor&rsquo;s mark
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ol>
+
+            <p className="text-body-sm border-t border-[var(--color-line)] pt-5 text-[var(--color-ink-quiet)]">
+              The assessor records a level for every criterion and writes the
+              reasoning behind it — shown to the candidate in full.
             </p>
           </div>
         </div>
@@ -602,7 +686,8 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>
-    </PublicShell>
+        </section>
+      </PublicShell>
+    </div>
   );
 }

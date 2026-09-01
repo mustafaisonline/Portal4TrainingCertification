@@ -58,7 +58,10 @@ export function PublicShell({ children }: { children: ReactNode }) {
           <Link href="/" className="flex min-w-0 items-center gap-3">
             <LogoMark />
             <span className="leading-tight">
-              <span className="block text-[1.05rem] font-semibold tracking-tight">
+              {/* `wordmark` is a bare hook with no global styles — it is
+                  styled only inside `.type-plex` (typography Experiment 1,
+                  homepage only), so every other page renders unchanged. */}
+              <span className="wordmark block text-[1.05rem] font-semibold tracking-tight">
                 Data &amp; AI Academy
               </span>
               <span className="text-label hidden text-[0.6rem] sm:block">

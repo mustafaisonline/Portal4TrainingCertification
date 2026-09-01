@@ -42,7 +42,7 @@ export default async function TrainerProfilePage({
     <PublicShell>
       {/* ===== Profile header (night) ===== */}
       <section className="night relative">
-        <div className="mx-auto max-w-[1280px] px-6 py-14 lg:py-16">
+        <div className="section mx-auto max-w-[1280px] px-6">
           <Link
             href="/trainers"
             className="text-body-sm mb-10 inline-block text-[var(--color-ink-quiet)] underline underline-offset-4 hover:text-[var(--color-ink)]"
@@ -91,7 +91,7 @@ export default async function TrainerProfilePage({
       </section>
 
       {/* ===== About + career, with credentials sidebar ===== */}
-      <section className="mx-auto max-w-[1280px] px-6 py-16">
+      <section className="section mx-auto max-w-[1280px] px-6">
         <div className="grid gap-12 lg:grid-cols-[1fr_360px]">
           <div className="max-w-[680px]">
             <h2 className="text-h1 mb-5">About</h2>
@@ -187,10 +187,7 @@ export default async function TrainerProfilePage({
       {/* ===== Published books ===== */}
       {person.books && (
         <section className="border-t border-[var(--color-line)]">
-          <div className="mx-auto max-w-[1280px] px-6 py-16">
-            <p className="text-label mb-3 text-[var(--color-primary)]">
-              Thought leadership
-            </p>
+          <div className="section mx-auto max-w-[1280px] px-6">
             <h2 className="text-display mb-10">Published books</h2>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {person.books.map((book) => (
@@ -233,10 +230,7 @@ export default async function TrainerProfilePage({
       {/* ===== Innovations & frameworks ===== */}
       {person.frameworks && (
         <section className="border-t border-[var(--color-line)] bg-[var(--color-ground-raised)]">
-          <div className="mx-auto max-w-[1280px] px-6 py-16">
-            <p className="text-label mb-3 text-[var(--color-primary)]">
-              Original contributions
-            </p>
+          <div className="section mx-auto max-w-[1280px] px-6">
             <h2 className="text-display mb-10">
               Innovations &amp; frameworks
             </h2>
@@ -275,18 +269,7 @@ export default async function TrainerProfilePage({
       {/* ===== Let's Talk About Data (night band) ===== */}
       {person.podcast && (
         <section className="night relative overflow-hidden">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(50% 90% at 82% 30%, rgba(122,132,255,0.14), transparent 70%)",
-            }}
-          />
-          <div className="relative mx-auto max-w-[1280px] px-6 py-16">
-            <p className="text-label mb-3 text-[var(--color-primary)]">
-              Podcast
-            </p>
+          <div className="mx-auto max-w-[1280px] section px-6">
             <h2 className="text-display mb-5">{person.podcast.name}</h2>
             <p className="text-body-lg mb-9 max-w-[620px] text-[var(--color-ink-quiet)]">
               {person.podcast.description}
@@ -316,10 +299,7 @@ export default async function TrainerProfilePage({
 
       {/* ===== Community impact ===== */}
       {person.communityImpact && (
-        <section className="mx-auto max-w-[1280px] px-6 py-16">
-          <p className="text-label mb-3 text-[var(--color-primary)]">
-            Beyond commercial work
-          </p>
+        <section className="section mx-auto max-w-[1280px] px-6">
           <h2 className="text-display mb-10">Community impact</h2>
           <div className="grid gap-6 md:grid-cols-3">
             {person.communityImpact.map((item) => (
@@ -346,7 +326,7 @@ export default async function TrainerProfilePage({
       {/* ===== Connect online ===== */}
       {person.socialLinks && (
         <section className="border-t border-[var(--color-line)]">
-          <div className="mx-auto max-w-[1280px] px-6 py-16">
+          <div className="section mx-auto max-w-[1280px] px-6">
             <h2 className="text-h1 mb-8">Connect online</h2>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {person.socialLinks.map((link) => (
@@ -373,7 +353,7 @@ export default async function TrainerProfilePage({
       )}
 
       {/* ===== Honest State-A note ===== */}
-      <section className="mx-auto max-w-[1280px] px-6 pb-16">
+      <section className="mx-auto max-w-[1280px] px-6 pb-14">
         <p className="border-t border-[var(--color-line)] pt-6 text-body-sm text-[var(--color-ink-faint)]">
           Programme delivery history at the Academy will appear here as
           cohorts are delivered — genuinely, never padded.

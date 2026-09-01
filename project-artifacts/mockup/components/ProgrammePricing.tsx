@@ -70,15 +70,7 @@ export function ProgrammePricing({
       id="investment"
       className="night relative scroll-mt-24 overflow-hidden"
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(50% 85% at 80% 25%, rgba(122,132,255,0.14), transparent 70%)",
-        }}
-      />
-      <div className="relative mx-auto max-w-[1280px] px-6 py-16">
+      <div className="mx-auto max-w-[1280px] section px-6">
         <p className="text-label mb-3 text-[var(--color-primary)]">
           Investment
         </p>

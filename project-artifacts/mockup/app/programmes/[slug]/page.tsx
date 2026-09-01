@@ -72,14 +72,6 @@ export default async function ProgrammeDetailPage({
     <PublicShell>
       {/* ===== Hero ===== */}
       <section className="night relative overflow-hidden">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(55% 80% at 80% 20%, rgba(122,132,255,0.14), transparent 70%)",
-          }}
-        />
         <div className="relative mx-auto max-w-[1280px] px-6 py-14 lg:py-16">
           <Link
             href="/programmes"
@@ -117,7 +109,7 @@ export default async function ProgrammeDetailPage({
       </section>
 
       {/* ===== Overview + highlights ===== */}
-      <section className="mx-auto max-w-[1280px] px-6 py-16">
+      <section className="section mx-auto max-w-[1280px] px-6">
         <div className="grid gap-12 lg:grid-cols-[1fr_340px]">
           <div className="max-w-[680px]">
             <h2 className="text-h1 mb-5">{programme.rationale.heading}</h2>
@@ -175,10 +167,7 @@ export default async function ProgrammeDetailPage({
 
       {/* ===== Who should attend ===== */}
       <section className="border-t border-[var(--color-line)] bg-[var(--color-ground-raised)]">
-        <div className="mx-auto max-w-[1280px] px-6 py-16">
-          <p className="text-label mb-3 text-[var(--color-primary)]">
-            Who is this for
-          </p>
+        <div className="section-tight mx-auto max-w-[1280px] px-6">
           <h2 className="text-display mb-5">Who should attend</h2>
           <p className="text-body-lg mb-9 max-w-[680px] text-[var(--color-ink-quiet)]">
             {programme.whoShouldAttend.intro}
@@ -193,10 +182,7 @@ export default async function ProgrammeDetailPage({
 
       {/* ===== Delivery formats (flagship) ===== */}
       {programme.deliveryFormats && (
-        <section className="mx-auto max-w-[1280px] px-6 py-16">
-          <p className="text-label mb-3 text-[var(--color-primary)]">
-            Choose your pace
-          </p>
+        <section className="section mx-auto max-w-[1280px] px-6">
           <h2 className="text-display mb-4">Flexible learning formats</h2>
           <p className="text-body-lg mb-10 max-w-[680px] text-[var(--color-ink-quiet)]">
             All formats cover the same curriculum, learning outcomes,
@@ -245,10 +231,7 @@ export default async function ProgrammeDetailPage({
 
       {/* ===== Learning outcomes ===== */}
       {(programme.outcomes || programme.outcomeGroups) && (
-        <section className="mx-auto max-w-[1280px] px-6 py-16">
-          <p className="text-label mb-3 text-[var(--color-primary)]">
-            Learning outcomes
-          </p>
+        <section className="section mx-auto max-w-[1280px] px-6">
           <h2 className="text-display mb-10">What you will learn</h2>
           {programme.outcomeGroups && (
             <div className="grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
@@ -292,10 +275,7 @@ export default async function ProgrammeDetailPage({
         id="curriculum"
         className="border-y border-[var(--color-line)] bg-[var(--color-ground-raised)]"
       >
-        <div className="mx-auto max-w-[1280px] scroll-mt-24 px-6 py-16">
-          <p className="text-label mb-3 text-[var(--color-primary)]">
-            Programme content
-          </p>
+        <div className="section-open mx-auto max-w-[1280px] scroll-mt-24 px-6">
           <h2 className="text-display mb-4">Curriculum</h2>
           <p className="text-body-sm mb-10 text-[var(--color-ink-faint)]">
             {programme.modules.length} modules · expand any module to see what
@@ -364,10 +344,7 @@ export default async function ProgrammeDetailPage({
 
       {/* ===== Career paths (mentorship) ===== */}
       {programme.careerPaths && (
-        <section className="mx-auto max-w-[1280px] px-6 py-16">
-          <p className="text-label mb-3 text-[var(--color-primary)]">
-            Career transitions
-          </p>
+        <section className="section mx-auto max-w-[1280px] px-6">
           <h2 className="text-display mb-4">Choose your career path</h2>
           <p className="text-body-lg mb-10 max-w-[680px] text-[var(--color-ink-quiet)]">
             Identify where you are today — and where mentorship can take you.
@@ -403,10 +380,7 @@ export default async function ProgrammeDetailPage({
       {/* ===== Methodology / journey ===== */}
       {programme.methodology && (
         <section className="night relative overflow-hidden">
-          <div className="relative mx-auto max-w-[1280px] px-6 py-16">
-            <p className="text-label mb-3 text-[var(--color-primary)]">
-              The approach
-            </p>
+          <div className="mx-auto max-w-[1280px] section px-6">
             <h2 className="text-display mb-10">{programme.methodology.name}</h2>
             <ol className="grid gap-x-8 gap-y-7 sm:grid-cols-2 lg:grid-cols-4">
               {programme.methodology.steps.map((step, i) => (
@@ -430,12 +404,9 @@ export default async function ProgrammeDetailPage({
 
       {/* ===== How it is taught ===== */}
       {programme.pedagogy && (
-        <section className="mx-auto max-w-[1280px] px-6 py-16">
+        <section className="section mx-auto max-w-[1280px] px-6">
           <div className="grid gap-12 lg:grid-cols-[1fr_1fr]">
             <div className="max-w-[560px]">
-              <p className="text-label mb-3 text-[var(--color-primary)]">
-                Learning experience
-              </p>
               <h2 className="text-display mb-5">How it is taught</h2>
               <p className="text-body-lg text-[var(--color-ink-quiet)]">
                 {programme.pedagogy.intro}
@@ -472,7 +443,7 @@ export default async function ProgrammeDetailPage({
       {/* ===== Organisational benefits ===== */}
       {programme.benefits && (
         <section className="border-t border-[var(--color-line)] bg-[var(--color-ground-raised)]">
-          <div className="mx-auto max-w-[1280px] px-6 py-16">
+          <div className="section-tight mx-auto max-w-[1280px] px-6">
             <h2 className="text-h1 mb-5">{programme.benefits.intro}</h2>
             <ul className="grid gap-x-10 sm:grid-cols-2 lg:grid-cols-3">
               {programme.benefits.items.map((item) => (
@@ -499,10 +470,7 @@ export default async function ProgrammeDetailPage({
       />
 
       {/* ===== Trainer ===== */}
-      <section className="mx-auto max-w-[1280px] px-6 py-16">
-        <p className="text-label mb-3 text-[var(--color-primary)]">
-          Who delivers this
-        </p>
+      <section className="section-lead mx-auto max-w-[1280px] px-6">
         <h2 className="text-display mb-8">Taught by a practitioner</h2>
         <div className="max-w-[760px]">
           <TrainerCard person={founder} />
@@ -510,9 +478,17 @@ export default async function ProgrammeDetailPage({
       </section>
 
       {/* ===== Certification note (OQ-21 boundary) ===== */}
-      <section className="mx-auto max-w-[1280px] px-6 pb-16">
-        <Card variant="plate" className="max-w-[760px] p-6">
-          <p className="text-label mb-2">Certification</p>
+      <section className="mx-auto max-w-[1280px] px-6 pb-14">
+        <Card
+          variant="plate"
+          className="max-w-[760px] border-l-2 border-[var(--color-accent)] p-6"
+        >
+          {/* Ember accent activated here only (audit): the credential is the
+              one achievement moment on the site, and the accent's scarcity
+              is what makes it mean something. */}
+          <p className="text-mono mb-2 text-[0.7rem] uppercase tracking-[0.14em] text-[var(--color-accent)]">
+            Certification
+          </p>
           <p className="text-body-sm text-[var(--color-ink-quiet)]">
             This programme awards a{" "}
             <span className="text-[var(--color-ink)]">
@@ -534,7 +510,7 @@ export default async function ProgrammeDetailPage({
 
       {/* ===== External resources ===== */}
       {programme.externalResources && (
-        <section className="mx-auto max-w-[1280px] px-6 pb-16">
+        <section className="mx-auto max-w-[1280px] px-6 pb-14">
           <h2 className="text-h1 mb-6">Related resources</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {programme.externalResources.map((res) => (
@@ -562,7 +538,7 @@ export default async function ProgrammeDetailPage({
       {/* ===== Related programmes ===== */}
       {related.length > 0 && (
         <section className="border-t border-[var(--color-line)]">
-          <div className="mx-auto max-w-[1280px] px-6 py-16">
+          <div className="section-tight mx-auto max-w-[1280px] px-6">
             <h2 className="text-h1 mb-8">Related programmes</h2>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {related.map((p) => (
@@ -575,15 +551,7 @@ export default async function ProgrammeDetailPage({
 
       {/* ===== CTA ===== */}
       <section className="night relative overflow-hidden">
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(50% 90% at 20% 50%, rgba(122,132,255,0.14), transparent 70%)",
-          }}
-        />
-        <div className="relative mx-auto max-w-[1280px] px-6 py-16">
+        <div className="mx-auto max-w-[1280px] section px-6">
           <h2 className="text-display mb-4 max-w-[620px]">
             Bring this programme to your team
           </h2>

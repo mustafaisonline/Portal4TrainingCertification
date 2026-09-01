@@ -20,7 +20,7 @@ export default function TrainersPage() {
   return (
     <PublicShell>
       <section className="night relative">
-        <div className="mx-auto max-w-[1280px] px-6 py-16 lg:py-20">
+        <div className="section-open mx-auto max-w-[1280px] px-6">
           <p className="text-label mb-4 text-[var(--color-primary)]">
             Trainers
           </p>
@@ -36,7 +36,7 @@ export default function TrainersPage() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1280px] px-6 py-16">
+      <section className="section mx-auto max-w-[1280px] px-6">
         <div className="flex max-w-[760px] flex-col gap-6">
           {practitioners.map((person) => (
             <TrainerCard key={person.slug} person={person} />

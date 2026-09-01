@@ -40,12 +40,40 @@ they can't drift apart.
 
 ### Typography (updated 2026-08-31 — visual redesign)
 
-Display roles now use **Newsreader** (editorial serif, weight 500) and
-UI/body uses **Inter**, both self-hosted at build time via `next/font` in
+Display roles use **Newsreader** (editorial serif, weight 500) and UI/body
+uses **Inter**, both self-hosted at build time via `next/font` in
 `app/layout.tsx` — no runtime font service and no new package. The system
-stacks remain as fallbacks in `--font-display` / `--font-body`. The
-earlier "system fonts only" simplification is superseded. Mono stays a
-system stack.
+stacks remain as fallbacks in `--font-display` / `--font-body`. The earlier
+"system fonts only" simplification is superseded. Mono stays a system stack.
+
+**The serif stops at `.text-h1`** (audit, 2026-09-01). `.text-h2` — which
+carries ~30 card titles — is **sans 600 at 17px**. Setting card titles in
+the display serif spread it so thin that it stopped signalling anything.
+Display weights are unified at **500**; the previous 600 on `.text-h2` was
+an unexplained inconsistency. `.text-wordmark` is the masthead mark.
+
+### Audit remediation (2026-09-01) — binding rules
+
+A design audit found the portal read as AI-generated, caused by structural
+uniformity rather than any single element. Four rules now bind new work:
+
+1. **Eyebrows are wayfinding, not decoration.** Do not open a section with
+   an uppercase `.text-label` by default. Site-wide they went 77 → 39, and
+   accent-coloured section eyebrows 28 → 6. `.text-label` remains correct
+   for `dt` elements and card labels.
+2. **Use the rhythm tiers, not a uniform `py-16`.** `.section-tight` (3.5rem)
+   · `.section` (5.5rem) · `.section-open` (8rem) · `.section-lead` and
+   `.section-follow` (asymmetric). Dense reference material tightens;
+   statements open up. A page should not have one tempo.
+3. **A card must earn its box.** Cards are for genuinely comparable objects
+   (programmes, trainers, packages). Descriptive attributes belong in ruled
+   lists or definition lists.
+4. **Vary the column count.** Three-up was the reflex; 2-up asymmetric,
+   4-up and multi-column indexes are all in use now.
+
+Also: `--ink-faint` was darkened to meet WCAG AA (4.59:1), the decorative
+dot-field and radial glows were removed entirely, and the wordmark became a
+typographic mark (`.text-wordmark`) rather than the UI font.
 
 ### Palette (updated 2026-08-31 — visual redesign)
 

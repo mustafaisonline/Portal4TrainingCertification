@@ -177,6 +177,63 @@ lives in the "Learn from practitioners" section (`H3`, with a
   omitted; **no Academy programme-delivery history is claimed** — the
   profile says so explicitly until cohorts have genuinely run (State A).
 
+## Audit remediation (2026-09-01)
+
+A visual design audit found the portal read as AI-generated. The cause was
+not any individual element — it was **total structural uniformity**. All
+ten remediations were implemented; measured before → after:
+
+| Finding | Before | After |
+|---|---|---|
+| Homepage sections opening with an uppercase eyebrow | 9 / 9 | **1 / 9** |
+| `text-label` instances site-wide | 77 | **39** (remainder are functional `dt`/card labels, not section eyebrows) |
+| Accent-coloured section eyebrows | 28 | **6** |
+| Distinct section rhythms on P01 | 1 dominant (`py-16` × 33) | **6**, incl. 2 asymmetric (88/40, 40/88) |
+| Card instances on P01 | ~23 | **13** |
+| Decorative dot-fields | 2 | **0** |
+| Decorative radial glows | 7 | **0** |
+| `--ink-faint` contrast on paper | 3.72:1 ❌ | **4.59:1** ✅ AA |
+| Wordmark | Inter 16.8px | **Newsreader 21px + rule + mono descriptor** |
+| Ember accent | defined, unused | **active on credential moments only** |
+
+**What changed and why:**
+
+1. **Eyebrow habit broken.** The `eyebrow → serif heading → paragraph`
+   construction ran on every section without exception; that regularity was
+   the single biggest generated-looking tell. Eyebrows now survive only
+   where they do genuine wayfinding.
+2. **Rhythm tiers added** — `.section-tight` / `.section` / `.section-open`
+   plus asymmetric `.section-lead` / `.section-follow` in `globals.css`.
+   Dense reference blocks tighten; the curriculum and the credential
+   statement open up. The page now breathes unevenly, as an edited page does.
+3. **Wordmark redesigned.** It was set in the UI font at 16.8px and read as
+   a nav label. Now a typographic mark: display serif, hairline rule, mono
+   descriptor. The geometric line-art logo glyph was **removed** — it was
+   itself part of the generic-tech read.
+4. **Photography — NOT DONE.** The audit's #4 recommendation (genuine
+   delivery photography) cannot be implemented: no real photography exists,
+   and stock or AI-generated imagery is prohibited. **This remains the
+   single largest open credibility gap and is a content dependency.**
+5. **De-carded.** Delivery formats, capability areas, the hero model and the
+   programmes-page philosophy/levels blocks became ruled lists and
+   definition lists. Cards now survive where items are genuinely comparable
+   (programmes, trainers, pricing packages).
+6. **Contrast fixed** — `--ink-faint` darkened `#7a8091` → `#6b7183`.
+7. **Decoration removed** — dot-field SVG and radial glows deleted outright.
+8. **Three-column reflex broken** — P01 now uses 2-up asymmetric splits,
+   a 4-up definition grid, a centred full-width statement, and a
+   multi-column ruled index. The programmes level grid went 3 → 2 columns.
+9. **Serif pulled back.** `.text-h2` (≈30 card titles) moved from display
+   serif 600 to **sans 600 at 17px**; display weights unified at 500. The
+   serif now stops at `.text-h1`, so it signals consequence again.
+10. **Ember activated** on the credential band and the certification
+    boundary — the one achievement moment, and the one thing that
+    differentiates the palette from AI-industry indigo.
+
+**Preserved deliberately:** zero drop shadows, the button system, the warm
+paper ground, the token architecture and `.night` scope, all honest-content
+discipline, and the programme content depth.
+
 ## Rejected alternatives
 
 - **Leading the hero with an offerings board** ("Direction A") — rejected:

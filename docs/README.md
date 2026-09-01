@@ -6,7 +6,7 @@
 |---|---|---|
 | [`architecture/`](architecture/README.md) | **Decisions** — principles, ADRs, technology choices, data/security/integration/deployment architecture. The frozen baseline | [Architecture index](architecture/README.md) |
 | [`execution/`](execution/README.md) | **Delivery** — milestone plans, RED-gate action lists, verification criteria, completion reports | [Execution index](execution/README.md) |
-| [`design/`](design/) | **Screen-level design specifications** — what a given screen must communicate, contain and enable, below the Mockup Specification and above any visual design work | [`P01_HOMEPAGE_REDESIGN_SPECIFICATION.md`](design/P01_HOMEPAGE_REDESIGN_SPECIFICATION.md) — **also the durable record of the Homepage Design Strategy decisions** (its §3) |
+| [`design/`](design/) | **Design specifications & governance** — what screens must communicate (below the Mockup Specification, above visual design), and the rules that govern visual refinement | [`P01_HOMEPAGE_REDESIGN_SPECIFICATION.md`](design/P01_HOMEPAGE_REDESIGN_SPECIFICATION.md) — also the durable Homepage Design Strategy record (its §3) · [`VISUAL_REFINEMENT_GOVERNANCE.md`](design/VISUAL_REFINEMENT_GOVERNANCE.md) — the design-governance blueprint, incl. the binding lesson from the reverted audit remediation (`93217e0`→`f7f826a`) |
 
 **The test for where something belongs:** if it would still be true after the current milestone ships, it is architecture. If it describes *this* piece of work, it is execution. If it defines what a specific screen must become, it is design.
 

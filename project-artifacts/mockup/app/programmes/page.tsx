@@ -38,7 +38,15 @@ export default function ProgrammesPage() {
     <PublicShell>
       {/* Hero */}
       <section className="night relative overflow-hidden">
-        <div className="mx-auto max-w-[1280px] section-open px-6">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(55% 75% at 78% 25%, rgba(122,132,255,0.15), transparent 70%)",
+          }}
+        />
+        <div className="relative mx-auto max-w-[1280px] px-6 py-16 lg:py-20">
           <p className="text-label mb-4 text-[var(--color-primary)]">
             Programmes
           </p>
@@ -62,9 +70,12 @@ export default function ProgrammesPage() {
       </section>
 
       {/* Philosophy */}
-      <section className="section mx-auto max-w-[1280px] px-6">
+      <section className="mx-auto max-w-[1280px] px-6 py-16">
         <div className="grid gap-10 lg:grid-cols-[1fr_1fr]">
           <div className="max-w-[560px]">
+            <p className="text-label mb-3 text-[var(--color-primary)]">
+              How these programmes are built
+            </p>
             <h2 className="text-display mb-5">
               Taught by practitioners, not theorists
             </h2>
@@ -81,63 +92,58 @@ export default function ProgrammesPage() {
               university programmes.
             </p>
           </div>
-          {/* De-carded (audit): four boxes became a ruled list. These are
-              descriptive attributes, not comparable objects — they never
-              needed containers. */}
-          <dl>
+          <div className="grid gap-4 sm:grid-cols-2">
             {[
               ["Practitioner-led", "Taught by someone who has built these systems in real organisations."],
               ["Enterprise context", "Banking, telecom, healthcare, retail, oil & gas and public sector examples."],
               ["Vendor-neutral", "Concepts and architecture patterns, not a product tutorial."],
               ["Applied", "Case studies, discussion and practical scenarios throughout."],
             ].map(([title, body]) => (
-              <div
-                key={title}
-                className="grid gap-x-8 gap-y-1 border-t border-[var(--color-line)] py-4 sm:grid-cols-[minmax(0,18ch)_minmax(0,1fr)]"
-              >
-                <dt className="text-h2">{title}</dt>
-                <dd className="text-body-sm text-[var(--color-ink-quiet)]">
+              <Card key={title} variant="plate" className="p-5">
+                <h3 className="text-h2 mb-2">{title}</h3>
+                <p className="text-body-sm text-[var(--color-ink-quiet)]">
                   {body}
-                </dd>
-              </div>
+                </p>
+              </Card>
             ))}
-          </dl>
+          </div>
         </div>
       </section>
 
       {/* Levels */}
       <section className="border-y border-[var(--color-line)] bg-[var(--color-ground-raised)]">
-        <div className="section-tight mx-auto max-w-[1280px] px-6">
-          {/* Two columns, not three — breaking the three-column reflex the
-              audit flagged. Dense ruled index rather than accent-topped
-              tiles. */}
-          <dl className="grid gap-x-14 sm:grid-cols-2">
+        <div className="mx-auto max-w-[1280px] px-6 py-14">
+          <p className="text-label mb-6 text-[var(--color-primary)]">
+            Programme levels
+          </p>
+          <div className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
             {programmeLevels.map(({ level, description }) => {
               const count = programmes.filter((p) => p.level === level).length;
               return (
                 <div
                   key={level}
-                  className="flex items-baseline justify-between gap-6 border-t border-[var(--color-line)] py-4"
+                  className="border-t-2 border-[var(--color-primary)]/50 pt-4"
                 >
-                  <div>
-                    <dt className="text-h2">{level}</dt>
-                    <dd className="text-body-sm text-[var(--color-ink-quiet)]">
-                      {description}
-                    </dd>
-                  </div>
-                  <span className="text-mono shrink-0 text-[0.75rem] text-[var(--color-ink-faint)]">
-                    {count}
-                  </span>
+                  <p className="mb-1 font-semibold">{level}</p>
+                  <p className="text-body-sm text-[var(--color-ink-quiet)]">
+                    {description}
+                  </p>
+                  <p className="text-mono mt-2 text-[0.75rem] text-[var(--color-ink-faint)]">
+                    {count === 1 ? "1 programme" : `${count} programmes`}
+                  </p>
                 </div>
               );
             })}
-          </dl>
+          </div>
         </div>
       </section>
 
       {/* Flagship */}
       {flagship && (
-        <section className="section mx-auto max-w-[1280px] px-6">
+        <section className="mx-auto max-w-[1280px] px-6 py-16">
+          <p className="text-label mb-3 text-[var(--color-primary)]">
+            Flagship programme
+          </p>
           <Card variant="feature">
             <div className="grid gap-8 lg:grid-cols-[1fr_320px] lg:items-center">
               <div>
@@ -173,8 +179,11 @@ export default function ProgrammesPage() {
       {/* All programmes */}
       <section
         id="all-programmes"
-        className="section mx-auto max-w-[1280px] scroll-mt-24 px-6"
+        className="mx-auto max-w-[1280px] scroll-mt-24 px-6 py-16"
       >
+        <p className="text-label mb-3 text-[var(--color-primary)]">
+          The portfolio
+        </p>
         <h2 className="text-display mb-10">All programmes</h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {programmes.map((programme) => (
@@ -185,7 +194,10 @@ export default function ProgrammesPage() {
 
       {/* Learning pathway */}
       <section id="pathway" className="night relative scroll-mt-24 overflow-hidden">
-        <div className="mx-auto max-w-[1280px] section px-6">
+        <div className="relative mx-auto max-w-[1280px] px-6 py-16">
+          <p className="text-label mb-3 text-[var(--color-primary)]">
+            Choose your journey
+          </p>
           <h2 className="text-display mb-4">Where to start, and what follows</h2>
           <p className="text-body-lg mb-10 max-w-[620px] text-[var(--color-ink-quiet)]">
             The core track builds from shared language to enterprise design and
@@ -245,9 +257,12 @@ export default function ProgrammesPage() {
       </section>
 
       {/* Corporate + delivery */}
-      <section className="section mx-auto max-w-[1280px] px-6">
+      <section className="mx-auto max-w-[1280px] px-6 py-16">
         <div className="grid gap-12 lg:grid-cols-2">
           <div className="max-w-[560px]">
+            <p className="text-label mb-3 text-[var(--color-primary)]">
+              For organisations
+            </p>
             <h2 className="text-display mb-5">
               Customised capability development
             </h2>

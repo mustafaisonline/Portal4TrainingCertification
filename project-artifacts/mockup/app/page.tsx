@@ -1,8 +1,9 @@
-import Link from "next/link";
 import { PublicShell } from "@/components/PublicShell";
 import { ProgrammeCard } from "@/components/ProgrammeCard";
+import { TrainerCard } from "@/components/TrainerCard";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
+import { Chip } from "@/components/ui/Chip";
 import { domains } from "@/data/domains";
 import { practitioners } from "@/data/practitioners";
 import { programmes } from "@/data/programmes";
@@ -17,99 +18,228 @@ const featuredProgrammes = [
 
 /**
  * P01 — Homepage. Content per docs/design/P01_HOMEPAGE_REDESIGN_SPECIFICATION.md
- * (H0–H9). Visual recomposition 2026-09-01 following the design audit —
- * see docs/P01_DESIGN_DECISIONS.md "Audit remediation".
+ * (H0–H9); visual recomposition 2026-08-31 for the premium navy identity —
+ * see docs/P01_DESIGN_DECISIONS.md "Visual redesign".
  *
- * What the audit changed here, and why:
- * - Eyebrows: 9/9 sections opened with an uppercase label. Now 2 remain,
- *   where they do genuine wayfinding. That uniformity was the single
- *   biggest reason the page read as generated.
- * - Rhythm: every section used symmetric py-16. Now uses the deliberate
- *   .section-tight / .section / .section-open / .section-lead tiers so the
- *   page breathes unevenly, the way an edited page does.
- * - Decoration removed: the dot-field SVG and radial "glow" gradients are
- *   gone. They were atmosphere without meaning, and the data-dot motif is
- *   the most recognisable AI-industry cliché in current use.
- * - De-carded: delivery formats, capability areas and the journey are now
- *   ruled lists and editorial columns rather than boxes.
- * - Three-column reflex broken: the page now uses 2-, 4- and asymmetric
- *   splits, and one full-bleed statement.
- * - Ember accent activated on the credential moment only.
+ * Inventory state: STATE A — no confirmed public programme inventory.
+ * Nothing here shows a programme name, date, capacity or price. The
+ * programmes-vs-offerings emphasis (HO-1) remains open: both concepts are
+ * described, neither leads.
  *
- * Inventory state: STATE A — no dates, capacity or fabricated evidence.
+ * All decorative graphics below are ORIGINAL inline SVG (deterministic dot
+ * fields and geometric glyphs) — nothing is copied from reference
+ * material, and no stock or AI-generated imagery is used anywhere.
  */
 
-export default function HomePage() {
-  const founder = practitioners[0];
+/** Original data-atmosphere: a masked dot grid + a few falling node
+ *  streams. Deterministic — no randomness, so SSR output is stable. */
+function DotField({ id }: { id: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-0 h-full w-full text-[var(--color-primary)]"
+    >
+      <defs>
+        <pattern
+          id={`${id}-dots`}
+          width="24"
+          height="24"
+          patternUnits="userSpaceOnUse"
+        >
+          <circle cx="1.5" cy="1.5" r="1.1" fill="currentColor" />
+        </pattern>
+        <radialGradient id={`${id}-fade`} cx="72%" cy="30%" r="80%">
+          <stop offset="0%" stopColor="white" stopOpacity="0.34" />
+          <stop offset="55%" stopColor="white" stopOpacity="0.1" />
+          <stop offset="100%" stopColor="white" stopOpacity="0" />
+        </radialGradient>
+        <mask id={`${id}-mask`}>
+          <rect width="100%" height="100%" fill={`url(#${id}-fade)`} />
+        </mask>
+      </defs>
+      <rect
+        width="100%"
+        height="100%"
+        fill={`url(#${id}-dots)`}
+        mask={`url(#${id}-mask)`}
+      />
+      {[62, 76, 88].map((x, i) => (
+        <line
+          key={x}
+          x1={`${x}%`}
+          y1="0%"
+          x2={`${x}%`}
+          y2={`${34 + i * 14}%`}
+          stroke="currentColor"
+          strokeOpacity={0.25 - i * 0.06}
+          strokeWidth="1.5"
+          strokeDasharray="2 10"
+          strokeLinecap="round"
+        />
+      ))}
+    </svg>
+  );
+}
 
+/** Original geometric glyphs for the three pathways. */
+function GlyphRise() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M4 19 L10 12.5 L14 15.5 L20 6.5"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle cx="20" cy="6.5" r="2.3" fill="currentColor" />
+    </svg>
+  );
+}
+function GlyphNodes() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M7.5 8.5 L16.5 8.5 M8.5 10.5 L11 15 M15.5 10.5 L13 15"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <circle cx="6.5" cy="8" r="2.4" fill="currentColor" />
+      <circle cx="17.5" cy="8" r="2.4" fill="currentColor" />
+      <circle cx="12" cy="17" r="2.4" fill="currentColor" />
+    </svg>
+  );
+}
+function GlyphTarget() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="12" cy="12" r="4.5" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="12" cy="12" r="1.7" fill="currentColor" />
+    </svg>
+  );
+}
+const heroChips = [
+  "24+ years in practice",
+  "Practitioner-led",
+  "Data & AI focused",
+  "Assessment-driven",
+  "Face-to-face & live online",
+];
+
+export default function HomePage() {
   return (
     <PublicShell>
-      {/* ============ Hero — night, asymmetric ============
-          No eyebrow: the masthead already says what this is, and a label
-          above an H1 is the construction the audit flagged. */}
-      <section className="night">
-        <div className="mx-auto max-w-[1280px] px-6 pb-16 pt-20 lg:pb-20 lg:pt-28">
-          <div className="grid gap-14 lg:grid-cols-[minmax(0,1fr)_320px] lg:gap-20">
-            <div>
-              <h1 className="text-display-xl max-w-[15ch]">
-                Taught live by a practitioner.
+      {/* ============ H1 — Hero (night) ============
+          The D0 compound proof: named genuine practitioner + live delivery
+          formats in one eyeline. No date exists yet, so none is shown
+          (State A omits the element rather than faking it). Diagnostic CTA
+          sits as hero secondary per the 2026-08-31 visual-redesign
+          authorization — see P01_DESIGN_DECISIONS.md. */}
+      <section className="night relative overflow-hidden">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(58% 72% at 76% 18%, rgba(122,132,255,0.16), transparent 70%)",
+          }}
+        />
+        <DotField id="hero" />
+        <div className="relative mx-auto max-w-[1280px] px-6 pt-16 lg:pt-20">
+          <div className="grid items-center gap-14 pb-14 lg:grid-cols-[1fr_400px] lg:pb-20">
+            <div className="max-w-[660px]">
+              <p className="text-label mb-5 text-[var(--color-primary)]">
+                Expert-led training &amp; certification · Data &amp; AI
+              </p>
+              <h1 className="text-display-xl mb-6">
+                Taught live by a practitioner.{" "}
+                <span className="text-[var(--color-primary)]">
+                  Proven by the work you do.
+                </span>
               </h1>
-              <p className="text-body-lg mt-8 max-w-[46ch] text-[var(--color-ink-quiet)]">
+              <p className="text-body-lg mb-9 max-w-[560px] text-[var(--color-ink-quiet)]">
                 Expert-led programmes for data and AI professionals —
                 delivered face-to-face and live online, in Malaysia and
-                internationally. Not a course library: real sessions, direct
-                feedback from someone who has built these systems, and a
-                credential that has to be earned.
+                internationally. This is not a course library: real sessions,
+                direct feedback from someone who has built these systems, and
+                a credential that has to be earned.
               </p>
-              <div className="mt-10 flex flex-wrap items-center gap-4">
-                <Button href="/programmes">Explore programmes</Button>
+              <div className="flex flex-wrap items-center gap-4">
+                <Button href="#programmes">Explore programmes</Button>
                 <Button variant="secondary" href="/diagnostic">
                   Start free diagnostic (10 min)
                 </Button>
               </div>
             </div>
 
-            {/* The model, stated plainly as a numbered sequence — a ruled
-                list rather than three floating cards. */}
-            <ol className="lg:pt-3">
-              {[
-                ["Live programmes", "Face-to-face and live online. Never a video library."],
-                ["Applied work", "Real deliverables, judged against a published rubric."],
-                ["Earned credential", "Recognition for demonstrated capability."],
-              ].map(([title, body], i) => (
-                <li
-                  key={title}
-                  className="flex gap-5 border-t border-[var(--color-line)] py-5 first:border-t-0 first:pt-0"
-                >
-                  <span className="text-mono text-body-sm pt-0.5 text-[var(--color-primary)]">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div>
-                    <p className="text-h2 mb-1">{title}</p>
-                    <p className="text-body-sm text-[var(--color-ink-quiet)]">
-                      {body}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </div>
-
-        {/* Credibility descriptors — positioning facts, not metrics. */}
-        <div className="border-t border-[var(--color-line)]">
-          <div className="mx-auto flex max-w-[1280px] flex-wrap items-center gap-x-10 gap-y-3 px-6 py-5">
-            {[
-              "24+ years in practice",
-              "Practitioner-led",
-              "Data & AI focused",
-              "Assessment-driven",
-              "Face-to-face & live online",
-            ].map((chip) => (
-              <span
-                key={chip}
-                className="text-body-sm text-[var(--color-ink-quiet)]"
+            {/* The learning journey — an original, academy-first visual:
+                three ascending steps from live delivery to an earned
+                credential (2026-08-31 direction: no individual trainer
+                profile dominates the hero; trainers live at /trainers and
+                in the "Learn from practitioners" section below). */}
+            <div className="relative mx-auto w-full max-w-[400px]">
+              <svg
+                aria-hidden="true"
+                width="150"
+                height="150"
+                viewBox="0 0 150 150"
+                fill="none"
+                className="pointer-events-none absolute -right-6 -top-10 text-[var(--color-primary)] opacity-25"
               >
+                <circle cx="75" cy="75" r="60" stroke="currentColor" strokeWidth="1.5" strokeDasharray="3 7" />
+                <circle cx="75" cy="75" r="38" stroke="currentColor" strokeWidth="1.5" />
+                <path d="M62 76 L71 85 L90 62" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <ol className="relative flex flex-col gap-5">
+                {[
+                  [
+                    "01",
+                    "Live programmes",
+                    "Taught face-to-face and live online — never a video library.",
+                    "",
+                  ],
+                  [
+                    "02",
+                    "Applied work",
+                    "Real deliverables, judged by a qualified assessor against a published rubric.",
+                    "sm:ml-8",
+                  ],
+                  [
+                    "03",
+                    "Earned credential",
+                    "Recognition that stands for demonstrated capability — publicly verifiable.",
+                    "sm:ml-16",
+                  ],
+                ].map(([num, title, body, offset]) => (
+                  <li key={num} className={offset}>
+                    <Card
+                      variant="panel"
+                      className="border border-[var(--color-line-strong)]"
+                    >
+                      <div className="flex items-baseline gap-4">
+                        <span className="text-mono text-body-sm text-[var(--color-primary)]">
+                          {num}
+                        </span>
+                        <div>
+                          <p className="text-h2 mb-1">{title}</p>
+                          <p className="text-body-sm text-[var(--color-ink-quiet)]">
+                            {body}
+                          </p>
+                        </div>
+                      </div>
+                    </Card>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </div>
+
+          {/* Credibility descriptors — positioning facts, not metrics. */}
+          <div className="flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-[var(--color-line)] py-6">
+            {heroChips.map((chip) => (
+              <span key={chip} className="text-label">
                 {chip}
               </span>
             ))}
@@ -117,241 +247,276 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ============ Pathways — two-up asymmetric, not three cards ============ */}
-      <section className="section mx-auto max-w-[1280px] px-6">
-        <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[minmax(0,26ch)_minmax(0,1fr)]">
-          <h2 className="text-display">Start where it makes sense</h2>
-          <div>
-            {[
-              [
-                "Explore programmes",
-                "Expert-led programmes with stated capability outcomes, and an assessed path to the credential.",
-                "/programmes",
-                "See the programmes",
-              ],
-              [
-                "Train your team",
-                "Private cohorts and tailored engagements — on-site, live online, and internationally.",
-                "#organisations",
-                "How we work with teams",
-              ],
-              [
-                "Assess your capability",
-                "Ten minutes, free, and a specific answer about where you stand — not a score.",
-                "/diagnostic",
-                "Start free diagnostic (10 min)",
-              ],
-            ].map(([title, body, href, cta]) => (
-              <div
-                key={title}
-                className="grid gap-x-10 gap-y-2 border-t border-[var(--color-line)] py-7 sm:grid-cols-[minmax(0,22ch)_minmax(0,1fr)]"
-              >
-                <h3 className="text-h1">{title}</h3>
-                <div>
-                  <p className="text-body-sm mb-3 text-[var(--color-ink-quiet)]">
-                    {body}
-                  </p>
-                  <Link
-                    href={href}
-                    className="text-body-sm font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
-                  >
-                    {cta} →
-                  </Link>
-                </div>
-              </div>
-            ))}
+      {/* ============ H2 — Three pathways (light) ============ */}
+      <section className="mx-auto max-w-[1280px] px-6 py-20">
+        <p className="text-label mb-3 text-center text-[var(--color-primary)]">
+          Three pathways
+        </p>
+        <h2 className="text-display mb-12 text-center">
+          Start where it makes sense for you
+        </h2>
+        <div className="grid gap-6 md:grid-cols-3">
+          <Card variant="panel">
+            <div className="mb-5 inline-flex rounded-[10px] bg-[var(--color-prof-1)] p-2.5 text-[var(--color-primary)]">
+              <GlyphRise />
+            </div>
+            <p className="text-label mb-2">For individuals</p>
+            <h3 className="text-h2 mb-2">Explore programmes</h3>
+            <p className="text-body-sm mb-6 text-[var(--color-ink-quiet)]">
+              Expert-led programmes with stated capability outcomes, delivered
+              live — and an assessed path to the credential.
+            </p>
+            <Button variant="secondary" href="#programmes">
+              See the programmes
+            </Button>
+          </Card>
+          <Card variant="panel">
+            <div className="mb-5 inline-flex rounded-[10px] bg-[var(--color-prof-1)] p-2.5 text-[var(--color-primary)]">
+              <GlyphNodes />
+            </div>
+            <p className="text-label mb-2">For organisations</p>
+            <h3 className="text-h2 mb-2">Train your team</h3>
+            <p className="text-body-sm mb-6 text-[var(--color-ink-quiet)]">
+              Private cohorts and tailored engagements — on-site, live online,
+              and internationally — with evidence the capability changed.
+            </p>
+            <Button variant="secondary" href="#organisations">
+              How we work with teams
+            </Button>
+          </Card>
+          <Card variant="panel">
+            <div className="mb-5 inline-flex rounded-[10px] bg-[var(--color-prof-1)] p-2.5 text-[var(--color-primary)]">
+              <GlyphTarget />
+            </div>
+            <p className="text-label mb-2">Not sure where to start?</p>
+            <h3 className="text-h2 mb-2">Assess your capability</h3>
+            <p className="text-body-sm mb-6 text-[var(--color-ink-quiet)]">
+              Ten minutes, free, and you get a specific answer about where you
+              stand — not a score.
+            </p>
+            <Button variant="secondary" href="/diagnostic">
+              Start free diagnostic (10 min)
+            </Button>
+          </Card>
+        </div>
+      </section>
+
+      {/* ============ H4 — How it works (light, editorial 01–04) ============ */}
+      <section
+        id="delivery"
+        className="mx-auto max-w-[1280px] scroll-mt-24 px-6 py-16"
+      >
+        <p className="text-label mb-3 text-[var(--color-primary)]">
+          How it works
+        </p>
+        <h2 className="text-display mb-4 max-w-[680px]">
+          Live means live. You are in the room — physical or online.
+        </h2>
+        <p className="text-body-lg mb-12 max-w-[680px] text-[var(--color-ink-quiet)]">
+          A session is interaction: questions, discussion of your own
+          situation, worked examples, and direct expert feedback — alongside
+          peers from other organisations. It is never watching a recording.
+        </p>
+        <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            [
+              "Face-to-face",
+              "Instructor-led programmes and workshops, delivered in person.",
+            ],
+            [
+              "Live online",
+              "Real-time sessions with the same interaction, questions and feedback — not pre-recorded content.",
+            ],
+            [
+              "Private cohorts",
+              "Dedicated programmes for one organisation, shaped to its context.",
+            ],
+            [
+              "On-site & international",
+              "Expert-led delivery at your location, including outside Malaysia.",
+            ],
+          ].map(([title, body], i) => (
+            <div
+              key={title}
+              className="border-t-2 border-[var(--color-primary)]/60 pt-5"
+            >
+              <p className="text-mono text-body-sm mb-3 text-[var(--color-ink-faint)]">
+                {String(i + 1).padStart(2, "0")}
+              </p>
+              <h3 className="text-h2 mb-2">{title}</h3>
+              <p className="text-body-sm text-[var(--color-ink-quiet)]">
+                {body}
+              </p>
+            </div>
+          ))}
+        </div>
+        <p className="mt-12 max-w-[680px] text-body-sm text-[var(--color-ink-faint)]">
+          Materials — readings, templates, exercises, session preparation —
+          support the live experience. They prepare, extend and reinforce it;
+          they never replace it.
+        </p>
+      </section>
+
+      {/* ============ Night band: H6 capability areas + H3 who teaches ============ */}
+      <section className="night relative mt-8 overflow-hidden">
+        <DotField id="band" />
+        <div className="relative mx-auto grid max-w-[1280px] gap-16 px-6 py-20 lg:grid-cols-2">
+          {/* Capability areas — subject scope, never categories; no counts. */}
+          <div id="capability" className="scroll-mt-24">
+            <p className="text-label mb-3 text-[var(--color-primary)]">
+              Capability areas
+            </p>
+            <h2 className="text-display mb-8">
+              Where we build professional capability
+            </h2>
+            <ul>
+              {domains.map((domain) => (
+                <li
+                  key={domain.code}
+                  className="flex items-baseline gap-4 border-t border-[var(--color-line)] py-4"
+                >
+                  <Chip>{domain.code}</Chip>
+                  <div>
+                    <p className="font-semibold">{domain.name}</p>
+                    <p className="text-body-sm text-[var(--color-ink-quiet)]">
+                      {domain.scope}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Learn from practitioners — featured trainer cards, rendered
+              from the plural practitioners array (a data change adds a
+              trainer, never a redesign). Full profiles live at /trainers. */}
+          <div id="practitioner" className="scroll-mt-24">
+            <p className="text-label mb-3 text-[var(--color-primary)]">
+              Who teaches
+            </p>
+            <h2 className="text-display mb-5">Learn from practitioners</h2>
+            <p className="text-body-lg mb-8 text-[var(--color-ink-quiet)]">
+              Programmes are designed and delivered by people who have built
+              these systems in real organisations — and can respond to yours.
+            </p>
+            <div className="mb-6 flex flex-col gap-6">
+              {practitioners.slice(0, 3).map((person) => (
+                <TrainerCard key={person.slug} person={person} />
+              ))}
+            </div>
+            <div className="flex flex-wrap items-center gap-5">
+              <Button variant="secondary" href="/trainers">
+                Meet the trainers
+              </Button>
+              <p className="text-body-sm text-[var(--color-ink-faint)]">
+                Founder-led today — additional trainers will be real ones,
+                never placeholders.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ============ What live means — full-bleed statement ============
-          The one moment on the page that breaks the container. */}
-      <section
-        id="delivery"
-        className="section-open scroll-mt-24 border-y border-[var(--color-line)] bg-[var(--color-ground-raised)]"
-      >
-        <div className="mx-auto max-w-[1280px] px-6">
-          <p className="text-display mx-auto max-w-[24ch] text-center">
-            A session is interaction — not playback.
-          </p>
-          <p className="text-body-lg mx-auto mt-7 max-w-[62ch] text-center text-[var(--color-ink-quiet)]">
-            Questions, discussion of your own situation, worked examples and
-            direct expert feedback, alongside peers from other organisations.
-            Materials prepare and reinforce that experience; they never
-            replace it.
-          </p>
-          <dl className="mx-auto mt-14 grid max-w-[900px] gap-x-14 gap-y-8 sm:grid-cols-2">
-            {[
-              ["Face-to-face", "Instructor-led programmes and workshops, delivered in person."],
-              ["Live online", "Real-time sessions with the same interaction and feedback."],
-              ["Private cohorts", "Dedicated programmes for one organisation, shaped to its context."],
-              ["On-site & international", "Expert-led delivery at your location, including outside Malaysia."],
-            ].map(([title, body]) => (
-              <div key={title} className="border-t border-[var(--color-line-strong)] pt-4">
-                <dt className="text-h2 mb-1.5">{title}</dt>
-                <dd className="text-body-sm text-[var(--color-ink-quiet)]">
-                  {body}
-                </dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-      </section>
-
-      {/* ============ Programmes — lead tier, cards earn their place here ============ */}
+      {/* ============ H5 — Programmes (light) ============
+          The real portfolio now exists (migrated from the founder's training
+          ecosystem), so the homepage previews it and routes to /programmes:
+          discovery here, exploration there, depth on the detail pages.
+          Still no dates — scheduled offerings remain State A, which keeps
+          the programmes-vs-offerings emphasis (HO-1) open. */}
       <section
         id="programmes"
-        className="section-lead mx-auto max-w-[1280px] scroll-mt-24 px-6"
+        className="mx-auto max-w-[1280px] scroll-mt-24 px-6 py-20"
       >
-        <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
-          <h2 className="text-display max-w-[20ch]">
-            A deliberately structured portfolio
-          </h2>
-          <Button variant="secondary" href="/programmes">
-            All seven programmes
-          </Button>
+        <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
+          <div className="max-w-[620px]">
+            <p className="text-label mb-3 text-[var(--color-primary)]">
+              Programmes
+            </p>
+            <h2 className="text-display mb-5">
+              A deliberately structured portfolio, built properly
+            </h2>
+            <p className="text-body-lg text-[var(--color-ink-quiet)]">
+              A programme here is a designed, expert-led learning experience
+              with stated outcomes — what you will actually be able to do
+              afterwards. Each runs as scheduled offerings: a specific format,
+              dates and location you register for.
+            </p>
+          </div>
+          <Button href="/programmes">All programmes</Button>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
           {featuredProgrammes.map((programme) => (
             <ProgrammeCard key={programme.slug} programme={programme} />
           ))}
         </div>
+        <p className="text-body-sm mt-8 text-[var(--color-ink-faint)]">
+          Public dates are not yet published. When they are, they will be real
+          — a small, genuine schedule, never a padded catalogue.
+        </p>
       </section>
 
-      {/* ============ Capability areas — dense ruled index, deliberately tight ============ */}
-      <section
-        id="capability"
-        className="section-follow mx-auto max-w-[1280px] scroll-mt-24 px-6"
-      >
-        <div className="grid gap-x-16 gap-y-6 lg:grid-cols-[minmax(0,26ch)_minmax(0,1fr)]">
-          <div>
-            <h2 className="text-h1 mb-3">Capability areas</h2>
-            <p className="text-body-sm text-[var(--color-ink-quiet)]">
-              Where we develop professional capability — subject scope, not a
-              catalogue.
-            </p>
-          </div>
-          <ul className="columns-1 sm:columns-2">
-            {domains.map((domain) => (
-              <li
-                key={domain.code}
-                className="mb-4 break-inside-avoid border-t border-[var(--color-line)] pt-3"
-              >
-                <p className="text-h2">{domain.name}</p>
-                <p className="text-body-sm text-[var(--color-ink-quiet)]">
-                  {domain.scope}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* ============ Who teaches — editorial, photograph earns the space ============ */}
-      <section
-        id="practitioner"
-        className="section scroll-mt-24 border-t border-[var(--color-line)]"
-      >
-        <div className="mx-auto grid max-w-[1280px] gap-x-16 gap-y-10 px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,30ch)]">
-          <div>
-            <h2 className="text-display mb-6 max-w-[22ch]">
-              Learn from someone who has done the work
-            </h2>
-            <p className="text-body-lg mb-8 max-w-[54ch] text-[var(--color-ink-quiet)]">
-              Programmes are designed and delivered by practitioners with real
-              enterprise delivery behind them — people who have built, led and
-              operated data and AI capabilities, not just taught them.
-            </p>
-            <Button variant="secondary" href="/trainers">
-              Meet the trainers
-            </Button>
-          </div>
-          <figure className="border-t border-[var(--color-line-strong)] pt-5">
-            <figcaption>
-              <p className="text-h1">{founder.name}</p>
-              <p className="text-body-sm mb-4 text-[var(--color-ink-quiet)]">
-                {founder.role}
-              </p>
-            </figcaption>
-            <ul>
-              {founder.expertise.slice(0, 4).map((item) => (
-                <li
-                  key={item}
-                  className="border-t border-[var(--color-line)] py-2 text-body-sm text-[var(--color-ink-quiet)]"
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <Link
-              href={`/trainers/${founder.slug}`}
-              className="text-body-sm mt-4 inline-block font-medium text-[var(--color-primary)] underline underline-offset-4"
-            >
-              Full profile →
-            </Link>
-          </figure>
-        </div>
-      </section>
-
-      {/* ============ The credential — the one ember moment on the site ============ */}
+      {/* ============ H7 — Certification (light + night rubric card) ============ */}
       <section
         id="credential"
-        className="section-open scroll-mt-24 border-y border-[var(--color-line)] bg-[var(--color-accent-quiet)]"
+        className="mx-auto max-w-[1280px] scroll-mt-24 px-6 py-16"
       >
-        <div className="mx-auto grid max-w-[1280px] items-start gap-x-16 gap-y-10 px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,34ch)]">
-          <div>
-            <p className="text-mono mb-5 text-[0.7rem] uppercase tracking-[0.14em] text-[var(--color-accent)]">
-              The credential
+        <div className="grid items-center gap-12 lg:grid-cols-2">
+          <div className="max-w-[560px]">
+            <p className="text-label mb-3 text-[var(--color-primary)]">
+              Certification
             </p>
-            <h2 className="text-display mb-6 max-w-[18ch]">
-              It has to be earned
+            <h2 className="text-display mb-6">
+              The credential has to be earned
             </h2>
-            <p className="text-body-lg mb-4 max-w-[54ch] text-[var(--color-ink-quiet)]">
+            <p className="text-body-lg mb-4 text-[var(--color-ink-quiet)]">
               No credential here is awarded for showing up. It is earned
               through assessed applied work — real deliverables, judged by a
               qualified assessor against a published rubric, with written
               reasoning for every criterion.
             </p>
-            <p className="text-body-sm max-w-[54ch] text-[var(--color-ink-quiet)]">
+            <p className="text-body-sm text-[var(--color-ink-quiet)]">
               Taking part in an expert-led programme is part of the pathway.
               Attendance alone is never enough — and that is exactly why the
               credential means something to an employer.
             </p>
           </div>
-          <div className="border-l-2 border-[var(--color-accent)] pl-6">
-            <p className="text-mono text-body-sm mb-3 text-[var(--color-ink-faint)]">
-              From the assessment rubric
-            </p>
+          <div className="night rounded-[var(--radius-panel)] border border-[var(--color-line-strong)] p-7">
+            <p className="text-label mb-4">From the assessment rubric</p>
             <p className="text-mono text-body-sm text-[var(--color-ink-quiet)]">
               Criterion 2 — Justification
-              <br />○ Not yet&nbsp;&nbsp;◉ Competent&nbsp;&nbsp;○ Proficient
-              <br />○ Distinguished
-            </p>
-            <p className="text-body-sm mt-5 border-t border-[var(--color-line)] pt-4 text-[var(--color-ink-quiet)]">
-              Assessor reasoning is written for every criterion, and shown to
-              the candidate in full.
+              <br />
+              ○ Not yet&nbsp;&nbsp;◉ Competent&nbsp;&nbsp;○
+              Proficient&nbsp;&nbsp;○ Distinguished
+              <br />
+              <br />
+              Assessor reasoning: written for every criterion,
+              <br />
+              and shown to the candidate in full.
             </p>
           </div>
         </div>
       </section>
 
-      {/* ============ Organisations ============ */}
+      {/* ============ H8 — For organisations (raised) ============ */}
       <section
         id="organisations"
-        className="section mx-auto max-w-[1280px] scroll-mt-24 px-6"
+        className="scroll-mt-24 border-y border-[var(--color-line)] bg-[var(--color-ground-raised)]"
       >
-        <div className="grid gap-x-16 gap-y-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,32ch)]">
-          <div>
-            <h2 className="text-display mb-6 max-w-[20ch]">
+        <div className="mx-auto grid max-w-[1280px] items-center gap-12 px-6 py-20 lg:grid-cols-2">
+          <div className="max-w-[560px]">
+            <p className="text-label mb-3 text-[var(--color-primary)]">
+              For organisations
+            </p>
+            <h2 className="text-display mb-6">
               Build your team&rsquo;s capability — with proof it worked
             </h2>
-            <p className="text-body-lg mb-4 max-w-[54ch] text-[var(--color-ink-quiet)]">
+            <p className="text-body-lg mb-4 text-[var(--color-ink-quiet)]">
               Private cohorts and tailored engagements, delivered on-site,
               live online, or at your locations internationally. We usually
               start with a team capability assessment — so the programme
               targets the gaps you actually have.
             </p>
-            <p className="text-body-sm mb-8 max-w-[54ch] text-[var(--color-ink-quiet)]">
+            <p className="text-body-sm mb-9 text-[var(--color-ink-quiet)]">
               You get cohort visibility, attendance records, and the
               documentation your L&amp;D and reporting processes need.
             </p>
@@ -359,15 +524,15 @@ export default function HomePage() {
               Talk to us about your team
             </Button>
           </div>
-          <Card variant="plate" className="p-6">
-            <p className="text-body-sm mb-4 text-[var(--color-ink-faint)]">
+          <Card variant="plate" className="bg-[var(--color-ground)] p-6">
+            <p className="text-label mb-4">
               Illustrative — team capability view
             </p>
             <div className="grid grid-cols-10 gap-1" aria-hidden="true">
               {Array.from({ length: 40 }).map((_, i) => (
                 <div
                   key={i}
-                  className="aspect-square rounded-[2px]"
+                  className="aspect-square rounded-[3px]"
                   style={{
                     background: `var(--color-prof-${((i * 13 + 3) % 5) + 1})`,
                   }}
@@ -381,24 +546,60 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ============ Honest position + close — night, tight ============ */}
-      <section className="night section-tight">
-        <div className="mx-auto flex max-w-[1280px] flex-col gap-8 px-6 lg:flex-row lg:items-end lg:justify-between">
-          <div className="max-w-[46ch]">
-            <h2 className="text-h1 mb-3">
-              The first programmes are being prepared now
-            </h2>
-            <p className="text-body-sm text-[var(--color-ink-quiet)]">
-              Everything published here will be genuine — real programmes,
-              real dates, a real practitioner. On a platform about proof, that
-              starts with us.
-            </p>
+      {/* ============ H9 — Honest position + primary close (light) ============ */}
+      <section className="mx-auto max-w-[1280px] px-6 py-20 text-center">
+        <p className="text-label mb-3 text-[var(--color-primary)]">
+          Where we are today
+        </p>
+        <h2 className="text-display mb-5">
+          The first programmes are being prepared now
+        </h2>
+        <p className="text-body-lg mx-auto mb-9 max-w-[620px] text-[var(--color-ink-quiet)]">
+          Everything published here will be genuine — real programmes, real
+          dates, a real practitioner. On a platform about proof, that starts
+          with us.
+        </p>
+        <Button href="#programmes">Explore programmes</Button>
+      </section>
+
+      {/* ============ Diagnostic band (night, pre-footer) ============
+          Final placement of the preserved diagnostic CTA. Descriptors are
+          the approved expectations — free, ~10 minutes, named gaps, no
+          commitment — not metrics. */}
+      <section className="night relative overflow-hidden">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(50% 90% at 18% 50%, rgba(122,132,255,0.14), transparent 70%)",
+          }}
+        />
+        <div className="relative mx-auto flex max-w-[1280px] flex-col gap-10 px-6 py-14 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex max-w-[560px] items-start gap-5">
+            <div className="mt-1 hidden rounded-[10px] border border-[var(--color-line-strong)] p-2.5 text-[var(--color-primary)] sm:inline-flex">
+              <GlyphTarget />
+            </div>
+            <div>
+              <h2 className="text-h1 mb-2">Not sure where you stand?</h2>
+              <p className="text-body-sm mb-6 text-[var(--color-ink-quiet)]">
+                The free diagnostic locates you across our capability areas
+                and names your gaps in plain language — before you commit to
+                anything.
+              </p>
+              <Button href="/diagnostic">Start free diagnostic (10 min)</Button>
+            </div>
           </div>
-          <div className="flex flex-wrap gap-4">
-            <Button href="/programmes">Explore programmes</Button>
-            <Button variant="secondary" href="/diagnostic">
-              Start free diagnostic (10 min)
-            </Button>
+          <div className="flex items-center gap-8 lg:gap-10">
+            <div>
+              <p className="text-mono text-h1">10</p>
+              <p className="text-label">minutes</p>
+            </div>
+            <div className="flex flex-col gap-3 border-l border-[var(--color-line)] pl-8 lg:pl-10">
+              <p className="text-label">Free · no account to start</p>
+              <p className="text-label">Named gaps, not a score</p>
+              <p className="text-label">No commitment</p>
+            </div>
           </div>
         </div>
       </section>

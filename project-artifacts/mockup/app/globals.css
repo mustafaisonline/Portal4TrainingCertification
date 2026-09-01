@@ -22,13 +22,10 @@
   --color-ground: #faf8f4; /* warm off-white, never pure #fff */
   --color-ground-raised: #f2efe8; /* Panel card surface */
 
-  /* Ink (text), 3 steps.
-     ink-faint was #7a8091 = 3.72:1 on the paper ground — below the WCAG AA
-     4.5:1 minimum, and it was carrying 54 text nodes including body-size
-     copy. Darkened to 4.53:1 (audit fix, 2026-09-01). */
+  /* Ink (text), 3 steps */
   --color-ink: #1b1f27; /* near-black, slight blue-grey cast */
   --color-ink-quiet: #4b5160;
-  --color-ink-faint: #6b7183;
+  --color-ink-faint: #7a8091;
 
   /* Line (hairlines/borders), 2 steps */
   --color-line: #e2ded3;
@@ -41,12 +38,9 @@
   --color-primary-strong: #2f3494;
   --color-primary-ink: #f7f8ff;
 
-  /* Accent — warm ember. Reserved for credential and assessment moments.
-     Activated 2026-09-01: its scarcity is the point — it marks where a
-     credential is earned, and appears nowhere else. It is also the one
-     colour that differentiates this palette from AI-industry indigo. */
-  --color-accent: #a3541f;
-  --color-accent-quiet: #f0e4d8;
+  /* Accent — warm ember. Reserved for credential/achievement moments only.
+     Not used on P01/P05/P06 in this milestone. */
+  --color-accent: #b5652b;
 
   /* Semantic — muted, never fluorescent */
   --color-success: #3f7d5c;
@@ -94,14 +88,13 @@
     --color-ground-raised: #131a30;
     --color-ink: #eef0f8;
     --color-ink-quiet: #aab3d2;
-    --color-ink-faint: #8b93b8;
+    --color-ink-faint: #7a83aa;
     --color-line: #232a44;
     --color-line-strong: #364065;
     --color-primary: #9aa3ff;
     --color-primary-strong: #b4bbff;
     --color-primary-ink: #0b0f22;
-    --color-accent: #e0a06a;
-    --color-accent-quiet: rgba(224, 160, 106, 0.12);
+    --color-accent: #d98a4c;
     --color-success: #6fb890;
     --color-warning: #d1a25f;
     --color-danger: #d1786c;
@@ -118,14 +111,13 @@
   --color-ground-raised: #131a30;
   --color-ink: #eef0f8;
   --color-ink-quiet: #aab3d2;
-  --color-ink-faint: #8b93b8;
+  --color-ink-faint: #7a83aa;
   --color-line: #232a44;
   --color-line-strong: #364065;
   --color-primary: #9aa3ff;
   --color-primary-strong: #b4bbff;
   --color-primary-ink: #0b0f22;
-  --color-accent: #e0a06a;
-  --color-accent-quiet: rgba(224, 160, 106, 0.12);
+  --color-accent: #d98a4c;
   --color-success: #6fb890;
   --color-warning: #d1a25f;
   --color-danger: #d1786c;
@@ -148,14 +140,12 @@
   --color-ground-raised: #12182e;
   --color-ink: #eef0f8;
   --color-ink-quiet: #aab3d2;
-  --color-ink-faint: #8b93b8;
+  --color-ink-faint: #7a83aa;
   --color-line: rgba(148, 160, 220, 0.18);
   --color-line-strong: rgba(148, 160, 220, 0.34);
   --color-primary: #9aa3ff;
   --color-primary-strong: #b4bbff;
   --color-primary-ink: #0b0f22;
-  --color-accent: #e0a06a;
-  --color-accent-quiet: rgba(224, 160, 106, 0.12);
   --color-prof-1: #232741;
   --color-prof-2: #3a4070;
   --color-prof-3: #565fa4;
@@ -207,53 +197,11 @@ body {
   font-size: 1.75rem;
   line-height: 1.25;
 }
-/* .text-h2 is SANS since the 2026-09-01 audit. It carries card titles
-   across ~30 cards; setting those in the display serif spread the serif so
-   thin that it stopped signalling anything. The serif now stops at
-   .text-h1 — display roles are reserved for moments of consequence. */
 .text-h2 {
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 1.0625rem;
-  line-height: 1.35;
-  letter-spacing: -0.005em;
-}
-
-/* Wordmark — the masthead was previously set in the UI font at 16.8px,
-   which read as a nav label rather than a mark. */
-.text-wordmark {
   font-family: var(--font-display);
-  font-weight: 500;
-  font-size: 1.3125rem;
-  line-height: 1.1;
-  letter-spacing: 0.005em;
-}
-
-/* Section rhythm — three deliberate tiers, replacing the uniform py-16
-   that ran across 33 sections. `-open` is for statements that need air;
-   `-tight` for dense reference material. Asymmetric variants let a
-   section sit closer to what follows it than what precedes it. */
-.section-tight {
-  padding-block: 3.5rem;
-}
-.section {
-  padding-block: 5.5rem;
-}
-.section-open {
-  padding-block: 8rem;
-}
-.section-lead {
-  padding-block: 5.5rem 2.5rem;
-}
-.section-follow {
-  padding-block: 2.5rem 5.5rem;
-}
-@media (max-width: 640px) {
-  .section-tight { padding-block: 2.5rem; }
-  .section { padding-block: 3.5rem; }
-  .section-open { padding-block: 4.5rem; }
-  .section-lead { padding-block: 3.5rem 1.75rem; }
-  .section-follow { padding-block: 1.75rem 3.5rem; }
+  font-weight: 600;
+  font-size: 1.375rem;
+  line-height: 1.3;
 }
 
 /* Scale display sizes down below ~640px — the fixed 3rem/2.25rem sizes

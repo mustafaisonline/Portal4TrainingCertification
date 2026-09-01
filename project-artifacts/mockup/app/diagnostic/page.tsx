@@ -120,7 +120,11 @@ export default function DiagnosticPage() {
     <div className="flex min-h-dvh flex-col">
       <header className="border-b border-[var(--color-line)] px-6 py-4">
         <div className="mx-auto flex max-w-[640px] items-center justify-between">
-          <Link href="/" className="text-h2">
+          {/* The diagnostic runs in its own stripped-back shell, not
+              PublicShell, so it needs the `wordmark` class explicitly —
+              otherwise this is the only place in the portal where the brand
+              is set in the interface sans rather than the serif. */}
+          <Link href="/" className="wordmark">
             Data &amp; AI Academy
           </Link>
           <p className="text-label">

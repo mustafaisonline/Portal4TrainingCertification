@@ -242,3 +242,48 @@ Per governance §1.2 — small, reviewable, revertible, founder-gated.
 ---
 
 *Typography strategy v1.0 · 2026-09-01 · Analysis only — implementation requires founder approval of a direction, then Experiment 1.*
+
+---
+
+## 15. Adoption Record — Experiment 1 approved, rolled out portal-wide
+
+**Status: ADOPTED. 2026-09-02.** Founder verdict on Experiment 1 (Direction C, IBM Plex, homepage only): **adopt**, with instruction to apply portal-wide. This section supersedes §13–§14's "validate before any global adoption" gate, which is now satisfied.
+
+### 15.1 What shipped
+
+| Item | Before | After |
+|---|---|---|
+| Serif | Newsreader | IBM Plex Serif (400/500/600, incl. italic) |
+| Sans | Inter | IBM Plex Sans (400/500/600, incl. italic) |
+| Mono | system stack | IBM Plex Mono (400/500/600) |
+| `.text-display-xl` | serif 500 | **serif 500 — unchanged** |
+| `.text-display-lg` | serif 500 | sans 600, tracking −0.018em |
+| `.text-display` | serif 500 | sans 600, tracking −0.018em |
+| `.text-h1` | serif 500 | sans 600, tracking −0.012em |
+| `.text-h2` | serif 600 | sans 600, tracking −0.006em |
+| `.wordmark` | Inter 16.8px semibold | Plex Serif 21px medium (17px ≤640px) |
+
+Sizes, line-heights, colour, spacing, layout and content are **unchanged**. Only family, weight and tracking moved — the experiment isolated the typeface variable and the rollout kept that discipline.
+
+### 15.2 The serif is now reserved for exactly two moments
+
+`.text-display-xl` is used on **one element in the entire portal** — the P01 hero — and the wordmark appears in every masthead. Everything else is Plex Sans. This is §8's thesis carried through: a serif on every heading of every page spends its authority until it carries none.
+
+**Consequence the founder should watch for:** every non-homepage page title (`/programmes`, `/trainers`, programme and trainer detail pages, `/diagnostic/result`) is now sans. Those pages were reviewed after rollout but were **not** part of the approved experiment surface. If the serif is missed there, the cheapest correction is to promote selected page titles to `.text-display-xl`, not to re-serif `.text-display`.
+
+### 15.3 Implementation notes worth keeping
+
+- **Folded into the base type scale, not layered as overrides.** The `.type-plex` scope class was deleted rather than promoted. This matters: `.text-mono` is defined after the display roles at *equal* specificity, so `text-mono text-display` (the pricing figure, the trainer community-impact stats) still resolves to mono. A more specific override rule would have silently broken those. Verified: the `40,000+` figure computes to `IBM Plex Mono / 600`.
+- **Plex Mono is loaded at 600** solely because `text-mono text-display` inherits the display weight; without it the browser synthesises a faux bold, which smears a monospace face.
+- **`.text-label` hard-codes `--color-ink-faint`** and, as unlayered CSS, outranks any Tailwind `text-*` utility. Recolouring a label requires an inline style or a more specific rule.
+- **`/diagnostic` has its own shell**, not `PublicShell`. Its brand link needed the `wordmark` class added explicitly, or it would have been the single sans brand in the portal.
+
+### 15.4 Still open after this rollout
+
+1. **`--color-ink-faint` at 3.72:1 fails WCAG 2.2 AA.** Unchanged by this work; §14.2 still applies. It should ship independently of any taste decision.
+2. **The masthead wraps to two lines at 375px on every page.** Pre-existing (measured on `/programmes` before rollout, at the old 16.8px). The serif was stepped down below 640px so header height did not regress, but the wrap itself wants a *layout* fix, not a type one.
+3. **Wordmark is a typographic treatment, not an identity.** Full brand exercise still deferred until naming (`HO-4`).
+
+---
+
+*Adoption record appended 2026-09-02. Strategy body above (v1.0, 2026-09-01) is unchanged and remains the rationale of record.*

@@ -58,12 +58,11 @@ export function PublicShell({ children }: { children: ReactNode }) {
           <Link href="/" className="flex min-w-0 items-center gap-3">
             <LogoMark />
             <span className="leading-tight">
-              {/* `wordmark` is a bare hook with no global styles — it is
-                  styled only inside `.type-plex` (typography Experiment 1,
-                  homepage only), so every other page renders unchanged. */}
-              <span className="wordmark block text-[1.05rem] font-semibold tracking-tight">
-                Data &amp; AI Academy
-              </span>
+              {/* `.wordmark` (globals.css) owns the family, size, weight
+                  and tracking — one place, since the masthead appears on
+                  every page. Set in the serif, which the type scale now
+                  reserves for this and the P01 hero alone. */}
+              <span className="wordmark block">Data &amp; AI Academy</span>
               <span className="text-label hidden text-[0.6rem] sm:block">
                 Training &amp; certification
               </span>

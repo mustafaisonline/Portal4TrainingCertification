@@ -7,7 +7,12 @@ import { TrainerCard } from "@/components/TrainerCard";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Chip } from "@/components/ui/Chip";
-import { getProgramme, programmes } from "@/data/programmes";
+import { ProgrammePricing } from "@/components/ProgrammePricing";
+import {
+  getProgramme,
+  mentorshipPackages,
+  programmes,
+} from "@/data/programmes";
 import { practitioners } from "@/data/practitioners";
 
 /**
@@ -94,8 +99,8 @@ export default async function ProgrammeDetailPage({
           </p>
           <div className="mb-10 flex flex-wrap items-center gap-4">
             <Button href="/#organisations">Register your interest</Button>
-            <Button variant="secondary" href="#curriculum">
-              See the curriculum
+            <Button variant="secondary" href="#investment">
+              See the investment
             </Button>
           </div>
           <dl className="grid gap-x-8 gap-y-5 border-t border-[var(--color-line)] pt-7 sm:grid-cols-2 lg:grid-cols-3">
@@ -482,6 +487,16 @@ export default async function ProgrammeDetailPage({
           </div>
         </section>
       )}
+
+      {/* ===== Investment (regional pricing) ===== */}
+      <ProgrammePricing
+        pricing={programme.pricing}
+        packages={
+          programme.level === "Mentorship" ? mentorshipPackages : undefined
+        }
+        valueStack={programme.valueStack}
+        valueStackTotal={programme.valueStackTotal}
+      />
 
       {/* ===== Trainer ===== */}
       <section className="mx-auto max-w-[1280px] px-6 py-16">

@@ -7,11 +7,27 @@
  * progression between programmes are preserved as written, lightly edited
  * only for house style (en-GB, "programme", sentence case).
  *
+ * PRICING — migrated 2026-09-01 at the founder's explicit direction.
+ * The figures live in the source site's `js/main.min.js`
+ * (TRAINING_INVESTMENT_DATA + buildMentorshipInvestmentRegions) and are
+ * injected client-side, which is why a first static-HTML pass missed five
+ * of the seven programmes. All three published regions are carried, with
+ * the launch-offer framing intact, exactly as published:
+ *   Malaysia (RM) · Pakistan (Rs., regional scholarship) · International (USD)
+ * Mentorship prices are computed in the source from USD bases
+ * (250 / 1,000 / 2,500) × region multiplier, less the region discount;
+ * the resulting published figures are recorded here literally rather than
+ * recomputed, so nothing drifts.
+ *
+ * ⚠ These are TIME-LIMITED LAUNCH OFFERS ("Founder's Launch Offer",
+ * "Regional Scholarship Program"). They will date. When the campaign
+ * changes, update `pricing` below — no component changes are required.
+ * This supersedes the earlier HO-7 hold on price display, by founder
+ * direction; the underlying pricing *strategy* decision for the Academy
+ * remains the founder's to make.
+ *
  * DELIBERATELY NOT MIGRATED — each is a live open decision, not an
  * oversight:
- * - PRICES. The source publishes figures (RM/USD). Pricing presentation is
- *   open (P01 spec HO-7) and individual online payment is deferred
- *   (ADR-014 / OQ-2), so no fee, range or figure appears anywhere here.
  * - DATES / SCHEDULED OFFERINGS. The source publishes none, and none may
  *   be invented (DR-02 §4.1). Programmes are the *proposition* layer;
  *   scheduled offerings (format · date · location · capacity) remain
@@ -32,6 +48,185 @@ export type ProgrammeLevel =
   | "Executive"
   | "Builder"
   | "Mentorship";
+
+export type RegionKey = "malaysia" | "pakistan" | "international";
+
+/** One region's published price for one programme (or mentorship package). */
+export type RegionPrice = {
+  original: string;
+  discount: string;
+  save: string;
+  today: string;
+};
+
+export type ProgrammePricing = Record<RegionKey, RegionPrice>;
+
+/** Region metadata exactly as published on the source site. */
+export const pricingRegions: {
+  key: RegionKey;
+  label: string;
+  subtitle: string;
+  badge: string;
+  discountLabel: string;
+}[] = [
+  {
+    key: "malaysia",
+    label: "Malaysia",
+    subtitle: "Founder's launch offer",
+    badge: "Save up to 50%",
+    discountLabel: "Discount",
+  },
+  {
+    key: "pakistan",
+    label: "Pakistan",
+    subtitle: "Regional scholarship programme",
+    badge: "Regional scholarship",
+    discountLabel: "Scholarship",
+  },
+  {
+    key: "international",
+    label: "International",
+    subtitle: "Global professional pricing",
+    badge: "Global launch offer",
+    discountLabel: "Discount",
+  },
+];
+
+/** Mentorship uses different discount rates from the training programmes
+ *  (20/30/10 rather than 50/70/10), so its region badges differ. */
+export const mentorshipRegionBadges: Record<RegionKey, string> = {
+  malaysia: "Save up to 20%",
+  pakistan: "Regional scholarship — save 30%",
+  international: "Global launch offer — save 10%",
+};
+
+/** Mentorship is priced per package rather than per programme. */
+export type MentorshipPackage = {
+  id: string;
+  badge: string;
+  name: string;
+  duration: string;
+  idealFor: string;
+  includesLead?: string;
+  includes: string[];
+  featured?: boolean;
+  pricing: ProgrammePricing;
+};
+
+export const mentorshipPackages: MentorshipPackage[] = [
+  {
+    id: "career-assessment",
+    badge: "Start here",
+    name: "Career Assessment",
+    duration: "90–120 minutes",
+    idealFor:
+      "Professionals who want expert career guidance before committing to a longer mentorship programme.",
+    includes: [
+      "Career discussion",
+      "Skills assessment",
+      "CV review",
+      "LinkedIn review",
+      "Career recommendations",
+      "Personalised roadmap discussion",
+    ],
+    pricing: {
+      malaysia: {
+        original: "RM 1,075",
+        discount: "20% OFF",
+        save: "RM 215",
+        today: "RM 860",
+      },
+      pakistan: {
+        original: "Rs. 75,000",
+        discount: "30% OFF",
+        save: "Rs. 22,500",
+        today: "Rs. 52,500",
+      },
+      international: {
+        original: "USD 250",
+        discount: "10% OFF",
+        save: "USD 25",
+        today: "USD 225",
+      },
+    },
+  },
+  {
+    id: "professional-mentorship",
+    badge: "Most popular",
+    name: "Professional Mentorship",
+    duration: "3 months",
+    idealFor:
+      "Professionals looking to transition, accelerate or reposition their careers.",
+    includes: [
+      "Monthly one-to-one mentoring",
+      "Personalised career roadmap",
+      "Technical guidance",
+      "CV review",
+      "LinkedIn guidance",
+      "Interview preparation",
+      "Progress reviews",
+      "Email support between sessions",
+    ],
+    featured: true,
+    pricing: {
+      malaysia: {
+        original: "RM 4,300",
+        discount: "20% OFF",
+        save: "RM 860",
+        today: "RM 3,440",
+      },
+      pakistan: {
+        original: "Rs. 300,000",
+        discount: "30% OFF",
+        save: "Rs. 90,000",
+        today: "Rs. 210,000",
+      },
+      international: {
+        original: "USD 1,000",
+        discount: "10% OFF",
+        save: "USD 100",
+        today: "USD 900",
+      },
+    },
+  },
+  {
+    id: "executive-mentorship",
+    badge: "Executive",
+    name: "Executive Mentorship",
+    duration: "6 months",
+    idealFor:
+      "Senior professionals, architects, managers and aspiring technology leaders.",
+    includesLead: "Everything in Professional Mentorship, plus:",
+    includes: [
+      "Leadership mentoring",
+      "Executive career planning",
+      "Strategic decision guidance",
+      "Personal branding",
+      "Long-term accountability",
+      "Priority scheduling",
+    ],
+    pricing: {
+      malaysia: {
+        original: "RM 10,750",
+        discount: "20% OFF",
+        save: "RM 2,150",
+        today: "RM 8,600",
+      },
+      pakistan: {
+        original: "Rs. 750,000",
+        discount: "30% OFF",
+        save: "Rs. 225,000",
+        today: "Rs. 525,000",
+      },
+      international: {
+        original: "USD 2,500",
+        discount: "10% OFF",
+        save: "USD 250",
+        today: "USD 2,250",
+      },
+    },
+  },
+];
 
 export type Programme = {
   slug: string;
@@ -83,6 +278,12 @@ export type Programme = {
   careerPaths?: { from: string; to: string; challenge: string; helps: string }[];
   /** Named methodology stages, where the source publishes one. */
   methodology?: { name: string; steps: { title: string; body: string }[] };
+  /** Published per-region pricing. Absent on the mentorship programme,
+   *  which is priced per package (see `mentorshipPackages`). */
+  pricing?: ProgrammePricing;
+  /** Value-stack breakdown, where the source publishes one. */
+  valueStack?: { item: string; value: string }[];
+  valueStackTotal?: string;
   /** Slugs of related programmes, from the source's own cross-links. */
   related: string[];
   /** Genuinely external resources — YPT service pages with no Academy
@@ -230,6 +431,11 @@ export const programmes: Programme[] = [
         "Simplified explanations of complex concepts",
       ],
     },
+    pricing: {
+      malaysia: { original: "RM 1,398", discount: "50% OFF", save: "RM 699", today: "RM 699" },
+      pakistan: { original: "Rs. 95,983.00", discount: "70% OFF", save: "Rs. 67,188.10", today: "Rs. 28,794.90" },
+      international: { original: "USD 874", discount: "10% OFF", save: "USD 88", today: "USD 786" },
+    },
     related: ["data-blueprint", "agentic-ai-strategy-adoption"],
   },
 
@@ -368,6 +574,11 @@ export const programmes: Programme[] = [
         "Prepare teams for AI adoption",
         "Create a common enterprise data language",
       ],
+    },
+    pricing: {
+      malaysia: { original: "RM 2,998", discount: "50% OFF", save: "RM 1,499", today: "RM 1,499" },
+      pakistan: { original: "Rs. 205,528.84", discount: "70% OFF", save: "Rs. 143,870.19", today: "Rs. 61,658.65" },
+      international: { original: "USD 1,874", discount: "10% OFF", save: "USD 188", today: "USD 1,686" },
     },
     related: [
       "data-ai-essentials",
@@ -517,6 +728,11 @@ export const programmes: Programme[] = [
         ],
       },
     ],
+    pricing: {
+      malaysia: { original: "RM 4,998", discount: "50% OFF", save: "RM 2,499", today: "RM 2,499" },
+      pakistan: { original: "Rs. 342,799.53", discount: "70% OFF", save: "Rs. 239,959.67", today: "Rs. 102,839.86" },
+      international: { original: "USD 3,124", discount: "10% OFF", save: "USD 313", today: "USD 2,811" },
+    },
     related: ["data-blueprint", "enterprise-data-architecture"],
     externalResources: [
       {
@@ -646,6 +862,11 @@ export const programmes: Programme[] = [
           "An overview of the DAC Architecture framework and how it brings modern data and AI capabilities together within a unified enterprise architecture.",
       },
     ],
+    pricing: {
+      malaysia: { original: "RM 5,998", discount: "50% OFF", save: "RM 2,999", today: "RM 2,999" },
+      pakistan: { original: "Rs. 411,165.42", discount: "70% OFF", save: "Rs. 287,815.79", today: "Rs. 123,349.63" },
+      international: { original: "USD 3,749", discount: "10% OFF", save: "USD 375", today: "USD 3,374" },
+    },
     related: ["enterprise-data-modelling", "data-blueprint"],
     externalResources: [
       {
@@ -789,6 +1010,11 @@ export const programmes: Programme[] = [
         "Risk management",
         "Value realisation",
       ],
+    },
+    pricing: {
+      malaysia: { original: "RM 3,998", discount: "50% OFF", save: "RM 1,999", today: "RM 1,999" },
+      pakistan: { original: "Rs. 274,434.11", discount: "70% OFF", save: "Rs. 192,103.88", today: "Rs. 82,330.23" },
+      international: { original: "USD 2,499", discount: "10% OFF", save: "USD 250", today: "USD 2,249" },
     },
     related: ["data-ai-essentials", "ai-powered-product-development"],
     externalResources: [
@@ -1058,6 +1284,21 @@ export const programmes: Programme[] = [
         "Reduce time-to-market",
       ],
     },
+    pricing: {
+      malaysia: { original: "RM 4,998", discount: "50% OFF", save: "RM 2,499", today: "RM 2,499" },
+      pakistan: { original: "Rs. 342,799.53", discount: "70% OFF", save: "Rs. 239,959.67", today: "Rs. 102,839.86" },
+      international: { original: "USD 3,124", discount: "10% OFF", save: "USD 313", today: "USD 2,811" },
+    },
+    valueStack: [
+      { item: "AI-Powered Product Development training", value: "RM 4,998" },
+      { item: "PromptOS Starter Edition", value: "RM 1,500+" },
+      { item: "Data Blueprint Foundations module", value: "RM 1,499" },
+      { item: "Product development templates", value: "RM 500+" },
+      { item: "Prompt engineering library", value: "RM 500+" },
+      { item: "Capstone project assets", value: "RM 500+" },
+      { item: "Certificate of participation", value: "Included" },
+    ],
+    valueStackTotal: "RM 9,497+",
     related: ["data-blueprint", "agentic-ai-strategy-adoption"],
     externalResources: [
       {

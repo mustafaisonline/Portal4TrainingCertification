@@ -85,11 +85,56 @@ the source at any time.
 
 | Held back | Why |
 |---|---|
-| **Prices** — the source publishes RM and USD figures across several programmes | Pricing presentation is open (`HO-7`) and individual online payment is deferred (ADR-014 / OQ-2). No fee, range or figure appears anywhere in the portal. **This is the single largest deliberate omission — ask the founder before adding.** |
+| ~~Prices~~ — **now migrated, 2026-09-01** | See "Pricing migration" below |
 | **Dates / scheduled offerings** | The source publishes none, and none may be invented (DR-02 §4.1). Programmes are the *proposition* layer; offerings (format · date · location · capacity) remain State A. This is also what keeps the programmes-vs-offerings emphasis (`HO-1`) genuinely open |
 | **Enrol / "Enroll Now" buttons** | Registration and payment do not exist. CTAs stop at "register your interest" and "talk to us" |
 | **Founder credibility blocks repeated on every source page** ("Why learn from YPT", 24+ years, community size, podcast) | Consolidated into the Trainers ecosystem and linked, rather than repeated seven times. The trainer card appears once per programme page |
 | **YPT company framing and its consultation CTA** | Another company's commercial surface; the Academy is the product here |
+
+## Pricing migration (2026-09-01)
+
+**Correcting an earlier error in this migration.** The first pass reported
+that "prices exist on only 2 of the 7 pages". That was **wrong**. The
+founder was right that pricing is published for all seven.
+
+**Why it was missed:** the figures are not in the pages' HTML. They are
+injected client-side by `renderTrainingInvestment({ course: … })` from
+`js/main.min.js` (`TRAINING_INVESTMENT_DATA` and
+`buildMentorshipInvestmentRegions()`). A static `curl` fetch never runs
+that script, and the extraction step stripped `<script>` blocks before
+searching — so five of seven programmes appeared to have no pricing. Only
+the two pages that *also* hard-code figures in their HTML showed up.
+
+**Lesson for future migrations from this source:** check
+`js/main.min.js` for client-injected content before concluding that
+anything is absent.
+
+**What was migrated** — all three published regions, verbatim:
+
+| Region | Training programmes | Mentorship |
+|---|---|---|
+| Malaysia (RM) | 50% off — Founder's launch offer | 20% off |
+| Pakistan (Rs.) | 70% off — Regional scholarship | 30% off |
+| International (USD) | 10% off — Global launch offer | 10% off |
+
+Mentorship is priced per **package** (Career Assessment · Professional ·
+Executive), not per programme, and its discount rates differ from the
+training programmes — hence `mentorshipRegionBadges`. The flagship's
+value-stack breakdown (`RM 9,497+` total) is carried in `valueStack`.
+
+**Where it appears:** a region-tabbed "Programme investment" section on
+every programme detail page (`components/ProgrammePricing.tsx`), plus an
+indicative "from" price (Malaysia rate) on each programme card.
+
+⚠ **These are time-limited launch offers and will date.** They live in
+`data/programmes.ts`; changing them is a data edit with no component
+changes. **No checkout is implied** — payment is not built (ADR-014 /
+OQ-2), so every CTA remains an enquiry.
+
+**On `HO-7`:** displaying these figures was the founder's explicit
+direction and supersedes the earlier hold. The Academy's own pricing
+*strategy* — whether it ultimately adopts these figures, this regional
+model, or this discount framing — remains the founder's decision.
 
 ## Content gaps in the source
 

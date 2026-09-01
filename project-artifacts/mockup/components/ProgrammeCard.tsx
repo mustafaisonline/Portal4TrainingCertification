@@ -1,18 +1,26 @@
 import Link from "next/link";
 import { Card } from "./ui/Card";
 import { Chip } from "./ui/Chip";
-import type { Programme } from "@/data/programmes";
+import { mentorshipPackages, type Programme } from "@/data/programmes";
 
 /**
  * Reusable programme card — used on /programmes, the P01 homepage preview
  * and the "related programmes" rail on detail pages. Token-driven, so it
  * renders correctly on both light and night surfaces.
  *
- * Discovery and navigation only: level, duration, audience, formats and a
- * summary. Deliberately no dates, capacity or price — offerings and
- * pricing are open decisions (see data/programmes.ts header).
+ * Discovery and navigation: level, duration, audience, formats, a summary
+ * and an indicative "from" price (Malaysia rate — the detail page carries
+ * all three regions). Still no dates or capacity: scheduled offerings
+ * remain an open decision (see data/programmes.ts header).
  */
 export function ProgrammeCard({ programme }: { programme: Programme }) {
+  // Mentorship is priced per package; show its entry package as the "from".
+  const fromPrice =
+    programme.pricing?.malaysia.today ??
+    (programme.level === "Mentorship"
+      ? mentorshipPackages[0]?.pricing.malaysia.today
+      : undefined);
+
   return (
     <Card
       variant="panel"
@@ -45,6 +53,15 @@ export function ProgrammeCard({ programme }: { programme: Programme }) {
             {programme.formats.join(" · ")}
           </dd>
         </div>
+        {fromPrice && (
+          <div className="flex gap-3 text-body-sm">
+            <dt className="text-label w-[86px] shrink-0">From</dt>
+            <dd className="text-mono text-[0.8rem] text-[var(--color-primary)]">
+              {fromPrice}{" "}
+              <span className="text-[var(--color-ink-faint)]">(MY)</span>
+            </dd>
+          </div>
+        )}
       </dl>
       <Link
         href={`/programmes/${programme.slug}`}

@@ -1,9 +1,16 @@
 # P01 Homepage — Redesign Specification
 
 **Document type:** Screen-level design specification. Implementation-independent.
-**Version:** 1.0 · **Created:** 2026-08-31
+**Version:** 1.1 · **Created:** 2026-08-31 · **Last revised:** 2026-09-01
 **Screen:** `P01` Homepage · **Work package:** WBS `4.1.2`
 **Status:** **SPECIFICATION APPROVED FOR AUTHORING — implementation NOT authorized.**
+
+**Revision history**
+
+| Version | Date | Change |
+|---|---|---|
+| 1.0 | 2026-08-31 | Created |
+| 1.1 | 2026-09-01 | **`HO-7` (pricing presentation) marked partially resolved** — price *display* authorised by founder direction for `/programmes` pages; `P01` still carries no price; pricing *strategy* remains open. Dependent references in §10.6 and §17.2 updated to match. No other section changed |
 
 > ## ⛔ THIS DOCUMENT AUTHORISES NO DESIGN OR IMPLEMENTATION WORK
 >
@@ -85,7 +92,7 @@ Homepage Implementation (not authorised)    code
 | **HO-4** | **Platform and credential naming** | The masthead wordmark cannot be finalised. Blocks WP 4.1.1, which precedes this work package | Product owner (WBS 4.4.1) |
 | **HO-5** | **Which pathway leads visually**, given the fixed priority order | A visual-design decision, deliberately left to that stage | Visual design stage |
 | **HO-6** | **Diagnostic CTA noun** — "diagnostic" vs "capability assessment" | §9.5 states the preference and the tension without resolving it | Product owner |
-| **HO-7** | **Pricing presentation** | No price, range or fee appears on `P01` until decided | Product owner |
+| **HO-7** | **Pricing presentation** — ⚠️ **PARTIALLY RESOLVED 2026-09-01.** *Display* was authorised by founder direction: the founder's published programme pricing is now shown on `/programmes` detail pages (all three regions, launch-offer framing intact) and as an indicative "from" price on programme cards. **`P01` itself still carries no price** — the homepage previews programmes and links out. **Still open:** whether the Academy adopts these figures, the three-region model, and the discount framing as its own pricing *strategy*. See `project-artifacts/mockup/docs/PROGRAMME_CONTENT_MIGRATION.md` → "Pricing migration" | Product owner |
 | **HO-8** | **`OQ-21`** — programme participation in the credential model | §12 defines permitted and forbidden language so copy cannot resolve it accidentally | Product owner |
 | **HO-9** | **`OQ-22`** — assessor supply and scaling | No public claim about assessor network, scale or capacity | Product owner |
 | **HO-10** | **Individual online payment** (`ADR-014` / `OQ-2`) | No "register and pay now" on `P01` | Product owner |
@@ -490,7 +497,7 @@ The distinction is preserved and the Homepage must not collapse it:
 **Not designed here, and not to be designed by the visual stage:** booking engines · calendars · seat allocation · capacity mechanics · waitlists · recurrence. ADR-043 `:1018` — *"Capacity is named; the mechanism enforcing it is not designed."* ⛔ Consequently **no "N seats left" indicator** may appear — it has no architectural support.
 
 ### 10.6 Truthfulness constraints
-⛔ No invented programme names, counts, dates, capacities, locations or prices (`HD-7`, `HO-2`, `HO-7`). ⛔ No "register and pay" (`HO-10`). Prototype fixtures are permitted **only** as clearly-labelled fixture data (`MVP_BUILD_SPEC.md:686`) and must never be published outside the prototype.
+⛔ No **invented** programme names, counts, dates, capacities, locations or prices (`HD-7`, `HO-2`). *(Genuine published prices are a separate matter — see `HO-7`, partially resolved: they are shown on programme pages, not on `P01`.)* ⛔ No "register and pay" (`HO-10`). Prototype fixtures are permitted **only** as clearly-labelled fixture data (`MVP_BUILD_SPEC.md:686`) and must never be published outside the prototype.
 
 ---
 
@@ -710,7 +717,7 @@ Assets inspected under the authorization of this stage. **None were modified, mo
 | `HO-3` capability-area scope | Count-agnostic layout (§11.5) |
 | `HO-4` naming | Wordmark treated as a variable |
 | `HO-6` diagnostic noun | CTA **shape** fixed; noun left open |
-| `HO-7` pricing | No price surface on `P01` |
+| `HO-7` pricing | No price surface on `P01` *(still holds — display was resolved for programme pages only, 2026-09-01)* |
 | `HO-8` `OQ-21` | Language boundary in §12 |
 | `HO-9` `OQ-22` | No assessor claims |
 | `HO-10` payment | CTAs stop at *explore* and *enquire* |

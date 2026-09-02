@@ -81,6 +81,9 @@ export function PublicShell({ children }: { children: ReactNode }) {
             <Link href="/trainers" className="hover:text-[var(--color-ink)]">
               Trainers
             </Link>
+            <Link href="/about" className="hover:text-[var(--color-ink)]">
+              About
+            </Link>
             <Link href="/#credential" className="hover:text-[var(--color-ink)]">
               Certification
             </Link>
@@ -132,16 +135,48 @@ export function PublicShell({ children }: { children: ReactNode }) {
               >
                 Trainers
               </Link>{" "}
+              ·{" "}
+              <Link
+                href="/about"
+                className="underline underline-offset-4 hover:text-[var(--color-ink)]"
+              >
+                About
+              </Link>{" "}
+              ·{" "}
+              <Link
+                href="/contact"
+                className="underline underline-offset-4 hover:text-[var(--color-ink)]"
+              >
+                Contact
+              </Link>{" "}
               · Certification · For organisations
             </p>
           </div>
+          {/* These three are named because the product genuinely requires
+              them — but none has been drafted, and none may be written by an
+              agent: they are legal instruments and business policy. Marked
+              as pending rather than styled as working links, so the footer
+              stops promising documents that do not exist. See
+              docs/SITE_PAGES.md. */}
           <div>
             <p className="text-label mb-3">Legal</p>
-            <p>Terms · Privacy · Credential integrity policy</p>
+            <p className="text-[var(--color-ink-faint)]">
+              Terms · Privacy · Credential integrity policy
+              <br />
+              <span className="text-mono text-[0.7rem]">
+                not yet published
+              </span>
+            </p>
           </div>
           <div>
             <p className="text-label mb-3">Verify a credential</p>
-            <p>Public verification lookup</p>
+            <p className="text-[var(--color-ink-faint)]">
+              Public verification lookup
+              <br />
+              <span className="text-mono text-[0.7rem]">
+                available once the first credential is issued
+              </span>
+            </p>
           </div>
         </div>
         <div className="border-t border-[var(--color-line)] px-6 py-4 text-center text-body-sm text-[var(--color-ink-faint)]">

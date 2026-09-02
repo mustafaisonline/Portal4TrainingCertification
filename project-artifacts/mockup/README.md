@@ -48,6 +48,8 @@ Screens now built:
 | `/programmes`, `/programmes/[slug]` | Seven **genuine** programmes migrated from the founder's existing training ecosystem, with his published pricing |
 | `/trainers` | Redesigned 2026-09-02 as the single trainer surface — directory, selection standard, published work. **Genuine people only.** The per-trainer profile route was retired the same day; cards link out to the trainer's own published profile |
 | `/diagnostic`, `/diagnostic/result` (`P05`/`P06`) | ⚠ Still the **pre-DR-02 baseline** — see the reconciliation notice above |
+| `/about` | Added 2026-09-02. Organisation identity, commitments, founder, honest current state — every claim traced to DR-02 |
+| `/contact` | Added 2026-09-02. Three enquiry routes, inert form, **genuine channels only** — no invented email or phone |
 | `/journey-placeholder` | Labelled next-stage placeholder |
 
 The whole portal is set in **IBM Plex** (adopted 2026-09-02, sans-led — the
@@ -87,7 +89,7 @@ public/experts/           Genuine practitioner photography (never AI-generated o
 public/books/             The founder's own published book-cover artwork
 docs/                     DESIGN_FOUNDATION.md, MOCK_DATA_REGISTER.md, FINDINGS.md,
                           P01_DESIGN_DECISIONS.md, PROGRAMME_CONTENT_MIGRATION.md,
-                          IMAGE_SLOTS.md
+                          IMAGE_SLOTS.md, SITE_PAGES.md
 ```
 
 ## Continuing this work in a new session

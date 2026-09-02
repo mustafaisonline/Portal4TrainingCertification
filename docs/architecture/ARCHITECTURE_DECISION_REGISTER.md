@@ -41,7 +41,7 @@ Statuses in use: `PROPOSED` (recommended by analysis, not yet reviewed) · `PEND
 | ADR-011 | Caching | No Redis. Cache only where rebuildable; never a source of truth | Redis for sessions/timers/rate limits | Guardrails Rule 6 + Service Restart Test; resolves CONF-2 | Correctness guarantee | 🟡 Report | **DEFERRED** — trigger: a measured need for rate limiting or shared cache |
 | ADR-012 | Search | Postgres full-text search | OpenSearch; Typesense; Algolia | ~30 articles; spec calls alternatives absurd at this scale | Knowledge library | 🟢 | **DEFERRED** — trigger: the knowledge library is built |
 | ADR-013 | AI services | Claude behind one routing function; pgvector in the same Postgres | Other LLM vendors; self-hosted models; dedicated vector DB | Model swappability is the requirement; one datastore is explicit | Tutor (M8) | 🔴 Yes | **DEFERRED (M8 deferred by DR-02)** — ⚠️ **trigger corrected 2026-08-31.** The old trigger *"the knowledge library corpus exists"* would fire spuriously: M4 still ships, so the corpus **will** exist while the tutor stays deferred. **New trigger: an AI capability is separately authorised on its own strategic justification** — never merely because the corpus exists |
-| ADR-014 | Payments | Stripe + a Malaysian rail; **rail provider open** | Paddle (merchant of record); Adyen; local gateways; invoice-only | Local rail materially affects conversion; corporate may buy on invoice | Revenue path | 🔴 Yes | **DEFERRED** — trigger: candidacy registration is built; answer OQ-2 first |
+| ADR-014 | Payments | Stripe + a Malaysian rail; **rail provider open** | Paddle (merchant of record); Adyen; local gateways; invoice-only | Local rail materially affects conversion; corporate may buy on invoice | Revenue path | 🔴 Yes | ✅ **STRIPE APPROVED 2026-09-02** (founder holds the account) · **rail still open** · implementation still **DEFERRED** — trigger unchanged: candidacy registration is built; answer OQ-2 first |
 | ADR-015 | Transactional email | **Open** — Resend vs Postmark | AWS SES; provider-bundled email | Deliverability is on the SLA path, not cosmetic | SLA, verification | 🔴 Yes | **DEFERRED** — trigger: real email verification is required (Milestone 2+) |
 | ADR-016 | Hosting | **Open** — Vercel vs a single container on a managed host | Self-managed VM/Kubernetes (rejected as oversized) | Evidence-pack duration limits and residency drive the choice | Ops, cost, residency | 🔴 Yes | **DEFERRED** — trigger: first deployment |
 | ADR-017 | Observability | Error tracker + product analytics + uptime + job health | Logs only (rejected — SLA must be measurable) | NFR-5/NFR-6 require measurement from day one | Operations | 🔴 Yes (analytics) | **APPROVED (principles only)** 2026-08-30 |
@@ -370,7 +370,29 @@ Each record: **Context · Decision/Recommendation · Alternatives considered · 
 ---
 
 ### ADR-014 — Payments: Stripe plus a Malaysian rail (rail OPEN)
-**Date:** 2026-08-30 · **Status:** PENDING HUMAN APPROVAL
+**Date:** 2026-08-30 · **Status:** ✅ **STRIPE HALF APPROVED 2026-09-02** — rail still OPEN; implementation still DEFERRED
+
+> **Founder confirmation, 2026-09-02:** *"We also need to add Stripe as Payment
+> Gateway… I have a Stripe account which will be used for user to make
+> payments."* This is the human approval this ADR was waiting on, and it
+> settles the **provider** question for cards. It does **not** settle the
+> Malaysian rail, and it does **not** authorise implementation.
+>
+> **Nothing has been implemented, deliberately.** The mockup has no database,
+> no authentication, no server actions and no API routes — so the `orders`/
+> `candidacies` records this decision makes authoritative cannot exist, and
+> neither can signature-verified idempotent webhooks. A payment flow built on
+> that foundation would be a **simulated success state**, which is prohibited.
+>
+> **Prerequisites before any Stripe work begins:** candidacy/registration
+> records in a real backend · the Malaysian rail selected · refund policy per
+> product type (`OQ-2`, `OQ-9`) · invoicing legal entity and tax treatment ·
+> `HO-10` (whether individual online payment is offered at all) resolved.
+>
+> **Secrets:** live Stripe keys must never be handled by an agent or committed
+> to this repository. They belong in the deployment environment.
+>
+> See `project-artifacts/mockup/docs/SITE_PAGES.md` "Payments — Stripe".
 
 **Context.** MYR + USD only. Local payment methods materially affect conversion in the primary market. The specifications name FPX/DuitNow but no provider.
 

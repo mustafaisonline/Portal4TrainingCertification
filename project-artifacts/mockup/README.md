@@ -46,7 +46,7 @@ Screens now built:
 |---|---|
 | `/` (`P01` Homepage) | Redesigned 2026-08-31 for the expert-led model; typography adopted 2026-09-02 |
 | `/programmes`, `/programmes/[slug]` | Seven **genuine** programmes migrated from the founder's existing training ecosystem, with his published pricing |
-| `/trainers`, `/trainers/[slug]` | Plural trainer architecture; **genuine people only**, no placeholder profiles |
+| `/trainers` | Redesigned 2026-09-02 as the single trainer surface — directory, selection standard, published work. **Genuine people only.** The per-trainer profile route was retired the same day; cards link out to the trainer's own published profile |
 | `/diagnostic`, `/diagnostic/result` (`P05`/`P06`) | ⚠ Still the **pre-DR-02 baseline** — see the reconciliation notice above |
 | `/journey-placeholder` | Labelled next-stage placeholder |
 

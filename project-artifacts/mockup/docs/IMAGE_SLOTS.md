@@ -59,13 +59,18 @@ reflow, because the frame already holds the space.
 
 ## Implemented
 
-**12 frames across 4 templates.** All are empty; each fills with a `src` prop.
+**8 frames across 4 templates.** All are empty; each fills with a `src` prop.
+
+> **↻ 2026-09-02, later the same day.** The `/trainers/[slug]` profile route was
+> retired by founder direction, taking its 4 frames with it (3 community + 1
+> podcast). The count went 12 → 8. Those subjects are **not lost** — they are
+> recorded in the [photography brief](https://claude.ai/code/artifact/c188bb7c-0eef-435e-aafe-070b9160a7b2)
+> and remain worth shooting; they simply have no surface in the portal today.
 
 | Location | Slots | Ratio | Why here |
 |---|---|---|---|
 | `app/page.tsx` → "Live means live" | 4 (one per delivery format) | 4:3 | **The portal's highest-value image slot.** The section makes the central claim — *you are in the room with a practitioner* — and proved it with a text grid alone |
-| `app/trainers/[slug]` → community impact | 3 | 3:2 | Community reach is stated purely as numbers. Per the brief these photographs most likely **already exist** rather than needing a shoot |
-| `app/trainers/[slug]` → podcast | 1 | 1:1 | The show's own cover art, already published on YouTube/Spotify — a copy-across, not a commission, and the trainer's own artwork so no licensing question arises |
+| `app/trainers` → "Trainers at work" | 1 | 3:2 | A trainer mid-session. The only slot on the redesigned trainers page |
 | `app/programmes/[slug]` → header band | 1 per programme (7) | 21:9 | Placed **below** the hero, not inside it: the hero is a night section carrying the title and meta strip, and an empty box there would weaken the page's one dominant moment |
 | `app/programmes/[slug]` → "How it is taught" | 1 (where the programme has pedagogy) | 3:2 | The most abstract writing on the page; a photograph of the teaching makes it concrete |
 | `app/programmes` → flagship band | 1 | 4:3 | The flagship earns a distinct treatment; an image is one way to give it one |

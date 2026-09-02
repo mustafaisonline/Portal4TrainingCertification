@@ -169,7 +169,9 @@ lives in the "Learn from practitioners" section (`H3`, with a
   model in one glance, needs no inventory, and fabricates nothing.
 - **Trainers architecture** (the `P23` Expert Profile concept realised
   for the mockup): `/trainers` (index — page hero + `TrainerCard` list +
-  honest growth note) and `/trainers/[slug]` (full expert biography:
+  honest growth note) and ⊘ **`/trainers/[slug]` — RETIRED 2026-09-02** by
+  founder direction; see "Trainers page redesign" below. Original wording:
+  `/trainers/[slug]` (full expert biography:
   about, background at sector level, specialisations, certifications,
   education, publishing/podcast/community, genuine LinkedIn link).
   Everything renders from the plural `data/practitioners.ts`; adding a
@@ -247,6 +249,69 @@ Fixed with a real grid: `items-baseline` plus
 `grid-auto-rows: minmax(2.75rem, auto)`, sized for two wrapped lines so a
 wrap no longer changes row height. Verified aligned at 1440px, 820px and
 375px.
+
+## Trainers page redesign + profile route retired (2026-09-02, fifth pass)
+
+Founder direction: drop `/trainers/mustafa-qizilbash`, and make `/trainers`
+more professional with multiple cards, the filled one linking to the
+founder's published Medium profile in a new tab.
+
+### What was retired, and what was preserved
+
+`app/trainers/[slug]/` was deleted — 421 lines rendering books, frameworks,
+podcast, community impact, career achievements, certifications, education and
+eight social links.
+
+**`data/practitioners.ts` was left completely intact.** Nothing in it was
+removed, so no researched content was destroyed: the page is recoverable from
+git, and every field is still addressable. This mattered because that content
+came from explicitly directed research with exact embedded URLs, which must
+never be re-guessed.
+
+The most checkable material was **carried onto `/trainers`** rather than lost
+with the page: career achievements inside the lead trainer's card, and the
+five published books as their own section with the Amazon links intact.
+Deliberately not carried over: the full about/background prose,
+specialisations, certifications, education, podcast and the eight social
+links. Those live in the data file and, for a reader, at the Medium profile —
+which is the point of linking out.
+
+### The tension in "multiple cards", and how it was resolved
+
+The instruction asked for several cards. The standing rule — DR-02 §7 and this
+document above — is **no placeholder profiles, ghost cards or "coming soon"
+slots, ever.** Both are honoured:
+
+- The grid is genuinely scalable (`lg:grid-cols-2`, driven by
+  `practitioners`), and any real trainer added to the data appears with the
+  same treatment.
+- The one unfilled position uses the **reserved-slot language built for
+  images** — ember tint, dashed border, `role="note"`. It names nobody, shows
+  no silhouette, invents no credentials, and says in plain words that the
+  position is open and will only be filled by a real person.
+
+A ghost card implies a faculty that does not exist. A labelled empty position
+states the opposite. **If the founder wants a strict "only what exists" index,
+deleting that one block restores it** — it is isolated for exactly that reason.
+
+The page also earns its length from real material rather than filler: a
+four-point trainer selection standard (which doubles as an argument for why
+the credential is worth anything), the published books, and one reserved
+photography slot.
+
+### Link changes
+
+`TrainerCard` previously linked to `/trainers/${slug}`, which no longer
+exists. It now links **outward** to `mediumProfile ?? linkedin`, in a new tab
+with `rel="noopener noreferrer"` and an explicit `aria-label`. Verified: zero
+`/trainers/[slug]` links remain anywhere, and the retired route returns 404.
+
+### Book covers
+
+Rendered in a fixed 2:3 box with `object-cover`. The source covers are
+500×750, 500×715 and 469×750, so intrinsic sizing produced rows of
+340/324/362px and the titles beneath them did not align — the same
+cross-card misalignment reported on the programme cards (`FINDINGS` F4).
 
 ## Rejected alternatives
 

@@ -76,6 +76,10 @@ export type Practitioner = {
   education: string[];
   /** Genuine public professional profile. */
   linkedin?: string;
+  /** Genuine public long-form profile. Since the in-portal profile page was
+   *  retired (2026-09-02, founder direction) this is where a reader goes for
+   *  the full biography — so it is the card's primary outbound link. */
+  mediumProfile?: string;
 };
 
 export const practitioners: Practitioner[] = [
@@ -282,5 +286,7 @@ export const practitioners: Practitioner[] = [
       "Bachelor's degree in Commerce",
     ],
     linkedin: "https://www.linkedin.com/in/mustafaisonline",
+    mediumProfile:
+      "https://medium.com/@mustafaisonline/profile-mustafa-qizilbash-2fb7a294f40f",
   },
 ];

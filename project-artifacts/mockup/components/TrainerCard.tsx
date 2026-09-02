@@ -1,17 +1,24 @@
 import Image from "next/image";
-import Link from "next/link";
 import { Card } from "./ui/Card";
 import { Chip } from "./ui/Chip";
 import type { Practitioner } from "@/data/practitioners";
 
 /**
  * Reusable trainer card — used on the P01 "Learn from practitioners"
- * section and the /trainers index. Token-driven, so it renders correctly
- * on both light and night surfaces. Deliberately scalable: the pages map
- * over data/practitioners.ts, and this card never assumes how many
- * trainers exist. Genuine people and genuine photographs only.
+ * section, the programme detail pages and the /trainers index. Token-driven,
+ * so it renders correctly on both light and night surfaces. Deliberately
+ * scalable: pages map over data/practitioners.ts and this card never assumes
+ * how many trainers exist. Genuine people and genuine photographs only.
+ *
+ * The in-portal profile page (/trainers/[slug]) was retired on 2026-09-02 by
+ * founder direction. The card therefore links OUTWARD to the trainer's own
+ * published profile instead of to a route that no longer exists — external,
+ * new tab, with the usual rel and an explicit aria-label, matching how every
+ * other outbound link in this portal behaves.
  */
 export function TrainerCard({ person }: { person: Practitioner }) {
+  const profileUrl = person.mediumProfile ?? person.linkedin;
+
   return (
     <Card variant="panel" className="flex flex-col gap-5 sm:flex-row">
       <Image
@@ -26,9 +33,7 @@ export function TrainerCard({ person }: { person: Practitioner }) {
         <p className="text-body-sm mb-1 text-[var(--color-ink-quiet)]">
           {person.role}
         </p>
-        {/* Standalone stat line, so mono is kept as the "measured voice" —
-            but the arbitrary 0.8rem sat outside the type scale. Now uses
-            the scale's body-sm size (2026-09-02). */}
+        {/* Standalone stat line, so mono is kept as the "measured voice". */}
         <p className="text-mono text-body-sm mb-3 text-[var(--color-ink-faint)]">
           {person.experienceLine}
         </p>
@@ -40,12 +45,17 @@ export function TrainerCard({ person }: { person: Practitioner }) {
             <Chip key={tag}>{tag}</Chip>
           ))}
         </div>
-        <Link
-          href={`/trainers/${person.slug}`}
-          className="text-body-sm font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
-        >
-          View full profile →
-        </Link>
+        {profileUrl && (
+          <a
+            href={profileUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Read ${person.name}'s full profile (opens in a new tab)`}
+            className="text-body-sm font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
+          >
+            Read the full profile ↗
+          </a>
+        )}
       </div>
     </Card>
   );

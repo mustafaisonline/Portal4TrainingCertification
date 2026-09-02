@@ -57,7 +57,12 @@ jobs:
           # it the OG card points at localhost and no share preview renders.
           NEXT_PUBLIC_SITE_URL: "https://mustafaisonline.github.io/Portal4TrainingCertification"
 
+      # `enablement: true` turns Pages ON via the API using the workflow's own
+      # GITHUB_TOKEN (permissions.pages: write above), so the site does not
+      # have to be enabled by hand in Settings first. Harmless once enabled.
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:

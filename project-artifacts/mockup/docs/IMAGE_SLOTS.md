@@ -74,6 +74,29 @@ reflow, because the frame already holds the space.
 tall) a caption in the corner reads as a broken image; centred content reads
 as a deliberate empty state.
 
+### Reserved slots are deliberately loud (founder direction, 2026-09-02)
+
+An empty frame previously used `--color-ground-raised` — the **same surface as
+a Panel card** — so it blended into the page and reserved slots were hard to
+pick out while reviewing. They now carry a dedicated ember tint:
+
+| Token | Light | Dark | Night | Role |
+|---|---|---|---|---|
+| `--color-accent-soft` | `#f7ece2` | `#241a12` | `#1a1710` | Frame ground |
+| `--color-accent-line` | `#b5652b` | `#a0713f` | `#a0713f` | 2px dashed border |
+| `--color-accent-ink` | `#8f4d1d` | `#e0975c` | `#e0975c` | "Photograph needed" label |
+
+**Contrast was computed, not eyeballed** — and the computation changed the
+values. The base `--color-accent` (`#b5652b`) reaches only **3.71:1** on the
+tint and would have failed AA for the 12px label, hence the darker
+`--color-accent-ink` at **5.56:1**. Body text sits at 6.82:1 and the border
+clears 3:1 for non-text contrast. The spec line moved from `--color-ink-faint`
+(3.39:1 on the tint — a fail) to `--color-ink-quiet`.
+
+**The loudness is temporary by construction.** A filled frame renders the
+photograph alone, so the tint disappears exactly as the slots are satisfied —
+the page gets quieter as the work gets done, with nothing to clean up.
+
 ## Deliberately NOT given frames
 
 Frames were added only where there was a **genuine gap**. Where working

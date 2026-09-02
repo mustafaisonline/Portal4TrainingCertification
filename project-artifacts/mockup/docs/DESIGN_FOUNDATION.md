@@ -124,9 +124,19 @@ of a classroom is a claim that cohorts have run. See
 [`IMAGE_SLOTS.md`](IMAGE_SLOTS.md) for every slot, and which locations were
 deliberately left unframed.
 
-The `.night` scope gained `--color-accent` (2026-09-02) for this component's
-ember label; it previously fell through to the light value at poor contrast
-on navy.
+**Empty slots are deliberately loud**, so reserved images are identifiable at
+a glance while reviewing a page. They use a dedicated three-token family —
+`--color-accent-soft` (ground), `--color-accent-line` (2px dashed border) and
+`--color-accent-ink` (label) — defined in all three scopes. Previously the
+frame shared `--color-ground-raised` with Panel cards and disappeared into the
+page.
+
+`--color-accent-ink` exists because the base `--color-accent` measures only
+3.71:1 on the tint and fails AA at label size; the darker value reaches
+5.56:1. The `.night` scope also gained `--color-accent` on the same date,
+having previously fallen through to the light value at poor contrast on navy.
+
+The tint is self-clearing: a filled frame renders the photograph alone.
 
 **Deferred, not built:** `CredentialCard`, `MilestoneTimeline` (full),
 `RubricPanel`, `HeatmapGrid`. `P01`'s heatmap teaser is a static illustrative

@@ -38,9 +38,18 @@
   --color-primary-strong: #2f3494;
   --color-primary-ink: #f7f8ff;
 
-  /* Accent — warm ember. Reserved for credential/achievement moments only.
-     Not used on P01/P05/P06 in this milestone. */
+  /* Accent — warm ember. Reserved for credential/achievement moments, and
+     for the "this is missing" signal on reserved image slots. */
   --color-accent: #b5652b;
+  /* Reserved-image-slot family (2026-09-02). A dedicated tint so an empty
+     ImageFrame is instantly distinguishable from a Panel card, which shares
+     --color-ground-raised. Values are contrast-checked, not eyeballed:
+     accent-ink on accent-soft is 5.56:1 (the base --color-accent manages
+     only 3.71:1 there and would fail AA for the 12px label), body text is
+     6.82:1, and the dashed border clears 3:1 for non-text contrast. */
+  --color-accent-soft: #f7ece2;
+  --color-accent-line: #b5652b;
+  --color-accent-ink: #8f4d1d;
 
   /* Semantic — muted, never fluorescent */
   --color-success: #3f7d5c;
@@ -96,6 +105,9 @@
     --color-primary-strong: #b4bbff;
     --color-primary-ink: #0b0f22;
     --color-accent: #d98a4c;
+    --color-accent-soft: #241a12;
+    --color-accent-line: #a0713f;
+    --color-accent-ink: #e0975c;
     --color-success: #6fb890;
     --color-warning: #d1a25f;
     --color-danger: #d1786c;
@@ -119,6 +131,9 @@
   --color-primary-strong: #b4bbff;
   --color-primary-ink: #0b0f22;
   --color-accent: #d98a4c;
+  --color-accent-soft: #241a12;
+  --color-accent-line: #a0713f;
+  --color-accent-ink: #e0975c;
   --color-success: #6fb890;
   --color-warning: #d1a25f;
   --color-danger: #d1786c;
@@ -151,6 +166,9 @@
      inside a night section inherited the light-mode #b5652b and sat at poor
      contrast on navy. Added for the image-frame labels (2026-09-02). */
   --color-accent: #d98a4c;
+  --color-accent-soft: #1a1710;
+  --color-accent-line: #a0713f;
+  --color-accent-ink: #e0975c;
   --color-prof-1: #232741;
   --color-prof-2: #3a4070;
   --color-prof-3: #565fa4;

@@ -19,6 +19,13 @@ import Image from "next/image";
  * right ratio.
  *
  * Token-driven, so it renders correctly on paper and inside `.night`.
+ *
+ * It is DELIBERATELY LOUD. An empty slot uses a dedicated ember tint
+ * (`--color-accent-soft`) rather than the Panel card surface it used to
+ * share, so every reserved image is identifiable at a glance while
+ * reviewing a page. This is a working instrument: when the photographs
+ * arrive the tint disappears with them, because a filled frame renders the
+ * image alone.
  */
 
 export type ImageFrameProps = {
@@ -71,7 +78,7 @@ export function ImageFrame({
       // programme header is ~500px tall) a caption stuck in the corner reads
       // as a broken image, whereas centred content reads as a deliberate
       // empty state. Holds at small sizes too.
-      className={`flex flex-col items-center justify-center rounded-[var(--radius-plate)] border border-dashed border-[var(--color-line-strong)] bg-[var(--color-ground-raised)] p-5 text-center ${className}`}
+      className={`flex flex-col items-center justify-center rounded-[var(--radius-plate)] border-2 border-dashed border-[var(--color-accent-line)] bg-[var(--color-accent-soft)] p-5 text-center ${className}`}
       style={{ aspectRatio: ratio }}
       // Announced to assistive tech as what it is: a gap, not a picture.
       role="note"
@@ -80,18 +87,23 @@ export function ImageFrame({
       {/* Colour set inline, not via a Tailwind utility: `.text-label`
           hard-codes `color: var(--color-ink-faint)` and, being unlayered
           CSS, outranks any `text-*` utility — the ember silently did not
-          apply. See DESIGN_FOUNDATION.md "CSS layer/specificity traps". */}
+          apply. See DESIGN_FOUNDATION.md "CSS layer/specificity traps".
+          Uses --color-accent-ink, not --color-accent: the base ember only
+          reaches 3.71:1 on the tint and would fail AA at this size. */}
       <span
         className="text-label mb-1.5"
-        style={{ color: "var(--color-accent)" }}
+        style={{ color: "var(--color-accent-ink)" }}
       >
         Photograph needed
       </span>
       <span className="text-body-sm max-w-[46ch] leading-snug text-[var(--color-ink-quiet)]">
         {subject}
       </span>
+      {/* ink-quiet, not ink-faint: faint measures 3.39:1 on the tint and would
+          fail AA. This is one place the known ink-faint contrast problem was
+          avoidable without waiting for the global fix. */}
       {(minWidth || note) && (
-        <span className="text-mono mt-1.5 text-[0.7rem] leading-snug text-[var(--color-ink-faint)]">
+        <span className="text-mono mt-1.5 text-[0.7rem] leading-snug text-[var(--color-ink-quiet)]">
           {[ratio.replace(/\s/g, ""), minWidth && `min ${minWidth}px`, note]
             .filter(Boolean)
             .join(" · ")}

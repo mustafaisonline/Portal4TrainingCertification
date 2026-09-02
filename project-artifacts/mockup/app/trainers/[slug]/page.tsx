@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PublicShell } from "@/components/PublicShell";
+import { ImageFrame } from "@/components/ImageFrame";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Chip } from "@/components/ui/Chip";
@@ -336,6 +337,31 @@ export default async function TrainerProfilePage({
                 </p>
               </div>
             ))}
+          </div>
+          {/* Reserved photography (2026-09-02). This section states community
+              reach entirely as numbers; photographs of the speaking and
+              meetup work would evidence it, and per the photography brief
+              they most likely already exist rather than needing a shoot.
+              Frames stay visibly empty until genuine ones are supplied. */}
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            <ImageFrame
+              subject="Speaking at a conference or industry event"
+              ratio="3 / 2"
+              minWidth={1200}
+              note="date + venue for the caption"
+            />
+            <ImageFrame
+              subject="A community meetup in progress"
+              ratio="3 / 2"
+              minWidth={1200}
+              note="candid preferred"
+            />
+            <ImageFrame
+              subject="Podcast recording, or the published cover art"
+              ratio="3 / 2"
+              minWidth={1200}
+              note="may already exist on YouTube"
+            />
           </div>
           <p className="text-mono mt-8 text-[0.7rem] text-[var(--color-ink-faint)]">
             Figures as published by the trainer, 2026.

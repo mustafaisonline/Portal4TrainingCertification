@@ -45,6 +45,14 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
+  /* Required for the OG card in app/opengraph-image.tsx: Next.js resolves
+     og:image to an absolute URL against this base. No real domain is settled
+     yet, so it reads from the environment and falls back to localhost rather
+     than hardcoding a domain that does not exist. SET THIS BEFORE LAUNCH —
+     an og:image pointing at localhost will not render for anyone else. */
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  ),
   title: "Data & AI Academy — Mockup",
   description:
     "Disposable Mockup/Wireframe artifact. Not the production application.",

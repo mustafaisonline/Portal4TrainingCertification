@@ -25,9 +25,11 @@ they can't drift apart.
 - **Primary** — deep **capability indigo** (light `#3d43b8` / night+dark
   `#9aa3ff`), used for all actions/links. *(Was blue-teal until the
   2026-08-31 visual redesign — see Palette below.)*
-- **Accent** — warm ember. Defined but **not used anywhere in this
-  milestone** — it's reserved for credential/achievement moments (`K10`
-  and similar), which are out of scope here.
+- **Accent** — warm ember. First use 2026-09-02: the "Photograph needed"
+  label on `ImageFrame`, where it means *this is missing and someone must
+  act*. Still reserved otherwise for credential/achievement moments (`K10`
+  and similar), which remain out of scope. Defined in `.night` as well since
+  that date — it previously fell through to the light value on navy.
 - **Semantic** (success/warning/danger/info) — defined but likewise unused
   in this milestone; no error or status states exist on `P01`/`P05`/`P06`.
 - **Proficiency scale** (`--color-prof-1..5`) — a separate 5-step family
@@ -109,6 +111,22 @@ themes — identity, not theming.
   role" section. A minimal version, not the full signature-component
   treatment (radar option, drill-through) implied by the spec's `SkillMeter`
   — built only as far as `P06` needs it.
+
+### `components/ImageFrame.tsx` — reserved photography
+
+A slot for a photograph that does not exist yet. Renders a **visibly empty,
+labelled frame** carrying the subject, aspect ratio and minimum width, so it
+doubles as the shoot brief; passing `src` swaps in the real image with no
+layout change, because the frame already reserved the box.
+
+**Stock and AI-generated imagery are prohibited in these slots** — an image
+of a classroom is a claim that cohorts have run. See
+[`IMAGE_SLOTS.md`](IMAGE_SLOTS.md) for every slot, and which locations were
+deliberately left unframed.
+
+The `.night` scope gained `--color-accent` (2026-09-02) for this component's
+ember label; it previously fell through to the light value at poor contrast
+on navy.
 
 **Deferred, not built:** `CredentialCard`, `MilestoneTimeline` (full),
 `RubricPanel`, `HeatmapGrid`. `P01`'s heatmap teaser is a static illustrative

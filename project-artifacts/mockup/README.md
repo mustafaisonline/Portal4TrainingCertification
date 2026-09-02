@@ -78,11 +78,16 @@ components/signature/     DiagnosticQuestionCanvas, SkillMeter (scoped to this m
 components/PublicShell.tsx  Global public header/footer (§4)
 components/TrainerCard.tsx  Reusable trainer card (P01 + /trainers; genuine people only)
 components/ProgrammeCard.tsx Reusable programme card (P01 + /programmes + related rails)
+components/ImageFrame.tsx   Reserved photography — labelled empty slot, or the real image
+app/icon.svg                Favicon
+app/opengraph-image.tsx     1200x630 social share card, generated at build by next/og
+assets/fonts/               Build-time TTFs for the OG card only — NOT served to browsers
 data/                     Fixtures — programmes (REAL, incl. pricing), practitioners (REAL data only), capability areas, diagnostic questions, result fixtures, role targets
 public/experts/           Genuine practitioner photography (never AI-generated or stock)
 public/books/             The founder's own published book-cover artwork
 docs/                     DESIGN_FOUNDATION.md, MOCK_DATA_REGISTER.md, FINDINGS.md,
-                          P01_DESIGN_DECISIONS.md, PROGRAMME_CONTENT_MIGRATION.md
+                          P01_DESIGN_DECISIONS.md, PROGRAMME_CONTENT_MIGRATION.md,
+                          IMAGE_SLOTS.md
 ```
 
 ## Continuing this work in a new session

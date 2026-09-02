@@ -147,6 +147,10 @@
   --color-primary: #9aa3ff;
   --color-primary-strong: #b4bbff;
   --color-primary-ink: #0b0f22;
+  /* The night scope previously omitted --color-accent, so an ember element
+     inside a night section inherited the light-mode #b5652b and sat at poor
+     contrast on navy. Added for the image-frame labels (2026-09-02). */
+  --color-accent: #d98a4c;
   --color-prof-1: #232741;
   --color-prof-2: #3a4070;
   --color-prof-3: #565fa4;

@@ -1,6 +1,7 @@
 import { PublicShell } from "@/components/PublicShell";
 import { ProgrammeCard } from "@/components/ProgrammeCard";
 import { TrainerCard } from "@/components/TrainerCard";
+import { ImageFrame } from "@/components/ImageFrame";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Chip } from "@/components/ui/Chip";
@@ -318,24 +319,39 @@ export default function HomePage() {
           peers from other organisations. It is never watching a recording.
         </p>
         <div className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+          {/* Each format reserves a photograph (2026-09-02). This is the
+              portal's highest-value image slot: the section makes the
+              product's central claim — you are in the room with a
+              practitioner — and until now proved it with a text grid alone.
+              The frames stay visibly empty rather than borrowing stock
+              imagery, which would claim delivery that has not happened.
+              Filling one is a `src` prop; no layout changes. */}
           {[
-            [
-              "Face-to-face",
-              "Instructor-led programmes and workshops, delivered in person.",
-            ],
-            [
-              "Live online",
-              "Real-time sessions with the same interaction, questions and feedback — not pre-recorded content.",
-            ],
-            [
-              "Private cohorts",
-              "Dedicated programmes for one organisation, shaped to its context.",
-            ],
-            [
-              "On-site & international",
-              "Expert-led delivery at your location, including outside Malaysia.",
-            ],
-          ].map(([title, body], i) => (
+            {
+              title: "Face-to-face",
+              body: "Instructor-led programmes and workshops, delivered in person.",
+              shot: "A face-to-face session in progress — room, participants, practitioner teaching",
+              note: "consent required",
+            },
+            {
+              title: "Live online",
+              body: "Real-time sessions with the same interaction, questions and feedback — not pre-recorded content.",
+              shot: "A live online session as run — screen, gallery of participants, discussion",
+              note: "no client data on screen",
+            },
+            {
+              title: "Private cohorts",
+              body: "Dedicated programmes for one organisation, shaped to its context.",
+              shot: "A single-organisation cohort working together",
+              note: "client consent essential",
+            },
+            {
+              title: "On-site & international",
+              body: "Expert-led delivery at your location, including outside Malaysia.",
+              shot: "Delivery at a client site, ideally showing place",
+              note: "consent required",
+            },
+          ].map(({ title, body, shot, note }, i) => (
             <div
               key={title}
               className="border-t-2 border-[var(--color-primary)]/60 pt-5"
@@ -344,9 +360,15 @@ export default function HomePage() {
                 {String(i + 1).padStart(2, "0")}
               </p>
               <h3 className="text-h2 mb-2">{title}</h3>
-              <p className="text-body-sm text-[var(--color-ink-quiet)]">
+              <p className="text-body-sm mb-5 text-[var(--color-ink-quiet)]">
                 {body}
               </p>
+              <ImageFrame
+                subject={shot}
+                ratio="4 / 3"
+                minWidth={1600}
+                note={note}
+              />
             </div>
           ))}
         </div>

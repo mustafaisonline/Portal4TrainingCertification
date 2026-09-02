@@ -188,6 +188,36 @@ own block headed "Alongside · entered at any stage". Both derive from the
 single `learningPathway` array via a `.filter()`, so the sequence cannot
 desynchronise from the data.
 
+## Three-region pricing on the hub (2026-09-02)
+
+Founder report: the programme **detail** pages list Malaysia, Pakistan and
+International, while the hub — both the flagship band and every portfolio
+card — showed **Malaysia only**. A Pakistani or international reader would
+read that as *"this price is not for me."*
+
+- `pricingRegions` gained a `short` code (`MY` / `PK` / `INT`) so compact
+  price lists stay data-driven; components previously hardcoded `(MY)`.
+- `ProgrammeCard` gained `showAllRegions`, **defaulting to false**. The hub
+  passes it; the P01 homepage preview is deliberately unchanged, because that
+  page has been reviewed and approved and three prices per card there is a
+  separate judgement call, not an implied consequence of this one. **Verified
+  after the change: P01 still renders `RM 2,499 (MY)`.**
+- The flagship band's pricing was lifted out of the four-up meta strip into
+  its own "From — by region" row, so three regions get room.
+
+### ⚠ Observation, not changed: the Pakistan figures carry decimals
+
+Every migrated PKR price ends in cents — `Rs. 102,839.86`, `Rs. 28,794.90`,
+`Rs. 61,658.65`. These are **verbatim from the source**, whose client-side
+`TRAINING_INVESTMENT_DATA` evidently derives PKR from a base currency at a
+conversion rate rather than publishing a set price.
+
+They are genuine, so they were not touched — **rounding a published price is
+inventing a price**, and a business decision either way. But they read as a
+machine conversion rather than something a person set, which is more visible
+now that PKR appears on the hub as well as the detail pages. **Rounding them
+is the founder's call.**
+
 ## Content gaps in the source
 
 - **Certification** — the source offers a *certificate of participation* per

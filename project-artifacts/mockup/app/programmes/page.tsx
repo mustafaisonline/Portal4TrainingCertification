@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/Card";
 import { Chip } from "@/components/ui/Chip";
 import {
   learningPathway,
+  pricingRegions,
   programmeLevels,
   programmes,
   getProgramme,
@@ -173,26 +174,43 @@ export default function ProgrammesPage() {
                 </p>
 
                 {/* The buyer's four questions, answered without a click. */}
-                <dl className="mb-9 grid grid-cols-2 gap-x-8 gap-y-5 border-t border-[var(--color-line)] pt-7 sm:grid-cols-4">
+                <dl className="mb-8 grid grid-cols-2 gap-x-8 gap-y-5 border-t border-[var(--color-line)] pt-7 sm:grid-cols-3">
                   {[
                     ["Duration", flagship.duration],
                     ["For", flagship.audienceSummary],
                     ["Delivery", flagship.formats.join(" · ")],
-                    [
-                      "From",
-                      flagship.pricing
-                        ? `${flagship.pricing.malaysia.today} (MY)`
-                        : null,
-                    ],
-                  ]
-                    .filter(([, v]) => v)
-                    .map(([label, value]) => (
-                      <div key={label as string}>
-                        <dt className="text-label mb-1.5">{label}</dt>
-                        <dd className="text-body-sm leading-snug">{value}</dd>
-                      </div>
-                    ))}
+                  ].map(([label, value]) => (
+                    <div key={label}>
+                      <dt className="text-label mb-1.5">{label}</dt>
+                      <dd className="text-body-sm leading-snug">{value}</dd>
+                    </div>
+                  ))}
                 </dl>
+
+                {/* Pricing lifted out of the meta strip (2026-09-02). All
+                    three published regions are shown, matching the detail
+                    page: the hub previously listed Malaysia alone, which a
+                    Pakistani or international reader would read as "this
+                    price is not for me". Figures are the founder's own
+                    published launch offers and will date — the detail page
+                    carries that caveat in full. */}
+                {flagship.pricing && (
+                  <div className="mb-9 border-t border-[var(--color-line)] pt-7">
+                    <p className="text-label mb-4">From — by region</p>
+                    <dl className="grid grid-cols-3 gap-x-6 gap-y-3">
+                      {pricingRegions.map((region) => (
+                        <div key={region.key}>
+                          <dt className="text-mono text-[0.7rem] mb-1 text-[var(--color-ink-faint)]">
+                            {region.label}
+                          </dt>
+                          <dd className="text-body-sm font-medium text-[var(--color-primary)]">
+                            {flagship.pricing![region.key].today}
+                          </dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </div>
+                )}
 
                 <div className="flex flex-wrap items-center gap-4">
                   <Button href={`/programmes/${flagship.slug}`}>
@@ -291,6 +309,7 @@ export default function ProgrammesPage() {
                     <ProgrammeCard
                       key={programme.slug}
                       programme={programme}
+                      showAllRegions
                     />
                   ))}
                 </div>

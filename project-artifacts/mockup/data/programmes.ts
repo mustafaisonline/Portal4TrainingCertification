@@ -65,6 +65,10 @@ export type ProgrammePricing = Record<RegionKey, RegionPrice>;
 export const pricingRegions: {
   key: RegionKey;
   label: string;
+  /** Compact code for space-constrained price lists (cards, meta strips).
+   *  Added 2026-09-02 when the programmes hub began showing all three
+   *  regions; previously components hardcoded "(MY)". */
+  short: string;
   subtitle: string;
   badge: string;
   discountLabel: string;
@@ -72,6 +76,7 @@ export const pricingRegions: {
   {
     key: "malaysia",
     label: "Malaysia",
+    short: "MY",
     subtitle: "Founder's launch offer",
     badge: "Save up to 50%",
     discountLabel: "Discount",
@@ -79,6 +84,7 @@ export const pricingRegions: {
   {
     key: "pakistan",
     label: "Pakistan",
+    short: "PK",
     subtitle: "Regional scholarship programme",
     badge: "Regional scholarship",
     discountLabel: "Scholarship",
@@ -86,6 +92,7 @@ export const pricingRegions: {
   {
     key: "international",
     label: "International",
+    short: "INT",
     subtitle: "Global professional pricing",
     badge: "Global launch offer",
     discountLabel: "Discount",

@@ -1,7 +1,11 @@
 import Link from "next/link";
 import { Card } from "./ui/Card";
 import { Chip } from "./ui/Chip";
-import { mentorshipPackages, type Programme } from "@/data/programmes";
+import {
+  mentorshipPackages,
+  pricingRegions,
+  type Programme,
+} from "@/data/programmes";
 
 /**
  * Reusable programme card — used on /programmes, the P01 homepage preview
@@ -13,12 +17,30 @@ import { mentorshipPackages, type Programme } from "@/data/programmes";
  * all three regions). Still no dates or capacity: scheduled offerings
  * remain an open decision (see data/programmes.ts header).
  */
-export function ProgrammeCard({ programme }: { programme: Programme }) {
+export function ProgrammeCard({
+  programme,
+  /**
+   * Show the entry price in all three published regions rather than
+   * Malaysia alone. On 2026-09-02 the founder pointed out that the
+   * programme detail pages list Malaysia, Pakistan and International while
+   * the hub showed only Malaysia — an inconsistency a Pakistani or
+   * international reader would experience as "the price does not apply to
+   * me". Turned on for /programmes.
+   *
+   * Defaults to false so the P01 homepage preview is unchanged: that page
+   * has been reviewed and approved, and three prices per card there is a
+   * separate judgement call, not an implied consequence of this one.
+   */
+  showAllRegions = false,
+}: {
+  programme: Programme;
+  showAllRegions?: boolean;
+}) {
   // Mentorship is priced per package; show its entry package as the "from".
-  const fromPrice =
-    programme.pricing?.malaysia.today ??
+  const pricing =
+    programme.pricing ??
     (programme.level === "Mentorship"
-      ? mentorshipPackages[0]?.pricing.malaysia.today
+      ? mentorshipPackages[0]?.pricing
       : undefined);
 
   return (
@@ -71,14 +93,33 @@ export function ProgrammeCard({ programme }: { programme: Programme }) {
           {programme.formats.join(" · ")}
         </dd>
 
-        {fromPrice && (
+        {pricing && (
           <>
             <dt className="text-label">From</dt>
-            <dd className="font-medium leading-snug text-[var(--color-primary)]">
-              {fromPrice}{" "}
-              <span className="font-normal text-[var(--color-ink-faint)]">
-                (MY)
-              </span>
+            <dd className="leading-snug">
+              {showAllRegions ? (
+                /* Tabular so the three figures align down the column —
+                   .text-mono carries font-variant-numeric: tabular-nums. */
+                <span className="flex flex-col gap-1">
+                  {pricingRegions.map((region) => (
+                    <span key={region.key} className="flex items-baseline gap-2">
+                      <span className="font-medium text-[var(--color-primary)]">
+                        {pricing[region.key].today}
+                      </span>
+                      <span className="text-mono text-[0.7rem] text-[var(--color-ink-faint)]">
+                        {region.short}
+                      </span>
+                    </span>
+                  ))}
+                </span>
+              ) : (
+                <span className="font-medium text-[var(--color-primary)]">
+                  {pricing.malaysia.today}{" "}
+                  <span className="font-normal text-[var(--color-ink-faint)]">
+                    ({pricingRegions[0].short})
+                  </span>
+                </span>
+              )}
             </dd>
           </>
         )}

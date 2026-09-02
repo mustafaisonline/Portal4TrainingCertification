@@ -20,6 +20,12 @@ import { join } from "node:path";
  * child sets `display: flex` explicitly.
  */
 
+/* Required by `output: "export"` (the GitHub Pages build): Next will not
+   collect an image route for a static export unless it is explicitly
+   declared static. The card was already generated at build time in every
+   other mode, so this states existing behaviour rather than changing it. */
+export const dynamic = "force-static";
+
 export const alt =
   "Data & AI Academy — expert-led Data & AI training and certification";
 export const size = { width: 1200, height: 630 };

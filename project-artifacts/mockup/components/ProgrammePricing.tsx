@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { Button } from "./ui/Button";
 import { Card } from "./ui/Card";
@@ -222,12 +223,12 @@ export function ProgrammePricing({
           Prices are as currently published and reflect a time-limited launch
           offer, shown in the currency of the selected region. Corporate and
           private-cohort engagements are quoted separately —{" "}
-          <a
+          <Link
             href="/#organisations"
             className="text-[var(--color-primary)] underline underline-offset-4"
           >
             talk to us about your team
-          </a>
+          </Link>
           .
         </p>
       </div>

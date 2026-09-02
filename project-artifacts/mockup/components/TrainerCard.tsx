@@ -1,3 +1,4 @@
+import { assetPath } from "@/lib/basePath";
 import Image from "next/image";
 import { Card } from "./ui/Card";
 import { Chip } from "./ui/Chip";
@@ -22,7 +23,7 @@ export function TrainerCard({ person }: { person: Practitioner }) {
   return (
     <Card variant="panel" className="flex flex-col gap-5 sm:flex-row">
       <Image
-        src={person.photo}
+        src={assetPath(person.photo)}
         alt={`Photograph of ${person.name}`}
         width={800}
         height={800}

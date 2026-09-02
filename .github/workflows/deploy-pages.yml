@@ -1,0 +1,75 @@
+# Publishes the MOCKUP to GitHub Pages.
+#
+# ⚠ project-artifacts/mockup is a disposable review artifact, NOT the
+# production application (see its README.md). Nothing here deploys, builds or
+# otherwise touches the Milestone 1 production work.
+#
+# Live at: https://mustafaisonline.github.io/Portal4TrainingCertification/
+name: Deploy mockup to GitHub Pages
+
+on:
+  # Only republish when the mockup itself changes. Editing specifications or
+  # governance documents does NOT trigger a public deploy.
+  push:
+    branches: [main]
+    paths:
+      - "project-artifacts/mockup/**"
+      - ".github/workflows/deploy-pages.yml"
+  # Manual re-publish from the Actions tab.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two publishes race. An in-flight deploy is allowed to finish
+# rather than being cancelled half-written.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: project-artifacts/mockup
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: project-artifacts/mockup/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static export
+        run: npm run build
+        env:
+          # Switches on output:"export", basePath and assetPrefix in
+          # next.config.ts. Set ONLY here — never locally.
+          GITHUB_PAGES: "true"
+          # Resolves og:image to an absolute URL in app/layout.tsx. Without
+          # it the OG card points at localhost and no share preview renders.
+          NEXT_PUBLIC_SITE_URL: "https://mustafaisonline.github.io/Portal4TrainingCertification"
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: project-artifacts/mockup/out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,3 +1,4 @@
+import { assetPath } from "@/lib/basePath";
 import Image from "next/image";
 
 /**
@@ -61,7 +62,7 @@ export function ImageFrame({
         style={{ aspectRatio: ratio }}
       >
         <Image
-          src={src}
+          src={assetPath(src)}
           alt={alt ?? subject}
           fill
           className="object-cover"

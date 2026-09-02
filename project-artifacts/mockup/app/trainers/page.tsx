@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { assetPath } from "@/lib/basePath";
 import Image from "next/image";
 import { PublicShell } from "@/components/PublicShell";
 import { Button } from "@/components/ui/Button";
@@ -99,7 +100,7 @@ export default function TrainersPage() {
           >
             <div className="mb-5 flex gap-5">
               <Image
-                src={lead.photo}
+                src={assetPath(lead.photo)}
                 alt={`Photograph of ${lead.name}`}
                 width={800}
                 height={800}
@@ -181,7 +182,7 @@ export default function TrainersPage() {
             >
               <div className="mb-5 flex gap-5">
                 <Image
-                  src={person.photo}
+                  src={assetPath(person.photo)}
                   alt={`Photograph of ${person.name}`}
                   width={800}
                   height={800}
@@ -322,7 +323,7 @@ export default function TrainersPage() {
                       fixes it at every breakpoint. */}
                   <span className="relative block aspect-[2/3] w-full overflow-hidden rounded-[var(--radius-plate)] border border-[var(--color-line)]">
                     <Image
-                      src={book.cover}
+                      src={assetPath(book.cover)}
                       alt={`Cover of ${book.title}`}
                       fill
                       sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 18vw"

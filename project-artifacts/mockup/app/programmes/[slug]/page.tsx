@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PublicShell } from "@/components/PublicShell";
+import { ImageFrame } from "@/components/ImageFrame";
 import { ProgrammeCard } from "@/components/ProgrammeCard";
 import { TrainerCard } from "@/components/TrainerCard";
 import { Button } from "@/components/ui/Button";
@@ -114,6 +115,23 @@ export default async function ProgrammeDetailPage({
             ))}
           </dl>
         </div>
+      </section>
+
+      {/* ===== Programme header photograph (reserved) =====
+          One wide frame per programme. Deliberately BELOW the hero rather
+          than inside it: the hero is a night section carrying the title and
+          the meta strip, and dropping an empty box into it would weaken the
+          page's one dominant moment. Per the photography brief this is the
+          most expensive line on the list — seven programmes — so it should
+          be fed by allocating frames from a single delivery shoot rather
+          than shooting each programme separately. */}
+      <section className="mx-auto max-w-[1280px] px-6 pt-12">
+        <ImageFrame
+          subject={`${programme.title} in delivery — the room, the participants, the work being done`}
+          ratio="21 / 9"
+          minWidth={2000}
+          note="reusable across pages"
+        />
       </section>
 
       {/* ===== Overview + highlights ===== */}
@@ -437,9 +455,18 @@ export default async function ProgrammeDetailPage({
                 Learning experience
               </p>
               <h2 className="text-display mb-5">How it is taught</h2>
-              <p className="text-body-lg text-[var(--color-ink-quiet)]">
+              <p className="text-body-lg mb-8 text-[var(--color-ink-quiet)]">
                 {programme.pedagogy.intro}
               </p>
+              {/* Pedagogy is the most abstract writing on the page; a
+                  photograph of the teaching itself is what makes it
+                  concrete. Detail over wide shot. */}
+              <ImageFrame
+                subject="The teaching itself — whiteboard, a worked exercise, or a group working through a case"
+                ratio="3 / 2"
+                minWidth={1400}
+                note="detail beats a wide shot"
+              />
             </div>
             <div>
               <ul className="grid gap-x-8 sm:grid-cols-2">

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PublicShell } from "@/components/PublicShell";
+import { ImageFrame } from "@/components/ImageFrame";
 import { ProgrammeCard } from "@/components/ProgrammeCard";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -161,16 +162,27 @@ export default function ProgrammesPage() {
                   Explore the programme
                 </Button>
               </div>
-              <ul className="flex flex-col gap-2">
-                {flagship.highlights.map((h) => (
-                  <li
-                    key={h}
-                    className="border-t border-[var(--color-line)] pt-2 text-body-sm text-[var(--color-ink-quiet)]"
-                  >
-                    {h}
-                  </li>
-                ))}
-              </ul>
+              <div className="flex flex-col gap-6">
+                <ul className="flex flex-col gap-2">
+                  {flagship.highlights.map((h) => (
+                    <li
+                      key={h}
+                      className="border-t border-[var(--color-line)] pt-2 text-body-sm text-[var(--color-ink-quiet)]"
+                    >
+                      {h}
+                    </li>
+                  ))}
+                </ul>
+                {/* The flagship earns a distinct treatment; a photograph is
+                    one way to give it one (a different composition would do
+                    the same job for free — see IMAGE_SLOTS.md). */}
+                <ImageFrame
+                  subject={`${flagship.title} — a cohort building, not listening`}
+                  ratio="4 / 3"
+                  minWidth={1600}
+                  note="consent required"
+                />
+              </div>
             </div>
           </Card>
         </section>

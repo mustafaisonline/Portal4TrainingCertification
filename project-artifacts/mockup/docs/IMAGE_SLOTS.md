@@ -7,15 +7,41 @@ which carries the full inventory and shoot specs. This file records what is
 
 ---
 
-## The rule
+## The rules
 
-**An empty slot must look empty.** `components/ImageFrame.tsx` renders a
-labelled, visibly unfilled frame carrying the subject, aspect ratio and
-minimum width — so it doubles as the shoot brief.
+### 1. No licensed imagery — founder direction, 2026-09-02
 
-Stock and AI-generated imagery are **prohibited**, not merely discouraged: a
-photograph of a classroom is a claim that cohorts have run. The same rule that
-rejected the AI portrait in `Reference Material/` applies to every slot here.
+**Every image published in this portal must be ours to publish.** No stock
+libraries — free tiers included — no third-party licensed photography, no
+imagery whose rights sit with someone else, however permissive the terms look.
+
+Acceptable sources are exactly these:
+
+| Source | Example |
+|---|---|
+| Photographs the founder or the Academy took or commissioned | a delivery shoot |
+| The founder's own artwork | the five book covers already in `public/books/` |
+| Photographs supplied with the subject's consent | participants in a session |
+| Original graphics authored for this portal | `DotField`, the logo mark, the OG card |
+
+**This is broader than the honesty rule below and catches things that rule
+does not.** Notably, the DAMA/CDMP material in the reference archive is
+third-party licensed and may not be reproduced even though it is genuine, and
+even though the founder holds the certification.
+
+**When in doubt, the slot stays empty.** An empty frame costs nothing; a
+licensing claim costs a great deal more than a photograph.
+
+### 2. An empty slot must look empty
+
+`components/ImageFrame.tsx` renders a labelled, visibly unfilled frame
+carrying the subject, aspect ratio and minimum width — so it doubles as the
+shoot brief.
+
+Stock and AI-generated imagery are **prohibited** on honesty grounds as well:
+a photograph of a classroom is a claim that cohorts have run. The same rule
+that rejected the AI portrait in `Reference Material/` applies to every slot
+here.
 
 ## The engineering rule
 
@@ -33,10 +59,20 @@ reflow, because the frame already holds the space.
 
 ## Implemented
 
+**12 frames across 4 templates.** All are empty; each fills with a `src` prop.
+
 | Location | Slots | Ratio | Why here |
 |---|---|---|---|
 | `app/page.tsx` → "Live means live" | 4 (one per delivery format) | 4:3 | **The portal's highest-value image slot.** The section makes the central claim — *you are in the room with a practitioner* — and proved it with a text grid alone |
 | `app/trainers/[slug]` → community impact | 3 | 3:2 | Community reach is stated purely as numbers. Per the brief these photographs most likely **already exist** rather than needing a shoot |
+| `app/trainers/[slug]` → podcast | 1 | 1:1 | The show's own cover art, already published on YouTube/Spotify — a copy-across, not a commission, and the trainer's own artwork so no licensing question arises |
+| `app/programmes/[slug]` → header band | 1 per programme (7) | 21:9 | Placed **below** the hero, not inside it: the hero is a night section carrying the title and meta strip, and an empty box there would weaken the page's one dominant moment |
+| `app/programmes/[slug]` → "How it is taught" | 1 (where the programme has pedagogy) | 3:2 | The most abstract writing on the page; a photograph of the teaching makes it concrete |
+| `app/programmes` → flagship band | 1 | 4:3 | The flagship earns a distinct treatment; an image is one way to give it one |
+
+**Frame content is centred, not bottom-anchored.** On the 21:9 header (~500px
+tall) a caption in the corner reads as a broken image; centred content reads
+as a deliberate empty state.
 
 ## Deliberately NOT given frames
 

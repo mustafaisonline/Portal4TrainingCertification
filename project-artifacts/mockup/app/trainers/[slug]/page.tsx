@@ -292,6 +292,17 @@ export default async function TrainerProfilePage({
             <p className="text-body-lg mb-9 max-w-[620px] text-[var(--color-ink-quiet)]">
               {person.podcast.description}
             </p>
+            {/* Cover art almost certainly already exists on YouTube or
+                Spotify — this is a copy-across, not a commission. It is the
+                trainer's own artwork, so no licensing question arises. */}
+            <div className="mb-9 w-full max-w-[220px]">
+              <ImageFrame
+                subject="The podcast's own cover art"
+                ratio="1 / 1"
+                minWidth={1400}
+                note="already published"
+              />
+            </div>
             <div className="flex flex-wrap items-center gap-4">
               <Button
                 href={person.podcast.youtube}
@@ -357,10 +368,10 @@ export default async function TrainerProfilePage({
               note="candid preferred"
             />
             <ImageFrame
-              subject="Podcast recording, or the published cover art"
+              subject="Teaching or mentoring outside commercial work — a student session or open workshop"
               ratio="3 / 2"
               minWidth={1200}
-              note="may already exist on YouTube"
+              note="consent required"
             />
           </div>
           <p className="text-mono mt-8 text-[0.7rem] text-[var(--color-ink-faint)]">

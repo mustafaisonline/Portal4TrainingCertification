@@ -67,7 +67,11 @@ export function ImageFrame({
   // Empty state — deliberately, visibly unfilled.
   return (
     <div
-      className={`flex flex-col items-start justify-end rounded-[var(--radius-plate)] border border-dashed border-[var(--color-line-strong)] bg-[var(--color-ground-raised)] p-4 ${className}`}
+      // Content is centred, not bottom-anchored: on a large frame (the 21:9
+      // programme header is ~500px tall) a caption stuck in the corner reads
+      // as a broken image, whereas centred content reads as a deliberate
+      // empty state. Holds at small sizes too.
+      className={`flex flex-col items-center justify-center rounded-[var(--radius-plate)] border border-dashed border-[var(--color-line-strong)] bg-[var(--color-ground-raised)] p-5 text-center ${className}`}
       style={{ aspectRatio: ratio }}
       // Announced to assistive tech as what it is: a gap, not a picture.
       role="note"
@@ -83,7 +87,7 @@ export function ImageFrame({
       >
         Photograph needed
       </span>
-      <span className="text-body-sm leading-snug text-[var(--color-ink-quiet)]">
+      <span className="text-body-sm max-w-[46ch] leading-snug text-[var(--color-ink-quiet)]">
         {subject}
       </span>
       {(minWidth || note) && (

@@ -60,6 +60,23 @@ Use the existing approved project documentation as the source of product require
 
 Do not consolidate, reinterpret, replace, or create a new authoritative product specification unless explicitly instructed. If specifications conflict, identify the conflict and request clarification before implementing a decision that depends on it.
 
+### Reference Material — outside the repository
+
+The founder's source archive (résumés, prior training material, HRD
+documentation, photographs) lives at
+`/Users/mustafaqizilbash/Documents/GitHub/ReferenceMaterial` — **not** in this
+repository. It is reachable through the `reference-material` MCP server
+declared in `.mcp.json`, which is **read-only by enforced permission deny
+rules**.
+
+It contains **personal identity documents and client-confidential third-party
+material.** Read it for understanding; never copy its content into the
+repository, the portal, commits or published artifacts without explicit
+founder direction, and never write to it.
+
+**Read `docs/REFERENCE_MATERIAL_ACCESS.md` before using it.** Reference
+material ranks below approved specifications in the hierarchy below.
+
 **Authority hierarchy:** 1) Explicit current human instruction → 2) **Approved decision records (`DR-02`, `DR-01`)** → 3) Approved project specification documents → 4) Approved architecture and technical documentation → 5) Existing working implementation → 6) Other approved reference materials → 7) Previous AI assumptions → 8) General AI knowledge.
 
 ---

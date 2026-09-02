@@ -90,7 +90,7 @@ The existing documents have already caught most classic gaps (refunds, accommoda
 
 14. ★ **Payment webhook event log**: IP-2/IP-3 require reconciliation after outages; storing raw provider events (not just derived order state) is what makes reconciliation possible. One table.
 15. **Time-zone display** for exam windows, SLA countdowns, cohort sessions (regional audience is explicit).
-16. ★ **`Reference Material/` contains what appears to be client-confidential third-party material** (Petronas CLASS documents, DAMA/CDMP PDFs) sitting untracked in the repo. The owner has directed it not be gitignored — respected — but the standing risk is that it is one accidental bulk-stage away from a confidentiality incident, with the ban on `git add .` as the only control. Consider relocating it outside the repository entirely (a decision, not an action).
+16. ✅ **RESOLVED 2026-09-02 — the recommendation below was taken.** The founder relocated the folder to `/Users/mustafaqizilbash/Documents/GitHub/ReferenceMaterial`, outside the repository; it is now reached read-only via the `reference-material` MCP server (see [`../REFERENCE_MATERIAL_ACCESS.md`](../REFERENCE_MATERIAL_ACCESS.md)). The accidental-bulk-stage risk is structurally eliminated. Original finding: ★ **`Reference Material/` contains what appears to be client-confidential third-party material** (Petronas CLASS documents, DAMA/CDMP PDFs) sitting untracked in the repo. The owner has directed it not be gitignored — respected — but the standing risk is that it is one accidental bulk-stage away from a confidentiality incident, with the ban on `git add .` as the only control. Consider relocating it outside the repository entirely (a decision, not an action).
 
 ### Optional
 

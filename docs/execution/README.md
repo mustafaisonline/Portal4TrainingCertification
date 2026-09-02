@@ -68,6 +68,6 @@ These apply to every milestone in this folder and are not restated in each plan:
 
 - **No RED-gate action** — framework initialisation, package installation, container start, database or schema creation, migration, infrastructure provisioning, external account creation, staging, committing, pushing — without explicit authorization at the moment it is performed.
 - **No `git add .`** or bulk staging. Files are staged individually and verified.
-- **`Reference Material/`** is out of scope: not modified, moved, renamed, deleted, staged, committed, or added to `.gitignore`. Observations may be reported; they authorise nothing.
+- **`Reference Material/`** ↻ **relocated by the founder 2026-09-02** to `/Users/mustafaqizilbash/Documents/GitHub/ReferenceMaterial`, outside this repository. The out-of-scope rule stands and is now enforced technically: the `reference-material` MCP server is **read-only by permission deny rules**, so it cannot be modified, renamed or deleted, and being outside the repo it cannot be staged or committed. Observations may be reported; they authorise nothing. See [`../REFERENCE_MATERIAL_ACCESS.md`](../REFERENCE_MATERIAL_ACCESS.md).
 - **AP-07** — anything stubbed is visibly identified as temporary and structurally isolated. Nothing simulated is reported as complete.
 - **AP-12** — no technology introducing a mandatory development-time cost without approval.

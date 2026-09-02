@@ -645,7 +645,7 @@ Assets inspected under the authorization of this stage. **None were modified, mo
 
 | Asset | Size | Assessment |
 |---|---|---|
-| `Reference Material/Resume/Mustafa/Resume -Editable/Mustafa_Pic.jpg` | 800×800 | ✅ **Best genuine option.** Authentic professional headshot, business attire, neutral background. Suitable for `H3`; adequate for a modest hero treatment |
+| `Reference Material/Resume/Mustafa/Resume -Editable/Mustafa_Pic.jpg` ⟨*archive moved 2026-09-02 — read `Reference Material/` as `/Users/mustafaqizilbash/Documents/GitHub/ReferenceMaterial/`; paths below it are unchanged*⟩ | 800×800 | ✅ **Best genuine option.** Authentic professional headshot, business attire, neutral background. Suitable for `H3`; adequate for a modest hero treatment |
 | `Reference Material/Resume/Mustafa/Mustafa_Photo.jpg` | 457×457 | ✅ Same genuine headshot, lower resolution. Small sizes only |
 | `Reference Material/Resume/Mustafa/Mustafa_AI_Photo.jpeg` | 1254×1254 | ⛔ **AI-generated / AI-enhanced portrait. Must not be used.** Highest resolution and most polished — and therefore the most dangerous. A synthetic portrait on a page claiming *a real practitioner teaches this* falsifies the very claim it decorates, and would breach `HD-7` and DR-02 §7 |
 | `Reference Material/Trainer Photos/` — 3 files | ~1179×777 | ⛔ **Not training photographs despite the folder name.** They are recreational cricket-team photographs from a corporate sports event. Unusable for any Homepage purpose |

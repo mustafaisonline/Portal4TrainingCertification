@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "reference-material": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem@2026.8.31",
+        "/Users/mustafaqizilbash/Documents/GitHub/ReferenceMaterial"
+      ]
+    }
+  }
+}

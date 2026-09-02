@@ -36,7 +36,9 @@ practitioner *is* the design statement). `H3` then carries substance
 ## Founder representation — how and why
 
 - Photo: `public/experts/mustafa-qizilbash.jpg`, copied from the founder's
-  own résumé materials (`Reference Material/Resume/Mustafa/Resume
+  own résumé materials (archive relocated 2026-09-02 — now
+  `/Users/mustafaqizilbash/Documents/GitHub/ReferenceMaterial/`; the path
+  below it is unchanged: `Reference Material/Resume/Mustafa/Resume
   -Editable/Mustafa_Pic.jpg`, 800×800, genuine). **The AI-generated
   portrait in the same folder was deliberately NOT used** — prohibited by
   the P01 specification §16.2, because a synthetic likeness on a page

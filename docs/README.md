@@ -8,6 +8,8 @@
 | [`execution/`](execution/README.md) | **Delivery** — milestone plans, RED-gate action lists, verification criteria, completion reports | [Execution index](execution/README.md) |
 | [`design/`](design/) | **Design specifications & governance** — what screens must communicate (below the Mockup Specification, above visual design), and the rules that govern visual refinement | [`P01_HOMEPAGE_REDESIGN_SPECIFICATION.md`](design/P01_HOMEPAGE_REDESIGN_SPECIFICATION.md) — also the durable Homepage Design Strategy record (its §3) · [`VISUAL_REFINEMENT_GOVERNANCE.md`](design/VISUAL_REFINEMENT_GOVERNANCE.md) — the design-governance blueprint, incl. the binding lesson from the reverted audit remediation (`93217e0`→`f7f826a`) · [`TYPOGRAPHY_STRATEGY.md`](design/TYPOGRAPHY_STRATEGY.md) — font exploration, recommendation and the **adoption record** (§15): Direction C / IBM Plex approved after Experiment 1 and **rolled out portal-wide 2026-09-02** |
 
+| [`REFERENCE_MATERIAL_ACCESS.md`](REFERENCE_MATERIAL_ACCESS.md) | **The founder's source archive** — where it lives (outside this repo), the read-only `reference-material` MCP server that reaches it, and the confidentiality rules that bind every session using it |
+
 **The test for where something belongs:** if it would still be true after the current milestone ships, it is architecture. If it describes *this* piece of work, it is execution. If it defines what a specific screen must become, it is design.
 
 ## Authoritative sources above this folder

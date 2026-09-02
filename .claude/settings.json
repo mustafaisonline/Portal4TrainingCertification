@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "deny": [
+      "mcp__reference-material__write_file",
+      "mcp__reference-material__edit_file",
+      "mcp__reference-material__move_file",
+      "mcp__reference-material__create_directory"
+    ]
+  },
+  "enabledMcpjsonServers": [
+    "reference-material"
+  ]
+}

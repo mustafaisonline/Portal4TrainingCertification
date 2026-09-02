@@ -151,7 +151,7 @@ If the implementation diverges from an approved ADR, that is a defect to be repo
 
 - **No application code exists.** The repository contains specifications, governance documents and reference material only.
 - **No technology has been selected as an implementation decision.** `.gitignore` is deliberately technology-neutral.
-- `Reference Material/` is present and **untracked**; it contains a `.venv/` directory and Office lock files. It has been read for product understanding only and has not been modified.
+- `Reference Material/` ⊘ **MOVED OUT OF THE REPOSITORY 2026-09-02.** It now lives at `/Users/mustafaqizilbash/Documents/GitHub/ReferenceMaterial` and is reached through the read-only `reference-material` MCP server — see [`../REFERENCE_MATERIAL_ACCESS.md`](../REFERENCE_MATERIAL_ACCESS.md). This **closes finding 16** of the external architecture review, which recommended exactly this relocation. Original wording: *"present and untracked; it contains a `.venv/` directory and Office lock files. It has been read for product understanding only and has not been modified."*
 
 ---
 

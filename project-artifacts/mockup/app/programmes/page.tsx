@@ -34,6 +34,10 @@ export const metadata: Metadata = {
 
 export default function ProgrammesPage() {
   const flagship = programmes.find((p) => p.flagship);
+  // One source of truth (learningPathway); the section splits it rather than
+  // duplicating the sequence, so a data change cannot desynchronise them.
+  const corePath = learningPathway.filter((step) => !step.parallel);
+  const parallelPath = learningPathway.filter((step) => step.parallel);
 
   return (
     <PublicShell>
@@ -139,56 +143,110 @@ export default function ProgrammesPage() {
         </div>
       </section>
 
-      {/* Flagship */}
+      {/* ===== Flagship =====
+          Redesigned 2026-09-02. Was a beige Feature card whose right column
+          was a bare hairline list with the image frame wedged beneath it —
+          it read as a normal section with more items in it, and answered
+          none of a buyer's concrete questions.
+
+          Now a NIGHT band. The distinction is structural rather than
+          decorative: night is the portal's existing device for identity
+          moments, so the flagship is the only paper-section break between
+          the hero and the pathway, and it earns the page's one dominant
+          moment (P3, hierarchy over uniformity) without inventing a new
+          treatment. The meta strip is the substantive change — duration,
+          audience, delivery and the entry price now answer on the page what
+          previously required a click. */}
       {flagship && (
-        <section className="mx-auto max-w-[1280px] px-6 py-16">
-          <p className="text-label mb-3 text-[var(--color-primary)]">
-            Flagship programme
-          </p>
-          <Card variant="feature">
-            <div className="grid gap-8 lg:grid-cols-[1fr_320px] lg:items-center">
+        <section className="night relative overflow-hidden">
+          <div className="relative mx-auto max-w-[1280px] px-6 py-16 lg:py-20">
+            <div className="grid gap-x-14 gap-y-10 lg:grid-cols-[1.1fr_1fr] lg:items-start">
               <div>
-                <div className="mb-4 flex flex-wrap gap-2">
-                  <Chip tone="primary">{flagship.level}</Chip>
-                  {flagship.formats.map((f) => (
-                    <Chip key={f}>{f}</Chip>
-                  ))}
-                </div>
-                <h2 className="text-display mb-3">{flagship.title}</h2>
-                <p className="text-body-lg mb-5 text-[var(--color-ink-quiet)]">
+                <p className="text-label mb-4 text-[var(--color-primary)]">
+                  Flagship programme
+                </p>
+                <h2 className="text-display-lg mb-5 max-w-[16ch]">
+                  {flagship.title}
+                </h2>
+                <p className="text-body-lg mb-8 max-w-[52ch] text-[var(--color-ink-quiet)]">
                   {flagship.valueProposition}
                 </p>
-                <Button href={`/programmes/${flagship.slug}`}>
-                  Explore the programme
-                </Button>
+
+                {/* The buyer's four questions, answered without a click. */}
+                <dl className="mb-9 grid grid-cols-2 gap-x-8 gap-y-5 border-t border-[var(--color-line)] pt-7 sm:grid-cols-4">
+                  {[
+                    ["Duration", flagship.duration],
+                    ["For", flagship.audienceSummary],
+                    ["Delivery", flagship.formats.join(" · ")],
+                    [
+                      "From",
+                      flagship.pricing
+                        ? `${flagship.pricing.malaysia.today} (MY)`
+                        : null,
+                    ],
+                  ]
+                    .filter(([, v]) => v)
+                    .map(([label, value]) => (
+                      <div key={label as string}>
+                        <dt className="text-label mb-1.5">{label}</dt>
+                        <dd className="text-body-sm leading-snug">{value}</dd>
+                      </div>
+                    ))}
+                </dl>
+
+                <div className="flex flex-wrap items-center gap-4">
+                  <Button href={`/programmes/${flagship.slug}`}>
+                    Explore the programme
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    href={`/programmes/${flagship.slug}#investment`}
+                  >
+                    See the investment
+                  </Button>
+                </div>
               </div>
-              <div className="flex flex-col gap-6">
-                <ul className="flex flex-col gap-2">
+
+              <div>
+                <p className="text-label mb-5">What it leads to</p>
+                <ul className="mb-8 flex flex-col gap-3.5">
                   {flagship.highlights.map((h) => (
-                    <li
-                      key={h}
-                      className="border-t border-[var(--color-line)] pt-2 text-body-sm text-[var(--color-ink-quiet)]"
-                    >
-                      {h}
+                    <li key={h} className="flex gap-3.5">
+                      {/* A drawn rule, not a bullet glyph — consistent with
+                          the rubric block and the delivery-format cards. */}
+                      <span
+                        aria-hidden="true"
+                        className="mt-2.5 h-px w-5 shrink-0 bg-[var(--color-primary)]"
+                      />
+                      <span className="text-body-sm leading-snug text-[var(--color-ink-quiet)]">
+                        {h}
+                      </span>
                     </li>
                   ))}
                 </ul>
-                {/* The flagship earns a distinct treatment; a photograph is
-                    one way to give it one (a different composition would do
-                    the same job for free — see IMAGE_SLOTS.md). */}
                 <ImageFrame
                   subject={`${flagship.title} — a cohort building, not listening`}
-                  ratio="4 / 3"
+                  ratio="3 / 2"
                   minWidth={1600}
                   note="consent required"
                 />
               </div>
             </div>
-          </Card>
+          </div>
         </section>
       )}
 
-      {/* All programmes */}
+      {/* ===== All programmes =====
+          Redesigned 2026-09-02. Was a flat 3-column grid of all seven cards
+          in data order — Foundation, Practitioner, Architect, Architect,
+          Executive, Builder, Mentorship — which reads as arbitrary, gives no
+          way to scan, and wastes the level taxonomy established directly
+          above it.
+
+          Now grouped by level in progression order, reusing `programmeLevels`
+          so the grouping cannot drift from the rail above. Still no client
+          -side filter: this adds structure, not catalogue-browse mechanics
+          the model retired. */}
       <section
         id="all-programmes"
         className="mx-auto max-w-[1280px] scroll-mt-24 px-6 py-16"
@@ -196,49 +254,98 @@ export default function ProgrammesPage() {
         <p className="text-label mb-3 text-[var(--color-primary)]">
           The portfolio
         </p>
-        <h2 className="text-display mb-10">All programmes</h2>
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {programmes.map((programme) => (
-            <ProgrammeCard key={programme.slug} programme={programme} />
-          ))}
+        <h2 className="text-display mb-4">All programmes</h2>
+        <p className="text-body-lg mb-14 max-w-[620px] text-[var(--color-ink-quiet)]">
+          Seven programmes, grouped by the level they are pitched at. The order
+          is the progression — but only the core track is sequential, and the
+          journey below shows which parts are not.
+        </p>
+
+        {/* Level as a left rail, not a full-width header. Five of the six
+            levels hold a single programme, so a header-plus-3-column-grid
+            per level produced five near-empty rows and ran the section to
+            ~4000px. The rail keeps the grouping legible while reading as a
+            structured index, and the progression runs top to bottom. */}
+        <div className="flex flex-col">
+          {programmeLevels.map(({ level, description }) => {
+            const inLevel = programmes.filter((p) => p.level === level);
+            if (inLevel.length === 0) return null;
+            return (
+              <div
+                key={level}
+                className="grid gap-x-10 gap-y-6 border-t border-[var(--color-line)] py-10 first:border-t-0 first:pt-0 lg:grid-cols-[220px_1fr]"
+              >
+                <div className="lg:pt-1">
+                  <h3 className="text-h1 mb-2">{level}</h3>
+                  <p className="text-body-sm mb-2 text-[var(--color-ink-quiet)]">
+                    {description}
+                  </p>
+                  <p className="text-mono text-body-sm text-[var(--color-ink-faint)]">
+                    {inLevel.length === 1
+                      ? "1 programme"
+                      : `${inLevel.length} programmes`}
+                  </p>
+                </div>
+                <div className="grid gap-6 sm:grid-cols-2">
+                  {inLevel.map((programme) => (
+                    <ProgrammeCard
+                      key={programme.slug}
+                      programme={programme}
+                    />
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 
-      {/* Learning pathway */}
-      <section id="pathway" className="night relative scroll-mt-24 overflow-hidden">
-        <div className="relative mx-auto max-w-[1280px] px-6 py-16">
+      {/* ===== Choose your journey =====
+          Redesigned 2026-09-02. Was a flat <ol> of six Panel cards where the
+          only signal that two of them run in PARALLEL rather than in sequence
+          was a 48px left indent at lg — invisible below that breakpoint, and
+          easy to miss above it. The section's whole job is that distinction.
+
+          Now split explicitly: a core track drawn as a spine with numbered
+          nodes, and the parallel tracks as their own block that says so in
+          words. The spine is CSS — no library, no images. */}
+      <section
+        id="pathway"
+        className="night relative scroll-mt-24 overflow-hidden"
+      >
+        <div className="relative mx-auto max-w-[1280px] px-6 py-16 lg:py-20">
           <p className="text-label mb-3 text-[var(--color-primary)]">
             Choose your journey
           </p>
           <h2 className="text-display mb-4">Where to start, and what follows</h2>
-          <p className="text-body-lg mb-10 max-w-[620px] text-[var(--color-ink-quiet)]">
+          <p className="text-body-lg mb-14 max-w-[620px] text-[var(--color-ink-quiet)]">
             The core track builds from shared language to enterprise design and
-            product delivery. Two tracks run in parallel rather than in
-            sequence — they are entered when the role calls for them.
+            product delivery. Two further tracks run alongside it rather than
+            after it — entered when the role calls for them, at any point.
           </p>
-          <ol className="flex flex-col gap-4">
-            {learningPathway.map((step, i) => (
-              <li
-                key={step.stage}
-                className={step.parallel ? "lg:ml-12" : undefined}
-              >
-                <Card
-                  variant="panel"
-                  className="border border-[var(--color-line-strong)]"
-                >
-                  <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
-                    <div className="flex shrink-0 items-center gap-3 sm:w-[190px]">
-                      <span className="text-mono text-body-sm text-[var(--color-primary)]">
-                        {step.parallel ? "↳" : String(i + 1).padStart(2, "0")}
-                      </span>
-                      <div>
-                        <p className="text-label">{step.stage}</p>
-                        <p className="text-body-sm font-semibold">
-                          {step.level}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="min-w-0 flex-1">
+
+          <div className="grid gap-x-16 gap-y-14 lg:grid-cols-[1.25fr_1fr] lg:items-start">
+            {/* ── Core track: a drawn spine ── */}
+            <div>
+              <p className="text-label mb-7">The core track · in sequence</p>
+              <ol className="relative flex flex-col gap-9">
+                {/* The spine itself. Stops short at both ends so it reads as
+                    connecting the nodes rather than running off the block. */}
+                <span
+                  aria-hidden="true"
+                  className="absolute bottom-4 left-[15px] top-4 w-px bg-[var(--color-line-strong)]"
+                />
+                {corePath.map((step, i) => (
+                  <li key={step.stage} className="relative flex gap-6">
+                    <span
+                      aria-hidden="true"
+                      className="text-mono relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[var(--color-primary)] bg-[var(--color-ground)] text-[0.75rem] text-[var(--color-primary)]"
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <div className="min-w-0 flex-1 pt-1">
+                      <p className="text-label mb-1">{step.level}</p>
+                      <p className="text-h2 mb-3">{step.stage}</p>
                       <div className="flex flex-wrap gap-x-5 gap-y-2">
                         {step.slugs.map((slug) => {
                           const p = getProgramme(slug);
@@ -254,17 +361,59 @@ export default function ProgrammesPage() {
                           );
                         })}
                       </div>
-                      {step.note && (
-                        <p className="text-body-sm mt-2 text-[var(--color-ink-faint)]">
-                          {step.note}
-                        </p>
-                      )}
                     </div>
-                  </div>
-                </Card>
-              </li>
-            ))}
-          </ol>
+                  </li>
+                ))}
+              </ol>
+            </div>
+
+            {/* ── Parallel tracks: stated, not implied by an indent ── */}
+            <div>
+              <p className="text-label mb-7">
+                Alongside · entered at any stage
+              </p>
+              <div className="flex flex-col gap-5">
+                {parallelPath.map((step) => (
+                  <Card
+                    key={step.stage}
+                    variant="panel"
+                    className="border border-[var(--color-line-strong)]"
+                  >
+                    <div className="mb-3 flex items-center gap-3">
+                      <span
+                        aria-hidden="true"
+                        className="text-mono text-body-sm text-[var(--color-primary)]"
+                      >
+                        ↳
+                      </span>
+                      <p className="text-label">{step.level}</p>
+                    </div>
+                    <p className="text-h2 mb-3">{step.stage}</p>
+                    <div className="mb-3 flex flex-wrap gap-x-5 gap-y-2">
+                      {step.slugs.map((slug) => {
+                        const p = getProgramme(slug);
+                        if (!p) return null;
+                        return (
+                          <Link
+                            key={slug}
+                            href={`/programmes/${slug}`}
+                            className="text-body-sm font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
+                          >
+                            {p.title} →
+                          </Link>
+                        );
+                      })}
+                    </div>
+                    {step.note && (
+                      <p className="text-body-sm text-[var(--color-ink-quiet)]">
+                        {step.note}
+                      </p>
+                    )}
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

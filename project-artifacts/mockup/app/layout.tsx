@@ -17,7 +17,7 @@ import "./globals.css";
  * this product — editorial, interface and measured — finally relate.
  *
  * All three are loaded here rather than per-route: the masthead wordmark
- * needs the serif on every page, and the mono appears on programme,
+ * needs the serif on every page, and the mono appears on course,
  * pricing and trainer pages.
  */
 const plexSerif = IBM_Plex_Serif({

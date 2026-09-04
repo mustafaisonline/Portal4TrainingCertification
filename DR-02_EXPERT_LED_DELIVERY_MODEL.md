@@ -8,6 +8,37 @@
 
 ---
 
+> ## ✎ AMENDMENT A1 — product vocabulary: "course" replaces "programme" (2026-09-02)
+>
+> **Founder direction, 2026-09-02.** The market-facing unit of the product is
+> now called a **course**. The portal's navigation, URLs (`/courses`), headings
+> and body copy were changed accordingly.
+>
+> **This changes the WORD, not the MODEL.** Everything this record establishes
+> about *what the thing is* stands unaltered: expert-led, live, real-time,
+> assessed, delivered face-to-face and live online, never self-paced, never a
+> library of pre-recorded video. A Data & AI Academy "course" is what this
+> record calls a programme — it is **not** the self-paced, browsable,
+> video-first product this record was written to prevent.
+>
+> **What this amendment supersedes:** §4's "The unit of the product is a
+> **programme**, not a course", and the use of the bare word *course* as
+> shorthand for the rejected model in §1, §4.1 and §11.
+>
+> **Consequence, and the reason this needed founder approval:** the rejection
+> in §1 ("not a mass online course marketplace") can no longer lean on the
+> word *course* to carry it, because that is now our own word. Every such
+> statement must instead name the actual thing being rejected — **self-paced,
+> pre-recorded, video-first delivery** — which is the substance that always
+> mattered. The portal copy was rewritten on exactly that basis: the homepage
+> now reads *"This is not a video library"*, and the About page's "we are not"
+> list reads *"a mass-market self-paced video marketplace"*.
+>
+> **Unchanged and still binding:** no browsable catalogue as an identity or
+> value signal · no catalogue depth as a claim · no course counts as a
+> credibility signal · recordings document delivery and are never sold as a
+> product · the four delivery forms · the certification relationship.
+
 ## The misalignment being resolved
 
 This is a real defect in the documented product model, not a wording problem. The specifications describe a business the founder is not building.
@@ -101,7 +132,7 @@ Content delivery is fifth. That ordering is the decision.
 
 ## 4. The programme model
 
-The unit of the product is a **programme**, not a course.
+⊘ **SUPERSEDED by Amendment A1 (2026-09-02)** — the product unit is now called a **course**; the model it names is unchanged. Original wording: *"The unit of the product is a **programme**, not a course."*
 
 ```
     FROM                                  TO

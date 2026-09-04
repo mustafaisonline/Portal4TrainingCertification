@@ -7,7 +7,7 @@ import { Button } from "./ui/Button";
  *
  * - Header and footer carry the `.night` token scope: deep-navy editorial
  *   framing on every public page, in light and dark themes alike.
- * - Exactly ONE CTA in the header, and it is programme discovery — not the
+ * - Exactly ONE CTA in the header, and it is course discovery — not the
  *   diagnostic (P01 spec HD-14). Nav promises no screen that does not
  *   exist: items route to P01 sections via absolute-path anchors.
  * - The logo mark is an ORIGINAL inline SVG (a capability line rising
@@ -68,30 +68,34 @@ export function PublicShell({ children }: { children: ReactNode }) {
               </span>
             </span>
           </Link>
+          {/* Menu restructured 2026-09-02 by founder direction:
+              "How it works" and "For organisations" removed; "Home" and
+              "Contact Us" added; Programmes → Courses; About → About Us;
+              Certification → Certifications. Six items — the documented
+              maximum. The two removed anchors pointed at homepage sections
+              that still exist and are still linked from elsewhere; only
+              their nav entries went. */}
           <nav
             aria-label="Primary"
             className="hidden items-center gap-7 text-body-sm text-[var(--color-ink-quiet)] lg:flex"
           >
-            <Link href="/programmes" className="hover:text-[var(--color-ink)]">
-              Programmes
+            <Link href="/" className="hover:text-[var(--color-ink)]">
+              Home
             </Link>
-            <Link href="/#delivery" className="hover:text-[var(--color-ink)]">
-              How it works
+            <Link href="/courses" className="hover:text-[var(--color-ink)]">
+              Courses
+            </Link>
+            <Link href="/#credential" className="hover:text-[var(--color-ink)]">
+              Certifications
             </Link>
             <Link href="/trainers" className="hover:text-[var(--color-ink)]">
               Trainers
             </Link>
-            <Link href="/about" className="hover:text-[var(--color-ink)]">
-              About
+            <Link href="/about-us" className="hover:text-[var(--color-ink)]">
+              About Us
             </Link>
-            <Link href="/#credential" className="hover:text-[var(--color-ink)]">
-              Certification
-            </Link>
-            <Link
-              href="/#organisations"
-              className="hover:text-[var(--color-ink)]"
-            >
-              For organisations
+            <Link href="/contact-us" className="hover:text-[var(--color-ink)]">
+              Contact Us
             </Link>
           </nav>
           <div className="flex shrink-0 items-center gap-3">
@@ -100,7 +104,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
                 Sign in
               </Button>
             </span>
-            <Button href="/programmes">Explore programmes</Button>
+            <Button href="/courses">Explore courses</Button>
           </div>
         </div>
       </header>
@@ -123,10 +127,10 @@ export function PublicShell({ children }: { children: ReactNode }) {
             <p className="text-label mb-3">Explore</p>
             <p>
               <Link
-                href="/programmes"
+                href="/courses"
                 className="underline underline-offset-4 hover:text-[var(--color-ink)]"
               >
-                Programmes
+                Courses
               </Link>{" "}
               ·{" "}
               <Link
@@ -137,19 +141,19 @@ export function PublicShell({ children }: { children: ReactNode }) {
               </Link>{" "}
               ·{" "}
               <Link
-                href="/about"
+                href="/about-us"
                 className="underline underline-offset-4 hover:text-[var(--color-ink)]"
               >
-                About
+                About Us
               </Link>{" "}
               ·{" "}
               <Link
-                href="/contact"
+                href="/contact-us"
                 className="underline underline-offset-4 hover:text-[var(--color-ink)]"
               >
-                Contact
+                Contact Us
               </Link>{" "}
-              · Certification · For organisations
+              · Certifications · For organisations
             </p>
           </div>
           {/* These three are named because the product genuinely requires

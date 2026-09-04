@@ -1,7 +1,7 @@
 # P01 Homepage — Redesign Specification
 
 **Document type:** Screen-level design specification. Implementation-independent.
-**Version:** 1.2 · **Created:** 2026-08-31 · **Last revised:** 2026-09-02
+**Version:** 1.3 · **Created:** 2026-08-31 · **Last revised:** 2026-09-02
 **Screen:** `P01` Homepage · **Work package:** WBS `4.1.2`
 **Status:** **SPECIFICATION APPROVED FOR AUTHORING — implementation NOT authorized.**
 
@@ -10,7 +10,8 @@
 | Version | Date | Change |
 |---|---|---|
 | 1.0 | 2026-08-31 | Created |
-| 1.1 | 2026-09-01 | **`HO-7` (pricing presentation) marked partially resolved** — price *display* authorised by founder direction for `/programmes` pages; `P01` still carries no price; pricing *strategy* remains open. Dependent references in §10.6 and §17.2 updated to match. No other section changed |
+| 1.1 | 2026-09-01 | **`HO-7` (pricing presentation) marked partially resolved** — price *display* authorised by founder direction for `/courses` pages; `P01` still carries no price; pricing *strategy* remains open. Dependent references in §10.6 and §17.2 updated to match. No other section changed |
+| 1.3 | 2026-09-02 | **Vocabulary reconciled** — the product unit is now called a **course** (founder direction; `DR-02` Amendment A1). Route references updated (`/courses`, `/about-us`, `/contact-us`). **Prose below still says "programme" and is deliberately left as written** — it is the record of what was decided at the time, and the two words denote the same thing. The model is unchanged: expert-led, live, assessed, never self-paced |
 | 1.2 | 2026-09-02 | **`HO-4` annotated** — a serif wordmark *treatment* shipped with the portal-wide typography adoption; naming remains open and the entry says so explicitly, so a future reader does not mistake the treatment for a resolution. **No requirement in this specification changed.** Typography is implementation, and this document is implementation-independent |
 
 > ## ⛔ THIS DOCUMENT AUTHORISES NO DESIGN OR IMPLEMENTATION WORK
@@ -93,7 +94,7 @@ Homepage Implementation (not authorised)    code
 | **HO-4** | **Platform and credential naming** | The masthead wordmark cannot be finalised. Blocks WP 4.1.1, which precedes this work package. ⚠️ **Still open — do not read the 2026-09-02 wordmark as a resolution.** A *typographic treatment* now ships (Plex Serif, via a `.wordmark` class) as part of the adopted typography; the **name** is unchanged and unresolved, and no brand identity exercise has been run. A treatment is not an identity | Product owner (WBS 4.4.1) |
 | **HO-5** | **Which pathway leads visually**, given the fixed priority order | A visual-design decision, deliberately left to that stage | Visual design stage |
 | **HO-6** | **Diagnostic CTA noun** — "diagnostic" vs "capability assessment" | §9.5 states the preference and the tension without resolving it | Product owner |
-| **HO-7** | **Pricing presentation** — ⚠️ **PARTIALLY RESOLVED 2026-09-01.** *Display* was authorised by founder direction: the founder's published programme pricing is now shown on `/programmes` detail pages (all three regions, launch-offer framing intact) and as an indicative "from" price on programme cards. **`P01` itself still carries no price** — the homepage previews programmes and links out. **Still open:** whether the Academy adopts these figures, the three-region model, and the discount framing as its own pricing *strategy*. See `project-artifacts/mockup/docs/PROGRAMME_CONTENT_MIGRATION.md` → "Pricing migration" | Product owner |
+| **HO-7** | **Pricing presentation** — ⚠️ **PARTIALLY RESOLVED 2026-09-01.** *Display* was authorised by founder direction: the founder's published programme pricing is now shown on `/courses` detail pages (all three regions, launch-offer framing intact) and as an indicative "from" price on programme cards. **`P01` itself still carries no price** — the homepage previews programmes and links out. **Still open:** whether the Academy adopts these figures, the three-region model, and the discount framing as its own pricing *strategy*. See `project-artifacts/mockup/docs/PROGRAMME_CONTENT_MIGRATION.md` → "Pricing migration" | Product owner |
 | **HO-8** | **`OQ-21`** — programme participation in the credential model | §12 defines permitted and forbidden language so copy cannot resolve it accidentally | Product owner |
 | **HO-9** | **`OQ-22`** — assessor supply and scaling | No public claim about assessor network, scale or capacity | Product owner |
 | **HO-10** | **Individual online payment** (`ADR-014` / `OQ-2`) | No "register and pay now" on `P01` | Product owner |

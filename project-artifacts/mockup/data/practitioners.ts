@@ -1,5 +1,5 @@
 /**
- * Practitioners who deliver programmes — GENUINE people only, ever.
+ * Practitioners who deliver courses — GENUINE people only, ever.
  *
  * DR-02 §7 and the P01 specification (docs/design/
  * P01_HOMEPAGE_REDESIGN_SPECIFICATION.md §8) bind this file:
@@ -21,8 +21,8 @@
  * cover artwork from that bio.
  * Still deliberately omitted: current employer/role (open item HO-14 —
  * sources conflict).
- * No Academy programme-delivery history is listed because no Academy
- * programme has run yet (State A) — that history appears only when real.
+ * No Academy course-delivery history is listed because no Academy
+ * course has run yet (State A) — that history appears only when real.
  */
 export type Practitioner = {
   slug: string;
@@ -101,12 +101,12 @@ export const practitioners: Practitioner[] = [
       "Data engineering",
     ],
     about: [
-      "Mustafa has spent more than 24 years at the working end of enterprise data — from traditional data warehousing through modern lakehouse architectures to today's AI-driven data ecosystems. His career has been international, hands-on and senior at the same time: leading platform modernisation programmes while staying close to the architectures, pipelines and decisions underneath them.",
-      "His teaching starts from a practitioner's problem, not a textbook's chapter: organisations do not lack data — they lack data they can trust, and people who can build that trust. The programmes he delivers are built around that reality, using real enterprise scenarios and the judgement calls that come with them.",
+      "Mustafa has spent more than 24 years at the working end of enterprise data — from traditional data warehousing through modern lakehouse architectures to today's AI-driven data ecosystems. His career has been international, hands-on and senior at the same time: leading platform modernisation courses while staying close to the architectures, pipelines and decisions underneath them.",
+      "His teaching starts from a practitioner's problem, not a textbook's chapter: organisations do not lack data — they lack data they can trust, and people who can build that trust. The courses he delivers are built around that reality, using real enterprise scenarios and the judgement calls that come with them.",
     ],
     background: [
       "Led the modernisation of an enterprise data lake into a lakehouse platform supporting analytics, AI initiatives and self-service data capabilities at national-enterprise scale",
-      "Directed an enterprise data-lake modernisation programme in the banking sector, owning end-to-end technical delivery",
+      "Directed an enterprise data-lake modernisation course in the banking sector, owning end-to-end technical delivery",
       "Headed a big-data consulting practice delivering enterprise platform initiatives across the region",
       "Earlier delivery and leadership roles across banking, energy, telecom, government and enterprise sectors in Asia and internationally",
     ],

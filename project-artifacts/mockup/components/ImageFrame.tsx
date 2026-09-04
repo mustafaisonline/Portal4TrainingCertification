@@ -76,7 +76,7 @@ export function ImageFrame({
   return (
     <div
       // Content is centred, not bottom-anchored: on a large frame (the 21:9
-      // programme header is ~500px tall) a caption stuck in the corner reads
+      // course header is ~500px tall) a caption stuck in the corner reads
       // as a broken image, whereas centred content reads as a deliberate
       // empty state. Holds at small sizes too.
       className={`flex flex-col items-center justify-center rounded-[var(--radius-plate)] border-2 border-dashed border-[var(--color-accent-line)] bg-[var(--color-accent-soft)] p-5 text-center ${className}`}

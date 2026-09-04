@@ -3,21 +3,21 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PublicShell } from "@/components/PublicShell";
 import { ImageFrame } from "@/components/ImageFrame";
-import { ProgrammeCard } from "@/components/ProgrammeCard";
+import { CourseCard } from "@/components/CourseCard";
 import { TrainerCard } from "@/components/TrainerCard";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Chip } from "@/components/ui/Chip";
-import { ProgrammePricing } from "@/components/ProgrammePricing";
+import { CoursePricing } from "@/components/CoursePricing";
 import {
-  getProgramme,
+  getCourse,
   mentorshipPackages,
-  programmes,
-} from "@/data/programmes";
+  courses,
+} from "@/data/courses";
 import { practitioners } from "@/data/practitioners";
 
 /**
- * Programme detail — the P10 Programme Detail realization for the mockup.
+ * Course detail — the P10 Course Detail realization for the mockup.
  *
  * Every section renders only when the source published that content, so
  * depth is preserved where it exists and nothing is padded where it does
@@ -25,11 +25,11 @@ import { practitioners } from "@/data/practitioners";
  * keeps a 9–10 module curriculum scannable without hiding it, and needs no
  * client JS.
  *
- * No dates, capacity or price appear here — see data/programmes.ts.
+ * No dates, capacity or price appear here — see data/courses.ts.
  */
 
 export function generateStaticParams() {
-  return programmes.map((p) => ({ slug: p.slug }));
+  return courses.map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({
@@ -38,35 +38,35 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const programme = getProgramme(slug);
+  const course = getCourse(slug);
   return {
-    title: programme
-      ? `${programme.title} — Data & AI Academy`
-      : "Programme — Data & AI Academy",
+    title: course
+      ? `${course.title} — Data & AI Academy`
+      : "Course — Data & AI Academy",
   };
 }
 
-export default async function ProgrammeDetailPage({
+export default async function CourseDetailPage({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const programme = getProgramme(slug);
-  if (!programme) notFound();
+  const course = getCourse(slug);
+  if (!course) notFound();
 
-  const related = programme.related
-    .map(getProgramme)
+  const related = course.related
+    .map(getCourse)
     .filter((p): p is NonNullable<typeof p> => Boolean(p));
   const founder = practitioners[0];
 
   const meta: [string, string][] = [
-    ["Level", programme.level],
-    ["Duration", programme.duration],
-    ["Prerequisites", programme.prerequisites],
-    ["Delivery", programme.formats.join(" · ")],
-    ["Certificate", programme.certificate],
-    ["Audience", programme.audienceSummary],
+    ["Level", course.level],
+    ["Duration", course.duration],
+    ["Prerequisites", course.prerequisites],
+    ["Delivery", course.formats.join(" · ")],
+    ["Certificate", course.certificate],
+    ["Audience", course.audienceSummary],
   ];
 
   return (
@@ -83,20 +83,20 @@ export default async function ProgrammeDetailPage({
         />
         <div className="relative mx-auto max-w-[1280px] px-6 py-14 lg:py-16">
           <Link
-            href="/programmes"
+            href="/courses"
             className="text-body-sm mb-9 inline-block text-[var(--color-ink-quiet)] underline underline-offset-4 hover:text-[var(--color-ink)]"
           >
-            ← All programmes
+            ← All courses
           </Link>
           <div className="mb-5 flex flex-wrap items-center gap-2">
-            <Chip tone="primary">{programme.level}</Chip>
-            {programme.flagship && <Chip>Flagship programme</Chip>}
+            <Chip tone="primary">{course.level}</Chip>
+            {course.flagship && <Chip>Flagship course</Chip>}
           </div>
           <h1 className="text-display-lg mb-4 max-w-[820px]">
-            {programme.title}
+            {course.title}
           </h1>
           <p className="text-body-lg mb-8 max-w-[640px] text-[var(--color-ink-quiet)]">
-            {programme.valueProposition}
+            {course.valueProposition}
           </p>
           <div className="mb-10 flex flex-wrap items-center gap-4">
             <Button href="/#organisations">Register your interest</Button>
@@ -117,17 +117,17 @@ export default async function ProgrammeDetailPage({
         </div>
       </section>
 
-      {/* ===== Programme header photograph (reserved) =====
-          One wide frame per programme. Deliberately BELOW the hero rather
+      {/* ===== Course header photograph (reserved) =====
+          One wide frame per course. Deliberately BELOW the hero rather
           than inside it: the hero is a night section carrying the title and
           the meta strip, and dropping an empty box into it would weaken the
           page's one dominant moment. Per the photography brief this is the
-          most expensive line on the list — seven programmes — so it should
+          most expensive line on the list — seven courses — so it should
           be fed by allocating frames from a single delivery shoot rather
-          than shooting each programme separately. */}
+          than shooting each course separately. */}
       <section className="mx-auto max-w-[1280px] px-6 pt-12">
         <ImageFrame
-          subject={`${programme.title} in delivery — the room, the participants, the work being done`}
+          subject={`${course.title} in delivery — the room, the participants, the work being done`}
           ratio="21 / 9"
           minWidth={2000}
           note="reusable across pages"
@@ -138,8 +138,8 @@ export default async function ProgrammeDetailPage({
       <section className="mx-auto max-w-[1280px] px-6 py-16">
         <div className="grid gap-12 lg:grid-cols-[1fr_340px]">
           <div className="max-w-[680px]">
-            <h2 className="text-h1 mb-5">{programme.rationale.heading}</h2>
-            {programme.rationale.paragraphs.map((p, i) => (
+            <h2 className="text-h1 mb-5">{course.rationale.heading}</h2>
+            {course.rationale.paragraphs.map((p, i) => (
               <p
                 key={i}
                 className="text-body-lg mb-4 text-[var(--color-ink-quiet)]"
@@ -147,9 +147,9 @@ export default async function ProgrammeDetailPage({
                 {p}
               </p>
             ))}
-            {programme.rationale.problems && (
+            {course.rationale.problems && (
               <ul className="mt-6 grid gap-x-8 sm:grid-cols-2">
-                {programme.rationale.problems.map((item) => (
+                {course.rationale.problems.map((item) => (
                   <li
                     key={item}
                     className="border-t border-[var(--color-line)] py-3 text-body-sm text-[var(--color-ink-quiet)]"
@@ -161,9 +161,9 @@ export default async function ProgrammeDetailPage({
             )}
           </div>
           <Card variant="panel" className="h-fit">
-            <p className="text-label mb-4">Programme highlights</p>
+            <p className="text-label mb-4">Course highlights</p>
             <ul className="flex flex-col gap-2.5">
-              {programme.highlights.map((h) => (
+              {course.highlights.map((h) => (
                 <li
                   key={h}
                   className="text-body-sm text-[var(--color-ink-quiet)]"
@@ -172,11 +172,11 @@ export default async function ProgrammeDetailPage({
                 </li>
               ))}
             </ul>
-            {programme.included && (
+            {course.included && (
               <>
                 <p className="text-label mb-3 mt-7">Included</p>
                 <ul className="flex flex-col gap-2">
-                  {programme.included.map((item) => (
+                  {course.included.map((item) => (
                     <li
                       key={item}
                       className="text-body-sm text-[var(--color-ink-quiet)]"
@@ -199,10 +199,10 @@ export default async function ProgrammeDetailPage({
           </p>
           <h2 className="text-display mb-5">Who should attend</h2>
           <p className="text-body-lg mb-9 max-w-[680px] text-[var(--color-ink-quiet)]">
-            {programme.whoShouldAttend.intro}
+            {course.whoShouldAttend.intro}
           </p>
           <div className="flex flex-wrap gap-2.5">
-            {programme.whoShouldAttend.roles.map((role) => (
+            {course.whoShouldAttend.roles.map((role) => (
               <Chip key={role}>{role}</Chip>
             ))}
           </div>
@@ -210,7 +210,7 @@ export default async function ProgrammeDetailPage({
       </section>
 
       {/* ===== Delivery formats (flagship) ===== */}
-      {programme.deliveryFormats && (
+      {course.deliveryFormats && (
         <section className="mx-auto max-w-[1280px] px-6 py-16">
           <p className="text-label mb-3 text-[var(--color-primary)]">
             Choose your pace
@@ -222,7 +222,7 @@ export default async function ProgrammeDetailPage({
             the pace of delivery.
           </p>
           <div className="grid gap-6 lg:grid-cols-3">
-            {programme.deliveryFormats.map((format) => (
+            {course.deliveryFormats.map((format) => (
               <Card key={format.name} variant="panel" className="flex flex-col">
                 {format.badge && (
                   <p className="text-label mb-3 text-[var(--color-primary)]">
@@ -262,15 +262,15 @@ export default async function ProgrammeDetailPage({
       )}
 
       {/* ===== Learning outcomes ===== */}
-      {(programme.outcomes || programme.outcomeGroups) && (
+      {(course.outcomes || course.outcomeGroups) && (
         <section className="mx-auto max-w-[1280px] px-6 py-16">
           <p className="text-label mb-3 text-[var(--color-primary)]">
             Learning outcomes
           </p>
           <h2 className="text-display mb-10">What you will learn</h2>
-          {programme.outcomeGroups && (
+          {course.outcomeGroups && (
             <div className="grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
-              {programme.outcomeGroups.map((group) => (
+              {course.outcomeGroups.map((group) => (
                 <div
                   key={group.title}
                   className="border-t-2 border-[var(--color-primary)]/50 pt-4"
@@ -290,9 +290,9 @@ export default async function ProgrammeDetailPage({
               ))}
             </div>
           )}
-          {programme.outcomes && (
+          {course.outcomes && (
             <ul className="grid gap-x-10 sm:grid-cols-2">
-              {programme.outcomes.map((item) => (
+              {course.outcomes.map((item) => (
                 <li
                   key={item}
                   className="border-t border-[var(--color-line)] py-3.5 text-body-sm text-[var(--color-ink-quiet)]"
@@ -312,15 +312,15 @@ export default async function ProgrammeDetailPage({
       >
         <div className="mx-auto max-w-[1280px] scroll-mt-24 px-6 py-16">
           <p className="text-label mb-3 text-[var(--color-primary)]">
-            Programme content
+            Course content
           </p>
           <h2 className="text-display mb-4">Curriculum</h2>
           <p className="text-body-sm mb-10 text-[var(--color-ink-faint)]">
-            {programme.modules.length} modules · expand any module to see what
+            {course.modules.length} modules · expand any module to see what
             it covers
           </p>
           <div className="max-w-[860px]">
-            {programme.modules.map((module, i) => {
+            {course.modules.map((module, i) => {
               const hasDetail = Boolean(module.description || module.points);
               const header = (
                 <>
@@ -381,7 +381,7 @@ export default async function ProgrammeDetailPage({
       </section>
 
       {/* ===== Career paths (mentorship) ===== */}
-      {programme.careerPaths && (
+      {course.careerPaths && (
         <section className="mx-auto max-w-[1280px] px-6 py-16">
           <p className="text-label mb-3 text-[var(--color-primary)]">
             Career transitions
@@ -391,7 +391,7 @@ export default async function ProgrammeDetailPage({
             Identify where you are today — and where mentorship can take you.
           </p>
           <div className="grid gap-5 md:grid-cols-2">
-            {programme.careerPaths.map((path) => (
+            {course.careerPaths.map((path) => (
               <Card
                 key={`${path.from}-${path.to}`}
                 variant="plate"
@@ -419,15 +419,15 @@ export default async function ProgrammeDetailPage({
       )}
 
       {/* ===== Methodology / journey ===== */}
-      {programme.methodology && (
+      {course.methodology && (
         <section className="night relative overflow-hidden">
           <div className="relative mx-auto max-w-[1280px] px-6 py-16">
             <p className="text-label mb-3 text-[var(--color-primary)]">
               The approach
             </p>
-            <h2 className="text-display mb-10">{programme.methodology.name}</h2>
+            <h2 className="text-display mb-10">{course.methodology.name}</h2>
             <ol className="grid gap-x-8 gap-y-7 sm:grid-cols-2 lg:grid-cols-4">
-              {programme.methodology.steps.map((step, i) => (
+              {course.methodology.steps.map((step, i) => (
                 <li
                   key={step.title}
                   className="border-t-2 border-[var(--color-primary)]/60 pt-4"
@@ -447,7 +447,7 @@ export default async function ProgrammeDetailPage({
       )}
 
       {/* ===== How it is taught ===== */}
-      {programme.pedagogy && (
+      {course.pedagogy && (
         <section className="mx-auto max-w-[1280px] px-6 py-16">
           <div className="grid gap-12 lg:grid-cols-[1fr_1fr]">
             <div className="max-w-[560px]">
@@ -456,7 +456,7 @@ export default async function ProgrammeDetailPage({
               </p>
               <h2 className="text-display mb-5">How it is taught</h2>
               <p className="text-body-lg mb-8 text-[var(--color-ink-quiet)]">
-                {programme.pedagogy.intro}
+                {course.pedagogy.intro}
               </p>
               {/* Pedagogy is the most abstract writing on the page; a
                   photograph of the teaching itself is what makes it
@@ -470,7 +470,7 @@ export default async function ProgrammeDetailPage({
             </div>
             <div>
               <ul className="grid gap-x-8 sm:grid-cols-2">
-                {programme.pedagogy.methods.map((m) => (
+                {course.pedagogy.methods.map((m) => (
                   <li
                     key={m}
                     className="border-t border-[var(--color-line)] py-3 text-body-sm text-[var(--color-ink-quiet)]"
@@ -479,13 +479,13 @@ export default async function ProgrammeDetailPage({
                   </li>
                 ))}
               </ul>
-              {programme.pedagogy.industries && (
+              {course.pedagogy.industries && (
                 <>
                   <p className="text-label mb-3 mt-7">
                     Industry examples drawn from
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    {programme.pedagogy.industries.map((ind) => (
+                    {course.pedagogy.industries.map((ind) => (
                       <Chip key={ind}>{ind}</Chip>
                     ))}
                   </div>
@@ -497,12 +497,12 @@ export default async function ProgrammeDetailPage({
       )}
 
       {/* ===== Organisational benefits ===== */}
-      {programme.benefits && (
+      {course.benefits && (
         <section className="border-t border-[var(--color-line)] bg-[var(--color-ground-raised)]">
           <div className="mx-auto max-w-[1280px] px-6 py-16">
-            <h2 className="text-h1 mb-5">{programme.benefits.intro}</h2>
+            <h2 className="text-h1 mb-5">{course.benefits.intro}</h2>
             <ul className="grid gap-x-10 sm:grid-cols-2 lg:grid-cols-3">
-              {programme.benefits.items.map((item) => (
+              {course.benefits.items.map((item) => (
                 <li
                   key={item}
                   className="border-t border-[var(--color-line)] py-3.5 text-body-sm text-[var(--color-ink-quiet)]"
@@ -516,13 +516,13 @@ export default async function ProgrammeDetailPage({
       )}
 
       {/* ===== Investment (regional pricing) ===== */}
-      <ProgrammePricing
-        pricing={programme.pricing}
+      <CoursePricing
+        pricing={course.pricing}
         packages={
-          programme.level === "Mentorship" ? mentorshipPackages : undefined
+          course.level === "Mentorship" ? mentorshipPackages : undefined
         }
-        valueStack={programme.valueStack}
-        valueStackTotal={programme.valueStackTotal}
+        valueStack={course.valueStack}
+        valueStackTotal={course.valueStackTotal}
       />
 
       {/* ===== Trainer ===== */}
@@ -541,13 +541,13 @@ export default async function ProgrammeDetailPage({
         <Card variant="plate" className="max-w-[760px] p-6">
           <p className="text-label mb-2">Certification</p>
           <p className="text-body-sm text-[var(--color-ink-quiet)]">
-            This programme awards a{" "}
+            This course awards a{" "}
             <span className="text-[var(--color-ink)]">
-              {programme.certificate.toLowerCase()}
+              {course.certificate.toLowerCase()}
             </span>
             . That is deliberately distinct from the Academy credential, which
             is earned through assessed applied work judged by a qualified
-            assessor — taking part in a programme is part of that pathway, and
+            assessor — taking part in a course is part of that pathway, and
             attendance alone is never sufficient.{" "}
             <Link
               href="/#credential"
@@ -560,11 +560,11 @@ export default async function ProgrammeDetailPage({
       </section>
 
       {/* ===== External resources ===== */}
-      {programme.externalResources && (
+      {course.externalResources && (
         <section className="mx-auto max-w-[1280px] px-6 pb-16">
           <h2 className="text-h1 mb-6">Related resources</h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {programme.externalResources.map((res) => (
+            {course.externalResources.map((res) => (
               <a
                 key={res.url}
                 href={res.url}
@@ -586,14 +586,14 @@ export default async function ProgrammeDetailPage({
         </section>
       )}
 
-      {/* ===== Related programmes ===== */}
+      {/* ===== Related courses ===== */}
       {related.length > 0 && (
         <section className="border-t border-[var(--color-line)]">
           <div className="mx-auto max-w-[1280px] px-6 py-16">
-            <h2 className="text-h1 mb-8">Related programmes</h2>
+            <h2 className="text-h1 mb-8">Related courses</h2>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {related.map((p) => (
-                <ProgrammeCard key={p.slug} programme={p} />
+                <CourseCard key={p.slug} course={p} />
               ))}
             </div>
           </div>
@@ -612,7 +612,7 @@ export default async function ProgrammeDetailPage({
         />
         <div className="relative mx-auto max-w-[1280px] px-6 py-16">
           <h2 className="text-display mb-4 max-w-[620px]">
-            Bring this programme to your team
+            Bring this course to your team
           </h2>
           <p className="text-body-lg mb-9 max-w-[620px] text-[var(--color-ink-quiet)]">
             Public dates are not yet published. Register your interest, or talk
@@ -621,8 +621,8 @@ export default async function ProgrammeDetailPage({
           </p>
           <div className="flex flex-wrap items-center gap-4">
             <Button href="/#organisations">Talk to us about your team</Button>
-            <Button variant="secondary" href="/programmes">
-              Explore other programmes
+            <Button variant="secondary" href="/courses">
+              Explore other courses
             </Button>
           </div>
         </div>

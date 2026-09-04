@@ -269,7 +269,7 @@ Sizes, line-heights, colour, spacing, layout and content are **unchanged**. Only
 
 `.text-display-xl` is used on **one element in the entire portal** — the P01 hero — and the wordmark appears in every masthead. Everything else is Plex Sans. This is §8's thesis carried through: a serif on every heading of every page spends its authority until it carries none.
 
-**Consequence the founder should watch for:** every non-homepage page title (`/programmes`, `/trainers`, programme and trainer detail pages, `/diagnostic/result`) is now sans. Those pages were reviewed after rollout but were **not** part of the approved experiment surface. If the serif is missed there, the cheapest correction is to promote selected page titles to `.text-display-xl`, not to re-serif `.text-display`.
+**Consequence the founder should watch for:** every non-homepage page title (`/courses`, `/trainers`, programme and trainer detail pages, `/diagnostic/result`) is now sans. Those pages were reviewed after rollout but were **not** part of the approved experiment surface. If the serif is missed there, the cheapest correction is to promote selected page titles to `.text-display-xl`, not to re-serif `.text-display`.
 
 ### 15.3 Implementation notes worth keeping
 
@@ -281,7 +281,7 @@ Sizes, line-heights, colour, spacing, layout and content are **unchanged**. Only
 ### 15.4 Still open after this rollout
 
 1. **`--color-ink-faint` at 3.72:1 fails WCAG 2.2 AA.** Unchanged by this work; §14.2 still applies. It should ship independently of any taste decision.
-2. **The masthead wraps to two lines at 375px on every page.** Pre-existing (measured on `/programmes` before rollout, at the old 16.8px). The serif was stepped down below 640px so header height did not regress, but the wrap itself wants a *layout* fix, not a type one.
+2. **The masthead wraps to two lines at 375px on every page.** Pre-existing (measured on `/courses` before rollout, at the old 16.8px). The serif was stepped down below 640px so header height did not regress, but the wrap itself wants a *layout* fix, not a type one.
 3. **Wordmark is a typographic treatment, not an identity.** Full brand exercise still deferred until naming (`HO-4`).
 
 ---

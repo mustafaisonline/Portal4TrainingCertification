@@ -1,5 +1,5 @@
 import { PublicShell } from "@/components/PublicShell";
-import { ProgrammeCard } from "@/components/ProgrammeCard";
+import { CourseCard } from "@/components/CourseCard";
 import { TrainerCard } from "@/components/TrainerCard";
 import { ImageFrame } from "@/components/ImageFrame";
 import { Button } from "@/components/ui/Button";
@@ -7,14 +7,14 @@ import { Card } from "@/components/ui/Card";
 import { Chip } from "@/components/ui/Chip";
 import { domains } from "@/data/domains";
 import { practitioners } from "@/data/practitioners";
-import { programmes } from "@/data/programmes";
+import { courses } from "@/data/courses";
 
-/** Homepage preview: the flagship plus the two entry-level programmes —
- *  discovery, not the catalogue. Exploration lives at /programmes. */
-const featuredProgrammes = [
-  programmes.find((p) => p.flagship),
-  programmes.find((p) => p.slug === "data-ai-essentials"),
-  programmes.find((p) => p.slug === "data-blueprint"),
+/** Homepage preview: the flagship plus the two entry-level courses —
+ *  discovery, not the catalogue. Exploration lives at /courses. */
+const featuredCourses = [
+  courses.find((p) => p.flagship),
+  courses.find((p) => p.slug === "data-ai-essentials"),
+  courses.find((p) => p.slug === "data-blueprint"),
 ].filter((p): p is NonNullable<typeof p> => Boolean(p));
 
 /**
@@ -22,9 +22,9 @@ const featuredProgrammes = [
  * (H0–H9); visual recomposition 2026-08-31 for the premium navy identity —
  * see docs/P01_DESIGN_DECISIONS.md "Visual redesign".
  *
- * Inventory state: STATE A — no confirmed public programme inventory.
- * Nothing here shows a programme name, date, capacity or price. The
- * programmes-vs-offerings emphasis (HO-1) remains open: both concepts are
+ * Inventory state: STATE A — no confirmed public course inventory.
+ * Nothing here shows a course name, date, capacity or price. The
+ * courses-vs-offerings emphasis (HO-1) remains open: both concepts are
  * described, neither leads.
  *
  * All decorative graphics below are ORIGINAL inline SVG (deterministic dot
@@ -169,14 +169,14 @@ export default function HomePage() {
                 </span>
               </h1>
               <p className="text-body-lg mb-9 max-w-[560px] text-[var(--color-ink-quiet)]">
-                Expert-led programmes for data and AI professionals —
+                Expert-led courses for data and AI professionals —
                 delivered face-to-face and live online, in Malaysia and
-                internationally. This is not a course library: real sessions,
+                internationally. This is not a video library: real sessions,
                 direct feedback from someone who has built these systems, and
                 a credential that has to be earned.
               </p>
               <div className="flex flex-wrap items-center gap-4">
-                <Button href="#programmes">Explore programmes</Button>
+                <Button href="#courses">Explore courses</Button>
                 <Button variant="secondary" href="/diagnostic">
                   Start free diagnostic (10 min)
                 </Button>
@@ -205,7 +205,7 @@ export default function HomePage() {
                 {[
                   [
                     "01",
-                    "Live programmes",
+                    "Live courses",
                     "Taught face-to-face and live online — never a video library.",
                     "",
                   ],
@@ -270,13 +270,13 @@ export default function HomePage() {
               <GlyphRise />
             </div>
             <p className="text-label mb-2">For individuals</p>
-            <h3 className="text-h2 mb-2">Explore programmes</h3>
+            <h3 className="text-h2 mb-2">Explore courses</h3>
             <p className="text-body-sm mb-6 text-[var(--color-ink-quiet)]">
-              Expert-led programmes with stated capability outcomes, delivered
+              Expert-led courses with stated capability outcomes, delivered
               live — and an assessed path to the credential.
             </p>
-            <Button variant="secondary" href="#programmes">
-              See the programmes
+            <Button variant="secondary" href="#courses">
+              See the courses
             </Button>
           </Card>
           <Card variant="panel">
@@ -337,7 +337,7 @@ export default function HomePage() {
           {[
             {
               title: "Face-to-face",
-              body: "Instructor-led programmes and workshops, delivered in person.",
+              body: "Instructor-led courses and workshops, delivered in person.",
               shot: "A face-to-face session in progress — room, participants, practitioner teaching",
               note: "consent required",
             },
@@ -349,7 +349,7 @@ export default function HomePage() {
             },
             {
               title: "Private cohorts",
-              body: "Dedicated programmes for one organisation, shaped to its context.",
+              body: "Dedicated courses for one organisation, shaped to its context.",
               shot: "A single-organisation cohort working together",
               note: "client consent essential",
             },
@@ -426,7 +426,7 @@ export default function HomePage() {
             </p>
             <h2 className="text-display mb-5">Learn from practitioners</h2>
             <p className="text-body-lg mb-8 text-[var(--color-ink-quiet)]">
-              Programmes are designed and delivered by people who have built
+              Courses are designed and delivered by people who have built
               these systems in real organisations — and can respond to yours.
             </p>
             <div className="mb-6 flex flex-col gap-6">
@@ -447,36 +447,36 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ============ H5 — Programmes (light) ============
+      {/* ============ H5 — Courses (light) ============
           The real portfolio now exists (migrated from the founder's training
-          ecosystem), so the homepage previews it and routes to /programmes:
+          ecosystem), so the homepage previews it and routes to /courses:
           discovery here, exploration there, depth on the detail pages.
           Still no dates — scheduled offerings remain State A, which keeps
-          the programmes-vs-offerings emphasis (HO-1) open. */}
+          the courses-vs-offerings emphasis (HO-1) open. */}
       <section
-        id="programmes"
+        id="courses"
         className="mx-auto max-w-[1280px] scroll-mt-24 px-6 py-20"
       >
         <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
           <div className="max-w-[620px]">
             <p className="text-label mb-3 text-[var(--color-primary)]">
-              Programmes
+              Courses
             </p>
             <h2 className="text-display mb-5">
               A deliberately structured portfolio, built properly
             </h2>
             <p className="text-body-lg text-[var(--color-ink-quiet)]">
-              A programme here is a designed, expert-led learning experience
+              A course here is a designed, expert-led learning experience
               with stated outcomes — what you will actually be able to do
               afterwards. Each runs as scheduled offerings: a specific format,
               dates and location you register for.
             </p>
           </div>
-          <Button href="/programmes">All programmes</Button>
+          <Button href="/courses">All courses</Button>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
-          {featuredProgrammes.map((programme) => (
-            <ProgrammeCard key={programme.slug} programme={programme} />
+          {featuredCourses.map((course) => (
+            <CourseCard key={course.slug} course={course} />
           ))}
         </div>
         <p className="text-body-sm mt-8 text-[var(--color-ink-faint)]">
@@ -505,7 +505,7 @@ export default function HomePage() {
               reasoning for every criterion.
             </p>
             <p className="text-body-sm text-[var(--color-ink-quiet)]">
-              Taking part in an expert-led programme is part of the pathway.
+              Taking part in an expert-led course is part of the pathway.
               Attendance alone is never enough — and that is exactly why the
               credential means something to an employer.
             </p>
@@ -598,7 +598,7 @@ export default function HomePage() {
             <p className="text-body-lg mb-4 text-[var(--color-ink-quiet)]">
               Private cohorts and tailored engagements, delivered on-site,
               live online, or at your locations internationally. We usually
-              start with a team capability assessment — so the programme
+              start with a team capability assessment — so the course
               targets the gaps you actually have.
             </p>
             <p className="text-body-sm mb-9 text-[var(--color-ink-quiet)]">
@@ -637,14 +637,14 @@ export default function HomePage() {
           Where we are today
         </p>
         <h2 className="text-display mb-5">
-          The first programmes are being prepared now
+          The first courses are being prepared now
         </h2>
         <p className="text-body-lg mx-auto mb-9 max-w-[620px] text-[var(--color-ink-quiet)]">
-          Everything published here will be genuine — real programmes, real
+          Everything published here will be genuine — real courses, real
           dates, a real practitioner. On a platform about proof, that starts
           with us.
         </p>
-        <Button href="#programmes">Explore programmes</Button>
+        <Button href="#courses">Explore courses</Button>
       </section>
 
       {/* ============ Diagnostic band (night, pre-footer) ============

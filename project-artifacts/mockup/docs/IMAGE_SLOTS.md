@@ -71,9 +71,9 @@ reflow, because the frame already holds the space.
 |---|---|---|---|
 | `app/page.tsx` → "Live means live" | 4 (one per delivery format) | 4:3 | **The portal's highest-value image slot.** The section makes the central claim — *you are in the room with a practitioner* — and proved it with a text grid alone |
 | `app/trainers` → "Trainers at work" | 1 | 3:2 | A trainer mid-session. The only slot on the redesigned trainers page |
-| `app/programmes/[slug]` → header band | 1 per programme (7) | 21:9 | Placed **below** the hero, not inside it: the hero is a night section carrying the title and meta strip, and an empty box there would weaken the page's one dominant moment |
-| `app/programmes/[slug]` → "How it is taught" | 1 (where the programme has pedagogy) | 3:2 | The most abstract writing on the page; a photograph of the teaching makes it concrete |
-| `app/programmes` → flagship band | 1 | 4:3 | The flagship earns a distinct treatment; an image is one way to give it one |
+| `app/courses/[slug]` → header band | 1 per programme (7) | 21:9 | Placed **below** the hero, not inside it: the hero is a night section carrying the title and meta strip, and an empty box there would weaken the page's one dominant moment |
+| `app/courses/[slug]` → "How it is taught" | 1 (where the programme has pedagogy) | 3:2 | The most abstract writing on the page; a photograph of the teaching makes it concrete |
+| `app/courses` → flagship band | 1 | 4:3 | The flagship earns a distinct treatment; an image is one way to give it one |
 
 **Frame content is centred, not bottom-anchored.** On the 21:9 header (~500px
 tall) a caption in the corner reads as a broken image; centred content reads

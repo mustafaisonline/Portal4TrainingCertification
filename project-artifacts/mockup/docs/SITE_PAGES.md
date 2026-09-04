@@ -10,19 +10,37 @@ training-and-certification portal needs, what was built, and — importantly —
 
 ---
 
+## Primary navigation (restructured 2026-09-02)
+
+**Home · Courses · Certifications · Trainers · About Us · Contact Us** — six
+items, the documented maximum.
+
+Removed by founder direction: **How it works** (`/#delivery`) and **For
+organisations** (`/#organisations`). Both were homepage anchors; the sections
+themselves still exist and are still reached from elsewhere, so only the nav
+entries went.
+
+The header CTA reads **"Explore courses"**. The instruction said "Explore
+Course" (singular); it links to a list of seven, so the plural is used — a
+grammatical error on the most prominent button in the portal was not worth
+shipping. Say the word if singular was deliberate.
+
+**Certifications** remains an anchor to the homepage section (`/#credential`)
+rather than a page, because no certification page exists yet.
+
 ## Built
 
 | Route | Purpose | Content status |
 |---|---|---|
 | `/` | Homepage (P01) | Real |
-| `/programmes`, `/programmes/[slug]` | Portfolio and detail | Real — migrated, with published pricing |
+| `/courses`, `/courses/[slug]` | Portfolio and detail | Real — migrated, with published pricing |
 | `/trainers` | Trainer directory, selection standard, published work | Real |
-| `/about` | Organisation identity, commitments, founder, honest current state | **Real — every positioning claim traced to DR-02 §1/§2/§6/§7.** Nothing about scale, history, clients, team size, founding date or accreditation is stated, because none is established |
-| `/contact` | Three enquiry routes, enquiry form, genuine channels | **Real, with one gap — see below** |
+| `/about-us` | Organisation identity, commitments, founder, honest current state | **Real — every positioning claim traced to DR-02 §1/§2/§6/§7.** Nothing about scale, history, clients, team size, founding date or accreditation is stated, because none is established |
+| `/contact-us` | Three enquiry routes, enquiry form, genuine channels | **Real, with one gap — see below** |
 | `/diagnostic`, `/diagnostic/result` | Capability assessment (P05/P06) | Pre-DR-02 baseline |
 | `/journey-placeholder` | Labelled next-stage placeholder | Placeholder, labelled |
 
-## ⚠ Open gap on `/contact` — there is no business email address
+## ⚠ Open gap on `/contact-us` — there is no business email address
 
 **No email address, telephone number, office address, company registration or
 response-time commitment appears anywhere on that page, because none exists in

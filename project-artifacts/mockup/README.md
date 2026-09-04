@@ -45,11 +45,11 @@ Screens now built:
 | Route | State |
 |---|---|
 | `/` (`P01` Homepage) | Redesigned 2026-08-31 for the expert-led model; typography adopted 2026-09-02 |
-| `/programmes`, `/programmes/[slug]` | Seven **genuine** programmes migrated from the founder's existing training ecosystem, with his published pricing |
+| `/courses`, `/courses/[slug]` | Seven **genuine** programmes migrated from the founder's existing training ecosystem, with his published pricing |
 | `/trainers` | Redesigned 2026-09-02 as the single trainer surface — directory, selection standard, published work. **Genuine people only.** The per-trainer profile route was retired the same day; cards link out to the trainer's own published profile |
 | `/diagnostic`, `/diagnostic/result` (`P05`/`P06`) | ⚠ Still the **pre-DR-02 baseline** — see the reconciliation notice above |
-| `/about` | Added 2026-09-02. Organisation identity, commitments, founder, honest current state — every claim traced to DR-02 |
-| `/contact` | Added 2026-09-02. Three enquiry routes, inert form, **genuine channels only** — no invented email or phone |
+| `/about-us` | Added 2026-09-02. Organisation identity, commitments, founder, honest current state — every claim traced to DR-02 |
+| `/contact-us` | Added 2026-09-02. Three enquiry routes, inert form, **genuine channels only** — no invented email or phone |
 | `/journey-placeholder` | Labelled next-stage placeholder |
 
 The whole portal is set in **IBM Plex** (adopted 2026-09-02, sans-led — the
@@ -79,7 +79,7 @@ components/ui/            Button, Chip, Card (the three card types)
 components/signature/     DiagnosticQuestionCanvas, SkillMeter (scoped to this milestone)
 components/PublicShell.tsx  Global public header/footer (§4)
 components/TrainerCard.tsx  Reusable trainer card (P01 + /trainers; genuine people only)
-components/ProgrammeCard.tsx Reusable programme card (P01 + /programmes + related rails)
+components/CourseCard.tsx Reusable programme card (P01 + /programmes + related rails)
 components/ImageFrame.tsx   Reserved photography — labelled empty slot, or the real image
 app/icon.svg                Favicon
 app/opengraph-image.tsx     1200x630 social share card, generated at build by next/og
@@ -88,7 +88,7 @@ data/                     Fixtures — programmes (REAL, incl. pricing), practit
 public/experts/           Genuine practitioner photography (never AI-generated or stock)
 public/books/             The founder's own published book-cover artwork
 docs/                     DESIGN_FOUNDATION.md, MOCK_DATA_REGISTER.md, FINDINGS.md,
-                          P01_DESIGN_DECISIONS.md, PROGRAMME_CONTENT_MIGRATION.md,
+                          P01_DESIGN_DECISIONS.md, COURSE_CONTENT_MIGRATION.md,
                           IMAGE_SLOTS.md, SITE_PAGES.md
 ```
 
@@ -96,7 +96,7 @@ docs/                     DESIGN_FOUNDATION.md, MOCK_DATA_REGISTER.md, FINDINGS.
 
 Read, in order: this file → `docs/DESIGN_FOUNDATION.md` →
 `docs/MOCK_DATA_REGISTER.md` → `docs/FINDINGS.md` →
-`docs/P01_DESIGN_DECISIONS.md` → `docs/PROGRAMME_CONTENT_MIGRATION.md`.
+`docs/P01_DESIGN_DECISIONS.md` → `docs/COURSE_CONTENT_MIGRATION.md`.
 Together they explain what exists, what every token and component means,
 what is simulated, and what was discovered and decided along the way —
 without needing this conversation's history.

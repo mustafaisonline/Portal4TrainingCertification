@@ -32,7 +32,7 @@ import { practitioners } from "@/data/practitioners";
 export const metadata: Metadata = {
   title: "Trainers — Data & AI Academy",
   description:
-    "The practitioners who design and deliver Data & AI Academy programmes.",
+    "The practitioners who design and deliver Data & AI Academy courses.",
 };
 
 /** What a trainer must be able to show. Genuine selection criteria, not
@@ -72,7 +72,7 @@ export default function TrainersPage() {
             The people who actually built this work
           </h1>
           <p className="text-body-lg max-w-[640px] text-[var(--color-ink-quiet)]">
-            Every programme is designed and delivered by a practitioner with
+            Every course is designed and delivered by a practitioner with
             real enterprise delivery behind them — people who have built, led
             and operated data and AI capabilities, not only taught them. This
             is who they are, and how you can check.
@@ -319,7 +319,7 @@ export default function TrainersPage() {
                       500x750, 500x715 and 469x750, so intrinsic sizing gave
                       rows of 340/324/362px and the titles beneath them did
                       not line up — the same cross-card misalignment reported
-                      on the programme cards (FINDINGS F4). A uniform ratio
+                      on the course cards (FINDINGS F4). A uniform ratio
                       fixes it at every breakpoint. */}
                   <span className="relative block aspect-[2/3] w-full overflow-hidden rounded-[var(--radius-plate)] border border-[var(--color-line)]">
                     <Image

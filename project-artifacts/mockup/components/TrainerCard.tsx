@@ -6,7 +6,7 @@ import type { Practitioner } from "@/data/practitioners";
 
 /**
  * Reusable trainer card — used on the P01 "Learn from practitioners"
- * section, the programme detail pages and the /trainers index. Token-driven,
+ * section, the course detail pages and the /trainers index. Token-driven,
  * so it renders correctly on both light and night surfaces. Deliberately
  * scalable: pages map over data/practitioners.ts and this card never assumes
  * how many trainers exist. Genuine people and genuine photographs only.

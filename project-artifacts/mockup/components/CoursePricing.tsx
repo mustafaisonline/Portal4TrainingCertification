@@ -9,15 +9,15 @@ import {
   mentorshipRegionBadges,
   pricingRegions,
   type MentorshipPackage,
-  type ProgrammePricing as Pricing,
+  type CoursePricing as Pricing,
   type RegionKey,
-} from "@/data/programmes";
+} from "@/data/courses";
 
 /**
- * Programme investment — the source site's regional pricing, rendered in
+ * Course investment — the source site's regional pricing, rendered in
  * the portal's own design system.
  *
- * Figures come from data/programmes.ts (migrated from the source's
+ * Figures come from data/courses.ts (migrated from the source's
  * client-side pricing data). They are TIME-LIMITED LAUNCH OFFERS; the
  * component states that plainly rather than presenting them as standing
  * list prices, and no checkout is implied — payment is not built
@@ -44,7 +44,7 @@ function PriceFigures({ price, discountLabel }: { price: Pricing[RegionKey]; dis
   );
 }
 
-export function ProgrammePricing({
+export function CoursePricing({
   pricing,
   packages,
   valueStack,
@@ -58,7 +58,7 @@ export function ProgrammePricing({
   const [region, setRegion] = useState<RegionKey>("malaysia");
   const baseRegion =
     pricingRegions.find((r) => r.key === region) ?? pricingRegions[0];
-  // Mentorship discounts differ from the training programmes, so its
+  // Mentorship discounts differ from the training courses, so its
   // badge is overridden rather than reusing the 50%-off training badge.
   const activeRegion = packages
     ? { ...baseRegion, badge: mentorshipRegionBadges[region] }
@@ -83,7 +83,7 @@ export function ProgrammePricing({
         <p className="text-label mb-3 text-[var(--color-primary)]">
           Investment
         </p>
-        <h2 className="text-display mb-4">Programme investment</h2>
+        <h2 className="text-display mb-4">Course investment</h2>
         <p className="text-body-lg mb-8 max-w-[620px] text-[var(--color-ink-quiet)]">
           Pricing is shown by region. {activeRegion.subtitle} —{" "}
           <span className="text-[var(--color-ink)]">{activeRegion.badge}</span>.
@@ -115,7 +115,7 @@ export function ProgrammePricing({
           })}
         </div>
 
-        {/* Single-programme pricing */}
+        {/* Single-course pricing */}
         {pricing && (
           <div className="grid gap-6 lg:grid-cols-[minmax(0,420px)_1fr] lg:items-start">
             <Card

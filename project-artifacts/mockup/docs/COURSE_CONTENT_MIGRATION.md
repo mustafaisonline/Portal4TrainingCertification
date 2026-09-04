@@ -27,9 +27,9 @@ the source site.
 
 ```
 trainings.html (overview)        →  /programmes
-  ├ portfolio grid               →  "All programmes" + ProgrammeCard
+  ├ portfolio grid               →  "All programmes" + CourseCard
   ├ "Choose your learning journey"→  learningPathway[] + pathway section
-  ├ level labels                 →  programmeLevels[] taxonomy
+  ├ level labels                 →  courseLevels[] taxonomy
   ├ corporate training block     →  "For organisations" section → /#organisations
   └ delivery options             →  "Delivery options" list
 [programme].html × 7             →  /programmes/[slug]
@@ -43,7 +43,7 @@ trainings.html (overview)        →  /programmes
   ├ delivery formats (flagship)  →  deliveryFormats[] cards
   ├ career paths (mentorship)    →  careerPaths[] cards
   ├ frameworks (AI-PPD, mentorship) → methodology.steps[]
-  └ Related Training Programs    →  related[] → ProgrammeCard rail
+  └ Related Training Programs    →  related[] → CourseCard rail
 ```
 
 **Level, not "category", is the taxonomy** — that is how the source itself
@@ -63,7 +63,7 @@ such rather than forced into the ladder.
 
 **Internal → portal routes.** Every cross-programme link in the source now
 points at the migrated page: `data-blueprint.html` → `/programmes/data-blueprint`,
-and so on for all seven. `trainings.html` → `/programmes`. The mentorship
+and so on for all seven. `trainings.html` → `/courses`. The mentorship
 page's `team/mustafa-qizilbash.html` → `/trainers/mustafa-qizilbash`.
 `contact.html` → `/#organisations` (the portal's enquiry surface; no
 contact screen exists yet).
@@ -123,11 +123,11 @@ training programmes — hence `mentorshipRegionBadges`. The flagship's
 value-stack breakdown (`RM 9,497+` total) is carried in `valueStack`.
 
 **Where it appears:** a region-tabbed "Programme investment" section on
-every programme detail page (`components/ProgrammePricing.tsx`), plus an
+every programme detail page (`components/CoursePricing.tsx`), plus an
 indicative "from" price (Malaysia rate) on each programme card.
 
 ⚠ **These are time-limited launch offers and will date.** They live in
-`data/programmes.ts`; changing them is a data edit with no component
+`data/courses.ts`; changing them is a data edit with no component
 changes. **No checkout is implied** — payment is not built (ADR-014 /
 OQ-2), so every CTA remains an enquiry.
 
@@ -160,14 +160,14 @@ Was a flat 3-column grid in data order — Foundation, Practitioner, Architect,
 Architect, Executive, Builder, Mentorship — which reads as arbitrary and wastes
 the level taxonomy established directly above it.
 
-Now grouped by level in progression order, reusing `programmeLevels` so the
+Now grouped by level in progression order, reusing `courseLevels` so the
 grouping **cannot drift** from the rail above it.
 
 **Trade-off, recorded honestly.** A header-plus-grid per level was tried first
 and produced five near-empty rows (five of six levels hold a single
 programme), running the section to ~4,048px. The level was moved into a left
 rail, which brought it to ~3,650px — still roughly 2.5× the old flat grid's
-~1,400px, because the driver is `ProgrammeCard`'s own height, not the layout.
+~1,400px, because the driver is `CourseCard`'s own height, not the layout.
 **Structure was bought with length.** If the length is not wanted, the compact
 alternative is a sorted 3-column grid relying on the level chip each card
 already carries.
@@ -197,7 +197,7 @@ read that as *"this price is not for me."*
 
 - `pricingRegions` gained a `short` code (`MY` / `PK` / `INT`) so compact
   price lists stay data-driven; components previously hardcoded `(MY)`.
-- `ProgrammeCard` gained `showAllRegions`, **defaulting to false**. The hub
+- `CourseCard` gained `showAllRegions`, **defaulting to false**. The hub
   passes it; the P01 homepage preview is deliberately unchanged, because that
   page has been reviewed and approved and three prices per card there is a
   separate judgement call, not an implied consequence of this one. **Verified
@@ -232,3 +232,66 @@ is the founder's call.**
   engagement stages were structured as modules so the page renders
   consistently, and its Career Acceleration Framework is carried in
   `methodology`.
+
+---
+
+## Vocabulary change: "programme" → "course" (2026-09-02)
+
+**Founder direction, taken with the conflict made explicit first.** The
+market-facing unit is now a **course**: navigation, URLs (`/courses`),
+headings, body copy and the data model's naming all changed.
+
+This contradicted `DR-02` §4 — *"The unit of the product is a programme, not a
+course"* — so it was raised before any code moved, and **DR-02 now carries
+Amendment A1** recording the change and its limits.
+
+### The word changed; the model did not
+
+DR-02's substance is untouched: expert-led, live, real-time, assessed, never
+self-paced or video-first. A Data & AI Academy *course* is what that record
+called a programme.
+
+The real consequence is that **statements rejecting the old model could no
+longer lean on the word "course"**, because it is now our own word. Each was
+rewritten to name the actual thing rejected:
+
+| Was | Now |
+|---|---|
+| "This is not a course library" (homepage hero) | "This is not a **video** library" |
+| "A mass online course marketplace" (About, "we are not") | "A mass-market **self-paced video** marketplace" |
+| "A recorded course can be finished without being understood" | "A recorded **lesson** can be finished…" |
+
+### ⚠ Where "programme" was deliberately KEPT
+
+A blind find-and-replace corrupts migrated content, because the source uses
+"programme" in its ordinary English sense as well as for our product. Three
+were caught and reverted after the mechanical pass:
+
+| Location | Kept as "programme" | Why |
+|---|---|---|
+| `"Governance programmes fail"` | Data Blueprint problem list | Sits beside *"Data initiatives struggle"* and *"AI projects produce limited value"* — organisational governance initiatives failing, nothing to do with our courses |
+| `"Regional scholarship programme"` | Pakistan pricing region subtitle | A funding scheme, not a product unit |
+| `"Long-term structured learning programmes"` | AI-Powered Product Development `bestFor` | Sits under *"Students and universities"* — an institutional course of study |
+
+**The lesson for any future rename:** run the mechanical pass, then read every
+changed string. Word-boundary regex cannot tell a product noun from the same
+word used in ordinary prose, and migrated content is exactly where that
+distinction matters.
+
+### Renames applied
+
+| Was | Now |
+|---|---|
+| `app/programmes/` | `app/courses/` |
+| `app/about/` · `app/contact/` | `app/about-us/` · `app/contact-us/` |
+| `data/programmes.ts` | `data/courses.ts` |
+| `ProgrammeCard` · `ProgrammePricing` | `CourseCard` · `CoursePricing` |
+| `Programme` · `ProgrammeLevel` · `ProgrammePricing` (types) | `Course` · `CourseLevel` · `CoursePricing` |
+| `programmes` · `programmeLevels` · `getProgramme` | `courses` · `courseLevels` · `getCourse` |
+| `PROGRAMME_CONTENT_MIGRATION.md` | `COURSE_CONTENT_MIGRATION.md` |
+
+**Old URLs now return 404.** `/programmes`, `/about` and `/contact` are not
+redirected — the mockup has no redirect layer, and none was added for an
+artifact with no external inbound links. ⚠ **A production move would need
+301 redirects**, and the GitHub Pages deployment will break any previously
+shared `/programmes/...` link.

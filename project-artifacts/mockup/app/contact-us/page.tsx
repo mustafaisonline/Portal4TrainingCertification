@@ -25,18 +25,18 @@ import { practitioners } from "@/data/practitioners";
  */
 
 export const metadata: Metadata = {
-  title: "Contact — Data & AI Academy",
+  title: "Contact Us — Data & AI Academy",
   description:
-    "Talk to us about programmes for yourself, capability development for your team, or teaching with the Academy.",
+    "Talk to us about courses for yourself, capability development for your team, or teaching with the Academy.",
 };
 
 const routes = [
   {
     label: "For individuals",
-    title: "A programme for yourself",
-    body: "Tell us where you are and what you need to be able to do. If a programme fits, we will say which one — and if none does, we will say that too.",
-    cta: "Explore programmes",
-    href: "/programmes",
+    title: "A course for yourself",
+    body: "Tell us where you are and what you need to be able to do. If a course fits, we will say which one — and if none does, we will say that too.",
+    cta: "Explore courses",
+    href: "/courses",
   },
   {
     label: "For organisations",
@@ -73,7 +73,7 @@ export default function ContactPage() {
           </h1>
           <p className="text-body-lg max-w-[640px] text-[var(--color-ink-quiet)]">
             Whether that is your own capability, your team&rsquo;s, or a
-            programme you want delivered at your location — start here and a
+            course you want delivered at your location — start here and a
             practitioner will answer, not a sales sequence.
           </p>
         </div>

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { ImageFrame } from "@/components/ImageFrame";
 import { practitioners } from "@/data/practitioners";
-import { programmes } from "@/data/programmes";
+import { courses } from "@/data/courses";
 
 /**
  * About — added 2026-09-02 by founder direction.
@@ -23,14 +23,14 @@ import { programmes } from "@/data/programmes";
  */
 
 export const metadata: Metadata = {
-  title: "About — Data & AI Academy",
+  title: "About Us — Data & AI Academy",
   description:
     "An independent professional training and certification organisation for data and AI capability, built on expert-led delivery.",
 };
 
 /** DR-02 §1, verbatim in substance. The negative list is as load-bearing as
  *  the positive one — it is what keeps the model from drifting back to a
- *  course marketplace. */
+ *  self-paced video marketplace. */
 const weAre = [
   "Independent",
   "Focused on data and AI capability",
@@ -41,7 +41,7 @@ const weAre = [
   "Assessment-driven",
 ];
 const weAreNot = [
-  "A mass online course marketplace",
+  "A mass-market self-paced video marketplace",
   "A video-first learning platform",
   "A self-paced content library",
   "A generic LMS",
@@ -84,12 +84,12 @@ export default function AboutPage() {
             </h2>
             <p className="text-body-lg mb-4 text-[var(--color-ink-quiet)]">
               Data and AI training has become abundant and, in the process,
-              largely unaccountable. A recorded course can be finished without
+              largely unaccountable. A recorded lesson can be finished without
               being understood, and a certificate of completion says only that
               a video reached its end.
             </p>
             <p className="text-body-lg text-[var(--color-ink-quiet)]">
-              We built this the other way round. Programmes are taught live by
+              We built this the other way round. Courses are taught live by
               someone who has done the work in real organisations, and the
               credential is earned through assessed applied work — judged by a
               qualified assessor against a published rubric, with written
@@ -154,7 +154,7 @@ export default function AboutPage() {
               },
               {
                 t: "Taught by practitioners",
-                b: "Programmes are delivered by people who have built these systems in real organisations — and who can be checked.",
+                b: "Courses are delivered by people who have built these systems in real organisations — and who can be checked.",
               },
               {
                 t: "The credential is earned",
@@ -197,7 +197,7 @@ export default function AboutPage() {
               delivery across banking, energy, telecom and government.
             </p>
             <p className="text-body-sm mb-8 text-[var(--color-ink-quiet)]">
-              Today he designs and delivers the programmes himself. As the
+              Today he designs and delivers the courses himself. As the
               practitioner network grows, trainers will be introduced on the
               trainers page — only ever real people, with records you can
               verify independently. There are no placeholder profiles.
@@ -222,18 +222,18 @@ export default function AboutPage() {
             Where we are today
           </p>
           <h2 className="text-display mb-5">
-            {programmes.length} programmes designed. The first dates are being
+            {courses.length} courses designed. The first dates are being
             prepared.
           </h2>
           <p className="text-body-lg mx-auto mb-9 max-w-[620px] text-[var(--color-ink-quiet)]">
             Public schedules are not published yet. When they are, they will be
-            real dates for real programmes — a small, genuine schedule rather
+            real dates for real courses — a small, genuine schedule rather
             than a padded catalogue. Everything on this portal follows the same
             rule.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button href="/programmes">Explore programmes</Button>
-            <Button variant="secondary" href="/contact">
+            <Button href="/courses">Explore courses</Button>
+            <Button variant="secondary" href="/contact-us">
               Talk to us
             </Button>
           </div>

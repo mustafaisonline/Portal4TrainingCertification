@@ -214,7 +214,7 @@ founder reviewed it live and approved adoption.
   exactly one element in the portal — this page's hero. With the masthead
   wordmark, that is the serif's entire footprint.
 - **Consequence to watch:** every *other* page title in the portal
-  (`/programmes`, `/trainers`, detail pages, `/diagnostic/result`) is now
+  (`/courses`, `/trainers`, detail pages, `/diagnostic/result`) is now
   sans. Those pages were reviewed after rollout but were **not** part of
   the approved experiment surface. If the serif is missed there, the
   cheap correction is promoting selected titles to `.text-display-xl` —

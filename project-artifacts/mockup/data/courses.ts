@@ -1,17 +1,17 @@
 /**
- * Programme catalogue — migrated 2026-08-31 from the founder's existing
+ * Course catalogue — migrated 2026-08-31 from the founder's existing
  * training ecosystem at yourpartnertechnologies.com/trainings.html and its
- * seven programme subpages (confirmed complete against that site's
- * sitemap.xml). This is real, previously authored content: programme
+ * seven course subpages (confirmed complete against that site's
+ * sitemap.xml). This is real, previously authored content: course
  * names, audiences, learning outcomes, curricula, pedagogy and the
- * progression between programmes are preserved as written, lightly edited
- * only for house style (en-GB, "programme", sentence case).
+ * progression between courses are preserved as written, lightly edited
+ * only for house style (en-GB, "course", sentence case).
  *
  * PRICING — migrated 2026-09-01 at the founder's explicit direction.
  * The figures live in the source site's `js/main.min.js`
  * (TRAINING_INVESTMENT_DATA + buildMentorshipInvestmentRegions) and are
  * injected client-side, which is why a first static-HTML pass missed five
- * of the seven programmes. All three published regions are carried, with
+ * of the seven courses. All three published regions are carried, with
  * the launch-offer framing intact, exactly as published:
  *   Malaysia (RM) · Pakistan (Rs., regional scholarship) · International (USD)
  * Mentorship prices are computed in the source from USD bases
@@ -29,19 +29,19 @@
  * DELIBERATELY NOT MIGRATED — each is a live open decision, not an
  * oversight:
  * - DATES / SCHEDULED OFFERINGS. The source publishes none, and none may
- *   be invented (DR-02 §4.1). Programmes are the *proposition* layer;
+ *   be invented (DR-02 §4.1). Courses are the *proposition* layer;
  *   scheduled offerings (format · date · location · capacity) remain
- *   State A until real ones exist. This keeps the programmes-vs-offerings
+ *   State A until real ones exist. This keeps the courses-vs-offerings
  *   emphasis (HO-1) genuinely open.
  * - Certification claims beyond what the source states. The source offers
- *   a "Certificate of Participation" per programme — that is recorded as
+ *   a "Certificate of Participation" per course — that is recorded as
  *   `certificate` and must never be conflated with the Academy credential,
  *   which is earned through assessed applied work (OQ-21 boundary).
  *
- * Adding a programme is a data operation: every page maps over this file.
+ * Adding a course is a data operation: every page maps over this file.
  */
 
-export type ProgrammeLevel =
+export type CourseLevel =
   | "Foundation"
   | "Practitioner"
   | "Architect"
@@ -51,7 +51,7 @@ export type ProgrammeLevel =
 
 export type RegionKey = "malaysia" | "pakistan" | "international";
 
-/** One region's published price for one programme (or mentorship package). */
+/** One region's published price for one course (or mentorship package). */
 export type RegionPrice = {
   original: string;
   discount: string;
@@ -59,14 +59,14 @@ export type RegionPrice = {
   today: string;
 };
 
-export type ProgrammePricing = Record<RegionKey, RegionPrice>;
+export type CoursePricing = Record<RegionKey, RegionPrice>;
 
 /** Region metadata exactly as published on the source site. */
 export const pricingRegions: {
   key: RegionKey;
   label: string;
   /** Compact code for space-constrained price lists (cards, meta strips).
-   *  Added 2026-09-02 when the programmes hub began showing all three
+   *  Added 2026-09-02 when the courses hub began showing all three
    *  regions; previously components hardcoded "(MY)". */
   short: string;
   subtitle: string;
@@ -99,7 +99,7 @@ export const pricingRegions: {
   },
 ];
 
-/** Mentorship uses different discount rates from the training programmes
+/** Mentorship uses different discount rates from the training courses
  *  (20/30/10 rather than 50/70/10), so its region badges differ. */
 export const mentorshipRegionBadges: Record<RegionKey, string> = {
   malaysia: "Save up to 20%",
@@ -107,7 +107,7 @@ export const mentorshipRegionBadges: Record<RegionKey, string> = {
   international: "Global launch offer — save 10%",
 };
 
-/** Mentorship is priced per package rather than per programme. */
+/** Mentorship is priced per package rather than per course. */
 export type MentorshipPackage = {
   id: string;
   badge: string;
@@ -117,7 +117,7 @@ export type MentorshipPackage = {
   includesLead?: string;
   includes: string[];
   featured?: boolean;
-  pricing: ProgrammePricing;
+  pricing: CoursePricing;
 };
 
 export const mentorshipPackages: MentorshipPackage[] = [
@@ -127,7 +127,7 @@ export const mentorshipPackages: MentorshipPackage[] = [
     name: "Career Assessment",
     duration: "90–120 minutes",
     idealFor:
-      "Professionals who want expert career guidance before committing to a longer mentorship programme.",
+      "Professionals who want expert career guidance before committing to a longer mentorship course.",
     includes: [
       "Career discussion",
       "Skills assessment",
@@ -235,13 +235,13 @@ export const mentorshipPackages: MentorshipPackage[] = [
   },
 ];
 
-export type Programme = {
+export type Course = {
   slug: string;
   title: string;
   /** Short line under the title on the detail hero. */
   subtitle: string;
-  level: ProgrammeLevel;
-  /** Marks the founder's designated flagship programme. */
+  level: CourseLevel;
+  /** Marks the founder's designated flagship course. */
   flagship?: boolean;
   /** Free-text as published — never a fabricated schedule. */
   duration: string;
@@ -255,11 +255,11 @@ export type Programme = {
   valueProposition: string;
   highlights: string[];
   whoShouldAttend: { intro: string; roles: string[] };
-  /** "Why this matters" — the argument for the programme. */
+  /** "Why this matters" — the argument for the course. */
   rationale: {
     heading: string;
     paragraphs: string[];
-    /** Bulleted problems the programme addresses. */
+    /** Bulleted problems the course addresses. */
     problems?: string[];
   };
   /** Flat outcome list. */
@@ -281,25 +281,25 @@ export type Programme = {
   included?: string[];
   pedagogy?: { intro: string; methods: string[]; industries?: string[] };
   benefits?: { intro: string; items: string[] };
-  /** Career-path transitions — mentorship programme only. */
+  /** Career-path transitions — mentorship course only. */
   careerPaths?: { from: string; to: string; challenge: string; helps: string }[];
   /** Named methodology stages, where the source publishes one. */
   methodology?: { name: string; steps: { title: string; body: string }[] };
-  /** Published per-region pricing. Absent on the mentorship programme,
+  /** Published per-region pricing. Absent on the mentorship course,
    *  which is priced per package (see `mentorshipPackages`). */
-  pricing?: ProgrammePricing;
+  pricing?: CoursePricing;
   /** Value-stack breakdown, where the source publishes one. */
   valueStack?: { item: string; value: string }[];
   valueStackTotal?: string;
-  /** Slugs of related programmes, from the source's own cross-links. */
+  /** Slugs of related courses, from the source's own cross-links. */
   related: string[];
   /** Genuinely external resources — YPT service pages with no Academy
    *  equivalent. Internal training links were migrated to portal routes. */
   externalResources?: { label: string; url: string; description: string }[];
 };
 
-export const programmeLevels: {
-  level: ProgrammeLevel;
+export const courseLevels: {
+  level: CourseLevel;
   description: string;
 }[] = [
   { level: "Foundation", description: "Shared language for working with data and AI" },
@@ -310,7 +310,7 @@ export const programmeLevels: {
   { level: "Mentorship", description: "One-to-one career direction" },
 ];
 
-export const programmes: Programme[] = [
+export const courses: Course[] = [
   /* ------------------------------------------------------------------ */
   {
     slug: "data-ai-essentials",
@@ -325,7 +325,7 @@ export const programmes: Programme[] = [
     summary:
       "Build practical data and AI literacy — understand how organisations use data, analytics, generative AI and agentic AI to make better decisions, without needing a technical background.",
     valueProposition:
-      "Understand modern data and AI concepts and their business applications — the starting point before advancing to practitioner and leadership programmes.",
+      "Understand modern data and AI concepts and their business applications — the starting point before advancing to practitioner and leadership courses.",
     highlights: [
       "Beginner friendly",
       "No technical background required",
@@ -351,7 +351,7 @@ export const programmes: Programme[] = [
       heading: "Why data & AI literacy matters",
       paragraphs: [
         "Organisations across every industry are investing heavily in data and artificial intelligence. However, many professionals struggle because they do not understand the fundamental concepts behind modern data ecosystems and AI technologies.",
-        "This programme bridges that gap by providing a practical understanding of how data and AI work together to support business decisions, innovation and digital transformation. Participants gain the confidence to engage with data engineers, scientists, architects and AI teams using shared language.",
+        "This course bridges that gap by providing a practical understanding of how data and AI work together to support business decisions, innovation and digital transformation. Participants gain the confidence to engage with data engineers, scientists, architects and AI teams using shared language.",
       ],
     },
     outcomeGroups: [
@@ -932,7 +932,7 @@ export const programmes: Programme[] = [
       heading: "Why organisations need an agentic AI strategy",
       paragraphs: [
         "Many organisations rushed into generative AI initiatives without fully understanding business value, governance requirements, operational challenges and production realities. As agentic AI emerges, many risk repeating the same mistakes.",
-        "This programme provides a practical roadmap for the questions leaders actually have to answer.",
+        "This course provides a practical roadmap for the questions leaders actually have to answer.",
       ],
       problems: [
         "What is agentic AI?",
@@ -1008,7 +1008,7 @@ export const programmes: Programme[] = [
     ],
     pedagogy: {
       intro:
-        "Most AI training focuses on tools, prompts, chatbots and technical implementation. This programme focuses on the decisions leaders own:",
+        "Most AI training focuses on tools, prompts, chatbots and technical implementation. This course focuses on the decisions leaders own:",
       methods: [
         "Business outcomes",
         "Organisational readiness",
@@ -1058,7 +1058,7 @@ export const programmes: Programme[] = [
     summary:
       "Transform ideas into working apps, MVPs and portfolio projects using AI-assisted development, PromptOS and trusted data foundations — for freelance clients, corporate innovation, or your next startup.",
     valueProposition:
-      "Not a traditional coding bootcamp. A hands-on product-building programme — from idea validation to deployment — designed for builders who want results, not syntax drills.",
+      "Not a traditional coding bootcamp. A hands-on product-building course — from idea validation to deployment — designed for builders who want results, not syntax drills.",
     highlights: [
       "Build AI-powered applications",
       "Explore freelance opportunities",
@@ -1082,10 +1082,10 @@ export const programmes: Programme[] = [
       ],
     },
     rationale: {
-      heading: "After this programme, you will be able to",
+      heading: "After this course, you will be able to",
       paragraphs: [
         "Participants learn not only how to build applications using AI, but also how to ensure those applications are supported by trusted data, strong requirements, quality processes and real-world deployment practices.",
-        "Unlike many AI development courses that focus only on coding tools, this programme teaches a complete end-to-end approach to building production-ready AI solutions.",
+        "Unlike many AI development courses that focus only on coding tools, this course teaches a complete end-to-end approach to building production-ready AI solutions.",
       ],
       problems: [
         "Build AI-powered applications — websites, portals, dashboards, assistants and business applications",
@@ -1325,7 +1325,7 @@ export const programmes: Programme[] = [
     duration: "Flexible engagement",
     prerequisites: "None",
     formats: ["One-to-one", "Live online"],
-    certificate: "Not a certificated programme",
+    certificate: "Not a certificated course",
     audienceSummary: "Aspiring and experienced data & AI professionals",
     summary:
       "Personalised one-to-one mentorship tailored to your experience, aspirations, strengths and challenges — defining your destination, identifying the gaps, and building a practical roadmap.",
@@ -1538,7 +1538,7 @@ export const programmes: Programme[] = [
  *  deliberately parallel tracks (not steps in the same ladder). */
 export const learningPathway: {
   stage: string;
-  level: ProgrammeLevel;
+  level: CourseLevel;
   slugs: string[];
   parallel?: boolean;
   note?: string;
@@ -1571,6 +1571,6 @@ export const learningPathway: {
   },
 ];
 
-export function getProgramme(slug: string) {
-  return programmes.find((p) => p.slug === slug);
+export function getCourse(slug: string) {
+  return courses.find((p) => p.slug === slug);
 }

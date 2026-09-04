@@ -2,39 +2,39 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PublicShell } from "@/components/PublicShell";
 import { ImageFrame } from "@/components/ImageFrame";
-import { ProgrammeCard } from "@/components/ProgrammeCard";
+import { CourseCard } from "@/components/CourseCard";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Chip } from "@/components/ui/Chip";
 import {
   learningPathway,
   pricingRegions,
-  programmeLevels,
-  programmes,
-  getProgramme,
-} from "@/data/programmes";
+  courseLevels,
+  courses,
+  getCourse,
+} from "@/data/courses";
 
 /**
- * Programmes hub — the P10/P24 discovery surface for the mockup.
+ * Courses hub — the P10/P24 discovery surface for the mockup.
  *
  * Content migrated from the founder's existing training ecosystem; see
- * data/programmes.ts for provenance and for what was deliberately NOT
+ * data/courses.ts for provenance and for what was deliberately NOT
  * migrated (prices, dates). Levels are used as the organising taxonomy
  * because that is how the source itself groups the portfolio, and they
  * double as the progression.
  *
  * Deliberately server-rendered with no client-side filter: seven
- * programmes across six levels is a portfolio, not a catalogue — the
+ * courses across six levels is a portfolio, not a catalogue — the
  * level rail plus a single grid is more usable here than facets, and it
  * avoids reintroducing catalogue-browse patterns DR-02 retired.
  */
 
 export const metadata: Metadata = {
-  title: "Programmes — Data & AI Academy",
+  title: "Courses — Data & AI Academy",
 };
 
-export default function ProgrammesPage() {
-  const flagship = programmes.find((p) => p.flagship);
+export default function CoursesPage() {
+  const flagship = courses.find((p) => p.flagship);
   // One source of truth (learningPathway); the section splits it rather than
   // duplicating the sequence, so a data change cannot desynchronise them.
   const corePath = learningPathway.filter((step) => !step.parallel);
@@ -54,7 +54,7 @@ export default function ProgrammesPage() {
         />
         <div className="relative mx-auto max-w-[1280px] px-6 py-16 lg:py-20">
           <p className="text-label mb-4 text-[var(--color-primary)]">
-            Programmes
+            Courses
           </p>
           <h1 className="text-display-lg mb-6 max-w-[760px]">
             Build the Data &amp; AI capability that holds up at work
@@ -63,11 +63,11 @@ export default function ProgrammesPage() {
             A deliberately structured portfolio — from foundational literacy
             for business teams, through practitioner and architect tracks, to
             executive AI adoption, product building and one-to-one career
-            mentorship. Every programme is designed and delivered by a
+            mentorship. Every course is designed and delivered by a
             practitioner.
           </p>
           <div className="flex flex-wrap items-center gap-4">
-            <Button href="#all-programmes">Explore programmes</Button>
+            <Button href="#all-courses">Explore courses</Button>
             <Button variant="secondary" href="#pathway">
               Find your starting point
             </Button>
@@ -80,22 +80,22 @@ export default function ProgrammesPage() {
         <div className="grid gap-10 lg:grid-cols-[1fr_1fr]">
           <div className="max-w-[560px]">
             <p className="text-label mb-3 text-[var(--color-primary)]">
-              How these programmes are built
+              How these courses are built
             </p>
             <h2 className="text-display mb-5">
               Taught by practitioners, not theorists
             </h2>
             <p className="text-body-lg mb-4 text-[var(--color-ink-quiet)]">
-              Each programme maps to real enterprise data and AI work rather
+              Each course maps to real enterprise data and AI work rather
               than slide-deck theory. Concepts are taught through practical
               business situations and industry case studies — not
               vendor-specific tooling — so what you learn transfers to the
               platform your organisation actually runs.
             </p>
             <p className="text-body-sm text-[var(--color-ink-quiet)]">
-              Programmes are delivered face-to-face, live online or hybrid, as
+              Courses are delivered face-to-face, live online or hybrid, as
               public sessions, private team cohorts, executive workshops or
-              university programmes.
+              university courses.
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -120,11 +120,11 @@ export default function ProgrammesPage() {
       <section className="border-y border-[var(--color-line)] bg-[var(--color-ground-raised)]">
         <div className="mx-auto max-w-[1280px] px-6 py-14">
           <p className="text-label mb-6 text-[var(--color-primary)]">
-            Programme levels
+            Course levels
           </p>
           <div className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
-            {programmeLevels.map(({ level, description }) => {
-              const count = programmes.filter((p) => p.level === level).length;
+            {courseLevels.map(({ level, description }) => {
+              const count = courses.filter((p) => p.level === level).length;
               return (
                 <div
                   key={level}
@@ -135,7 +135,7 @@ export default function ProgrammesPage() {
                     {description}
                   </p>
                   <p className="text-mono mt-2 text-[0.75rem] text-[var(--color-ink-faint)]">
-                    {count === 1 ? "1 programme" : `${count} programmes`}
+                    {count === 1 ? "1 course" : `${count} courses`}
                   </p>
                 </div>
               );
@@ -164,7 +164,7 @@ export default function ProgrammesPage() {
             <div className="grid gap-x-14 gap-y-10 lg:grid-cols-[1.1fr_1fr] lg:items-start">
               <div>
                 <p className="text-label mb-4 text-[var(--color-primary)]">
-                  Flagship programme
+                  Flagship course
                 </p>
                 <h2 className="text-display-lg mb-5 max-w-[16ch]">
                   {flagship.title}
@@ -213,12 +213,12 @@ export default function ProgrammesPage() {
                 )}
 
                 <div className="flex flex-wrap items-center gap-4">
-                  <Button href={`/programmes/${flagship.slug}`}>
-                    Explore the programme
+                  <Button href={`/courses/${flagship.slug}`}>
+                    Explore the course
                   </Button>
                   <Button
                     variant="secondary"
-                    href={`/programmes/${flagship.slug}#investment`}
+                    href={`/courses/${flagship.slug}#investment`}
                   >
                     See the investment
                   </Button>
@@ -254,39 +254,39 @@ export default function ProgrammesPage() {
         </section>
       )}
 
-      {/* ===== All programmes =====
+      {/* ===== All courses =====
           Redesigned 2026-09-02. Was a flat 3-column grid of all seven cards
           in data order — Foundation, Practitioner, Architect, Architect,
           Executive, Builder, Mentorship — which reads as arbitrary, gives no
           way to scan, and wastes the level taxonomy established directly
           above it.
 
-          Now grouped by level in progression order, reusing `programmeLevels`
+          Now grouped by level in progression order, reusing `courseLevels`
           so the grouping cannot drift from the rail above. Still no client
           -side filter: this adds structure, not catalogue-browse mechanics
           the model retired. */}
       <section
-        id="all-programmes"
+        id="all-courses"
         className="mx-auto max-w-[1280px] scroll-mt-24 px-6 py-16"
       >
         <p className="text-label mb-3 text-[var(--color-primary)]">
           The portfolio
         </p>
-        <h2 className="text-display mb-4">All programmes</h2>
+        <h2 className="text-display mb-4">All courses</h2>
         <p className="text-body-lg mb-14 max-w-[620px] text-[var(--color-ink-quiet)]">
-          Seven programmes, grouped by the level they are pitched at. The order
+          Seven courses, grouped by the level they are pitched at. The order
           is the progression — but only the core track is sequential, and the
           journey below shows which parts are not.
         </p>
 
         {/* Level as a left rail, not a full-width header. Five of the six
-            levels hold a single programme, so a header-plus-3-column-grid
+            levels hold a single course, so a header-plus-3-column-grid
             per level produced five near-empty rows and ran the section to
             ~4000px. The rail keeps the grouping legible while reading as a
             structured index, and the progression runs top to bottom. */}
         <div className="flex flex-col">
-          {programmeLevels.map(({ level, description }) => {
-            const inLevel = programmes.filter((p) => p.level === level);
+          {courseLevels.map(({ level, description }) => {
+            const inLevel = courses.filter((p) => p.level === level);
             if (inLevel.length === 0) return null;
             return (
               <div
@@ -300,15 +300,15 @@ export default function ProgrammesPage() {
                   </p>
                   <p className="text-mono text-body-sm text-[var(--color-ink-faint)]">
                     {inLevel.length === 1
-                      ? "1 programme"
-                      : `${inLevel.length} programmes`}
+                      ? "1 course"
+                      : `${inLevel.length} courses`}
                   </p>
                 </div>
                 <div className="grid gap-6 sm:grid-cols-2">
-                  {inLevel.map((programme) => (
-                    <ProgrammeCard
-                      key={programme.slug}
-                      programme={programme}
+                  {inLevel.map((course) => (
+                    <CourseCard
+                      key={course.slug}
+                      course={course}
                       showAllRegions
                     />
                   ))}
@@ -367,12 +367,12 @@ export default function ProgrammesPage() {
                       <p className="text-h2 mb-3">{step.stage}</p>
                       <div className="flex flex-wrap gap-x-5 gap-y-2">
                         {step.slugs.map((slug) => {
-                          const p = getProgramme(slug);
+                          const p = getCourse(slug);
                           if (!p) return null;
                           return (
                             <Link
                               key={slug}
-                              href={`/programmes/${slug}`}
+                              href={`/courses/${slug}`}
                               className="text-body-sm font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
                             >
                               {p.title} →
@@ -410,12 +410,12 @@ export default function ProgrammesPage() {
                     <p className="text-h2 mb-3">{step.stage}</p>
                     <div className="mb-3 flex flex-wrap gap-x-5 gap-y-2">
                       {step.slugs.map((slug) => {
-                        const p = getProgramme(slug);
+                        const p = getCourse(slug);
                         if (!p) return null;
                         return (
                           <Link
                             key={slug}
-                            href={`/programmes/${slug}`}
+                            href={`/courses/${slug}`}
                             className="text-body-sm font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
                           >
                             {p.title} →
@@ -447,15 +447,15 @@ export default function ProgrammesPage() {
               Customised capability development
             </h2>
             <p className="text-body-lg mb-4 text-[var(--color-ink-quiet)]">
-              Programmes can be tailored to your industry, technology stack and
+              Courses can be tailored to your industry, technology stack and
               workforce skill gaps — across government, financial services,
               telecommunications, healthcare, retail, universities and
               enterprise organisations.
             </p>
             <p className="text-body-sm mb-8 text-[var(--color-ink-quiet)]">
-              Engagement models include executive awareness programmes, team
-              workshops, capability development programmes, graduate
-              development programmes and private bootcamps.
+              Engagement models include executive awareness courses, team
+              workshops, capability development courses, graduate
+              development courses and private bootcamps.
             </p>
             <Button variant="secondary" href="/#organisations">
               Talk to us about your team
@@ -465,10 +465,10 @@ export default function ProgrammesPage() {
             <p className="text-label mb-5">Delivery options</p>
             <ul>
               {[
-                ["Public programmes", "Scheduled sessions open to individuals."],
-                ["Private team training", "Dedicated programmes for one organisation."],
-                ["Executive workshops", "Leadership-focused awareness programmes."],
-                ["University programmes", "Student and graduate capability development."],
+                ["Public courses", "Scheduled sessions open to individuals."],
+                ["Private team training", "Dedicated courses for one organisation."],
+                ["Executive workshops", "Leadership-focused awareness courses."],
+                ["University courses", "Student and graduate capability development."],
               ].map(([title, body]) => (
                 <li
                   key={title}

@@ -248,7 +248,7 @@ export default function TrainersPage() {
               there are no placeholder profiles on this page, and there never
               will be.
             </p>
-            <Button variant="secondary" href="/#organisations">
+            <Button variant="secondary" href="/contact-us">
               Enquire about teaching with us
             </Button>
           </div>

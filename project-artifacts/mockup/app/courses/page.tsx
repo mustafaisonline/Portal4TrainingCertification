@@ -457,7 +457,7 @@ export default function CoursesPage() {
               workshops, capability development courses, graduate
               development courses and private bootcamps.
             </p>
-            <Button variant="secondary" href="/#organisations">
+            <Button variant="secondary" href="/contact-us">
               Talk to us about your team
             </Button>
           </div>

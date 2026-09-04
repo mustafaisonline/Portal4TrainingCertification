@@ -1,21 +1,10 @@
 import { PublicShell } from "@/components/PublicShell";
-import { CourseCard } from "@/components/CourseCard";
-import { TrainerCard } from "@/components/TrainerCard";
 import { ImageFrame } from "@/components/ImageFrame";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Chip } from "@/components/ui/Chip";
 import { domains } from "@/data/domains";
-import { practitioners } from "@/data/practitioners";
 import { courses } from "@/data/courses";
-
-/** Homepage preview: the flagship plus the two entry-level courses —
- *  discovery, not the catalogue. Exploration lives at /courses. */
-const featuredCourses = [
-  courses.find((p) => p.flagship),
-  courses.find((p) => p.slug === "data-ai-essentials"),
-  courses.find((p) => p.slug === "data-blueprint"),
-].filter((p): p is NonNullable<typeof p> => Boolean(p));
 
 /**
  * P01 — Homepage. Content per docs/design/P01_HOMEPAGE_REDESIGN_SPECIFICATION.md
@@ -121,6 +110,65 @@ function GlyphTarget() {
     </svg>
   );
 }
+
+/* Original glyphs for the hero credibility badges — one per heroChip.
+   Hand-drawn line icons in the file's existing style, not an icon library. */
+function GlyphEnterprise() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="5" y="4" width="9" height="16" rx="1" stroke="currentColor" strokeWidth="1.6" />
+      <rect x="14" y="9" width="5" height="11" rx="1" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M7.5 7.5h1.5M7.5 11h1.5M7.5 14.5h1.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+function GlyphPractitioner() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="8" r="3.4" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M5.5 19c1-3.5 3.8-5.5 6.5-5.5s5.5 2 6.5 5.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+function GlyphDataAI() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="7" y="7" width="10" height="10" rx="1.5" stroke="currentColor" strokeWidth="1.6" />
+      <circle cx="12" cy="12" r="2" stroke="currentColor" strokeWidth="1.4" />
+      <path d="M12 3.5v2.3M12 18.2v2.3M3.5 12h2.3M18.2 12h2.3" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+    </svg>
+  );
+}
+function GlyphAssessed() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="5" y="4.5" width="14" height="16" rx="1.5" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M8.5 12l2.3 2.3L16 9.7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+function GlyphLiveGlobe() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="8" stroke="currentColor" strokeWidth="1.6" />
+      <path d="M4 12h16M12 4c2.5 2.2 3.8 5 3.8 8s-1.3 5.8-3.8 8c-2.5-2.2-3.8-5-3.8-8s1.3-5.8 3.8-8z" stroke="currentColor" strokeWidth="1.4" />
+    </svg>
+  );
+}
+function GlyphArrowRight() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M4 12h16M13 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+function GlyphDiagnosticBars() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M5 19V13M12 19V8M19 19V5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
 /* Positioning facts about the ACADEMY — never metrics, and never facts that
    belong to a person rather than the organisation. "24+ years in practice"
    was removed on 2026-09-02 (founder direction) on both counts: it is a
@@ -130,11 +178,11 @@ function GlyphTarget() {
    `experienceLine`. "Real enterprise context" replaces it, drawn from
    DR-02 §9, and adds a dimension the other four do not carry. */
 const heroChips = [
-  "Real enterprise context",
-  "Practitioner-led",
-  "Data & AI focused",
-  "Assessment-driven",
-  "Face-to-face & live online",
+  { label: "Real enterprise context", icon: <GlyphEnterprise /> },
+  { label: "Practitioner-led", icon: <GlyphPractitioner /> },
+  { label: "Data & AI focused", icon: <GlyphDataAI /> },
+  { label: "Assessment-driven", icon: <GlyphAssessed /> },
+  { label: "Face-to-face & live online", icon: <GlyphLiveGlobe /> },
 ];
 
 export default function HomePage() {
@@ -145,7 +193,20 @@ export default function HomePage() {
           formats in one eyeline. No date exists yet, so none is shown
           (State A omits the element rather than faking it). Diagnostic CTA
           sits as hero secondary per the 2026-08-31 visual-redesign
-          authorization — see P01_DESIGN_DECISIONS.md. */}
+          authorization — see P01_DESIGN_DECISIONS.md.
+
+          2026-09-04: recomposed (headline cadence, CTA helper line,
+          credibility badges) taking layout cues from a founder-supplied
+          reference mockup — see the founder's request in session for the
+          reference. The reference's own copy (self-paced/portfolio/
+          freelance framing) was NOT used: it contradicts DR-02's
+          expert-led, live-delivery, earned-credential model, so every
+          line below still carries only facts already approved elsewhere
+          on this page. The reference's photograph was deliberately not
+          used either — this file's header comment bars stock/AI imagery
+          site-wide, and the 2026-08-31 direction already decided no
+          individual profile should dominate the hero; the abstract
+          "learning journey" visual is unchanged for that reason. */}
       <section className="night relative overflow-hidden">
         <div
           aria-hidden="true"
@@ -163,12 +224,15 @@ export default function HomePage() {
                 Expert-led training &amp; certification · Data &amp; AI
               </p>
               <h1 className="text-display-xl mb-6">
-                Taught live by a practitioner.{" "}
+                Taught live.
+                <br />
                 <span className="text-[var(--color-primary)]">
-                  Proven by the work you do.
+                  By a practitioner.
                 </span>
+                <br />
+                Proven by the work you do.
               </h1>
-              <p className="text-body-lg mb-9 max-w-[560px] text-[var(--color-ink-quiet)]">
+              <p className="text-body-lg mb-6 max-w-[560px] text-[var(--color-ink-quiet)]">
                 Expert-led courses for data and AI professionals —
                 delivered face-to-face and live online, in Malaysia and
                 internationally. This is not a video library: real sessions,
@@ -176,18 +240,39 @@ export default function HomePage() {
                 a credential that has to be earned.
               </p>
               <div className="flex flex-wrap items-center gap-4">
-                <Button href="#courses">Explore courses</Button>
+                <Button href="/courses">
+                  Explore courses
+                  <GlyphArrowRight />
+                </Button>
                 <Button variant="secondary" href="/diagnostic">
+                  <GlyphDiagnosticBars />
                   Start free diagnostic (10 min)
                 </Button>
               </div>
+              <p className="text-body-sm mt-4 text-[var(--color-ink-faint)]">
+                Not sure where to start? The free 10-minute diagnostic names
+                your gaps — no account needed.
+              </p>
+
+              {/* Credibility badges — positioning facts, not metrics;
+                  content unchanged from the prior full-width strip, only
+                  the presentation (icon + label) and position moved. */}
+              <ul className="mt-9 flex flex-wrap gap-x-7 gap-y-4">
+                {heroChips.map(({ label, icon }) => (
+                  <li key={label} className="flex items-center gap-2.5">
+                    <span className="inline-flex rounded-full bg-[var(--color-prof-1)] p-1.5 text-[var(--color-primary)]">
+                      {icon}
+                    </span>
+                    <span className="text-label">{label}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
 
             {/* The learning journey — an original, academy-first visual:
                 three ascending steps from live delivery to an earned
                 credential (2026-08-31 direction: no individual trainer
-                profile dominates the hero; trainers live at /trainers and
-                in the "Learn from practitioners" section below). */}
+                profile dominates the hero; trainers live at /trainers). */}
             <div className="relative mx-auto w-full max-w-[400px]">
               <svg
                 aria-hidden="true"
@@ -242,16 +327,16 @@ export default function HomePage() {
                   </li>
                 ))}
               </ol>
+              {/* Floating fact tag — echoes the reference mockup's corner
+                  tag treatment, restating a fact already stated in the
+                  subtext above rather than a new claim. */}
+              <div className="absolute -bottom-4 -left-4 hidden items-center gap-2 rounded-[var(--radius-plate)] border border-[var(--color-line-strong)] bg-[var(--color-ground-raised)] px-3.5 py-2 shadow-lg sm:flex">
+                <span className="text-[var(--color-primary)]">
+                  <GlyphLiveGlobe />
+                </span>
+                <span className="text-label">Malaysia &amp; international</span>
+              </div>
             </div>
-          </div>
-
-          {/* Credibility descriptors — positioning facts, not metrics. */}
-          <div className="flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-[var(--color-line)] py-6">
-            {heroChips.map((chip) => (
-              <span key={chip} className="text-label">
-                {chip}
-              </span>
-            ))}
           </div>
         </div>
       </section>
@@ -275,7 +360,7 @@ export default function HomePage() {
               Expert-led courses with stated capability outcomes, delivered
               live — and an assessed path to the credential.
             </p>
-            <Button variant="secondary" href="#courses">
+            <Button variant="secondary" href="/courses">
               See the courses
             </Button>
           </Card>
@@ -289,7 +374,7 @@ export default function HomePage() {
               Private cohorts and tailored engagements — on-site, live online,
               and internationally — with evidence the capability changed.
             </p>
-            <Button variant="secondary" href="#organisations">
+            <Button variant="secondary" href="/contact-us">
               How we work with teams
             </Button>
           </Card>
@@ -387,7 +472,17 @@ export default function HomePage() {
         </p>
       </section>
 
-      {/* ============ Night band: H6 capability areas + H3 who teaches ============ */}
+      {/* ============ Night band: H6 capability areas + "Why expert-led" ============
+          2026-09-04 (founder direction): the H3 "Who teaches" practitioner
+          panel that occupied this slot was removed from the homepage. It
+          is replaced with a differentiator panel that restates claims
+          already made elsewhere on this page (H1 hero, H4 "How it works")
+          rather than inventing new ones — live delivery, direct feedback,
+          an earned credential. It names no individual, so it carries no
+          claim that needs a second practitioner to stay true. The full
+          practitioner content (H3 as approved in
+          docs/design/P01_HOMEPAGE_REDESIGN_SPECIFICATION.md §8) still lives
+          at /trainers; only its homepage placement changed. */}
       <section className="night relative mt-8 overflow-hidden">
         <DotField id="band" />
         <div className="relative mx-auto grid max-w-[1280px] gap-16 px-6 py-20 lg:grid-cols-2">
@@ -417,235 +512,61 @@ export default function HomePage() {
             </ul>
           </div>
 
-          {/* Learn from practitioners — featured trainer cards, rendered
-              from the plural practitioners array (a data change adds a
-              trainer, never a redesign). Full profiles live at /trainers. */}
-          <div id="practitioner" className="scroll-mt-24">
+          {/* Why expert-led — restates claims already made in H1 and H4
+              (live delivery, direct feedback, an earned credential) rather
+              than introducing new ones. Names no individual. */}
+          <div id="why-expert-led" className="scroll-mt-24">
             <p className="text-label mb-3 text-[var(--color-primary)]">
-              Who teaches
+              Why expert-led
             </p>
-            <h2 className="text-display mb-5">Learn from practitioners</h2>
+            <h2 className="text-display mb-5">Live, not self-paced</h2>
             <p className="text-body-lg mb-8 text-[var(--color-ink-quiet)]">
-              Courses are designed and delivered by people who have built
-              these systems in real organisations — and can respond to yours.
+              A video library can&rsquo;t take your questions and can&rsquo;t
+              check whether you can actually do the work. Every course here
+              runs live, with direct feedback, and ends in a credential you
+              earn — not one you attend.
             </p>
-            <div className="mb-6 flex flex-col gap-6">
-              {practitioners.slice(0, 3).map((person) => (
-                <TrainerCard key={person.slug} person={person} />
-              ))}
-            </div>
-            <div className="flex flex-wrap items-center gap-5">
-              <Button variant="secondary" href="/trainers">
-                Meet the trainers
-              </Button>
-              <p className="text-body-sm text-[var(--color-ink-faint)]">
-                Founder-led today — additional trainers will be real ones,
-                never placeholders.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ============ H5 — Courses (light) ============
-          The real portfolio now exists (migrated from the founder's training
-          ecosystem), so the homepage previews it and routes to /courses:
-          discovery here, exploration there, depth on the detail pages.
-          Still no dates — scheduled offerings remain State A, which keeps
-          the courses-vs-offerings emphasis (HO-1) open. */}
-      <section
-        id="courses"
-        className="mx-auto max-w-[1280px] scroll-mt-24 px-6 py-20"
-      >
-        <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
-          <div className="max-w-[620px]">
-            <p className="text-label mb-3 text-[var(--color-primary)]">
-              Courses
-            </p>
-            <h2 className="text-display mb-5">
-              A deliberately structured portfolio, built properly
-            </h2>
-            <p className="text-body-lg text-[var(--color-ink-quiet)]">
-              A course here is a designed, expert-led learning experience
-              with stated outcomes — what you will actually be able to do
-              afterwards. Each runs as scheduled offerings: a specific format,
-              dates and location you register for.
-            </p>
-          </div>
-          <Button href="/courses">All courses</Button>
-        </div>
-        <div className="grid gap-6 md:grid-cols-3">
-          {featuredCourses.map((course) => (
-            <CourseCard key={course.slug} course={course} />
-          ))}
-        </div>
-        <p className="text-body-sm mt-8 text-[var(--color-ink-faint)]">
-          Public dates are not yet published. When they are, they will be real
-          — a small, genuine schedule, never a padded catalogue.
-        </p>
-      </section>
-
-      {/* ============ H7 — Certification (light + night rubric card) ============ */}
-      <section
-        id="credential"
-        className="mx-auto max-w-[1280px] scroll-mt-24 px-6 py-16"
-      >
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          <div className="max-w-[560px]">
-            <p className="text-label mb-3 text-[var(--color-primary)]">
-              Certification
-            </p>
-            <h2 className="text-display mb-6">
-              The credential has to be earned
-            </h2>
-            <p className="text-body-lg mb-4 text-[var(--color-ink-quiet)]">
-              No credential here is awarded for showing up. It is earned
-              through assessed applied work — real deliverables, judged by a
-              qualified assessor against a published rubric, with written
-              reasoning for every criterion.
-            </p>
-            <p className="text-body-sm text-[var(--color-ink-quiet)]">
-              Taking part in an expert-led course is part of the pathway.
-              Attendance alone is never enough — and that is exactly why the
-              credential means something to an employer.
-            </p>
-          </div>
-          {/* Rubric excerpt — rebuilt 2026-09-02.
-              It previously rendered as a single monospace paragraph with
-              <br> breaks and ○/◉ characters standing in for form controls,
-              which read as terminal output rather than an assessment
-              instrument. It is now laid out as the scale it actually is:
-              prose in the UI face, the four levels as a real four-point
-              scale, and the assessor's mark carried by a drawn indicator.
-              The selected level is signalled by weight, a marker and a
-              caption as well as colour — colour is never the sole carrier
-              of meaning here. Still illustrative of FORMAT only: the real
-              rubric is unwritten and must never be faked. */}
-          <div className="night rounded-[var(--radius-panel)] border border-[var(--color-line-strong)] p-7">
-            <p className="text-label mb-5">From the assessment rubric</p>
-
-            <p className="text-h2">Justification</p>
-            <p className="text-body-sm mb-7 text-[var(--color-ink-faint)]">
-              Criterion 2 of 5 · assessed on every submission
-            </p>
-
-            <ol className="mb-7 grid grid-cols-2 gap-x-5 gap-y-5 sm:grid-cols-4">
+            <ul>
               {[
-                { level: "Not yet", awarded: false },
-                { level: "Competent", awarded: true },
-                { level: "Proficient", awarded: false },
-                { level: "Distinguished", awarded: false },
-              ].map(({ level, awarded }) => (
-                <li key={level}>
-                  <span
-                    aria-hidden="true"
-                    className={`mb-2.5 block h-[3px] rounded-full ${
-                      awarded
-                        ? "bg-[var(--color-primary)]"
-                        : "bg-[var(--color-line-strong)]"
-                    }`}
-                  />
-                  <span
-                    className={`block text-body-sm ${
-                      awarded
-                        ? "font-semibold text-[var(--color-ink)]"
-                        : "text-[var(--color-ink-faint)]"
-                    }`}
-                  >
-                    {level}
-                  </span>
-                  {/* One word, not a phrase: "assessor's mark" set in the
-                      tracked uppercase label wrapped to two lines inside a
-                      quarter-width column and read as clutter. This carries
-                      the same meaning without colour being the sole
-                      signal, and never wraps. */}
-                  {awarded && (
-                    <span
-                      className="text-label mt-1 block"
-                      // `.text-label` sets its own colour and is unlayered
-                      // CSS, so it outranks a Tailwind text-* utility. Set
-                      // it here rather than fight specificity.
-                      style={{ color: "var(--color-primary)" }}
-                    >
-                      Awarded
-                    </span>
-                  )}
+                [
+                  "Live sessions",
+                  "Face-to-face or live online, with real-time interaction — never a recording.",
+                ],
+                [
+                  "Direct feedback",
+                  "Questions, worked examples and feedback from someone who has built these systems.",
+                ],
+                [
+                  "Earned credential",
+                  "Real deliverables, judged by a qualified assessor against a published rubric — not attendance.",
+                ],
+              ].map(([title, body]) => (
+                <li
+                  key={title}
+                  className="border-t border-[var(--color-line)] py-4"
+                >
+                  <p className="font-semibold">{title}</p>
+                  <p className="text-body-sm text-[var(--color-ink-quiet)]">
+                    {body}
+                  </p>
                 </li>
               ))}
-            </ol>
-
-            <p className="text-body-sm border-t border-[var(--color-line)] pt-5 text-[var(--color-ink-quiet)]">
-              The assessor records a level for every criterion and writes the
-              reasoning behind it — shown to the candidate in full.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ============ H8 — For organisations (raised) ============ */}
-      <section
-        id="organisations"
-        className="scroll-mt-24 border-y border-[var(--color-line)] bg-[var(--color-ground-raised)]"
-      >
-        <div className="mx-auto grid max-w-[1280px] items-center gap-12 px-6 py-20 lg:grid-cols-2">
-          <div className="max-w-[560px]">
-            <p className="text-label mb-3 text-[var(--color-primary)]">
-              For organisations
-            </p>
-            <h2 className="text-display mb-6">
-              Build your team&rsquo;s capability — with proof it worked
-            </h2>
-            <p className="text-body-lg mb-4 text-[var(--color-ink-quiet)]">
-              Private cohorts and tailored engagements, delivered on-site,
-              live online, or at your locations internationally. We usually
-              start with a team capability assessment — so the course
-              targets the gaps you actually have.
-            </p>
-            <p className="text-body-sm mb-9 text-[var(--color-ink-quiet)]">
-              You get cohort visibility, attendance records, and the
-              documentation your L&amp;D and reporting processes need.
-            </p>
-            <Button variant="secondary" href="#">
-              Talk to us about your team
-            </Button>
-          </div>
-          <Card variant="plate" className="bg-[var(--color-ground)] p-6">
-            <p className="text-label mb-4">
-              Illustrative — team capability view
-            </p>
-            <div className="grid grid-cols-10 gap-1" aria-hidden="true">
-              {Array.from({ length: 40 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="aspect-square rounded-[3px]"
-                  style={{
-                    background: `var(--color-prof-${((i * 13 + 3) % 5) + 1})`,
-                  }}
-                />
-              ))}
+            </ul>
+            <div className="mt-6 flex flex-wrap items-center gap-5">
+              <Button variant="secondary" href="#delivery">
+                See how it works
+              </Button>
             </div>
-            <p className="text-mono mt-4 text-[0.7rem] text-[var(--color-ink-faint)]">
-              team members × capability areas · proficiency 1–5
-            </p>
-          </Card>
+          </div>
         </div>
       </section>
 
-      {/* ============ H9 — Honest position + primary close (light) ============ */}
-      <section className="mx-auto max-w-[1280px] px-6 py-20 text-center">
-        <p className="text-label mb-3 text-[var(--color-primary)]">
-          Where we are today
-        </p>
-        <h2 className="text-display mb-5">
-          The first courses are being prepared now
-        </h2>
-        <p className="text-body-lg mx-auto mb-9 max-w-[620px] text-[var(--color-ink-quiet)]">
-          Everything published here will be genuine — real courses, real
-          dates, a real practitioner. On a platform about proof, that starts
-          with us.
-        </p>
-        <Button href="#courses">Explore courses</Button>
-      </section>
+      {/* H5 Courses, H7 Certification, H8 For organisations and H9
+          "Where we are today" were REMOVED 2026-09-02 by founder
+          direction. See docs/P01_DESIGN_DECISIONS.md "Homepage reduced"
+          for what each carried and where it went. The certification
+          content was not discarded — it moved to /certifications. */}
+
 
       {/* ============ Diagnostic band (night, pre-footer) ============
           Final placement of the preserved diagnostic CTA. Descriptors are

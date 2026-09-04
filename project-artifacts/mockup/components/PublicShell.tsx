@@ -85,7 +85,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
             <Link href="/courses" className="hover:text-[var(--color-ink)]">
               Courses
             </Link>
-            <Link href="/#credential" className="hover:text-[var(--color-ink)]">
+            <Link href="/certifications" className="hover:text-[var(--color-ink)]">
               Certifications
             </Link>
             <Link href="/trainers" className="hover:text-[var(--color-ink)]">

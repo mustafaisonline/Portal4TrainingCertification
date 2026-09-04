@@ -129,7 +129,7 @@ export function CoursePricing({
                 discountLabel={activeRegion.discountLabel}
               />
               <div className="mt-7 flex flex-wrap gap-3">
-                <Button href="/#organisations">Register your interest</Button>
+                <Button href="/contact-us">Register your interest</Button>
               </div>
               <p className="text-body-sm mt-4 text-[var(--color-ink-faint)]">
                 Enquiry-based — no online payment yet. We confirm dates and
@@ -210,7 +210,7 @@ export function CoursePricing({
                 </ul>
                 <Button
                   variant={pkg.featured ? "primary" : "secondary"}
-                  href="/#organisations"
+                  href="/contact-us"
                 >
                   Enquire about this package
                 </Button>
@@ -224,7 +224,7 @@ export function CoursePricing({
           offer, shown in the currency of the selected region. Corporate and
           private-cohort engagements are quoted separately —{" "}
           <Link
-            href="/#organisations"
+            href="/contact-us"
             className="text-[var(--color-primary)] underline underline-offset-4"
           >
             talk to us about your team

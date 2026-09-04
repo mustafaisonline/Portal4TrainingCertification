@@ -99,7 +99,7 @@ export default async function CourseDetailPage({
             {course.valueProposition}
           </p>
           <div className="mb-10 flex flex-wrap items-center gap-4">
-            <Button href="/#organisations">Register your interest</Button>
+            <Button href="/contact-us">Register your interest</Button>
             <Button variant="secondary" href="#investment">
               See the investment
             </Button>
@@ -550,7 +550,7 @@ export default async function CourseDetailPage({
             assessor — taking part in a course is part of that pathway, and
             attendance alone is never sufficient.{" "}
             <Link
-              href="/#credential"
+              href="/certifications"
               className="text-[var(--color-primary)] underline underline-offset-4"
             >
               How certification works
@@ -620,7 +620,7 @@ export default async function CourseDetailPage({
             online, or internationally.
           </p>
           <div className="flex flex-wrap items-center gap-4">
-            <Button href="/#organisations">Talk to us about your team</Button>
+            <Button href="/contact-us">Talk to us about your team</Button>
             <Button variant="secondary" href="/courses">
               Explore other courses
             </Button>

@@ -317,6 +317,55 @@ Rendered in a fixed 2:3 box with `object-cover`. The source covers are
 340/324/362px and the titles beneath them did not align — the same
 cross-card misalignment reported on the programme cards (`FINDINGS` F4).
 
+## Homepage reduced to five sections (2026-09-02, sixth pass)
+
+Founder direction: remove **H5 Courses**, **H7 Certification**, **H8 For
+organisations** and **H9 "Where we are today"**. The homepage now runs
+Hero → Pathways → How it works → Capability + Why expert-led → Diagnostic.
+
+### These were anchor targets, not just sections
+
+Deleting them would have broken **13 links across 7 files**, including every
+"Register your interest" button on course pages — the primary commercial path
+— and the **Certifications nav item requested one instruction earlier**. Each
+was repointed to a real page, and each destination is better than the anchor
+it replaced:
+
+| Anchor | Now | Why it is an improvement |
+|---|---|---|
+| `#courses` | `/courses` | The full portfolio rather than a three-card teaser |
+| `#organisations` (9 links) | `/contact-us` | That page's "For organisations" route card is exactly this enquiry |
+| `/#credential` | `/certifications` | A page, not a band |
+
+### What was preserved, and what was lost
+
+**Preserved:** the certification argument and the rubric block moved to
+`/certifications` **intact** — the rubric had been specifically rebuilt on
+founder feedback, and discarding it would have thrown that away. The
+certificate-of-participation vs credential boundary (`OQ-21`) is stated more
+explicitly there than it was on the homepage.
+
+**Lost from the homepage, deliberately, and worth knowing:**
+
+- **D1, the credential differentiator, no longer appears on P01.** It was the
+  page's answer to *"why does this matter more than a certificate?"* It now
+  lives one click away.
+- **The H9 honest close is gone.** That section carried the State A position
+  in plain words — *"the first courses are being prepared"*, no dates
+  invented. **P01 no longer states anywhere that no schedule exists yet.**
+  The claim was never false and is not now — but the page no longer
+  volunteers it, and volunteering it was the point.
+
+Both are recoverable: `/about-us` still carries the four commitments
+(including "The credential is earned") and its own honest close.
+
+### Spec status
+
+`docs/design/P01_HOMEPAGE_REDESIGN_SPECIFICATION.md` specifies H0–H9. **Four
+of those nine sections no longer exist on P01.** The specification is not
+rewritten here — it remains the record of what was approved — but a reader
+must not treat it as a description of the current page.
+
 ## Rejected alternatives
 
 - **Leading the hero with an offerings board** ("Direction A") — rejected:

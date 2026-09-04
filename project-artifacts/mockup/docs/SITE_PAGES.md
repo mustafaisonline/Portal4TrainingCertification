@@ -25,8 +25,9 @@ Course" (singular); it links to a list of seven, so the plural is used — a
 grammatical error on the most prominent button in the portal was not worth
 shipping. Say the word if singular was deliberate.
 
-**Certifications** remains an anchor to the homepage section (`/#credential`)
-rather than a page, because no certification page exists yet.
+**Certifications** now points at `/certifications`. It was an anchor to a
+homepage section, but that section was removed on the same day — which would
+have orphaned the menu item, so the content moved to its own page.
 
 ## Built
 
@@ -36,7 +37,8 @@ rather than a page, because no certification page exists yet.
 | `/courses`, `/courses/[slug]` | Portfolio and detail | Real — migrated, with published pricing |
 | `/trainers` | Trainer directory, selection standard, published work | Real |
 | `/about-us` | Organisation identity, commitments, founder, honest current state | **Real — every positioning claim traced to DR-02 §1/§2/§6/§7.** Nothing about scale, history, clients, team size, founding date or accreditation is stated, because none is established |
-| `/contact-us` | Three enquiry routes, enquiry form, genuine channels | **Real, with one gap — see below** |
+| `/contact-us` | Three enquiry routes, enquiry form, genuine channels | **Real, with one gap — see below.** Also now the destination for every "Register your interest" and corporate-enquiry CTA, after the homepage's For-organisations band was removed |
+| `/certifications` | The earned-credential argument, the assessment rubric, and the participation-certificate boundary | Real. Created 2026-09-02 when the homepage certification section was removed — the content moved rather than being discarded |
 | `/diagnostic`, `/diagnostic/result` | Capability assessment (P05/P06) | Pre-DR-02 baseline |
 | `/journey-placeholder` | Labelled next-stage placeholder | Placeholder, labelled |
 

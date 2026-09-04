@@ -43,7 +43,7 @@ const routes = [
     title: "Capability for your team",
     body: "Private cohorts, tailored engagements and on-site delivery, in Malaysia or internationally. These start with a conversation about the gap, not a quote.",
     cta: "How we work with teams",
-    href: "/#organisations",
+    href: "/contact-us",
   },
   {
     label: "For practitioners",

@@ -141,7 +141,11 @@ placeholder.
   CSS-grayscaled, in the who-teaches band (a style treatment; the asset is
   untouched).
 - **Credibility descriptor strip** under the hero — positioning facts
-  (24+ years in practice · practitioner-led · …), never metrics.
+  (real enterprise context · practitioner-led · …), never metrics.
+  *(Updated 2026-09-02: "24+ years in practice" was removed by founder
+  direction. It broke this rule twice — a metric, and one belonging to the
+  founder rather than the Academy, so it implied an organisation two decades
+  old. It remains on the trainer, where it is true.)*
 
 **Diagnostic placement (supersedes the §9 note above):** under this
 authorization the CTA appears **three** times — hero secondary, the

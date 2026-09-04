@@ -121,8 +121,16 @@ function GlyphTarget() {
     </svg>
   );
 }
+/* Positioning facts about the ACADEMY — never metrics, and never facts that
+   belong to a person rather than the organisation. "24+ years in practice"
+   was removed on 2026-09-02 (founder direction) on both counts: it is a
+   metric, which this strip's own rule excludes, and it is the founder's
+   experience rather than the Academy's, so reading it here implied an
+   organisation two decades old. It survives where it is true — the trainer's
+   `experienceLine`. "Real enterprise context" replaces it, drawn from
+   DR-02 §9, and adds a dimension the other four do not carry. */
 const heroChips = [
-  "24+ years in practice",
+  "Real enterprise context",
   "Practitioner-led",
   "Data & AI focused",
   "Assessment-driven",

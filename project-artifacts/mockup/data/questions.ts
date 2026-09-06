@@ -145,3 +145,23 @@ export const INSIGHT_CARD = {
   afterQuestionIndex: 5, // 1-indexed question number, matches §4 "roughly every 5"
   text: "You're reading strongly on data modelling and pipeline reliability. Let's check how you reason about AI and governance next.",
 };
+
+/**
+ * Certificate-of-attempt tiers, named by question count (2026-09-05, founder
+ * request). Only `count: 10` ("Basic") is real — this file has exactly 10
+ * questions. The other three are shown in the UI as named tiers but are not
+ * backed by a question bank; see docs/MOCK_DATA_REGISTER.md.
+ *
+ * ⚠ Named tiers on a paid certificate sit in tension with DR-01 ("one
+ * credential, no ladder, no bands"). This is deliberately scoped as a
+ * distinct, lesser "certificate of attempt" (self-assessment record), not
+ * the Academy's earned credential DR-01 governs — but that framing is not
+ * itself an approved decision. Flagged for founder review, not resolved
+ * here.
+ */
+export const QUESTION_COUNT_TIERS = [
+  { count: 10, tier: "Basic" },
+  { count: 50, tier: "Associate" },
+  { count: 100, tier: "Professional" },
+  { count: 200, tier: "Master" },
+] as const;

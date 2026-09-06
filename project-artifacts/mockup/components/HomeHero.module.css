@@ -1,0 +1,973 @@
+/**
+ * ==========================================================================
+ * DATA & AI ACADEMY — HERO SECTION (reference-architecture implementation)
+ * ==========================================================================
+ *
+ * Ported from a founder-supplied CSS blueprint (hero-section-reference.css,
+ * 2026-09-05) that specified an exact DOM contract, layout, layering,
+ * spacing and responsive behaviour, with an explicit instruction NOT to
+ * redesign it — only to adapt colours/fonts to the portal's existing design
+ * tokens where a direct equivalent exists. This file preserves the
+ * blueprint's structure, values and breakpoints as closely as possible;
+ * see HomeHero.tsx's header comment for exactly what was adapted and why.
+ *
+ * CSS Modules — class names below are scoped locally (e.g. `.hero` here is
+ * NOT the same as a global `.hero` elsewhere) and consumed from HomeHero.tsx
+ * as `styles.hero`, `styles['hero__grid-bg']`, etc.
+ * ==========================================================================
+ */
+
+/* ==========================================================================
+   01. HERO ROOT + BACKGROUND
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  /* Was a fixed 920px from the original blueprint — sized for an earlier,
+     taller composition (more cards, the journey strip pinned inside this
+     box). Content has since shrunk (.hero-visual's own min-height is the
+     real floor for the card collage now) and nobody revisited this value,
+     so it was reserving ~66px of dead space below the actual content.
+     Tablet/mobile already use `auto` for the same reason; desktop now
+     matches. 2026-09-05, founder direction: "reduce the bottom padding". */
+  min-height: auto;
+  color: var(--color-ink);
+  background:
+    radial-gradient(circle at 77% 28%, rgba(90, 104, 210, 0.14), transparent 26%),
+    radial-gradient(circle at 58% 60%, rgba(65, 83, 180, 0.08), transparent 30%),
+    linear-gradient(180deg, #0b1024 0%, #080d20 48%, #060a18 100%);
+}
+
+/* Subtle dotted engineering grid — kept low-opacity; atmospheric, not
+   wallpaper. This is the blueprint's own CSS-only grid (distinct from the
+   shared <DotField/> SVG component used elsewhere on the page), used here
+   because the blueprint specifies its exact pattern and fade mask. */
+.hero__grid-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+  opacity: 0.72;
+  background-image:
+    radial-gradient(circle, rgba(130, 149, 226, 0.46) 1px, transparent 1.15px),
+    linear-gradient(
+      90deg,
+      transparent 0,
+      transparent calc(50% - 1px),
+      rgba(118, 134, 204, 0.08) calc(50% - 1px),
+      rgba(118, 134, 204, 0.08) calc(50% + 1px),
+      transparent calc(50% + 1px)
+    );
+  background-size: 24px 24px, 100% 100%;
+  mask-image: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.7),
+    rgba(0, 0, 0, 1) 25%,
+    rgba(0, 0, 0, 0.45) 92%,
+    transparent 100%
+  );
+}
+
+.hero__ambient-glow {
+  position: absolute;
+  z-index: -2;
+  pointer-events: none;
+  border-radius: 999px;
+  filter: blur(80px);
+}
+
+.hero__ambient-glow--one {
+  width: 500px;
+  height: 500px;
+  top: 100px;
+  right: 16%;
+  background: rgba(90, 103, 225, 0.13);
+}
+
+.hero__ambient-glow--two {
+  width: 350px;
+  height: 300px;
+  bottom: 70px;
+  left: 35%;
+  background: rgba(76, 100, 198, 0.06);
+}
+
+/* ==========================================================================
+   02. MAIN HERO CONTAINER
+   ========================================================================== */
+
+.hero__inner {
+  position: relative;
+  width: min(1440px, calc(100% - (clamp(24px, 4vw, 72px) * 2)));
+  margin-inline: auto;
+  /* Top padding reduced (2026-09-05) — a standalone request, not tied to
+     bottom padding after all. Safe to shrink freely: it only affects
+     where the hero's content starts, not the journey strip's clearance
+     below (that depends entirely on padding-bottom, verified separately —
+     see that property's own comment). */
+  padding-top: 56px;
+  /* Was 190px, reserved so the journey strip (then absolutely positioned
+     and pinned to this box's bottom edge) wouldn't overlap the cards
+     above it. The strip is normal-flow now, below the hero entirely (see
+     .hero-journey), so this is back to a plain symmetric value. */
+  padding-bottom: 56px;
+
+  display: grid;
+  grid-template-columns: minmax(0, 0.94fr) minmax(560px, 1.06fr);
+  column-gap: clamp(32px, 5vw, 96px);
+  align-items: center;
+}
+
+/* ==========================================================================
+   03. LEFT CONTENT COLUMN
+   ========================================================================== */
+
+.hero__content {
+  position: relative;
+  z-index: 4;
+  max-width: 660px;
+  padding-top: 28px;
+}
+
+.hero__eyebrow {
+  margin: 0 0 20px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.3em;
+  color: var(--color-ink-quiet);
+}
+
+/* Large editorial headline — uses the portal's own reserved display serif
+   (var(--font-display)) rather than the blueprint's generic Georgia stack,
+   per "adapt fonts to existing tokens where a direct equivalent exists". */
+.hero__title {
+  margin: 0;
+  max-width: 650px;
+  font-family: var(--font-display);
+  /* 2026-09-05: reduced 25% from the blueprint's clamp(58px, 5.1vw, 84px)
+     across every breakpoint below too — founder direction, "too big". */
+  font-size: clamp(43.5px, 3.83vw, 63px);
+  font-weight: 600;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  color: var(--color-ink);
+}
+
+.hero__title > span {
+  display: block;
+}
+
+.hero__title-gradient {
+  background: linear-gradient(
+    90deg,
+    var(--color-hero-blue) 0%,
+    var(--color-primary) 45%,
+    var(--color-hero-purple) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero__description {
+  width: min(100%, 610px);
+  margin: 30px 0 0;
+  font-size: clamp(17px, 1.35vw, 20px);
+  font-weight: 400;
+  line-height: 1.58;
+  color: var(--color-ink-quiet);
+}
+
+/* ==========================================================================
+   04. CTA SYSTEM
+   ========================================================================== */
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.heroButton {
+  min-height: 58px;
+  padding: 0 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  font: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease;
+}
+
+.heroButton:hover {
+  transform: translateY(-2px);
+}
+
+.heroButton:focus-visible {
+  outline: 3px solid rgba(151, 166, 255, 0.72);
+  outline-offset: 4px;
+}
+
+.heroButtonPrimary {
+  composes: heroButton;
+  min-width: 225px;
+  color: var(--color-primary-ink);
+  background: linear-gradient(
+    135deg,
+    var(--color-hero-blue) 0%,
+    var(--color-primary-strong) 48%,
+    var(--color-primary) 100%
+  );
+  box-shadow:
+    0 10px 30px rgba(109, 123, 244, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.heroButtonPrimary:hover {
+  box-shadow:
+    0 16px 38px rgba(109, 123, 244, 0.32),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.heroButtonSecondary {
+  composes: heroButton;
+  min-width: 320px;
+  color: var(--color-ink);
+  background: rgba(10, 16, 34, 0.48);
+  border-color: rgba(120, 143, 230, 0.64);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.heroButtonSecondary:hover {
+  background: rgba(33, 42, 76, 0.72);
+  border-color: rgba(153, 169, 255, 0.82);
+}
+
+.hero-button__icon {
+  color: var(--color-hero-blue);
+  display: inline-flex;
+}
+
+.hero__helper {
+  margin: 14px 0 0;
+  color: var(--color-ink-faint);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+/* ==========================================================================
+   05. BENEFIT ICON ROW
+   ========================================================================== */
+
+.hero__benefits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  margin-top: 34px;
+}
+
+.hero-benefit {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 130px;
+}
+
+.hero-benefit__icon {
+  width: 50px;
+  height: 50px;
+  flex: 0 0 50px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(143, 158, 234, 0.28);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+.hero-benefit__icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.hero-benefit__icon--blue {
+  color: var(--color-hero-blue);
+  background: rgba(66, 86, 154, 0.35);
+}
+.hero-benefit__icon--purple {
+  color: var(--color-hero-purple);
+  background: rgba(103, 70, 150, 0.3);
+}
+.hero-benefit__icon--orange {
+  color: var(--color-hero-orange);
+  background: rgba(145, 86, 37, 0.28);
+}
+.hero-benefit__icon--teal {
+  color: var(--color-hero-teal);
+  background: rgba(35, 117, 119, 0.25);
+}
+
+.hero-benefit__text {
+  color: var(--color-ink-quiet);
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.25;
+}
+
+/* ==========================================================================
+   06. RIGHT VISUAL COMPOSITION
+   ========================================================================== */
+
+.hero-visual {
+  position: relative;
+  /* 780px (was 800px): reduced after removing 2 of the 8 cards (2026-09-05)
+     — the remaining 6 were shifted up to close the gap those two left
+     behind. Not reduced as much as the shift alone would suggest: the
+     lowest card ("Get Career Support") is absolutely positioned and
+     extends past a much smaller min-height without being clipped, which
+     left only a 3px gap above the journey strip in testing — too tight
+     to survive minor rendering variance. Verified with a real margin. */
+  min-height: 700px;
+  z-index: 2;
+}
+
+/* ==========================================================================
+   07. ORBIT / CONNECTION DECORATION
+   ========================================================================== */
+
+.hero-orbit {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 50%;
+  border: 1px solid rgba(132, 151, 246, 0.22);
+}
+
+.hero-orbit--large {
+  width: 590px;
+  height: 390px;
+  top: 82px;
+  left: 70px;
+  transform: rotate(-10deg);
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+  box-shadow:
+    0 0 55px rgba(100, 116, 255, 0.07),
+    inset 0 0 50px rgba(100, 116, 255, 0.025);
+}
+
+.hero-orbit--small {
+  width: 410px;
+  height: 300px;
+  top: 170px;
+  left: 155px;
+  transform: rotate(25deg);
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  opacity: 0.65;
+}
+
+/* ==========================================================================
+   08. FLOATING LEARNING CARDS
+   ========================================================================== */
+
+.hero-card {
+  position: absolute;
+  z-index: 6;
+  width: 270px;
+  min-height: 116px;
+  padding: 19px 20px;
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  column-gap: 14px;
+  align-items: center;
+  border: 1px solid rgba(137, 154, 222, 0.38);
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(52, 62, 93, 0.96), rgba(34, 42, 67, 0.91));
+  box-shadow:
+    0 18px 55px rgba(0, 0, 0, 0.36),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition:
+    translate 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.hero-card:hover {
+  /* `translate` (not `transform`) so this composes with each card's own
+     static `transform: rotate(...)` below instead of overwriting it —
+     `transform` and `translate` are independent CSS properties. */
+  translate: 0 -5px;
+  border-color: rgba(156, 169, 239, 0.58);
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.42),
+    0 0 30px rgba(125, 140, 255, 0.12);
+}
+
+.hero-card__number {
+  position: absolute;
+  top: 13px;
+  right: 18px;
+  color: rgba(163, 177, 245, 0.7);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.hero-card__icon {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(170, 184, 255, 0.32);
+}
+.hero-card__icon svg {
+  width: 25px;
+  height: 25px;
+}
+
+.hero-card__content {
+  padding-right: 8px;
+}
+
+.hero-card__title {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: 17px;
+  font-weight: 750;
+  line-height: 1.22;
+}
+
+.hero-card__description {
+  margin: 7px 0 0;
+  color: var(--color-ink-quiet);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* Individual card accent treatments.
+   2026-09-05, creative rearrangement: a flowing diagonal cascade (not two
+   straight columns) — each card gets its own small independent rotation
+   for a hand-placed feel, alternating sides with varied insets rather
+   than a repeating left/right pattern. Positions verified overlap-free by
+   measuring actual rendered rectangles (8-card pairwise check), not by
+   eye. Spatial order is deliberately not the same as reading order (01,
+   03 both sit in the top row, etc.) — the original founder reference did
+   the same, and a scatter that strictly followed 1-2-3-4 reading order
+   would look more like a grid than a composition. */
+
+.hero-card--vibe {
+  top: 0;
+  left: 70px;
+  transform: rotate(-2deg);
+}
+.hero-card--vibe .hero-card__icon {
+  color: #e8ecff;
+  background: radial-gradient(circle at 30% 30%, #9bb5ff 0%, var(--color-hero-blue) 58%, #465aa7 100%);
+  box-shadow: 0 0 28px rgba(116, 139, 255, 0.24);
+}
+
+.hero-card--certification {
+  top: 40px;
+  right: 0;
+  transform: rotate(-1.5deg);
+}
+.hero-card--certification .hero-card__icon {
+  color: #9bb5ff;
+  background: rgba(66, 86, 154, 0.32);
+  border-color: rgba(124, 140, 255, 0.32);
+}
+
+.hero-card--opportunities {
+  top: 195px;
+  left: 70px;
+  transform: rotate(-2deg);
+}
+.hero-card--opportunities .hero-card__icon {
+  color: #ffd092;
+  background: rgba(161, 100, 45, 0.34);
+  border-color: rgba(246, 164, 75, 0.34);
+}
+
+.hero-card--interview {
+  top: 235px;
+  right: 0;
+  transform: rotate(2deg);
+}
+.hero-card--interview .hero-card__icon {
+  color: #8bf0e8;
+  background: rgba(41, 135, 140, 0.3);
+  border-color: rgba(79, 209, 197, 0.3);
+}
+
+.hero-card--community {
+  top: 385px;
+  left: 0;
+  transform: rotate(1deg);
+}
+.hero-card--community .hero-card__icon {
+  color: #ffd092;
+  background: rgba(161, 100, 45, 0.34);
+  border-color: rgba(246, 164, 75, 0.34);
+}
+
+.hero-card--career {
+  top: 425px;
+  right: 70px;
+  transform: rotate(-1.5deg);
+}
+.hero-card--career .hero-card__icon {
+  color: #d7c5ff;
+  background: rgba(111, 77, 160, 0.3);
+  border-color: rgba(178, 140, 255, 0.32);
+}
+
+/* ==========================================================================
+   09. HANDWRITTEN ANNOTATIONS — var(--font-hand), the portal's own
+   self-hosted handwriting font, rather than the blueprint's generic
+   cursive fallback stack.
+   ========================================================================== */
+
+.hero-script {
+  position: absolute;
+  z-index: 7;
+  color: var(--color-primary-strong);
+  font-family: var(--font-hand);
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.2;
+  opacity: 0.96;
+  text-align: center;
+}
+
+.hero-script--bottom {
+  right: 38px;
+  bottom: 50px;
+  font-size: 18px;
+  transform: rotate(5deg);
+}
+
+/* ==========================================================================
+   11. BOTTOM LEARNING JOURNEY STRIP
+   ========================================================================== */
+
+.hero-journey {
+  /* 2026-09-05, later still: moved from `position: absolute` (pinned
+     inside the hero's bottom edge) to normal flow, directly below the
+     hero — founder direction. Width/centering matches `.hero__inner`'s
+     own formula so its edges line up with the hero content above it. */
+  position: relative;
+  z-index: 8;
+  width: min(1440px, calc(100% - (clamp(24px, 4vw, 72px) * 2)));
+  /* Bottom margin matched to top (48px, was 64px) — 2026-09-05: the
+     founder asked for this same hero→journey gap kept consistent between
+     every homepage section. The other sections now carry their own
+     48px `mt-12` (app/page.tsx), but adjoining margins collapse to
+     whichever is larger, so this needed to match too or the
+     journey→next-section gap would still read as 64px. */
+  margin: 48px auto;
+  min-height: 150px;
+  padding: 26px 38px;
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1fr) 46px
+    minmax(0, 1fr) 46px
+    minmax(0, 1fr) 46px
+    minmax(0, 1.15fr)
+    160px;
+  align-items: center;
+  border: 1px solid rgba(122, 141, 213, 0.42);
+  border-radius: 20px;
+  background: linear-gradient(100deg, rgba(32, 40, 65, 0.96), rgba(25, 33, 54, 0.94));
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.journey-step {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  align-items: center;
+  gap: 14px;
+}
+
+.journey-step__icon {
+  width: 70px;
+  height: 70px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(145, 159, 237, 0.3);
+}
+.journey-step__icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* Named by role, matching how the floating cards are also named
+   (--vibe/--projects/--portfolio/--opportunities) — not by colour tone. */
+.journey-step--learn .journey-step__icon {
+  color: var(--color-hero-purple);
+  background: rgba(92, 67, 157, 0.35);
+}
+.journey-step--build .journey-step__icon {
+  color: var(--color-hero-blue);
+  background: rgba(39, 88, 152, 0.36);
+}
+.journey-step--showcase .journey-step__icon {
+  color: var(--color-hero-teal);
+  background: rgba(37, 110, 111, 0.33);
+}
+.journey-step--explore .journey-step__icon {
+  color: var(--color-hero-purple);
+  background: rgba(89, 65, 151, 0.36);
+}
+
+.journey-step__number {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--color-ink-quiet);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.journey-step__title {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: 18px;
+  font-weight: 750;
+  line-height: 1.2;
+}
+
+.journey-step__description {
+  margin: 7px 0 0;
+  color: var(--color-ink-quiet);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.journey-arrow {
+  justify-self: center;
+  color: var(--color-ink-quiet);
+  font-size: 34px;
+  font-weight: 300;
+}
+
+.hero-journey__note {
+  color: var(--color-primary-strong);
+  font-family: var(--font-hand);
+  font-size: 21px;
+  line-height: 1.2;
+  text-align: center;
+  transform: rotate(-6deg);
+}
+
+/* ==========================================================================
+   12. OPTIONAL MICRO-INTERACTIONS
+   ========================================================================== */
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-card--vibe {
+    animation: heroFloatA 7s ease-in-out infinite;
+  }
+  .hero-card--opportunities {
+    animation: heroFloatA 9s ease-in-out infinite reverse;
+  }
+  .hero-card--certification {
+    animation: heroFloatB 8.5s ease-in-out infinite reverse;
+  }
+  .hero-card--interview {
+    animation: heroFloatC 7s ease-in-out infinite;
+  }
+  .hero-card--career {
+    animation: heroFloatA 8s ease-in-out infinite;
+  }
+  .hero-card--community {
+    animation: heroFloatB 9.5s ease-in-out infinite;
+  }
+}
+
+@keyframes heroFloatA {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -8px; }
+}
+@keyframes heroFloatB {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 7px; }
+}
+@keyframes heroFloatC {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 4px -6px; }
+}
+
+/* ==========================================================================
+   13. LARGE DESKTOP
+   ========================================================================== */
+
+@media (min-width: 1600px) {
+  .hero__inner {
+    grid-template-columns: 0.92fr 1.08fr;
+  }
+  .hero-visual {
+    min-height: 660px;
+  }
+  .hero__title {
+    font-size: 64.5px;
+  }
+}
+
+/* ==========================================================================
+   14. LAPTOP / SMALL DESKTOP
+   ========================================================================== */
+
+@media (max-width: 1250px) {
+  .hero__inner {
+    grid-template-columns: minmax(0, 0.98fr) minmax(480px, 1.02fr);
+    column-gap: 24px;
+  }
+  .hero__title {
+    font-size: clamp(40.5px, 4.05vw, 54px);
+  }
+  .hero-card {
+    width: 235px;
+  }
+  .hero-card--vibe {
+    left: 70px;
+  }
+  .hero-card--opportunities {
+    right: 0;
+  }
+  .hero-journey {
+    padding-inline: 24px;
+    grid-template-columns:
+      minmax(0, 1fr) 32px
+      minmax(0, 1fr) 32px
+      minmax(0, 1fr) 32px
+      minmax(0, 1.1fr)
+      120px;
+  }
+  .journey-step {
+    grid-template-columns: 56px 1fr;
+    gap: 10px;
+  }
+  .journey-step__icon {
+    width: 56px;
+    height: 56px;
+  }
+  .journey-step__icon svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* ==========================================================================
+   15. TABLET
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .hero {
+    min-height: auto;
+  }
+  .hero__inner {
+    width: min(100% - 48px, 900px);
+    padding-top: 72px;
+    /* Was 420px, reserved for the journey strip when it was pinned inside
+       this box (see the base rule's comment) — normal value now. */
+    padding-bottom: 72px;
+    grid-template-columns: 1fr;
+    row-gap: 42px;
+  }
+  .hero__content {
+    max-width: 760px;
+  }
+  .hero__title {
+    max-width: 760px;
+  }
+  .hero-visual {
+    width: min(760px, 100%);
+    min-height: 610px;
+    margin-inline: auto;
+  }
+  .hero-journey {
+    width: min(100% - 48px, 900px);
+    grid-template-columns: 1fr 30px 1fr 30px 1fr 30px 1fr;
+  }
+  .hero-journey__note {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   16. MOBILE — abandon the desktop absolute collage; an intentional
+   vertical story: content → laptop → four cards (2-col grid) → journey.
+   ========================================================================== */
+
+@media (max-width: 720px) {
+  .hero {
+    overflow: hidden;
+    min-height: auto;
+  }
+  .hero__grid-bg {
+    background-size: 20px 20px, 100% 100%;
+  }
+  .hero__inner {
+    width: min(100% - 32px, 640px);
+    padding-top: 52px;
+    padding-bottom: 48px;
+  }
+  .hero__content {
+    padding-top: 0;
+  }
+  .hero__eyebrow {
+    margin-bottom: 14px;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+  }
+  .hero__title {
+    font-size: clamp(36px, 10.5vw, 49.5px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+  }
+  .hero__description {
+    margin-top: 22px;
+    font-size: 16px;
+  }
+  .hero__actions {
+    margin-top: 24px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .heroButton {
+    width: 100%;
+    min-width: 0;
+  }
+  .hero__helper {
+    font-size: 13px;
+  }
+  .hero__benefits {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .hero-benefit {
+    min-width: 0;
+  }
+  .hero-benefit__icon {
+    width: 44px;
+    height: 44px;
+    flex-basis: 44px;
+  }
+  .hero-benefit__icon svg {
+    width: 19px;
+    height: 19px;
+  }
+
+  .hero-visual {
+    min-height: auto;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .hero-orbit,
+  .hero-script {
+    display: none;
+  }
+
+  .hero-card {
+    position: relative;
+    inset: auto !important;
+    /* The desktop cascade's per-card `rotate()` isn't reset by `inset`
+       above — without this, cards would render tilted inside the tidy
+       mobile grid instead of sitting flush. */
+    transform: none !important;
+    width: auto;
+    min-height: 112px;
+    padding: 15px;
+    grid-template-columns: 46px 1fr;
+    gap: 10px;
+    animation: none !important;
+  }
+  .hero-card__icon {
+    width: 46px;
+    height: 46px;
+  }
+  .hero-card__icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  .hero-card__title {
+    font-size: 14px;
+  }
+  .hero-card__description {
+    font-size: 11px;
+  }
+  .hero-card__number {
+    display: none;
+  }
+
+  .hero-journey {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    margin-top: 36px;
+    padding: 18px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .journey-step {
+    grid-template-columns: 54px 1fr;
+  }
+  .journey-step__icon {
+    width: 54px;
+    height: 54px;
+  }
+  .journey-step__icon svg {
+    width: 22px;
+    height: 22px;
+  }
+  .journey-step__title {
+    font-size: 16px;
+  }
+  .journey-arrow {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   17. SMALL MOBILE
+   ========================================================================== */
+
+@media (max-width: 440px) {
+  .hero__benefits {
+    grid-template-columns: 1fr;
+  }
+  .hero-visual {
+    grid-template-columns: 1fr;
+  }
+  .hero-card {
+    grid-template-columns: 50px 1fr;
+  }
+}

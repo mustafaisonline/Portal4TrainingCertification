@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { IBM_Plex_Mono, IBM_Plex_Sans, IBM_Plex_Serif } from "next/font/google";
+import {
+  Caveat,
+  IBM_Plex_Mono,
+  IBM_Plex_Sans,
+  IBM_Plex_Serif,
+} from "next/font/google";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import "./globals.css";
 
@@ -43,6 +48,18 @@ const plexMono = IBM_Plex_Mono({
   variable: "--font-plex-mono",
   display: "swap",
 });
+/* Handwriting accent — same mechanism as the three faces above (self-hosted
+   via next/font/google, no new package, no runtime font service), added
+   2026-09-04 for the homepage hero's marginal handwritten-style annotations
+   only ("Same Laptop. A Bigger Future.", "Work From Anywhere", "Your
+   Journey Starts Here" — see app/page.tsx). Scoped to those few elements
+   via `var(--font-hand)`, not adopted anywhere else in the type system. */
+const caveat = Caveat({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  variable: "--font-hand",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   /* Required for the OG card in app/opengraph-image.tsx: Next.js resolves
@@ -63,7 +80,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
-      className={`${plexSerif.variable} ${plexSans.variable} ${plexMono.variable}`}
+      className={`${plexSerif.variable} ${plexSans.variable} ${plexMono.variable} ${caveat.variable}`}
     >
       <body>
         {children}

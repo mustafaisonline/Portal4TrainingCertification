@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Chip } from "@/components/ui/Chip";
 import { ImageFrame } from "@/components/ImageFrame";
+import { TrainerAtWorkIllustration } from "@/components/illustrations/DeliveryIllustrations";
 import { practitioners } from "@/data/practitioners";
 
 /**
@@ -360,6 +361,7 @@ export default function TrainersPage() {
             ratio="3 / 2"
             minWidth={1600}
             note="consent required"
+            illustration={<TrainerAtWorkIllustration />}
           />
         </div>
       </section>

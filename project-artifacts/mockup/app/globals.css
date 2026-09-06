@@ -66,6 +66,16 @@
   --color-prof-4: #5c65cb;
   --color-prof-5: #3d43b8;
 
+  /* Homepage hero accents (2026-09-05) — the four icon tints in the
+     founder-approved hero reference (components/HomeHero.tsx): teal,
+     purple, orange, blue. Identity colours for that composition only, the
+     same in both themes and inside `.night`, so defined once here rather
+     than as one-off values in the component. */
+  --color-hero-blue: #7c8cff;
+  --color-hero-teal: #4fd1c5;
+  --color-hero-purple: #b28cff;
+  --color-hero-orange: #f6a44b;
+
   /* Radius — one per card type (§16.3) */
   --radius-plate: 0.5rem; /* 8px */
   --radius-panel: 0.75rem; /* 12px */

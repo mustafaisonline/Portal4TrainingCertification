@@ -57,6 +57,30 @@ right aspect ratio, so:
 Filling a slot is **a `src` prop and nothing else** — no layout work, no
 reflow, because the frame already holds the space.
 
+### Illustrated stand-ins — 2026-09-05, founder direction
+
+All 8 slots below now render an original, abstract SVG illustration
+(`components/illustrations/DeliveryIllustrations.tsx`) via a new
+`illustration` prop, instead of staying an empty dashed box while the real
+photography is pending.
+
+**The request that started this was explicitly framed as "AI-generated
+images" and explicitly accepted as overriding rule 1 above** ("a photograph
+of a classroom is a claim that cohorts have run"). No image-generation tool
+is available in this environment, so hand-authored original SVG illustration
+was offered as the alternative and chosen instead. That choice means the
+override was never actually exercised: an abstract, clearly non-photographic
+line illustration is not a photograph and cannot be mistaken for one — it
+sits inside the **existing** "original graphics authored for this portal"
+exception (rule 1's table, row 4), the same category as `DotField` and the
+homepage hero glyphs. Rule 1 itself is unchanged and still binds: no stock
+or AI-generated **photograph** may go in any of these frames.
+
+`ImageFrame` now has three states, in priority order: `src` (a real
+photograph) → `illustration` (this stand-in) → empty (the dashed "Photograph
+needed" box). Swapping an illustration for the real photograph is still
+just a `src` prop.
+
 ## Implemented
 
 **8 frames across 4 templates.** All are empty; each fills with a `src` prop.

@@ -3,6 +3,7 @@ import { PublicShell } from "@/components/PublicShell";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { ImageFrame } from "@/components/ImageFrame";
+import { FounderTeachingIllustration } from "@/components/illustrations/DeliveryIllustrations";
 import { practitioners } from "@/data/practitioners";
 import { courses } from "@/data/courses";
 
@@ -211,6 +212,7 @@ export default function AboutPage() {
             ratio="3 / 2"
             minWidth={1600}
             note="consent required"
+            illustration={<FounderTeachingIllustration />}
           />
         </div>
       </section>

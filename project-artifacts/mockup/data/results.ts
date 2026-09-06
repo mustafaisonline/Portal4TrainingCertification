@@ -4,6 +4,9 @@ export type ProficiencyProfile = Record<Domain["code"], 1 | 2 | 3 | 4 | 5>;
 
 export type ResultFixture = {
   id: "A" | "B";
+  /** Illustrative only — see this field's own note below. Never computed
+   *  from real answers; do not treat as a scoring result. */
+  score: number;
   profile: ProficiencyProfile;
   gaps: string[];
   path: {
@@ -25,6 +28,11 @@ export type ResultFixture = {
 export const resultFixtures: Record<"A" | "B", ResultFixture> = {
   A: {
     id: "A",
+    // Illustrative — one fixture stays under the 90% wireframe threshold,
+    // the other clears it, so both certificate-offer states (shown / not
+    // shown) are reachable just by answering the diagnostic differently.
+    // Not a computed score. See this field's type-level note.
+    score: 76,
     profile: { DF: 4, DE: 3, AI: 2, GA: 2, GT: 2 },
     gaps: [
       "You can describe what metadata is, but not how to design a lineage capability that survives a system migration.",
@@ -51,6 +59,9 @@ export const resultFixtures: Record<"A" | "B", ResultFixture> = {
   },
   B: {
     id: "B",
+    // Illustrative — clears the 90% wireframe threshold on purpose (see A's
+    // note). Not a computed score.
+    score: 93,
     profile: { DF: 2, DE: 2, AI: 4, GA: 4, GT: 3 },
     gaps: [
       "You reason well about AI governance, but haven't yet designed a conceptual data model from scratch under ambiguity.",

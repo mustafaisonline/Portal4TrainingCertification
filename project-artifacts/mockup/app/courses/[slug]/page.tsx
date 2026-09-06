@@ -3,6 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PublicShell } from "@/components/PublicShell";
 import { ImageFrame } from "@/components/ImageFrame";
+import {
+  CourseInDeliveryIllustration,
+  TeachingDetailIllustration,
+} from "@/components/illustrations/DeliveryIllustrations";
 import { CourseCard } from "@/components/CourseCard";
 import { TrainerCard } from "@/components/TrainerCard";
 import { Button } from "@/components/ui/Button";
@@ -131,6 +135,7 @@ export default async function CourseDetailPage({
           ratio="21 / 9"
           minWidth={2000}
           note="reusable across pages"
+          illustration={<CourseInDeliveryIllustration />}
         />
       </section>
 
@@ -466,6 +471,7 @@ export default async function CourseDetailPage({
                 ratio="3 / 2"
                 minWidth={1400}
                 note="detail beats a wide shot"
+                illustration={<TeachingDetailIllustration />}
               />
             </div>
             <div>

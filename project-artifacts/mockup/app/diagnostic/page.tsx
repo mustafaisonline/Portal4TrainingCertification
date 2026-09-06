@@ -116,6 +116,26 @@ export default function DiagnosticPage() {
     persist(nextIndex, answers);
   };
 
+  // "Cancel test" (2026-09-05 founder request): distinct from "Save & exit"
+  // above — this discards the in-progress answers rather than preserving
+  // them for resume. Shared with components/HomeDiagnostic.tsx via the same
+  // DiagnosticQuestionCanvas; see that component's header comment.
+  const handleCancel = () => {
+    if (
+      !window.confirm(
+        "Cancel this diagnostic? Your answers so far will be discarded.",
+      )
+    ) {
+      return;
+    }
+    try {
+      window.localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      // Best-effort only.
+    }
+    router.push("/");
+  };
+
   return (
     <div className="flex min-h-dvh flex-col">
       <header className="border-b border-[var(--color-line)] px-6 py-4">
@@ -151,6 +171,7 @@ export default function DiagnosticPage() {
             onBack={handleBack}
             onContinue={handleContinue}
             canGoBack={index > 0}
+            onCancel={handleCancel}
           />
         )}
       </main>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PublicShell } from "@/components/PublicShell";
 import { ImageFrame } from "@/components/ImageFrame";
+import { CohortBuildingIllustration } from "@/components/illustrations/DeliveryIllustrations";
 import { CourseCard } from "@/components/CourseCard";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -247,6 +248,7 @@ export default function CoursesPage() {
                   ratio="3 / 2"
                   minWidth={1600}
                   note="consent required"
+                  illustration={<CohortBuildingIllustration />}
                 />
               </div>
             </div>

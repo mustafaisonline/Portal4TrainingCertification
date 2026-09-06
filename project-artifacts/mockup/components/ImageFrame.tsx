@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { assetPath } from "@/lib/basePath";
 import Image from "next/image";
 
@@ -27,6 +28,16 @@ import Image from "next/image";
  * reviewing a page. This is a working instrument: when the photographs
  * arrive the tint disappears with them, because a filled frame renders the
  * image alone.
+ *
+ * `illustration` (2026-09-05, founder direction): a third state, between
+ * empty and a real photograph — an original, abstract SVG graphic (see
+ * components/illustrations/DeliveryIllustrations.tsx) standing in for the
+ * photograph until one is shot. It deliberately does not read as a photo,
+ * so it never claims delivery that hasn't happened — it stays inside the
+ * "original graphics authored for this portal" exception in
+ * docs/IMAGE_SLOTS.md, not the prohibited stock/AI-photograph case. `src`
+ * still wins when both are supplied — a real photograph always replaces
+ * the illustration standing in for it.
  */
 
 export type ImageFrameProps = {
@@ -43,6 +54,9 @@ export type ImageFrameProps = {
   /** Required whenever `src` is set. */
   alt?: string;
   className?: string;
+  /** An original SVG illustration standing in for the photograph — see the
+   *  header comment above. Ignored when `src` is also supplied. */
+  illustration?: ReactNode;
 };
 
 export function ImageFrame({
@@ -53,6 +67,7 @@ export function ImageFrame({
   src,
   alt,
   className = "",
+  illustration,
 }: ImageFrameProps) {
   // Filled state — the genuine photograph, in the box the frame reserved.
   if (src) {
@@ -68,6 +83,21 @@ export function ImageFrame({
           className="object-cover"
           sizes="(max-width: 640px) 100vw, 33vw"
         />
+      </div>
+    );
+  }
+
+  // Illustrated stand-in — not a photograph, doesn't claim to be one; see
+  // the header comment above.
+  if (illustration) {
+    return (
+      <div
+        className={`overflow-hidden rounded-[var(--radius-plate)] ${className}`}
+        style={{ aspectRatio: ratio }}
+        role="img"
+        aria-label={`Illustration standing in for a photograph: ${subject}`}
+      >
+        {illustration}
       </div>
     );
   }

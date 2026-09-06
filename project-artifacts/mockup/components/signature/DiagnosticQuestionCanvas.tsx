@@ -11,6 +11,12 @@ import { UNSURE_OPTION } from "@/data/questions";
  * an equal-weight, unpenalised option (never visually or semantically
  * distinguished from the real options — same card, same size, no muted
  * styling), Back always permitted, no timer, no score ever shown here.
+ *
+ * `onCancel` (2026-09-05, founder request): optional — when supplied, shows
+ * a "Cancel test" affordance so a user can abandon a test mid-way, distinct
+ * from `onBack` (which only steps back one question to change an answer).
+ * Shared by both diagnostic entry points (this file's own header note); the
+ * caller owns what "cancel" means (discard progress, where to land).
  */
 export function DiagnosticQuestionCanvas({
   question,
@@ -19,6 +25,7 @@ export function DiagnosticQuestionCanvas({
   onBack,
   onContinue,
   canGoBack,
+  onCancel,
 }: {
   question: Question;
   selected: string | null;
@@ -26,6 +33,7 @@ export function DiagnosticQuestionCanvas({
   onBack: () => void;
   onContinue: () => void;
   canGoBack: boolean;
+  onCancel?: () => void;
 }) {
   const allOptions = [...question.options, UNSURE_OPTION];
 
@@ -65,6 +73,17 @@ export function DiagnosticQuestionCanvas({
           Continue
         </Button>
       </div>
+      {onCancel && (
+        <div className="mt-4 text-center">
+          <button
+            type="button"
+            onClick={onCancel}
+            className="text-body-sm text-[var(--color-ink-faint)] underline underline-offset-4 hover:text-[var(--color-ink-quiet)]"
+          >
+            Cancel test
+          </button>
+        </div>
+      )}
     </Card>
   );
 }

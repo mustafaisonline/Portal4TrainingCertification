@@ -112,6 +112,12 @@ import styles from "./HomeHero.module.css";
  *   size (270→230px wide, 116→100px min-height, icon 54→44px, title
  *   17→15px) — positions are unchanged in HomeHero.module.css, since a
  *   smaller box only reduces overlap risk, never increases it.
+ * - 2026-09-06, later still: founder direction — the learning-journey
+ *   strip redesigned from a supplied reference image. See the comment on
+ *   `.hero-journey` below for exactly what changed (intro block added,
+ *   steps restacked vertically, connectors redrawn, step 04 recoloured,
+ *   the handwritten note replaced by a trailing arrow, step copy for
+ *   02–04 rewritten to match the reference).
  *
  * WHAT IS AND IS NOT A PHOTOGRAPH here: one genuine image — the HRD Corp
  * badge on card 03, an asset HRD Corp itself issued (not a photograph of
@@ -257,9 +263,9 @@ const benefits = [
 
 const journey = [
   { num: "01", role: "learn", icon: <GlyphBook />, title: "Learn", body: "Master in-demand skills at your own pace." },
-  { num: "02", role: "build", icon: <GlyphCube />, title: "Build", body: "Create real-world projects." },
-  { num: "03", role: "showcase", icon: <GlyphPerson />, title: "Showcase", body: "Build a portfolio that proves your skills." },
-  { num: "04", role: "explore", icon: <GlyphBars />, title: "Explore Opportunities", body: "Prepare for freelance and remote work." },
+  { num: "02", role: "build", icon: <GlyphCube />, title: "Build", body: "Apply your learning through real-world projects." },
+  { num: "03", role: "showcase", icon: <GlyphPerson />, title: "Showcase", body: "Create a portfolio that demonstrates what you can actually do." },
+  { num: "04", role: "explore", icon: <GlyphBars />, title: "Explore Opportunities", body: "Use your skills and evidence to pursue freelance and remote opportunities." },
 ] as const;
 
 export function HomeHero() {
@@ -365,8 +371,8 @@ export function HomeHero() {
                 <Image
                   src={assetPath(accreditation.badge)}
                   alt="HRD Corp Accredited Trainer badge"
-                  width={54}
-                  height={54}
+                  width={44}
+                  height={44}
                   className="h-full w-full rounded-full object-cover"
                 />
               </span>
@@ -465,32 +471,53 @@ export function HomeHero() {
           itself now — its card design (dark gradient, light text via the
           shared --color-ink/--color-primary tokens) depended on the hero's
           `.night` scope for those tokens, which it no longer inherits by
-          sitting outside the section. */}
+          sitting outside the section.
+
+          REDESIGNED 2026-09-06, founder direction, from a supplied reference
+          image: an intro block (eyebrow, two-line headline, description)
+          added as its own column/row, steps restacked vertically (number
+          above icon above title above description — previously icon beside
+          a text column), the text-arrow connectors between steps replaced
+          by a drawn line-with-dot, and the handwritten "Your Journey /
+          Starts Here" note replaced by a trailing arrow after the last
+          step. `--explore` (step 04) recoloured orange, matching the
+          reference — it had shared `--learn`'s purple. */}
       <div className={`${styles["hero-journey"]} night outline outline-[#e5e5e5]`}>
+        <div className={styles["hero-journey__intro"]}>
+          <p className={styles["hero-journey__eyebrow"]}>Your Learning Journey</p>
+          <h3 className={styles["hero-journey__title"]}>
+            From learning
+            <br />
+            <span className={styles["hero-journey__title-accent"]}>
+              to real opportunities.
+            </span>
+          </h3>
+          <p className={styles["hero-journey__description"]}>
+            A clear, practical path from building capability to creating
+            evidence of your skills and pursuing meaningful work.
+          </p>
+        </div>
         {journey.map((step, i) => (
           <div key={step.num} className="contents">
             <article className={`${styles["journey-step"]} ${styles[`journey-step--${step.role}`]}`}>
+              <span className={styles["journey-step__number"]}>{step.num}</span>
               <span className={styles["journey-step__icon"]}>
                 {step.icon}
               </span>
-              <div>
-                <span className={styles["journey-step__number"]}>{step.num}</span>
-                <p className={styles["journey-step__title"]}>{step.title}</p>
-                <p className={styles["journey-step__description"]}>{step.body}</p>
-              </div>
+              <p className={styles["journey-step__title"]}>{step.title}</p>
+              <p className={styles["journey-step__description"]}>{step.body}</p>
             </article>
-            {i < journey.length - 1 && (
-              <span className={styles["journey-arrow"]} aria-hidden="true">
-                →
+            {i < journey.length - 1 ? (
+              <span className={styles["journey-connector"]} aria-hidden="true">
+                <span className={styles["journey-connector__dot"]} />
+              </span>
+            ) : (
+              <span className={styles["journey-end-arrow"]} aria-hidden="true">
+                <GlyphArrowRight />
               </span>
             )}
           </div>
         ))}
-        <p className={styles["hero-journey__note"]}>
-          Your Journey
-          <br />
-          Starts Here
-        </p>
       </div>
     </>
   );

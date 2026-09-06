@@ -43,6 +43,11 @@ practitioner *is* the design statement). `H3` then carries substance
   portrait in the same folder was deliberately NOT used** — prohibited by
   the P01 specification §16.2, because a synthetic likeness on a page
   claiming "a real practitioner teaches this" falsifies the claim.
+  **⚠ 2026-09-06: this is now history, not current fact.** The photo was
+  replaced with an AI-generated/AI-enhanced one (now
+  `public/experts/mustafa-qizilbash-v2.jpg`), and the portal's policy on
+  AI imagery changed the same day to permit it. See `docs/IMAGE_SLOTS.md`
+  rule 2 and `data/practitioners.ts`'s `photo` field comment.
 - Facts shown are the specification's §8.4 **Tier 1** list only
   (cross-source consistent). Volatile counts (books, episodes, followers)
   and **current employer** are deliberately omitted (spec §8.6/§18.3 — the

@@ -29,8 +29,30 @@ export type Practitioner = {
   name: string;
   /** Role on this platform — a platform designation, not an employer title. */
   role: string;
-  /** Path under public/. Genuine photograph only; AI-generated or stock
-   *  imagery is prohibited (P01 spec §16.2–16.3). */
+  /** Path under public/.
+   *
+   *  POLICY CHANGED 2026-09-06 (founder direction, same day as the change
+   *  below): AI-generated or AI-enhanced imagery is now permitted
+   *  portal-wide — see docs/IMAGE_SLOTS.md rule 2 for the current wording.
+   *  Before this, the rule read "genuine photograph only; AI-generated or
+   *  stock imagery is prohibited (P01 spec §16.2–16.3)" — still the
+   *  governing text in the ROOT approved specifications, which this
+   *  session did not edit (see docs/IMAGE_SLOTS.md's policy-change note).
+   *  Stock/third-party-licensed imagery is UNCHANGED and still prohibited —
+   *  this policy change is specifically about AI generation, not licensing.
+   *
+   *  `public/experts/mustafa-qizilbash.jpg` (now renamed *-v2.jpg — see
+   *  below) was REPLACED 2026-09-06 with a file named
+   *  `Trainer Photos/Mustafa_AI_Photo.jpeg` from the reference archive —
+   *  the same filename as a DIFFERENT file this project had already
+   *  refused as AI-generated (docs/REFERENCE_MATERIAL_ACCESS.md §5). That
+   *  refusal happened under the OLD policy; this replacement happened
+   *  after the founder was told of the naming conflict twice, confirmed
+   *  the face is genuinely his ("Face in the photo is my. so please
+   *  proceed."), and — later the same day — changed the policy itself to
+   *  permit AI imagery, which is what makes this the current, compliant
+   *  state rather than a one-off exception. The prior file remains in git
+   *  history if this needs reversing. */
   photo: string;
   location: string;
   /** One-line positioning used on cards. */
@@ -119,7 +141,23 @@ export const practitioners: Practitioner[] = [
     slug: "mustafa-qizilbash",
     name: "Mustafa Qizilbash",
     role: "Founder & Lead Trainer",
-    photo: "/experts/mustafa-qizilbash.jpg",
+    // Renamed *-v2.jpg, 2026-09-06: cache-bust after the photo swap. Files
+    // in public/ are never fingerprinted by Next.js, so swapping this
+    // file's content while keeping its old name got served stale
+    // indefinitely by any browser that had already cached that URL
+    // (confirmed live: /_next/image's own server-side cache regenerated
+    // correctly and every resolution was verified correct by fetching it
+    // directly — the staleness was purely the browser's HTTP cache, which
+    // does not revalidate a `next/image` URL on every soft navigation).
+    // A `?v=2` query-string cache-buster was tried first and rejected by
+    // Next.js itself: local image sources need `images.localPatterns`
+    // configured before a query string on them is even allowed
+    // (next.config.ts does not set this). Renaming the file avoids that
+    // restriction entirely and works identically in dev (optimized) and
+    // the GitHub Pages static export (unoptimized). Bump the suffix
+    // (-v3.jpg, -v4.jpg, ...) every time this file's CONTENT changes
+    // without introducing a new person or removing this one.
+    photo: "/experts/mustafa-qizilbash-v2.jpg",
     location: "Kuala Lumpur, Malaysia · delivers internationally",
     headline: "Enterprise Data & AI practitioner and educator",
     experienceLine: "24+ years · enterprise data & AI",

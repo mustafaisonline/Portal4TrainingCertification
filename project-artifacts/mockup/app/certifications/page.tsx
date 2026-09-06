@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { PublicShell } from "@/components/PublicShell";
 import { Button } from "@/components/ui/Button";
 
@@ -15,7 +16,17 @@ import { Button } from "@/components/ui/Button";
  * Boundary held (OQ-21): a course's "Certificate of Participation" is NOT
  * the Academy credential, and this page must never blur the two. Nothing
  * here claims a credential has been issued, because none has.
+ *
+ * DISABLED 2026-09-06, founder direction: "We will work on Certification
+ * option in future." The nav item was removed too (components/PublicShell.tsx).
+ * The page content below is untouched — this is a pause, not a deletion —
+ * `notFound()` just makes the route 404 until `CERTIFICATIONS_PAGE_ENABLED`
+ * is flipped back. Two other pages still link here (app/hrd-corp/page.tsx,
+ * app/courses/[slug]/page.tsx's rubric section) — those links were left as
+ * they are rather than silently reworked, since re-pointing them is itself
+ * a content decision; they will 404 too until this is re-enabled.
  */
+const CERTIFICATIONS_PAGE_ENABLED = false;
 
 export const metadata: Metadata = {
   title: "Certifications — Data & AI Academy",
@@ -24,6 +35,10 @@ export const metadata: Metadata = {
 };
 
 export default function CertificationsPage() {
+  if (!CERTIFICATIONS_PAGE_ENABLED) {
+    notFound();
+  }
+
   return (
     <PublicShell>
       <section className="night relative overflow-hidden">

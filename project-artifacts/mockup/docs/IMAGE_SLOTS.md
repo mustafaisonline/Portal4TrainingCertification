@@ -38,10 +38,70 @@ licensing claim costs a great deal more than a photograph.
 carrying the subject, aspect ratio and minimum width — so it doubles as the
 shoot brief.
 
-Stock and AI-generated imagery are **prohibited** on honesty grounds as well:
-a photograph of a classroom is a claim that cohorts have run. The same rule
-that rejected the AI portrait in `Reference Material/` applies to every slot
-here.
+**⚠ POLICY CHANGED 2026-09-06, founder direction: AI-generated and
+AI-enhanced imagery is now permitted portal-wide**, including trainer
+photos and these frames. This supersedes the original wording of this
+rule, which prohibited it on honesty grounds ("a photograph of a classroom
+is a claim that cohorts have run") — the same reasoning that rejected the
+AI portrait recorded in `docs/REFERENCE_MATERIAL_ACCESS.md` §5. That
+reasoning is not wrong, it has just been overridden: the founder made this
+call knowingly, after that exact tension was raised directly to him over
+the practitioner photo (see `data/practitioners.ts`'s `photo` field
+comment for the full exchange).
+
+**What did NOT change:** rule 1 above (no stock or third-party-licensed
+imagery) is a separate, still-binding concern about ownership, not
+honesty — this policy change is specifically about AI generation. An
+AI-generated *evidentiary* photograph (e.g. one purporting to show a real
+cohort session that never happened) would still misrepresent a fact this
+portal states elsewhere as true or false — that risk hasn't disappeared
+just because the imagery itself is now allowed; it is on whoever fills a
+slot to not make a false claim with what they put in it.
+
+**This project's root approved specifications** (e.g.
+`DATA_AI_ACADEMY_PORTAL_MOCKUP_SPECIFICATION.md`,
+`DATA_AI_ACADEMY_PORTAL_BLUEPRINT.md`, and `docs/design/*`) still contain
+the OLD wording of this rule and were deliberately left untouched here.
+Per this repo's own convention (`CLAUDE.md`: "Do not consolidate,
+reinterpret, replace, or create a new authoritative product specification
+unless explicitly instructed"), rewriting approved-spec prose is not
+something this session did on its own initiative — the established
+mechanism for a policy change to actually supersede a specification is a
+decision record, the same way `DR-01` and `DR-02` supersede specific
+passages in place with `⊘ RETIRED` / `↻ REFRAMED` markers rather than
+rewriting the original text. **This mockup's own operative files
+(`data/practitioners.ts`, this file, `MOCK_DATA_REGISTER.md`,
+`REFERENCE_MATERIAL_ACCESS.md`) are updated and current** — those are what
+actually govern implementation. If full consistency across the approved
+specifications matters too, that's a `DR-03`-shaped decision, not a mockup
+doc edit.
+
+### 3. Swapping a `public/` image's content requires renaming the file — 2026-09-06
+
+**Files in `public/` are never fingerprinted by Next.js** — unlike
+`next/font` or a bundled import, a path like `/experts/mustafa-qizilbash.jpg`
+never changes just because the file's bytes did. This bit for real: the
+founder's photo was swapped in place (same filename, new content), and
+every browser that had already visited a page rendering it — including one
+of Claude's own automated test tabs — kept serving the OLD image
+indefinitely, with no way for the user to distinguish "the fix didn't
+work" from "the fix worked but my browser won't show it." Proven, not
+guessed: a direct `curl` of the exact same URL, bypassing browser cache,
+returned the new file every time; only the browser-rendered page was
+stale. Full mechanism in `data/practitioners.ts`'s `photo` field comment.
+
+**The rule, going forward: when a `public/` image's CONTENT changes but it
+represents the same subject (a re-shot headshot, an updated badge, a
+corrected book cover), rename the file — do not overwrite it in place.**
+`mustafa-qizilbash.jpg` → `mustafa-qizilbash-v2.jpg` → `-v3.jpg`, and so
+on. This is not optional politeness; it is the only reliable way to force
+every viewer's browser to fetch the new content, because nothing else in
+this static mockup can invalidate a browser's HTTP cache for them. A
+`?v=2`-style query-string cache-buster was tried first and does NOT work
+here — Next.js 16 rejects a query string on a local image source unless
+`images.localPatterns` is explicitly configured for it (not done in this
+project's `next.config.ts`, and not something to add just to route around
+this — the rename costs nothing and needs no config change).
 
 ## The engineering rule
 
@@ -74,7 +134,13 @@ line illustration is not a photograph and cannot be mistaken for one — it
 sits inside the **existing** "original graphics authored for this portal"
 exception (rule 1's table, row 4), the same category as `DotField` and the
 homepage hero glyphs. Rule 1 itself is unchanged and still binds: no stock
-or AI-generated **photograph** may go in any of these frames.
+**photograph** may go in any of these frames.
+
+**⚠ As of 2026-09-06 this is historical, not current, on the AI point**
+— see rule 2's policy-change note above. An AI-generated photograph may
+now go in these frames if a real one is wanted here; these SVG
+illustrations remain simply because nobody has replaced them yet, not
+because AI imagery is still barred.
 
 `ImageFrame` now has three states, in priority order: `src` (a real
 photograph) → `illustration` (this stand-in) → empty (the dashed "Photograph
@@ -174,3 +240,7 @@ still come from `next/font`.
    inherited the light-mode value at poor contrast on navy. Added 2026-09-02.
 3. **`Trainer Photos/` in the reference archive is not delivery
    photography** despite the name. See `docs/REFERENCE_MATERIAL_ACCESS.md` §5.
+4. **Overwriting a `public/` image in place looks like it worked and
+   isn't.** The dev server, `curl`, and every fresh check will show the new
+   content — only a browser that already cached the old URL keeps showing
+   the old one, silently, with no error anywhere. See rule 3 above.

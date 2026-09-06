@@ -3,11 +3,11 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { DiagnosticQuestionCanvas } from "@/components/signature/DiagnosticQuestionCanvas";
+import { DiagnosticStartCard } from "@/components/signature/DiagnosticStartCard";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import {
   INSIGHT_CARD,
-  QUESTION_COUNT_TIERS,
   questions,
   UNSURE_OPTION,
 } from "@/data/questions";
@@ -33,8 +33,15 @@ import { selectFixture } from "@/data/results";
  * data/questions.ts — no 50/100/200 question bank exists. Per
  * docs/MOCK_DATA_REGISTER.md's own standard ("Diagnostic question sequence
  * — FAKED... out of scope for a mockup" to invent more), the other three
- * tiers are shown but disabled rather than backed by fabricated filler
- * questions.
+ * tiers are not backed by fabricated filler questions — clicking one here
+ * does not run a 50/100/200-question test. Extracted into
+ * `DiagnosticStartCard` (2026-09-06, founder direction) so this exact
+ * content — tier selector, Start button, the disclaimer below — is shared
+ * with app/diagnostic/page.tsx rather than duplicated and drifting.
+ * "10" starts the real inline walkthrough; clicking 50/100/200 HERE
+ * navigates to the standalone /diagnostic page instead of doing nothing —
+ * there is somewhere more dedicated to send that visitor, even though the
+ * tier itself is still unavailable once they arrive.
  *
  * Certificate-of-attempt copy (account + USD 10 fee, 2026-09-05 founder
  * request): describes the intended flow only — no account system exists
@@ -225,41 +232,10 @@ export function HomeDiagnostic() {
         </div>
 
         {stage === "idle" && (
-          <Card variant="feature">
-            <p className="text-label mb-3">Number of questions</p>
-            <div className="mb-6 flex flex-wrap gap-2.5">
-              {QUESTION_COUNT_TIERS.map(({ count, tier }) => {
-                const isAvailable = count === 10;
-                return (
-                  <span
-                    key={count}
-                    className={`text-label inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 ${
-                      isAvailable
-                        ? "border-[var(--color-primary)] text-[var(--color-primary)]"
-                        : "cursor-not-allowed border-[var(--color-line)] text-[var(--color-ink-faint)] opacity-60"
-                    }`}
-                    aria-disabled={!isAvailable}
-                    title={isAvailable ? undefined : "Coming soon — not yet available"}
-                  >
-                    {count} · {tier}
-                    {!isAvailable && (
-                      <span className="text-[0.65rem] normal-case tracking-normal">
-                        (soon)
-                      </span>
-                    )}
-                  </span>
-                );
-              })}
-            </div>
-            <Button onClick={handleStart}>Start free diagnostic (10 min)</Button>
-            <p className="mt-4 text-body-sm text-[var(--color-ink-faint)]">
-              The diagnostic itself is always free — no account needed. A
-              Certificate of Attempt for a strong result is a separate,
-              optional step: it needs a free account and a one-time USD 10
-              fee. See &ldquo;Certificate of attempt&rdquo; on your result
-              page for details.
-            </p>
-          </Card>
+          <DiagnosticStartCard
+            onStart={handleStart}
+            onUnavailableTier={() => router.push("/diagnostic")}
+          />
         )}
 
         {stage === "insight" && (

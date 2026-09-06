@@ -17,7 +17,11 @@ import { Button } from "./ui/Button";
  *   NOT adopted, because naming is an open decision.
  */
 
-function LogoMark() {
+/** Exported (2026-09-06) so app/diagnostic/page.tsx — which runs in its
+ *  own stripped-back shell, not PublicShell — can reuse the exact same
+ *  brand mark in its minimal header, rather than the mockup drifting to a
+ *  second, near-identical mark or no mark at all. */
+export function LogoMark() {
   return (
     <svg
       width="30"
@@ -86,7 +90,15 @@ export function PublicShell({ children }: { children: ReactNode }) {
 
               2026-09-06, later the same day: "HRD Corp" moved to position 2
               (right after Home), founder direction — second-highest
-              prominence in the nav, after the homepage itself. */}
+              prominence in the nav, after the homepage itself.
+
+              2026-09-06, later still: "Certifications" removed — founder
+              direction, "We will work on Certification option in future."
+              The page itself is disabled too (app/certifications/page.tsx
+              now 404s via a flag), not deleted. Five items now; six is the
+              documented maximum, not a fixed count. The footer's plain-text
+              "Certifications" mention (not a link) was left as-is — it was
+              never a working nav item and removing it is a separate call. */}
           <nav
             aria-label="Primary"
             className="hidden items-center gap-7 text-body-sm text-[var(--color-ink-quiet)] lg:flex"
@@ -99,9 +111,6 @@ export function PublicShell({ children }: { children: ReactNode }) {
             </Link>
             <Link href="/courses" className="hover:text-[var(--color-ink)]">
               Courses
-            </Link>
-            <Link href="/certifications" className="hover:text-[var(--color-ink)]">
-              Certifications
             </Link>
             <Link href="/trainers" className="hover:text-[var(--color-ink)]">
               Trainers

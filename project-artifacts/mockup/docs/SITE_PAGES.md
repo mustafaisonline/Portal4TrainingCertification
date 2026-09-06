@@ -12,8 +12,15 @@ training-and-certification portal needs, what was built, and — importantly —
 
 ## Primary navigation (restructured 2026-09-02; updated 2026-09-06)
 
-**Home · HRD Corp · Courses · Certifications · Trainers · About Us** — six
-items, the documented maximum.
+**Home · HRD Corp · Courses · Trainers · About Us** — five items. Six was
+the documented maximum, not a fixed count.
+
+**2026-09-06, later still: Certifications removed**, founder direction —
+"We will work on Certification option in future." `/certifications` itself
+is disabled the same way (a flag in `app/certifications/page.tsx` makes it
+404; content untouched, this is a pause not a deletion). Two other pages
+still link to it (`/hrd-corp`, a course detail page's rubric section) — left
+as-is rather than silently reworked, so they 404 too until this returns.
 
 Removed by founder direction: **How it works** (`/#delivery`) and **For
 organisations** (`/#organisations`). Both were homepage anchors; the sections
@@ -48,8 +55,8 @@ have orphaned the menu item, so the content moved to its own page.
 | `/trainers` | Trainer directory, selection standard, the trainer's HRD Corp accreditation | Real. "Published work" (books) removed from this page 2026-09-06 (data untouched in `data/practitioners.ts`); the HRD Corp accreditation display ("Held today") moved in the same day from `/hrd-corp` — see below |
 | `/about-us` | Organisation identity, commitments, founder, honest current state | **Real — every positioning claim traced to DR-02 §1/§2/§6/§7.** Nothing about scale, history, clients, team size, founding date or accreditation is stated, because none is established |
 | `/contact-us` | Three enquiry routes, enquiry form, genuine channels | **Real, with one gap — see below.** Also now the destination for every "Register your interest" and corporate-enquiry CTA, after the homepage's For-organisations band was removed |
-| `/certifications` | The earned-credential argument, the assessment rubric, and the participation-certificate boundary | Real. Created 2026-09-02 when the homepage certification section was removed — the content moved rather than being discarded |
-| `/diagnostic`, `/diagnostic/result` | Capability assessment (P05/P06) | Pre-DR-02 baseline |
+| `/certifications` | The earned-credential argument, the assessment rubric, and the participation-certificate boundary | **Disabled 2026-09-06** (404 via a flag, founder direction — "future" work). Content real and untouched underneath; removed from primary nav. Created 2026-09-02 when the homepage certification section was removed — the content moved rather than being discarded |
+| `/diagnostic`, `/diagnostic/result` | Capability assessment (P05/P06) | Pre-DR-02 baseline. `/diagnostic` gained an idle landing stage 2026-09-06 (heading, tier selector, Start button — see `docs/MOCK_DATA_REGISTER.md`), shared with the homepage's embedded diagnostic via `DiagnosticStartCard` so the two never drift apart |
 | `/journey-placeholder` | Labelled next-stage placeholder | Placeholder, labelled |
 | `/hrd-corp` | What HRD Corp is, and the honest status of organisational registration and course claimability | Real, created 2026-09-06 by founder direction. **In primary nav** (position 2, right after Home — replacing Contact Us, same day, see above), and also reached via the homepage hero's floating "03" card. The trainer's own accreditation display (badge, verify link) moved to `/trainers` the same day — this page still links there for it. Every other page (courses, certifications, course detail, about-us) still carries nothing HRD-Corp-related, by founder direction. See [`HRD_CORP.md`](HRD_CORP.md) |
 

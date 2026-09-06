@@ -634,15 +634,21 @@
      journey→next-section gap would still read as 64px. */
   margin: 48px auto;
   min-height: 150px;
-  padding: 26px 38px;
+  padding: 32px 40px;
   display: grid;
+  /* 2026-09-06, redesign: intro column + 4 step columns + 4 connector
+     columns (3 mid-connectors + 1 trailing arrow) — was 4 step + 3 arrow
+     + 1 note column, no intro. `align-items: start`, not `center` (was):
+     the intro block and a step column are no longer the same few lines
+     each, so top-aligning is what actually lines up "Your Learning
+     Journey" with "01" the way the reference does. */
   grid-template-columns:
-    minmax(0, 1fr) 46px
-    minmax(0, 1fr) 46px
-    minmax(0, 1fr) 46px
-    minmax(0, 1.15fr)
-    160px;
-  align-items: center;
+    minmax(220px, 0.8fr)
+    minmax(0, 1fr) 40px
+    minmax(0, 1fr) 40px
+    minmax(0, 1fr) 40px
+    minmax(0, 1fr) 44px;
+  align-items: start;
   border: 1px solid rgba(122, 141, 213, 0.42);
   border-radius: 20px;
   background: linear-gradient(100deg, rgba(32, 40, 65, 0.96), rgba(25, 33, 54, 0.94));
@@ -653,17 +659,51 @@
   -webkit-backdrop-filter: blur(16px);
 }
 
+/* ---- Intro block — added 2026-09-06 ---- */
+
+.hero-journey__eyebrow {
+  margin: 0 0 10px;
+  color: var(--color-ink-quiet);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.hero-journey__title {
+  margin: 0 0 12px;
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.22;
+  color: var(--color-ink);
+}
+
+.hero-journey__title-accent {
+  color: var(--color-hero-purple);
+}
+
+.hero-journey__description {
+  margin: 0;
+  max-width: 30ch;
+  color: var(--color-ink-quiet);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+/* ---- Steps — restacked vertically 2026-09-06 (was icon beside a text
+   column; now number, icon, title, description, top to bottom) ---- */
+
 .journey-step {
   min-width: 0;
-  display: grid;
-  grid-template-columns: 70px 1fr;
-  align-items: center;
-  gap: 14px;
+  display: flex;
+  flex-direction: column;
 }
 
 .journey-step__icon {
   width: 70px;
   height: 70px;
+  margin-bottom: 14px;
   display: grid;
   place-items: center;
   border-radius: 50%;
@@ -675,7 +715,9 @@
 }
 
 /* Named by role, matching how the floating cards are also named
-   (--vibe/--projects/--portfolio/--opportunities) — not by colour tone. */
+   (--vibe/--projects/--portfolio/--opportunities) — not by colour tone.
+   `--explore` recoloured orange 2026-09-06 (was purple, duplicating
+   `--learn` — the reference gives step 04 its own hue). */
 .journey-step--learn .journey-step__icon {
   color: var(--color-hero-purple);
   background: rgba(92, 67, 157, 0.35);
@@ -689,13 +731,13 @@
   background: rgba(37, 110, 111, 0.33);
 }
 .journey-step--explore .journey-step__icon {
-  color: var(--color-hero-purple);
-  background: rgba(89, 65, 151, 0.36);
+  color: var(--color-hero-orange);
+  background: rgba(155, 100, 45, 0.34);
 }
 
 .journey-step__number {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   color: var(--color-ink-quiet);
   font-size: 11px;
   font-weight: 800;
@@ -717,20 +759,41 @@
   line-height: 1.45;
 }
 
-.journey-arrow {
-  justify-self: center;
-  color: var(--color-ink-quiet);
-  font-size: 34px;
-  font-weight: 300;
+/* ---- Connectors — a drawn line + dot, 2026-09-06 (was a "→" character
+   centred in its column). `margin-top` aligns the line with the icon
+   circle's vertical centre: number block (~21px) + half the 70px icon
+   (35px) ≈ 51px from the step column's top edge — `align-items: start`
+   on `.hero-journey` above is what makes that a stable reference point. ---- */
+
+.journey-connector {
+  position: relative;
+  height: 1px;
+  margin-top: 51px;
+  background: rgba(145, 159, 237, 0.35);
+}
+.journey-connector__dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(163, 177, 245, 0.75);
+  transform: translate(-50%, -50%);
 }
 
-.hero-journey__note {
-  color: var(--color-primary-strong);
-  font-family: var(--font-hand);
-  font-size: 21px;
-  line-height: 1.2;
-  text-align: center;
-  transform: rotate(-6deg);
+/* Trailing arrow after the last step — replaces the handwritten "Your
+   Journey / Starts Here" note (removed 2026-09-06): that role is now
+   carried by the intro block instead. */
+.journey-end-arrow {
+  display: flex;
+  align-items: center;
+  margin-top: 51px;
+  color: var(--color-ink-quiet);
+}
+.journey-end-arrow svg {
+  width: 22px;
+  height: 22px;
 }
 
 /* ==========================================================================
@@ -812,15 +875,11 @@
   .hero-journey {
     padding-inline: 24px;
     grid-template-columns:
+      minmax(180px, 0.75fr)
       minmax(0, 1fr) 32px
       minmax(0, 1fr) 32px
       minmax(0, 1fr) 32px
-      minmax(0, 1.1fr)
-      120px;
-  }
-  .journey-step {
-    grid-template-columns: 56px 1fr;
-    gap: 10px;
+      minmax(0, 1fr) 36px;
   }
   .journey-step__icon {
     width: 56px;
@@ -829,6 +888,12 @@
   .journey-step__icon svg {
     width: 22px;
     height: 22px;
+  }
+  /* 47px ≈ number block (~21px) + half the smaller 56px icon (28px) —
+     see the base `.journey-connector` comment for the calculation. */
+  .journey-connector,
+  .journey-end-arrow {
+    margin-top: 47px;
   }
 }
 
@@ -863,10 +928,19 @@
   }
   .hero-journey {
     width: min(100% - 48px, 900px);
-    grid-template-columns: 1fr 30px 1fr 30px 1fr 30px 1fr;
+    /* Too narrow here for the intro column beside 4 steps — 2026-09-06:
+       the intro spans the full width as its own row instead (below),
+       steps keep their own row underneath with a trailing arrow column
+       (8 columns: 4 steps + 4 connectors, the note this replaced never
+       had one). */
+    grid-template-columns: 1fr 30px 1fr 30px 1fr 30px 1fr 30px;
+    row-gap: 28px;
   }
-  .hero-journey__note {
-    display: none;
+  .hero-journey__intro {
+    grid-column: 1 / -1;
+  }
+  .hero-journey__description {
+    max-width: 60ch;
   }
 }
 
@@ -990,12 +1064,12 @@
     grid-template-columns: 1fr;
     gap: 14px;
   }
-  .journey-step {
-    grid-template-columns: 54px 1fr;
-  }
+  /* No `grid-template-columns` override here (2026-09-06): `.journey-step`
+     is a flex column now at every breakpoint, not a 2-column grid. */
   .journey-step__icon {
     width: 54px;
     height: 54px;
+    margin-bottom: 10px;
   }
   .journey-step__icon svg {
     width: 22px;
@@ -1004,7 +1078,8 @@
   .journey-step__title {
     font-size: 16px;
   }
-  .journey-arrow {
+  .journey-connector,
+  .journey-end-arrow {
     display: none;
   }
 }

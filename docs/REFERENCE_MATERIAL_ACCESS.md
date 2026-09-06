@@ -108,15 +108,19 @@ Recorded in
 
 | Asset | Source | Outcome |
 |---|---|---|
-| `public/experts/mustafa-qizilbash.jpg` | `Resume/Mustafa/Resume -Editable/Mustafa_Pic.jpg` | ✅ Used — genuine, 800×800 |
-| `Resume/Mustafa/Mustafa_AI_Photo.jpeg` | — | ⛔ **Refused.** AI-generated portrait. A synthetic likeness falsifies the claim that a real practitioner teaches here |
-| `Trainer Photos/` (3 files) | — | ⛔ **Refused.** Despite the folder name these are **not** training-delivery photographs. They do not evidence delivery |
+| `public/experts/mustafa-qizilbash-v2.jpg` (renamed from `mustafa-qizilbash.jpg` — see the caching note below) | **2026-09-06 →** `Trainer Photos/Mustafa_AI_Photo.jpeg`. **Until 2026-09-06:** `Resume/Mustafa/Resume -Editable/Mustafa_Pic.jpg` | ✅ **Replaced, founder direction — now policy-compliant, see the row directly below.** The prior file (genuine, 800×800, used without issue since 2026-08-31) remains in git history if this needs reversing. **Renamed to `-v2.jpg` the same day** after the in-place content swap was found to be served stale by browsers that had already cached the old URL — `public/` assets are never fingerprinted by Next.js, so a same-path swap doesn't reliably reach already-visited browsers. See `data/practitioners.ts`'s `photo` field comment for the full mechanism |
+| `Trainer Photos/Mustafa_AI_Photo.jpeg` (**not** the same path as the row below — same filename, different folder) | — | ✅ **Used — AI-generated/AI-enhanced imagery of the founder's own likeness, now permitted.** This filename exactly matches the row below, refused under the OLD policy as AI-generated. Before this policy existed, the founder was told of that exact conflict, twice; he confirmed directly: *"Face in the photo is my. so please proceed,"* then — later the same day — changed the portal's policy to permit AI-generated/AI-enhanced imagery portal-wide (`docs/IMAGE_SLOTS.md` rule 2). That policy change, not just the founder's confirmation, is what makes this compliant rather than an exception. File metadata carries no camera EXIF either way (consistent with a real photo with EXIF stripped, or an AI-generated one) — moot now, since AI generation is no longer the disqualifying factor. Recorded in `data/practitioners.ts`'s `photo` field comment |
+| `Resume/Mustafa/Mustafa_AI_Photo.jpeg` | — | ⛔ **Refused under the policy in force at the time (before 2026-09-06).** AI-generated portrait; reasoning then was "a synthetic likeness falsifies the claim that a real practitioner teaches here." Left un-revisited — a different file, and nobody has asked to use it |
+| `Trainer Photos/` (3 numbered files: `1730213455334.jpeg` etc.) | — | ⛔ **Refused.** Despite the folder name these are **not** training-delivery photographs. They do not evidence delivery |
 | `Malaysia - HRD Requirements/HRD Certificates and Badge/HRDBadge.png` | `project-artifacts/mockup/public/hrd-corp/accredited-trainer-badge.png` | ✅ **Used — founder direction, 2026-09-06.** HRD Corp's own "Accredited Trainer" badge, issued to the founder (Trainer ID 68923) for display |
 | `Malaysia - HRD Requirements/HRD Certificates and Badge/HRDTrainer_Certificate.pdf`, `TTT_Cerfitcate.pdf` | — | ⛔ **Refused — both carry the founder's passport number.** Only the Trainer ID, Certificate ID and validity dates were extracted into `data/practitioners.ts`; the documents themselves are not reproduced anywhere in the repository |
 
 **`Trainer Photos/` is a trap for a future session.** The name promises exactly
 what the [photography brief](https://claude.ai/code/artifact/c188bb7c-0eef-435e-aafe-070b9160a7b2) says the portal most needs — genuine delivery
-photography — and does not deliver it. Do not assume from the name.
+photography — and does not deliver it. Do not assume from the name. Its 4th
+file, `Mustafa_AI_Photo.jpeg`, is now in use as the founder's headshot
+(2026-09-06, see above) — a separate decision from the other 3, made only
+after the naming conflict was raised directly with the founder.
 
 ## 6. Path references in older documents
 

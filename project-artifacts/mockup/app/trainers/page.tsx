@@ -60,6 +60,7 @@ const standard = [
 export default function TrainersPage() {
   const lead = practitioners[0];
   const others = practitioners.slice(1);
+  const accreditation = lead.hrdCorpAccreditation;
 
   return (
     <PublicShell>
@@ -290,56 +291,93 @@ export default function TrainersPage() {
         </div>
       </section>
 
-      {/* ===== Published work — genuine, and the strongest checkable proof
-              this page carries. Retained here when the profile page was
-              retired, rather than lost with it. ===== */}
-      {lead.books && (
-        <section className="mx-auto max-w-[1280px] px-6 py-16">
-          <p className="text-label mb-3 text-[var(--color-primary)]">
-            Published work
-          </p>
-          <h2 className="text-display mb-5 max-w-[720px]">
-            Written by the person teaching it
-          </h2>
-          <p className="text-body-lg mb-10 max-w-[640px] text-[var(--color-ink-quiet)]">
-            {lead.name} has published {lead.books.length} books on data and AI.
-            They are listed here because they are independently checkable —
-            each links to its own listing.
-          </p>
-          <ul className="grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3 lg:grid-cols-5">
-            {lead.books.map((book) => (
-              <li key={book.url} className="flex flex-col">
-                <a
-                  href={book.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`${book.title} (opens in a new tab)`}
-                  className="group flex flex-col gap-3"
-                >
-                  {/* Fixed 2:3 box with object-cover. The source covers are
-                      500x750, 500x715 and 469x750, so intrinsic sizing gave
-                      rows of 340/324/362px and the titles beneath them did
-                      not line up — the same cross-card misalignment reported
-                      on the course cards (FINDINGS F4). A uniform ratio
-                      fixes it at every breakpoint. */}
-                  <span className="relative block aspect-[2/3] w-full overflow-hidden rounded-[var(--radius-plate)] border border-[var(--color-line)]">
-                    <Image
-                      src={assetPath(book.cover)}
-                      alt={`Cover of ${book.title}`}
-                      fill
-                      sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 18vw"
-                      className="object-cover transition-opacity group-hover:opacity-85"
-                    />
-                  </span>
-                  <span className="text-body-sm font-medium leading-snug underline-offset-4 group-hover:underline">
-                    {book.title}
-                  </span>
-                </a>
-              </li>
-            ))}
-          </ul>
+      {/* ===== Held today — HRD Corp Accredited Trainer =====
+          Moved here from /hrd-corp, 2026-09-06, founder direction: this is
+          the trainer's OWN accreditation, so it sits next to the person it
+          belongs to rather than on the page about the organisation.
+          /hrd-corp keeps the organisation-level facts (registration status,
+          general HRD Corp background) and still links here for this.
+          Content unchanged from its original section — see
+          docs/HRD_CORP.md for the full research trail (evidence, the
+          verification permalink, what is deliberately not reproduced). */}
+      {accreditation && (
+        <section className="night relative overflow-hidden">
+          <div className="relative mx-auto max-w-[1280px] px-6 py-16 lg:py-20">
+            <p className="text-label mb-3 text-[var(--color-primary)]">
+              Held today
+            </p>
+            <h2 className="text-display mb-10 max-w-[640px]">
+              Our HRD Corp Accredited Trainer
+            </h2>
+            <div className="grid items-center gap-12 lg:grid-cols-[220px_1fr]">
+              <Image
+                src={assetPath(accreditation.badge)}
+                alt="HRD Corp Accredited Trainer badge"
+                width={220}
+                height={220}
+                className="mx-auto rounded-full lg:mx-0"
+              />
+              <div>
+                <p className="text-h1 mb-1">{lead.name}</p>
+                <p className="text-body-sm mb-6 text-[var(--color-ink-quiet)]">
+                  {accreditation.title} · issued by {accreditation.issuer}
+                </p>
+                <dl className="mb-8 grid grid-cols-2 gap-x-8 gap-y-5 border-t border-[var(--color-line)] pt-7 sm:grid-cols-3">
+                  {[
+                    ["Trainer ID", accreditation.trainerId],
+                    ["Valid from", "8 July 2026"],
+                    ["Valid to", "8 July 2029"],
+                  ].map(([label, value]) => (
+                    <div key={label}>
+                      <dt className="text-label mb-1.5">{label}</dt>
+                      <dd className="text-body-sm leading-snug">{value}</dd>
+                    </div>
+                  ))}
+                </dl>
+                <div className="rounded-[var(--radius-panel)] border border-[var(--color-line-strong)] p-6">
+                  <p className="text-label mb-3">Verify this accreditation</p>
+                  <p className="text-body-sm mb-4 text-[var(--color-ink-quiet)]">
+                    This links straight to HRD Corp&rsquo;s own official
+                    verification result for this certificate — we would
+                    rather you see it there than take our word for it.
+                  </p>
+                  <dl className="mb-4 flex flex-col gap-2">
+                    <div className="flex flex-wrap gap-x-2">
+                      <dt className="text-body-sm font-medium">
+                        Trainer ID:
+                      </dt>
+                      <dd className="text-mono text-body-sm text-[var(--color-ink-quiet)]">
+                        {accreditation.trainerId}
+                      </dd>
+                    </div>
+                    <div className="flex flex-wrap gap-x-2">
+                      <dt className="text-body-sm font-medium">
+                        Certificate ID:
+                      </dt>
+                      <dd className="text-mono text-body-sm text-[var(--color-ink-quiet)] break-all">
+                        {accreditation.certificateId}
+                      </dd>
+                    </div>
+                  </dl>
+                  <Button
+                    variant="secondary"
+                    href={accreditation.verifyUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Verify this certificate at HRD Corp ↗
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
       )}
+
+      {/* ===== Published work — REMOVED 2026-09-06, founder direction.
+          `lead.books` is untouched in data/practitioners.ts (genuine,
+          real data) — only this page's rendering of it is gone. Restoring
+          it is a JSX addition, not a data operation, if wanted back. */}
 
       {/* ===== Seeing them teach ===== */}
       <section className="mx-auto max-w-[1280px] px-6 pb-20">

@@ -74,6 +74,38 @@ export type Practitioner = {
   certifications: string[];
   /** Profile — formal education. */
   education: string[];
+  /**
+   * A genuine, personally-held government/statutory-body accreditation —
+   * distinct from `certifications` above because it is independently
+   * verifiable by a third party. Displayed on /trainers ("Held today")
+   * and the homepage hero's floating "03" card. Founder direction,
+   * 2026-09-06. See docs/HRD_CORP.md.
+   *
+   * This is the TRAINER's accreditation, not an organisational status —
+   * never conflate it with HRD Corp "Registered Training Provider" (an
+   * entity-level registration Your Partner Technologies does not hold yet;
+   * see data/hrdCorp.ts) or "HRD Corp Claimable" (a per-course status no
+   * course holds yet). The certificate PDF and the trainer's passport
+   * number are deliberately not reproduced anywhere in this codebase —
+   * only the badge HRD Corp itself issued for display, and the identifiers
+   * needed to verify (Trainer ID, Certificate ID).
+   */
+  hrdCorpAccreditation?: {
+    issuer: string;
+    title: string;
+    trainerId: string;
+    certificateId: string;
+    validFrom: string;
+    validTo: string;
+    /** Path under public/. The badge HRD Corp issued for this trainer. */
+    badge: string;
+    /** HRD Corp's own public verification portal — a direct permalink to
+     *  THIS certificate's result (confirmed live, 2026-09-06: loads
+     *  "Verification Successful" with no prior interaction needed). The
+     *  founder's QR scan resolves to the same tool; this URL was found by
+     *  driving it directly and reading window.location.href. */
+    verifyUrl: string;
+  };
   /** Genuine public professional profile. */
   linkedin?: string;
   /** Genuine public long-form profile. Since the in-portal profile page was
@@ -285,6 +317,17 @@ export const practitioners: Practitioner[] = [
       "Master's degree in Information Technology",
       "Bachelor's degree in Commerce",
     ],
+    hrdCorpAccreditation: {
+      issuer: "HRD Corp (Pembangunan Sumber Manusia Berhad)",
+      title: "HRD Corp Accredited Trainer",
+      trainerId: "68923",
+      certificateId: "7471d4a0-493f-11f1-b157-27447d2b99e9",
+      validFrom: "2026-07-08",
+      validTo: "2029-07-08",
+      badge: "/hrd-corp/accredited-trainer-badge.png",
+      verifyUrl:
+        "https://trainers.hrdcorp.gov.my/ecert?id=7471d4a0-493f-11f1-b157-27447d2b99e9",
+    },
     linkedin: "https://www.linkedin.com/in/mustafaisonline",
     mediumProfile:
       "https://medium.com/@mustafaisonline/profile-mustafa-qizilbash-2fb7a294f40f",

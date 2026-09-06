@@ -111,6 +111,8 @@ Recorded in
 | `public/experts/mustafa-qizilbash.jpg` | `Resume/Mustafa/Resume -Editable/Mustafa_Pic.jpg` | ✅ Used — genuine, 800×800 |
 | `Resume/Mustafa/Mustafa_AI_Photo.jpeg` | — | ⛔ **Refused.** AI-generated portrait. A synthetic likeness falsifies the claim that a real practitioner teaches here |
 | `Trainer Photos/` (3 files) | — | ⛔ **Refused.** Despite the folder name these are **not** training-delivery photographs. They do not evidence delivery |
+| `Malaysia - HRD Requirements/HRD Certificates and Badge/HRDBadge.png` | `project-artifacts/mockup/public/hrd-corp/accredited-trainer-badge.png` | ✅ **Used — founder direction, 2026-09-06.** HRD Corp's own "Accredited Trainer" badge, issued to the founder (Trainer ID 68923) for display |
+| `Malaysia - HRD Requirements/HRD Certificates and Badge/HRDTrainer_Certificate.pdf`, `TTT_Cerfitcate.pdf` | — | ⛔ **Refused — both carry the founder's passport number.** Only the Trainer ID, Certificate ID and validity dates were extracted into `data/practitioners.ts`; the documents themselves are not reproduced anywhere in the repository |
 
 **`Trainer Photos/` is a trap for a future session.** The name promises exactly
 what the [photography brief](https://claude.ai/code/artifact/c188bb7c-0eef-435e-aafe-070b9160a7b2) says the portal most needs — genuine delivery

@@ -1,4 +1,7 @@
 import Link from "next/link";
+import Image from "next/image";
+import { assetPath } from "@/lib/basePath";
+import { practitioners } from "@/data/practitioners";
 import styles from "./HomeHero.module.css";
 
 /**
@@ -75,10 +78,45 @@ import styles from "./HomeHero.module.css";
  *   min-height reduced to match. Numbers on the remaining cards (01, 04–08)
  *   were left as-is rather than renumbered, since they still read fine as
  *   a sequence and renumbering risked more churn than it was worth.
+ * - 2026-09-06: founder direction — a compact HRD Corp credibility mark
+ *   (a standalone `HrdCorpBadge` component, linking to /hrd-corp) added to
+ *   the content column, below the helper line.
+ * - 2026-09-06, later the same day: founder direction — moved into the
+ *   floating card composition instead, filling the empty "03" slot left by
+ *   "Create a Portfolio" above. `HrdCorpBadge.tsx` is deleted (it had no
+ *   other use); the card is built inline here, as a `Link` (not a plain
+ *   `<article>` like the other seven) so it still routes to /hrd-corp, with
+ *   the actual HRD Corp-issued badge image filling the icon circle instead
+ *   of an inline SVG glyph — the one card where showing the genuine mark
+ *   matters more than visual consistency with the other seven. Still states
+ *   only that the TRAINER holds HRD Corp's "Accredited Trainer" status
+ *   (Trainer ID 68923) — not that the organisation is a Registered Training
+ *   Provider or that any course is HRD Corp Claimable. See
+ *   docs/HRD_CORP.md.
+ * - 2026-09-06, later still: founder direction — two more tweaks to the
+ *   card composition. (1) Card 03 (HRD Corp) recoloured to gold, distinct
+ *   from every other card's hue (blue/purple/orange/teal), and — unlike
+ *   every other card here — the override reaches the CARD itself
+ *   (background/border/glow), not just its icon, so it visibly stands out
+ *   rather than blending in as an eighth same-treatment card. (2) Card 04
+ *   ("Explore Opportunities") recoloured from orange to rose — it was
+ *   identical to `--community` (both drew from the same orange token) and
+ *   had drifted close to card 03's new gold — and its title shortened to
+ *   "Opportunities". The journey strip below still reads "Explore
+ *   Opportunities" in full; only the floating card's title changed.
+ * - 2026-09-06, later still: founder direction — moved HRD Corp (card 03)
+ *   to a top-row position (top:40/right:0), swapping slots with
+ *   `--certification` rather than computing a new position from scratch —
+ *   `--certification` now sits where `--hrdcorp` used to (bottom-left),
+ *   an already-overlap-verified spot. All eight cards also reduced in
+ *   size (270→230px wide, 116→100px min-height, icon 54→44px, title
+ *   17→15px) — positions are unchanged in HomeHero.module.css, since a
+ *   smaller box only reduces overlap risk, never increases it.
  *
- * WHAT IS AND IS NOT A PHOTOGRAPH here: nothing — no image asset of any
- * kind. Every visual (cards, annotations) is CSS/inline SVG, consistent
- * with this file's history.
+ * WHAT IS AND IS NOT A PHOTOGRAPH here: one genuine image — the HRD Corp
+ * badge on card 03, an asset HRD Corp itself issued (not a photograph of
+ * this Academy or its delivery). Every other visual (cards, annotations)
+ * is still CSS/inline SVG, consistent with this file's original history.
  */
 
 /* ---------- Original inline glyphs (no icon library, no stock asset) ---------- */
@@ -225,6 +263,8 @@ const journey = [
 ] as const;
 
 export function HomeHero() {
+  const accreditation = practitioners[0]?.hrdCorpAccreditation;
+
   return (
     // Fragment, not a single <section>, since 2026-09-05 (later still): the
     // journey strip below moved out of the hero into normal document flow
@@ -310,13 +350,48 @@ export function HomeHero() {
             </div>
           </article>
 
+          {/* Card 03 — the slot "Create a Portfolio" left empty (see file
+              header). A Link, not an <article> like its seven siblings: the
+              real, verifiable HRD Corp accreditation is worth routing
+              somewhere, and .hero-card's hover/focus styling is generic
+              (not scoped to <article>), so this costs nothing visually. */}
+          {accreditation && (
+            <Link
+              href="/hrd-corp"
+              className={`${styles["hero-card"]} ${styles["hero-card--hrdcorp"]}`}
+            >
+              <span className={styles["hero-card__number"]}>03</span>
+              <span className={styles["hero-card__icon"]}>
+                <Image
+                  src={assetPath(accreditation.badge)}
+                  alt="HRD Corp Accredited Trainer badge"
+                  width={54}
+                  height={54}
+                  className="h-full w-full rounded-full object-cover"
+                />
+              </span>
+              <div className={styles["hero-card__content"]}>
+                <p className={styles["hero-card__title"]}>
+                  {accreditation.title}
+                </p>
+                <p className={styles["hero-card__description"]}>
+                  Verified — Trainer ID {accreditation.trainerId}.
+                </p>
+              </div>
+            </Link>
+          )}
+
           <article className={`${styles["hero-card"]} ${styles["hero-card--opportunities"]}`}>
             <span className={styles["hero-card__number"]}>04</span>
             <span className={styles["hero-card__icon"]}>
               <GlyphBriefcase />
             </span>
             <div className={styles["hero-card__content"]}>
-              <p className={styles["hero-card__title"]}>Explore Opportunities</p>
+              {/* Shortened from "Explore Opportunities" — 2026-09-06,
+                  founder direction. The journey strip below (`journey`,
+                  step 04) still reads "Explore Opportunities" in full;
+                  only this floating card's title changed. */}
+              <p className={styles["hero-card__title"]}>Opportunities</p>
               {/* "Confirm Job in Pakistan & Malaysia (T&C Applied)" was
                   requested (2026-09-05) and NOT used — same reasoning as
                   the file header's note on "Confirm Job.... Post

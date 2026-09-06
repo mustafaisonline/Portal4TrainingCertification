@@ -74,13 +74,28 @@ export function PublicShell({ children }: { children: ReactNode }) {
               Certification → Certifications. Six items — the documented
               maximum. The two removed anchors pointed at homepage sections
               that still exist and are still linked from elsewhere; only
-              their nav entries went. */}
+              their nav entries went.
+
+              2026-09-06, founder direction: "Contact Us" removed here
+              (it already lives in the footer's Explore list, so nothing
+              is lost) and "HRD Corp" added in its place — still six items.
+              /hrd-corp was originally reached only via the homepage hero
+              mark (HrdCorpBadge); this nav entry supersedes that
+              discoverability decision, recorded in docs/HRD_CORP.md and
+              docs/SITE_PAGES.md.
+
+              2026-09-06, later the same day: "HRD Corp" moved to position 2
+              (right after Home), founder direction — second-highest
+              prominence in the nav, after the homepage itself. */}
           <nav
             aria-label="Primary"
             className="hidden items-center gap-7 text-body-sm text-[var(--color-ink-quiet)] lg:flex"
           >
             <Link href="/" className="hover:text-[var(--color-ink)]">
               Home
+            </Link>
+            <Link href="/hrd-corp" className="hover:text-[var(--color-ink)]">
+              HRD Corp
             </Link>
             <Link href="/courses" className="hover:text-[var(--color-ink)]">
               Courses
@@ -93,9 +108,6 @@ export function PublicShell({ children }: { children: ReactNode }) {
             </Link>
             <Link href="/about-us" className="hover:text-[var(--color-ink)]">
               About Us
-            </Link>
-            <Link href="/contact-us" className="hover:text-[var(--color-ink)]">
-              Contact Us
             </Link>
           </nav>
           <div className="flex shrink-0 items-center gap-3">

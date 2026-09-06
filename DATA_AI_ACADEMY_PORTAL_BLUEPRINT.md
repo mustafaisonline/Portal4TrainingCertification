@@ -1601,10 +1601,9 @@ Design these once and reuse everywhere:
 - **VerificationSeal** — the trust mark on verification pages
 - **StatTile**, **UpliftBar**, **TrendIndicator** for dashboards
 
-### 25.6 Motion, tone, and imagery
+### 25.6 Motion and tone
 - **Motion:** functional only — 150–250ms transitions, meaningful state changes. **One deliberate exception:** the credential award moment earns real, celebratory motion. Respect `prefers-reduced-motion` everywhere.
 - **Tone of voice:** direct, expert, encouraging, never condescending and never hype. Say "not yet" rather than "failed". Say "you're 3 skills from this credential" rather than "62% complete". Assessment copy is calm and precise.
-- **Imagery:** real people, real work contexts, regionally diverse — reflecting the actual audience across Southeast Asia, the Middle East, and beyond. Diagrams and data visualisation over stock photography. Abstract "glowing brain" AI imagery is banned; it undermines the credibility the brand depends on.
 
 ### 25.7 Technical foundations
 Design tokens (colour, type, space, radius, shadow, motion) as the single source of truth, exported to both design tool and code · component library with documented props and states · WCAG 2.2 AA verified per component · RTL support built in from the start for Arabic · full documentation of usage rules, not just visual specs.

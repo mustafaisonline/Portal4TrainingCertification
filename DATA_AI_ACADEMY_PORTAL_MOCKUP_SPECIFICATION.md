@@ -561,7 +561,7 @@ Routes given as URL paths so a coding agent can scaffold directly.
 
 **Key sections, in order:**
 
-1. **Hero.** One claim, not three. Headline states the differentiator: *learn what you're missing, prove it by doing the work, carry the proof anywhere*. Sub-line names the audience. Single primary CTA **Start free diagnostic (10 min)** + secondary text link *See how certification works*. Supporting visual: an abstracted skill-graph / capability map — **never** a stock photo of people at laptops.
+1. **Hero.** One claim, not three. Headline states the differentiator: *learn what you're missing, prove it by doing the work, carry the proof anywhere*. Sub-line names the audience. Single primary CTA **Start free diagnostic (10 min)** + secondary text link *See how certification works*.
 2. **The three doors.** The most important block on the page. Three large cards, equal weight, each with icon, one-line description, and its own CTA:
    - *Build my career* → `/learn`
    - *Train my team* → `/organisations`
@@ -2185,7 +2185,6 @@ Per-screen hierarchy discipline: exactly one primary action · one dominant cont
 - A **source citation block** under every substantive answer — small, monospace reference IDs with version stamps. This *is* the AI visual identity: **citations, not sparkles.**
 - A "why this" disclosure affordance on every recommendation.
 - Policy chips (`Permitted` / `Disclosed` / `Restricted`) as small-caps annotation labels.
-- **No** glowing orbs, animated gradients, "thinking" brain imagery, or purple-to-pink gradients. In 2026 that visual language reads as unserious — precisely the wrong signal for a body that certifies AI competence.
 
 **Data visualisation principles:**
 - Thin strokes, generous whitespace, direct labelling over legends.
@@ -2193,14 +2192,11 @@ Per-screen hierarchy discipline: exactly one primary action · one dominant cont
 - Heatmaps: value + colour, always.
 - No pie charts. No 3D. No gradients on data.
 - Every chart works in greyscale — test it.
-- Charts are theme-aware SVG, not raster images.
 
-## 16.9 Motion & imagery
+## 16.9 Motion
 
 **Motion:** functional only. 150–250ms, ease-out. Meaningful state changes, not decoration. Respect `prefers-reduced-motion` throughout.
 **The one deliberate exception:** the credential award moment (`K10`) earns real, celebratory, choreographed motion. Scarcity is what makes it land.
-
-**Imagery:** real people in real work contexts, regionally diverse (Southeast Asia, Middle East, and beyond — reflecting the actual audience). Diagrams over photographs wherever a diagram can carry the meaning. Original technical illustration in the blueprint idiom. **Banned:** stock photos of diverse people pointing at laptops, glowing brains, humanoid robots, binary-code backgrounds, and handshake imagery.
 
 ## 16.10 Accessibility as a design constraint
 WCAG 2.2 AA minimum, verified per component. Keyboard-complete — the assessment runner and lesson player especially. Visible focus states designed, not browser-default. Captions and transcripts on all video. Colour never the sole carrier of meaning. Minimum 4.5:1 body contrast, 3:1 for large text and UI boundaries. Touch targets ≥44×44px. RTL support built into the component library from day one for Arabic, not retrofitted.

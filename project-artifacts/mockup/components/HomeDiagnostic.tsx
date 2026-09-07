@@ -3,6 +3,10 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { DiagnosticQuestionCanvas } from "@/components/signature/DiagnosticQuestionCanvas";
+import {
+  DiagnosticIllustration,
+  DiagnosticTrustCard,
+} from "@/components/signature/DiagnosticIntro";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import {
@@ -121,7 +125,15 @@ import { selectFixture } from "@/data/results";
  *   conflicting-utility-class risk noted above, without a clean inline-
  *   style seam for `Button`) would either fight the design system or
  *   require changing it site-wide, which is outside "only update this
- *   section." Flagged as the one spec value not matched exactly. */
+ *   section." Flagged as the one spec value not matched exactly.
+ *
+ * FOURTH PASS, 2026-09-07 — founder asked for /diagnostic (the standalone
+ * page) to match this same treatment. `DiagnosticIllustration` and the
+ * trust-points card moved out to components/signature/DiagnosticIntro.tsx
+ * so both entry points render the identical thing, same reasoning as
+ * `DiagnosticStartCard` already being shared. No visual change here —
+ * `<DiagnosticTrustCard className="sm:w-[320px]" />` reproduces the
+ * previous inline markup exactly. */
 
 const STORAGE_KEY = "mockup:diagnostic:in-progress";
 
@@ -131,77 +143,6 @@ type SavedProgress = {
 };
 
 type Stage = "question" | "insight";
-
-/** Shared stroke props for this file's local icon glyphs — same
- *  convention as app/trainers/page.tsx's `iconStroke`. */
-const iconStroke = {
-  stroke: "currentColor",
-  strokeWidth: 1.7,
-  strokeLinecap: "round" as const,
-  strokeLinejoin: "round" as const,
-  fill: "none",
-};
-
-/** Decorative illustration beside the intro text.
- *
- * REDESIGNED 2026-09-07, third pass — the founder's verification loop on
- * the previous (reference-image-matching) version broke down: two
- * screenshots sent as "current output" were pixel-identical to each
- * other despite real code changes in between, so pixel-matching against
- * an unverifiable screenshot was abandoned in favour of an own-judgment
- * design pass. This illustration is simplified from "target icon +
- * two-row checklist crammed into one small card" (busy at 140–160px) to
- * one clear metaphor: a single gauge/target reading, with a small
- * "assessed" check-badge overlapping the card corner — a pattern more
- * confident at small sizes, still original geometric inline SVG (not a
- * photograph, per IMAGE_SLOTS.md), still deterministic. */
-function DiagnosticIllustration() {
-  return (
-    <div className="relative h-[136px] w-[136px] shrink-0 sm:h-[152px] sm:w-[152px]">
-      <div
-        aria-hidden="true"
-        className="absolute -left-5 -top-4 h-[130px] w-[130px] rounded-full bg-[var(--color-primary)]/10 blur-xl"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute bottom-1 left-0 h-[40px] w-[40px] rounded-full border border-dashed border-[var(--color-line-strong)]"
-      />
-      <svg viewBox="0 0 152 152" className="relative h-full w-full" aria-hidden="true">
-        {/* Card, floating via drop-shadow rather than a flat border. */}
-        <g style={{ filter: "drop-shadow(0 16px 24px rgba(47,95,224,0.18))" }}>
-          <rect x="18" y="10" width="116" height="116" rx="20" fill="var(--color-ground-raised)" stroke="var(--color-line)" />
-        </g>
-        {/* The gauge — a single, larger, centred reading. */}
-        <circle cx="76" cy="68" r="34" fill="none" stroke="var(--color-line)" strokeWidth="8" />
-        <circle
-          cx="76"
-          cy="68"
-          r="34"
-          fill="none"
-          stroke="var(--color-primary)"
-          strokeWidth="8"
-          strokeLinecap="round"
-          strokeDasharray={`${2 * Math.PI * 34 * 0.7} ${2 * Math.PI * 34}`}
-          transform="rotate(-90 76 68)"
-        />
-        <circle cx="76" cy="68" r="6" fill="var(--color-primary)" />
-        {/* Sparkle accent. */}
-        <path d="M130 20l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="var(--color-primary)" opacity="0.55" />
-      </svg>
-      {/* "Assessed" badge — overlaps the card's bottom-right corner,
-          outside the svg so its own drop-shadow doesn't get clipped by
-          the card's shadow filter above. */}
-      <span
-        aria-hidden="true"
-        className="absolute bottom-2 right-1 grid h-9 w-9 place-items-center rounded-full bg-[var(--color-primary)] shadow-[0_6px_14px_rgba(47,95,224,0.35)] ring-4 ring-[var(--color-ground)]"
-      >
-        <svg viewBox="0 0 24 24" className="h-4 w-4 text-white" aria-hidden="true">
-          <path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-        </svg>
-      </span>
-    </div>
-  );
-}
 
 /** Trailing arrow for the primary CTA — identical markup to
  *  components/HomeHeroLight.tsx's local `IconArrow`, duplicated per this
@@ -213,60 +154,6 @@ function IconArrowRight() {
     </svg>
   );
 }
-
-/** Duplicated from components/HomeHeroLight.tsx's local `IconBars` — same
- *  per-file icon convention as `IconArrowRight` above. */
-function IconBars() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
-      <path d="M5 19v-6M12 19V8M19 19V5" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" fill="none" />
-    </svg>
-  );
-}
-
-function IconGift() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
-      <rect x="4" y="9.5" width="16" height="10" rx="1.5" {...iconStroke} />
-      <path d="M4 13.2h16" {...iconStroke} />
-      <path d="M12 9.5v10" {...iconStroke} />
-      <path
-        d="M12 9.5c-1.2-3-3-4-4.2-3-1 .8-.4 3 4.2 3zM12 9.5c1.2-3 3-4 4.2-3 1 .8.4 3-4.2 3z"
-        {...iconStroke}
-      />
-    </svg>
-  );
-}
-
-function IconShield() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
-      <path d="M12 3.5l7 3v5.2c0 4.6-3 7.8-7 8.8-4-1-7-4.2-7-8.8V6.5l7-3z" {...iconStroke} />
-    </svg>
-  );
-}
-
-/** 2026-09-07: the three trust points ("Free · no account to start" etc.)
- *  now carry a title AND a description line, in a bordered card — see
- *  file header comment (point 3). Description copy is new, matching the
- *  supplied reference image; titles are unchanged. */
-const trustPoints = [
-  {
-    icon: <IconGift />,
-    title: "Free · no account to start",
-    body: "Get started instantly",
-  },
-  {
-    icon: <IconBars />,
-    title: "Named gaps, not a score",
-    body: "Clear, actionable insights",
-  },
-  {
-    icon: <IconShield />,
-    title: "No commitment",
-    body: "Explore at your own pace",
-  },
-] as const;
 
 export function HomeDiagnostic() {
   const router = useRouter();
@@ -461,25 +348,7 @@ export function HomeDiagnostic() {
               </p>
             </div>
           </div>
-          <Card
-            variant="panel"
-            className="flex shrink-0 flex-col gap-6 border border-[var(--color-line)] sm:w-[320px]"
-            style={{ borderRadius: "20px" }}
-          >
-            {trustPoints.map((point) => (
-              <div key={point.title} className="flex items-start gap-3">
-                <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
-                  {point.icon}
-                </span>
-                <div>
-                  <p className="text-label mb-0.5">{point.title}</p>
-                  <p className="text-body-sm text-[var(--color-ink-quiet)]">
-                    {point.body}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </Card>
+          <DiagnosticTrustCard className="sm:w-[320px]" />
         </div>
 
         {/* Divider between the pitch and the live form — 2026-09-07,

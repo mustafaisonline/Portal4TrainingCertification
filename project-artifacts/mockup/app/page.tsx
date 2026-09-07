@@ -189,7 +189,23 @@ export default function HomePage() {
               rather than staying an empty dashed box — see that file's own
               header comment for why this isn't a stock/AI photograph.
               Swapping in a real photograph is still just a `src` prop; no
-              layout changes. */}
+              layout changes.
+
+              2026-09-07, founder direction: all four formats now filled
+              with a real photograph — AI-generated scenes, saved to
+              public/delivery/face-to-face.png, live-online.png,
+              private-cohorts.png and on-site-international.png
+              respectively. Permitted under the 2026-09-06 policy change
+              recorded in docs/IMAGE_SLOTS.md rule 2 (AI-generated/AI-
+              enhanced imagery allowed portal-wide; stock/third-party-
+              licensed imagery, rule 1, remains prohibited — none of these
+              was sourced from either). `illustration` is left in place on
+              every entry rather than removed: per ImageFrame's own
+              contract `src` always wins over `illustration` when both are
+              supplied, so each is inert here, not a fallback that could
+              show through — reverting any one format to its illustration
+              is then just deleting that entry's `photo`/`photoAlt` pair,
+              nothing structural. */}
           {[
             {
               title: "Face-to-face",
@@ -197,6 +213,9 @@ export default function HomePage() {
               shot: "A face-to-face session in progress — room, participants, practitioner teaching",
               note: "consent required",
               illustration: <FaceToFaceIllustration />,
+              photo: "/delivery/face-to-face.png",
+              photoAlt:
+                "A trainer leading a face-to-face session, presenting to seated participants",
             },
             {
               title: "Live online",
@@ -204,6 +223,9 @@ export default function HomePage() {
               shot: "A live online session as run — screen, gallery of participants, discussion",
               note: "no client data on screen",
               illustration: <LiveOnlineIllustration />,
+              photo: "/delivery/live-online.png",
+              photoAlt:
+                "A learner attending a live online session on a laptop video call, taking notes",
             },
             {
               title: "Private cohorts",
@@ -211,6 +233,9 @@ export default function HomePage() {
               shot: "A single-organisation cohort working together",
               note: "client consent essential",
               illustration: <PrivateCohortIllustration />,
+              photo: "/delivery/private-cohorts.png",
+              photoAlt:
+                "A small private cohort working together around a table, discussing and taking notes",
             },
             {
               title: "On-site & international",
@@ -218,8 +243,11 @@ export default function HomePage() {
               shot: "Delivery at a client site, ideally showing place",
               note: "consent required",
               illustration: <OnSiteIllustration />,
+              photo: "/delivery/on-site-international.png",
+              photoAlt:
+                "A practitioner briefing a group on-site, with a city skyline in the background",
             },
-          ].map(({ title, body, shot, note, illustration }, i) => (
+          ].map(({ title, body, shot, note, illustration, photo, photoAlt }, i) => (
             <div
               key={title}
               className="border-t-2 border-[var(--color-primary)]/60 pt-5"
@@ -237,6 +265,8 @@ export default function HomePage() {
                 minWidth={1600}
                 note={note}
                 illustration={illustration}
+                src={photo}
+                alt={photoAlt}
               />
             </div>
           ))}

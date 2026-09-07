@@ -56,6 +56,14 @@ jobs:
           # Resolves og:image to an absolute URL in app/layout.tsx. Without
           # it the OG card points at localhost and no share preview renders.
           NEXT_PUBLIC_SITE_URL: "https://mustafaisonline.github.io/Portal4TrainingCertification"
+          # Powers the live "Community" video row on /trainers (lib/youtube.ts,
+          # 2026-09-07). Set this repo secret at Settings → Secrets and
+          # variables → Actions → New repository secret, name YOUTUBE_API_KEY.
+          # See .env.example for how the key itself is created and restricted.
+          # Missing this does not fail the build — the section just shows its
+          # honest error state (lib/youtube.ts's YouTubeConfigError) — but it
+          # does mean the live site won't show any videos until it's set.
+          NEXT_PUBLIC_YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
 
       # `enablement: true` turns Pages ON via the API using the workflow's own
       # GITHUB_TOKEN (permissions.pages: write above), so the site does not

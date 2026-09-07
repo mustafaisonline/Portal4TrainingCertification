@@ -3,6 +3,11 @@ import type { NextConfig } from "next";
 // Mockup artifact — static/local only. No server actions, no API routes,
 // no database. See docs/DESIGN_FOUNDATION.md and docs/MOCK_DATA_REGISTER.md.
 //
+// ⚠ One exception, 2026-09-07: the "Community" video row on /trainers
+// calls the YouTube Data API v3 directly from the browser (lib/youtube.ts)
+// — still no backend of ours, but it is this project's one third-party
+// API dependency. See that file's header comment and .env.example.
+//
 // ── GitHub Pages preview build ──────────────────────────────────────────
 // The Pages workflow (.github/workflows/deploy-pages.yml) sets
 // GITHUB_PAGES=true. EVERY Pages setting is gated behind it, deliberately,

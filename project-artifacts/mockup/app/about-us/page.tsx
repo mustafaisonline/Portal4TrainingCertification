@@ -5,7 +5,6 @@ import { Card } from "@/components/ui/Card";
 import { ImageFrame } from "@/components/ImageFrame";
 import { FounderTeachingIllustration } from "@/components/illustrations/DeliveryIllustrations";
 import { practitioners } from "@/data/practitioners";
-import { courses } from "@/data/courses";
 
 /**
  * About — added 2026-09-02 by founder direction.
@@ -188,7 +187,22 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ===== Who is behind it ===== */}
+      {/* ===== Who is behind it =====
+          2026-09-07, founder direction: filled with a real photograph —
+          an AI-generated teaching scene ("Turning real-world experience
+          into practical skills"), saved to
+          public/delivery/about-founder-teaching.png. Named for the page,
+          not the founder's likeness: like the same illustration's other
+          fill-ins on this session (app/DataBlueprint-AIVibeCoding/
+          page.tsx's Hero), this is a generic AI-generated figure, not the
+          founder's actual photograph — that distinction matters because
+          this section's own copy is specifically about the founder as a
+          named individual. Ratio already matched the photo's own 3:2
+          landscape, so no layout change was needed beyond `src`/`alt`.
+          Permitted under docs/IMAGE_SLOTS.md rule 2 (AI-generated imagery
+          allowed portal-wide; rule 1's stock/licensed-imagery ban is
+          separate and untouched). `illustration` stays in place, inert
+          per ImageFrame's `src`-wins contract. */}
       <section className="mx-auto max-w-[1280px] px-6 py-16">
         <div className="grid gap-12 lg:grid-cols-[1fr_1fr] lg:items-start">
           <div className="max-w-[560px]">
@@ -220,25 +234,41 @@ export default function AboutPage() {
             minWidth={1600}
             note="consent required"
             illustration={<FounderTeachingIllustration />}
+            src="/delivery/about-founder-teaching.png"
+            alt="A practitioner teaching a group, with a slide reading 'Turning real-world experience into practical skills'"
           />
         </div>
       </section>
 
-      {/* ===== Where we are today — the honest close ===== */}
+      {/* ===== Where we are today — the honest close =====
+          UPDATED 2026-09-07, founder direction ("update this section's
+          content as per Programme Page"): this previously cited
+          `courses.length` (7) — a count of every entry in
+          data/courses.ts, most of which are disabled and no longer
+          surfaced anywhere (see docs/course_landing_page.md §5). That
+          made this section claim something the site no longer shows a
+          visitor. Reworded to state what the Programme page
+          (/DataBlueprint-AIVibeCoding) actually presents today: one
+          course, with real published pricing and an enquiry-based
+          "Register your interest" flow — but still no scheduled dates,
+          which remains genuinely true (that page's own investment
+          section says so). `courses.length` is no longer referenced;
+          the `courses` import above was removed along with it. */}
       <section className="border-t border-[var(--color-line)] bg-[var(--color-ground-raised)]">
         <div className="mx-auto max-w-[1280px] px-6 py-16 text-center">
           <p className="text-label mb-3 text-[var(--color-primary)]">
             Where we are today
           </p>
           <h2 className="text-display mb-5">
-            {courses.length} courses designed. The first dates are being
+            One course, built as a method. The first dates are being
             prepared.
           </h2>
           <p className="text-body-lg mx-auto mb-9 max-w-[620px] text-[var(--color-ink-quiet)]">
-            Public schedules are not published yet. When they are, they will be
-            real dates for real courses — a small, genuine schedule rather
-            than a padded catalogue. Everything on this portal follows the same
-            rule.
+            Pricing is published and registering interest is open, but
+            public schedules are not — dates and invoicing are confirmed
+            directly with you. When schedules do publish, they will be real
+            dates for this course, not a padded catalogue. Everything on
+            this portal follows the same rule.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button href="/DataBlueprint-AIVibeCoding">Explore courses</Button>

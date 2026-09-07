@@ -5,7 +5,11 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { DiagnosticQuestionCanvas } from "@/components/signature/DiagnosticQuestionCanvas";
 import { DiagnosticStartCard } from "@/components/signature/DiagnosticStartCard";
-import { LogoMark } from "@/components/PublicShell";
+import {
+  DiagnosticIllustration,
+  DiagnosticTrustCard,
+} from "@/components/signature/DiagnosticIntro";
+import { PublicShell } from "@/components/PublicShell";
 import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import {
@@ -16,8 +20,18 @@ import {
 import { selectFixture } from "@/data/results";
 
 /**
- * P05 — Free Skill Diagnostic (§4). Full-screen focus mode: no global nav,
- * just logo + honest progress + Save & exit, per the spec.
+ * P05 — Free Skill Diagnostic (§4). Originally full-screen "focus mode" —
+ * no global nav, just logo + honest progress + Save & exit, per the spec.
+ *
+ * FOCUS MODE REVERSED — 2026-09-07, founder direction ("bring portal
+ * header menu on this page as well"): the reduced, nav-less header is
+ * replaced with the full `PublicShell` chrome (primary nav, Sign in,
+ * Explore courses CTA, footer) used by every other public page — this
+ * page no longer reads as an isolated flow disconnected from the rest of
+ * the site. The progress indicator and "Save & exit" link are NOT
+ * dropped — nothing here removes functionality that existed — they now
+ * render as their own slim bar directly beneath the main header, still
+ * only while `stage !== "idle"`, same condition as before.
  *
  * localStorage boundary (approval message, adjustment #3): this is the ONE
  * approved use of localStorage in this milestone — temporary, resumable
@@ -37,6 +51,27 @@ import { selectFixture } from "@/data/results";
  * further to send a visitor who is already on the dedicated page.
  * Resuming an in-progress attempt (existing behaviour, unchanged) skips
  * straight past this stage into "question", same as before.
+ *
+ * REDESIGNED 2026-09-07, founder direction ("match it with portal theme")
+ * — this page predated the visual pass components/HomeDiagnostic.tsx went
+ * through the same day (soft gradient background, the gauge illustration,
+ * the trust-points card, a wider/rounder question card) and had fallen
+ * visibly behind it: a bare icon-in-box, three unstyled `text-label`
+ * bullets, a flat white background, no shadow anywhere. Brought in line:
+ * - Background: same soft radial-gradient-on-pale-lavender treatment as
+ *   the homepage section, applied to this page's own wrapper.
+ * - Idle stage: `GlyphTarget` + the three bare bullets replaced by
+ *   `DiagnosticIllustration` + `DiagnosticTrustCard` — the exact shared
+ *   components the homepage now uses (see DiagnosticIntro.tsx's own
+ *   header comment for why these were extracted to be shared rather than
+ *   duplicated a second time). `DiagnosticStartCard` below is untouched
+ *   (content/logic already shared and out of scope here).
+ * - Question/insight stage: `DiagnosticQuestionCanvas` now gets the same
+ *   `cardClassName`/`cardStyle` widening (860px, 22px radius) the
+ *   homepage embed already uses, via the props added to that component
+ *   for exactly this purpose.
+ * Content and functionality are unchanged — tier selector, Start button,
+ * Save & exit, Cancel test, resume-in-progress, all identical to before.
  */
 
 const STORAGE_KEY = "mockup:diagnostic:in-progress";
@@ -47,16 +82,6 @@ type SavedProgress = {
 };
 
 type Stage = "idle" | "question" | "insight";
-
-function GlyphTarget() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="12" cy="12" r="4.5" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="12" cy="12" r="1.7" fill="currentColor" />
-    </svg>
-  );
-}
 
 export default function DiagnosticPage() {
   const router = useRouter();
@@ -184,65 +209,66 @@ export default function DiagnosticPage() {
   };
 
   return (
-    <div className="flex min-h-dvh flex-col">
-      {/* 2026-09-06, founder direction: this header was a plain light bar —
-          every other page opened with the site's dark-navy masthead
-          (PublicShell) at the time, so this one read as a different,
-          disconnected product. Given the same `night` scope + translucent
-          navy background + LogoMark as PublicShell's header (imported
-          from there so the mark can't drift into a second version), while
-          keeping the deliberately reduced content (logo + progress +
-          Save & exit only, no full nav, no CTA) — that reduction is
-          "focus mode," not the theme mismatch that needed fixing.
-          LATER THE SAME DAY, light-theme propagation: `.night` removed —
-          PublicShell's header is light now too, so this still matches it,
-          just at the new colour. See components/HomeHeroLight.tsx's
-          header comment for the redesign this follows. */}
-      <header className="sticky top-0 z-10 border-b border-[var(--color-line)] bg-white/90 px-6 py-3.5 backdrop-blur">
-        <div className="mx-auto flex max-w-[640px] items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5">
-            <LogoMark />
-            <span className="wordmark">Data &amp; AI Academy</span>
-          </Link>
-          {/* Progress and Save & exit only mean something once a walkthrough
-              is actually underway — hidden on the new idle stage rather than
-              showing "Question 1 of ~10" before anything has started. */}
-          {stage !== "idle" && (
-            <>
+    <PublicShell>
+      <div className="relative overflow-hidden bg-[#eef2fc]">
+        {/* Soft background gradient — same treatment as the homepage's
+            "Not sure where you stand?" section (components/HomeDiagnostic.tsx),
+            added 2026-09-07 so this page reads as the same product rather
+            than a flat-white outlier once you click through. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(85% 130% at 25% 20%, rgba(47,95,224,0.06), transparent 75%)",
+          }}
+        />
+        {/* Progress + Save & exit — moved 2026-09-07 from this page's own
+            (now-removed) header into a slim bar beneath PublicShell's main
+            nav. Same condition as before (`stage !== "idle"`), same two
+            pieces of content, same behaviour — only the surrounding chrome
+            changed. Not sticky: PublicShell's own header already is, and
+            two stacked sticky bars is more than this needs. */}
+        {stage !== "idle" && (
+          <div className="relative border-b border-[var(--color-line)] bg-white/70 px-6 py-2.5 backdrop-blur">
+            <div className="mx-auto flex max-w-[900px] items-center justify-between">
               <p className="text-label">
                 Question {index + 1} of ~{questions.length}
               </p>
               <Link href="/" className="text-body-sm text-[var(--color-ink-quiet)] underline underline-offset-4">
                 Save &amp; exit
               </Link>
-            </>
-          )}
-        </div>
-      </header>
-
-      <main className="flex flex-1 items-center justify-center px-6 py-16">
-        {stage === "idle" ? (
-          <div className="flex w-full max-w-[640px] flex-col gap-8">
-            <div className="flex items-start gap-5">
-              <div className="mt-1 hidden rounded-[10px] border border-[var(--color-line-strong)] p-2.5 text-[var(--color-primary)] sm:inline-flex">
-                <GlyphTarget />
-              </div>
-              <div>
-                <p className="text-label mb-2 text-[var(--color-primary)]">
-                  Free skill diagnostic
-                </p>
-                <h1 className="text-h1 mb-2">Not sure where you stand?</h1>
-                <p className="text-body-sm text-[var(--color-ink-quiet)]">
-                  The free diagnostic locates you across our capability areas
-                  and names your gaps in plain language — before you commit
-                  to anything.
-                </p>
-              </div>
             </div>
-            <div className="flex flex-wrap gap-x-6 gap-y-2">
-              <p className="text-label">Free · no account to start</p>
-              <p className="text-label">Named gaps, not a score</p>
-              <p className="text-label">No commitment</p>
+          </div>
+        )}
+
+        <div className="relative flex items-center justify-center px-6 py-16">
+        {stage === "idle" ? (
+          <div className="flex w-full max-w-[900px] flex-col gap-10">
+            {/* Two-column layout — identical shared pieces to the
+                homepage's embed (DiagnosticIllustration, DiagnosticTrustCard):
+                see this file's header comment. The three plain-text bullets
+                that used to sit here are gone, not lost — DiagnosticTrustCard
+                carries the same three points plus the description line each
+                one already has on the homepage. */}
+            <div className="flex flex-col items-start gap-8 sm:flex-row sm:items-start sm:justify-between">
+              <div className="flex max-w-[520px] items-start gap-5">
+                <div className="hidden sm:block">
+                  <DiagnosticIllustration />
+                </div>
+                <div>
+                  <p className="text-label mb-2 text-[var(--color-primary)]">
+                    Free skill diagnostic
+                  </p>
+                  <h1 className="text-h1 mb-2">Not sure where you stand?</h1>
+                  <p className="text-body-sm text-[var(--color-ink-quiet)]">
+                    The free diagnostic locates you across our capability
+                    areas and names your gaps in plain language — before you
+                    commit to anything.
+                  </p>
+                </div>
+              </div>
+              <DiagnosticTrustCard className="sm:w-[280px]" />
             </div>
             <DiagnosticStartCard onStart={handleStart} />
           </div>
@@ -261,9 +287,12 @@ export default function DiagnosticPage() {
             onContinue={handleContinue}
             canGoBack={index > 0}
             onCancel={handleCancel}
+            cardClassName="max-w-[860px]"
+            cardStyle={{ borderRadius: "22px" }}
           />
         )}
-      </main>
-    </div>
+        </div>
+      </div>
+    </PublicShell>
   );
 }

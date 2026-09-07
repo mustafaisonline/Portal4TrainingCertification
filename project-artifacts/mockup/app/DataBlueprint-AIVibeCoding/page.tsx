@@ -205,7 +205,19 @@ export default function CoursesPage() {
           grid with an ImageFrame, since this section had no visual
           counterbalance and read as conspicuously empty on wide
           viewports. Background tone: gradient (bookends the page — the
-          closing CTA shares it). */}
+          closing CTA shares it).
+          2026-09-07, founder direction: filled with a real photograph —
+          an AI-generated scene (a practitioner walking a group through a
+          build framework at a whiteboard), saved to
+          public/delivery/teaching-the-method.png. Named for the scene, not
+          the founder — same as the homepage's four "How it works" photos,
+          this is a generic AI-generated figure, not the founder's actual
+          likeness, despite standing in for `FounderTeachingIllustration`.
+          Permitted under docs/IMAGE_SLOTS.md rule 2 (AI-generated imagery
+          allowed portal-wide; rule 1's stock/licensed-imagery ban is
+          separate and untouched — this wasn't sourced from either).
+          `illustration` stays in place, inert per ImageFrame's own
+          `src`-wins contract. */}
       <section className="relative overflow-hidden bg-gradient-to-b from-[#eef2fc] to-[var(--color-ground)]">
         <div
           aria-hidden="true"
@@ -243,6 +255,8 @@ export default function CoursesPage() {
             minWidth={1600}
             note="consent required"
             illustration={<FounderTeachingIllustration />}
+            src="/delivery/teaching-the-method.png"
+            alt="A practitioner walking a group through a build framework at a whiteboard"
           />
         </div>
       </section>
@@ -325,7 +339,13 @@ export default function CoursesPage() {
           640px inside a 1280px section). "See the course" now points at
           the new Curriculum section (`#curriculum`) — its old target,
           `#course`, no longer exists (see the Investment section's own
-          comment for what replaced it). */}
+          comment for what replaced it).
+          2026-09-07, founder direction: filled with a real photograph —
+          an AI-generated whiteboard scene mapping the Plan→Build→Test→
+          Deploy→Improve loop this section describes, saved to
+          public/delivery/the-method.png. Same basis as the Hero's own
+          photo above (docs/IMAGE_SLOTS.md rule 2); `illustration` stays
+          in place, inert per ImageFrame's `src`-wins contract. */}
       <section
         id="the-method"
         className="relative scroll-mt-24 overflow-hidden border-y border-[var(--color-line)] bg-[var(--color-ground-raised)]"
@@ -357,6 +377,8 @@ export default function CoursesPage() {
             minWidth={1600}
             note="consent required"
             illustration={<TeachingDetailIllustration />}
+            src="/delivery/the-method.png"
+            alt="A whiteboard mapping the plan, build, test, deploy and improve loop, with a laptop showing a project plan"
           />
         </div>
       </section>
@@ -369,7 +391,21 @@ export default function CoursesPage() {
           from "The Method" (white-raised) above it and "Curriculum"
           (white-raised) below it, once that section moved up ahead of
           "Who Teaches You" on 2026-09-07 — see that section's own
-          comment. */}
+          comment.
+          2026-09-07, later still, founder direction: filled with a real
+          photograph — an AI-generated scene of the five-stage journey on
+          a whiteboard (Learn Foundations → Learn AI/Vibe Coding → Build
+          Real Projects → Work as a Freelancer or AI Engineer → Earn Real
+          Opportunities), saved to public/delivery/learning-journey.png.
+          `ratio` changed from the original "3 / 4" (portrait, sized for
+          `CohortBuildingIllustration`) to "4 / 3" (landscape, matching
+          this page's other two photos) — the photo itself is landscape,
+          and `ImageFrame`'s `src` mode crops to `object-cover`, so keeping
+          the portrait box would have cut off most of the whiteboard on
+          both sides. `illustration` stays in place, inert per
+          ImageFrame's `src`-wins contract; docs/IMAGE_SLOTS.md rule 2
+          covers the AI-generated-imagery basis, as with this page's other
+          photos. */}
       <section className="mx-auto max-w-[1280px] px-6 py-16">
         <p className="text-label mb-3 text-[var(--color-primary)]">
           Your Learning Journey
@@ -402,10 +438,12 @@ export default function CoursesPage() {
           </ol>
           <ImageFrame
             subject="A cohort mid-build, moving through the stages of the journey"
-            ratio="3 / 4"
+            ratio="4 / 3"
             minWidth={1200}
             note="consent required"
             illustration={<CohortBuildingIllustration />}
+            src="/delivery/learning-journey.png"
+            alt="A learner at a laptop beside a whiteboard mapping the five-stage learning journey, from foundations to real opportunities"
           />
         </div>
       </section>

@@ -1168,18 +1168,116 @@ export const courses: Course[] = [
           "AI-powered innovation",
         ],
       },
+      /* Data Blueprint Foundations — 2026-09-07, founder direction: expanded
+         from the single placeholder module above (now replaced) into nine
+         modules, one per deck in the founder's own training archive
+         (`My Training Material/`, decks numbered 1–9; see
+         docs/course_landing_page.md §7 open item 1). Content is drawn from
+         the decks' actual slide text — outcomes, terminology and case
+         studies are the founder's own, not invented. Deck 7 has two files
+         sharing that number: "DAC Architecture1.1.pptx" (2026, newest) and
+         the older "Data Architecture.pptx" (2025) — the newer, more
+         developed deck was used below; the older one appears superseded
+         but wasn't confirmed as such, so it's flagged rather than
+         discarded. See the completion report for this session for the
+         full flag. */
       {
-        title: "Data foundations for AI product builders",
+        title: "Decision support systems (DSS)",
         description:
-          "Built on Data Blueprint Foundations™. Outcome: understand why successful AI products depend on trusted, governed, high-quality data.",
+          "Outcome: understand how organisations turn data into decisions, and the anatomy of a Decision Support System.",
         points: [
-          "Data fundamentals",
-          "Structured versus unstructured data",
-          "Metadata awareness",
-          "Data quality fundamentals",
-          "Data governance essentials",
-          "Privacy and security awareness",
-          "AI-ready data thinking",
+          "What a system is — people, process and technology working together",
+          "OLTP vs OLAP — operational systems vs analytical systems",
+          "Components of a Decision Support System",
+          "Real-world DSS examples across banking, telecom, oil & gas and healthcare",
+        ],
+      },
+      {
+        title: "What is data",
+        description:
+          "Outcome: build data literacy from first principles — entities, attributes and how raw data becomes insight.",
+        points: [
+          "Entities, attributes and instances",
+          "Tables, columns and rows",
+          "States and types of data",
+          "The DIKW pyramid — Data, Information, Knowledge, Wisdom",
+          "Best practices and guidelines for working with data",
+        ],
+      },
+      {
+        title: "What is metadata",
+        description:
+          "Outcome: understand metadata as the layer that gives data meaning, trust and usability.",
+        points: [
+          "Business, technical and operational metadata",
+          "Data assets, and why metadata unlocks their value",
+          "Case studies — banking, telecom, oil & gas and retail",
+          "The cost of inaction: what happens without metadata",
+        ],
+      },
+      {
+        title: "Building blocks of data",
+        description:
+          "Outcome: understand the four building blocks every enterprise depends on, and how they work together.",
+        points: [
+          "Master data — stable, reusable core entities",
+          "Reference data — codes, classifications and standardisation",
+          "Transactional data — high-volume business events",
+          "Case studies — banking, telecommunications, oil & gas and healthcare",
+        ],
+      },
+      {
+        title: "Data modelling",
+        description:
+          "Outcome: navigate the full modelling landscape, from business concepts through to physical, AI-ready design.",
+        points: [
+          "Business, conceptual and information modelling (NIAM, ORM, FCO-IM, ontologies, knowledge graphs)",
+          "Conceptual, logical and physical data modelling, including normalisation (1NF–6NF, BCNF, DKNF)",
+          "Specialised techniques — dimensional, Data Vault, Anchor, Focal Point, NoSQL, temporal, event-driven",
+          "Governance and AI extensions — metadata modelling, access control, ML feature modelling",
+        ],
+      },
+      {
+        title: "Data processing & storage",
+        description:
+          "Outcome: understand how data is stored and processed at scale, and which pattern fits which workload.",
+        points: [
+          "Data warehouse, data lake, lakehouse, data hub and data fabric",
+          "Relational vs NoSQL — key-value, document, columnar and graph databases",
+          "Specialised datastores — Hadoop, object storage, file and table formats",
+        ],
+      },
+      {
+        title: "DAC Architecture",
+        description:
+          "Outcome: apply the founder's own DAC (Data & AI Cognitive) Architecture framework to modern data platform design.",
+        points: [
+          "Why traditional architecture fails, and the cost of architectural drift",
+          "Operating models — centralised, decentralised, data mesh, data hub, data fabric",
+          "DAC's design principles, layers and \"one door in, one window out\" integration",
+          "Traditional architecture vs DAC — what changes and why",
+        ],
+      },
+      {
+        title: "Data governance, security, privacy & quality",
+        description:
+          "Outcome: understand the four pillars of trust in enterprise data, and the roles that keep them working.",
+        points: [
+          "Data governance — ownership, stewardship, policies and decision rights",
+          "Security vs privacy — the CIA triad and responsible data use",
+          "The six dimensions of data quality",
+          "The real cost of getting any one pillar wrong",
+        ],
+      },
+      {
+        title: "Agentic AI",
+        description:
+          "Outcome: understand what agentic AI actually is, why many projects get scrapped, and where it creates real business value.",
+        points: [
+          "The evolution of AI, and the current reality of agentic AI adoption",
+          "Core agent types and how agentic AI works",
+          "The PVP (Productionizable Viable Product) approach",
+          "Real business use cases — HR onboarding, meeting automation, policy discovery",
         ],
       },
       {

@@ -24,6 +24,16 @@ import { NeuralNetworkBackground } from "@/components/NeuralNetworkBackground";
  * shadowed cards in a static grid instead of a dark rotated cascade, a
  * real photograph instead of no photograph.
  *
+ * 2026-09-07, founder direction: the second CTA, "Start Free Diagnostic
+ * (10 min)" (→ /diagnostic), was REMOVED — "Explore Courses" is now the
+ * only hero CTA. The diagnostic is still reachable: it gained its own
+ * primary-nav entry, "Free Diagnostic" (components/PublicShell.tsx,
+ * before "About Us"), and components/HomeDiagnostic.tsx's own section
+ * further down this page now opens the real 10-question form immediately
+ * rather than waiting for a click here. `components/HomeHero.tsx` (the
+ * unused dark-theme original this file replaced) still has the old
+ * button — deliberately untouched, since it isn't rendered anywhere.
+ *
  * THE PHOTOGRAPH: the supplied reference used a stock photo of an
  * unrelated model. This project has a standing, previously-enforced rule
  * against stock/third-party-licensed imagery (docs/IMAGE_SLOTS.md rule 1
@@ -215,12 +225,6 @@ export function HomeHero() {
               >
                 Explore Courses <IconArrow />
               </Link>
-              <Link
-                href="/diagnostic"
-                className="inline-flex items-center gap-2 rounded-xl border border-[var(--color-line-strong)] bg-white px-6 py-3.5 text-[15px] font-semibold text-[var(--color-ink)] hover:border-[var(--color-primary)]"
-              >
-                Start Free Diagnostic (10 min)
-              </Link>
             </div>
             <div className="flex flex-wrap gap-x-8 gap-y-4">
               {benefits.map((b) => (
@@ -308,11 +312,18 @@ export function HomeHero() {
             {journey.map((step, i) => (
               <div key={step.num} className="contents">
                 <div>
-                  <span className="mb-3 grid h-14 w-14 place-items-center rounded-full border border-[var(--color-line-strong)] bg-white text-[var(--color-primary)] shadow-sm">
-                    {step.icon}
-                  </span>
-                  <p className="mb-1 text-xs font-bold tracking-wide text-[var(--color-ink-faint)]">{step.num}</p>
-                  <p className="mb-1.5 text-base font-semibold text-[var(--color-ink)]">{step.title}</p>
+                  {/* Number + heading moved beside the icon, body text
+                      dropped to sit under the icon rather than the
+                      heading — 2026-09-07 founder request. */}
+                  <div className="mb-3 flex items-center gap-3">
+                    <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-[var(--color-line-strong)] bg-white text-[var(--color-primary)] shadow-sm">
+                      {step.icon}
+                    </span>
+                    <div>
+                      <p className="text-xs font-bold tracking-wide text-[var(--color-ink-faint)]">{step.num}</p>
+                      <p className="text-base font-semibold text-[var(--color-ink)]">{step.title}</p>
+                    </div>
+                  </div>
                   <p className="text-[13px] leading-snug text-[var(--color-ink-quiet)]">{step.body}</p>
                 </div>
                 {i < journey.length - 1 && (

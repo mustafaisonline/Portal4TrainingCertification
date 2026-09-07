@@ -119,7 +119,15 @@ export function PublicShell({ children }: { children: ReactNode }) {
               label changed to "Programme" — the header CTA ("Explore
               courses") and footer's "Courses" link keep their existing
               text, just re-pointed to the new URL, since the founder asked
-              specifically for "the menu item." */}
+              specifically for "the menu item."
+
+              2026-09-07, founder direction: "Free Diagnostic" added before
+              "About Us" (→ /diagnostic, the standalone walkthrough — see
+              app/diagnostic/page.tsx). Six items now — the documented
+              maximum, reached exactly rather than exceeded. Companion
+              change the same day: the hero's own "Start Free Diagnostic
+              (10 min)" CTA was removed (components/HomeHeroLight.tsx) now
+              that the diagnostic has this permanent nav entry instead. */}
           <nav
             aria-label="Primary"
             className="hidden items-center gap-7 text-body-sm text-[var(--color-ink-quiet)] lg:flex"
@@ -135,6 +143,9 @@ export function PublicShell({ children }: { children: ReactNode }) {
             </Link>
             <Link href="/trainers" className="hover:text-[var(--color-ink)]">
               Trainers
+            </Link>
+            <Link href="/diagnostic" className="hover:text-[var(--color-ink)]">
+              Free Diagnostic
             </Link>
             <Link href="/about-us" className="hover:text-[var(--color-ink)]">
               About Us

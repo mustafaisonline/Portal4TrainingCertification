@@ -5,8 +5,7 @@ import { PublicShell } from "@/components/PublicShell";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Chip } from "@/components/ui/Chip";
-import { ImageFrame } from "@/components/ImageFrame";
-import { TrainerAtWorkIllustration } from "@/components/illustrations/DeliveryIllustrations";
+import { CommunityVideos } from "@/components/signature/CommunityVideos";
 import { practitioners } from "@/data/practitioners";
 
 /**
@@ -506,48 +505,44 @@ export default function TrainersPage() {
           real data) — only this page's rendering of it is gone. Restoring
           it is a JSX addition, not a data operation, if wanted back. */}
 
-      {/* ===== Seeing them teach =====
-          Body copy rewritten 2026-09-06, founder direction, after web
-          research on live vs. recorded/self-paced training effectiveness.
-          Findings were genuinely mixed (some studies favour live delivery,
-          some favour well-designed video, depending heavily on content
-          complexity) and one widely-repeated "75% more retention" figure
-          traced back to unsourced content-marketing claims, not a
-          verifiable primary study — not something to put a specific number
-          on for a page this deliberate about only stating what's checkable.
-          The new copy makes a qualitative case instead (echoing "How it
-          works" on the homepage: interaction, feedback, the actual
-          situation in the room), and keeps the original's core honesty
-          sentence about the empty image slot intact — that line is
-          load-bearing for the portal's whole no-stock-imagery policy,
-          not just decoration. */}
+      {/* ===== Community =====
+          REPLACED 2026-09-07, founder direction: "In the room" (the
+          previous section — live-delivery copy beside an empty/illustrated
+          photograph slot for "Trainers at work") is gone. In its place:
+          real episodes from the founder's own YouTube show, "Let's Talk
+          About Data!", proving the Academy is active there. Data and
+          provenance in data/videos.ts's header comment; the row/carousel
+          itself is components/signature/CommunityVideos.tsx.
+
+          The previous section's copy and ImageFrame slot were not carried
+          over — this is a full replacement, not an addition, per the
+          instruction. TrainerAtWorkIllustration and the "trainer mid-
+          session" ImageFrame subject are unused here now but remain
+          defined (components/illustrations/DeliveryIllustrations.tsx,
+          docs/IMAGE_SLOTS.md) if a future section wants them again. */}
       <section className="mx-auto max-w-[1280px] px-6 pb-20 pt-[50px]">
-        <div className="grid gap-8 lg:grid-cols-[1fr_1fr]">
-          <div className="max-w-[560px]">
-            <p className="text-label mb-3 text-[var(--color-primary)]">
-              In the room
-            </p>
-            <h2 className="text-h1 mb-4">Trainers at work</h2>
-            <p className="text-body-sm text-[var(--color-ink-quiet)]">
-              Live delivery means real interaction: questions answered as
-              they come up, feedback shaped by the problem actually in front
-              of you, discussion that follows where the room needs it to
-              go — none of which a recording can offer. That is why every
-              course here is delivered live, never pre-recorded.
-              Photography of a real session belongs here. Until one exists,
-              the space stays visibly empty rather than filled with stock
-              imagery — the same rule that governs every image on this
-              portal.
-            </p>
-          </div>
-          <ImageFrame
-            subject="A trainer mid-session — teaching, not posing"
-            ratio="3 / 2"
-            minWidth={1600}
-            note="consent required"
-            illustration={<TrainerAtWorkIllustration />}
-          />
-        </div>
+        <p className="text-label mb-3 text-[var(--color-primary)]">
+          Community
+        </p>
+        <h2 className="text-h1 mb-4">From the show</h2>
+        <p className="mb-10 max-w-[640px] text-body-sm text-[var(--color-ink-quiet)]">
+          The founder hosts{" "}
+          <span className="font-medium text-[var(--color-ink)]">
+            Let&rsquo;s Talk About Data!
+          </span>
+          , a live conversation series with practitioners from around the
+          world — real episodes, not a highlight reel.{" "}
+          <a
+            href={practitioners[0].podcast?.youtube ?? "https://www.youtube.com/@letstalkaboutdata"}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline underline-offset-4 hover:text-[var(--color-ink)]"
+          >
+            Subscribe on YouTube
+          </a>
+          .
+        </p>
+        <CommunityVideos />
       </section>
     </PublicShell>
   );

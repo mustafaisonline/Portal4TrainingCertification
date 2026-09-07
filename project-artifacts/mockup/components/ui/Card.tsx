@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 type CardVariant = "plate" | "panel" | "feature";
 
@@ -22,10 +22,18 @@ type CardVariant = "plate" | "panel" | "feature";
 export function Card({
   variant = "plate",
   className = "",
+  style,
   children,
 }: {
   variant?: CardVariant;
   className?: string;
+  /** Escape hatch for a one-off caller that needs a value the shared
+   *  variant tokens don't cover (e.g. a non-standard border-radius) —
+   *  inline style always wins over the variant's own utility classes,
+   *  so it's the safe way to override without risking two conflicting
+   *  Tailwind classes on the same property. Omit for the normal case;
+   *  existing callers are unaffected. */
+  style?: CSSProperties;
   children: ReactNode;
 }) {
   const variantClasses: Record<CardVariant, string> = {
@@ -37,7 +45,7 @@ export function Card({
       "bg-[var(--color-ground-raised)] border border-[var(--color-primary)]/30 rounded-[var(--radius-feature)] p-8",
   };
   return (
-    <div className={`${variantClasses[variant]} ${className}`}>
+    <div className={`${variantClasses[variant]} ${className}`} style={style}>
       {children}
     </div>
   );

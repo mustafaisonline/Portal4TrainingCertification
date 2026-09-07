@@ -52,7 +52,76 @@ import { selectFixture } from "@/data/results";
  * the intro paragraph below instead, so it isn't lost along with the
  * card, plus a new sentence pointing anyone who wants the 50/100/200
  * tiers at the new "Free Diagnostic" button/nav item (→ /diagnostic,
- * where that tier selector still lives). */
+ * where that tier selector still lives).
+ *
+ * REDESIGNED 2026-09-07, founder direction, from a supplied reference
+ * image (same "redesign from a reference image" pattern already used on
+ * /trainers and the P01 homepage hero — see those files' own header
+ * comments): four changes to match the reference exactly —
+ * 1. A decorative illustration (`DiagnosticIllustration` below) now sits
+ *    beside the intro text, replacing the bare icon-in-box. Original,
+ *    geometric, deterministic inline SVG — same convention as
+ *    components/illustrations/DeliveryIllustrations.tsx and
+ *    components/DotField.tsx, not a photograph (see IMAGE_SLOTS.md) —
+ *    kept local to this file since it's a decorative accent, not a
+ *    "photograph needed" slot filled via `ImageFrame`.
+ * 2. "Free Diagnostic" is now the primary (filled) button variant with a
+ *    trailing arrow, not secondary/outlined — matching the reference's
+ *    solid CTA.
+ * 3. The three trust points moved from bare checkmark rows into a bordered
+ *    card, each with an icon-in-circle, a bold title AND a description
+ *    line (the description line — "Get started instantly" / "Clear,
+ *    actionable insights" / "Explore at your own pace" — is new copy
+ *    matching the reference; titles are unchanged). Icons: a new
+ *    `IconGift`/`IconShield` (no existing equivalent) and `IconBars`
+ *    (duplicated from components/HomeHeroLight.tsx's own local icon of
+ *    the same name, same convention as that file's own duplicated
+ *    glyphs — this codebase keeps small per-file icon copies rather than
+ *    a shared icon module).
+ * 4. The "Question X of Y" pill now sits on a visible progress track
+ *    (filled proportionally to `index`), not floating with no bar
+ *    beneath it.
+ * The answer-option radio circles visible in the same reference image are
+ * `DiagnosticQuestionCanvas`'s own — see that component's header comment.
+ *
+ * SECOND PASS, 2026-09-07, same day — founder returned with a much more
+ * detailed brief against the same reference image ("look extremely close
+ * to the reference, not merely inspired by it"), covering exact spacing,
+ * proportions and card treatment the first pass approximated. Changes:
+ * - Section padding: `py-[25px]` → `py-16 sm:py-20`. Every other homepage
+ *   section still uses `py-[25px]` (app/page.tsx) — this section now
+ *   deliberately breaks that rhythm because the brief specifically asked
+ *   for "plenty of whitespace... premium... spacious" for THIS section,
+ *   and the reference image's own padding is visibly generous. Flagged
+ *   rather than silently making every section inconsistent or silently
+ *   ignoring the brief.
+ * - `DiagnosticIllustration`: added a soft blurred blob and a dashed
+ *   accent ring behind the card stack (both plain CSS, not SVG), matching
+ *   the reference's background treatment around the illustration; the
+ *   illustration itself enlarged slightly.
+ * - Benefits card: explicit `style={{ borderRadius: "20px" }}` and
+ *   widened — the brief asked for a ~20px radius, more than the shared
+ *   Card "panel" variant's own 16px token. Inline `style` (not another
+ *   Tailwind class) deliberately, to avoid two conflicting `rounded-*`
+ *   utility classes on one element — see Card.tsx's own `style` prop doc
+ *   comment, added for exactly this.
+ * - CTA button: added a soft coloured shadow (`shadow-[...]`) — the brief
+ *   asked for "soft shadow... smooth hover transition"; Button's own base
+ *   styles had no shadow at all. Added via className only (no radius
+ *   override — see below).
+ * - Question card: now passes `cardClassName`/`cardStyle` to
+ *   `DiagnosticQuestionCanvas` (added to that component this same pass)
+ *   to widen it toward the brief's ~800–900px and apply a ~22px radius —
+ *   see that component's own header comment for why this is additive and
+ *   why app/diagnostic/page.tsx (which doesn't pass these) is unaffected.
+ * - Button/answer-option border-radius: deliberately LEFT at the shared
+ *   `--radius-plate` token (8px) rather than the brief's suggested
+ *   10–12px — both are load-bearing shared primitives used across the
+ *   whole site, and forcing a one-off radius on them (the same
+ *   conflicting-utility-class risk noted above, without a clean inline-
+ *   style seam for `Button`) would either fight the design system or
+ *   require changing it site-wide, which is outside "only update this
+ *   section." Flagged as the one spec value not matched exactly. */
 
 const STORAGE_KEY = "mockup:diagnostic:in-progress";
 
@@ -63,41 +132,141 @@ type SavedProgress = {
 
 type Stage = "question" | "insight";
 
-function GlyphTarget() {
+/** Shared stroke props for this file's local icon glyphs — same
+ *  convention as app/trainers/page.tsx's `iconStroke`. */
+const iconStroke = {
+  stroke: "currentColor",
+  strokeWidth: 1.7,
+  strokeLinecap: "round" as const,
+  strokeLinejoin: "round" as const,
+  fill: "none",
+};
+
+/** Decorative illustration beside the intro text.
+ *
+ * REDESIGNED 2026-09-07, third pass — the founder's verification loop on
+ * the previous (reference-image-matching) version broke down: two
+ * screenshots sent as "current output" were pixel-identical to each
+ * other despite real code changes in between, so pixel-matching against
+ * an unverifiable screenshot was abandoned in favour of an own-judgment
+ * design pass. This illustration is simplified from "target icon +
+ * two-row checklist crammed into one small card" (busy at 140–160px) to
+ * one clear metaphor: a single gauge/target reading, with a small
+ * "assessed" check-badge overlapping the card corner — a pattern more
+ * confident at small sizes, still original geometric inline SVG (not a
+ * photograph, per IMAGE_SLOTS.md), still deterministic. */
+function DiagnosticIllustration() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="12" cy="12" r="4.5" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="12" cy="12" r="1.7" fill="currentColor" />
+    <div className="relative h-[136px] w-[136px] shrink-0 sm:h-[152px] sm:w-[152px]">
+      <div
+        aria-hidden="true"
+        className="absolute -left-5 -top-4 h-[130px] w-[130px] rounded-full bg-[var(--color-primary)]/10 blur-xl"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute bottom-1 left-0 h-[40px] w-[40px] rounded-full border border-dashed border-[var(--color-line-strong)]"
+      />
+      <svg viewBox="0 0 152 152" className="relative h-full w-full" aria-hidden="true">
+        {/* Card, floating via drop-shadow rather than a flat border. */}
+        <g style={{ filter: "drop-shadow(0 16px 24px rgba(47,95,224,0.18))" }}>
+          <rect x="18" y="10" width="116" height="116" rx="20" fill="var(--color-ground-raised)" stroke="var(--color-line)" />
+        </g>
+        {/* The gauge — a single, larger, centred reading. */}
+        <circle cx="76" cy="68" r="34" fill="none" stroke="var(--color-line)" strokeWidth="8" />
+        <circle
+          cx="76"
+          cy="68"
+          r="34"
+          fill="none"
+          stroke="var(--color-primary)"
+          strokeWidth="8"
+          strokeLinecap="round"
+          strokeDasharray={`${2 * Math.PI * 34 * 0.7} ${2 * Math.PI * 34}`}
+          transform="rotate(-90 76 68)"
+        />
+        <circle cx="76" cy="68" r="6" fill="var(--color-primary)" />
+        {/* Sparkle accent. */}
+        <path d="M130 20l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="var(--color-primary)" opacity="0.55" />
+      </svg>
+      {/* "Assessed" badge — overlaps the card's bottom-right corner,
+          outside the svg so its own drop-shadow doesn't get clipped by
+          the card's shadow filter above. */}
+      <span
+        aria-hidden="true"
+        className="absolute bottom-2 right-1 grid h-9 w-9 place-items-center rounded-full bg-[var(--color-primary)] shadow-[0_6px_14px_rgba(47,95,224,0.35)] ring-4 ring-[var(--color-ground)]"
+      >
+        <svg viewBox="0 0 24 24" className="h-4 w-4 text-white" aria-hidden="true">
+          <path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+        </svg>
+      </span>
+    </div>
+  );
+}
+
+/** Trailing arrow for the primary CTA — identical markup to
+ *  components/HomeHeroLight.tsx's local `IconArrow`, duplicated per this
+ *  codebase's existing per-file icon convention (see file header). */
+function IconArrowRight() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
+      <path d="M4 12h16M13 5l7 7-7 7" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" fill="none" />
     </svg>
   );
 }
 
-/** 2026-09-07: the three trust points ("Free · no account to start" etc.)
- *  used to be bare `text-label` lines with no visual anchor — this gives
- *  each one the same icon-in-circle treatment already established for
- *  the hero's benefit row (components/HomeHeroLight.tsx's `benefits`),
- *  reused here rather than inventing a second convention. */
-function IconCheck() {
+/** Duplicated from components/HomeHeroLight.tsx's local `IconBars` — same
+ *  per-file icon convention as `IconArrowRight` above. */
+function IconBars() {
   return (
-    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" aria-hidden="true">
+    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
+      <path d="M5 19v-6M12 19V8M19 19V5" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" fill="none" />
+    </svg>
+  );
+}
+
+function IconGift() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
+      <rect x="4" y="9.5" width="16" height="10" rx="1.5" {...iconStroke} />
+      <path d="M4 13.2h16" {...iconStroke} />
+      <path d="M12 9.5v10" {...iconStroke} />
       <path
-        d="M5 12.5l4.5 4.5L19 7"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        fill="none"
+        d="M12 9.5c-1.2-3-3-4-4.2-3-1 .8-.4 3 4.2 3zM12 9.5c1.2-3 3-4 4.2-3 1 .8.4 3-4.2 3z"
+        {...iconStroke}
       />
     </svg>
   );
 }
 
+function IconShield() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
+      <path d="M12 3.5l7 3v5.2c0 4.6-3 7.8-7 8.8-4-1-7-4.2-7-8.8V6.5l7-3z" {...iconStroke} />
+    </svg>
+  );
+}
+
+/** 2026-09-07: the three trust points ("Free · no account to start" etc.)
+ *  now carry a title AND a description line, in a bordered card — see
+ *  file header comment (point 3). Description copy is new, matching the
+ *  supplied reference image; titles are unchanged. */
 const trustPoints = [
-  "Free · no account to start",
-  "Named gaps, not a score",
-  "No commitment",
-];
+  {
+    icon: <IconGift />,
+    title: "Free · no account to start",
+    body: "Get started instantly",
+  },
+  {
+    icon: <IconBars />,
+    title: "Named gaps, not a score",
+    body: "Clear, actionable insights",
+  },
+  {
+    icon: <IconShield />,
+    title: "No commitment",
+    body: "Explore at your own pace",
+  },
+] as const;
 
 export function HomeDiagnostic() {
   const router = useRouter();
@@ -223,11 +392,17 @@ export function HomeDiagnostic() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
         style={{
+          // Softened 2026-09-07, second pass: a real screenshot showed
+          // this reading as a visibly two-toned diagonal (saturated
+          // top-left fading to near-white bottom-right) against the
+          // reference's flatter, more uniform pale lavender. Wider spread
+          // (90% → 130%) and lower peak opacity (0.10 → 0.06) so the glow
+          // is present without a hard light/dark side.
           background:
-            "radial-gradient(60% 90% at 20% 30%, rgba(47,95,224,0.10), transparent 70%)",
+            "radial-gradient(85% 130% at 25% 20%, rgba(47,95,224,0.06), transparent 75%)",
         }}
       />
-      <div className="relative mx-auto max-w-[880px] px-6 py-[25px]">
+      <div className="relative mx-auto max-w-[960px] px-6 py-16 sm:py-20">
         {/* Intro block (heading, description, trust points) — always
             visible. EXTENDED 2026-09-05 (founder request): previously this
             whole block disappeared once the quiz started, replaced by the
@@ -243,8 +418,8 @@ export function HomeDiagnostic() {
             as an unstyled afterthought next to a designed hero above it. */}
         <div className="relative mb-10 flex flex-col items-start gap-8 lg:flex-row lg:items-start lg:justify-between">
           <div className="flex max-w-[560px] items-start gap-5">
-            <div className="mt-1 hidden rounded-[10px] border border-[var(--color-line-strong)] p-2.5 text-[var(--color-primary)] sm:inline-flex">
-              <GlyphTarget />
+            <div className="hidden sm:block">
+              <DiagnosticIllustration />
             </div>
             <div>
               <p className="text-label mb-2 text-[var(--color-primary)]">
@@ -257,8 +432,12 @@ export function HomeDiagnostic() {
                 to anything.
               </p>
               <div className="mt-5">
-                <Button href="/diagnostic" variant="secondary">
+                <Button
+                  href="/diagnostic"
+                  className="shadow-[0_10px_24px_rgba(47,95,224,0.28)] transition-shadow hover:shadow-[0_14px_28px_rgba(47,95,224,0.34)]"
+                >
                   Free Diagnostic
+                  <IconArrowRight />
                 </Button>
               </div>
               {/* Fine print — split out from the pitch above it, 2026-09-07
@@ -282,16 +461,25 @@ export function HomeDiagnostic() {
               </p>
             </div>
           </div>
-          <div className="flex shrink-0 flex-col gap-3 sm:flex-row sm:gap-6 lg:flex-col lg:gap-3">
+          <Card
+            variant="panel"
+            className="flex shrink-0 flex-col gap-6 border border-[var(--color-line)] sm:w-[320px]"
+            style={{ borderRadius: "20px" }}
+          >
             {trustPoints.map((point) => (
-              <div key={point} className="flex items-center gap-2.5">
-                <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-white text-[var(--color-primary)] shadow-sm">
-                  <IconCheck />
+              <div key={point.title} className="flex items-start gap-3">
+                <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+                  {point.icon}
                 </span>
-                <span className="text-label whitespace-nowrap">{point}</span>
+                <div>
+                  <p className="text-label mb-0.5">{point.title}</p>
+                  <p className="text-body-sm text-[var(--color-ink-quiet)]">
+                    {point.body}
+                  </p>
+                </div>
               </div>
             ))}
-          </div>
+          </Card>
         </div>
 
         {/* Divider between the pitch and the live form — 2026-09-07,
@@ -311,8 +499,22 @@ export function HomeDiagnostic() {
 
         {stage === "question" && (
           <div className="relative">
-            <div className="mb-6 flex justify-center">
-              <span className="text-label inline-flex items-center rounded-full border border-[var(--color-line-strong)] bg-white px-4 py-1.5 text-[var(--color-ink-quiet)] shadow-sm">
+            {/* Progress track + floating pill — 2026-09-07, see file
+                header comment (point 4). The pill previously floated with
+                no visible bar beneath it. */}
+            <div className="relative mb-6 flex items-center">
+              <div className="h-[3px] w-full overflow-hidden rounded-full bg-[var(--color-line)]">
+                {/* Fixed 2026-09-07, second pass: was `index / length`, so
+                    question 1 showed 0% filled — a real screenshot showed
+                    the reference already has ~10% filled on question 1.
+                    Progress is CURRENT question number, not completed
+                    count. */}
+                <div
+                  className="h-full rounded-full bg-[var(--color-primary)] transition-[width]"
+                  style={{ width: `${((index + 1) / questions.length) * 100}%` }}
+                />
+              </div>
+              <span className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-[var(--color-line-strong)] bg-white px-4 py-1.5 text-label text-[var(--color-ink-quiet)] shadow-sm">
                 Question {index + 1} of {questions.length}
               </span>
             </div>
@@ -324,6 +526,8 @@ export function HomeDiagnostic() {
               onContinue={handleContinue}
               canGoBack={index > 0}
               onCancel={handleCancel}
+              cardClassName="max-w-[860px]"
+              cardStyle={{ borderRadius: "22px" }}
             />
           </div>
         )}

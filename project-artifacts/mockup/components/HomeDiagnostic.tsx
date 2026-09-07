@@ -274,7 +274,7 @@ export function HomeDiagnostic() {
     // see HomeHeroLight.tsx's header comment for the redesign this is
     // part of). mt-12: standardised 48px inter-section gap, unchanged (see
     // app/page.tsx's "Three pathways" comment for the gap convention).
-    <section className="relative mt-12 overflow-hidden bg-[#eef2fc]">
+    <section className="relative mt-12 overflow-hidden bg-[var(--color-ground-tint)]">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
@@ -383,7 +383,7 @@ export function HomeDiagnostic() {
                   style={{ width: `${((index + 1) / questions.length) * 100}%` }}
                 />
               </div>
-              <span className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-[var(--color-line-strong)] bg-white px-4 py-1.5 text-label text-[var(--color-ink-quiet)] shadow-sm">
+              <span className="absolute left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-[var(--color-line-strong)] bg-[var(--color-ground-raised)] px-4 py-1.5 text-label text-[var(--color-ink-quiet)] shadow-sm">
                 Question {index + 1} of {questions.length}
               </span>
             </div>

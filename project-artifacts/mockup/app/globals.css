@@ -29,6 +29,19 @@
      line #e2ded3 / #c9c3b3, primary #3d43b8 / #2f3494. */
   --color-ground: #f7f9fd; /* cool near-white, light-blue cast */
   --color-ground-raised: #ffffff; /* pure white — Panel card surface */
+  /* A second, slightly deeper "tinted" surface used for section banding
+     (alternating a page's sections so they don't all read as one flat
+     block) — added 2026-09-07. Was hardcoded `bg-[#eef2fc]` in ~11 files
+     (homepage, trainers, hrd-corp, courses detail, the Programme page,
+     the diagnostic flow, CoursePricing), none of which had a dark-mode
+     value: the literal hex never changed under `prefers-color-scheme:
+     dark` or `[data-theme="dark"]`, while the TEXT sitting on it (via
+     --color-ink and friends) did — near-white dark-mode text landing on
+     a background frozen at light-mode-pale-lavender, i.e. nearly
+     invisible. Founder-reported: "on mobile at night mode, I hardly can
+     see text." Token, not a fix-in-place hex, so this can't drift back
+     to the same bug in a twelfth file later. */
+  --color-ground-tint: #eef2fc;
 
   /* Ink (text), 3 steps — unchanged: already a cool near-black, reads
      correctly against the new cooler ground without adjustment. */
@@ -86,6 +99,14 @@
   --color-hero-teal: #4fd1c5;
   --color-hero-purple: #b28cff;
   --color-hero-orange: #f6a44b;
+  /* Soft icon-badge backgrounds for the four hero accents above — added
+     2026-09-07, same dark-mode fix as --color-ground-tint. These were
+     hardcoded per-instance hex (`bg-[#e7edfc]` etc.) in HomeHeroLight.tsx
+     with no dark-mode value. */
+  --color-hero-blue-soft: #e7edfc;
+  --color-hero-teal-soft: #e1f6f0;
+  --color-hero-purple-soft: #eee8fd;
+  --color-hero-orange-soft: #fdecd9;
 
   /* Radius — one per card type (§16.3). `--radius-panel` bumped
      0.75rem→1rem 2026-09-06 (light-theme redesign) to match the rounder,
@@ -120,6 +141,11 @@
   :root:not([data-theme="light"]) {
     --color-ground: #0c101f;
     --color-ground-raised: #131a30;
+    --color-ground-tint: #10182e;
+    --color-hero-blue-soft: #1b2140;
+    --color-hero-teal-soft: #132922;
+    --color-hero-purple-soft: #211a3a;
+    --color-hero-orange-soft: #2e1f10;
     --color-ink: #eef0f8;
     --color-ink-quiet: #aab3d2;
     --color-ink-faint: #7a83aa;
@@ -146,6 +172,11 @@
 :root[data-theme="dark"] {
   --color-ground: #0c101f;
   --color-ground-raised: #131a30;
+  --color-ground-tint: #10182e;
+  --color-hero-blue-soft: #1b2140;
+  --color-hero-teal-soft: #132922;
+  --color-hero-purple-soft: #211a3a;
+  --color-hero-orange-soft: #2e1f10;
   --color-ink: #eef0f8;
   --color-ink-quiet: #aab3d2;
   --color-ink-faint: #7a83aa;

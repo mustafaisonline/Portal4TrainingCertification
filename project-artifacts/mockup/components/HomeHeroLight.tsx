@@ -178,10 +178,10 @@ const journey = [
 ] as const;
 
 const toneClasses = {
-  blue: "bg-[#e7edfc] text-[#2f5fe0]",
-  purple: "bg-[#eee8fd] text-[#7c5cf0]",
-  orange: "bg-[#fdecd9] text-[#d9822b]",
-  teal: "bg-[#e1f6f0] text-[#1e9c7c]",
+  blue: "bg-[var(--color-hero-blue-soft)] text-[#2f5fe0]",
+  purple: "bg-[var(--color-hero-purple-soft)] text-[#7c5cf0]",
+  orange: "bg-[var(--color-hero-orange-soft)] text-[#d9822b]",
+  teal: "bg-[var(--color-hero-teal-soft)] text-[#1e9c7c]",
 } as const;
 
 export function HomeHero() {
@@ -246,9 +246,9 @@ export function HomeHero() {
               cards' content changed. */}
           <div className="relative mx-auto grid max-w-[520px] grid-cols-2 gap-3">
             {heroCardsLeft.map((c) => (
-              <div key={c.title} className="rounded-2xl border border-[var(--color-line)] bg-white p-4 shadow-[0_10px_30px_rgba(16,24,40,0.06)]">
+              <div key={c.title} className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-ground-raised)] p-4 shadow-[0_10px_30px_rgba(16,24,40,0.06)]">
                 <div className="mb-2 flex items-center gap-2">
-                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#e7edfc] text-[var(--color-primary)]">
+                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[var(--color-hero-blue-soft)] text-[var(--color-primary)]">
                     {c.icon}
                   </span>
                   <p className="text-[13px] font-semibold text-[var(--color-ink)]">{c.title}</p>
@@ -260,7 +260,7 @@ export function HomeHero() {
             {accreditation && (
               <Link
                 href="/hrd-corp"
-                className="rounded-2xl border border-[var(--color-line)] bg-white p-4 shadow-[0_10px_30px_rgba(16,24,40,0.06)] transition-shadow hover:shadow-[0_14px_36px_rgba(16,24,40,0.1)]"
+                className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-ground-raised)] p-4 shadow-[0_10px_30px_rgba(16,24,40,0.06)] transition-shadow hover:shadow-[0_14px_36px_rgba(16,24,40,0.1)]"
               >
                 <div className="mb-2 flex items-center gap-2">
                   <Image
@@ -275,18 +275,18 @@ export function HomeHero() {
                 <p className="text-[12px] leading-snug text-[var(--color-ink-faint)]">Verified — Trainer ID {accreditation.trainerId}.</p>
               </Link>
             )}
-            <div className="rounded-2xl border border-[var(--color-line)] bg-white p-4 shadow-[0_10px_30px_rgba(16,24,40,0.06)]">
+            <div className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-ground-raised)] p-4 shadow-[0_10px_30px_rgba(16,24,40,0.06)]">
               <div className="mb-2 flex items-center gap-2">
-                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#e1f6f0] text-[#1e9c7c]">
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[var(--color-hero-teal-soft)] text-[#1e9c7c]">
                   <IconChat />
                 </span>
                 <p className="text-[13px] font-semibold text-[var(--color-ink)]">Prepare for Interviews</p>
               </div>
               <p className="text-[12px] leading-snug text-[var(--color-ink-faint)]">Practice with real projects, so you walk in ready.</p>
             </div>
-            <div className="rounded-2xl border border-[var(--color-line)] bg-white p-4 shadow-[0_10px_30px_rgba(16,24,40,0.06)]">
+            <div className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-ground-raised)] p-4 shadow-[0_10px_30px_rgba(16,24,40,0.06)]">
               <div className="mb-2 flex items-center gap-2">
-                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[#e7edfc] text-[var(--color-primary)]">
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[var(--color-hero-blue-soft)] text-[var(--color-primary)]">
                   <IconCompass />
                 </span>
                 <p className="text-[13px] font-semibold text-[var(--color-ink)]">Get Career Support</p>
@@ -302,7 +302,7 @@ export function HomeHero() {
       </section>
 
       {/* ===== Learning journey ===== */}
-      <section className="bg-[#eef2fc]">
+      <section className="bg-[var(--color-ground-tint)]">
         <div className="mx-auto max-w-[1280px] px-6 py-14">
           <p className="mb-3 text-xs font-bold tracking-[0.2em] text-[#5b667c]">YOUR LEARNING JOURNEY</p>
           <h2 className="mb-10 max-w-[520px] text-3xl font-bold leading-tight text-[var(--color-ink)]">
@@ -316,7 +316,7 @@ export function HomeHero() {
                       dropped to sit under the icon rather than the
                       heading — 2026-09-07 founder request. */}
                   <div className="mb-3 flex items-center gap-3">
-                    <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-[var(--color-line-strong)] bg-white text-[var(--color-primary)] shadow-sm">
+                    <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-[var(--color-line-strong)] bg-[var(--color-ground-raised)] text-[var(--color-primary)] shadow-sm">
                       {step.icon}
                     </span>
                     <div>

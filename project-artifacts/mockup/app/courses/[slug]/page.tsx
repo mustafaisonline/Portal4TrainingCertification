@@ -429,7 +429,7 @@ export default async function CourseDetailPage({
       {/* ===== Methodology / journey =====
           `.night` removed, 2026-09-06 light-theme propagation. */}
       {course.methodology && (
-        <section className="relative overflow-hidden bg-[#eef2fc]">
+        <section className="relative overflow-hidden bg-[var(--color-ground-tint)]">
           <div className="relative mx-auto max-w-[1280px] px-6 py-16">
             <p className="text-label mb-3 text-[var(--color-primary)]">
               The approach
@@ -613,7 +613,7 @@ export default async function CourseDetailPage({
       {/* ===== CTA =====
           `.night` removed, 2026-09-06 light-theme propagation. Gradient
           hue moved indigo→blue to match. */}
-      <section className="relative overflow-hidden bg-[#eef2fc]">
+      <section className="relative overflow-hidden bg-[var(--color-ground-tint)]">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0"

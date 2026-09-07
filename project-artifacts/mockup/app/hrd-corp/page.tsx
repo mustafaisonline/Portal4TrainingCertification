@@ -161,7 +161,7 @@ export default function HrdCorpPage() {
 
       {/* ===== For organisations =====
           `.night` removed, 2026-09-06 light-theme propagation. */}
-      <section className="relative overflow-hidden bg-[#eef2fc]">
+      <section className="relative overflow-hidden bg-[var(--color-ground-tint)]">
         <div className="relative mx-auto max-w-[1280px] px-6 py-16 lg:py-20">
           <div className="max-w-[640px]">
             <p className="text-label mb-3 text-[var(--color-primary)]">

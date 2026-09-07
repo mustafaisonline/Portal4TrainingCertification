@@ -98,7 +98,7 @@ export default function CertificationsPage() {
                 a dark accent card for emphasis; now a white card with a
                 primary-tinted border, same emphasis via colour+shadow
                 instead of a dark surface. */}
-            <div className="rounded-[var(--radius-panel)] border border-[var(--color-primary)]/25 bg-white p-7 shadow-[0_10px_30px_rgba(16,24,40,0.06)]">
+            <div className="rounded-[var(--radius-panel)] border border-[var(--color-primary)]/25 bg-[var(--color-ground-raised)] p-7 shadow-[0_10px_30px_rgba(16,24,40,0.06)]">
               <p className="text-label mb-5">From the assessment rubric</p>
 
               <p className="text-h2">Justification</p>

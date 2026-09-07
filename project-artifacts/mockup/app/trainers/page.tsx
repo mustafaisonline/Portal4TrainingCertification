@@ -380,7 +380,7 @@ export default function TrainersPage() {
 
       {/* ===== The standard =====
           `.night` removed, 2026-09-06 light-theme propagation. */}
-      <section className="bg-[#eef2fc]">
+      <section className="bg-[var(--color-ground-tint)]">
         <div className="mx-auto max-w-[1280px] px-6 py-16">
           <p className="text-label mb-3 text-[var(--color-primary)]">
             How trainers are selected
@@ -426,7 +426,7 @@ export default function TrainersPage() {
         // `.night` removed, 2026-09-06 light-theme propagation.
         <section
           id="hrd-corp-accreditation"
-          className="relative scroll-mt-20 overflow-hidden bg-[#eef2fc]"
+          className="relative scroll-mt-20 overflow-hidden bg-[var(--color-ground-tint)]"
         >
           <div className="relative mx-auto max-w-[1280px] px-6 py-16 lg:py-20">
             <p className="text-label mb-3 text-[var(--color-primary)]">

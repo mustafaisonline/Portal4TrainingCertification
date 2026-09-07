@@ -73,7 +73,7 @@ export function CoursePricing({
     // wash) since this is a secondary section, not a page-opening hero.
     <section
       id="investment"
-      className="relative scroll-mt-24 overflow-hidden bg-[#eef2fc]"
+      className="relative scroll-mt-24 overflow-hidden bg-[var(--color-ground-tint)]"
     >
       <div
         aria-hidden="true"

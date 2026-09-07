@@ -48,7 +48,7 @@ export function TrainerCard({ person }: { person: Practitioner }) {
             href="/hrd-corp"
             title="HRD Corp Accredited Trainer — see details"
             aria-label="HRD Corp Accredited Trainer — see accreditation details"
-            className="absolute -bottom-1.5 -right-1.5 rounded-full bg-white p-0.5 shadow-md ring-1 ring-[var(--color-line-strong)]"
+            className="absolute -bottom-1.5 -right-1.5 rounded-full bg-[var(--color-ground-raised)] p-0.5 shadow-md ring-1 ring-[var(--color-line-strong)]"
           >
             <Image
               src={assetPath(accreditation.badge)}

@@ -117,7 +117,7 @@ export default function HomePage() {
         </h2>
         <div className="grid gap-6 md:grid-cols-3">
           <Card variant="panel">
-            <div className="mb-5 inline-flex rounded-[10px] bg-[#e7edfc] p-2.5 text-[var(--color-primary)]">
+            <div className="mb-5 inline-flex rounded-[10px] bg-[var(--color-hero-blue-soft)] p-2.5 text-[var(--color-primary)]">
               <GlyphRise />
             </div>
             <p className="text-label mb-2">For individuals</p>
@@ -131,7 +131,7 @@ export default function HomePage() {
             </Button>
           </Card>
           <Card variant="panel">
-            <div className="mb-5 inline-flex rounded-[10px] bg-[#e7edfc] p-2.5 text-[var(--color-primary)]">
+            <div className="mb-5 inline-flex rounded-[10px] bg-[var(--color-hero-blue-soft)] p-2.5 text-[var(--color-primary)]">
               <GlyphNodes />
             </div>
             <p className="text-label mb-2">For organisations</p>
@@ -145,7 +145,7 @@ export default function HomePage() {
             </Button>
           </Card>
           <Card variant="panel">
-            <div className="mb-5 inline-flex rounded-[10px] bg-[#e7edfc] p-2.5 text-[var(--color-primary)]">
+            <div className="mb-5 inline-flex rounded-[10px] bg-[var(--color-hero-blue-soft)] p-2.5 text-[var(--color-primary)]">
               <GlyphTarget />
             </div>
             <p className="text-label mb-2">Not sure where to start?</p>

@@ -210,7 +210,7 @@ export default function DiagnosticPage() {
 
   return (
     <PublicShell>
-      <div className="relative overflow-hidden bg-[#eef2fc]">
+      <div className="relative overflow-hidden bg-[var(--color-ground-tint)]">
         {/* Soft background gradient — same treatment as the homepage's
             "Not sure where you stand?" section (components/HomeDiagnostic.tsx),
             added 2026-09-07 so this page reads as the same product rather
@@ -230,7 +230,7 @@ export default function DiagnosticPage() {
             changed. Not sticky: PublicShell's own header already is, and
             two stacked sticky bars is more than this needs. */}
         {stage !== "idle" && (
-          <div className="relative border-b border-[var(--color-line)] bg-white/70 px-6 py-2.5 backdrop-blur">
+          <div className="relative border-b border-[var(--color-line)] bg-[var(--color-ground-raised)]/70 px-6 py-2.5 backdrop-blur">
             <div className="mx-auto flex max-w-[900px] items-center justify-between">
               <p className="text-label">
                 Question {index + 1} of ~{questions.length}

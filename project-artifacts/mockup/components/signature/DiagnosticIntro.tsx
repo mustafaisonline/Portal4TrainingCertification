@@ -60,7 +60,7 @@ export function DiagnosticIllustration() {
         aria-hidden="true"
         className="absolute bottom-2 right-1 grid h-9 w-9 place-items-center rounded-full bg-[var(--color-primary)] shadow-[0_6px_14px_rgba(47,95,224,0.35)] ring-4 ring-[var(--color-ground)]"
       >
-        <svg viewBox="0 0 24 24" className="h-4 w-4 text-white" aria-hidden="true">
+        <svg viewBox="0 0 24 24" className="h-4 w-4 text-[var(--color-primary-ink)]" aria-hidden="true">
           <path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" fill="none" />
         </svg>
       </span>

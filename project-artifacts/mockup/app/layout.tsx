@@ -6,8 +6,19 @@ import {
   IBM_Plex_Sans,
   IBM_Plex_Serif,
 } from "next/font/google";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import "./globals.css";
+
+/* No-flash theme script — 2026-09-07, added alongside promoting
+   ThemeToggle from a dev-only affordance to a real, persisted one (see
+   that component's header comment). Runs before hydration/paint: if the
+   visitor previously chose a theme (localStorage), it's applied
+   immediately via `data-theme`, so a returning dark-mode visitor doesn't
+   see a flash of the light theme first. If no explicit choice exists yet,
+   this does nothing — `app/globals.css`'s `prefers-color-scheme` media
+   query already handles the system-preference case with no attribute
+   needed. Inline and tiny by design: this has to run before first paint,
+   which rules out a normal component. */
+const themeInitScript = `(function(){try{var t=localStorage.getItem('mockup:theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();`;
 
 /*
  * Fonts are self-hosted at build time via next/font (built into Next.js —
@@ -81,13 +92,20 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html
       lang="en"
       className={`${plexSerif.variable} ${plexSans.variable} ${plexMono.variable} ${caveat.variable}`}
+      // The no-flash script above sets `data-theme` on this element before
+      // React hydrates, which the server-rendered markup never has (the
+      // server doesn't know a visitor's stored preference) — an expected,
+      // intentional mismatch on this one attribute, the same pattern every
+      // no-flash dark-mode approach uses (e.g. next-themes). Without this,
+      // React logs a hydration-mismatch warning for something that isn't a
+      // bug; nothing else on the page is affected either way.
+      suppressHydrationWarning
     >
-      <body>
-        {children}
-        <div className="fixed bottom-4 right-4 z-50 hidden sm:block">
-          <ThemeToggle />
-        </div>
-      </body>
+      <head>
+        {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
+      <body>{children}</body>
     </html>
   );
 }

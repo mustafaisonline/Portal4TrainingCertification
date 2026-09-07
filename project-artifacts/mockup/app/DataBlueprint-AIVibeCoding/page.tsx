@@ -300,7 +300,7 @@ export default function CoursesPage() {
           Background tone: light-blue (was white-raised, same as "Who
           Teaches You" below it — 2026-09-06 background-variation pass, so
           adjacent sections stop reading as identical). */}
-      <section className="bg-[#eef2fc]">
+      <section className="bg-[var(--color-ground-tint)]">
         <div className="mx-auto max-w-[1280px] px-6 py-16">
           <p className="text-label mb-3 text-[var(--color-primary)]">
             Why train with us

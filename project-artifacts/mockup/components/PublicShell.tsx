@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import type { ReactNode } from "react";
 import { Button } from "./ui/Button";
+import { ThemeToggle } from "./ThemeToggle";
 
 /**
  * Global public shell — visual redesign 2026-08-31 (premium navy identity).
@@ -120,7 +121,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <div className="flex min-h-dvh flex-col">
-      <header className="sticky top-0 z-10 border-b border-[var(--color-line)] bg-white/90 backdrop-blur">
+      <header className="sticky top-0 z-10 border-b border-[var(--color-line)] bg-[var(--color-ground-raised)]/90 backdrop-blur">
         <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
           <Link href="/" className="flex min-w-0 items-center gap-3">
             <LogoMark />
@@ -198,6 +199,11 @@ export function PublicShell({ children }: { children: ReactNode }) {
               </Button>
             </span>
             <Button href="/DataBlueprint-AIVibeCoding">Explore courses</Button>
+            {/* Theme toggle — visible at every width (not just desktop, not
+                buried in the mobile panel): see components/ThemeToggle.tsx's
+                header comment for why this moved here from a
+                `hidden sm:block` corner button. */}
+            <ThemeToggle />
             {/* Mobile menu toggle — only where the inline `<nav>` above is
                 hidden. See "MOBILE MENU FIXED" in this file's header
                 comment. */}
@@ -241,7 +247,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
         )}
       </header>
       <main className="flex-1">{children}</main>
-      <footer className="border-t border-[var(--color-line)] bg-white">
+      <footer className="border-t border-[var(--color-line)] bg-[var(--color-ground-raised)]">
         <div className="mx-auto grid max-w-[1280px] gap-10 px-6 py-14 text-body-sm text-[var(--color-ink-quiet)] sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <div className="mb-4 flex items-center gap-3">

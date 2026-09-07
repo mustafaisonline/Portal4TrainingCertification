@@ -537,6 +537,12 @@
 .hero-card--community {
   top: 385px;
   left: 0;
+  /* 100 → 120px, 2026-09-06: this card's copy ("No Coding Experience
+     Required" / "Anyone with zero coding background can take this
+     course.") runs longer than its siblings' — a little more room so it
+     doesn't feel cramped. Checked against `--certification` below it
+     (top:530): 385+120=505, still a clear 25px gap. */
+  min-height: 120px;
   transform: rotate(1deg);
 }
 .hero-card--community .hero-card__icon {

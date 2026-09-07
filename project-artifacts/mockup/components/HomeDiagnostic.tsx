@@ -189,16 +189,18 @@ export function HomeDiagnostic() {
   };
 
   return (
-    // `night` (globals.css) + mt-12: same dark scope and standardised
-    // 48px inter-section gap as every other homepage section (see
+    // LIGHT-THEME REDESIGN, 2026-09-06: `night` removed (was the same dark
+    // scope as every other homepage section under the old visual system —
+    // see HomeHeroLight.tsx's header comment for the redesign this is
+    // part of). mt-12: standardised 48px inter-section gap, unchanged (see
     // app/page.tsx's "Three pathways" comment for the gap convention).
-    <section className="night relative mt-12 overflow-hidden">
+    <section className="relative mt-12 overflow-hidden bg-[#eef2fc]">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(60% 90% at 20% 30%, rgba(122,132,255,0.14), transparent 70%)",
+            "radial-gradient(60% 90% at 20% 30%, rgba(47,95,224,0.10), transparent 70%)",
         }}
       />
       <div className="relative mx-auto max-w-[880px] px-6 py-[25px]">

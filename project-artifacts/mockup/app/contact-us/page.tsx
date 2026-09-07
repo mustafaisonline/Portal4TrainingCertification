@@ -36,7 +36,7 @@ const routes = [
     title: "A course for yourself",
     body: "Tell us where you are and what you need to be able to do. If a course fits, we will say which one — and if none does, we will say that too.",
     cta: "Explore courses",
-    href: "/courses",
+    href: "/DataBlueprint-AIVibeCoding",
   },
   {
     label: "For organisations",
@@ -62,8 +62,10 @@ export default function ContactPage() {
 
   return (
     <PublicShell>
-      {/* ===== Hero ===== */}
-      <section className="night relative overflow-hidden">
+      {/* ===== Hero =====
+          `.night` removed, 2026-09-06 light-theme propagation — see
+          components/HomeHeroLight.tsx's header comment. */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#eef2fc] to-[var(--color-ground)]">
         <div className="relative mx-auto max-w-[1280px] px-6 py-16 lg:py-20">
           <p className="text-label mb-4 text-[var(--color-primary)]">
             Contact us

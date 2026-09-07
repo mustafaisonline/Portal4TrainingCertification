@@ -55,8 +55,13 @@ export default function AboutPage() {
 
   return (
     <PublicShell>
-      {/* ===== Hero ===== */}
-      <section className="night relative overflow-hidden">
+      {/* ===== Hero =====
+          LIGHT-THEME PROPAGATION, 2026-09-06, founder direction: `.night`
+          removed (was dark navy portal-wide until the homepage-only
+          redesign a few hours earlier) — see
+          components/HomeHeroLight.tsx's header comment for the theme
+          this propagates. */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#eef2fc] to-[var(--color-ground)]">
         <div className="relative mx-auto max-w-[1280px] px-6 py-16 lg:py-20">
           <p className="text-label mb-4 text-[var(--color-primary)]">About us
           </p>
@@ -134,8 +139,10 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ===== What we hold ourselves to ===== */}
-      <section className="night">
+      {/* ===== What we hold ourselves to =====
+          `.night` removed, 2026-09-06 light-theme propagation (see hero
+          comment above). */}
+      <section>
         <div className="mx-auto max-w-[1280px] px-6 py-16">
           <p className="text-label mb-3 text-[var(--color-primary)]">
             What we hold ourselves to
@@ -234,7 +241,7 @@ export default function AboutPage() {
             rule.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button href="/courses">Explore courses</Button>
+            <Button href="/DataBlueprint-AIVibeCoding">Explore courses</Button>
             <Button variant="secondary" href="/contact-us">
               Talk to us
             </Button>

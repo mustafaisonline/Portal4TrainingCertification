@@ -67,16 +67,20 @@ export function CoursePricing({
   if (!pricing && !packages) return null;
 
   return (
+    // `.night` removed, 2026-09-06 light-theme propagation — see
+    // components/HomeHeroLight.tsx's header comment. Gradient hue moved
+    // indigo→blue to match; flat light-blue band (not the hero's gradient
+    // wash) since this is a secondary section, not a page-opening hero.
     <section
       id="investment"
-      className="night relative scroll-mt-24 overflow-hidden"
+      className="relative scroll-mt-24 overflow-hidden bg-[#eef2fc]"
     >
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(50% 85% at 80% 25%, rgba(122,132,255,0.14), transparent 70%)",
+            "radial-gradient(50% 85% at 80% 25%, rgba(47,95,224,0.12), transparent 70%)",
         }}
       />
       <div className="relative mx-auto max-w-[1280px] px-6 py-16">

@@ -118,6 +118,12 @@ import styles from "./HomeHero.module.css";
  *   steps restacked vertically, connectors redrawn, step 04 recoloured,
  *   the handwritten note replaced by a trailing arrow, step copy for
  *   02–04 rewritten to match the reference).
+ * - 2026-09-06, later still: founder direction — card 08's content changed
+ *   from "Join a Community" (icon: `GlyphUsers`) to "No Coding Experience
+ *   Required" (icon: `GlyphCheckCircle`, new — a plain checkmark, since
+ *   the people icon no longer matched). Class name `--community` and card
+ *   number 08 kept, per this file's own established practice of not
+ *   renaming things just because their content moved on.
  *
  * WHAT IS AND IS NOT A PHOTOGRAPH here: one genuine image — the HRD Corp
  * badge on card 03, an asset HRD Corp itself issued (not a photograph of
@@ -251,6 +257,14 @@ function GlyphUsers() {
     </svg>
   );
 }
+function GlyphCheckCircle() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="8.5" {...stroke} />
+      <path d="M8 12.5l2.5 2.5L16 9.5" {...stroke} />
+    </svg>
+  );
+}
 
 /* ---------- Content ---------- */
 
@@ -305,7 +319,7 @@ export function HomeHero() {
           </p>
 
           <div className={styles["hero__actions"]}>
-            <Link href="/courses" className={styles.heroButtonPrimary}>
+            <Link href="/DataBlueprint-AIVibeCoding" className={styles.heroButtonPrimary}>
               Explore Courses
               <span className="[&_svg]:size-4">
                 <GlyphArrowRight />
@@ -444,14 +458,19 @@ export function HomeHero() {
             </div>
           </article>
 
+          {/* Was "Join a Community" (GlyphUsers) until 2026-09-06, founder
+              direction. Class name `--community` and card number 08 kept
+              as-is — same reasoning the file already applies elsewhere
+              (renaming risks more churn than it's worth); only the visible
+              content and icon changed. */}
           <article className={`${styles["hero-card"]} ${styles["hero-card--community"]}`}>
             <span className={styles["hero-card__number"]}>08</span>
             <span className={styles["hero-card__icon"]}>
-              <GlyphUsers />
+              <GlyphCheckCircle />
             </span>
             <div className={styles["hero-card__content"]}>
-              <p className={styles["hero-card__title"]}>Join a Community</p>
-              <p className={styles["hero-card__description"]}>Learn and grow alongside other builders.</p>
+              <p className={styles["hero-card__title"]}>No Coding Experience Required</p>
+              <p className={styles["hero-card__description"]}>Anyone with zero coding background can take this course.</p>
             </div>
           </article>
 

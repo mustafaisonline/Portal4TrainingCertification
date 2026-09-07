@@ -5,8 +5,6 @@ import { Button } from "./ui/Button";
 /**
  * Global public shell — visual redesign 2026-08-31 (premium navy identity).
  *
- * - Header and footer carry the `.night` token scope: deep-navy editorial
- *   framing on every public page, in light and dark themes alike.
  * - Exactly ONE CTA in the header, and it is course discovery — not the
  *   diagnostic (P01 spec HD-14). Nav promises no screen that does not
  *   exist: items route to P01 sections via absolute-path anchors.
@@ -15,7 +13,19 @@ import { Button } from "./ui/Button";
  * - "Data & AI Academy" remains a working placeholder name (open item
  *   HO-4 / WBS 4.4.1) — the reference image's brand name was deliberately
  *   NOT adopted, because naming is an open decision.
- */
+ *
+ * LIGHT-THEME REDESIGN, 2026-09-06, founder direction, from a supplied
+ * reference image: the `.night` scope removed from both header and
+ * footer below. Until now they carried deep-navy editorial framing on
+ * every public page (the original 2026-08-31 identity, in the comment
+ * this replaces); the new reference uses a plain white header throughout.
+ * Because this component is shared by every route, this one change
+ * affects every page's header/footer immediately — accepted as part of
+ * "foundations" (shared chrome) rather than held back for the
+ * page-by-page propagation `/` alone has received so far. Nothing else
+ * here changed: nav items, the logo mark and copy are untouched, and
+ * every `var(--color-*)` reference below simply now resolves through the
+ * plain (light) `:root` tokens instead of `.night`'s dark overrides. */
 
 /** Exported (2026-09-06) so app/diagnostic/page.tsx — which runs in its
  *  own stripped-back shell, not PublicShell — can reuse the exact same
@@ -57,7 +67,7 @@ export function LogoMark() {
 export function PublicShell({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-dvh flex-col">
-      <header className="night sticky top-0 z-10 border-b border-[var(--color-line)] bg-[var(--color-ground)]/95 backdrop-blur">
+      <header className="sticky top-0 z-10 border-b border-[var(--color-line)] bg-white/90 backdrop-blur">
         <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
           <Link href="/" className="flex min-w-0 items-center gap-3">
             <LogoMark />
@@ -98,7 +108,18 @@ export function PublicShell({ children }: { children: ReactNode }) {
               now 404s via a flag), not deleted. Five items now; six is the
               documented maximum, not a fixed count. The footer's plain-text
               "Certifications" mention (not a link) was left as-is — it was
-              never a working nav item and removing it is a separate call. */}
+              never a working nav item and removing it is a separate call.
+
+              2026-09-06, later still: "Courses" relabelled "Programme" and
+              re-pointed to `/DataBlueprint-AIVibeCoding` (was `/courses`) —
+              founder direction: "we are offering only one training." The
+              hub page itself moved route (git history preserved via
+              `git mv`); `/courses/[slug]` detail pages are UNCHANGED and
+              still live under `/courses/`. Scoped narrowly: only this nav
+              label changed to "Programme" — the header CTA ("Explore
+              courses") and footer's "Courses" link keep their existing
+              text, just re-pointed to the new URL, since the founder asked
+              specifically for "the menu item." */}
           <nav
             aria-label="Primary"
             className="hidden items-center gap-7 text-body-sm text-[var(--color-ink-quiet)] lg:flex"
@@ -109,8 +130,8 @@ export function PublicShell({ children }: { children: ReactNode }) {
             <Link href="/hrd-corp" className="hover:text-[var(--color-ink)]">
               HRD Corp
             </Link>
-            <Link href="/courses" className="hover:text-[var(--color-ink)]">
-              Courses
+            <Link href="/DataBlueprint-AIVibeCoding" className="hover:text-[var(--color-ink)]">
+              Programme
             </Link>
             <Link href="/trainers" className="hover:text-[var(--color-ink)]">
               Trainers
@@ -125,12 +146,12 @@ export function PublicShell({ children }: { children: ReactNode }) {
                 Sign in
               </Button>
             </span>
-            <Button href="/courses">Explore courses</Button>
+            <Button href="/DataBlueprint-AIVibeCoding">Explore courses</Button>
           </div>
         </div>
       </header>
       <main className="flex-1">{children}</main>
-      <footer className="night border-t border-[var(--color-line)]">
+      <footer className="border-t border-[var(--color-line)] bg-white">
         <div className="mx-auto grid max-w-[1280px] gap-10 px-6 py-14 text-body-sm text-[var(--color-ink-quiet)] sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <div className="mb-4 flex items-center gap-3">
@@ -148,7 +169,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
             <p className="text-label mb-3">Explore</p>
             <p>
               <Link
-                href="/courses"
+                href="/DataBlueprint-AIVibeCoding"
                 className="underline underline-offset-4 hover:text-[var(--color-ink)]"
               >
                 Courses

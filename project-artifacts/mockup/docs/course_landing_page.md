@@ -121,27 +121,246 @@ Per founder direction: **"disable, don't delete."** Nothing in
   express the merged course as ordinary data — no schema change is
   currently expected.
 
-## 7. Open items requiring founder confirmation before implementation
+## 7. Open items — status as of 2026-09-06
 
-1. **Merged curriculum** — how "Data Blueprint & AI / Vibe Coding"
-   reconciles the two source courses' modules, duration, prerequisites,
-   formats and price into one coherent course. This needs to be drafted
-   as a proposal and reviewed — it is real curriculum content, not
-   something to invent silently.
-2. **Third governing file's name** — proposed `project_context.md`, not
-   yet confirmed.
-3. **The "25 resources → 5" claim** — confirm whether this appears on the
-   page as a specific case-study number (which would need a real,
-   attributable case behind it) or as a softer capability statement
-   ("teams doing more with less"). Recommend the latter unless a real
-   case exists to cite.
-4. **Detail-page reachability** — confirm it's acceptable for
-   `/courses/[slug]` to remain live-but-unlinked from the hub during this
-   pass (vs. fully gating it), given other pages may still deep-link into
-   it.
+1. **Merged curriculum** — **deferred by founder direction.** Not drafted
+   in this pass; founder will supply this separately before it's written
+   into `data/courses.ts` or the page.
+2. **Third governing file's name** — **confirmed.** `project_context.md`
+   — founder approved the proposal ("if useful, please make it").
+3. **The "25 resources → 5" claim** — **stays, as a benefit.** Founder
+   will share more supporting detail to substantiate it before it ships
+   copy-final; treat as pending elaboration, not as removed or softened.
+4. **Detail-page reachability** — **resolved, superseding the earlier
+   interpretation.** See §8.7: the flagship course card links directly to
+   `/courses/ai-powered-product-development`. Founder confirmed this
+   explicitly when specifying the course-card section.
 
 ---
 
-*Once the above is confirmed, this file becomes the basis for the actual
-`app/courses/page.tsx` rewrite and the new course entry in
-`data/courses.ts`.*
+## 8. Page structure
+
+**Confirmed order** (founder-approved 2026-09-06, including both proposed
+additions):
+
+1. Hero
+2. Who can take this training
+3. Benefits of this training
+4. The Method
+5. Your learning journey
+6. Who teaches you
+7. Course card / section
+8. CTA
+
+Section-by-section content is brainstormed below as each is agreed.
+
+### 8.1 Hero — LOCKED (2026-09-06)
+
+- **Eyebrow label:** `Courses` — kept consistent with the site's existing
+  page convention; no new pattern introduced.
+- **Headline (H1):** "Vibe coding isn't a prompt. It's a method."
+  *(sets up §8.4 The Method by name)*
+- **Subhead (body-lg):** "Before a single feature gets built, you define
+  what you're building, the rules the AI must never break, and the
+  context it needs to stay on track — the same discipline that keeps an
+  AI coding agent reliable on real work. Taught by a practitioner, not
+  sold as a shortcut."
+- **CTAs:**
+  - Primary: "See how it works" → anchors to §8.4 The Method
+  - Secondary: "Who this is for" → anchors to §8.2 Who can take this
+    training
+- **Deliberately excluded from hero:** the course name ("Data Blueprint &
+  AI / Vibe Coding" — lands in §8.7 instead), the benefit claims (§8.3),
+  and the 25→5 number (a proof point, not a hero-level promise).
+
+### 8.2 Who can take this training — LOCKED (2026-09-06)
+
+Reuses the existing `whoShouldAttend: { intro, roles }` shape already
+used throughout `data/courses.ts` — no new content pattern introduced.
+
+- **Intro:** "This is built for people who want to build — not just talk
+  about building. Whether you've never opened a code editor or you
+  already write code every day, the method works the same way: that's
+  the point of teaching it as a method, not a set of tricks."
+- **Roles:**
+  - Aspiring freelance developers — want client-ready skills, not another
+    tutorial
+  - Career changers — moving into tech from a completely different field
+  - Entrepreneurs & startup founders — need to build and ship an MVP
+    without hiring a dev team
+  - Product managers & business analysts — want to go from idea to
+    working product themselves
+  - Students & graduates — building a portfolio that gets freelance
+    work, not just a certificate
+  - Working professionals — want to use AI properly at work, not just
+    experiment with it
+- **Callout beneath the list:** "No prior coding experience required. If
+  you already code, the method makes you faster and more reliable — it
+  doesn't start you over."
+- **Deliberately not committed here:** a hard prerequisite line (e.g.
+  "None" vs "Basic awareness") — that depends on the merged-curriculum
+  content still to come (§7 open item 1); this framing holds regardless
+  of where that lands.
+
+### 8.3 Benefits of this training — LOCKED (2026-09-06)
+
+Six cards, in founder-confirmed order:
+
+1. **Freelance-ready from day one**
+   > Leave with a proven method, not a syntax refresher. Take on real
+   > client work immediately — you don't need a team behind you to
+   > deliver.
+
+2. **Reduce workforce**
+   > One example: a company's workflow that used to take 25 people now
+   > runs on 5, through the same AI-leveraged building approach you'll
+   > learn.
+   > *(Pending founder's supporting detail — open item 3 in §7. Slot and
+   > title are locked; copy may be refined once that detail arrives.)*
+
+3. **No coding required**
+   > You don't need to already know how to code. The method is designed
+   > to take you from zero to shipping — coding ability helps, but it
+   > was never the barrier.
+   > *(Reinforces the same point already made as a callout in §8.2 —
+   > deliberate repetition, not a duplicate to dedupe.)*
+
+4. **10–15 frameworks, not just one trick**
+   > You're not learning "how to prompt ChatGPT." You're exposed to
+   > 10–15 real frameworks — for planning, building, testing and
+   > deploying a product — the same discipline a professional
+   > AI-builder actually uses.
+   > *(Cross-references §8.4 The Method, which walks through what these
+   > frameworks actually are — the two sections should link to each
+   > other in the build.)*
+
+5. **Build for real companies**
+   > This isn't a personal-project bootcamp. You learn to scope, build
+   > and deliver work a company would actually pay for — because that's
+   > exactly the discipline the method teaches.
+
+6. **Become part of the network**
+   > You're not just a graduate — you gain visibility with the
+   > practitioner network behind this Academy, the same trainers
+   > teaching here, as you go on to build real work.
+   > *(Still flagged: "become part of the network" implies a real
+   > mechanism — referrals, visibility, an application step — not yet
+   > defined. Needs a short answer before copy-final.)*
+
+### 8.4 The Method — LOCKED (2026-09-06)
+
+**Deliberately a teaser, not a disclosure.** Founder direction: don't
+give the method away free on the public page — name that it exists and
+say it's taught in the course, nothing more. The six governing
+files/categories from §3 (`vision.md`, `guardrails.md`,
+`project_context.md`, the tools/stack file, prompt-engineering
+playbooks, Skills/agents) are **not named or listed on the page** — only
+referenced in aggregate here.
+
+- **Eyebrow:** `The Method`
+- **H2:** "Before you build the product, you build the method"
+- **Body (short, two lines):**
+  > "Every project starts with a small set of governing files — what
+  > you're building, the rules the AI must never break, and the context
+  > it needs to stay on track — plus a set of reusable skills and
+  > frameworks for planning, building, testing and deploying.
+  > The full method — every file, every framework, in the order it's
+  > taught — is inside the course itself."
+- **CTA beneath:** "See the course" → anchors to §8.7 Course card
+
+### 8.5 Your learning journey — LOCKED (2026-09-06)
+
+Founder-steered structure (learn → do → earn funnel), shown in full —
+unlike §8.4, this section is meant to be fully visible. Reuses the same
+numbered-spine visual pattern already on the current courses page.
+
+- **Eyebrow:** `Your Learning Journey`
+- **H2:** "From data foundations to paid work"
+
+1. **Learn data foundations** — "Build the trusted-data instincts every
+   real product needs — how data is structured, governed and made
+   reliable, before AI ever touches it."
+2. **Learn AI / vibe coding** — "Apply the method to build real, working
+   products with AI — not a toy demo, a working build."
+3. **Start developing products & solutions** — "Move from guided
+   exercises to your own builds — real briefs, real constraints, a
+   capstone you can actually show someone."
+4. **Start working as a freelancer or AI engineer** — "Take what you
+   built into the market — as a freelancer, an AI engineer, or inside
+   your own company."
+5. **Earn** — "Designed to lead to paid work, not just a certificate —
+   the natural result of stages 1–4, not a separate promise bolted on."
+   *(Deliberately phrased as "designed to lead to," not a direct income
+   guarantee.)*
+
+### 8.6 Who teaches you — LOCKED (2026-09-06)
+
+Reflects `data/practitioners.ts` honestly: one genuine practitioner
+(founder-led today, plural array ready for growth — same convention as
+the homepage). No implied faculty.
+
+- **Eyebrow:** `Who Teaches You`
+- **H2:** "Taught by a practitioner, not a curriculum team"
+- **Body:** "Mustafa Qizilbash has spent 24+ years building enterprise
+  data and AI platforms across banking, energy, telecom and government —
+  and founded and still runs a 40,000+ member Big Data community,
+  alongside a podcast with 80+ episodes. This course is taught by
+  someone who has done the work, not someone reading a script."
+- **Practitioner card:** reuses the existing card component already
+  built for the homepage/`/trainers` (photo, headline, experience line,
+  HRD Corp Accredited Trainer badge) — no new component.
+- **CTA:** "Meet the trainer" → `/trainers`
+
+**Resolves §7/§8.3 open item — "become part of the network":**
+**Confirmed by founder** — "network" means real access to this
+40,000+-member Big Data community and the podcast audience, both
+genuinely documented in `data/practitioners.ts`. Not a referral or
+subcontracting mechanism. §8.3's benefit card #6 flag is now resolved.
+
+### 8.7 Course card / section — LOCKED (2026-09-06)
+
+- **Structure:** reuses the existing Flagship section already built on
+  the current courses page (`app/courses/page.tsx` — the "night" band
+  with meta strip, region pricing, highlights, image). No new component.
+- **Content source:** the existing `ai-powered-product-development`
+  entry in `data/courses.ts`, **completely unchanged for now** —
+  placeholder until the real merged curriculum arrives (open item 1).
+- **Display-only name override:** the hub shows "Data Blueprint & AI /
+  Vibe Coding" as a **page-level override**, not an edit to the `title`
+  field in `data/courses.ts` — the underlying data record, its slug and
+  its provenance notes stay untouched until the actual merge content is
+  supplied. Cleaner to unwind if naming changes again before then.
+- **CTA:** "Explore the course" → links to the existing detail page at
+  its current slug, `/courses/ai-powered-product-development`.
+
+**Supersedes §7 open item 4:** the flagship card **does** link to its
+dedicated detail page — founder confirmed this explicitly, replacing the
+earlier "reachable-but-unlinked" assumption. The detail page itself is
+still unchanged/unredesigned (out of scope per §6) — only now it's
+reachable via this one card.
+
+### 8.8 CTA — LOCKED (2026-09-06)
+
+Bookends the hero's "method" language. No fabricated dates — consistent
+with DR-02 State A (no scheduled offerings exist yet).
+
+- **H2:** "Stop prompting. Start building properly."
+- **Body:** "One course. One method. A skillset you can start
+  freelancing with immediately."
+- **CTAs:**
+  - Primary: "Explore the course" → `/courses/ai-powered-product-development`
+    (same detail page as §8.7)
+  - Secondary: "Talk to us" → `/contact-us` (same pattern as the
+    existing corporate section's "Talk to us about your team")
+
+---
+
+**All eight sections locked 2026-09-06.** Remaining before
+implementation: the still-open items in §7 above (#1 merged curriculum,
+#3 the 25→5 supporting detail).
+
+---
+
+*This file is the basis for the actual `app/courses/page.tsx` rewrite and
+the new course entry in `data/courses.ts`, once the remaining open items
+above are resolved.*

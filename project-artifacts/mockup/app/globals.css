@@ -18,25 +18,36 @@
  * docs/DESIGN_FOUNDATION.md "Known issues and fixes".
  */
 :root {
-  /* Ground (page/base surfaces) */
-  --color-ground: #faf8f4; /* warm off-white, never pure #fff */
-  --color-ground-raised: #f2efe8; /* Panel card surface */
+  /* Ground (page/base surfaces) — LIGHT-THEME VISUAL REDESIGN, 2026-09-06,
+     founder direction, from a supplied reference image (institutional
+     white/light-blue, not the warm cream-and-indigo identity below).
+     `/` is the reference implementation of this new system; every other
+     page still uses the old cream/indigo values as tokens are shared —
+     that's an accepted, temporary side effect of changing tokens rather
+     than a full portal rollout (not yet approved). Old values kept in
+     this comment for reversal: ground #faf8f4, ground-raised #f2efe8,
+     line #e2ded3 / #c9c3b3, primary #3d43b8 / #2f3494. */
+  --color-ground: #f7f9fd; /* cool near-white, light-blue cast */
+  --color-ground-raised: #ffffff; /* pure white — Panel card surface */
 
-  /* Ink (text), 3 steps */
-  --color-ink: #1b1f27; /* near-black, slight blue-grey cast */
+  /* Ink (text), 3 steps — unchanged: already a cool near-black, reads
+     correctly against the new cooler ground without adjustment. */
+  --color-ink: #1b1f27;
   --color-ink-quiet: #4b5160;
   --color-ink-faint: #7a8091;
 
-  /* Line (hairlines/borders), 2 steps */
-  --color-line: #e2ded3;
-  --color-line-strong: #c9c3b3;
+  /* Line (hairlines/borders), 2 steps — shifted from warm (cream-paired)
+     greys to cool (blue-paired) greys, 2026-09-06, matching the new ground. */
+  --color-line: #e5e9f2;
+  --color-line-strong: #c7cede;
 
-  /* Primary — deep capability indigo (visual redesign 2026-08-31; was
-     blue-teal). Reads as data/AI without neon cliché; pairs with the warm
-     paper ground for an editorial navy-and-cream identity. */
-  --color-primary: #3d43b8;
-  --color-primary-strong: #2f3494;
-  --color-primary-ink: #f7f8ff;
+  /* Primary — institutional blue (visual redesign 2026-09-06, founder
+     direction; was deep capability indigo, 2026-08-31). Reads as
+     established/trustworthy per the supplied reference, rather than the
+     indigo identity's data/AI signal. */
+  --color-primary: #2f5fe0;
+  --color-primary-strong: #2549b8;
+  --color-primary-ink: #ffffff;
 
   /* Accent — warm ember. Reserved for credential/achievement moments, and
      for the "this is missing" signal on reserved image slots. */
@@ -76,9 +87,12 @@
   --color-hero-purple: #b28cff;
   --color-hero-orange: #f6a44b;
 
-  /* Radius — one per card type (§16.3) */
+  /* Radius — one per card type (§16.3). `--radius-panel` bumped
+     0.75rem→1rem 2026-09-06 (light-theme redesign) to match the rounder,
+     "floating" card language of the supplied reference; `--radius-plate`
+     and `--radius-feature` unchanged. */
   --radius-plate: 0.5rem; /* 8px */
-  --radius-panel: 0.75rem; /* 12px */
+  --radius-panel: 1rem; /* 16px, was 12px */
   --radius-feature: 1rem; /* 16px */
 
   /* Type families — IBM Plex superfamily, self-hosted at build time via

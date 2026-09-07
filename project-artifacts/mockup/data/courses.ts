@@ -1291,13 +1291,22 @@ export const courses: Course[] = [
         "Reduce time-to-market",
       ],
     },
+    // Malaysia price changed 2026-09-06, founder direction: RM 4,998 →
+    // RM 9,999 (original), discounted/"today" price RM 2,499 → RM 4,999.
+    // `discount` ("50% OFF") stays accurate — 5,000 saved on 9,999 is
+    // still ~50%. `save` recomputed (9,999 − 4,999 = 5,000). Pakistan and
+    // international prices deliberately untouched — not in scope.
+    // `valueStack`'s training line and `valueStackTotal` recomputed to
+    // match the new original price, so the Investment section doesn't
+    // visibly contradict itself (9,999 + 1,500 + 1,499 + 500 + 500 + 500
+    // = 14,498).
     pricing: {
-      malaysia: { original: "RM 4,998", discount: "50% OFF", save: "RM 2,499", today: "RM 2,499" },
+      malaysia: { original: "RM 9,999", discount: "50% OFF", save: "RM 5,000", today: "RM 4,999" },
       pakistan: { original: "Rs. 342,799.53", discount: "70% OFF", save: "Rs. 239,959.67", today: "Rs. 102,839.86" },
       international: { original: "USD 3,124", discount: "10% OFF", save: "USD 313", today: "USD 2,811" },
     },
     valueStack: [
-      { item: "AI-Powered Product Development training", value: "RM 4,998" },
+      { item: "AI-Powered Product Development training", value: "RM 9,999" },
       { item: "PromptOS Starter Edition", value: "RM 1,500+" },
       { item: "Data Blueprint Foundations module", value: "RM 1,499" },
       { item: "Product development templates", value: "RM 500+" },
@@ -1305,7 +1314,7 @@ export const courses: Course[] = [
       { item: "Capstone project assets", value: "RM 500+" },
       { item: "Certificate of participation", value: "Included" },
     ],
-    valueStackTotal: "RM 9,497+",
+    valueStackTotal: "RM 14,498+",
     related: ["data-blueprint", "agentic-ai-strategy-adoption"],
     externalResources: [
       {

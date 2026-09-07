@@ -142,8 +142,10 @@ export default function TrainersPage() {
 
   return (
     <PublicShell>
-      {/* ===== Hero ===== */}
-      <section className="night relative">
+      {/* ===== Hero =====
+          `.night` removed, 2026-09-06 light-theme propagation — see
+          components/HomeHeroLight.tsx's header comment. */}
+      <section className="relative bg-gradient-to-b from-[#eef2fc] to-[var(--color-ground)]">
         <div className="mx-auto max-w-[1280px] px-6 py-16 lg:py-20">
           <p className="text-label mb-4 text-[var(--color-primary)]">
             Trainers
@@ -377,8 +379,9 @@ export default function TrainersPage() {
         </div>
       </section>
 
-      {/* ===== The standard ===== */}
-      <section className="night">
+      {/* ===== The standard =====
+          `.night` removed, 2026-09-06 light-theme propagation. */}
+      <section className="bg-[#eef2fc]">
         <div className="mx-auto max-w-[1280px] px-6 py-16">
           <p className="text-label mb-3 text-[var(--color-primary)]">
             How trainers are selected
@@ -421,9 +424,10 @@ export default function TrainersPage() {
           docs/HRD_CORP.md for the full research trail (evidence, the
           verification permalink, what is deliberately not reproduced). */}
       {accreditation && (
+        // `.night` removed, 2026-09-06 light-theme propagation.
         <section
           id="hrd-corp-accreditation"
-          className="night relative scroll-mt-20 overflow-hidden"
+          className="relative scroll-mt-20 overflow-hidden bg-[#eef2fc]"
         >
           <div className="relative mx-auto max-w-[1280px] px-6 py-16 lg:py-20">
             <p className="text-label mb-3 text-[var(--color-primary)]">

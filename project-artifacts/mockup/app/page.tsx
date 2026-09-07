@@ -1,5 +1,11 @@
 import { PublicShell } from "@/components/PublicShell";
-import { HomeHero } from "@/components/HomeHero";
+// LIGHT-THEME REDESIGN, 2026-09-06, founder direction: now renders
+// `HomeHeroLight`, not the original `HomeHero` (dark `.night` hero, no
+// photograph, rotated card cascade) — see that new file's header comment
+// for the full rationale. `HomeHero.tsx`/`.module.css` are untouched and
+// still exported as `HomeHero`; reverting is swapping this one import
+// back, nothing more.
+import { HomeHero } from "@/components/HomeHeroLight";
 import { HomeDiagnostic } from "@/components/HomeDiagnostic";
 import { ImageFrame } from "@/components/ImageFrame";
 import {
@@ -21,9 +27,12 @@ import { Card } from "@/components/ui/Card";
  * courses-vs-offerings emphasis (HO-1) remains open: both concepts are
  * described, neither leads.
  *
- * All decorative graphics below are ORIGINAL inline SVG (deterministic dot
- * fields and geometric glyphs) — nothing is copied from reference
- * material, and no stock or AI-generated imagery is used anywhere.
+ * Decorative graphics on THIS page (the three pathway glyphs below) are
+ * ORIGINAL inline SVG — nothing copied from reference material. The hero
+ * (`HomeHeroLight`, rendered here) does include one genuine photograph
+ * (the founder's own) as of the 2026-09-06 light-theme redesign — see
+ * that component's header comment for why, and for the AI-imagery policy
+ * change that also permits AI-generated imagery portal-wide now.
  */
 
 /** Original geometric glyphs for the three pathways. */
@@ -70,14 +79,16 @@ export default function HomePage() {
   return (
     <PublicShell>
       {/* ============ H1 — Hero (includes the learning-journey strip) ============
-          Lives in components/HomeHero.tsx since 2026-09-05, with its full
-          change history (the DR-02 copy override, the founder photo, the
-          declined AI composite, the reference-architecture rebuild that
-          brought the journey strip back inside the hero) in that file's
-          header comment. */}
+          Lives in components/HomeHeroLight.tsx as of the 2026-09-06
+          light-theme redesign (previously components/HomeHero.tsx, whose
+          own change history — the DR-02 copy override, the founder photo,
+          the declined AI composite, the reference-architecture rebuild —
+          is preserved in that untouched, now-unused file). */}
       <HomeHero />
 
-      {/* ============ Diagnostic band (night) ============
+      {/* ============ Diagnostic band ============
+          Light-themed as of 2026-09-06 (was `night` under the old visual
+          system — see HomeDiagnostic.tsx's own comment).
           Moved above "Three pathways" (2026-09-05, founder request) — was
           previously the last section before the footer.
 
@@ -106,7 +117,7 @@ export default function HomePage() {
         </h2>
         <div className="grid gap-6 md:grid-cols-3">
           <Card variant="panel">
-            <div className="mb-5 inline-flex rounded-[10px] bg-[var(--color-prof-1)] p-2.5 text-[var(--color-primary)]">
+            <div className="mb-5 inline-flex rounded-[10px] bg-[#e7edfc] p-2.5 text-[var(--color-primary)]">
               <GlyphRise />
             </div>
             <p className="text-label mb-2">For individuals</p>
@@ -115,12 +126,12 @@ export default function HomePage() {
               Expert-led courses with stated capability outcomes, delivered
               live — and an assessed path to the credential.
             </p>
-            <Button variant="secondary" href="/courses">
+            <Button variant="secondary" href="/DataBlueprint-AIVibeCoding">
               See the courses
             </Button>
           </Card>
           <Card variant="panel">
-            <div className="mb-5 inline-flex rounded-[10px] bg-[var(--color-prof-1)] p-2.5 text-[var(--color-primary)]">
+            <div className="mb-5 inline-flex rounded-[10px] bg-[#e7edfc] p-2.5 text-[var(--color-primary)]">
               <GlyphNodes />
             </div>
             <p className="text-label mb-2">For organisations</p>
@@ -134,7 +145,7 @@ export default function HomePage() {
             </Button>
           </Card>
           <Card variant="panel">
-            <div className="mb-5 inline-flex rounded-[10px] bg-[var(--color-prof-1)] p-2.5 text-[var(--color-primary)]">
+            <div className="mb-5 inline-flex rounded-[10px] bg-[#e7edfc] p-2.5 text-[var(--color-primary)]">
               <GlyphTarget />
             </div>
             <p className="text-label mb-2">Not sure where to start?</p>

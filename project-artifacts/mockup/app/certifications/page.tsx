@@ -41,7 +41,12 @@ export default function CertificationsPage() {
 
   return (
     <PublicShell>
-      <section className="night relative overflow-hidden">
+      {/* `.night` removed, 2026-09-06 light-theme propagation — see
+          components/HomeHeroLight.tsx's header comment. (This page is
+          currently disabled/404 by founder direction, but kept in sync
+          with the rest of the portal's theme so it's ready when it
+          returns.) */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#eef2fc] to-[var(--color-ground)]">
         <div className="relative mx-auto max-w-[1280px] px-6 py-16 lg:py-20">
           <p className="text-label mb-4 text-[var(--color-primary)]">
             Certifications
@@ -89,7 +94,11 @@ export default function CertificationsPage() {
                 caption as well as colour — colour is never the sole carrier
                 of meaning here. Still illustrative of FORMAT only: the real
                 rubric is unwritten and must never be faked. */}
-            <div className="night rounded-[var(--radius-panel)] border border-[var(--color-line-strong)] p-7">
+            {/* `.night` removed, 2026-09-06 light-theme propagation — was
+                a dark accent card for emphasis; now a white card with a
+                primary-tinted border, same emphasis via colour+shadow
+                instead of a dark surface. */}
+            <div className="rounded-[var(--radius-panel)] border border-[var(--color-primary)]/25 bg-white p-7 shadow-[0_10px_30px_rgba(16,24,40,0.06)]">
               <p className="text-label mb-5">From the assessment rubric</p>
 
               <p className="text-h2">Justification</p>
@@ -197,7 +206,7 @@ export default function CertificationsPage() {
           credential that has already been awarded.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
-          <Button href="/courses">Explore courses</Button>
+          <Button href="/DataBlueprint-AIVibeCoding">Explore courses</Button>
           <Button variant="secondary" href="/contact-us">
             Ask about certification
           </Button>

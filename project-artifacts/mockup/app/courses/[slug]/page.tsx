@@ -75,19 +75,22 @@ export default async function CourseDetailPage({
 
   return (
     <PublicShell>
-      {/* ===== Hero ===== */}
-      <section className="night relative overflow-hidden">
+      {/* ===== Hero =====
+          `.night` removed, 2026-09-06 light-theme propagation — see
+          components/HomeHeroLight.tsx's header comment. Gradient hue
+          moved indigo→blue to match. */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#eef2fc] to-[var(--color-ground)]">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              "radial-gradient(55% 80% at 80% 20%, rgba(122,132,255,0.14), transparent 70%)",
+              "radial-gradient(55% 80% at 80% 20%, rgba(47,95,224,0.12), transparent 70%)",
           }}
         />
         <div className="relative mx-auto max-w-[1280px] px-6 py-14 lg:py-16">
           <Link
-            href="/courses"
+            href="/DataBlueprint-AIVibeCoding"
             className="text-body-sm mb-9 inline-block text-[var(--color-ink-quiet)] underline underline-offset-4 hover:text-[var(--color-ink)]"
           >
             ← All courses
@@ -423,9 +426,10 @@ export default async function CourseDetailPage({
         </section>
       )}
 
-      {/* ===== Methodology / journey ===== */}
+      {/* ===== Methodology / journey =====
+          `.night` removed, 2026-09-06 light-theme propagation. */}
       {course.methodology && (
-        <section className="night relative overflow-hidden">
+        <section className="relative overflow-hidden bg-[#eef2fc]">
           <div className="relative mx-auto max-w-[1280px] px-6 py-16">
             <p className="text-label mb-3 text-[var(--color-primary)]">
               The approach
@@ -606,14 +610,16 @@ export default async function CourseDetailPage({
         </section>
       )}
 
-      {/* ===== CTA ===== */}
-      <section className="night relative overflow-hidden">
+      {/* ===== CTA =====
+          `.night` removed, 2026-09-06 light-theme propagation. Gradient
+          hue moved indigo→blue to match. */}
+      <section className="relative overflow-hidden bg-[#eef2fc]">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              "radial-gradient(50% 90% at 20% 50%, rgba(122,132,255,0.14), transparent 70%)",
+              "radial-gradient(50% 90% at 20% 50%, rgba(47,95,224,0.12), transparent 70%)",
           }}
         />
         <div className="relative mx-auto max-w-[1280px] px-6 py-16">
@@ -627,7 +633,7 @@ export default async function CourseDetailPage({
           </p>
           <div className="flex flex-wrap items-center gap-4">
             <Button href="/contact-us">Talk to us about your team</Button>
-            <Button variant="secondary" href="/courses">
+            <Button variant="secondary" href="/DataBlueprint-AIVibeCoding">
               Explore other courses
             </Button>
           </div>

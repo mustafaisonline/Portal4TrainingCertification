@@ -8,8 +8,17 @@ import { join } from "node:path";
  *
  * Generated at build time by `next/og`, which is part of Next.js — no new
  * dependency. It is NOT a photograph and does not need one: this is a
- * typographic treatment on the portal's night navy, so it stays truthful
- * while genuine delivery photography does not yet exist.
+ * typographic treatment, so it stays truthful while genuine delivery
+ * photography does not yet exist.
+ *
+ * LIGHT-THEME REDESIGN, 2026-09-06, founder direction: recoloured from the
+ * portal's old dark-navy-and-indigo identity to match the light-theme
+ * propagation across every real page (see components/HomeHeroLight.tsx's
+ * header comment for that redesign). Every hex value below is one of this
+ * theme's actual values (--color-ground, --color-ink, --color-primary,
+ * etc. from app/globals.css), not a fresh palette invented for this file —
+ * hardcoded because Satori (inside ImageResponse) cannot read CSS custom
+ * properties.
  *
  * Fonts are read from `assets/fonts/` rather than `public/`, because they
  * are build-time inputs and must never be served to browsers — the runtime
@@ -49,9 +58,9 @@ export default async function OpenGraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#0a0e1f",
+          background: "#f7f9fd",
           backgroundImage:
-            "radial-gradient(900px 520px at 78% 12%, rgba(122,132,255,0.20), rgba(10,14,31,0) 70%)",
+            "radial-gradient(900px 520px at 78% 12%, rgba(47,95,224,0.14), rgba(247,249,253,0) 70%)",
           padding: "64px 72px",
           fontFamily: "Plex Sans",
         }}
@@ -63,23 +72,23 @@ export default async function OpenGraphImage() {
               resvg and failed here with "svgload_buffer: SVG rendering
               failed" during prerender. */}
           <svg width="64" height="64" viewBox="0 0 32 32">
-            <rect width="32" height="32" rx="8" fill="#9aa3ff" />
+            <rect width="32" height="32" rx="8" fill="#2f5fe0" />
             <path
               d="M8 22.5 L14 15 L18 18 L24 9"
               fill="none"
-              stroke="#0a0e1f"
+              stroke="#ffffff"
               strokeWidth="2.6"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
-            <circle cx="24" cy="9" r="3.1" fill="#0a0e1f" />
-            <circle cx="8" cy="22.5" r="2.2" fill="#0a0e1f" fillOpacity="0.55" />
+            <circle cx="24" cy="9" r="3.1" fill="#ffffff" />
+            <circle cx="8" cy="22.5" r="2.2" fill="#ffffff" fillOpacity="0.7" />
           </svg>
           <div
             style={{
               fontFamily: "Plex Serif",
               fontSize: 40,
-              color: "#eef0f8",
+              color: "#1b1f27",
               marginLeft: 22,
               letterSpacing: "0.004em",
             }}
@@ -96,7 +105,7 @@ export default async function OpenGraphImage() {
               fontWeight: 600,
               letterSpacing: "0.11em",
               textTransform: "uppercase",
-              color: "#9aa3ff",
+              color: "#2f5fe0",
               marginBottom: 26,
             }}
           >
@@ -110,11 +119,11 @@ export default async function OpenGraphImage() {
               fontWeight: 600,
               lineHeight: 1.12,
               letterSpacing: "-0.018em",
-              color: "#eef0f8",
+              color: "#1b1f27",
             }}
           >
             <div>Taught live by a practitioner.</div>
-            <div style={{ color: "#9aa3ff" }}>Proven by the work you do.</div>
+            <div style={{ color: "#2f5fe0" }}>Proven by the work you do.</div>
           </div>
         </div>
 
@@ -123,10 +132,10 @@ export default async function OpenGraphImage() {
           style={{
             display: "flex",
             alignItems: "center",
-            borderTop: "1px solid rgba(148,160,220,0.26)",
+            borderTop: "1px solid #e5e9f2",
             paddingTop: 26,
             fontSize: 23,
-            color: "#aab3d2",
+            color: "#7a8091",
           }}
         >
           Face-to-face &amp; live online · Malaysia &amp; internationally

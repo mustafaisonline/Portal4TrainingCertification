@@ -186,15 +186,19 @@ export default function DiagnosticPage() {
   return (
     <div className="flex min-h-dvh flex-col">
       {/* 2026-09-06, founder direction: this header was a plain light bar —
-          every other page opens with the site's dark-navy masthead
-          (PublicShell), so this one read as a different, disconnected
-          product. Now carries the same `night` scope + translucent navy
-          background + LogoMark as PublicShell's header (imported from
-          there so the mark can't drift into a second version), while
+          every other page opened with the site's dark-navy masthead
+          (PublicShell) at the time, so this one read as a different,
+          disconnected product. Given the same `night` scope + translucent
+          navy background + LogoMark as PublicShell's header (imported
+          from there so the mark can't drift into a second version), while
           keeping the deliberately reduced content (logo + progress +
           Save & exit only, no full nav, no CTA) — that reduction is
-          "focus mode," not the theme mismatch that needed fixing. */}
-      <header className="night sticky top-0 z-10 border-b border-[var(--color-line)] bg-[var(--color-ground)]/95 px-6 py-3.5 backdrop-blur">
+          "focus mode," not the theme mismatch that needed fixing.
+          LATER THE SAME DAY, light-theme propagation: `.night` removed —
+          PublicShell's header is light now too, so this still matches it,
+          just at the new colour. See components/HomeHeroLight.tsx's
+          header comment for the redesign this follows. */}
+      <header className="sticky top-0 z-10 border-b border-[var(--color-line)] bg-white/90 px-6 py-3.5 backdrop-blur">
         <div className="mx-auto flex max-w-[640px] items-center justify-between">
           <Link href="/" className="flex items-center gap-2.5">
             <LogoMark />

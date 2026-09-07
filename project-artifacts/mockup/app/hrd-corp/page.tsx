@@ -46,8 +46,10 @@ export const metadata: Metadata = {
 export default function HrdCorpPage() {
   return (
     <PublicShell>
-      {/* ===== Hero ===== */}
-      <section className="night relative overflow-hidden">
+      {/* ===== Hero =====
+          `.night` removed, 2026-09-06 light-theme propagation — see
+          components/HomeHeroLight.tsx's header comment. */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-[#eef2fc] to-[var(--color-ground)]">
         <div className="relative mx-auto max-w-[1280px] px-6 py-16 lg:py-20">
           <p className="text-label mb-4 text-[var(--color-primary)]">
             HRD Corp
@@ -157,8 +159,9 @@ export default function HrdCorpPage() {
         </div>
       </section>
 
-      {/* ===== For organisations ===== */}
-      <section className="night relative overflow-hidden">
+      {/* ===== For organisations =====
+          `.night` removed, 2026-09-06 light-theme propagation. */}
+      <section className="relative overflow-hidden bg-[#eef2fc]">
         <div className="relative mx-auto max-w-[1280px] px-6 py-16 lg:py-20">
           <div className="max-w-[640px]">
             <p className="text-label mb-3 text-[var(--color-primary)]">

@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 import type { ReactNode } from "react";
 import { Button } from "./ui/Button";
 
@@ -25,7 +28,26 @@ import { Button } from "./ui/Button";
  * page-by-page propagation `/` alone has received so far. Nothing else
  * here changed: nav items, the logo mark and copy are untouched, and
  * every `var(--color-*)` reference below simply now resolves through the
- * plain (light) `:root` tokens instead of `.night`'s dark overrides. */
+ * plain (light) `:root` tokens instead of `.night`'s dark overrides.
+ *
+ * MOBILE MENU FIXED — 2026-09-07, founder-reported bug ("when I am opening
+ * our portal on mobile its menu is not possible"). The primary `<nav>`
+ * has always been `hidden ... lg:flex` — correct for desktop, but below
+ * `lg` it simply vanished with no alternative, so every nav link (Home,
+ * HRD Corp, Programme, Trainers, Free Diagnostic, About Us) was
+ * unreachable on a phone or small tablet. Fixed with a standard hamburger
+ * pattern: a toggle button (`lg:hidden`, so it only appears where the
+ * inline nav is hidden) opens a collapsible panel with the same links,
+ * stacked. This file is now a Client Component (`useState` for open/
+ * closed) — the only change that required; every page that renders
+ * `PublicShell` keeps working exactly as before, Client Components are
+ * fine nested under Server Component pages. Nav link data is now a single
+ * `navItems` array feeding both the desktop `<nav>` and the mobile panel,
+ * so the two can never list different links by accident. The "Explore
+ * courses" CTA and the "Sign in" link's existing `hidden sm:inline-flex`
+ * visibility rule are UNCHANGED — this fixes nav-link reachability only,
+ * not the documented "exactly one CTA in the header" rule from this
+ * file's own top comment. */
 
 /** Exported (2026-09-06) so app/diagnostic/page.tsx — which runs in its
  *  own stripped-back shell, not PublicShell — can reuse the exact same
@@ -64,7 +86,38 @@ export function LogoMark() {
   );
 }
 
+/** Hamburger / close glyphs for the mobile menu toggle — original inline
+ *  SVG, same stroke convention (round caps/joins) as every other icon in
+ *  this codebase. */
+function IconMenu() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
+      <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" fill="none" />
+    </svg>
+  );
+}
+function IconClose() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
+      <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" fill="none" />
+    </svg>
+  );
+}
+
+/** Single source for the primary nav links — feeds both the desktop
+ *  `<nav>` and the mobile panel (see this file's "MOBILE MENU FIXED"
+ *  header comment). Content/order unchanged from before that fix. */
+const navItems = [
+  { href: "/", label: "Home" },
+  { href: "/hrd-corp", label: "HRD Corp" },
+  { href: "/DataBlueprint-AIVibeCoding", label: "Programme" },
+  { href: "/trainers", label: "Trainers" },
+  { href: "/diagnostic", label: "Free Diagnostic" },
+  { href: "/about-us", label: "About Us" },
+];
+
 export function PublicShell({ children }: { children: ReactNode }) {
+  const [menuOpen, setMenuOpen] = useState(false);
   return (
     <div className="flex min-h-dvh flex-col">
       <header className="sticky top-0 z-10 border-b border-[var(--color-line)] bg-white/90 backdrop-blur">
@@ -132,24 +185,11 @@ export function PublicShell({ children }: { children: ReactNode }) {
             aria-label="Primary"
             className="hidden items-center gap-7 text-body-sm text-[var(--color-ink-quiet)] lg:flex"
           >
-            <Link href="/" className="hover:text-[var(--color-ink)]">
-              Home
-            </Link>
-            <Link href="/hrd-corp" className="hover:text-[var(--color-ink)]">
-              HRD Corp
-            </Link>
-            <Link href="/DataBlueprint-AIVibeCoding" className="hover:text-[var(--color-ink)]">
-              Programme
-            </Link>
-            <Link href="/trainers" className="hover:text-[var(--color-ink)]">
-              Trainers
-            </Link>
-            <Link href="/diagnostic" className="hover:text-[var(--color-ink)]">
-              Free Diagnostic
-            </Link>
-            <Link href="/about-us" className="hover:text-[var(--color-ink)]">
-              About Us
-            </Link>
+            {navItems.map((item) => (
+              <Link key={item.href} href={item.href} className="hover:text-[var(--color-ink)]">
+                {item.label}
+              </Link>
+            ))}
           </nav>
           <div className="flex shrink-0 items-center gap-3">
             <span className="hidden sm:inline-flex">
@@ -158,8 +198,47 @@ export function PublicShell({ children }: { children: ReactNode }) {
               </Button>
             </span>
             <Button href="/DataBlueprint-AIVibeCoding">Explore courses</Button>
+            {/* Mobile menu toggle — only where the inline `<nav>` above is
+                hidden. See "MOBILE MENU FIXED" in this file's header
+                comment. */}
+            <button
+              type="button"
+              onClick={() => setMenuOpen((open) => !open)}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-nav"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              className="grid h-10 w-10 shrink-0 place-items-center rounded-[var(--radius-plate)] border border-[var(--color-line-strong)] text-[var(--color-ink)] lg:hidden"
+            >
+              {menuOpen ? <IconClose /> : <IconMenu />}
+            </button>
           </div>
         </div>
+        {/* Mobile nav panel — collapses open/closed beneath the row above.
+            Same `navItems` as the desktop nav, so the two can never list
+            different links. Every link (and the CTA below) closes the
+            panel on click, in case client-side navigation doesn't unmount
+            this component (e.g. same-page anchors). */}
+        {menuOpen && (
+          <div id="mobile-nav" className="border-t border-[var(--color-line)] px-4 pb-4 pt-2 sm:px-6 lg:hidden">
+            <nav aria-label="Primary, mobile" className="flex flex-col">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="rounded-[var(--radius-plate)] px-2 py-3 text-body-sm text-[var(--color-ink-quiet)] hover:bg-[var(--color-ground)] hover:text-[var(--color-ink)]"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+            <div className="mt-2 flex flex-col gap-3 border-t border-[var(--color-line)] pt-4 sm:hidden">
+              <Button variant="secondary" href="#" onClick={() => setMenuOpen(false)}>
+                Sign in
+              </Button>
+            </div>
+          </div>
+        )}
       </header>
       <main className="flex-1">{children}</main>
       <footer className="border-t border-[var(--color-line)] bg-white">

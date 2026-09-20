@@ -20,7 +20,9 @@ import { endDemoSession, useDemoSession } from "@/lib/demoSession";
 
 const menuLinks = [
   { href: "/account", label: "My account" },
-  { href: "/account/programmes", label: "My programmes" },
+  { href: "/account/programme", label: "Programme" },
+  { href: "/account/programmes", label: "My registrations" },
+  { href: "/account/certificate", label: "Certificate" },
   { href: "/account/orders", label: "Orders & receipts" },
   { href: "/account/profile", label: "Profile & security" },
 ];

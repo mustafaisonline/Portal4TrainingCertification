@@ -392,6 +392,18 @@ Each record: **Context · Decision/Recommendation · Alternatives considered · 
 > **Secrets:** live Stripe keys must never be handled by an agent or committed
 > to this repository. They belong in the deployment environment.
 >
+> **Founder input recorded 2026-09-20 — INFORMATIONAL; no status above is
+> changed by it.** While directing the checkout *wireframe* the founder said:
+> keep **all payment options** (not card-only) · show prices in **all
+> available currencies** and let the user choose · **no real payment yet** ·
+> a **simulated** confirmation is acceptable **inside the labelled demo
+> session**. These are inputs to the still-open rail decision, the payment-
+> method list and the currency/eligibility question — **not** approvals of
+> any of them. Full list of what this implies for the backend:
+> `docs/execution/ACCOUNT_AND_PAYMENT_REQUIREMENTS.md`. Note the wireframe now
+> contains a simulated payment success; that is confined to the demo session
+> (see `SITE_PAGES.md`) and does not weaken the prerequisites above.
+>
 > See `project-artifacts/mockup/docs/SITE_PAGES.md` "Payments — Stripe".
 
 **Context.** MYR + USD only. Local payment methods materially affect conversion in the primary market. The specifications name FPX/DuitNow but no provider.

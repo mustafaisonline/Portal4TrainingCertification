@@ -126,7 +126,7 @@ export function CourseCard({
       </dl>
       <Link
         href={`/courses/${course.slug}`}
-        className="text-body-sm font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
+        className="text-body-sm inline-block py-2 font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
       >
         Course details →
       </Link>

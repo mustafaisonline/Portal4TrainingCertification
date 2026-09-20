@@ -180,7 +180,7 @@ export default function TrainersPage() {
             variant="panel"
             className="flex flex-col border border-[var(--color-line)]"
           >
-            <div className="mb-5 flex gap-5">
+            <div className="mb-5 flex flex-col gap-4 min-[420px]:flex-row min-[420px]:gap-5">
               <div className="relative shrink-0">
                 <Image
                   src={assetPath(lead.photo)}
@@ -289,7 +289,7 @@ export default function TrainersPage() {
                 variant="panel"
                 className="flex flex-col border border-[var(--color-line)]"
               >
-                <div className="mb-5 flex gap-5">
+                <div className="mb-5 flex flex-col gap-4 min-[420px]:flex-row min-[420px]:gap-5">
                   <Image
                     src={assetPath(person.photo)}
                     alt={`Photograph of ${person.name}`}
@@ -298,7 +298,7 @@ export default function TrainersPage() {
                     className="h-32 w-32 shrink-0 rounded-[var(--radius-plate)] object-cover"
                   />
                   <div className="min-w-0">
-                    <h3 className="text-h1 mb-1">{person.name}</h3>
+                    <h3 className="text-h1 mb-1 break-words">{person.name}</h3>
                     <p className="text-label mb-2">{person.role}</p>
                     <div className="flex flex-col gap-1.5 text-body-sm text-[var(--color-ink-quiet)]">
                       <span className="flex items-center gap-2">

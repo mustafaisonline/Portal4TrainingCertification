@@ -50,7 +50,7 @@ export default function RegisterPage() {
           Already have an account?{" "}
           <Link
             href="/sign-in"
-            className="font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
+            className="inline-block py-2 font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
           >
             Sign in
           </Link>

@@ -143,7 +143,7 @@ export function DiagnosticQuestionCanvas({
           <button
             type="button"
             onClick={onCancel}
-            className="text-body-sm text-[var(--color-ink-faint)] underline underline-offset-4 hover:text-[var(--color-ink-quiet)]"
+            className="text-body-sm py-2 text-[var(--color-ink-faint)] underline underline-offset-4 hover:text-[var(--color-ink-quiet)]"
           >
             Cancel test
           </button>

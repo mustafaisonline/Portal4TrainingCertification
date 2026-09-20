@@ -36,7 +36,7 @@ export default function SignInPage() {
           New to the Academy?{" "}
           <Link
             href="/register"
-            className="font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
+            className="inline-block py-2 font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
           >
             Create an account
           </Link>

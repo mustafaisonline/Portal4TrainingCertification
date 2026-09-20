@@ -92,7 +92,7 @@ export default async function CourseDetailPage({
         <div className="relative mx-auto max-w-[1280px] px-6 py-14 lg:py-16">
           <Link
             href="/DataBlueprint-AIVibeCoding"
-            className="text-body-sm mb-9 inline-block text-[var(--color-ink-quiet)] underline underline-offset-4 hover:text-[var(--color-ink)]"
+            className="text-body-sm mb-7 inline-block py-2 text-[var(--color-ink-quiet)] underline underline-offset-4 hover:text-[var(--color-ink)]"
           >
             ← All courses
           </Link>

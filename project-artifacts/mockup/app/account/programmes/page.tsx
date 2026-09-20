@@ -1,70 +1,58 @@
+"use client";
+
 import Link from "next/link";
 import { SampleTag } from "@/components/account/SampleTag";
+import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { Chip } from "@/components/ui/Chip";
-import { registrations, withCourse } from "@/data/demoParticipant";
+import { PROGRAMME_TITLE, describeRegistration } from "@/data/demoParticipant";
+import { useDemoRegistrations } from "@/lib/demoRegistrations";
 
-/** L02 — My programmes (wireframe, 2026-09-20). Reframed by DR-02 from
- *  "My Learning" (in progress / not started) to programme PARTICIPATION:
- *  upcoming and completed live programmes. Sample data. */
-export default function MyProgrammesPage() {
-  const groups = [
-    { title: "Upcoming", items: registrations.filter((r) => r.status === "upcoming") },
-    { title: "Completed", items: registrations.filter((r) => r.status === "completed") },
-  ];
+/** L02 reframed — My registrations (wireframe, 2026-09-20). One programme, so
+ *  this lists the demo participant's registrations for its start dates —
+ *  empty until they register (lib/demoRegistrations.ts). Sample data. */
+export default function MyRegistrationsPage() {
+  const regs = useDemoRegistrations();
+  if (regs === null) return null;
   return (
     <div className="flex flex-col gap-8">
       <header>
-        <p className="text-label mb-2 text-[var(--color-primary)]">My programmes</p>
-        <h1 className="text-display">Your programmes</h1>
+        <p className="text-label mb-2 text-[var(--color-primary)]">My registrations</p>
+        <h1 className="text-display">Your registrations</h1>
       </header>
-      {groups.map((g) => (
-        <section key={g.title} aria-labelledby={`grp-${g.title}`}>
-          <h2 id={`grp-${g.title}`} className="text-h1 mb-4">
-            {g.title}
-          </h2>
-          {g.items.length === 0 ? (
-            <p className="text-body-sm text-[var(--color-ink-faint)]">Nothing here yet.</p>
-          ) : (
-            <ul className="flex flex-col gap-4">
-              {g.items.map((reg) => {
-                const { course } = withCourse(reg);
-                if (!course) return null;
-                return (
-                  <li key={reg.id}>
-                    <Link href={`/account/programmes/${reg.id}`} className="block">
-                      <Card variant="panel" className="p-5 transition-colors hover:border-[var(--color-primary)] sm:p-6">
-                        <div className="mb-3 flex flex-wrap items-center gap-2">
-                          <Chip tone={reg.status === "upcoming" ? "primary" : "neutral"}>
-                            {g.title}
-                          </Chip>
-                          <Chip>{course.level}</Chip>
-                          <Chip>{reg.format}</Chip>
-                        </div>
-                        <p className="text-body-lg font-medium">{course.title}</p>
-                        <p className="text-body-sm mt-1 text-[var(--color-ink-quiet)]">
-                          {reg.sessions.map((s) => s.date).join(" · ")}
-                          <SampleTag />
-                        </p>
-                      </Card>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-        </section>
-      ))}
-      <p className="text-body-sm text-[var(--color-ink-quiet)]">
-        Looking for another programme?{" "}
-        <Link
-          href="/DataBlueprint-AIVibeCoding"
-          className="text-[var(--color-primary)] underline underline-offset-4"
-        >
-          Explore the programme
-        </Link>
-        .
-      </p>
+      {regs.length === 0 ? (
+        <Card variant="panel" className="p-6 sm:p-8">
+          <h2 className="text-h1 mb-2">You are not registered yet</h2>
+          <p className="text-body-sm mb-5 text-[var(--color-ink-quiet)]">
+            Register for the programme to see your sessions, materials and
+            certificate here.
+          </p>
+          <Button href="/account/programme">View the programme</Button>
+        </Card>
+      ) : (
+        <ul className="flex flex-col gap-4">
+          {regs.map((reg) => {
+            const d = describeRegistration(reg);
+            return (
+              <li key={reg.orderId}>
+                <Link href={`/account/programmes/${reg.offeringId}`} className="block">
+                  <Card variant="panel" className="p-5 transition-colors hover:border-[var(--color-primary)] sm:p-6">
+                    <div className="mb-3 flex flex-wrap items-center gap-2">
+                      <Chip tone="primary">Registered</Chip>
+                      <Chip>{d.offering?.formatName}</Chip>
+                    </div>
+                    <p className="text-body-lg font-medium">{PROGRAMME_TITLE}</p>
+                    <p className="text-body-sm mt-1 text-[var(--color-ink-quiet)]">
+                      {d.offering?.dates}
+                      <SampleTag />
+                    </p>
+                  </Card>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </div>
   );
 }

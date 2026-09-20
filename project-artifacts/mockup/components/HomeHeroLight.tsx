@@ -333,7 +333,7 @@ export function HomeHero() {
           <h2 className="mb-10 max-w-[520px] text-3xl font-bold leading-tight text-[var(--color-ink)]">
             From learning to <span className="text-[var(--color-primary)]">real opportunities.</span>
           </h2>
-          <ol className="grid items-start gap-8 md:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] md:gap-4">
+          <ol className="grid items-start gap-8 sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1fr)] lg:gap-4">
             {journey.map((step, i) => (
               <li key={step.num} className="contents">
                 <div>
@@ -349,7 +349,7 @@ export function HomeHero() {
                   <p className="text-[13px] leading-snug text-[var(--color-ink-quiet)]">{step.body}</p>
                 </div>
                 {i < journey.length - 1 && (
-                  <div className="hidden items-center gap-1 self-start pt-[18px] text-[rgba(37,99,235,0.45)] md:flex" aria-hidden="true">
+                  <div className="hidden items-center gap-1 self-start pt-[18px] text-[rgba(37,99,235,0.45)] lg:flex" aria-hidden="true">
                     <span className="block w-8 border-t-2 border-dashed border-current lg:w-14" />
                     <IconArrow />
                   </div>

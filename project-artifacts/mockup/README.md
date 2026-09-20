@@ -34,6 +34,8 @@ are not connected.
 
 - Not the production Next.js application (there isn't one yet).
 - No database, no authentication, no server actions, no API routes.
+  (The demo sign-in and simulated checkout are labelled simulations in the
+  browser tab — see `lib/demoSession.ts`, `lib/demoRegistrations.ts`.)
 - No real business logic: no adaptive diagnostic scoring, no skill-graph
   computation, no credential rules. See [`docs/MOCK_DATA_REGISTER.md`](docs/MOCK_DATA_REGISTER.md)
   for exactly what is simulated and how.
@@ -51,9 +53,17 @@ Screens now built:
 | `/about-us` | Added 2026-09-02. Organisation identity, commitments, founder, honest current state — every claim traced to DR-02 |
 | `/contact-us` | Added 2026-09-02. Three enquiry routes, inert form, **genuine channels only** — no invented email or phone |
 | `/journey-placeholder` | Labelled next-stage placeholder |
+| `/sign-in`, `/register`, `/forgot-password`, `/sign-out` | Added 2026-09-20. Account wireframes. Register/forgot-password are inert; **sign-in is pre-filled with a public DEMO account** (a labelled simulation, not authentication) |
+| `/account/*` (`/account`, `/programme`, `/programmes`, `/orders`, `/skills`, `/profile`) | Added 2026-09-20. The signed-in area for the demo account — the single programme, registrations, orders, skills, profile. **Sample data, tagged "Sample"** |
+| `/verify`, `/verify/[id]`, `/account/certificate` (+ `/renew`) | Added 2026-09-20. **Certificate of Completion:** public search by ID or name, a unique shareable URL per certificate with live Active/Expired status, and the holder's certificate with yearly renewal (USD 10, simulated). **All records are sample and labelled.** Requirement + 15 open decisions: `docs/execution/COMPLETION_CERTIFICATE_REQUIREMENTS.md` |
+| `/checkout`, `/checkout/confirmation` | Added 2026-09-20. Register for the programme: choose start date, currency and payment method, then a **simulated** payment confirmation (demo session only; nothing is charged). See `docs/SITE_PAGES.md` and `docs/MOCK_DATA_REGISTER.md` |
 
 The whole portal is set in **IBM Plex** (adopted 2026-09-02, sans-led — the
 serif is reserved for the P01 hero and the masthead alone).
+
+**Starting backend work?** Read [`docs/execution/BACKEND_HANDOFF_INDEX.md`](../../docs/execution/BACKEND_HANDOFF_INDEX.md) first — it maps every wireframe screen to what is simulated, what the real build must do, and which decision blocks it.
+
+**Mobile:** audited at 320 / 375 / 768px on 2026-09-20 — see the "Mobile friendliness" section of [`docs/SITE_PAGES.md`](docs/SITE_PAGES.md) for what was found, fixed and *not* covered (no physical-device testing).
 
 See [`docs/DESIGN_FOUNDATION.md`](docs/DESIGN_FOUNDATION.md) for the
 token/component contract these screens are built on, and

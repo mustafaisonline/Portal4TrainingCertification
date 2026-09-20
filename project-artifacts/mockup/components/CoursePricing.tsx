@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Button } from "./ui/Button";
 import { Card } from "./ui/Card";
 import { Chip } from "./ui/Chip";
+import { RegisterInterestButton } from "./account/RegisterInterestButton";
 import {
   mentorshipRegionBadges,
   pricingRegions,
@@ -49,11 +50,17 @@ export function CoursePricing({
   packages,
   valueStack,
   valueStackTotal,
+  registrationFlow = false,
 }: {
   pricing?: Pricing;
   packages?: MentorshipPackage[];
   valueStack?: { item: string; value: string }[];
   valueStackTotal?: string;
+  /** 2026-09-20, founder direction: turn the main CTA into "sign in, then
+   *  register" (RegisterInterestButton) instead of an enquiry. Opt-in and
+   *  used ONLY for the flagship programme, because /checkout registers for
+   *  that one programme — the other courses' pages keep the enquiry route. */
+  registrationFlow?: boolean;
 }) {
   const [region, setRegion] = useState<RegionKey>("malaysia");
   const baseRegion =
@@ -133,11 +140,16 @@ export function CoursePricing({
                 discountLabel={activeRegion.discountLabel}
               />
               <div className="mt-7 flex flex-wrap gap-3">
-                <Button href="/contact-us">Register your interest</Button>
+                {registrationFlow ? (
+                  <RegisterInterestButton />
+                ) : (
+                  <Button href="/contact-us">Register your interest</Button>
+                )}
               </div>
               <p className="text-body-sm mt-4 text-[var(--color-ink-faint)]">
-                Enquiry-based — no online payment yet. We confirm dates and
-                invoicing with you directly.
+                {registrationFlow
+                  ? "Sign in to register. Wireframe: payment is simulated, and dates shown at registration are samples."
+                  : "Enquiry-based — no online payment yet. We confirm dates and invoicing with you directly."}
               </p>
             </Card>
 

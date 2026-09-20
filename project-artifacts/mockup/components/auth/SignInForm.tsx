@@ -2,12 +2,17 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
 import { Field, PasswordField, WireframeNote } from "@/components/auth/FormParts";
 import { Button } from "@/components/ui/Button";
 import { DEMO_EMAIL, DEMO_PASSWORD } from "@/lib/demoCredentials";
-import { credentialsMatch, startDemoSession } from "@/lib/demoSession";
+import {
+  consumeReturnTo,
+  credentialsMatch,
+  peekReturnTo,
+  startDemoSession,
+} from "@/lib/demoSession";
 
 /**
  * Sign-in form with a PRE-LOADED DEMO ACCOUNT — 2026-09-20, founder
@@ -27,13 +32,18 @@ export function SignInForm() {
   const [email, setEmail] = useState(DEMO_EMAIL);
   const [password, setPassword] = useState(DEMO_PASSWORD);
   const [error, setError] = useState(false);
+  // True when the visitor was sent here to register (return path pending).
+  const [toRegister, setToRegister] = useState(false);
+  useEffect(() => {
+    setToRegister(peekReturnTo() === "/checkout");
+  }, []);
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (credentialsMatch(email, password)) {
       setError(false);
       startDemoSession();
-      router.push("/account");
+      router.push(consumeReturnTo() ?? "/account");
     } else {
       setError(true);
     }
@@ -45,6 +55,11 @@ export function SignInForm() {
       onSubmit={onSubmit}
       className="flex flex-col gap-5"
     >
+      {toRegister && (
+        <p role="status" className="text-body-sm font-medium text-[var(--color-ink)]">
+          Sign in to continue to programme registration.
+        </p>
+      )}
       <div
         role="note"
         className="text-body-sm rounded-[var(--radius-plate)] bg-[var(--color-ground-tint)] px-3.5 py-3 text-[var(--color-ink-quiet)]"
@@ -79,7 +94,7 @@ export function SignInForm() {
         labelAside={
           <Link
             href="/forgot-password"
-            className="text-body-sm text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
+            className="text-body-sm inline-block py-2 text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
           >
             Forgot password?
           </Link>

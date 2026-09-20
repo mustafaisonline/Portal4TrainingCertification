@@ -71,7 +71,7 @@ export default function SkillsProfilePage() {
       <div className="flex flex-wrap items-center gap-4">
         <Link
           href="/diagnostic"
-          className="text-body-sm text-[var(--color-primary)] underline underline-offset-4"
+          className="text-body-sm inline-block py-2 text-[var(--color-primary)] underline underline-offset-4"
         >
           Take the diagnostic again
         </Link>

@@ -390,3 +390,61 @@ body {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
 }
+
+/*
+ * MOBILE USABILITY — 2026-09-20, founder request: "make sure the whole portal
+ * wireframe is mobile friendly, as I will be giving it to friends to check."
+ * An audit at 320/375px found no horizontal overflow on any route, but two
+ * systemic problems, fixed here in one place rather than per component:
+ *
+ * 1. FORM FIELDS UNDER 16px. iOS Safari zooms the whole page when a field
+ *    smaller than 16px is focused, and does not zoom back out — the most
+ *    common "this site feels broken on my iPhone" complaint. Fields here were
+ *    0.9375rem (15px). Raised to 16px on phones only; desktop is unchanged.
+ *    The selector's specificity beats the `.text-body-sm` utility on the
+ *    fields, so no per-component edits were needed (contact, sign-in,
+ *    register, forgot-password, checkout, profile all pick it up).
+ * 2. TAP TARGETS UNDER ~36px (region tabs, diagnostic tier/role chips,
+ *    "Cancel test", disclosure rows, the demo-session banner button). A
+ *    40px floor on phones/touch devices for buttons, tabs and disclosure
+ *    summaries. Standalone text links were padded individually.
+ */
+@media (max-width: 639px) {
+  input:not([type="radio"]):not([type="checkbox"]),
+  select:not([hidden]),
+  textarea:not([hidden]) {
+    font-size: 16px;
+  }
+}
+@media (max-width: 639px), (pointer: coarse) {
+  button:not(:disabled),
+  [role="tab"],
+  summary {
+    min-height: 40px;
+  }
+}
+
+/*
+ * PRINT — 2026-09-20. "Print / Save as PDF" on a certificate must output the
+ * certificate alone (no header, nav, footer or controls). Uses the browser's
+ * own print engine; no PDF library (new dependency) was added.
+ */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .print-area,
+  .print-area * {
+    visibility: visible;
+  }
+  .print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    box-shadow: none !important;
+  }
+  @page {
+    margin: 12mm;
+  }
+}

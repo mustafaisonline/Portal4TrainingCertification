@@ -83,7 +83,7 @@ export function TrainerCard({ person }: { person: Practitioner }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Read ${person.name}'s full profile (opens in a new tab)`}
-            className="text-body-sm font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
+            className="text-body-sm inline-block py-2 font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
           >
             Read the full profile ↗
           </a>

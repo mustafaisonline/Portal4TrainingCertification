@@ -128,8 +128,11 @@ indicative "from" price (Malaysia rate) on each programme card.
 
 ⚠ **These are time-limited launch offers and will date.** They live in
 `data/courses.ts`; changing them is a data edit with no component
-changes. **No checkout is implied** — payment is not built (ADR-014 /
-OQ-2), so every CTA remains an enquiry.
+changes. **No checkout is implied on the public site** — payment is not built
+(ADR-014 / OQ-2), so every public CTA remains an enquiry. (2026-09-20: a
+wireframe checkout with a *simulated* payment exists inside the signed-in
+demo session only — see `SITE_PAGES.md` "Registration & checkout". These
+same prices feed it, in all three currencies.)
 
 **On `HO-7`:** displaying these figures was the founder's explicit
 direction and supersedes the earlier hold. The Academy's own pricing

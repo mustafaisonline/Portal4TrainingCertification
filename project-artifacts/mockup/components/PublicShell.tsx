@@ -369,9 +369,22 @@ export function PublicShell({ children }: { children: ReactNode }) {
             </p>
           </div>
           <div>
-            <p className="text-label mb-3">Verify a credential</p>
+            {/* 2026-09-20, founder requirement: anyone can verify a
+                Certificate of COMPLETION at /verify (wireframe, sample
+                records). The earned-credential lookup (P16) is a different
+                thing and stays deferred, so its line is kept rather than
+                replaced. */}
+            <p className="text-label mb-3">Verify a certificate</p>
+            <p className="mb-3">
+              <Link
+                href="/verify"
+                className="underline-offset-4 hover:text-[var(--color-ink)] hover:underline"
+              >
+                Search completion certificates
+              </Link>
+            </p>
             <p className="text-[var(--color-ink-faint)]">
-              Public verification lookup
+              Credential verification
               <br />
               <span className="text-mono text-[0.7rem]">
                 available once the first credential is issued

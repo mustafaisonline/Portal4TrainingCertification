@@ -700,6 +700,7 @@ export default function CoursesPage() {
           higher up this same page. */}
       {flagship?.pricing && (
         <CoursePricing
+          registrationFlow
           pricing={flagship.pricing}
           valueStack={flagship.valueStack}
           valueStackTotal={flagship.valueStackTotal}

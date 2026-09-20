@@ -5,7 +5,7 @@ import type { ComponentPropsWithoutRef, FormEvent, ReactNode } from "react";
 
 /**
  * Shared building blocks for the account & payment WIREFRAMES
- * (/sign-in, /register, /forgot-password, /checkout) — added 2026-09-20,
+ * (/sign-in, /register, /forgot-password, /checkout, /account/profile) — added 2026-09-20,
  * founder direction: "introduce standard pages ... No backend
  * implementation yet."
  *
@@ -17,10 +17,15 @@ import type { ComponentPropsWithoutRef, FormEvent, ReactNode } from "react";
  *   including a password — into the address bar and browser history. That
  *   is a genuine leak even in a wireframe, so it is prevented, not merely
  *   left "not connected".
- * - The submit buttons on every page are genuinely `disabled`, the same
- *   convention as the Certificate-of-attempt button on /diagnostic/result.
- *   The alternative — a button that flashes "Signed in!" — would be a
- *   simulated success state, which this project prohibits.
+ * - The submit buttons on /register, /forgot-password and /account/profile
+ *   are genuinely `disabled`, the same convention as the
+ *   Certificate-of-attempt button on /diagnostic/result — a button that
+ *   flashes "Registered!" would be a simulated success state.
+ *   ⚠ EXCEPTIONS, added later on 2026-09-20 at the founder's explicit request
+ *   and confined to the labelled DEMO SESSION: the demo sign-in
+ *   (components/auth/SignInForm.tsx), the checkout "Pay" and the certificate
+ *   renewal "Pay" simulate success. Each says so on the page. See
+ *   lib/demoSession.ts and docs/execution/BACKEND_HANDOFF_INDEX.md.
  * - Nothing typed is read, stored or transmitted. These inputs are
  *   uncontrolled and unread; the only local state is the show/hide toggle
  *   on the password field, which is genuine UI behaviour.
@@ -115,7 +120,7 @@ export function PasswordField({
           type="button"
           onClick={() => setVisible((v) => !v)}
           aria-pressed={visible}
-          className="absolute inset-y-0 right-0 px-3.5 text-body-sm font-medium text-[var(--color-primary)] hover:text-[var(--color-primary-strong)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--color-primary)]"
+          className="absolute inset-y-0 right-0 min-w-[3.5rem] px-3.5 text-body-sm font-medium text-[var(--color-primary)] hover:text-[var(--color-primary-strong)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-[var(--color-primary)]"
         >
           {visible ? "Hide" : "Show"}
         </button>

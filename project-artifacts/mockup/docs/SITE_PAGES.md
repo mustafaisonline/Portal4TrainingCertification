@@ -37,6 +37,13 @@ the nav entry moved, not the page or its other entry points.
 **Later the same day:** **HRD Corp** moved to position 2, right after Home
 — founder direction, giving it the nav's second-highest prominence.
 
+> **⚠ Superseded — record corrected 2026-09-20.** `components/PublicShell.tsx`
+> carries a comment that the header **"Explore courses" CTA was removed
+> (dated 2026-09-07, founder direction)**, from both the header and the mobile
+> menu; the header now carries no CTA, and "Programme" in the nav reaches the
+> same page. This file was not updated at the time. The paragraph below is
+> retained as history.
+
 The header CTA reads **"Explore courses"**. The instruction said "Explore
 Course" (singular); it links to a list of seven, so the plural is used — a
 grammatical error on the most prominent button in the portal was not worth
@@ -59,7 +66,7 @@ have orphaned the menu item, so the content moved to its own page.
 | `/diagnostic`, `/diagnostic/result` | Capability assessment (P05/P06) | Pre-DR-02 baseline. `/diagnostic` gained an idle landing stage 2026-09-06 (heading, tier selector, Start button — see `docs/MOCK_DATA_REGISTER.md`), shared with the homepage's embedded diagnostic via `DiagnosticStartCard` so the two never drift apart |
 | `/journey-placeholder` | Labelled next-stage placeholder | Placeholder, labelled |
 | `/hrd-corp` | What HRD Corp is, and the honest status of organisational registration and course claimability | Real, created 2026-09-06 by founder direction. **In primary nav** (position 2, right after Home — replacing Contact Us, same day, see above), and also reached via the homepage hero's floating "03" card. The trainer's own accreditation display (badge, verify link) moved to `/trainers` the same day — this page still links there for it. Every other page (courses, certifications, course detail, about-us) still carries nothing HRD-Corp-related, by founder direction. See [`HRD_CORP.md`](HRD_CORP.md) |
-| `/sign-in`, `/register`, `/forgot-password`, `/sign-out`, `/checkout` | **Account & payment wireframes — added 2026-09-20, founder direction** ("standard pages … No backend implementation yet"). Spec screens `S01` (sign in, incl. recovery), `S02` (create account) and the pay step of `K03`; sign-out has no spec screen (only an avatar-menu item). Reachable from the header's "Sign in" and a reviewer index in the footer's bottom strip | **Wireframe — inert by design, except the labelled demo sign-in** (see "Signed-in wireframes" below). Register / forgot-password / checkout buttons are genuinely disabled; forms cannot submit (Enter is swallowed so typed values never reach the URL); each page carries a "Wireframe" note saying nothing is connected. See "Account & payment wireframes" below |
+| `/sign-in`, `/register`, `/forgot-password`, `/sign-out`, `/checkout`, `/checkout/confirmation` | **Account & payment wireframes — added 2026-09-20, founder direction** ("standard pages … No backend implementation yet"). Spec screens `S01` (sign in, incl. recovery), `S02` (create account) and the pay step of `K03`; sign-out has no spec screen (only an avatar-menu item). Reachable from the header's "Sign in" and a reviewer index in the footer's bottom strip | **Wireframe — inert by design, except the labelled demo sign-in** (see "Signed-in wireframes" below). Register / forgot-password / profile buttons are genuinely disabled; the **checkout and renewal "Pay" buttons are enabled only inside the demo session and simulate a payment** (see "Registration & checkout"); forms cannot submit (Enter is swallowed so typed values never reach the URL); each page carries a "Wireframe" note saying nothing is connected. See "Account & payment wireframes" below |
 
 ## ⚠ Open gap on `/contact-us` — there is no business email address
 
@@ -103,10 +110,10 @@ not exist is a small dishonesty that costs trust when discovered.
 
 | Page | Blocked on |
 |---|---|
-| **Verify a credential** (public lookup) | No credential has been issued. `ADR-018`/`ADR-039`. The footer says "available once the first credential is issued" |
+| **Verify a credential** (public lookup of the *earned credential*) | No credential has been issued. `ADR-018`/`ADR-039`. The footer still says "available once the first credential is issued". **Not to be confused with** the Certificate-of-Completion verification below, which is a wireframe (2026-09-20) |
 | **Schedule / upcoming dates** | State A — no confirmed public inventory. Inventing dates is prohibited (`HD-7`, `HO-2`) |
 | **Sign in / account** | *Wireframe drawn 2026-09-20* (see Built). Working sign-in still needs authentication (ADR-006, pending approval) |
-| **Checkout** | *Wireframe drawn 2026-09-20* (see Built). A working checkout is still blocked — see the payments record below |
+| **Checkout** | *Wireframe drawn 2026-09-20, with a SIMULATED payment inside the demo session* (see Built and "Registration & checkout"). A working checkout is still blocked — see the payments record below |
 
 ### Deliberately not added
 
@@ -119,6 +126,102 @@ not exist is a small dishonesty that costs trust when discovered.
   open-position signal.
 - **FAQ** — every genuinely frequent question is currently answered on the
   page where it arises. An FAQ assembled now would be inventing policy.
+
+---
+
+> **Before any backend work:** the master cross-reference of every screen, its
+> simulations, backend requirements and blocking decisions is
+> [`../../../docs/execution/BACKEND_HANDOFF_INDEX.md`](../../../docs/execution/BACKEND_HANDOFF_INDEX.md).
+
+## Certificate of Completion & public verification (2026-09-20)
+
+Founder requirement: on completing the training a participant gets a
+certificate with a **unique ID** that **expires every year**, kept active by an
+**annual fee (USD 10, changeable)**; the certificate is shown to the holder;
+**anyone** can search for holders **by name or ID**; each certificate has a
+**unique URL** showing the certificate and its **active / expired** status.
+
+The requirement was polished to best practice, with proposed defaults and 15
+open decisions, in
+[`../../../docs/execution/COMPLETION_CERTIFICATE_REQUIREMENTS.md`](../../../docs/execution/COMPLETION_CERTIFICATE_REQUIREMENTS.md)
+— read it before changing any of this. Named **"Certificate of Completion"**,
+not "Certification", and stated on the document to be **not the earned
+credential**, because `DR-02` §6 explicitly rejects "attend training → receive
+certificate" as the credential (decision D1 — for the founder to confirm).
+
+| Route | What it does |
+|---|---|
+| `/verify` | **Public search** by certificate ID (exact) or holder name (listed holders only, ≥ 3 characters, capped at 10). Linked from the footer ("Verify a certificate") |
+| `/verify/[id]` | **The certificate's unique, shareable URL.** Shows the certificate, the holder, dates and a live **Active / Renewal due / Expired** status. Expired certificates stay verifiable as Expired |
+| `/account/certificate` | The holder's certificate: live status, **print / save as PDF**, copy link, **public-listing consent**, renewal (fee shown), history |
+| `/account/certificate/renew` | Renewal payment — **simulated** (same rules as checkout) |
+
+**All records are invented and unmistakably labelled** — a diagonal SAMPLE
+watermark, a "Sample records" banner, obviously fictional names, and IDs that
+contain `0`/`1` (which the real ID alphabet never produces, so they cannot pass
+as real). Four public samples cover every state: **Active**, **Expired**,
+**Renewal due and unlisted** (findable by ID, invisible to name search), and a
+second Active. Their dates are relative to today so no example drifts.
+
+**To see the whole loop:** sign in → register (checkout) → *Certificate* →
+"Simulate completing the programme" → use the demo buttons to jump to *renewal
+due* / *expired* → renew → then search for "Demo Participant" on `/verify` and
+switch the listing toggle off to watch the name disappear while the ID still
+works.
+
+**Not built, deliberately:** a real QR code (needs an encoder library or
+server rendering — a new-dependency approval); PDF generation beyond the
+browser's own Print/Save-as-PDF; revocation, reminders and email, holder
+corrections, employer/corporate views (all listed as decisions or later).
+The wireframe defaults the listing toggle **on** because the founder wants a
+public directory; the recommended production default is opt-in.
+
+---
+
+## Mobile friendliness (audit 2026-09-20)
+
+Founder request: the whole portal wireframe must be mobile friendly — it is
+being handed to friends to review on their phones.
+
+**Method.** Every route (public, auth, signed-in, checkout) was loaded at
+**320px, 375px and 768px** (and spot-checked at 600/820/1024/1280) and probed
+for: horizontal overflow, tap targets under ~38px, standalone links under
+~28px tall, and form fields under 16px. Results were then checked by eye in
+light and dark on a 375px screen (sign-in, checkout, programme, dashboard,
+mobile menu).
+
+**Found and fixed**
+
+| Problem | Where | Fix |
+|---|---|---|
+| Form fields were 15px, so **iOS Safari zooms the page in on focus** and does not zoom back | Every form (contact, sign-in, register, forgot-password, checkout, profile) | One rule in `app/globals.css`: fields are 16px below `sm`; desktop unchanged |
+| Tap targets 24–35px | Region price tabs, diagnostic tier/role chips, "Cancel test", curriculum rows, the demo-banner button | `globals.css`: 40px minimum height for buttons, tabs and `<summary>` on phones/touch |
+| Text links only 19–24px tall | "Forgot password?", "Create an account", "Course details →", "← All courses", "Read the full profile", and several account-area links | Vertical padding added to each |
+| **Trainer name squeezed into a 74px column** beside the photo (1px page overflow) at 320px | `/trainers` cards | Photo stacks above the text under 420px |
+| **Homepage scrolled sideways by ~50px at tablet width** (768/820px): the four-column "learning journey" row cannot fit | `/` | Two columns on tablet, four from `lg` (1024px) |
+| Feature cards wasted width on phones (32px padding) | `/account`, `/account/programme`, `/checkout` | 20px on phones |
+
+**Files changed for mobile:** `app/globals.css` (16px fields, 40px targets),
+`components/HomeHeroLight.tsx` (journey row: 2 columns on tablet, 4 from `lg`),
+`components/CourseCard.tsx`, `components/TrainerCard.tsx`,
+`app/trainers/page.tsx` (photo stacks under 420px), `app/courses/[slug]/page.tsx`,
+`components/signature/DiagnosticQuestionCanvas.tsx` (link padding), and the new
+account screens (`components/account/AccountFrame.tsx`, `AccountMenu.tsx`,
+`ParticipationView.tsx`, feature-card padding).
+
+**Result.** No horizontal overflow on any route at 320, 375, 600, 768, 820,
+1024 or 1280px; no under-sized form fields, buttons or standalone links.
+
+**Not covered — say so honestly.** Tested in a desktop-app browser pane
+emulating phone sizes, **not on physical devices** or in Safari/Firefox.
+Landscape orientation and OS text-size settings were not tested. Contrast was
+not re-audited. The Next.js dev-tools badge (the round "N" bottom-left) that
+appears in `next dev` screenshots is not part of the site and is absent from
+the published build.
+
+**Known, left as is:** on phones the checkout's order summary sits *below* the
+form (it is a side column on desktop); the Pay button carries the total so the
+price is still visible at the point of paying.
 
 ---
 
@@ -136,20 +239,19 @@ undecided product/architecture question, not an oversight:
 | Sign in | Email, password (show/hide), forgot-password link, create-account link | Social providers, "remember me"/session length, MFA, org SSO — ADR-006 (auth) is pending approval |
 | Register | Name, email, country, password + confirm | Target role / goals / time budget (that is onboarding, `S03`); phone, DOB, org, ID — no approved source requires them; email verification (`S04`) — needs ADR-015; password rules — ADR-006 |
 | Forgot password | Request step only | The "check your email" and "set new password" steps — the first would be a simulated success with nothing sent; both need ADR-015 / ADR-006 |
-| Sign out | The signed-out landing screen | Nothing links here in the product until a signed-in avatar menu exists; it is a static layout and says nothing was signed out |
-| Checkout | Details, a dashed slot marking where Stripe's Payment Element will mount, order summary, disabled Pay button | **Card fields** (card data is typed into Stripe's own fields, never ours); payment-method list (Stripe account config + open Malaysian rail, ADR-014); tax line (`OQ-9`); a ticked consent (Terms and refund policy do not exist) |
+| Sign out | The signed-out landing screen; reached from the avatar menu and clears the demo session | A real sign-out (server-side session invalidation) — needs authentication |
+| Checkout | See "Registration & checkout" below — reworked the same day | **Card fields** (card data is typed into Stripe's own fields, never ours); a final payment-method list (Stripe account config + open Malaysian rail, ADR-014); tax line (`OQ-9`); a ticked consent (Terms and refund policy do not exist) |
 
 **Consent checkboxes are drawn disabled**, with the reason beside them
 (Terms / Privacy / Refund policy unpublished — see "Blocked on legal
 drafting" above). An enabled tick agreeing to a document that does not exist
 would be a fake consent record.
 
-**Checkout's line item** is real data (`The Data Blueprint`, Malaysia
-launch price, from `data/courses.ts`), but *which* programme is shown is not
-wired — there is no cart. `HO-10` (is individual online payment offered at
-all?) is still open, so this screen is a proposal, not a commitment.
+**Register, forgot-password and profile stay inert.** Only the demo
+sign-in and the checkout's Pay button do anything, and only inside the demo
+session.
 
-### Signed-in wireframes (`/account/*`) — added 2026-09-20
+### Signed-in wireframes (`/account/*`) — added 2026-09-20, reworked same day
 
 Founder direction: pre-load a dummy username and password so the wireframe
 shows how the portal behaves after sign-in. The `/sign-in` form is
@@ -158,6 +260,26 @@ opens the signed-in area. This is a **labelled simulation, not
 authentication** — see `lib/demoSession.ts` — with a persistent "Demo
 session — sample data" banner throughout.
 
+**One programme.** Founder direction, 2026-09-20: "Show only one programme."
+The signed-in area shows the single flagship — the same entry the public
+`/DataBlueprint-AIVibeCoding` page reads (`ai-powered-product-development`,
+displayed as "Data Blueprint & AI / Vibe Coding"; the title and curriculum
+are still PLACEHOLDERS pending the founder's real curriculum). The seven-
+course catalogue is not shown. **Public-page CTA, changed 2026-09-20 (founder direction):** the "Register
+your interest" button in the Investment section of `/DataBlueprint-AIVibeCoding`
+now checks the demo session **at click time** — *not signed in* → the sign-in
+page (with "Sign in to continue to programme registration."), and sign-in then
+returns the visitor to `/checkout`; *already signed in* → straight to
+`/checkout`. Implemented as an opt-in `registrationFlow` prop on
+`components/CoursePricing.tsx` (button: `components/account/RegisterInterestButton.tsx`).
+**Only this page opts in**, because `/checkout` registers for the single
+flagship programme. The other course pages (`/courses/<slug>`, including the
+flagship's own `/courses/ai-powered-product-development`) and the pricing
+component's "Enquire about this package" buttons still route to `/contact-us`.
+Other public copy (About Us, the course-detail template) still says there is
+no online payment — left unchanged; reconcile when A4 in the requirements
+record is decided.
+
 Screen set chosen from the approved specs, following DR-02 §3 (the portal
 *supports* live delivery; it is not where learning happens) and its priority
 order — discovery → scheduling/commercial → evidence → cohort operations →
@@ -165,9 +287,10 @@ supporting materials last:
 
 | Route | Spec | Notes |
 |---|---|---|
-| `/account` | `L01` Dashboard | Led by the **next session**, not a "Continue" card (DR-02 reframing) |
-| `/account/programmes`, `/account/programmes/[id]` | `L02` reframed | Programme *participation*: sessions, joining info, supporting materials, certificate of participation |
-| `/account/orders` | `S07` | Where `/checkout` leads; real prices, sample order data |
+| `/account` | `L01` Dashboard | Two states: **not registered** (led by an invitation to view/register) and **registered** (led by the **next session**, not a "Continue" card — DR-02 reframing) |
+| `/account/programme` | `P10` Programme Detail, signed-in | The one programme: real outcomes, "included" list, curriculum, the **three real delivery formats**, and the **published price in all three currencies**; "Register" CTA |
+| `/account/programmes`, `/account/programmes/[id]` | `L02` reframed | **My registrations** (empty until the participant registers) and participation for one start date: schedule, joining info, included materials, certificate of participation. `[id]` is a sample start-date id (static-export requirement) |
+| `/account/orders` | `S07` | One row per simulated registration; real prices in the chosen currency, sample order data |
 | `/account/skills` | `L05` | Illustrative diagnostic fixture; says so |
 | `/account/profile` | `S06` | Details, change password, PDPA export/delete — all disabled |
 
@@ -180,9 +303,33 @@ Certification is paused, founder direction 2026-09-06; gamification.
 **Sample dates are illustrative, by founder choice.** Offered the honest
 alternative ("Date to be announced", per DR-02 §4.1) he chose labelled
 illustrative dates. Every invented value carries a "Sample" chip. Recorded
-as an explicit override in `docs/MOCK_DATA_REGISTER.md`.
+as an explicit override in `docs/MOCK_DATA_REGISTER.md`. The three start
+dates map one-to-one onto the programme's real delivery formats (Bootcamp /
+Accelerator / Mastery); delivery mode and venue are stated by no source, so
+none is shown.
 
-**What it takes to make these real** is recorded in [`../../../docs/execution/ACCOUNT_AND_PAYMENT_REQUIREMENTS.md`](../../../docs/execution/ACCOUNT_AND_PAYMENT_REQUIREMENTS.md).
+### Registration & checkout (`/checkout`, `/checkout/confirmation`) — 2026-09-20
+
+Founder decisions, 2026-09-20 (recorded so the backend build misses none):
+
+| Decision | What the wireframe does |
+|---|---|
+| Sign in, then register | A signed-out visitor at `/checkout` sees a sign-in gate; sign-in returns them to checkout (return path in `sessionStorage`) |
+| Register = check out the programme | Five steps: **start date → currency → details → payment method → confirm**, with an order summary that updates live |
+| **Prices in every currency; the user chooses** | Malaysia (RM) · Pakistan (Rs.) · International (USD), each with its published launch price. ⚠ The Pakistan price is a **regional scholarship** (70% off) and the International a 10% offer; **no eligibility rule exists**, so offering all three to everyone is a founder-directed simplification, logged as an open business rule in the requirements record |
+| **Keep all payment options** (not card-only) | Credit or debit card · Online banking · E-wallet — **generic, provisional labels**; the real list depends on the Stripe account and the open Malaysian rail (ADR-014) |
+| **Simulate a successful payment in the demo session** | "Pay" adds a sample registration and shows `/checkout/confirmation`, with a "Demo — no payment was taken" banner. Enabled **only** inside the demo session |
+| No real payment yet | No Stripe.js, keys, dependency or network call |
+
+What is deliberately still not drawn: card `<input>`s (the card panel is a
+non-interactive picture of where Stripe's own fields will appear — never a
+place to type a card number); tax; a ticked consent (the tick stays disabled —
+Terms and refund policy do not exist; the demo does **not** gate Pay on it,
+the real product must). A registration that already exists for a start date
+disables Pay for that date.
+
+**What it takes to make these real** is recorded in [`../../../docs/execution/ACCOUNT_AND_PAYMENT_REQUIREMENTS.md`](../../../docs/execution/ACCOUNT_AND_PAYMENT_REQUIREMENTS.md), including an inventory of every demo file and what replaces it.
+
 
 **This does not implement Stripe.** No Stripe.js, no keys, no dependency was
 added. The Payments section below still stands as the record of what real
@@ -209,7 +356,11 @@ sitting at *PENDING HUMAN APPROVAL*.
    demands real persistence, which the Service Restart Test would fail today.
 3. **A payment flow in a mockup would be a simulated success state** —
    explicitly prohibited. A fake "payment received" is the worst possible thing
-   to mock.
+   to mock. **⚠ Superseded in part, 2026-09-20, by explicit founder
+   direction:** a simulated confirmation now exists, confined to the labelled
+   demo session (`/checkout/confirmation`, `lib/demoRegistrations.ts`), with a
+   "Demo — no payment was taken" banner and never reachable signed-out. The
+   prohibition still stands for anything outside that demo.
 4. **Refund policy is unresolved** (`OQ-2`, `OQ-9`) and is a prerequisite.
 5. **Secrets.** Live Stripe keys must never be handled by an agent or
    committed. They belong in the deployment environment.

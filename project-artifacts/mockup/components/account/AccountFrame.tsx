@@ -3,9 +3,8 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import type { ReactNode } from "react";
-import { Button } from "@/components/ui/Button";
-import { Card } from "@/components/ui/Card";
 import { demoParticipant } from "@/data/demoParticipant";
+import { SignInGate } from "./SignInGate";
 import { endDemoSession, useDemoSession } from "@/lib/demoSession";
 
 /**
@@ -13,16 +12,17 @@ import { endDemoSession, useDemoSession } from "@/lib/demoSession";
  * scrolling tab row on mobile, and a persistent banner saying this is a
  * demo session over sample data.
  *
- * The "not signed in" branch is a client-side check on the demo flag
- * (lib/demoSession.ts) — NOT access control. The page files are static and
- * fetchable by anyone; the real product enforces access on the server.
- * A card with a sign-in link is used rather than a redirect so a
- * signed-out visitor sees why, and so there is no redirect flash.
+ * The "not signed in" branch (SignInGate) is a client-side check on the
+ * demo flag (lib/demoSession.ts) — NOT access control. The page files are
+ * static and fetchable by anyone; the real product enforces access on the
+ * server.
  */
 
 const items = [
   { href: "/account", label: "Dashboard" },
-  { href: "/account/programmes", label: "My programmes" },
+  { href: "/account/programme", label: "Programme" },
+  { href: "/account/programmes", label: "My registrations" },
+  { href: "/account/certificate", label: "Certificate" },
   { href: "/account/orders", label: "Orders & receipts" },
   { href: "/account/skills", label: "Skills profile" },
   { href: "/account/profile", label: "Profile & security" },
@@ -30,7 +30,11 @@ const items = [
 
 function isActive(pathname: string, href: string) {
   const path = pathname.replace(/\/+$/, "") || "/";
-  return href === "/account" ? path === href : path === href || path.startsWith(`${href}/`);
+  // Exact match for "/account" and "/account/programme" — the latter is a
+  // string prefix of "/account/programmes", which is a different screen.
+  return href === "/account" || href === "/account/programme"
+    ? path === href
+    : path === href || path.startsWith(`${href}/`);
 }
 
 export function AccountFrame({ children }: { children: ReactNode }) {
@@ -44,19 +48,10 @@ export function AccountFrame({ children }: { children: ReactNode }) {
 
   if (state === "out") {
     return (
-      <section className="bg-[var(--color-ground-tint)]">
-        <div className="mx-auto max-w-[480px] px-4 py-20 sm:px-6">
-          <Card variant="panel" className="p-6 text-center sm:p-8">
-            <h1 className="text-h1 mb-3">You are not signed in</h1>
-            <p className="text-body-sm mb-6 text-[var(--color-ink-quiet)]">
-              Sign in to see your programmes, orders and profile. This
-              wireframe has a demo account — its details are pre-filled on the
-              sign-in page.
-            </p>
-            <Button href="/sign-in">Go to sign in</Button>
-          </Card>
-        </div>
-      </section>
+      <SignInGate
+        title="You are not signed in"
+        body="Sign in to see the programme, your registration, orders and profile. This wireframe has a demo account — its details are pre-filled on the sign-in page."
+      />
     );
   }
 

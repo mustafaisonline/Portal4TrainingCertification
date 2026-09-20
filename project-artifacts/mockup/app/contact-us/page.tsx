@@ -65,7 +65,8 @@ export default function ContactPage() {
       {/* ===== Hero =====
           `.night` removed, 2026-09-06 light-theme propagation — see
           components/HomeHeroLight.tsx's header comment. */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#eef2fc] to-[var(--color-ground)]">
+      {/* 2026-09-07 dark-identity redesign (whole-portal scope): `night hero-band` restores the dark navy hero (see app/globals.css). Any comment above saying `.night` was removed is superseded history, kept deliberately. */}
+      <section className="night hero-band relative overflow-hidden">
         <div className="relative mx-auto max-w-[1280px] px-6 py-16 lg:py-20">
           <p className="text-label mb-4 text-[var(--color-primary)]">
             Contact us

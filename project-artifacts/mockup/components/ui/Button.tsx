@@ -8,7 +8,11 @@ const base =
 
 const variants: Record<ButtonVariant, string> = {
   primary:
-    "bg-[var(--color-primary)] text-[var(--color-primary-ink)] hover:bg-[var(--color-primary-strong)]",
+    // --color-action*, not --color-primary*: inside a dark `.night` band the
+    // two diverge (readable-on-navy text blue vs. AA-safe button fill) —
+    // see app/globals.css. Outside `.night` they are identical, so light
+    // surfaces are unchanged. (2026-09-07, dark-identity redesign.)
+    "bg-[var(--color-action)] text-[var(--color-action-ink)] hover:bg-[var(--color-action-strong)]",
   secondary:
     "bg-transparent text-[var(--color-ink)] border border-[var(--color-line-strong)] hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]",
   text: "bg-transparent text-[var(--color-primary)] px-1 py-1 underline underline-offset-4 hover:text-[var(--color-primary-strong)]",

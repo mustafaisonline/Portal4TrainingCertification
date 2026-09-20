@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import type { ReactNode } from "react";
 import { Button } from "./ui/Button";
@@ -30,6 +31,24 @@ import { ThemeToggle } from "./ThemeToggle";
  * here changed: nav items, the logo mark and copy are untouched, and
  * every `var(--color-*)` reference below simply now resolves through the
  * plain (light) `:root` tokens instead of `.night`'s dark overrides.
+ *
+ * DARK-IDENTITY REDESIGN, 2026-09-07, founder direction, from a supplied
+ * reference image + brief (WHOLE-PORTAL scope, chosen explicitly): header
+ * and footer are `.night` again (deep navy, see app/globals.css), sticky
+ * header now has an ACTIVE-PAGE state (`aria-current="page"` + a cyan
+ * underline) via `usePathname`. This reverses the 2026-09-06 light
+ * header/footer above — kept as history, not deleted. Nav labels, order
+ * and destinations are UNCHANGED (founder chose "keep current nav,
+ * restyle only": the reference's "For Organisations"/"Resources"/search
+ * have no pages to go to, so none were added). The wordmark is now the
+ * sans (Plus Jakarta Sans, 700) rather than the serif.
+ *
+ * BREAKPOINT MOVED lg → xl, 2026-09-07 (same redesign): Plus Jakarta Sans
+ * is wider than IBM Plex was, and at exactly 1024px the six inline nav
+ * items plus wordmark, Sign in and CTA no longer fit on one row (measured:
+ * header grew to 110px tall with a three-line wordmark). The inline nav now
+ * appears from 1280px; below that the hamburger panel carries the same
+ * links. Wordmark/nav are also `whitespace-nowrap`.
  *
  * MOBILE MENU FIXED — 2026-09-07, founder-reported bug ("when I am opening
  * our portal on mobile its menu is not possible"). The primary `<nav>`
@@ -117,21 +136,34 @@ const navItems = [
   { href: "/about-us", label: "About Us" },
 ];
 
+/** Active-page test for the nav. Trailing slashes are normalised (the Pages
+ *  export uses `trailingSlash`), and `/courses/<slug>` counts as
+ *  "Programme" since that hub links straight into those detail pages. */
+function isActive(pathname: string, href: string) {
+  const path = pathname.replace(/\/+$/, "") || "/";
+  if (href === "/") return path === "/";
+  if (href === "/DataBlueprint-AIVibeCoding") {
+    return path === href || path.startsWith("/courses");
+  }
+  return path === href || path.startsWith(`${href}/`);
+}
+
 export function PublicShell({ children }: { children: ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname() ?? "/";
   return (
     <div className="flex min-h-dvh flex-col">
-      <header className="sticky top-0 z-10 border-b border-[var(--color-line)] bg-[var(--color-ground-raised)]/90 backdrop-blur">
+      <header className="night sticky top-0 z-10 border-b border-[var(--color-line)] bg-[var(--color-ground)]/95 backdrop-blur">
         <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
           <Link href="/" className="flex min-w-0 items-center gap-3">
             <LogoMark />
             <span className="leading-tight">
               {/* `.wordmark` (globals.css) owns the family, size, weight
                   and tracking — one place, since the masthead appears on
-                  every page. Set in the serif, which the type scale now
-                  reserves for this and the P01 hero alone. */}
-              <span className="wordmark block">Data &amp; AI Academy</span>
-              <span className="text-label hidden text-[0.6rem] sm:block">
+                  every page. Plus Jakarta Sans 700 since 2026-09-07 (was the
+                  serif). */}
+              <span className="wordmark block sm:whitespace-nowrap">Data &amp; AI Academy</span>
+              <span className="text-label hidden whitespace-nowrap text-[0.6rem] sm:block">
                 Training &amp; certification
               </span>
             </span>
@@ -184,13 +216,25 @@ export function PublicShell({ children }: { children: ReactNode }) {
               that the diagnostic has this permanent nav entry instead. */}
           <nav
             aria-label="Primary"
-            className="hidden items-center gap-7 text-body-sm text-[var(--color-ink-quiet)] lg:flex"
+            className="hidden items-center gap-7 whitespace-nowrap text-body-sm text-[var(--color-ink-quiet)] xl:flex"
           >
-            {navItems.map((item) => (
-              <Link key={item.href} href={item.href} className="hover:text-[var(--color-ink)]">
-                {item.label}
-              </Link>
-            ))}
+            {navItems.map((item) => {
+              const active = isActive(pathname, item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  aria-current={active ? "page" : undefined}
+                  className={`border-b-2 py-1 transition-colors hover:text-[var(--color-ink)] ${
+                    active
+                      ? "border-[var(--color-cyan)] font-medium text-[var(--color-ink)]"
+                      : "border-transparent"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
           </nav>
           <div className="flex shrink-0 items-center gap-3">
             <span className="hidden sm:inline-flex">
@@ -198,7 +242,14 @@ export function PublicShell({ children }: { children: ReactNode }) {
                 Sign in
               </Button>
             </span>
-            <Button href="/DataBlueprint-AIVibeCoding">Explore courses</Button>
+            {/* Header CTA shows from `sm` up; below that the same CTA lives at
+                the top of the mobile menu panel instead (Plus Jakarta Sans's
+                wider wordmark no longer leaves room for it beside the logo
+                at 375px — measured overlap, 2026-09-07). Same destination,
+                same label, still exactly one CTA per viewport. */}
+            <span className="hidden sm:inline-flex">
+              <Button href="/DataBlueprint-AIVibeCoding">Explore courses</Button>
+            </span>
             {/* Theme toggle — visible at every width (not just desktop, not
                 buried in the mobile panel): see components/ThemeToggle.tsx's
                 header comment for why this moved here from a
@@ -213,7 +264,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
               aria-expanded={menuOpen}
               aria-controls="mobile-nav"
               aria-label={menuOpen ? "Close menu" : "Open menu"}
-              className="grid h-10 w-10 shrink-0 place-items-center rounded-[var(--radius-plate)] border border-[var(--color-line-strong)] text-[var(--color-ink)] lg:hidden"
+              className="grid h-10 w-10 shrink-0 place-items-center rounded-[var(--radius-plate)] border border-[var(--color-line-strong)] text-[var(--color-ink)] xl:hidden"
             >
               {menuOpen ? <IconClose /> : <IconMenu />}
             </button>
@@ -225,20 +276,31 @@ export function PublicShell({ children }: { children: ReactNode }) {
             panel on click, in case client-side navigation doesn't unmount
             this component (e.g. same-page anchors). */}
         {menuOpen && (
-          <div id="mobile-nav" className="border-t border-[var(--color-line)] px-4 pb-4 pt-2 sm:px-6 lg:hidden">
+          <div id="mobile-nav" className="border-t border-[var(--color-line)] px-4 pb-4 pt-2 sm:px-6 xl:hidden">
             <nav aria-label="Primary, mobile" className="flex flex-col">
-              {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="rounded-[var(--radius-plate)] px-2 py-3 text-body-sm text-[var(--color-ink-quiet)] hover:bg-[var(--color-ground)] hover:text-[var(--color-ink)]"
-                >
-                  {item.label}
-                </Link>
-              ))}
+              {navItems.map((item) => {
+                const active = isActive(pathname, item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMenuOpen(false)}
+                    aria-current={active ? "page" : undefined}
+                    className={`rounded-[var(--radius-plate)] px-2 py-3 text-body-sm hover:bg-[var(--color-ground-raised)] hover:text-[var(--color-ink)] ${
+                      active
+                        ? "bg-[var(--color-ground-raised)] font-medium text-[var(--color-ink)]"
+                        : "text-[var(--color-ink-quiet)]"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
             </nav>
             <div className="mt-2 flex flex-col gap-3 border-t border-[var(--color-line)] pt-4 sm:hidden">
+              <Button href="/DataBlueprint-AIVibeCoding" onClick={() => setMenuOpen(false)}>
+                Explore courses
+              </Button>
               <Button variant="secondary" href="#" onClick={() => setMenuOpen(false)}>
                 Sign in
               </Button>
@@ -247,7 +309,16 @@ export function PublicShell({ children }: { children: ReactNode }) {
         )}
       </header>
       <main className="flex-1">{children}</main>
-      <footer className="border-t border-[var(--color-line)] bg-[var(--color-ground-raised)]">
+      {/* Footer back to `.night` (deep navy) — 2026-09-07, see this file's
+          header comment. Content unchanged. */}
+      <footer
+        className="night border-t border-[var(--color-line)]"
+        // Inline, not a bg-* utility: `.night` sets `background` in
+        // unlayered CSS, which outranks any Tailwind utility (the same trap
+        // documented in docs/DESIGN_FOUNDATION.md). Midnight #061226 is the
+        // brief's deepest surface, one step below the header's Deep Navy.
+        style={{ background: "#061226" }}
+      >
         <div className="mx-auto grid max-w-[1280px] gap-10 px-6 py-14 text-body-sm text-[var(--color-ink-quiet)] sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <div className="mb-4 flex items-center gap-3">
@@ -263,36 +334,29 @@ export function PublicShell({ children }: { children: ReactNode }) {
           </div>
           <div>
             <p className="text-label mb-3">Explore</p>
-            <p>
-              <Link
-                href="/DataBlueprint-AIVibeCoding"
-                className="underline underline-offset-4 hover:text-[var(--color-ink)]"
-              >
-                Courses
-              </Link>{" "}
-              ·{" "}
-              <Link
-                href="/trainers"
-                className="underline underline-offset-4 hover:text-[var(--color-ink)]"
-              >
-                Trainers
-              </Link>{" "}
-              ·{" "}
-              <Link
-                href="/about-us"
-                className="underline underline-offset-4 hover:text-[var(--color-ink)]"
-              >
-                About Us
-              </Link>{" "}
-              ·{" "}
-              <Link
-                href="/contact-us"
-                className="underline underline-offset-4 hover:text-[var(--color-ink)]"
-              >
-                Contact Us
-              </Link>{" "}
-              · Certifications · For organisations
-            </p>
+            {/* Vertical list, 2026-09-07 (was one wrapped line of inline
+                links separated by "·"). Same six items, same order, same
+                destinations; "Certifications" and "For organisations" stay
+                plain text, exactly as before — they were never links. */}
+            <ul className="flex flex-col gap-2">
+              {[
+                { href: "/DataBlueprint-AIVibeCoding", label: "Courses" },
+                { href: "/trainers", label: "Trainers" },
+                { href: "/about-us", label: "About Us" },
+                { href: "/contact-us", label: "Contact Us" },
+              ].map((l) => (
+                <li key={l.href}>
+                  <Link
+                    href={l.href}
+                    className="underline-offset-4 hover:text-[var(--color-ink)] hover:underline"
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+              <li className="text-[var(--color-ink-faint)]">Certifications</li>
+              <li className="text-[var(--color-ink-faint)]">For organisations</li>
+            </ul>
           </div>
           {/* These three are named because the product genuinely requires
               them — but none has been drafted, and none may be written by an

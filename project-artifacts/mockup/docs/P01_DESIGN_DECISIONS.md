@@ -382,3 +382,29 @@ must not treat it as a description of the current page.
   rejected: omit-rather-than-fill.
 - **A date placeholder in the hero** ("dates announced soon" chip) —
   rejected: State A omits the element entirely rather than teasing it.
+
+---
+
+## Dark-identity redesign — 2026-09-07 (founder direction, whole-portal scope)
+
+**Source:** a supplied reference image plus a written brief (Deep Navy #071A35 / Midnight #061226 / Royal #2563EB / Cyan #22D3EE / Purple #8B5CF6, Plus Jakarta Sans-class typography, dark hero + light content bands + dark diagnostic and footer). **Reverses the 2026-09-06 all-light direction** for hero/diagnostic/footer bands (light content bands stay light, as in the reference). The old light values are in git history and in the comments beside each token.
+
+**Founder decisions taken explicitly before implementing:** (1) whole portal, not homepage-only; (2) keep the current nav — labels, order and destinations unchanged, restyle only; (3) keep the existing hero wording ("Don't Just Learn. Build a Future…") rather than the reference's headline; (4) switch to Plus Jakarta Sans.
+
+**What changed (all presentation; no data, routes, logic or copy):**
+- `app/globals.css` — light tokens aligned to the brief (`--color-ground #f5f8ff`, ink `#111827`, primary Royal `#2563eb`, borders `#e2e8f0`); `.night` scope retuned to the navy palette; new `--color-action*` (button fill, split from `--color-primary` so a primary Button takes white text at AA *and* links stay readable on navy), `--color-cyan`, `--color-purple`; `.night.hero-band` (shared page-hero gradient). `--color-ink-faint` set to `#5a6a80` (the brief's `#64748b` measured 4.48:1 on the light ground, just under AA).
+- `app/layout.tsx` / fonts — Plus Jakarta Sans (body **and** display; replaces IBM Plex Sans + Serif). IBM Plex Mono kept for figures.
+- `components/ui/Button.tsx` — primary variant reads `--color-action*`.
+- `components/PublicShell.tsx` — dark sticky header, **active-page state** (`aria-current`), inline nav from `xl` (1280px) instead of `lg` because the wider font no longer fit at 1024; header CTA from `sm` up with the same CTA at the top of the mobile menu below that; dark footer (Explore links as a vertical list — same items).
+- Homepage — dark hero with glass capability cards and a gradient headline word; connected learning-journey rail; dark diagnostic band (**restyle only** — questions, options, fixture selection, resume/cancel, redirect verified end to end); three pathways with distinct blue/purple/teal accents (same links).
+- `night hero-band` restored on the hero of `/DataBlueprint-AIVibeCoding`, `/courses/[slug]`, `/trainers`, `/hrd-corp`, `/about-us`, `/contact-us`, `/certifications` (still disabled); `/diagnostic` wrapper dark to match the homepage embed.
+- Fixed while verifying: an existing mobile horizontal-scroll bug on the Programme page (`flex-none` trainer text block, 689px at a 375px viewport → `max-w-full`).
+
+**Deliberately NOT taken from the reference (needs a founder call if wanted):**
+- Nav items "For Organisations", "Resources" and a search icon — no such pages exist.
+- Claims not established in any approved source: "Industry-recognised certificate", "Experienced trainers", "Measurable outcomes", "Customised programmes" (DR-02: the credential is earned through assessed applied work). Existing copy kept.
+- The reference's stock photographs (still barred by `IMAGE_SLOTS.md` rule 1) — existing illustrations/images stay.
+- The closing "Build skills. Create opportunities…" CTA band and footer columns/links to Articles, FAQs, Terms & Privacy — new copy / pages that don't exist; the legal pages may not be written by an agent.
+- Reference hero headline "Master Data & AI. Build What's Next." — kept the existing wording per decision (3).
+
+**Verification:** `tsc` clean; GitHub Pages static export builds and emits `/Portal4TrainingCertification/`-prefixed links; no horizontal scroll at 375px on any route; nav, mobile menu and active state checked; 10-question diagnostic → result verified; contrast computed (all new pairs ≥ 4.5:1).

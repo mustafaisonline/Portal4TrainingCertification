@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { PublicShell } from "@/components/PublicShell";
 // LIGHT-THEME REDESIGN, 2026-09-06, founder direction: now renders
 // `HomeHeroLight`, not the original `HomeHero` (dark `.night` hero, no
@@ -115,49 +116,71 @@ export default function HomePage() {
         <h2 className="text-display mb-12 text-center">
           Start where it makes sense for you
         </h2>
+        {/* Distinct-but-harmonious accent per pathway (blue / purple /
+            cyan-teal), 2026-09-07 dark-identity redesign. Copy, links and
+            destinations are UNCHANGED. Buttons are plain <Link>s with their
+            own full class set rather than <Button className=...>: Button's
+            variant classes and any background or border override on the
+            same element are conflicting Tailwind utilities with no reliable
+            winner (see docs/DESIGN_FOUNDATION.md). */}
         <div className="grid gap-6 md:grid-cols-3">
-          <Card variant="panel">
-            <div className="mb-5 inline-flex rounded-[10px] bg-[var(--color-hero-blue-soft)] p-2.5 text-[var(--color-primary)]">
-              <GlyphRise />
-            </div>
-            <p className="text-label mb-2">For individuals</p>
-            <h3 className="text-h2 mb-2">Explore courses</h3>
-            <p className="text-body-sm mb-6 text-[var(--color-ink-quiet)]">
-              Expert-led courses with stated capability outcomes, delivered
-              live — and an assessed path to the credential.
-            </p>
-            <Button variant="secondary" href="/DataBlueprint-AIVibeCoding">
-              See the courses
-            </Button>
-          </Card>
-          <Card variant="panel">
-            <div className="mb-5 inline-flex rounded-[10px] bg-[var(--color-hero-blue-soft)] p-2.5 text-[var(--color-primary)]">
-              <GlyphNodes />
-            </div>
-            <p className="text-label mb-2">For organisations</p>
-            <h3 className="text-h2 mb-2">Train your team</h3>
-            <p className="text-body-sm mb-6 text-[var(--color-ink-quiet)]">
-              Private cohorts and tailored engagements — on-site, live online,
-              and internationally — with evidence the capability changed.
-            </p>
-            <Button variant="secondary" href="/contact-us">
-              How we work with teams
-            </Button>
-          </Card>
-          <Card variant="panel">
-            <div className="mb-5 inline-flex rounded-[10px] bg-[var(--color-hero-blue-soft)] p-2.5 text-[var(--color-primary)]">
-              <GlyphTarget />
-            </div>
-            <p className="text-label mb-2">Not sure where to start?</p>
-            <h3 className="text-h2 mb-2">Assess your capability</h3>
-            <p className="text-body-sm mb-6 text-[var(--color-ink-quiet)]">
-              Ten minutes, free, and you get a specific answer about where you
-              stand — not a score.
-            </p>
-            <Button variant="secondary" href="/diagnostic">
-              Start free diagnostic (10 min)
-            </Button>
-          </Card>
+          {[
+            {
+              accent: "#2563eb",
+              chip: "bg-[rgba(37,99,235,0.1)] text-[#2563eb]",
+              btn: "bg-[#2563eb] hover:bg-[#1d4ed8] shadow-[0_8px_20px_rgba(37,99,235,0.3)]",
+              glyph: <GlyphRise />,
+              label: "For individuals",
+              title: "Explore courses",
+              body: "Expert-led courses with stated capability outcomes, delivered live — and an assessed path to the credential.",
+              href: "/DataBlueprint-AIVibeCoding",
+              cta: "See the courses",
+            },
+            {
+              accent: "#7c3aed",
+              chip: "bg-[rgba(124,58,237,0.1)] text-[#7c3aed]",
+              btn: "bg-[#7c3aed] hover:bg-[#6d28d9] shadow-[0_8px_20px_rgba(124,58,237,0.3)]",
+              glyph: <GlyphNodes />,
+              label: "For organisations",
+              title: "Train your team",
+              body: "Private cohorts and tailored engagements — on-site, live online, and internationally — with evidence the capability changed.",
+              href: "/contact-us",
+              cta: "How we work with teams",
+            },
+            {
+              accent: "#0e7490",
+              chip: "bg-[rgba(8,145,178,0.12)] text-[#0e7490]",
+              btn: "bg-[#0e7490] hover:bg-[#155e75] shadow-[0_8px_20px_rgba(14,116,144,0.3)]",
+              glyph: <GlyphTarget />,
+              label: "Not sure where to start?",
+              title: "Assess your capability",
+              body: "Ten minutes, free, and you get a specific answer about where you stand — not a score.",
+              href: "/diagnostic",
+              cta: "Start free diagnostic (10 min)",
+            },
+          ].map((p) => (
+            <Card
+              key={p.title}
+              variant="panel"
+              className="flex flex-col border-t-[3px] transition-transform duration-200 hover:-translate-y-1"
+              style={{ borderTopColor: p.accent }}
+            >
+              <div className={`mb-5 inline-flex self-start rounded-[10px] p-2.5 ${p.chip}`}>
+                {p.glyph}
+              </div>
+              <p className="text-label mb-2">{p.label}</p>
+              <h3 className="text-h2 mb-2">{p.title}</h3>
+              <p className="text-body-sm mb-6 flex-1 text-[var(--color-ink-quiet)]">
+                {p.body}
+              </p>
+              <Link
+                href={p.href}
+                className={`inline-flex items-center justify-center gap-2 self-start rounded-[var(--radius-plate)] px-5 py-2.5 text-body-sm font-medium text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2563eb] ${p.btn}`}
+              >
+                {p.cta}
+              </Link>
+            </Card>
+          ))}
         </div>
       </section>
 

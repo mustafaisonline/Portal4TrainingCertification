@@ -210,19 +210,19 @@ export default function DiagnosticPage() {
 
   return (
     <PublicShell>
-      <div className="relative overflow-hidden bg-[var(--color-ground-tint)]">
-        {/* Soft background gradient — same treatment as the homepage's
-            "Not sure where you stand?" section (components/HomeDiagnostic.tsx),
-            added 2026-09-07 so this page reads as the same product rather
-            than a flat-white outlier once you click through. */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(85% 130% at 25% 20%, rgba(47,95,224,0.06), transparent 75%)",
-          }}
-        />
+      {/* DARK-IDENTITY REDESIGN, 2026-09-07 (whole-portal scope): `night`
+          with the same navy gradient as the homepage's embedded diagnostic
+          (components/HomeDiagnostic.tsx), so the two entry points still read
+          as one product. Wrapper styling ONLY — stages, questions, scoring
+          fixture selection, localStorage resume and cancel are untouched.
+          Inline `background` because `.night`'s own is unlayered CSS. */}
+      <div
+        className="night relative overflow-hidden"
+        style={{
+          background:
+            "radial-gradient(55% 90% at 12% 25%, rgba(37,99,235,0.26), transparent 70%), radial-gradient(40% 70% at 92% 80%, rgba(34,211,238,0.09), transparent 70%), linear-gradient(180deg, #071a35 0%, #061226 100%)",
+        }}
+      >
         {/* Progress + Save & exit — moved 2026-09-07 from this page's own
             (now-removed) header into a slim bar beneath PublicShell's main
             nav. Same condition as before (`stage !== "idle"`), same two

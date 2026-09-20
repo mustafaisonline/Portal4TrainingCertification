@@ -177,12 +177,19 @@ const journey = [
   { num: "04", icon: <IconBars />, title: "Explore Opportunities", body: "Use your skills and evidence to pursue freelance and remote opportunities." },
 ] as const;
 
+/* Tinted-glass chips for the DARK hero (2026-09-07 dark-identity
+   redesign) — were pastel-on-white. Each icon colour is ≥7:1 on the navy. */
 const toneClasses = {
-  blue: "bg-[var(--color-hero-blue-soft)] text-[#2f5fe0]",
-  purple: "bg-[var(--color-hero-purple-soft)] text-[#7c5cf0]",
-  orange: "bg-[var(--color-hero-orange-soft)] text-[#d9822b]",
-  teal: "bg-[var(--color-hero-teal-soft)] text-[#1e9c7c]",
+  blue: "bg-[rgba(59,130,246,0.18)] text-[#60a5fa] ring-1 ring-[rgba(96,165,250,0.35)]",
+  purple: "bg-[rgba(139,92,246,0.2)] text-[#b39dfa] ring-1 ring-[rgba(167,139,250,0.35)]",
+  orange: "bg-[rgba(246,164,75,0.16)] text-[#f6a44b] ring-1 ring-[rgba(246,164,75,0.35)]",
+  teal: "bg-[rgba(34,211,238,0.14)] text-[#22d3ee] ring-1 ring-[rgba(34,211,238,0.35)]",
 } as const;
+
+/** Glass capability card for the dark hero. Inline-free: `.night` scopes
+ *  the tokens, so these read as translucent panels over the network. */
+const glassCard =
+  "rounded-2xl border border-[var(--color-line)] bg-[rgba(255,255,255,0.05)] p-4 backdrop-blur-sm";
 
 export function HomeHero() {
   const founder = practitioners[0];
@@ -197,18 +204,30 @@ export function HomeHero() {
   return (
     <>
       {/* ===== Hero ===== */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#eef2fc] to-[var(--color-ground)]">
+      {/* DARK HERO — 2026-09-07 dark-identity redesign (founder direction,
+          reference image + brief). `.night` swaps in the deep-navy tokens;
+          the gradient is inline because `.night`'s own `background` is
+          unlayered CSS and would beat a bg-* utility. Every word of copy,
+          both benefit chips and all six capability cards are UNCHANGED —
+          this is a restyle only. */}
+      <section
+        className="night relative overflow-hidden"
+        style={{
+          background:
+            "radial-gradient(60% 70% at 78% 28%, rgba(37,99,235,0.28), transparent 70%), radial-gradient(45% 55% at 12% 90%, rgba(139,92,246,0.16), transparent 70%), linear-gradient(180deg, #071a35 0%, #061226 100%)",
+        }}
+      >
         <div className="pointer-events-none absolute inset-0">
           <NeuralNetworkBackground id="home-hero" />
         </div>
         <div className="relative mx-auto grid max-w-[1280px] gap-12 px-6 py-16 lg:grid-cols-[1.05fr_1fr] lg:items-center">
           <div>
-            <p className="mb-4 text-xs font-bold tracking-[0.2em] text-[#5b667c]">
+            <p className="mb-4 text-xs font-bold tracking-[0.2em] text-[var(--color-cyan)]">
               PRACTICAL SKILLS FOR A BRIGHTER TOMORROW
             </p>
             <h1 className="mb-5 text-5xl font-bold leading-[1.05] tracking-tight text-[var(--color-ink)]">
               Don&rsquo;t Just Learn.{" "}
-              <span className="bg-gradient-to-r from-[var(--color-primary)] to-[#6a5cf0] bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#22d3ee] via-[#3b82f6] to-[#8b5cf6] bg-clip-text text-transparent">
                 Build a Future
               </span>{" "}
               You&rsquo;re Excited About.
@@ -221,7 +240,7 @@ export function HomeHero() {
             <div className="mb-8 flex flex-wrap gap-3">
               <Link
                 href="/DataBlueprint-AIVibeCoding"
-                className="inline-flex items-center gap-2 rounded-xl bg-[var(--color-primary)] px-6 py-3.5 text-[15px] font-semibold text-[var(--color-primary-ink)] shadow-[0_10px_25px_rgba(47,95,224,0.28)] hover:bg-[var(--color-primary-strong)]"
+                className="inline-flex items-center gap-2 rounded-xl bg-[var(--color-action)] px-6 py-3.5 text-[15px] font-semibold text-[var(--color-action-ink)] shadow-[0_10px_28px_rgba(37,99,235,0.45)] transition-colors hover:bg-[var(--color-action-strong)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
               >
                 Explore Courses <IconArrow />
               </Link>
@@ -246,9 +265,9 @@ export function HomeHero() {
               cards' content changed. */}
           <div className="relative mx-auto grid max-w-[520px] grid-cols-2 gap-3">
             {heroCardsLeft.map((c) => (
-              <div key={c.title} className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-ground-raised)] p-4 shadow-[0_10px_30px_rgba(16,24,40,0.06)]">
+              <div key={c.title} className={glassCard}>
                 <div className="mb-2 flex items-center gap-2">
-                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[var(--color-hero-blue-soft)] text-[var(--color-primary)]">
+                  <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-lg ${toneClasses.blue}`}>
                     {c.icon}
                   </span>
                   <p className="text-[13px] font-semibold text-[var(--color-ink)]">{c.title}</p>
@@ -260,7 +279,7 @@ export function HomeHero() {
             {accreditation && (
               <Link
                 href="/hrd-corp"
-                className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-ground-raised)] p-4 shadow-[0_10px_30px_rgba(16,24,40,0.06)] transition-shadow hover:shadow-[0_14px_36px_rgba(16,24,40,0.1)]"
+                className={`${glassCard} transition-colors hover:bg-[rgba(255,255,255,0.09)]`}
               >
                 <div className="mb-2 flex items-center gap-2">
                   <Image
@@ -275,18 +294,18 @@ export function HomeHero() {
                 <p className="text-[12px] leading-snug text-[var(--color-ink-faint)]">Verified — Trainer ID {accreditation.trainerId}.</p>
               </Link>
             )}
-            <div className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-ground-raised)] p-4 shadow-[0_10px_30px_rgba(16,24,40,0.06)]">
+            <div className={glassCard}>
               <div className="mb-2 flex items-center gap-2">
-                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[var(--color-hero-teal-soft)] text-[#1e9c7c]">
+                <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-lg ${toneClasses.teal}`}>
                   <IconChat />
                 </span>
                 <p className="text-[13px] font-semibold text-[var(--color-ink)]">Prepare for Interviews</p>
               </div>
               <p className="text-[12px] leading-snug text-[var(--color-ink-faint)]">Practice with real projects, so you walk in ready.</p>
             </div>
-            <div className="rounded-2xl border border-[var(--color-line)] bg-[var(--color-ground-raised)] p-4 shadow-[0_10px_30px_rgba(16,24,40,0.06)]">
+            <div className={glassCard}>
               <div className="mb-2 flex items-center gap-2">
-                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-[var(--color-hero-blue-soft)] text-[var(--color-primary)]">
+                <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-lg ${toneClasses.blue}`}>
                   <IconCompass />
                 </span>
                 <p className="text-[13px] font-semibold text-[var(--color-ink)]">Get Career Support</p>
@@ -294,46 +313,50 @@ export function HomeHero() {
               <p className="text-[12px] leading-snug text-[var(--color-ink-faint)]">Guidance connecting your new skills to real opportunities.</p>
             </div>
 
-            <p className="col-span-2 mt-2 text-right font-serif text-[15px] italic text-[var(--color-primary)]">
+            <p className="col-span-2 mt-2 text-right text-[15px] font-medium italic text-[var(--color-cyan)]">
               Real Skills. Real Opportunities.
             </p>
           </div>
         </div>
       </section>
 
-      {/* ===== Learning journey ===== */}
-      <section className="bg-[var(--color-ground-tint)]">
+      {/* ===== Learning journey =====
+          Stays a LIGHT band between the dark hero and the dark diagnostic,
+          as in the reference (2026-09-07 dark-identity redesign). Content
+          and the earlier icon/number/heading-beside, text-below layout are
+          unchanged; what's new is the connecting rail (a dashed line
+          running through the step badges) and a ringed, gradient-tinted
+          badge per step. */}
+      <section className="bg-[var(--color-ground)]">
         <div className="mx-auto max-w-[1280px] px-6 py-14">
-          <p className="mb-3 text-xs font-bold tracking-[0.2em] text-[#5b667c]">YOUR LEARNING JOURNEY</p>
+          <p className="mb-3 text-xs font-bold tracking-[0.2em] text-[var(--color-ink-faint)]">YOUR LEARNING JOURNEY</p>
           <h2 className="mb-10 max-w-[520px] text-3xl font-bold leading-tight text-[var(--color-ink)]">
             From learning to <span className="text-[var(--color-primary)]">real opportunities.</span>
           </h2>
-          <div className="grid items-start gap-4 md:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr]">
+          <ol className="grid items-start gap-8 md:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] md:gap-4">
             {journey.map((step, i) => (
-              <div key={step.num} className="contents">
+              <li key={step.num} className="contents">
                 <div>
-                  {/* Number + heading moved beside the icon, body text
-                      dropped to sit under the icon rather than the
-                      heading — 2026-09-07 founder request. */}
                   <div className="mb-3 flex items-center gap-3">
-                    <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-[var(--color-line-strong)] bg-[var(--color-ground-raised)] text-[var(--color-primary)] shadow-sm">
+                    <span className="grid h-14 w-14 shrink-0 place-items-center rounded-full border border-[rgba(37,99,235,0.28)] bg-gradient-to-br from-white to-[#e7efff] text-[var(--color-primary)] shadow-[0_6px_18px_rgba(37,99,235,0.14)]">
                       {step.icon}
                     </span>
                     <div>
-                      <p className="text-xs font-bold tracking-wide text-[var(--color-ink-faint)]">{step.num}</p>
+                      <p className="text-mono text-xs font-bold tracking-wide text-[var(--color-primary)]">{step.num}</p>
                       <p className="text-base font-semibold text-[var(--color-ink)]">{step.title}</p>
                     </div>
                   </div>
                   <p className="text-[13px] leading-snug text-[var(--color-ink-quiet)]">{step.body}</p>
                 </div>
                 {i < journey.length - 1 && (
-                  <div className="hidden self-center pt-6 text-[var(--color-line-strong)] md:block" aria-hidden="true">
+                  <div className="hidden items-center gap-1 self-start pt-[18px] text-[rgba(37,99,235,0.45)] md:flex" aria-hidden="true">
+                    <span className="block w-8 border-t-2 border-dashed border-current lg:w-14" />
                     <IconArrow />
                   </div>
                 )}
-              </div>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
     </>

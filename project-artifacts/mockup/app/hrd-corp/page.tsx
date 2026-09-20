@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PublicShell } from "@/components/PublicShell";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -49,7 +50,8 @@ export default function HrdCorpPage() {
       {/* ===== Hero =====
           `.night` removed, 2026-09-06 light-theme propagation — see
           components/HomeHeroLight.tsx's header comment. */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#eef2fc] to-[var(--color-ground)]">
+      {/* 2026-09-07 dark-identity redesign (whole-portal scope): `night hero-band` restores the dark navy hero (see app/globals.css). Any comment above saying `.night` was removed is superseded history, kept deliberately. */}
+      <section className="night hero-band relative overflow-hidden">
         <div className="relative mx-auto max-w-[1280px] px-6 py-16 lg:py-20">
           <p className="text-label mb-4 text-[var(--color-primary)]">
             HRD Corp
@@ -60,12 +62,18 @@ export default function HrdCorpPage() {
           <p className="text-body-lg max-w-[640px] text-[var(--color-ink-quiet)]">
             Courses here are designed and delivered by an HRD Corp Accredited
             Trainer — see{" "}
-            <a
-              href="/trainers"
+            {/* `Link`, not a plain <a>: the GitHub Pages build serves under
+                a basePath (/Portal4TrainingCertification, next.config.ts),
+                which only `Link` prepends — a plain <a href="/trainers">
+                resolved to the domain root and 404'd on the live site
+                (fixed 2026-09-20). Lands on the accreditation section
+                itself, since that is what this sentence promises. */}
+            <Link
+              href="/trainers#hrd-corp-accreditation"
               className="font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
             >
               Trainers
-            </a>{" "}
+            </Link>{" "}
             for that accreditation and how to verify it. This page sets out
             what that does, and does not, mean for this organisation and its
             courses.

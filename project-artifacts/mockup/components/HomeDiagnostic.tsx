@@ -274,19 +274,31 @@ export function HomeDiagnostic() {
     // see HomeHeroLight.tsx's header comment for the redesign this is
     // part of). mt-12: standardised 48px inter-section gap, unchanged (see
     // app/page.tsx's "Three pathways" comment for the gap convention).
-    <section className="relative mt-12 overflow-hidden bg-[var(--color-ground-tint)]">
+    // DARK-IDENTITY REDESIGN, 2026-09-07 (founder direction, reference
+    // image + brief; whole-portal scope): back to `night`, with the deep
+    // navy gradient inline (`.night`'s own `background` is unlayered and
+    // beats any bg-* utility). RESTYLE ONLY — the questions, answer
+    // options, fixture selection, localStorage resume/cancel and the
+    // redirect to /diagnostic/result are byte-for-byte unchanged; every
+    // token below simply resolves through `.night` now.
+    <section
+      className="night relative mt-12 overflow-hidden"
+      style={{
+        background:
+          "radial-gradient(55% 90% at 12% 30%, rgba(37,99,235,0.28), transparent 70%), radial-gradient(40% 70% at 92% 80%, rgba(34,211,238,0.10), transparent 70%), linear-gradient(180deg, #071a35 0%, #061226 100%)",
+      }}
+    >
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
         style={{
-          // Softened 2026-09-07, second pass: a real screenshot showed
-          // this reading as a visibly two-toned diagonal (saturated
-          // top-left fading to near-white bottom-right) against the
-          // reference's flatter, more uniform pale lavender. Wider spread
-          // (90% → 130%) and lower peak opacity (0.10 → 0.06) so the glow
-          // is present without a hard light/dark side.
-          background:
-            "radial-gradient(85% 130% at 25% 20%, rgba(47,95,224,0.06), transparent 75%)",
+          backgroundImage:
+            "radial-gradient(rgba(96,165,250,0.22) 1px, transparent 1px)",
+          backgroundSize: "26px 26px",
+          maskImage:
+            "radial-gradient(70% 100% at 20% 40%, black, transparent 80%)",
+          WebkitMaskImage:
+            "radial-gradient(70% 100% at 20% 40%, black, transparent 80%)",
         }}
       />
       <div className="relative mx-auto max-w-[960px] px-6 py-16 sm:py-20">
@@ -321,7 +333,7 @@ export function HomeDiagnostic() {
               <div className="mt-5">
                 <Button
                   href="/diagnostic"
-                  className="shadow-[0_10px_24px_rgba(47,95,224,0.28)] transition-shadow hover:shadow-[0_14px_28px_rgba(47,95,224,0.34)]"
+                  className="shadow-[0_10px_26px_rgba(37,99,235,0.45)] transition-shadow hover:shadow-[0_14px_32px_rgba(37,99,235,0.55)]"
                 >
                   Free Diagnostic
                   <IconArrowRight />

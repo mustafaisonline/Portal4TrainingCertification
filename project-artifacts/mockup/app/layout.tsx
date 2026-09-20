@@ -3,8 +3,7 @@ import type { ReactNode } from "react";
 import {
   Caveat,
   IBM_Plex_Mono,
-  IBM_Plex_Sans,
-  IBM_Plex_Serif,
+  Plus_Jakarta_Sans,
 } from "next/font/google";
 import "./globals.css";
 
@@ -36,18 +35,15 @@ const themeInitScript = `(function(){try{var t=localStorage.getItem('mockup:them
  * needs the serif on every page, and the mono appears on course,
  * pricing and trainer pages.
  */
-const plexSerif = IBM_Plex_Serif({
+/* Plus Jakarta Sans — body AND display, portal-wide, 2026-09-07 (founder
+   choice, dark-identity redesign brief). Replaces IBM Plex Sans and IBM Plex
+   Serif (see the note above, which describes the 2026-09-02 arrangement it
+   supersedes). Same mechanism: next/font, self-hosted, no new package. */
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700", "800"],
   style: ["normal", "italic"],
-  variable: "--font-plex-serif",
-  display: "swap",
-});
-const plexSans = IBM_Plex_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  style: ["normal", "italic"],
-  variable: "--font-plex-sans",
+  variable: "--font-jakarta",
   display: "swap",
 });
 const plexMono = IBM_Plex_Mono({
@@ -91,7 +87,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
-      className={`${plexSerif.variable} ${plexSans.variable} ${plexMono.variable} ${caveat.variable}`}
+      className={`${jakarta.variable} ${plexMono.variable} ${caveat.variable}`}
       // The no-flash script above sets `data-theme` on this element before
       // React hydrates, which the server-rendered markup never has (the
       // server doesn't know a visitor's stored preference) — an expected,

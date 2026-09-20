@@ -218,7 +218,8 @@ export default function CoursesPage() {
           separate and untouched — this wasn't sourced from either).
           `illustration` stays in place, inert per ImageFrame's own
           `src`-wins contract. */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-[#eef2fc] to-[var(--color-ground)]">
+      {/* 2026-09-07 dark-identity redesign (whole-portal scope): `night hero-band` restores the dark navy hero (see app/globals.css). Any comment above saying `.night` was removed is superseded history, kept deliberately. */}
+      <section className="night hero-band relative overflow-hidden">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0"
@@ -604,7 +605,11 @@ export default function CoursesPage() {
                 className="h-28 w-28 shrink-0 rounded-[var(--radius-plate)] object-cover"
               />
               <div className="flex flex-wrap items-center gap-8">
-                <div className="flex-none">
+                {/* `max-w-full`: flex-none alone let this block keep its 640px
+                    natural width on a phone and push the whole page sideways
+                    (measured 689px scrollWidth at 375px viewport, 2026-09-07).
+                    Caps it at the row's own width; no effect wider than 640. */}
+                <div className="max-w-full flex-none">
                   <h3 className="text-h1 mb-1">{lead.name}</h3>
                   <p className="text-label mb-4">{lead.role}</p>
                   <p className="mb-6 max-w-[640px] text-body-sm text-[var(--color-ink-quiet)]">

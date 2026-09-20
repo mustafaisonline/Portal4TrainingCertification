@@ -27,7 +27,7 @@
      than a full portal rollout (not yet approved). Old values kept in
      this comment for reversal: ground #faf8f4, ground-raised #f2efe8,
      line #e2ded3 / #c9c3b3, primary #3d43b8 / #2f3494. */
-  --color-ground: #f7f9fd; /* cool near-white, light-blue cast */
+  --color-ground: #f5f8ff; /* brief's Light Background (2026-09-07 dark-identity redesign; was #f7f9fd) */
   --color-ground-raised: #ffffff; /* pure white — Panel card surface */
   /* A second, slightly deeper "tinted" surface used for section banding
      (alternating a page's sections so they don't all read as one flat
@@ -45,22 +45,37 @@
 
   /* Ink (text), 3 steps — unchanged: already a cool near-black, reads
      correctly against the new cooler ground without adjustment. */
-  --color-ink: #1b1f27;
+  --color-ink: #111827; /* brief's Dark Text (was #1b1f27) */
   --color-ink-quiet: #4b5160;
-  --color-ink-faint: #7a8091;
+  --color-ink-faint: #5a6a80; /* brief's Muted Text #64748b darkened slightly: it measured 4.48:1 on Light Background #f5f8ff (just under AA); this clears 4.5:1 on ground, tint and white. The old #7a8091 was a 3.4:1 fail. */
 
   /* Line (hairlines/borders), 2 steps — shifted from warm (cream-paired)
      greys to cool (blue-paired) greys, 2026-09-06, matching the new ground. */
-  --color-line: #e5e9f2;
+  --color-line: #e2e8f0; /* brief's Light Borders */
   --color-line-strong: #c7cede;
 
   /* Primary — institutional blue (visual redesign 2026-09-06, founder
      direction; was deep capability indigo, 2026-08-31). Reads as
      established/trustworthy per the supplied reference, rather than the
      indigo identity's data/AI signal. */
-  --color-primary: #2f5fe0;
-  --color-primary-strong: #2549b8;
+  --color-primary: #2563eb; /* brief's Royal Blue (was #2f5fe0) */
+  --color-primary-strong: #1d4ed8;
   --color-primary-ink: #ffffff;
+
+  /* ACTION — the fill colour of a primary Button, split from --color-primary
+     (2026-09-07, dark-identity redesign). Inside a dark `.night` band ONE
+     blue cannot be both a readable text/link colour on navy (needs to be
+     light) and a button fill that takes white text at AA (needs to be
+     deep) — so buttons read these instead. Outside `.night` they simply
+     equal primary, so nothing changes on light surfaces. */
+  --color-action: var(--color-primary);
+  --color-action-strong: var(--color-primary-strong);
+  --color-action-ink: var(--color-primary-ink);
+
+  /* Data & AI identity accents (brief's Cyan / Purple) — used sparingly,
+     for gradient headline words and the pathway-card accents. */
+  --color-cyan: #22d3ee;
+  --color-purple: #8b5cf6;
 
   /* Accent — warm ember. Reserved for credential/achievement moments, and
      for the "this is missing" signal on reserved image slots. */
@@ -122,11 +137,14 @@
      P01; replaced Newsreader + Inter. Rationale and the rejected
      directions: docs/design/TYPOGRAPHY_STRATEGY.md.
      Each falls back to a system stack if its variable is absent. */
+  /* 2026-09-07: Plus Jakarta Sans replaces IBM Plex Sans AND Plex Serif for
+     body and display alike (founder choice, per the dark-identity brief's
+     "modern professional sans-serif"). IBM Plex Mono stays for figures. */
   --font-display:
-    var(--font-plex-serif), ui-serif, Georgia, Cambria, "Times New Roman",
-    serif;
+    var(--font-jakarta), -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
   --font-body:
-    var(--font-plex-sans), -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    var(--font-jakarta), -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
     Arial, sans-serif;
   --font-mono:
     var(--font-plex-mono), ui-monospace, "SF Mono", "Cascadia Code", Menlo,
@@ -207,16 +225,24 @@
    sections stay night in BOTH light and dark themes — they are identity,
    not theming — which is why this is a class, not a media query. */
 .night {
-  --color-ground: #0a0e1f;
-  --color-ground-raised: #12182e;
-  --color-ink: #eef0f8;
-  --color-ink-quiet: #aab3d2;
-  --color-ink-faint: #7a83aa;
-  --color-line: rgba(148, 160, 220, 0.18);
-  --color-line-strong: rgba(148, 160, 220, 0.34);
-  --color-primary: #9aa3ff;
-  --color-primary-strong: #b4bbff;
-  --color-primary-ink: #0b0f22;
+  /* Retuned 2026-09-07 (dark-identity redesign, founder direction, from a
+     supplied reference image + brief): Deep Navy #071A35 ground, Midnight
+     #061226 as the deepest surface, blue/cyan accents. Was #0a0e1f indigo. */
+  --color-ground: #071a35;
+  --color-ground-raised: #0d2347;
+  --color-ink: #f1f5ff;
+  --color-ink-quiet: #b3c1de;
+  --color-ink-faint: #8a9bbd;
+  --color-line: rgba(120, 160, 230, 0.2);
+  --color-line-strong: rgba(120, 160, 230, 0.38);
+  /* primary = readable ON navy (links, labels, focus rings): 7:1+. */
+  --color-primary: #60a5fa;
+  --color-primary-strong: #93c5fd;
+  --color-primary-ink: #061226;
+  /* action = button fill, deep enough for white text at AA (5.2:1). */
+  --color-action: #2563eb;
+  --color-action-strong: #1d4ed8;
+  --color-action-ink: #ffffff;
   /* The night scope previously omitted --color-accent, so an ember element
      inside a night section inherited the light-mode #b5652b and sat at poor
      contrast on navy. Added for the image-frame labels (2026-09-02). */
@@ -224,13 +250,25 @@
   --color-accent-soft: #1a1710;
   --color-accent-line: #a0713f;
   --color-accent-ink: #e0975c;
-  --color-prof-1: #232741;
-  --color-prof-2: #3a4070;
-  --color-prof-3: #565fa4;
-  --color-prof-4: #7c86d9;
-  --color-prof-5: #a7b0ff;
+  --color-prof-1: #12305c;
+  --color-prof-2: #1d4a86;
+  --color-prof-3: #2f6bc0;
+  --color-prof-4: #60a5fa;
+  --color-prof-5: #93c5fd;
   background: var(--color-ground);
   color: var(--color-ink);
+}
+
+/* Page hero band — the deep-navy hero used at the top of every non-home
+   page (2026-09-07 dark-identity redesign, whole-portal scope). Written as
+   `.night.hero-band` so it out-specifies `.night`'s own flat `background`
+   (unlayered CSS, which beats any Tailwind bg-* utility). Pair with
+   `night`: <section className="night hero-band relative overflow-hidden">. */
+.night.hero-band {
+  background:
+    radial-gradient(55% 90% at 82% 15%, rgba(37, 99, 235, 0.3), transparent 70%),
+    radial-gradient(40% 70% at 6% 100%, rgba(139, 92, 246, 0.16), transparent 70%),
+    linear-gradient(180deg, #071a35 0%, #061226 100%);
 }
 
 /* Wordmark — Plex Serif, so the masthead is not set in the interface font
@@ -238,9 +276,9 @@
    is `.text-display-xl`, the P01 hero. */
 .wordmark {
   font-family: var(--font-display);
-  font-weight: 500;
-  font-size: 1.3125rem;
-  letter-spacing: 0.004em;
+  font-weight: 700;
+  font-size: 1.1875rem;
+  letter-spacing: -0.01em;
 }
 /* The masthead wraps to two lines at 375px, which predates this typeface
    change — but at 21px those two lines make the header ~11px taller than

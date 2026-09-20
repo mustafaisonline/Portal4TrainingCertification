@@ -31,7 +31,9 @@ function PriceFigures({ price, discountLabel }: { price: Pricing[RegionKey]; dis
   return (
     <>
       <div className="mb-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-        <span className="text-display text-[var(--color-primary)]">
+        {/* text-h1, not text-display — 2026-09-20, founder: fee figures
+            were too large. */}
+        <span className="text-h1 text-[var(--color-primary)]">
           {price.today}
         </span>
         <span className="text-body-sm text-[var(--color-ink-faint)] line-through">

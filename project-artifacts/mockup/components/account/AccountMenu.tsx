@@ -25,6 +25,8 @@ const menuLinks = [
   { href: "/account/certificate", label: "Certificate" },
   { href: "/account/orders", label: "Orders & receipts" },
   { href: "/account/profile", label: "Profile & security" },
+  { href: "/account/notifications", label: "Notifications" },
+  { href: "/account/help", label: "Help" },
 ];
 
 function useSignOut() {

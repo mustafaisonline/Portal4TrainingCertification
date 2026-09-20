@@ -90,7 +90,7 @@ export function RenewFlow() {
           </div>
           <div>
             <dt className="text-label mb-1">Renewal fee</dt>
-            <dd className="text-h1 text-[var(--color-primary)]">{fee}</dd>
+            <dd className="text-body-lg font-semibold text-[var(--color-primary)]">{fee}</dd>
           </div>
         </dl>
         <p className="text-body-sm mt-4 text-[var(--color-ink-faint)]">

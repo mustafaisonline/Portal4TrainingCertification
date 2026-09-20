@@ -174,7 +174,7 @@ export function CheckoutFlow() {
                       onChange={() => setCurrency(c.key)}
                     >
                       <span className="text-label block">{c.name}</span>
-                      <span className="text-h1 block text-[var(--color-primary)]">{p?.today}</span>
+                      <span className="text-body-lg block font-semibold text-[var(--color-primary)]">{p?.today}</span>
                       <span className="text-body-sm block text-[var(--color-ink-faint)]">
                         {getRegionMeta(c.key).subtitle}
                       </span>
@@ -245,8 +245,10 @@ export function CheckoutFlow() {
               <Step n={5} title="Confirm" />
               <div className="flex flex-col gap-6">
                 <BlockedConsent reason="Cannot be ticked yet — the Terms of service and the refund & cancellation policy have not been published. (In the real product, Pay stays disabled until this is ticked.)">
-                  I agree to the Terms of service and the refund &amp;
-                  cancellation policy.
+                  I agree to the{" "}
+                  <Link href="/terms" className="text-[var(--color-primary)] underline underline-offset-4">Terms of service</Link>{" "}
+                  and the{" "}
+                  <Link href="/refund-policy" className="text-[var(--color-primary)] underline underline-offset-4">refund &amp; cancellation policy</Link>.
                 </BlockedConsent>
                 {already && (
                   <p role="status" className="text-body-sm text-[var(--color-ink-quiet)]">
@@ -310,7 +312,7 @@ export function CheckoutFlow() {
               </dl>
               <div className="flex items-baseline justify-between gap-4 border-t border-[var(--color-line)] pt-5">
                 <span className="font-medium">Total today</span>
-                <span className="text-display text-[var(--color-primary)]">{price.today}</span>
+                <span className="text-h1 text-[var(--color-primary)]">{price.today}</span>
               </div>
               <p className="text-body-sm mt-4 text-[var(--color-ink-faint)]">
                 {getCurrencyChoice(currency).name}. Launch offer as published;

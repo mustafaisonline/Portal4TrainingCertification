@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { PublicShell } from "@/components/PublicShell";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
-import { practitioners } from "@/data/practitioners";
 
 /**
  * Contact — added 2026-09-02 by founder direction.
@@ -14,10 +13,11 @@ import { practitioners } from "@/data/practitioners";
  * most damaging kind of fabrication on a portal that asks people to trust
  * it with training budgets.
  *
- * What IS shown is genuine: the founder's own published professional
- * channels (exact URLs from data/practitioners.ts) and the location
- * recorded there. A real business email is an OPEN ITEM — see
- * docs/MOCK_DATA_REGISTER.md.
+ * The founder's published channels and location ("Reach us directly") were
+ * shown here until 2026-09-20, when the founder asked for that section to be
+ * removed. A real business email remains an OPEN ITEM — see
+ * docs/MOCK_DATA_REGISTER.md. The page now has the three routes and the
+ * (inert) enquiry form only.
  *
  * The enquiry form is inert per the established mockup convention: no
  * backend exists (no database, no server actions, no API routes), so it
@@ -55,11 +55,6 @@ const routes = [
 ];
 
 export default function ContactPage() {
-  const founder = practitioners[0];
-  const channels = (founder.socialLinks ?? []).filter((l) =>
-    ["LinkedIn", "Medium", "YouTube", "Substack"].includes(l.platform),
-  );
-
   return (
     <PublicShell>
       {/* ===== Hero =====
@@ -111,7 +106,9 @@ export default function ContactPage() {
       {/* ===== Enquiry form + channels ===== */}
       <section className="border-t border-[var(--color-line)] bg-[var(--color-ground-raised)]">
         <div className="mx-auto max-w-[1280px] px-6 py-16">
-          <div className="grid gap-12 lg:grid-cols-[1.15fr_1fr]">
+          {/* "Reach us directly" column (founder's channels + location) REMOVED
+              2026-09-20, founder direction. Single column now. */}
+          <div className="max-w-[720px]">
             <div>
               <h2 className="text-display mb-4">Send an enquiry</h2>
               <p className="text-body-lg mb-8 max-w-[52ch] text-[var(--color-ink-quiet)]">
@@ -170,52 +167,12 @@ export default function ContactPage() {
                     id="enquiry-status"
                     className="text-body-sm text-[var(--color-ink-faint)]"
                   >
-                    Not connected yet — this mockup has no backend. Use a
-                    channel opposite in the meantime.
+                    Not connected yet — this mockup has no backend.
                   </p>
                 </div>
               </form>
             </div>
 
-            {/* ── Genuine channels only ── */}
-            <div>
-              <h2 className="text-h1 mb-5">Reach us directly</h2>
-              <p className="text-body-sm mb-7 text-[var(--color-ink-quiet)]">
-                Until the Academy&rsquo;s own address is published, the fastest
-                route is the founder&rsquo;s own professional channels. These
-                are genuine and monitored.
-              </p>
-              <ul className="mb-8 flex flex-col">
-                {channels.map((c) => (
-                  <li
-                    key={c.url}
-                    className="border-t border-[var(--color-line)] py-3.5 first:border-t-0 first:pt-0"
-                  >
-                    <a
-                      href={c.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${c.platform} (opens in a new tab)`}
-                      className="flex items-baseline justify-between gap-4 group"
-                    >
-                      <span className="text-body-sm font-medium text-[var(--color-primary)] underline-offset-4 group-hover:underline">
-                        {c.platform} ↗
-                      </span>
-                      <span className="text-mono text-body-sm truncate text-[var(--color-ink-faint)]">
-                        {c.handle}
-                      </span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="border-t border-[var(--color-line)] pt-6">
-                <p className="text-label mb-2">Based in</p>
-                <p className="text-body-sm text-[var(--color-ink-quiet)]">
-                  {founder.location}
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </section>

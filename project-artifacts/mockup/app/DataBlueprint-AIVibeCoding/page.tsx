@@ -698,6 +698,21 @@ export default function CoursesPage() {
           duplicate use of the same original artwork on one page), and the
           highlights themselves already appear as the Benefits section
           higher up this same page. */}
+      {/* Participant stories — EMPTY STATE, 2026-09-20 founder direction
+          ("add these as sections … data we will add later"). No cohort has
+          run, so there are no stories; fabricating testimonials is the most
+          damaging thing this portal could do (docs/SITE_PAGES.md). The
+          section exists so the slot is designed and honest. */}
+      <section className="mx-auto max-w-[1280px] px-6 py-14">
+        <p className="text-label mb-2 text-[var(--color-primary)]">Participant stories</p>
+        <h2 className="text-display mb-4">What participants say</h2>
+        <div className="rounded-[var(--radius-panel)] border border-dashed border-[var(--color-line-strong)] p-6 text-body-sm text-[var(--color-ink-quiet)] sm:p-8">
+          The first cohort has not run yet, so there are no stories to show —
+          and we will not invent any. Real participants&rsquo; words, with
+          their permission, will appear here after the first programme.
+        </div>
+      </section>
+
       {flagship?.pricing && (
         <CoursePricing
           registrationFlow

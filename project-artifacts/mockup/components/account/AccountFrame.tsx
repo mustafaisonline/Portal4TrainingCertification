@@ -26,6 +26,8 @@ const items = [
   { href: "/account/orders", label: "Orders & receipts" },
   { href: "/account/skills", label: "Skills profile" },
   { href: "/account/profile", label: "Profile & security" },
+  { href: "/account/notifications", label: "Notifications" },
+  { href: "/account/help", label: "Help" },
 ];
 
 function isActive(pathname: string, href: string) {

@@ -12,8 +12,10 @@ training-and-certification portal needs, what was built, and — importantly —
 
 ## Primary navigation (restructured 2026-09-02; updated 2026-09-06)
 
-**Home · HRD Corp · Courses · Trainers · About Us** — five items. Six was
-the documented maximum, not a fixed count.
+**Home · HRD Corp · Programme · Trainers · Free Diagnostic · About Us · Search**
+— **seven items as of 2026-09-20** ("Search" → `/verify`, certificate search,
+promoted from the footer by founder direction; the six-item guideline was
+knowingly exceeded). Earlier: five, then six; the history below is retained.
 
 **2026-09-06, later still: Certifications removed**, founder direction —
 "We will work on Certification option in future." `/certifications` itself
@@ -61,7 +63,7 @@ have orphaned the menu item, so the content moved to its own page.
 | `/courses`, `/courses/[slug]` | Portfolio and detail | Real — migrated, with published pricing |
 | `/trainers` | Trainer directory, selection standard, the trainer's HRD Corp accreditation, a "Community" video row | Real. "Published work" (books) removed from this page 2026-09-06 (data untouched in `data/practitioners.ts`); the HRD Corp accreditation display ("Held today") moved in the same day from `/hrd-corp`. **2026-09-07:** the closing "In the room"/"Trainers at work" section (live-delivery copy beside an image slot) replaced with "Community" — real episodes from the founder's YouTube show, paged 3 at a time. See `docs/MOCK_DATA_REGISTER.md` and `docs/IMAGE_SLOTS.md` |
 | `/about-us` | Organisation identity, commitments, founder, honest current state | **Real — every positioning claim traced to DR-02 §1/§2/§6/§7.** Nothing about scale, history, clients, team size, founding date or accreditation is stated, because none is established |
-| `/contact-us` | Three enquiry routes, enquiry form, genuine channels | **Real, with one gap — see below.** Also now the destination for every "Register your interest" and corporate-enquiry CTA, after the homepage's For-organisations band was removed |
+| `/contact-us` | Three enquiry routes and the enquiry form. **"Reach us directly" (founder's channels + location) removed 2026-09-20, founder direction** — the page now shows no contact channel at all | **Real, with one gap — see below, now sharper: with the channels gone there is no way to contact the Academy from this page except the inert form.** Also now the destination for every "Register your interest" and corporate-enquiry CTA, after the homepage's For-organisations band was removed |
 | `/certifications` | The earned-credential argument, the assessment rubric, and the participation-certificate boundary | **Disabled 2026-09-06** (404 via a flag, founder direction — "future" work). Content real and untouched underneath; removed from primary nav. Created 2026-09-02 when the homepage certification section was removed — the content moved rather than being discarded |
 | `/diagnostic`, `/diagnostic/result` | Capability assessment (P05/P06) | Pre-DR-02 baseline. `/diagnostic` gained an idle landing stage 2026-09-06 (heading, tier selector, Start button — see `docs/MOCK_DATA_REGISTER.md`), shared with the homepage's embedded diagnostic via `DiagnosticStartCard` so the two never drift apart |
 | `/journey-placeholder` | Labelled next-stage placeholder | Placeholder, labelled |
@@ -102,8 +104,12 @@ Each is listed with what actually blocks it. **None is blocked on effort.**
 | **Refund & cancellation policy** | **A prerequisite for taking payment at all** | `OQ-2`/`OQ-9` record refund policy per product type as unresolved. Stripe cannot responsibly go live without it |
 | **Credential integrity policy** | Named in the footer; it is the substance of the credential's worth | Product policy — appeals, revocation, misconduct. `ADR-018`, `OQ-21` |
 
-Until these exist, the footer marks them **"not yet published"** rather than
-presenting them as working links. A footer that promises documents which do
+**2026-09-20, founder direction:** each now has its own page — `/terms`,
+`/privacy`, `/credential-integrity-policy` (`components/legal/PolicyPlaceholder.tsx`)
+— linked from the footer. **The pages are placeholders**: each states the
+document is not yet published, what it will govern, and what must be settled
+first. **No policy text was written**, for the reasons above. The footer
+still carries "not yet published". A footer that promises documents which do
 not exist is a small dishonesty that costs trust when discovered.
 
 ### Blocked on the product existing
@@ -124,8 +130,10 @@ not exist is a small dishonesty that costs trust when discovered.
   proof is the single most damaging thing this portal could do.
 - **Careers** — nothing to advertise. The `/trainers` page already carries the
   open-position signal.
-- **FAQ** — every genuinely frequent question is currently answered on the
-  page where it arises. An FAQ assembled now would be inventing policy.
+- ~~**FAQ**~~ — **built 2026-09-20 by founder direction** (`/faq`, `data/faq.ts`).
+  The concern above was met with a rule: every answer is either a fact
+  already stated on the portal, or an honest "to be confirmed" (chip) pointing
+  to the open decision. No answer invents a rule.
 
 ---
 
@@ -177,6 +185,51 @@ The wireframe defaults the listing toggle **on** because the founder wants a
 public directory; the recommended production default is opt-in.
 
 ---
+
+## Later on 2026-09-20 — founder review changes
+
+| Change | Where |
+|---|---|
+| Fee figures reduced (were `text-display`, now `text-h1` on the public Investment section; `text-body-lg` semibold in the signed-in currency cards, orders and renewal) — "font sizes are large wherever programme fees are involved" | `CoursePricing.tsx`, `CheckoutFlow.tsx`, `account/programme`, `account/orders`, `RenewFlow.tsx` |
+| "Search" added to the primary nav (→ `/verify`); footer link kept | `PublicShell.tsx` |
+| Footer "Certifications" and "For organisations" plain-text items removed | `PublicShell.tsx` |
+| Legal placeholder pages `/terms`, `/privacy`, `/credential-integrity-policy` | `components/legal/PolicyPlaceholder.tsx` |
+| `/contact-us` "Reach us directly" section removed | `app/contact-us/page.tsx` |
+| Homepage hero card "Opportunities / Freelance. Remote. Global — including Pakistan & Malaysia." → **"Confirm Job / Opportunities in Malaysia"** | `HomeHeroLight.tsx` |
+
+**Later still, 2026-09-20 — second founder review round**
+
+| Change | Where |
+|---|---|
+| Nav "Search" → **"Search Candidate"** (→ `/verify`) | `PublicShell.tsx` |
+| **Six hero cards, founder's order and copy**; "Get Career Support" removed: *Confirm Job Opportunities · Authorised Training Corporation · No Coding Experience Required · Prepare for Interviews · Learn Vibe Coding · Start Freelance Right After Training* | `HomeHeroLight.tsx` |
+| **`/faq`** — grouped FAQ, honest "to be confirmed" chips; in footer | `app/faq`, `data/faq.ts` |
+| **`/refund-policy`** placeholder; linked from footer, checkout consent, FAQ, help | `app/refund-policy` |
+| **`/schedule`** — upcoming dates with seats and waitlist (all sample); in footer | `app/schedule` |
+| **`/for-organisations`** — team engagement steps, honest HRD Corp status, inert team enquiry; in footer | `app/for-organisations` |
+| **Participant stories** empty-state section (no cohort has run — nothing invented) | `app/DataBlueprint-AIVibeCoding` |
+| **`/account/orders/[id]`** sample receipt with placeholder issuer block; `/account/notifications`; `/account/help` | `components/account/ReceiptView.tsx`, `app/account/*` |
+| **Trainer / admin wireframe** `/admin` (+ `offerings`, `registrations`, `certificates`, `settings`, `emails`) — sample tables, every action disabled, **no roles exist** | `components/admin/*`, `app/admin/*` |
+| Footer "Wireframe index" (was "Account & payment wireframes") now includes Trainer / admin | `PublicShell.tsx` |
+
+**Revised later the same day** (founder, after review): card 2 → "HRD Corp
+Accredited Trainer — Verified, Trainer ID …" (accurate); card 1 → "Job
+Opportunities in Malaysia — 1–2 top candidates will be brought to Malaysia
+for job opportunities" (founder intent, terms still to be written); card 4 →
+"Get ready for Data & AI Interview". The paragraph below records the earlier
+wording for traceability.
+
+⚠ **Three hero claims had no approved source** and were recorded verbatim at
+founder direction: "Confirm Job Opportunities / Top Candidates will be
+offered Job in Malaysia"; "**Authorised Training Corporation**" (the
+organisation is **not** an HRD Corp registered training provider —
+application in progress; only the trainer is accredited — see
+`docs/HRD_CORP.md` and HRD Corp's logo-usage terms); "Never fail Data & AI
+Interview". Raised with the founder in the 2026-09-20 review.
+
+⚠ The hero card now reads "Confirm Job". Nothing in any approved source
+establishes a job guarantee or placement service; this is founder copy,
+recorded as-is. See the review notes in the session for the concern.
 
 ## Mobile friendliness (audit 2026-09-20)
 

@@ -71,10 +71,23 @@
 | `/account/skills` | Skills profile (`L05`) | **Canned diagnostic fixture**, not computed from anyone's answers | Evidence-backed capability data | C22 | Diagnostic engine (out of scope of this record) |
 | `/account/profile` | Profile & security (`S06`) | Inert; export/delete/password buttons disabled | Profile edit, password change, PDPA export & deletion | C20, C1 | **B2**, A1 |
 
+### 2.4b Added in the 2026-09-20 review round
+
+| Route | Purpose | Simulated / faked | Real build needs | Requirements | Blocked by |
+|---|---|---|---|---|---|
+| `/faq` | FAQ (`data/faq.ts`) | "To be confirmed" chips where policy is open | Replace each TBC answer as decisions land | — | A4, A9, A11, B2, B3 |
+| `/refund-policy`, `/terms`, `/privacy`, `/credential-integrity-policy` | Legal placeholders | No text — state "not yet published" | The documents | B1–B3, integrity policy | Founder + counsel |
+| `/schedule` | Upcoming dates, seats, waitlist (`P24`) | Sample dates/seats; waitlist inert | Offerings with capacity and states; waitlist records + notifications | A6, C11 | A6 |
+| `/for-organisations` | Team engagement + HRD Corp + team enquiry (`P17`/`P19`) | Inert form | Corporate enquiry handling; invoice path; org dashboard (`O01`) and evidence pack (`O10`) later | A5 | A5, OQ-8 |
+| `/account/orders/[id]` | Receipt | Placeholder issuer, tax "not determined" | Real receipts/invoices with numbering, entity, tax | C19 | B4, B5, A11 |
+| `/account/notifications`, `/account/help` | Notification centre (`S05`), help | Static samples / signposts | Notification records; delivery | C6 | A2 |
+| `/admin`, `/admin/offerings`, `/registrations`, `/certificates`, `/settings`, `/emails` | **Trainer/admin operations** | Sample tables; **no roles**; every action disabled | RBAC (`ADR-020`), audit (`ADR-022`); record attendance/completion → issue certificate; revoke/correct; effective-dated fee; offerings & capacity; email catalogue | C2, C21, R-I1, R-F1/F2, R-L8, D2, D11, D12 | A1, A2, D2 |
+
 ### 2.5 Shared chrome
 
 | Item | Change | Note |
 |---|---|---|
+| Header nav | **"Search"** (→ `/verify`) added 2026-09-20 — seven nav items | — |
 | Footer | "Verify a certificate → Search completion certificates" (`/verify`); the earned-credential line is kept, still "available once the first credential is issued" | The two verifications are **different things** — never merge them (DR-02 §6, D1) |
 | Header | The "Explore courses" CTA was **removed** by a separate founder instruction (see the comment in `PublicShell.tsx`); "Sign in" became the avatar menu when in the demo session | — |
 | Print stylesheet (`globals.css`) | "Print / Save as PDF" outputs only `.print-area` | Reuse for the real certificate |
@@ -236,10 +249,10 @@ application** from this disposable mockup (its own `CLAUDE.md` says so).
 - **Certificate:** revocation, reminders/email, real QR, PDF generation beyond
   the browser's print, holder corrections, employer/corporate views, an ID
   check character.
-- **Operations surfaces:** anything for trainers or administrators — recording
-  attendance/completion, issuing or revoking, editing the fee, managing
-  offerings and capacity, viewing orders.
-- **Other:** notifications, help/support page, corporate-manager persona
+- **Operations surfaces:** now *drawn* under `/admin` (2026-09-20) as sample
+  tables with disabled actions — but **no roles, permissions, forms or
+  behaviour** exist behind them.
+- **Other:** corporate-manager persona
   (`O01`, `O10`), "My credentials" (`L09` — Certification is paused, founder
   2026-09-06), lesson player / AI tutor / learning paths / community (retired or
   deferred by DR-02).
@@ -253,7 +266,9 @@ align once A4 and D1 are settled.
 |---|---|---|
 | `about-us`, course-detail template, `CoursePricing` (other courses) | "no online payment yet", "Register your interest" → `/contact-us` | The flagship's public CTA now leads to sign-in/checkout |
 | Course pages, source content | "**Certificate of participation**" | Superseded by "Certificate of Completion" if D1 is accepted |
-| Footer | "Certifications" as plain text | Certification is paused; the new verify link is *completion* certificates |
+| Footer | *(resolved 2026-09-20 — plain-text "Certifications" / "For organisations" removed)* | — |
+| Homepage hero card | "Job Opportunities in Malaysia — 1–2 top candidates will be brought to Malaysia" (founder intent, 2026-09-20) | Needs terms before launch: selection criteria, what "brought" includes (visa, travel, employment), and who decides — a published policy, not hero copy |
+| Legal pages | `/terms`, `/privacy`, `/credential-integrity-policy` are placeholders | The documents (B1, B2 and the integrity policy) remain undrafted |
 | `/courses/ai-powered-product-development` (flagship's own detail page) | Enquiry CTA | Only `/DataBlueprint-AIVibeCoding` opts in to the sign-in/registration flow |
 | Pricing copy | "time-limited launch offers" | A10 — what a registered buyer is owed if prices change |
 | Brand | "Data & AI Academy" is a **working placeholder** (`HO-4`) and is printed on every certificate | D14 |

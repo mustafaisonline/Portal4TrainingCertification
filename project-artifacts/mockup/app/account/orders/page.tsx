@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { SampleTag } from "@/components/account/SampleTag";
 import { WireframeNote } from "@/components/auth/FormParts";
 import { Button } from "@/components/ui/Button";
@@ -40,7 +41,7 @@ export default function OrdersPage() {
                     <p className="text-body-lg font-medium">
                       {PROGRAMME_TITLE} · {d.offering?.formatName}
                     </p>
-                    <p className="text-h1 text-[var(--color-primary)]">{d.price?.today}</p>
+                    <p className="text-body-lg font-semibold text-[var(--color-primary)]">{d.price?.today}</p>
                   </div>
                   <dl className="text-body-sm mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-4">
                     <div>
@@ -62,10 +63,12 @@ export default function OrdersPage() {
                       </dd>
                     </div>
                   </dl>
-                  <p className="text-body-sm mt-4 text-[var(--color-ink-faint)]">
-                    Receipt: available once payments are connected.
-                    <SampleTag />
-                  </p>
+                  <Link
+                    href={`/account/orders/${reg.offeringId}`}
+                    className="text-body-sm -mb-2 mt-3 inline-block py-2 text-[var(--color-primary)] underline underline-offset-4"
+                  >
+                    View receipt (sample)
+                  </Link>
                 </Card>
               </li>
             );

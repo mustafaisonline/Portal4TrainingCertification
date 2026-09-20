@@ -65,7 +65,7 @@ export default function ProgrammePage() {
                 className="rounded-[var(--radius-plate)] border border-[var(--color-line)] bg-[var(--color-ground)] p-4"
               >
                 <p className="text-label mb-2">{c.name}</p>
-                <p className="text-h1 break-words text-[var(--color-primary)]">{price.today}</p>
+                <p className="text-body-lg break-words font-semibold text-[var(--color-primary)]">{price.today}</p>
                 <p className="text-body-sm mt-1 text-[var(--color-ink-faint)] line-through">
                   {price.original}
                 </p>

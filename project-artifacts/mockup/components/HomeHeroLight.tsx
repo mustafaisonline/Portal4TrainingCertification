@@ -195,10 +195,21 @@ export function HomeHero() {
   const founder = practitioners[0];
   const accreditation = founder.hrdCorpAccreditation;
 
-  const heroCardsLeft = [
-    { icon: <IconCode />, title: "Learn Vibe Coding", body: "Turn ideas into real products with AI." },
-    { icon: <IconBriefcase />, title: "Opportunities", body: "Freelance. Remote. Global — including Pakistan & Malaysia." },
-    { icon: <IconCheckCircle />, title: "No Coding Experience Required", body: "Anyone with zero coding background can take this course." },
+  /* Six hero cards, in the founder's order (2026-09-20, replacing the
+     earlier three-in-an-array + three-hardcoded arrangement; "Get Career
+     Support" removed). Copy is the founder's, verbatim.
+     Revised same day after review: card 2 now claims only the TRAINER's
+     HRD Corp accreditation (which is real — the organisation is not a
+     registered provider); card 1 states the founder's intent ("bring 1–2
+     top candidates to Malaysia") — an open policy commitment, not yet
+     backed by terms (see docs/MOCK_DATA_REGISTER.md); card 4 softened. */
+  const heroCards: { icon: React.ReactNode; tone: keyof typeof toneClasses; title: string; body: string; href?: string; badge?: string }[] = [
+    { icon: <IconBriefcase />, tone: "blue", title: "Job Opportunities in Malaysia", body: "1–2 top candidates will be brought to Malaysia for job opportunities." },
+    { icon: <IconCheckCircle />, tone: "teal", title: "HRD Corp Accredited Trainer", body: accreditation ? `Verified — Trainer ID ${accreditation.trainerId}.` : "Trained by an HRD Corp Accredited Trainer.", href: "/hrd-corp", badge: accreditation?.badge },
+    { icon: <IconCheckCircle />, tone: "blue", title: "No Coding Experience Required", body: "Anyone with zero coding background can take this course." },
+    { icon: <IconChat />, tone: "teal", title: "Prepare for Interviews", body: "Get ready for Data & AI Interview" },
+    { icon: <IconCode />, tone: "blue", title: "Learn Vibe Coding", body: "Turn ideas into real products with AI." },
+    { icon: <IconGlobe />, tone: "teal", title: "Start Freelance Right After Training", body: "Work From Anywhere" },
   ];
 
   return (
@@ -264,54 +275,30 @@ export function HomeHero() {
               2-column grid of all six cards; nothing else about the
               cards' content changed. */}
           <div className="relative mx-auto grid max-w-[520px] grid-cols-2 gap-3">
-            {heroCardsLeft.map((c) => (
-              <div key={c.title} className={glassCard}>
-                <div className="mb-2 flex items-center gap-2">
-                  <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-lg ${toneClasses.blue}`}>
-                    {c.icon}
-                  </span>
-                  <p className="text-[13px] font-semibold text-[var(--color-ink)]">{c.title}</p>
+            {heroCards.map((c) => {
+              const inner = (
+                <>
+                  <div className="mb-2 flex items-center gap-2">
+                    {c.badge ? (
+                      <Image src={assetPath(c.badge)} alt="" width={32} height={32} className="h-8 w-8 shrink-0 rounded-full object-cover" />
+                    ) : (
+                      <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-lg ${toneClasses[c.tone]}`}>{c.icon}</span>
+                    )}
+                    <p className="text-[13px] font-semibold leading-tight text-[var(--color-ink)]">{c.title}</p>
+                  </div>
+                  <p className="text-[12px] leading-snug text-[var(--color-ink-faint)]">{c.body}</p>
+                </>
+              );
+              return c.href ? (
+                <Link key={c.title} href={c.href} className={`${glassCard} transition-colors hover:bg-[rgba(255,255,255,0.09)]`}>
+                  {inner}
+                </Link>
+              ) : (
+                <div key={c.title} className={glassCard}>
+                  {inner}
                 </div>
-                <p className="text-[12px] leading-snug text-[var(--color-ink-faint)]">{c.body}</p>
-              </div>
-            ))}
-
-            {accreditation && (
-              <Link
-                href="/hrd-corp"
-                className={`${glassCard} transition-colors hover:bg-[rgba(255,255,255,0.09)]`}
-              >
-                <div className="mb-2 flex items-center gap-2">
-                  <Image
-                    src={assetPath(accreditation.badge)}
-                    alt=""
-                    width={32}
-                    height={32}
-                    className="h-8 w-8 shrink-0 rounded-full object-cover"
-                  />
-                  <p className="text-[13px] font-semibold leading-tight text-[var(--color-ink)]">{accreditation.title}</p>
-                </div>
-                <p className="text-[12px] leading-snug text-[var(--color-ink-faint)]">Verified — Trainer ID {accreditation.trainerId}.</p>
-              </Link>
-            )}
-            <div className={glassCard}>
-              <div className="mb-2 flex items-center gap-2">
-                <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-lg ${toneClasses.teal}`}>
-                  <IconChat />
-                </span>
-                <p className="text-[13px] font-semibold text-[var(--color-ink)]">Prepare for Interviews</p>
-              </div>
-              <p className="text-[12px] leading-snug text-[var(--color-ink-faint)]">Practice with real projects, so you walk in ready.</p>
-            </div>
-            <div className={glassCard}>
-              <div className="mb-2 flex items-center gap-2">
-                <span className={`grid h-8 w-8 shrink-0 place-items-center rounded-lg ${toneClasses.blue}`}>
-                  <IconCompass />
-                </span>
-                <p className="text-[13px] font-semibold text-[var(--color-ink)]">Get Career Support</p>
-              </div>
-              <p className="text-[12px] leading-snug text-[var(--color-ink-faint)]">Guidance connecting your new skills to real opportunities.</p>
-            </div>
+              );
+            })}
 
             <p className="col-span-2 mt-2 text-right text-[15px] font-medium italic text-[var(--color-cyan)]">
               Real Skills. Real Opportunities.

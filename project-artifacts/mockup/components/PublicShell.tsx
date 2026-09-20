@@ -135,6 +135,11 @@ const navItems = [
   { href: "/trainers", label: "Trainers" },
   { href: "/diagnostic", label: "Free Diagnostic" },
   { href: "/about-us", label: "About Us" },
+  // 2026-09-20, founder direction: certificate search promoted from the
+  // footer to the primary nav as "Search" (→ /verify). Seven items now —
+  // the "six maximum" noted above was a documented guideline, and the
+  // founder chose to exceed it.
+  { href: "/verify", label: "Search Candidate" },
 ];
 
 /** Active-page test for the nav. Trailing slashes are normalised (the Pages
@@ -337,6 +342,9 @@ export function PublicShell({ children }: { children: ReactNode }) {
                 { href: "/DataBlueprint-AIVibeCoding", label: "Courses" },
                 { href: "/trainers", label: "Trainers" },
                 { href: "/about-us", label: "About Us" },
+                { href: "/schedule", label: "Schedule" },
+                { href: "/for-organisations", label: "For Organisations" },
+                { href: "/faq", label: "FAQ" },
                 { href: "/contact-us", label: "Contact Us" },
               ].map((l) => (
                 <li key={l.href}>
@@ -348,8 +356,8 @@ export function PublicShell({ children }: { children: ReactNode }) {
                   </Link>
                 </li>
               ))}
-              <li className="text-[var(--color-ink-faint)]">Certifications</li>
-              <li className="text-[var(--color-ink-faint)]">For organisations</li>
+              {/* "Certifications" and "For organisations" plain-text items
+                  REMOVED 2026-09-20, founder direction. */}
             </ul>
           </div>
           {/* These three are named because the product genuinely requires
@@ -360,12 +368,29 @@ export function PublicShell({ children }: { children: ReactNode }) {
               docs/SITE_PAGES.md. */}
           <div>
             <p className="text-label mb-3">Legal</p>
-            <p className="text-[var(--color-ink-faint)]">
-              Terms · Privacy · Credential integrity policy
-              <br />
-              <span className="text-mono text-[0.7rem]">
-                not yet published
-              </span>
+            {/* 2026-09-20, founder direction: each item now has its own page.
+                The PAGES are placeholders that state the document is not yet
+                published — the documents themselves remain undrafted (legal
+                instruments; docs/SITE_PAGES.md "Blocked on legal drafting"). */}
+            <ul className="flex flex-col gap-2">
+              {[
+                { href: "/terms", label: "Terms of service" },
+                { href: "/privacy", label: "Privacy policy" },
+                { href: "/refund-policy", label: "Refund & cancellation policy" },
+                { href: "/credential-integrity-policy", label: "Credential integrity policy" },
+              ].map((l) => (
+                <li key={l.href}>
+                  <Link
+                    href={l.href}
+                    className="underline-offset-4 hover:text-[var(--color-ink)] hover:underline"
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <p className="text-mono mt-2 text-[0.7rem] text-[var(--color-ink-faint)]">
+              not yet published
             </p>
           </div>
           <div>
@@ -400,13 +425,14 @@ export function PublicShell({ children }: { children: ReactNode }) {
               until authentication and a cart exist, so without this they
               could not be reached to be reviewed. Not product navigation. */}
           <p className="mt-2">
-            Account &amp; payment wireframes:{" "}
+            Wireframe index:{" "}
             {[
               { href: "/sign-in", label: "Sign in" },
               { href: "/register", label: "Register" },
               { href: "/forgot-password", label: "Forgot password" },
               { href: "/sign-out", label: "Sign out" },
               { href: "/checkout", label: "Checkout" },
+              { href: "/admin", label: "Trainer / admin" },
             ].map((l, i) => (
               <span key={l.href}>
                 {i > 0 ? " · " : ""}

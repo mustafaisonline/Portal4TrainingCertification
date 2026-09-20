@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { demoParticipant } from "@/data/demoParticipant";
-import { endDemoSession, useDemoSession } from "@/lib/demoSession";
+import { endDemoSession, useDemoRole, useDemoSession } from "@/lib/demoSession";
 
 /**
  * Header account controls — 2026-09-20. Signed out (or still resolving):
@@ -17,6 +17,13 @@ import { endDemoSession, useDemoSession } from "@/lib/demoSession";
  * (`AccountMenu`, from `sm` up) and the mobile panel (`MobileAccountActions`),
  * where the row is too tight for an avatar at 375px.
  */
+
+const adminLinks = [
+  { href: "/admin", label: "Admin dashboard" },
+  { href: "/admin/offerings", label: "Dates & seats" },
+  { href: "/admin/registrations", label: "Registrations" },
+  { href: "/admin/certificates", label: "Certificates" },
+];
 
 const menuLinks = [
   { href: "/account", label: "My account" },
@@ -39,6 +46,8 @@ function useSignOut() {
 
 export function AccountMenu() {
   const state = useDemoSession();
+  const role = useDemoRole();
+  const links = role === "admin" ? adminLinks : menuLinks;
   const signOut = useSignOut();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -83,7 +92,7 @@ export function AccountMenu() {
           aria-hidden="true"
           className="grid h-8 w-8 place-items-center rounded-full bg-[var(--color-action)] text-[0.7rem] font-semibold text-[var(--color-action-ink)]"
         >
-          {demoParticipant.initials}
+          {role === "admin" ? "AD" : demoParticipant.initials}
         </span>
         <span className="hidden md:inline">Account</span>
       </button>
@@ -91,12 +100,12 @@ export function AccountMenu() {
         <div className="absolute right-0 top-full z-20 mt-2 w-60 rounded-[var(--radius-panel)] border border-[var(--color-line)] bg-[var(--color-ground-raised)] p-2 shadow-[0_10px_30px_rgba(16,24,40,0.18)]">
           <p className="px-3 pb-2 pt-1">
             <span className="block text-body-sm font-medium text-[var(--color-ink)]">
-              {demoParticipant.name}
+              {role === "admin" ? "Demo Admin" : demoParticipant.name}
             </span>
-            <span className="text-label text-[0.6rem]">Demo session</span>
+            <span className="text-label text-[0.6rem]">Demo session · {role}</span>
           </p>
           <ul className="border-t border-[var(--color-line)] pt-1">
-            {menuLinks.map((l) => (
+            {links.map((l) => (
               <li key={l.href}>
                 <Link
                   href={l.href}
@@ -126,6 +135,7 @@ export function AccountMenu() {
 
 export function MobileAccountActions({ onNavigate }: { onNavigate: () => void }) {
   const state = useDemoSession();
+  const role = useDemoRole();
   const signOut = useSignOut();
   if (state !== "in") {
     return (
@@ -136,8 +146,8 @@ export function MobileAccountActions({ onNavigate }: { onNavigate: () => void })
   }
   return (
     <>
-      <Button variant="secondary" href="/account" onClick={onNavigate}>
-        My account
+      <Button variant="secondary" href={role === "admin" ? "/admin" : "/account"} onClick={onNavigate}>
+        {role === "admin" ? "Admin" : "My account"}
       </Button>
       <Button
         variant="secondary"

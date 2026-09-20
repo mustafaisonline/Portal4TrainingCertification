@@ -135,7 +135,7 @@ real thing; each has a real replacement.
 
 | Demo artefact | What it fakes | Replaced by |
 |---|---|---|
-| `lib/demoCredentials.ts` | A public username/password | Real authentication (C1) |
+| `lib/demoCredentials.ts`, `lib/demoSession.ts` | Two personas' credentials (participant, admin), the session **role**, return-to | Real auth (C1), RBAC (`ADMIN_REQUIREMENTS.md` AD-1), validated redirect (C17) |
 | `lib/demoSession.ts` | A `sessionStorage` "signed in" flag; the return-to path | Real sessions (C1); validated redirect (C17) |
 | `components/auth/SignInForm.tsx` | Compares against the public constants | Real sign-in via the approved provider |
 | `components/auth/ClearDemoSession.tsx` | Ends the demo session on `/sign-out` | A server-side sign-out action (C1) |

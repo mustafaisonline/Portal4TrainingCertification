@@ -8,3 +8,10 @@
  */
 export const DEMO_EMAIL = "demo.participant@example.com";
 export const DEMO_PASSWORD = "Demo-Password-2026";
+
+/** Second persona, added 2026-09-20 for the trainer/admin wireframe. Same
+ *  warnings apply: public, protects nothing, delete with real auth. */
+export const DEMO_ADMIN_EMAIL = "demo.admin@example.com";
+export const DEMO_ADMIN_PASSWORD = "Demo-Admin-2026";
+
+export type DemoRole = "participant" | "admin";

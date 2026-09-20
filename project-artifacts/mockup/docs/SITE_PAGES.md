@@ -209,7 +209,7 @@ public directory; the recommended production default is opt-in.
 | **`/for-organisations`** — team engagement steps, honest HRD Corp status, inert team enquiry; in footer | `app/for-organisations` |
 | **Participant stories** empty-state section (no cohort has run — nothing invented) | `app/DataBlueprint-AIVibeCoding` |
 | **`/account/orders/[id]`** sample receipt with placeholder issuer block; `/account/notifications`; `/account/help` | `components/account/ReceiptView.tsx`, `app/account/*` |
-| **Trainer / admin wireframe** `/admin` (+ `offerings`, `registrations`, `certificates`, `settings`, `emails`) — sample tables, every action disabled, **no roles exist** | `components/admin/*`, `app/admin/*` |
+| **Trainer / admin wireframe** `/admin` — first pass (6 pages); **rebuilt later the same day** as a full admin side with its own demo persona, see "Trainer & admin side" below | `components/admin/*`, `app/admin/*` |
 | Footer "Wireframe index" (was "Account & payment wireframes") now includes Trainer / admin | `PublicShell.tsx` |
 
 **Revised later the same day** (founder, after review): card 2 → "HRD Corp
@@ -230,6 +230,32 @@ Interview". Raised with the founder in the 2026-09-20 review.
 ⚠ The hero card now reads "Confirm Job". Nothing in any approved source
 establishes a job guarantee or placement service; this is founder copy,
 recorded as-is. See the review notes in the session for the concern.
+
+## Trainer & admin side (`/admin`) — 2026-09-20
+
+Founder direction: "create all kind of pages, dashboards etc an admin side
+must have … show pre-loaded username and password for testing."
+
+**Second demo persona.** `/sign-in` now shows two accounts to click-fill:
+*Participant* (`demo.participant@example.com` / `Demo-Password-2026`) and
+*Trainer / admin* (`demo.admin@example.com` / `Demo-Admin-2026`). The stored
+session value is now the **role** (`lib/demoSession.ts`); a participant who
+opens `/admin` is told to switch accounts. ⚠ A browser label, not a
+permission — nothing is enforced.
+
+**Fifteen screens** (`app/admin/*`, sample data in `data/adminSamples.ts`,
+every action disabled): Dashboard (needs-attention list, KPIs, upcoming
+offerings, recent orders/enquiries/activity) · Programme (formats, prices,
+curriculum, materials) · Dates & seats + per-offering detail (sessions &
+attendance, roster, joining info) · Registrations & attendance (record
+attendance, **mark complete** → certificate) · Participants + detail · Orders
+& payments · Enquiries · Organisations · Certificates + detail (correct,
+reissue, **revoke**) · Fees & settings (effective-dated fee, currencies,
+eligibility, methods, tax, entity, Stripe, policy publication) · Emails ·
+Users & roles · Audit log · Reports.
+
+Requirements, decisions and the delete-list:
+[`../../../docs/execution/ADMIN_REQUIREMENTS.md`](../../../docs/execution/ADMIN_REQUIREMENTS.md).
 
 ## Mobile friendliness (audit 2026-09-20)
 

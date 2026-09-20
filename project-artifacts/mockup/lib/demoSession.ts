@@ -1,5 +1,11 @@
 import { useSyncExternalStore } from "react";
-import { DEMO_EMAIL, DEMO_PASSWORD } from "./demoCredentials";
+import {
+  DEMO_ADMIN_EMAIL,
+  DEMO_ADMIN_PASSWORD,
+  DEMO_EMAIL,
+  DEMO_PASSWORD,
+  type DemoRole,
+} from "./demoCredentials";
 import { clearDemoCertificate } from "./demoCertificate";
 import { clearDemoRegistrations } from "./demoRegistrations";
 
@@ -29,21 +35,29 @@ const KEY = "mockup:demo-session";
 // In-memory fallback for browsers that block sessionStorage (private modes,
 // storage disabled): the session then lasts for client-side navigation but
 // not a reload, rather than sign-in silently failing.
-let memory = false;
+let memoryRole: DemoRole | null = null;
 const listeners = new Set<() => void>();
 
-function read(): boolean {
+// The stored value is the ROLE ("participant" | "admin") since 2026-09-20 —
+// a second demo persona was added for the trainer/admin wireframe. This is
+// a label the browser chose to remember, not a permission: nothing checks it
+// server-side (there is no server). Real RBAC: ADR-020.
+function readRole(): DemoRole | null {
   try {
-    return sessionStorage.getItem(KEY) === "1";
+    const v = sessionStorage.getItem(KEY);
+    return v === "participant" || v === "admin" ? v : memoryRole;
   } catch {
-    return memory;
+    return memoryRole;
   }
 }
+function read(): boolean {
+  return readRole() !== null;
+}
 
-function write(on: boolean) {
-  memory = on;
+function write(role: DemoRole | null) {
+  memoryRole = role;
   try {
-    if (on) sessionStorage.setItem(KEY, "1");
+    if (role) sessionStorage.setItem(KEY, role);
     else sessionStorage.removeItem(KEY);
   } catch {
     /* storage unavailable — the in-memory flag above carries the session */
@@ -51,8 +65,8 @@ function write(on: boolean) {
   listeners.forEach((l) => l());
 }
 
-export function startDemoSession() {
-  write(true);
+export function startDemoSession(role: DemoRole = "participant") {
+  write(role);
 }
 
 /** Synchronous, non-hook read for event handlers (click-time decisions). */
@@ -61,7 +75,7 @@ export function isDemoSignedIn(): boolean {
 }
 
 export function endDemoSession() {
-  write(false);
+  write(null);
   // The simulated registrations belong to the demo session (see
   // lib/demoRegistrations.ts) and must not outlive it.
   clearDemoRegistrations();
@@ -102,9 +116,32 @@ export function consumeReturnTo(): string | null {
   }
 }
 
+/** Which demo persona the typed credentials belong to, or null. */
+export function matchDemoRole(email: string, password: string): DemoRole | null {
+  const e = email.trim().toLowerCase();
+  if (e === DEMO_EMAIL && password === DEMO_PASSWORD) return "participant";
+  if (e === DEMO_ADMIN_EMAIL && password === DEMO_ADMIN_PASSWORD) return "admin";
+  return null;
+}
+
 export function credentialsMatch(email: string, password: string) {
-  return (
-    email.trim().toLowerCase() === DEMO_EMAIL && password === DEMO_PASSWORD
+  return matchDemoRole(email, password) !== null;
+}
+
+/** Synchronous role read for event handlers. */
+export function demoRole(): DemoRole | null {
+  return readRole();
+}
+
+/** "unknown" during hydration, otherwise the role or null when signed out. */
+export function useDemoRole(): DemoRole | null | "unknown" {
+  return useSyncExternalStore<DemoRole | null | "unknown">(
+    (cb) => {
+      listeners.add(cb);
+      return () => listeners.delete(cb);
+    },
+    readRole,
+    () => "unknown",
   );
 }
 

@@ -22,6 +22,7 @@
 |---|---|---|
 | 1 | **This file** | The map: every screen ↔ simulations ↔ requirements ↔ blockers |
 | 2 | [`ACCOUNT_AND_PAYMENT_REQUIREMENTS.md`](ACCOUNT_AND_PAYMENT_REQUIREMENTS.md) | Founder decisions F1–F8, open decisions A1–A12, legal documents B1–B6, backend work C1–C22, demo-file inventory, test checklist |
+| 3a | [`ADMIN_REQUIREMENTS.md`](ADMIN_REQUIREMENTS.md) | The trainer/admin side: roles, operations, configuration, audit — requirements AD-1…21, decisions AD-D1..5, delete-list |
 | 3 | [`COMPLETION_CERTIFICATE_REQUIREMENTS.md`](COMPLETION_CERTIFICATE_REQUIREMENTS.md) | The certificate feature: requirements R-*, verified logic, privacy design, decisions D1–D15 |
 | 4 | `project-artifacts/mockup/docs/SITE_PAGES.md` | What each page shows, why, and what was deliberately not built |
 | 5 | `project-artifacts/mockup/docs/MOCK_DATA_REGISTER.md` | REAL vs FAKED for every claim the wireframe makes |
@@ -81,7 +82,7 @@
 | `/for-organisations` | Team engagement + HRD Corp + team enquiry (`P17`/`P19`) | Inert form | Corporate enquiry handling; invoice path; org dashboard (`O01`) and evidence pack (`O10`) later | A5 | A5, OQ-8 |
 | `/account/orders/[id]` | Receipt | Placeholder issuer, tax "not determined" | Real receipts/invoices with numbering, entity, tax | C19 | B4, B5, A11 |
 | `/account/notifications`, `/account/help` | Notification centre (`S05`), help | Static samples / signposts | Notification records; delivery | C6 | A2 |
-| `/admin`, `/admin/offerings`, `/registrations`, `/certificates`, `/settings`, `/emails` | **Trainer/admin operations** | Sample tables; **no roles**; every action disabled | RBAC (`ADR-020`), audit (`ADR-022`); record attendance/completion → issue certificate; revoke/correct; effective-dated fee; offerings & capacity; email catalogue | C2, C21, R-I1, R-F1/F2, R-L8, D2, D11, D12 | A1, A2, D2 |
+| `/admin` + 14 screens (see [`ADMIN_REQUIREMENTS.md`](ADMIN_REQUIREMENTS.md)) | **Trainer/admin operations** — own demo persona | Sample tables; the "role" is a browser label; every action disabled | RBAC + MFA (AD-1..4), attendance/completion → issuance (AD-6/7), orders/refunds/invoices (AD-10/11), enquiries/organisations (AD-12/13), certificate admin (AD-14/15), configuration (AD-16..18), audit/reports/PDPA (AD-19..21) | AD-1…AD-21 | A1, A2, D2, AD-D1..D5 |
 
 ### 2.5 Shared chrome
 
@@ -100,7 +101,7 @@ Nothing below is production logic. Each item has a real replacement.
 
 | `sessionStorage` key | Holds | Cleared by |
 |---|---|---|
-| `mockup:demo-session` | "signed in" flag | Sign-out / "End demo session" |
+| `mockup:demo-session` | the demo **role** (`participant` \| `admin`) — a label, not a permission | Sign-out / "End demo session" |
 | `mockup:demo-registrations` | Simulated registrations (the fake payments) | `endDemoSession()` |
 | `mockup:demo-certificate` | The demo participant's certificate and renewals | `endDemoSession()` |
 | `mockup:demo-return-to` | Path to resume after sign-in | Consumed on sign-in |
@@ -249,9 +250,9 @@ application** from this disposable mockup (its own `CLAUDE.md` says so).
 - **Certificate:** revocation, reminders/email, real QR, PDF generation beyond
   the browser's print, holder corrections, employer/corporate views, an ID
   check character.
-- **Operations surfaces:** now *drawn* under `/admin` (2026-09-20) as sample
-  tables with disabled actions — but **no roles, permissions, forms or
-  behaviour** exist behind them.
+- **Operations surfaces:** drawn in full under `/admin` (15 screens, own demo
+  persona) — but **no roles, permissions, forms or behaviour** exist behind
+  them. See `ADMIN_REQUIREMENTS.md`.
 - **Other:** corporate-manager persona
   (`O01`, `O10`), "My credentials" (`L09` — Certification is paused, founder
   2026-09-06), lesson player / AI tutor / learning paths / community (retired or

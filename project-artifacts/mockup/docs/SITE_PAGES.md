@@ -59,6 +59,7 @@ have orphaned the menu item, so the content moved to its own page.
 | `/diagnostic`, `/diagnostic/result` | Capability assessment (P05/P06) | Pre-DR-02 baseline. `/diagnostic` gained an idle landing stage 2026-09-06 (heading, tier selector, Start button — see `docs/MOCK_DATA_REGISTER.md`), shared with the homepage's embedded diagnostic via `DiagnosticStartCard` so the two never drift apart |
 | `/journey-placeholder` | Labelled next-stage placeholder | Placeholder, labelled |
 | `/hrd-corp` | What HRD Corp is, and the honest status of organisational registration and course claimability | Real, created 2026-09-06 by founder direction. **In primary nav** (position 2, right after Home — replacing Contact Us, same day, see above), and also reached via the homepage hero's floating "03" card. The trainer's own accreditation display (badge, verify link) moved to `/trainers` the same day — this page still links there for it. Every other page (courses, certifications, course detail, about-us) still carries nothing HRD-Corp-related, by founder direction. See [`HRD_CORP.md`](HRD_CORP.md) |
+| `/sign-in`, `/register`, `/forgot-password`, `/sign-out`, `/checkout` | **Account & payment wireframes — added 2026-09-20, founder direction** ("standard pages … No backend implementation yet"). Spec screens `S01` (sign in, incl. recovery), `S02` (create account) and the pay step of `K03`; sign-out has no spec screen (only an avatar-menu item). Reachable from the header's "Sign in" and a reviewer index in the footer's bottom strip | **Wireframe — inert by design, except the labelled demo sign-in** (see "Signed-in wireframes" below). Register / forgot-password / checkout buttons are genuinely disabled; forms cannot submit (Enter is swallowed so typed values never reach the URL); each page carries a "Wireframe" note saying nothing is connected. See "Account & payment wireframes" below |
 
 ## ⚠ Open gap on `/contact-us` — there is no business email address
 
@@ -104,8 +105,8 @@ not exist is a small dishonesty that costs trust when discovered.
 |---|---|
 | **Verify a credential** (public lookup) | No credential has been issued. `ADR-018`/`ADR-039`. The footer says "available once the first credential is issued" |
 | **Schedule / upcoming dates** | State A — no confirmed public inventory. Inventing dates is prohibited (`HD-7`, `HO-2`) |
-| **Sign in / account** | No authentication exists in the mockup by design |
-| **Checkout** | See the payments record below |
+| **Sign in / account** | *Wireframe drawn 2026-09-20* (see Built). Working sign-in still needs authentication (ADR-006, pending approval) |
+| **Checkout** | *Wireframe drawn 2026-09-20* (see Built). A working checkout is still blocked — see the payments record below |
 
 ### Deliberately not added
 
@@ -118,6 +119,74 @@ not exist is a small dishonesty that costs trust when discovered.
   open-position signal.
 - **FAQ** — every genuinely frequent question is currently answered on the
   page where it arises. An FAQ assembled now would be inventing policy.
+
+---
+
+## Account & payment wireframes (2026-09-20)
+
+Founder direction: add Sign-in, Sign-out, Forgot password, User registration
+and a Payment page (the company's Stripe account to be attached later), as
+wireframe, no backend.
+
+**What was drawn, and what was deliberately left out** — each omission is an
+undecided product/architecture question, not an oversight:
+
+| Screen | Drawn | Not drawn, because |
+|---|---|---|
+| Sign in | Email, password (show/hide), forgot-password link, create-account link | Social providers, "remember me"/session length, MFA, org SSO — ADR-006 (auth) is pending approval |
+| Register | Name, email, country, password + confirm | Target role / goals / time budget (that is onboarding, `S03`); phone, DOB, org, ID — no approved source requires them; email verification (`S04`) — needs ADR-015; password rules — ADR-006 |
+| Forgot password | Request step only | The "check your email" and "set new password" steps — the first would be a simulated success with nothing sent; both need ADR-015 / ADR-006 |
+| Sign out | The signed-out landing screen | Nothing links here in the product until a signed-in avatar menu exists; it is a static layout and says nothing was signed out |
+| Checkout | Details, a dashed slot marking where Stripe's Payment Element will mount, order summary, disabled Pay button | **Card fields** (card data is typed into Stripe's own fields, never ours); payment-method list (Stripe account config + open Malaysian rail, ADR-014); tax line (`OQ-9`); a ticked consent (Terms and refund policy do not exist) |
+
+**Consent checkboxes are drawn disabled**, with the reason beside them
+(Terms / Privacy / Refund policy unpublished — see "Blocked on legal
+drafting" above). An enabled tick agreeing to a document that does not exist
+would be a fake consent record.
+
+**Checkout's line item** is real data (`The Data Blueprint`, Malaysia
+launch price, from `data/courses.ts`), but *which* programme is shown is not
+wired — there is no cart. `HO-10` (is individual online payment offered at
+all?) is still open, so this screen is a proposal, not a commitment.
+
+### Signed-in wireframes (`/account/*`) — added 2026-09-20
+
+Founder direction: pre-load a dummy username and password so the wireframe
+shows how the portal behaves after sign-in. The `/sign-in` form is
+pre-filled with a **public demo account**; signing in with it (only it)
+opens the signed-in area. This is a **labelled simulation, not
+authentication** — see `lib/demoSession.ts` — with a persistent "Demo
+session — sample data" banner throughout.
+
+Screen set chosen from the approved specs, following DR-02 §3 (the portal
+*supports* live delivery; it is not where learning happens) and its priority
+order — discovery → scheduling/commercial → evidence → cohort operations →
+supporting materials last:
+
+| Route | Spec | Notes |
+|---|---|---|
+| `/account` | `L01` Dashboard | Led by the **next session**, not a "Continue" card (DR-02 reframing) |
+| `/account/programmes`, `/account/programmes/[id]` | `L02` reframed | Programme *participation*: sessions, joining info, supporting materials, certificate of participation |
+| `/account/orders` | `S07` | Where `/checkout` leads; real prices, sample order data |
+| `/account/skills` | `L05` | Illustrative diagnostic fixture; says so |
+| `/account/profile` | `S06` | Details, change password, PDPA export/delete — all disabled |
+
+**Deliberately absent:** lesson player, AI tutor, learning paths, community,
+content library (retired/deferred by DR-02); **"My credentials"** (`L09`) —
+Certification is paused, founder direction 2026-09-06; gamification.
+**Not yet built, offered as a later round:** a corporate-manager demo persona
+(`O01` org dashboard, `O10` HRD Corp evidence pack), notifications, help.
+
+**Sample dates are illustrative, by founder choice.** Offered the honest
+alternative ("Date to be announced", per DR-02 §4.1) he chose labelled
+illustrative dates. Every invented value carries a "Sample" chip. Recorded
+as an explicit override in `docs/MOCK_DATA_REGISTER.md`.
+
+**What it takes to make these real** is recorded in [`../../../docs/execution/ACCOUNT_AND_PAYMENT_REQUIREMENTS.md`](../../../docs/execution/ACCOUNT_AND_PAYMENT_REQUIREMENTS.md).
+
+**This does not implement Stripe.** No Stripe.js, no keys, no dependency was
+added. The Payments section below still stands as the record of what real
+integration requires.
 
 ---
 

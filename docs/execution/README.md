@@ -39,6 +39,7 @@ It is deliberately separate from [`../architecture/`](../architecture/README.md)
 |---|---|---|
 | [`MILESTONE_1_EXECUTION_PLAN.md`](MILESTONE_1_EXECUTION_PLAN.md) | The "Walking Skeleton" — the proposed first executable milestone: scope, approved decisions relied on, RED-gate actions, deliverables, verification criteria. **Unaffected by the `DR-02` correction** | ⛔ **SCOPE ACCEPTED — EXECUTION NOT AUTHORIZED** |
 | [`PROJECT_PLAN_WBS.md`](PROJECT_PLAN_WBS.md) | The master execution navigation layer: phases, workstreams, milestones, work packages, dependencies and status. **Reconciled with `DR-02` on 2026-08-31** | DRAFT — pending review |
+| [`ACCOUNT_AND_PAYMENT_REQUIREMENTS.md`](ACCOUNT_AND_PAYMENT_REQUIREMENTS.md) | What the 2026-09-20 sign-in / register / forgot-password / sign-out / checkout wireframes need before they can be real — split into founder decisions, legal documents and backend engineering. **A record only; authorises nothing** | REQUIREMENTS RECORD |
 
 ## 4. Milestone status
 

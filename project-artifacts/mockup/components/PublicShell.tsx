@@ -6,6 +6,7 @@ import { useState } from "react";
 import type { ReactNode } from "react";
 import { Button } from "./ui/Button";
 import { ThemeToggle } from "./ThemeToggle";
+import { AccountMenu, MobileAccountActions } from "./account/AccountMenu";
 
 /**
  * Global public shell — visual redesign 2026-08-31 (premium navy identity).
@@ -237,19 +238,17 @@ export function PublicShell({ children }: { children: ReactNode }) {
             })}
           </nav>
           <div className="flex shrink-0 items-center gap-3">
-            <span className="hidden sm:inline-flex">
-              <Button variant="text" href="#">
-                Sign in
-              </Button>
-            </span>
-            {/* Header CTA shows from `sm` up; below that the same CTA lives at
-                the top of the mobile menu panel instead (Plus Jakarta Sans's
-                wider wordmark no longer leaves room for it beside the logo
-                at 375px — measured overlap, 2026-09-07). Same destination,
-                same label, still exactly one CTA per viewport. */}
-            <span className="hidden sm:inline-flex">
-              <Button href="/DataBlueprint-AIVibeCoding">Explore courses</Button>
-            </span>
+            {/* "Sign in" link when signed out; avatar menu when in the DEMO
+                session (2026-09-20, components/account/AccountMenu.tsx). */}
+            <AccountMenu />
+            {/* "Explore courses" header CTA REMOVED 2026-09-07, founder
+                direction ("from main header menu, remove Explore courses
+                button") — both the `sm`+ header instance and its
+                below-`sm` copy in the mobile panel. "Programme" in the nav
+                (→ /DataBlueprint-AIVibeCoding) is the same destination, so
+                nothing became unreachable. This supersedes the "exactly
+                ONE CTA in the header" rule in this file's top comment: the
+                header now carries no CTA at all. */}
             {/* Theme toggle — visible at every width (not just desktop, not
                 buried in the mobile panel): see components/ThemeToggle.tsx's
                 header comment for why this moved here from a
@@ -298,12 +297,7 @@ export function PublicShell({ children }: { children: ReactNode }) {
               })}
             </nav>
             <div className="mt-2 flex flex-col gap-3 border-t border-[var(--color-line)] pt-4 sm:hidden">
-              <Button href="/DataBlueprint-AIVibeCoding" onClick={() => setMenuOpen(false)}>
-                Explore courses
-              </Button>
-              <Button variant="secondary" href="#" onClick={() => setMenuOpen(false)}>
-                Sign in
-              </Button>
+              <MobileAccountActions onNavigate={() => setMenuOpen(false)} />
             </div>
           </div>
         )}
@@ -388,6 +382,30 @@ export function PublicShell({ children }: { children: ReactNode }) {
         <div className="border-t border-[var(--color-line)] px-6 py-4 text-center text-body-sm text-[var(--color-ink-faint)]">
           Mockup/Wireframe — P01 redesigned under DR-02. Not the production
           site.
+          {/* Reviewer index for the account & payment wireframes added
+              2026-09-20. Sign-out and checkout have no other entry point
+              until authentication and a cart exist, so without this they
+              could not be reached to be reviewed. Not product navigation. */}
+          <p className="mt-2">
+            Account &amp; payment wireframes:{" "}
+            {[
+              { href: "/sign-in", label: "Sign in" },
+              { href: "/register", label: "Register" },
+              { href: "/forgot-password", label: "Forgot password" },
+              { href: "/sign-out", label: "Sign out" },
+              { href: "/checkout", label: "Checkout" },
+            ].map((l, i) => (
+              <span key={l.href}>
+                {i > 0 ? " · " : ""}
+                <Link
+                  href={l.href}
+                  className="underline underline-offset-4 hover:text-[var(--color-ink)]"
+                >
+                  {l.label}
+                </Link>
+              </span>
+            ))}
+          </p>
         </div>
       </footer>
     </div>

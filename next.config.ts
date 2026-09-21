@@ -12,6 +12,10 @@ import type { NextConfig } from "next";
  * docs/execution/WIREFRAME_TO_PRODUCTION_PLAN.md §4.
  */
 const nextConfig: NextConfig = {
+  // `forbidden()` from next/navigation — a real 403 response for a signed-in
+  // user who lacks a role (M2 plan §8 criterion 8), rather than a redirect
+  // that hides the refusal. Next.js gates it behind this flag.
+  experimental: { authInterrupts: true },
   // Keep the build honest: type errors and lint errors fail the build.
   typescript: { ignoreBuildErrors: false },
   // No image-optimisation opt-outs: a real server is present.

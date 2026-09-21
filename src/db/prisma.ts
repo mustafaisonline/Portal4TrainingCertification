@@ -3,7 +3,13 @@ import { PrismaPg } from "@prisma/adapter-pg";
 // by plain `node` (prisma/seed.ts), which resolves neither the `@/` alias nor
 // extensionless TypeScript specifiers. Next.js, Vitest and Playwright all
 // accept this form too.
-import { PrismaClient } from "../generated/prisma/client.ts";
+import { PrismaClient, type Prisma } from "../generated/prisma/client.ts";
+
+/** A client bound to an open transaction — what repositories accept so that a
+ *  business change and its audit row commit together (ADR-022). */
+export type Tx = Prisma.TransactionClient;
+/** Either the process client or a transaction client. */
+export type Db = PrismaClient | Tx;
 
 /*
  * The one PrismaClient for the process (ADR-005: single PostgreSQL, sole
@@ -44,6 +50,11 @@ export function getPrisma(): PrismaClient {
     return (globalForPrisma.__prisma ??= create());
   }
   return (globalForPrisma.__prisma ??= create());
+}
+
+/** Run `fn` inside one database transaction. Anything thrown rolls it back. */
+export function withTransaction<T>(fn: (tx: Tx) => Promise<T>): Promise<T> {
+  return getPrisma().$transaction((tx) => fn(tx));
 }
 
 /** Close the pool — used by seeds and test teardown, never by request code. */

@@ -42,3 +42,241 @@ model Domain {
 
   @@map("domains")
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Milestone 2 — Identity & access (MILESTONE_2_EXECUTION_PLAN.md §5).
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ── 5.1  Tables Better Auth owns — authentication only ───────────────────────
+// Column set = Better Auth 1.7.5's core schema for `emailAndPassword` +
+// `twoFactor` + database rate limiting, printed from `getAuthTables()` on
+// 2026-09-21 and mapped to snake_case. Better Auth generates the text ids.
+// RULE (DECISION_B §B, condition 3): no business table ever references an
+// `auth_*` row. The only bridge is `auth_identities.provider_subject`.
+
+model AuthUser {
+  id               String    @id
+  name             String
+  email            String    @unique
+  emailVerified    Boolean   @default(false) @map("email_verified")
+  image            String?
+  twoFactorEnabled Boolean?  @default(false) @map("two_factor_enabled")
+  /// Input carrier only: collected at registration (the reviewed form has it)
+  /// and copied to `users.country` by the mapping hook. Not read afterwards.
+  country          String?
+  createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  sessions   AuthSession[]
+  accounts   AuthAccount[]
+  twoFactors AuthTwoFactor[]
+
+  @@map("auth_users")
+}
+
+model AuthSession {
+  id        String   @id
+  expiresAt DateTime @map("expires_at") @db.Timestamptz(6)
+  token     String   @unique
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+  ipAddress String?  @map("ip_address")
+  userAgent String?  @map("user_agent")
+  userId    String   @map("user_id")
+  user      AuthUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("auth_sessions")
+}
+
+model AuthAccount {
+  id                    String    @id
+  accountId             String    @map("account_id")
+  providerId            String    @map("provider_id")
+  userId                String    @map("user_id")
+  user                  AuthUser  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?   @map("access_token")
+  refreshToken          String?   @map("refresh_token")
+  idToken               String?   @map("id_token")
+  accessTokenExpiresAt  DateTime? @map("access_token_expires_at") @db.Timestamptz(6)
+  refreshTokenExpiresAt DateTime? @map("refresh_token_expires_at") @db.Timestamptz(6)
+  scope                 String?
+  /// scrypt hash for the email+password credential (Better Auth default).
+  password              String?
+  createdAt             DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt             DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([userId])
+  @@map("auth_accounts")
+}
+
+model AuthVerification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime @map("expires_at") @db.Timestamptz(6)
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([identifier])
+  @@map("auth_verifications")
+}
+
+model AuthTwoFactor {
+  id                      String    @id
+  secret                  String
+  backupCodes             String    @map("backup_codes")
+  userId                  String    @map("user_id")
+  user                    AuthUser  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  verified                Boolean?  @default(true)
+  failedVerificationCount Int?      @default(0) @map("failed_verification_count")
+  lockedUntil             DateTime? @map("locked_until") @db.Timestamptz(6)
+
+  @@index([secret])
+  @@index([userId])
+  @@map("auth_two_factors")
+}
+
+model AuthRateLimit {
+  id          String @id
+  key         String @unique
+  count       Int
+  lastRequest BigInt @map("last_request")
+
+  @@map("auth_rate_limits")
+}
+
+// ── 5.2  Tables we own — business identity, authorisation, audit, email ──────
+
+/// THE business identity. One person, one account. Immutable UUID that every
+/// future business table references (ADR-020, AP-04; DECISION_B §B).
+model User {
+  id              String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  /// Stored lower-cased by the identity service.
+  email           String    @unique
+  name            String
+  country         String?
+  emailVerifiedAt DateTime? @map("email_verified_at") @db.Timestamptz(6)
+  createdAt       DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  identities AuthIdentity[]
+  roles      UserRole[]
+  consents   Consent[]
+
+  @@map("users")
+}
+
+/// The ONLY place a provider subject appears (condition 3). A provider change
+/// rewrites this table and nothing else.
+model AuthIdentity {
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId          String   @map("user_id") @db.Uuid
+  user            User     @relation(fields: [userId], references: [id], onDelete: Restrict)
+  provider        String
+  providerSubject String   @map("provider_subject")
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@unique([provider, providerSubject])
+  @@unique([userId, provider])
+  @@map("auth_identities")
+}
+
+/// Launch roles (SECURITY_ARCHITECTURE §3.1, DR-02 terminology).
+enum UserRoleName {
+  participant
+  expert
+  assessor
+  org_admin
+  platform_admin
+
+  @@map("user_role_name")
+}
+
+enum RoleScopeType {
+  platform
+  organisation
+  offering
+
+  @@map("role_scope_type")
+}
+
+/// Scoped RBAC — never a role column on users (ADR-020). Revocation is a
+/// state on the row, not a delete, so the history is kept.
+model UserRole {
+  id              String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId          String        @map("user_id") @db.Uuid
+  user            User          @relation(fields: [userId], references: [id], onDelete: Restrict)
+  role            UserRoleName
+  scopeType       RoleScopeType @map("scope_type")
+  /// Null only when scopeType = platform.
+  scopeId         String?       @map("scope_id") @db.Uuid
+  grantedAt       DateTime      @default(now()) @map("granted_at") @db.Timestamptz(6)
+  grantedByUserId String?       @map("granted_by_user_id") @db.Uuid
+  revokedAt       DateTime?     @map("revoked_at") @db.Timestamptz(6)
+  revokedByUserId String?       @map("revoked_by_user_id") @db.Uuid
+
+  @@unique([userId, role, scopeType, scopeId])
+  @@index([userId])
+  @@map("user_roles")
+}
+
+/// INSERT-ONLY (ADR-022). Written in the same transaction as the change it
+/// describes. No code path updates or deletes a row.
+model AuditLog {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  /// Null = the system itself.
+  actorUserId String?  @map("actor_user_id") @db.Uuid
+  action      String
+  entityType  String   @map("entity_type")
+  entityId    String   @map("entity_id")
+  before      Json?
+  after       Json?
+  reason      String?
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([entityType, entityId])
+  @@index([actorUserId])
+  @@map("audit_log")
+}
+
+enum OutboundEmailStatus {
+  queued
+  sent
+  failed
+
+  @@map("outbound_email_status")
+}
+
+/// Durable record of every email the system decides to send. Nothing is sent
+/// without a row (ADR-015 spirit: retryable and visible, never lost).
+model OutboundEmail {
+  id                String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  toEmail           String              @map("to_email")
+  templateKey       String              @map("template_key")
+  subject           String
+  textBody          String              @map("text_body")
+  status            OutboundEmailStatus @default(queued)
+  attempts          Int                 @default(0)
+  lastError         String?             @map("last_error")
+  providerMessageId String?             @map("provider_message_id")
+  createdAt         DateTime            @default(now()) @map("created_at") @db.Timestamptz(6)
+  sentAt            DateTime?           @map("sent_at") @db.Timestamptz(6)
+
+  @@index([status, createdAt])
+  @@map("outbound_emails")
+}
+
+/// Recorded acceptance of a PUBLISHED legal document version. Never written
+/// when no version is published (MILESTONE_2_EXECUTION_PLAN.md §6.9).
+model Consent {
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId          String   @map("user_id") @db.Uuid
+  user            User     @relation(fields: [userId], references: [id], onDelete: Restrict)
+  documentKey     String   @map("document_key")
+  documentVersion String   @map("document_version")
+  acceptedAt      DateTime @default(now()) @map("accepted_at") @db.Timestamptz(6)
+
+  @@unique([userId, documentKey, documentVersion])
+  @@map("consents")
+}

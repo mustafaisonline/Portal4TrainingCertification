@@ -56,6 +56,10 @@ jobs:
       DATABASE_URL: postgresql://p4tc:p4tc@localhost:5432/p4tc_dev
       DATABASE_URL_TEST: postgresql://p4tc:p4tc@localhost:5432/p4tc_test
       APP_BASE_URL: http://localhost:3101
+      # Identity & access (M2). CI-only values; no real environment uses them.
+      BETTER_AUTH_SECRET: ci-only-secret-not-for-any-real-environment-0123456789
+      EMAIL_TRANSPORT: log
+      LEGAL_DOCUMENT_VERSIONS: '{"terms":"ci","privacy":"ci"}'
 
     steps:
       - uses: actions/checkout@v4

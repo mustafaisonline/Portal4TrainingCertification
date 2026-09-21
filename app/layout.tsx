@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { IBM_Plex_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import Script from "next/script";
 import { themeInitScript } from "@/shared/chrome/theme";
 import "./globals.css";
 
@@ -53,10 +54,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       // every no-flash dark-mode approach uses.
       suppressHydrationWarning
     >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-      </head>
-      <body>{children}</body>
+      <body>
+        {/* beforeInteractive: injected into <head> and run before hydration,
+            so a returning dark-theme visitor never sees a light flash. */}
+        <Script id="theme-init" strategy="beforeInteractive">
+          {themeInitScript}
+        </Script>
+        {children}
+      </body>
     </html>
   );
 }

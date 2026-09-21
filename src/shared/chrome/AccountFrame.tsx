@@ -13,7 +13,7 @@ import type { ReactNode } from "react";
  */
 const items = [
   { href: "/account", label: "Dashboard" },
-  { href: "/account/security/mfa", label: "Security" },
+  { href: "/account/security", label: "Security" },
 ];
 
 function isActive(pathname: string, href: string) {

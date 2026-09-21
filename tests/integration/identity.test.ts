@@ -166,11 +166,13 @@ describe("registration (criterion 2)", () => {
     const email = uniqueEmail("dup");
     expect((await register(email, { password: "short" })).status).toBe(400);
     expect((await register(email)).status).toBe(200);
-    const again = await register(email, { name: "Someone Else" });
-    // With email verification required, Better Auth answers a repeat sign-up
-    // exactly like a first one (enumeration-safe, plan §6.6) — so the check
-    // is on the data: still one identity, untouched.
-    expect(again.status).toBe(200);
+    const again = await register(email, { name: "Someone Else", password: "a-different-password-1" });
+    // Founder decision 2026-09-21 (option A): a repeat sign-up is a clear
+    // error, and the existing credential is never touched.
+    expect(again.status).toBe(422);
+    expect((again.json as { code?: string }).code).toBe("USER_ALREADY_EXISTS");
+    expect((await signIn(email)).status).toBe(200); // original password still works
+    expect((await signIn(email, "a-different-password-1")).status).toBe(401);
     expect(await prisma.user.count({ where: { email } })).toBe(1);
     expect(await prisma.authUser.count({ where: { email } })).toBe(1);
     expect((await findUserByEmail(email))?.name).toBe("Test Person");
@@ -263,6 +265,32 @@ describe("password reset (criterion 7)", () => {
   it("a reset request for an unknown address is indistinguishable from a known one", async () => {
     const res = await call("POST", "/request-password-reset", { email: uniqueEmail("ghost"), redirectTo: "/reset-password" });
     expect(res.status).toBe(200);
+  });
+});
+
+describe("change password (founder request 2026-09-21)", () => {
+  it("requires the current password, revokes other sessions and writes an audit row", async () => {
+    const email = uniqueEmail("chpw");
+    await register(email);
+    const here = cookieHeader((await signIn(email)).cookies);
+    const elsewhere = cookieHeader((await signIn(email)).cookies);
+
+    const wrong = await call("POST", "/change-password", { currentPassword: "nope-nope-nope", newPassword: "fresh-password-77", revokeOtherSessions: true }, here);
+    expect(wrong.status).toBe(400);
+    expect((wrong.json as { code?: string }).code).toBe("INVALID_PASSWORD");
+
+    const short = await call("POST", "/change-password", { currentPassword: STRONG_PASSWORD, newPassword: "short", revokeOtherSessions: true }, here);
+    expect(short.status).toBe(400);
+
+    const ok = await call("POST", "/change-password", { currentPassword: STRONG_PASSWORD, newPassword: "fresh-password-77", revokeOtherSessions: true }, here);
+    expect(ok.status, JSON.stringify(ok.json)).toBe(200);
+
+    expect((await signIn(email)).status).toBe(401);
+    expect((await signIn(email, "fresh-password-77")).status).toBe(200);
+    expect((await call("GET", "/get-session", undefined, elsewhere)).json).toBeNull();
+
+    const user = (await findUserByEmail(email))!;
+    expect((await listAuditForEntity(prisma, "user", user.id)).map((a) => a.action)).toContain("password.changed");
   });
 });
 

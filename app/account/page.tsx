@@ -37,7 +37,7 @@ export default async function AccountPage() {
             <dt className="text-label mb-1">Two-factor authentication</dt>
             <dd data-testid="account-mfa">
               {user.mfaEnabled ? <Chip tone="primary">On</Chip> : <Chip>Off</Chip>}{" "}
-              <Link href="/account/security/mfa" className="ml-2 text-[var(--color-primary)] underline underline-offset-4">
+              <Link href="/account/security" className="ml-2 text-[var(--color-primary)] underline underline-offset-4">
                 Manage
               </Link>
             </dd>

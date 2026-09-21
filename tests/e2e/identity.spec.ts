@@ -190,6 +190,36 @@ test("admin gate: participant → 403; admin without MFA → enrol; with MFA →
   await expect(page.getByTestId("account-mfa")).toContainText("On");
 });
 
+test("a second registration with the same email is a clear error, and the password can be changed from Security", async ({ page }) => {
+  const email = newEmail("e2e-dup");
+  await registerViaUi(page, email);
+
+  await page.goto("/register");
+  await page.getByLabel("Full name").fill("Someone Else");
+  await page.getByLabel("Email").fill(email);
+  await page.getByLabel("Password", { exact: true }).fill("another-pass-1");
+  await page.getByLabel("Confirm password").fill("another-pass-1");
+  await page.getByRole("checkbox").check();
+  await page.getByRole("button", { name: "Create account" }).click();
+  await expect(page.getByText("An account with this email already exists")).toBeVisible();
+  await expect(page).toHaveURL(/\/register$/);
+
+  await signInViaUi(page, email); // the original password still applies
+  await expect(page).toHaveURL(/\/account$/);
+  await page.goto("/account/security");
+  await expectNoAxeViolations(page);
+  await page.getByLabel("Current password").fill(STRONG_PASSWORD);
+  await page.getByLabel("New password", { exact: true }).fill("my-new-password-8");
+  await page.getByLabel("Confirm new password").fill("my-new-password-8");
+  await page.getByTestId("change-password-submit").click();
+  await expect(page.getByText("Your password has been changed")).toBeVisible();
+
+  await page.goto("/sign-out");
+  await expect(page.getByTestId("header-sign-in")).toBeVisible();
+  await signInViaUi(page, email, "my-new-password-8");
+  await expect(page).toHaveURL(/\/account$/);
+});
+
 test("register and sign-in screens have no WCAG 2.2 AA violations", async ({ page }) => {
   await page.goto("/sign-in");
   await expectNoAxeViolations(page);

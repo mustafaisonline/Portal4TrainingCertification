@@ -14,6 +14,7 @@ export type AuditAction =
   | "user.registered"
   | "user.email_verified"
   | "password.reset"
+  | "password.changed"
   | "role.granted"
   | "role.revoked"
   | "mfa.enabled"

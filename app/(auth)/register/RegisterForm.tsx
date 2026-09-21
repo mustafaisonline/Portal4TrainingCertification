@@ -60,13 +60,11 @@ export function RegisterForm({
     setPending(false);
     if (err) {
       setError(
-        err.code === "REGISTRATION_CLOSED" || err.code === "CONSENT_REQUIRED"
+        err.code === "REGISTRATION_CLOSED" || err.code === "CONSENT_REQUIRED" || err.code === "USER_ALREADY_EXISTS"
           ? err.message ?? "Registration is not available."
           : err.status === 429
             ? "Too many attempts. Please wait a minute and try again."
-            : // Neutral on purpose (enumeration-safe): an existing address gets
-              // the same outcome as any other failure that isn't a policy error.
-              "We could not create the account with those details. If you already have an account, sign in or reset your password.",
+            : "We could not create the account with those details. Please check them and try again.",
       );
       return;
     }

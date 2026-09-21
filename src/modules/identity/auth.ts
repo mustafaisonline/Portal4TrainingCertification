@@ -150,6 +150,35 @@ export const auth = betterAuth({
             message: "Please accept the Terms of service and Privacy policy to create an account.",
           });
         }
+        // Founder decision 2026-09-21 (option A): a sign-up for an address
+        // that already has an account is a clear error, not Better Auth's
+        // enumeration-safe synthetic success (which it returns whenever
+        // autoSignIn is false). The existing credential is never touched.
+        const email = typeof body["email"] === "string" ? body["email"].trim().toLowerCase() : "";
+        if (email && (await getPrisma().authUser.findUnique({ where: { email }, select: { id: true } }))) {
+          throw new APIError("UNPROCESSABLE_ENTITY", {
+            code: "USER_ALREADY_EXISTS",
+            message: "An account with this email already exists. Sign in, or reset your password.",
+          });
+        }
+      }
+    }),
+    after: createAuthMiddleware(async (ctx) => {
+      // A successful password change is an identity mutation → audited.
+      if (ctx.path === "/change-password" && ctx.context.returned && !(ctx.context.returned instanceof APIError)) {
+        const subject = ctx.context.session?.user.id;
+        if (!subject) return;
+        await withTransaction(async (tx) => {
+          const ours = await findUserByAuthSubject(subject, tx);
+          if (!ours) return;
+          await writeAudit(tx, {
+            actorUserId: ours.id,
+            action: "password.changed",
+            entityType: "user",
+            entityId: ours.id,
+            after: { otherSessionsRevoked: (ctx.body as { revokeOtherSessions?: boolean } | undefined)?.revokeOtherSessions === true },
+          });
+        });
       }
     }),
   },

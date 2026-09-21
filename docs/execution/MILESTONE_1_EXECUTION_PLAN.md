@@ -1,13 +1,16 @@
 # Milestone 1 — "Walking Skeleton" · Execution Plan
 
-> # ⛔ NOT AUTHORIZED FOR EXECUTION
+> # ✅ EXECUTED 2026-09-21 — all ten verification criteria pass
 >
-> **Status:** PLANNING & ARCHITECTURE MODE · **Scope accepted; execution NOT authorized**
-> **Created:** 2026-08-30 · Preserved per the execution-status directive of 2026-08-30 §6 · **Relocated to `docs/execution/` on 2026-08-30**
+> **Status:** COMPLETE — see [`MILESTONE_1_COMPLETION_REPORT.md`](MILESTONE_1_COMPLETION_REPORT.md) for results, the schema created, and three recorded deviations (local DB via the machine's Homebrew PostgreSQL rather than a container; four necessary package additions; Node 24 LTS installed keg-only).
+> **Authorised by:** founder direction 2026-09-21 — *"go ahead and implement the production ready product"* (`README.md` §4).
+> **Created:** 2026-08-30 · scope accepted 2026-08-30 · executed 2026-09-21 on branch `feat/production-foundation`.
 >
-> **No action in this document may be performed.** It exists so the plan is not held only in conversation.
-> Execution begins only on an explicit instruction such as *"Proceed with Milestone 1"* or *"You may start implementation."*
-> **Approval of a direction is not approval to execute it.**
+> The text below is the plan as accepted, retained unchanged for traceability.
+>
+> ---
+>
+> *Original banner:* ⛔ NOT AUTHORIZED FOR EXECUTION · PLANNING & ARCHITECTURE MODE · Scope accepted; execution NOT authorized · No action in this document may be performed · Execution begins only on an explicit instruction · Approval of a direction is not approval to execute it.
 
 ---
 

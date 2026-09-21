@@ -43,15 +43,18 @@ It is deliberately separate from [`../architecture/`](../architecture/README.md)
 | [`BACKEND_HANDOFF_INDEX.md`](BACKEND_HANDOFF_INDEX.md) | **Start here for backend work.** The master map of the 2026-09-20 wireframe: every screen ↔ what is simulated ↔ real-build requirements ↔ blocking decisions; the full list of demo files and storage keys to delete/replace; entities implied; consolidated open decisions; suggested build order; hosting constraint; what is not built; what was and was not verified. **A record only; authorises nothing** | REQUIREMENTS RECORD |
 | [`ADMIN_REQUIREMENTS.md`](ADMIN_REQUIREMENTS.md) | The 2026-09-20 **trainer/admin side** wireframe (`/admin`, 15 screens, second demo persona): what it implies for roles, delivery operations, commerce, certificate administration, configuration, audit and reporting; decisions AD-D1..5; delete-list; test checklist. **A record only; authorises nothing** | REQUIREMENTS RECORD |
 | [`ACCOUNT_AND_PAYMENT_REQUIREMENTS.md`](ACCOUNT_AND_PAYMENT_REQUIREMENTS.md) | What the 2026-09-20 account, signed-in, registration and checkout wireframes need before they can be real — founder decisions log, open decisions, legal documents, backend engineering, an inventory of every demo file to delete/replace, and a test checklist. **A record only; authorises nothing** | REQUIREMENTS RECORD |
+| [`WIREFRAME_TO_PRODUCTION_PLAN.md`](WIREFRAME_TO_PRODUCTION_PLAN.md) | **The transition strategy, 2026-09-21** — where the production code lives (root, per the accepted Milestone 1 scope; proposed ADR-045), what is ported from the mockup and what is never ported, the decisions that gate backend work grouped into three sittings, a proposed M3–M10 roadmap extending Track B, standing rules per milestone, and how the mockup is retired. **Proposes; authorises nothing; creates no milestone until the WBS is updated on acceptance** | ⛔ **PROPOSED — pending founder review** |
 
 ## 4. Milestone status
 
 | # | Milestone | Objective | Blocked by | Status |
 |---|---|---|---|---|
-| **1** | Walking Skeleton | Prove the approved development foundation works end to end with a minimal, real, persistent vertical slice | **Nothing architectural** — only execution authorization | ⛔ Not authorized |
+| **1** | Walking Skeleton | Prove the approved development foundation works end to end with a minimal, real, persistent vertical slice | **Nothing architectural** — only execution authorization | ✅ **COMPLETE 2026-09-21** — all ten criteria pass; [`MILESTONE_1_COMPLETION_REPORT.md`](MILESTONE_1_COMPLETION_REPORT.md). Authorised by founder direction the same day; branch `feat/production-foundation` |
 | **2** | Authentication → authorization → dashboard | The first real steps of the Track B vertical slice | **ADR-006** — B1 deviation · B2 provider · B3 conditions | Not planned in detail |
 
 **Milestone 1 requires no decision that is not already approved.** The authentication decision (ADR-006) blocks Milestone 2 and can be settled in parallel.
+
+> **2026-09-21:** Milestones **3–10** (catalogue & staging → registration & payment → participant account → certificate & verification → renewal → admin operations → production readiness → launch cutover) are **proposed** in [`WIREFRAME_TO_PRODUCTION_PLAN.md`](WIREFRAME_TO_PRODUCTION_PLAN.md) §7. They are not in this table and not in the WBS until that plan is accepted; each will then need its own execution plan under §5 below.
 
 > **Reconciled with `DR-02`, 2026-08-31.** The Track B vertical slice these milestones belong to was **restated** away from the retired lesson-consumption model — see `PROJECT_PLAN_WBS.md` §6.2 and ADR-036/ADR-040. **Milestone 1 is unaffected**: a `domains`-table walking skeleton is delivery-model-agnostic, and its plan needed no change. Milestone 2 (authentication → authorisation → dashboard) is likewise unaffected in substance; the steps *after* it are what changed.
 

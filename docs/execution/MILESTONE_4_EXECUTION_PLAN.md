@@ -1,6 +1,6 @@
 # Milestone 4 — "Registration & Payment" · Execution Plan
 
-> **Status:** ▶ **EXECUTING 2026-09-21** on the founder's explicit direction of the same evening: *"implement stripe details and add pricing/refund rules, legal documents as Malaysia law"*, with four decisions taken in conversation (§3). Scope acceptance is therefore founder-directed; remaining defaults are listed in §10.
+> **Status:** ✅ **EXECUTED 2026-09-21 — 11 / 11 criteria, incl. a real test-mode payment and refund** ([`MILESTONE_4_COMPLETION_REPORT.md`](MILESTONE_4_COMPLETION_REPORT.md)), on the founder's explicit direction of the same evening: *"implement stripe details and add pricing/refund rules, legal documents as Malaysia law"*, with four decisions taken in conversation (§3). Scope acceptance is therefore founder-directed; remaining defaults are listed in §10.
 > **Roadmap row:** `WIREFRAME_TO_PRODUCTION_PLAN.md` §7 M4. **Depends on:** M1–M3 ✅, account shell ✅.
 
 ---

@@ -67,6 +67,7 @@ Plan (status) · this report · `README.md` · `.env.example` (Stripe names, key
 5. **The test key was pasted into chat** — rotate it in the Dashboard when convenient; live keys must only ever enter the production secret store.
 6. Dashboard "Latest order" line still says "No orders yet" (minor follow-up).
 7. Refund policy's `refund` consent is recorded under the Terms version until `LEGAL_DOCUMENT_VERSIONS` carries a `refund` key.
+8. **Timestamp skew defect — found and fixed during this verification.** Stripe's event was created at 12:40:34 UTC; our `received_at` read 04:40:37 — every timestamp the application wrote was **8 hours early**, because the Prisma pg adapter sends zone-less timestamps and PostgreSQL interprets them in its session timezone (`Asia/Kuala_Lumpur` on the founder's Homebrew instance). Comparisons made entirely through Prisma were self-consistent (which is why nothing had failed), but anything mixing DB-side `now()` or external timestamps — session expiry, order holds, refund-tier day counts near a boundary, audit chronology — would have been wrong. **Fix:** `ALTER DATABASE p4tc_dev/p4tc_test SET timezone TO 'UTC'` (persistent), compose init does the same, `.env.example` documents it, and `tests/integration/timestamps.test.ts` fails on any database where the session timezone is not UTC or a written timestamp drifts from the database clock. **Production must set the database timezone to UTC.** Rows written earlier today in the dev database keep their skewed values (dev data only).
 
 ## 9. Human decisions required
 | # | Item |

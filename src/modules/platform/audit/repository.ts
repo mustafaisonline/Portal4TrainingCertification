@@ -15,6 +15,7 @@ export type AuditAction =
   | "user.email_verified"
   | "password.reset"
   | "password.changed"
+  | "profile.updated"
   | "role.granted"
   | "role.revoked"
   | "consent.recorded";

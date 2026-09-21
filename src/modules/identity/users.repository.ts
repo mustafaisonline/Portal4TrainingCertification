@@ -101,6 +101,44 @@ export async function createRegisteredIdentity(tx: Tx, input: RegisterIdentityIn
   return user;
 }
 
+export type ProfileInput = { name: string; country: string | null };
+
+/**
+ * The person edits their own profile (account shell, 2026-09-21). Updates
+ * OUR `users` row — the source of truth for name and country — and writes
+ * the `profile.updated` audit row with the before/after of the fields that
+ * changed, in the caller's transaction. Email is not editable here: a change
+ * of address needs a verification email, which no provider can deliver yet.
+ * Returns null when the user no longer exists.
+ */
+export async function updateUserProfile(tx: Tx, userId: string, input: ProfileInput): Promise<UserRecord | null> {
+  const current = await findUserById(userId, tx);
+  if (!current) return null;
+  const name = input.name.trim();
+  const country = input.country?.trim() || null;
+  const before: Record<string, unknown> = {};
+  const after: Record<string, unknown> = {};
+  if (name !== current.name) {
+    before["name"] = current.name;
+    after["name"] = name;
+  }
+  if (country !== current.country) {
+    before["country"] = current.country;
+    after["country"] = country;
+  }
+  if (Object.keys(after).length === 0) return current;
+  const updated = await tx.user.update({ where: { id: userId }, data: { name, country }, select });
+  await writeAudit(tx, {
+    actorUserId: userId,
+    action: "profile.updated",
+    entityType: "user",
+    entityId: userId,
+    before,
+    after,
+  });
+  return updated;
+}
+
 /** Called when the provider confirms the address. Idempotent. */
 export async function markEmailVerified(tx: Tx, subject: string): Promise<UserRecord | null> {
   const user = await findUserByAuthSubject(subject, tx);

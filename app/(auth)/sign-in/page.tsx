@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 export default async function SignInPage({
   searchParams,
 }: {
-  searchParams: Promise<{ "return-to"?: string; reset?: string }>;
+  searchParams: Promise<{ "return-to"?: string; reset?: string; registered?: string }>;
 }) {
   const params = await searchParams;
   const returnTo = safeReturnTo(params["return-to"]);
@@ -42,7 +42,7 @@ export default async function SignInPage({
         </>
       }
     >
-      <SignInForm returnTo={returnTo} passwordWasReset={params.reset === "1"} />
+      <SignInForm returnTo={returnTo} passwordWasReset={params.reset === "1"} justRegistered={params.registered === "1"} />
     </AuthScreen>
   );
 }

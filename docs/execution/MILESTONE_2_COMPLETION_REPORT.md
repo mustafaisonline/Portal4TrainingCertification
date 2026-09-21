@@ -116,4 +116,11 @@ Plan (as-built notes, status) · this report · `docs/execution/README.md` (§3 
 | 5 | Roles at launch and the first `platform_admin` | Five roles; grant via `npm run admin:grant -- <email>` after the founder registers | Add `finance` later (AD-1) |
 | 6 | **ADR-015** email provider (Resend recommended) + sending domain (OQ-3) | None wired; `log` transport | Add one transport class; no schema change |
 
-**Completion status:** Implemented · **Tested** (all layers; 13 / 13 criteria) · Partially tested: none · Blocked: none · **Requires human validation:** the six ratifications above, and condition 4's operational commitment.
+### 9.1 Founder decisions received 2026-09-21 (evening) — applied
+
+| Item | Decision | Change |
+|---|---|---|
+| §9.3 password minimum | **8** (was the documented default of 12) | `auth.ts minPasswordLength`, register and reset forms and copy |
+| Email verification before sign-in | **Not required** — no email provider exists (ADR-015 open), so a link cannot be delivered. Registration now leads straight to `/sign-in?registered=1`; sign-in works with email + password immediately | `auth.ts requireEmailVerification: false`; register redirect; sign-in banner. The verification email is still recorded in the outbox and the link still sets `users.email_verified_at`, so verification can be re-required the day a provider is wired. Criterion 3 is therefore superseded: "sign-in refused before verification" no longer holds by design |
+
+**Completion status:** Implemented · **Tested** (all layers; 13 / 13 criteria as accepted, criterion 3 superseded by the decision above) · Partially tested: none · Blocked: none · **Requires human validation:** the six ratifications above, and condition 4's operational commitment.

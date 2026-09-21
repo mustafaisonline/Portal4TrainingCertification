@@ -65,9 +65,17 @@ export const auth = betterAuth({
 
   emailAndPassword: {
     enabled: true,
-    minPasswordLength: 12, // documented default, plan §10.3
+    // Founder decision 2026-09-21 (evening): minimum 8 (was the documented
+    // default of 12, plan §10.3).
+    minPasswordLength: 8,
     maxPasswordLength: 128,
-    requireEmailVerification: true,
+    // Founder decision 2026-09-21 (evening): no email provider exists yet
+    // (ADR-015 open), so a verification link cannot be delivered. Sign-in is
+    // allowed with email + password immediately after registration. The
+    // verification email is still recorded in the outbox (sendOnSignUp) and
+    // `users.email_verified_at` still records a verified address, so this
+    // can be switched back to `true` the day a provider is wired.
+    requireEmailVerification: false,
     autoSignIn: false,
     revokeSessionsOnPasswordReset: true,
     resetPasswordTokenExpiresIn: ONE_HOUR,

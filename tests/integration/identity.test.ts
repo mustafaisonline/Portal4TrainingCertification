@@ -178,12 +178,12 @@ describe("registration (criterion 2)", () => {
 });
 
 describe("verification, sign-in, sign-out (criteria 3, 4, 6)", () => {
-  it("refuses sign-in before verification, then verifies from the emailed link", async () => {
+  it("allows sign-in straight after registration (founder direction 2026-09-21: no email provider); the emailed link still verifies", async () => {
     const email = uniqueEmail("verify");
     await register(email);
     const before = await signIn(email);
-    expect(before.status).toBe(403);
-    expect((before.json as { code?: string }).code).toBe("EMAIL_NOT_VERIFIED");
+    expect(before.status).toBe(200);
+    expect((await findUserByEmail(email))?.emailVerifiedAt).toBeNull();
 
     const cookie = await verify(email);
     expect(cookie).toContain("session_token");

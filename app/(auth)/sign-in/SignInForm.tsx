@@ -10,7 +10,15 @@ import { Field, FormStatus, PasswordField } from "@/shared/ui/forms";
 
 type Outcome = { kind: "idle" } | { kind: "error"; message: string } | { kind: "unverified"; email: string };
 
-export function SignInForm({ returnTo, passwordWasReset }: { returnTo: string; passwordWasReset: boolean }) {
+export function SignInForm({
+  returnTo,
+  passwordWasReset,
+  justRegistered = false,
+}: {
+  returnTo: string;
+  passwordWasReset: boolean;
+  justRegistered?: boolean;
+}) {
   const router = useRouter();
   const [pending, setPending] = useState(false);
   const [outcome, setOutcome] = useState<Outcome>({ kind: "idle" });
@@ -48,6 +56,9 @@ export function SignInForm({ returnTo, passwordWasReset }: { returnTo: string; p
   return (
     <form aria-label="Sign in" onSubmit={onSubmit} className="flex flex-col gap-5" noValidate>
       {passwordWasReset && <FormStatus tone="success">Your password has been changed. Sign in with the new one.</FormStatus>}
+      {justRegistered && (
+        <FormStatus tone="success">Your account has been created. Sign in with your email and password.</FormStatus>
+      )}
       {returnTo !== "/account" && (
         <p role="status" className="text-body-sm font-medium text-[var(--color-ink)]">
           Sign in to continue.

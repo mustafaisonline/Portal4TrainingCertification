@@ -8,7 +8,7 @@ import { authClient } from "@/modules/identity/auth-client";
 import { Button } from "@/shared/ui/Button";
 import { Field, FormStatus, PasswordField } from "@/shared/ui/forms";
 
-const MIN_PASSWORD = 12;
+const MIN_PASSWORD = 8; // founder decision 2026-09-21 (was 12)
 
 export function RegisterForm({
   registrationOpen,
@@ -70,7 +70,9 @@ export function RegisterForm({
       );
       return;
     }
-    router.push(`/verify-email?email=${encodeURIComponent(email)}`);
+    // Founder direction 2026-09-21: no email provider yet, so registration
+    // leads straight to sign-in rather than to a "check your email" step.
+    router.push("/sign-in?registered=1");
   }
 
   const consentSentence = (

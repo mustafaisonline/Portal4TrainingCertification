@@ -45,12 +45,15 @@ async function registerViaUi(page: Page, email: string, name = "Ada Test") {
   await page.getByLabel("Confirm password").fill(STRONG_PASSWORD);
   await page.getByRole("checkbox").check();
   await page.getByRole("button", { name: "Create account" }).click();
-  await expect(page).toHaveURL(/\/verify-email\?email=/);
+  // Founder direction 2026-09-21: registration leads straight to sign-in
+  // (no email provider exists to deliver a verification link).
+  await expect(page).toHaveURL(/\/sign-in\?registered=1$/);
+  await expect(page.getByText("Your account has been created.")).toBeVisible();
 }
 
+/** Sign in right after registering — no verification step required. */
 async function verifyViaEmail(page: Page, email: string) {
-  const mail = await waitForEmail(email, "identity.verify-email");
-  await page.goto(firstLink(mail.textBody));
+  await signInViaUi(page, email);
   await expect(page).toHaveURL(/\/account$/);
 }
 
@@ -74,7 +77,13 @@ test("register → verify → signed-in account page shows OUR identity and role
 
   await expect(page.getByTestId("welcome")).toHaveText("Welcome, Ada Test");
   await expect(page.getByTestId("account-email")).toHaveText(email);
-  await expect(page.getByTestId("account-verified")).toContainText("Verified");
+  await expect(page.getByTestId("account-verified")).toContainText("Not verified");
+  // The verification link is still recorded in the outbox and still works,
+  // so the address can be confirmed once an email provider delivers it.
+  const mail = await waitForEmail(email, "identity.verify-email");
+  await page.goto(firstLink(mail.textBody));
+  await expect(page).toHaveURL(/\/account$/);
+  await expect(page.getByTestId("account-verified")).toHaveText("Verified");
   await expect(page.getByTestId("account-mfa")).toContainText("Off");
   await expect(page.getByTestId("account-roles")).toContainText("participant");
   await expect(page.getByTestId("header-account")).toBeVisible();

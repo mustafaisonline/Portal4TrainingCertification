@@ -19,7 +19,7 @@ export default async function ResetPasswordPage({
     <AuthScreen
       eyebrow="Account recovery"
       title="Choose a new password"
-      lead="Pick a password of at least 12 characters. All other sessions on your account will be signed out."
+      lead="Pick a password of at least 8 characters. All other sessions on your account will be signed out."
       footer={
         <Link
           href="/sign-in"

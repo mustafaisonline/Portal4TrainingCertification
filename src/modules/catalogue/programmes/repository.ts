@@ -1,0 +1,114 @@
+import type { Db } from "@/db/prisma";
+import { getPrisma } from "@/db/prisma";
+import type { ProgrammeContent, ProgrammeRecord, ProgrammeSummary } from "./types";
+
+/*
+ * Programme repository (module: catalogue). Pages read programmes ONLY
+ * through here; nothing in app/ knows a slug, title or price literal
+ * (ADR-023). Public readers see `published` rows only — "disable, not
+ * delete" (founder, 2026-09-20) is `status = unlisted`, which 404s.
+ */
+
+const include = {
+  modules: { orderBy: { position: "asc" as const } },
+  formatsDelivery: { orderBy: { position: "asc" as const } },
+  prices: true,
+  experts: { include: { expert: { select: { id: true, slug: true, name: true, roleTitle: true, headline: true, photoPath: true } } } },
+};
+
+type Row = NonNullable<Awaited<ReturnType<typeof loadBySlug>>>;
+
+function loadBySlug(db: Db, slug: string) {
+  return db.programme.findUnique({ where: { slug }, include });
+}
+
+function toRecord(row: Row): ProgrammeRecord {
+  return {
+    id: row.id,
+    domainId: row.domainId,
+    slug: row.slug,
+    title: row.title,
+    subtitle: row.subtitle,
+    level: row.level,
+    status: row.status,
+    flagship: row.flagship,
+    durationLabel: row.durationLabel,
+    prerequisites: row.prerequisites,
+    formats: row.formats as string[],
+    certificateLabel: row.certificateLabel,
+    audienceSummary: row.audienceSummary,
+    summary: row.summary,
+    valueProposition: row.valueProposition,
+    content: row.content as ProgrammeContent,
+    sortOrder: row.sortOrder,
+    modules: row.modules.map((m) => ({
+      position: m.position,
+      title: m.title,
+      description: m.description,
+      points: (m.points as string[] | null) ?? null,
+    })),
+    deliveryFormats: row.formatsDelivery.map((f) => ({
+      id: f.id,
+      code: f.code,
+      name: f.name,
+      badge: f.badge,
+      durationLabel: f.durationLabel,
+      scheduleLabel: f.scheduleLabel,
+      totalTimeLabel: f.totalTimeLabel,
+      bestFor: f.bestFor as string[],
+      position: f.position,
+    })),
+    prices: row.prices
+      .map((p) => ({
+        region: p.region,
+        currency: p.currency,
+        listAmountMinor: Number(p.listAmountMinor),
+        offerAmountMinor: Number(p.offerAmountMinor),
+        offerLabel: p.offerLabel,
+        offerName: p.offerName,
+      }))
+      .sort((a, b) => order(a.region) - order(b.region)),
+    experts: row.experts.map((e) => e.expert),
+  };
+}
+
+function order(region: string): number {
+  return ["malaysia", "pakistan", "international"].indexOf(region);
+}
+
+/** The founder-designated flagship, if it is published. */
+export async function findFlagshipProgramme(db: Db = getPrisma()): Promise<ProgrammeRecord | null> {
+  const row = await db.programme.findFirst({ where: { flagship: true, status: "published" }, include });
+  return row ? toRecord(row) : null;
+}
+
+/** Published programme by slug; unlisted/retired → null (public 404). */
+export async function findPublishedProgrammeBySlug(slug: string, db: Db = getPrisma()): Promise<ProgrammeRecord | null> {
+  const row = await loadBySlug(db, slug);
+  return row && row.status === "published" ? toRecord(row) : null;
+}
+
+/** Any status — for admin (M8) and tests. */
+export async function findProgrammeBySlug(slug: string, db: Db = getPrisma()): Promise<ProgrammeRecord | null> {
+  const row = await loadBySlug(db, slug);
+  return row ? toRecord(row) : null;
+}
+
+export async function listPublishedProgrammes(db: Db = getPrisma()): Promise<ProgrammeSummary[]> {
+  const rows = await db.programme.findMany({
+    where: { status: "published" },
+    orderBy: { sortOrder: "asc" },
+    select: {
+      id: true, slug: true, title: true, subtitle: true, level: true, status: true, flagship: true,
+      durationLabel: true, formats: true, certificateLabel: true, audienceSummary: true, summary: true, sortOrder: true,
+    },
+  });
+  return rows.map((r) => ({ ...r, formats: r.formats as string[] }));
+}
+
+/** Related programmes (by slug list) that are published. */
+export async function listPublishedProgrammesBySlugs(slugs: string[], db: Db = getPrisma()): Promise<ProgrammeSummary[]> {
+  if (slugs.length === 0) return [];
+  const all = await listPublishedProgrammes(db);
+  return all.filter((p) => slugs.includes(p.slug));
+}

@@ -40,6 +40,9 @@ model Domain {
   createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
 
+  programmes          Programme[]
+  diagnosticQuestions DiagnosticQuestion[]
+
   @@map("domains")
 }
 
@@ -279,4 +282,283 @@ model Consent {
 
   @@unique([userId, documentKey, documentVersion])
   @@map("consents")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Milestone 3 — Catalogue & public portal (MILESTONE_3_EXECUTION_PLAN.md §5).
+// ADR-043 concepts as data; ADR-023 expansion shape (domain_id, level,
+// sort_order, version present and inert). `Json` columns hold EDITORIAL
+// structures that are rendered, never queried.
+// ─────────────────────────────────────────────────────────────────────────────
+
+/// Display attribute only (DR-01: one credential, no ladder). Never a gate.
+enum ProgrammeLevel {
+  foundation
+  practitioner
+  architect
+  executive
+  builder
+  mentorship
+
+  @@map("programme_level")
+}
+
+enum ProgrammeStatus {
+  published
+  unlisted
+  retired
+
+  @@map("programme_status")
+}
+
+/// A designed, expert-led learning experience — the thing a person chooses.
+model Programme {
+  id               String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  domainId         String          @map("domain_id") @db.Uuid
+  domain           Domain          @relation(fields: [domainId], references: [id], onDelete: Restrict)
+  slug             String          @unique
+  title            String
+  subtitle         String
+  level            ProgrammeLevel
+  status           ProgrammeStatus @default(unlisted)
+  flagship         Boolean         @default(false)
+  durationLabel    String          @map("duration_label")
+  prerequisites    String
+  /// Delivery labels as published (e.g. "Live online", "Face-to-face").
+  formats          Json
+  certificateLabel String          @map("certificate_label")
+  audienceSummary  String          @map("audience_summary")
+  summary          String
+  valueProposition String          @map("value_proposition")
+  /// Editorial sections: highlights, whoShouldAttend, rationale, outcomes,
+  /// outcomeGroups, included, pedagogy, benefits, careerPaths, methodology,
+  /// valueStack, valueStackTotal, related, externalResources,
+  /// mentorshipPackages.
+  content          Json
+  sortOrder        Int             @default(0) @map("sort_order")
+  version          Int             @default(1)
+  createdAt        DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime        @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  modules   ProgrammeModule[]
+  formatsDelivery DeliveryFormat[]
+  prices    ProgrammePrice[]
+  experts   ProgrammeExpert[]
+  offerings ScheduledOffering[]
+  enquiries Enquiry[]
+
+  @@index([domainId])
+  @@index([status, sortOrder])
+  @@map("programmes")
+}
+
+model ProgrammeModule {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  programmeId String    @map("programme_id") @db.Uuid
+  programme   Programme @relation(fields: [programmeId], references: [id], onDelete: Cascade)
+  position    Int
+  title       String
+  description String?
+  points      Json?
+
+  @@unique([programmeId, position])
+  @@map("programme_modules")
+}
+
+/// Pace variants of a programme (Bootcamp / Accelerator / Mastery).
+model DeliveryFormat {
+  id             String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  programmeId    String    @map("programme_id") @db.Uuid
+  programme      Programme @relation(fields: [programmeId], references: [id], onDelete: Cascade)
+  code           String
+  name           String
+  badge          String?
+  durationLabel  String    @map("duration_label")
+  scheduleLabel  String    @map("schedule_label")
+  totalTimeLabel String    @map("total_time_label")
+  bestFor        Json      @map("best_for")
+  position       Int
+
+  offerings ScheduledOffering[]
+
+  @@unique([programmeId, code])
+  @@map("delivery_formats")
+}
+
+enum PriceRegion {
+  malaysia
+  pakistan
+  international
+
+  @@map("price_region")
+}
+
+/// Published regional prices — data, never constants. Amounts in minor units.
+model ProgrammePrice {
+  id               String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  programmeId      String      @map("programme_id") @db.Uuid
+  programme        Programme   @relation(fields: [programmeId], references: [id], onDelete: Cascade)
+  region           PriceRegion
+  currency         String      @db.Char(3)
+  listAmountMinor  BigInt      @map("list_amount_minor")
+  offerAmountMinor BigInt      @map("offer_amount_minor")
+  offerLabel       String      @map("offer_label")
+  offerName        String      @map("offer_name")
+  validFrom        DateTime?   @map("valid_from") @db.Timestamptz(6)
+  validTo          DateTime?   @map("valid_to") @db.Timestamptz(6)
+
+  @@unique([programmeId, region])
+  @@map("programme_prices")
+}
+
+/// The trainer / practitioner — a real role with a public profile (DR-02).
+model Expert {
+  id                   String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  /// Linked when the person registers; null until then.
+  userId               String?   @map("user_id") @db.Uuid
+  slug                 String    @unique
+  name                 String
+  roleTitle            String    @map("role_title")
+  location             String
+  headline             String
+  experienceLine       String    @map("experience_line")
+  summary              String
+  photoPath            String    @map("photo_path")
+  expertise            Json
+  /// about, background, specialisations, careerAchievements, books,
+  /// frameworks, frameworksUrl, podcast, communityImpact, socialLinks,
+  /// technologies, certifications, education, linkedin, mediumProfile.
+  profile              Json
+  hrdCorpAccreditation Json?     @map("hrd_corp_accreditation")
+  published            Boolean   @default(false)
+  createdAt            DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt            DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  programmes    ProgrammeExpert[]
+  leadOfferings ScheduledOffering[]
+
+  @@map("experts")
+}
+
+/// Expert association (ADR-043).
+model ProgrammeExpert {
+  programmeId String    @map("programme_id") @db.Uuid
+  programme   Programme @relation(fields: [programmeId], references: [id], onDelete: Cascade)
+  expertId    String    @map("expert_id") @db.Uuid
+  expert      Expert    @relation(fields: [expertId], references: [id], onDelete: Restrict)
+  role        String    @default("lead")
+
+  @@id([programmeId, expertId])
+  @@map("programme_experts")
+}
+
+enum DeliveryModality {
+  live_online
+  face_to_face
+  corporate_private
+
+  @@map("delivery_modality")
+}
+
+enum OfferingStatus {
+  planned
+  open
+  full
+  completed
+  cancelled
+
+  @@map("offering_status")
+}
+
+/// A dated instance of a programme — the thing a person registers for.
+/// ZERO rows until a real date exists (DR-02 §4.1). Capacity is named, not
+/// enforced (ADR-043); the hold mechanism is M4's.
+model ScheduledOffering {
+  id               String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  programmeId      String           @map("programme_id") @db.Uuid
+  programme        Programme        @relation(fields: [programmeId], references: [id], onDelete: Restrict)
+  deliveryFormatId String?          @map("delivery_format_id") @db.Uuid
+  deliveryFormat   DeliveryFormat?  @relation(fields: [deliveryFormatId], references: [id], onDelete: Restrict)
+  modality         DeliveryModality
+  location         String?
+  timezone         String
+  startsOn         DateTime         @map("starts_on") @db.Date
+  endsOn           DateTime         @map("ends_on") @db.Date
+  scheduleNote     String?          @map("schedule_note")
+  capacity         Int?
+  status           OfferingStatus   @default(planned)
+  /// Private-cohort scope. Plain UUID until `organisations` exists (M8).
+  organisationId   String?          @map("organisation_id") @db.Uuid
+  leadExpertId     String?          @map("lead_expert_id") @db.Uuid
+  leadExpert       Expert?          @relation(fields: [leadExpertId], references: [id], onDelete: Restrict)
+  /// ADR-044: the portal holds joining details; delivery is external.
+  /// Participant-only (M5); never rendered publicly.
+  joiningDetails   String?          @map("joining_details")
+  createdAt        DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime         @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([programmeId, status, startsOn])
+  @@map("scheduled_offerings")
+}
+
+model FaqEntry {
+  id         String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  groupTitle String  @map("group_title")
+  position   Int
+  question   String
+  answer     String
+  href       String?
+  hrefLabel  String? @map("href_label")
+  tbc        Boolean @default(false)
+  published  Boolean @default(true)
+
+  @@unique([groupTitle, position])
+  @@map("faq_entries")
+}
+
+model DiagnosticQuestion {
+  id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  code     String @unique
+  domainId String @map("domain_id") @db.Uuid
+  domain   Domain @relation(fields: [domainId], references: [id], onDelete: Restrict)
+  position Int    @unique
+  scenario String
+  /// string[]; "I'm not sure" is appended by the UI, never stored.
+  options  Json
+
+  @@map("diagnostic_questions")
+}
+
+enum EnquiryKind {
+  general
+  organisation
+  programme_interest
+
+  @@map("enquiry_kind")
+}
+
+enum EnquiryStatus {
+  new
+  replied
+  closed
+
+  @@map("enquiry_status")
+}
+
+/// Contact / register-interest submissions — persistent from day one.
+model Enquiry {
+  id           String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  kind         EnquiryKind
+  name         String
+  email        String
+  organisation String?
+  message      String
+  programmeId  String?       @map("programme_id") @db.Uuid
+  programme    Programme?    @relation(fields: [programmeId], references: [id], onDelete: SetNull)
+  sourcePath   String        @map("source_path")
+  status       EnquiryStatus @default(new)
+  createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([status, createdAt])
+  @@map("enquiries")
 }

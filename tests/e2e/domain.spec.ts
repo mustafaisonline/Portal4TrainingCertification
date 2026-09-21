@@ -22,7 +22,7 @@ test.describe("domain page renders from the database", () => {
     expect(domains.length, "test DB must be seeded before e2e").toBeGreaterThan(0);
     const expected = domains[0]!;
 
-    await page.goto("/");
+    await page.goto("/domains");
     const links = page.getByTestId("domain-link");
     await expect(links).toHaveCount(domains.length);
     await expect(links.first()).toHaveText(expected.name);
@@ -44,7 +44,7 @@ test.describe("domain page renders from the database", () => {
   });
 
   test("the domain page has no WCAG 2.2 AA violations", async ({ page }) => {
-    await page.goto("/");
+    await page.goto("/domains");
     await page.getByTestId("domain-link").first().click();
     await expect(page.getByTestId("domain-name")).toBeVisible();
     const results = await new AxeBuilder({ page })

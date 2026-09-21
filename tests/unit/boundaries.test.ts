@@ -75,6 +75,20 @@ describe("module boundaries", () => {
     expect(violations, `production code must not import preview fixtures:\n${violations.join("\n")}`).toEqual([]);
   });
 
+  it("no production module imports the mockup or the seed-data content files (ADR-045; M3 criterion 8)", () => {
+    // Content reaches the app through the database and its repositories,
+    // never as constants. prisma/ (the seed) is the only consumer of seed-data.
+    const violations: string[] = [];
+    for (const file of files) {
+      for (const spec of importsOf(file)) {
+        if (spec.includes("project-artifacts/") || spec.includes("seed-data/") || spec.includes("/prisma/seed-data")) {
+          violations.push(`${path.relative(ROOT, file)} → ${spec}`);
+        }
+      }
+    }
+    expect(violations, violations.join("\n")).toEqual([]);
+  });
+
   it("application code never imports the generated Prisma client directly (only src/db does)", () => {
     // Keeps the ORM behind the repository boundary (AP-10): swapping or
     // upgrading Prisma touches one folder.

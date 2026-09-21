@@ -1,0 +1,379 @@
+/*
+ * SEED DATA — PORTED VERBATIM 2026-09-21 from project-artifacts/mockup/data/practitioners.ts
+ * (ADR-045 PORT list: "content files become seed data"). Founder-reviewed
+ * content; edit the values here and re-run `npm run db:seed` — never in a
+ * migration (ADR-029). The original header comment follows.
+ */
+/**
+ * Practitioners who deliver courses — GENUINE people only, ever.
+ *
+ * DR-02 §7 and the P01 specification (docs/design/
+ * P01_HOMEPAGE_REDESIGN_SPECIFICATION.md §8) bind this file:
+ * - No fabricated practitioner may ever be added — not for visual balance,
+ *   not for marketing, not to appear larger.
+ * - The structure is deliberately plural and drives the trainer cards,
+ *   the /trainers index and the /trainers/[slug] profile pages: adding a
+ *   real practitioner is a data operation plus content, never a redesign.
+ *   Profile sections render only when their (optional) data exists, so a
+ *   future trainer without books or a podcast gets a correct page.
+ *
+ * Sources: the founder's own résumé in the repository, his authorized
+ * public profiles (P01 spec §8.4/§18), and — at the founder's direction,
+ * 2026-08-31 — his published bio at
+ * yourpartnertechnologies.com/team/mustafa-qizilbash.html, including its
+ * embedded URLs (Amazon book links, Medium frameworks article, podcast
+ * channels, social profiles) and his own published community metrics,
+ * reproduced as published. Book covers in public/books/ are his own
+ * cover artwork from that bio.
+ * Still deliberately omitted: current employer/role (open item HO-14 —
+ * sources conflict).
+ * No Academy course-delivery history is listed because no Academy
+ * course has run yet (State A) — that history appears only when real.
+ */
+export type Practitioner = {
+  slug: string;
+  name: string;
+  /** Role on this platform — a platform designation, not an employer title. */
+  role: string;
+  /** Path under public/.
+   *
+   *  POLICY CHANGED 2026-09-06 (founder direction, same day as the change
+   *  below): AI-generated or AI-enhanced imagery is now permitted
+   *  portal-wide — see docs/IMAGE_SLOTS.md rule 2 for the current wording.
+   *  Before this, the rule read "genuine photograph only; AI-generated or
+   *  stock imagery is prohibited (P01 spec §16.2–16.3)" — still the
+   *  governing text in the ROOT approved specifications, which this
+   *  session did not edit (see docs/IMAGE_SLOTS.md's policy-change note).
+   *  Stock/third-party-licensed imagery is UNCHANGED and still prohibited —
+   *  this policy change is specifically about AI generation, not licensing.
+   *
+   *  `public/experts/mustafa-qizilbash.jpg` (now renamed *-v2.jpg — see
+   *  below) was REPLACED 2026-09-06 with a file named
+   *  `Trainer Photos/Mustafa_AI_Photo.jpeg` from the reference archive —
+   *  the same filename as a DIFFERENT file this project had already
+   *  refused as AI-generated (docs/REFERENCE_MATERIAL_ACCESS.md §5). That
+   *  refusal happened under the OLD policy; this replacement happened
+   *  after the founder was told of the naming conflict twice, confirmed
+   *  the face is genuinely his ("Face in the photo is my. so please
+   *  proceed."), and — later the same day — changed the policy itself to
+   *  permit AI imagery, which is what makes this the current, compliant
+   *  state rather than a one-off exception. The prior file remains in git
+   *  history if this needs reversing. */
+  photo: string;
+  location: string;
+  /** One-line positioning used on cards. */
+  headline: string;
+  /** Short mono line for cards. */
+  experienceLine: string;
+  /** Card summary — two sentences maximum. */
+  summary: string;
+  /** Expertise tags shown as chips. */
+  expertise: string[];
+  /** Profile — introduction paragraphs. */
+  about: string[];
+  /** Profile — professional background, career-arc bullets. */
+  background: string[];
+  /** Profile — training specialisations. */
+  specialisations: string[];
+  /** Profile — career achievements, per engagement, as published in the
+   *  founder's own bio. */
+  careerAchievements?: { org: string; description: string }[];
+  /** Profile — published books, with the exact Amazon URLs and the
+   *  author's own cover artwork. */
+  books?: { title: string; subtitle: string; url: string; cover: string }[];
+  /** Profile — proprietary frameworks and methodologies. */
+  frameworks?: { abbr: string; name: string; description: string }[];
+  /** Deep-dive link for the frameworks section. */
+  frameworksUrl?: string;
+  /** Profile — podcast / media presence. */
+  podcast?: {
+    name: string;
+    description: string;
+    youtube: string;
+    spotify: string;
+  };
+  /** Profile — community impact, metrics as published by the founder. */
+  communityImpact?: { metric: string; label: string; description: string }[];
+  /** Profile — professional online presence, exact published URLs. */
+  socialLinks?: { platform: string; handle: string; url: string }[];
+  /** Profile — platforms and tooling taught/practised. */
+  technologies: string[];
+  /** Profile — certifications, from the founder's own résumé. */
+  certifications: string[];
+  /** Profile — formal education. */
+  education: string[];
+  /**
+   * A genuine, personally-held government/statutory-body accreditation —
+   * distinct from `certifications` above because it is independently
+   * verifiable by a third party. Displayed on /trainers ("Held today")
+   * and the homepage hero's floating "03" card. Founder direction,
+   * 2026-09-06. See docs/HRD_CORP.md.
+   *
+   * This is the TRAINER's accreditation, not an organisational status —
+   * never conflate it with HRD Corp "Registered Training Provider" (an
+   * entity-level registration Your Partner Technologies does not hold yet;
+   * see data/hrdCorp.ts) or "HRD Corp Claimable" (a per-course status no
+   * course holds yet). The certificate PDF and the trainer's passport
+   * number are deliberately not reproduced anywhere in this codebase —
+   * only the badge HRD Corp itself issued for display, and the identifiers
+   * needed to verify (Trainer ID, Certificate ID).
+   */
+  hrdCorpAccreditation?: {
+    issuer: string;
+    title: string;
+    trainerId: string;
+    certificateId: string;
+    validFrom: string;
+    validTo: string;
+    /** Path under public/. The badge HRD Corp issued for this trainer. */
+    badge: string;
+    /** HRD Corp's own public verification portal — a direct permalink to
+     *  THIS certificate's result (confirmed live, 2026-09-06: loads
+     *  "Verification Successful" with no prior interaction needed). The
+     *  founder's QR scan resolves to the same tool; this URL was found by
+     *  driving it directly and reading window.location.href. */
+    verifyUrl: string;
+  };
+  /** Genuine public professional profile. */
+  linkedin?: string;
+  /** Genuine public long-form profile. Since the in-portal profile page was
+   *  retired (2026-09-02, founder direction) this is where a reader goes for
+   *  the full biography — so it is the card's primary outbound link. */
+  mediumProfile?: string;
+};
+
+export const practitioners: Practitioner[] = [
+  {
+    slug: "mustafa-qizilbash",
+    name: "Mustafa Qizilbash",
+    role: "Founder & Lead Trainer",
+    // Renamed *-v2.jpg, 2026-09-06: cache-bust after the photo swap. Files
+    // in public/ are never fingerprinted by Next.js, so swapping this
+    // file's content while keeping its old name got served stale
+    // indefinitely by any browser that had already cached that URL
+    // (confirmed live: /_next/image's own server-side cache regenerated
+    // correctly and every resolution was verified correct by fetching it
+    // directly — the staleness was purely the browser's HTTP cache, which
+    // does not revalidate a `next/image` URL on every soft navigation).
+    // A `?v=2` query-string cache-buster was tried first and rejected by
+    // Next.js itself: local image sources need `images.localPatterns`
+    // configured before a query string on them is even allowed
+    // (next.config.ts does not set this). Renaming the file avoids that
+    // restriction entirely and works identically in dev (optimized) and
+    // the GitHub Pages static export (unoptimized). Bump the suffix
+    // (-v3.jpg, -v4.jpg, ...) every time this file's CONTENT changes
+    // without introducing a new person or removing this one.
+    photo: "/experts/mustafa-qizilbash-v2.jpg",
+    location: "Kuala Lumpur, Malaysia · delivers internationally",
+    headline: "Enterprise Data & AI practitioner and educator",
+    experienceLine: "24+ years · enterprise data & AI",
+    summary:
+      "More than two decades building enterprise data and AI platforms across banking, energy, telecom and government — now teaching the capability he has practised.",
+    expertise: [
+      "Data strategy & governance",
+      "Data platforms & lakehouse architecture",
+      "Enterprise analytics",
+      "Applied AI enablement",
+      "Data engineering",
+    ],
+    about: [
+      "Mustafa has spent more than 24 years at the working end of enterprise data — from traditional data warehousing through modern lakehouse architectures to today's AI-driven data ecosystems. His career has been international, hands-on and senior at the same time: leading platform modernisation courses while staying close to the architectures, pipelines and decisions underneath them.",
+      "His teaching starts from a practitioner's problem, not a textbook's chapter: organisations do not lack data — they lack data they can trust, and people who can build that trust. The courses he delivers are built around that reality, using real enterprise scenarios and the judgement calls that come with them.",
+    ],
+    background: [
+      "Led the modernisation of an enterprise data lake into a lakehouse platform supporting analytics, AI initiatives and self-service data capabilities at national-enterprise scale",
+      "Directed an enterprise data-lake modernisation course in the banking sector, owning end-to-end technical delivery",
+      "Headed a big-data consulting practice delivering enterprise platform initiatives across the region",
+      "Earlier delivery and leadership roles across banking, energy, telecom, government and enterprise sectors in Asia and internationally",
+    ],
+    specialisations: [
+      "Data governance and building trusted data",
+      "Data platform and lakehouse modernisation",
+      "Enterprise analytics and self-service enablement",
+      "Practical, applied AI adoption for the enterprise",
+      "Generative and agentic AI for the enterprise",
+    ],
+    careerAchievements: [
+      {
+        org: "Hong Leong Bank",
+        description:
+          "Led the first Teradata migration project in Southeast Asia, establishing a new benchmark in the region.",
+      },
+      {
+        org: "PETRONAS",
+        description:
+          "Led the team with zero SLA breaches over two years; migrated the data ecosystem to a unified Databricks Lakehouse; secured approval for a federated data architecture.",
+      },
+      {
+        org: "Big-data consulting, Pakistan",
+        description:
+          "Led the Big Data practice, securing the first-ever big-data wins by any consulting company in the country.",
+      },
+    ],
+    books: [
+      {
+        title: "Agentic AI and the Rise of Autonomous Intelligence",
+        subtitle:
+          "How autonomous systems are redefining work, strategy, and intelligence",
+        url: "https://www.amazon.com/dp/B0F46TJ5YN",
+        cover: "/books/agentic-ai.jpg",
+      },
+      {
+        title: "I Am Datapedia!",
+        subtitle:
+          "Series of ‘I Am Data!’ — co-authored with Bill Inmon & Marco Wobben",
+        url: "https://www.amazon.com/dp/B0F1NT87CL",
+        cover: "/books/i-am-datapedia.jpg",
+      },
+      {
+        title: "Lakebase",
+        subtitle:
+          "The Databricks-powered future of OLTP, analytics, and agentic AI",
+        url: "https://www.amazon.com/dp/B0FDKDST38",
+        cover: "/books/lakebase.jpg",
+      },
+      {
+        title: "Four 4s Formula",
+        subtitle:
+          "Series of ‘I Am Data!’ — a structured approach for data practices",
+        url: "https://www.amazon.com/dp/B0FGTR7Z1N",
+        cover: "/books/four-4s-formula.jpg",
+      },
+      {
+        title: "Data Engineering Technical Standards and Best Practices",
+        subtitle: "Series of ‘I Am Data!’",
+        url: "https://www.amazon.com/dp/B0FB2MKZPK",
+        cover: "/books/data-engineering-standards.jpg",
+      },
+    ],
+    frameworks: [
+      {
+        abbr: "4×4",
+        name: "Four 4s Formula",
+        description:
+          "A structured approach (4×4×4×4) for implementing data practices that breaks complex initiatives down into manageable components.",
+      },
+      {
+        abbr: "DAC",
+        name: "DAC Architecture",
+        description:
+          "Data & AI Cognitive Architecture — a comprehensive framework for building intelligent systems that combine data management with AI capabilities.",
+      },
+      {
+        abbr: "PVP",
+        name: "PVP Approach",
+        description:
+          "Productionizable Viable Product — a methodology for taking data and AI initiatives from proof-of-concept to production-ready products.",
+      },
+    ],
+    frameworksUrl:
+      "https://medium.com/@mustafaisonline/innovations-frameworks-methodologies-f38d1cc6b044",
+    podcast: {
+      name: "Let’s Talk About Data!",
+      description:
+        "Insightful conversations with data & AI leaders from around the world — 80+ episodes featuring industry experts, thought leaders and practitioners sharing their experiences and insights.",
+      youtube: "https://www.youtube.com/@letstalkaboutdata",
+      spotify: "https://open.spotify.com/playlist/703KmQouYdqqxwTz7KPdmf",
+    },
+    communityImpact: [
+      {
+        metric: "40,000+",
+        label: "Big Data community",
+        description:
+          "Founder and administrator for 12+ years of a thriving global Facebook community of data professionals.",
+      },
+      {
+        metric: "5,000+",
+        label: "LinkedIn followers",
+        description:
+          "600+ posts and articles on data architectures, AI adoption and industry thought leadership.",
+      },
+      {
+        metric: "80+",
+        label: "Podcast episodes",
+        description:
+          "Bringing global perspectives to practitioners through Let’s Talk About Data!",
+      },
+    ],
+    socialLinks: [
+      {
+        platform: "LinkedIn",
+        handle: "@mustafaisonline",
+        url: "https://linkedin.com/in/mustafaisonline",
+      },
+      {
+        platform: "YouTube",
+        handle: "Let’s Talk About Data",
+        url: "https://www.youtube.com/@letstalkaboutdata",
+      },
+      {
+        platform: "Medium",
+        handle: "Articles & blogs",
+        url: "https://medium.com/@mustafaisonline",
+      },
+      {
+        platform: "Substack",
+        handle: "Newsletter",
+        url: "https://mustafaqizilbash.substack.com",
+      },
+      {
+        platform: "X / Twitter",
+        handle: "@MustafaQiz",
+        url: "https://x.com/MustafaQiz",
+      },
+      {
+        platform: "Spotify",
+        handle: "Podcast playlist",
+        url: "https://open.spotify.com/playlist/703KmQouYdqqxwTz7KPdmf",
+      },
+      {
+        platform: "Bluesky",
+        handle: "@mustafaqiz",
+        url: "https://bsky.app/profile/mustafaqiz.bsky.social",
+      },
+      {
+        platform: "Instagram",
+        handle: "@mustafaisonline",
+        url: "https://www.instagram.com/mustafaisonline",
+      },
+    ],
+    technologies: [
+      "Databricks",
+      "Snowflake",
+      "Microsoft Fabric",
+      "Azure",
+      "AWS",
+      "Azure Data Factory",
+      "Talend",
+      "Informatica",
+      "Power BI",
+      "Tableau",
+    ],
+    certifications: [
+      "DAMA CDMP",
+      "Certified Data Governance Engineer (CDGE)",
+      "PMI Project Management",
+      "Apache Spark & Scala",
+      "Oracle Certified Associate",
+      "IBM Big Data",
+    ],
+    education: [
+      "Master's degree in Information Technology",
+      "Bachelor's degree in Commerce",
+    ],
+    hrdCorpAccreditation: {
+      issuer: "HRD Corp (Pembangunan Sumber Manusia Berhad)",
+      title: "HRD Corp Accredited Trainer",
+      trainerId: "68923",
+      certificateId: "7471d4a0-493f-11f1-b157-27447d2b99e9",
+      validFrom: "2026-07-08",
+      validTo: "2029-07-08",
+      badge: "/hrd-corp/accredited-trainer-badge.png",
+      verifyUrl:
+        "https://trainers.hrdcorp.gov.my/ecert?id=7471d4a0-493f-11f1-b157-27447d2b99e9",
+    },
+    linkedin: "https://www.linkedin.com/in/mustafaisonline",
+    mediumProfile:
+      "https://medium.com/@mustafaisonline/profile-mustafa-qizilbash-2fb7a294f40f",
+  },
+];

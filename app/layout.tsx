@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { IBM_Plex_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import { Caveat, IBM_Plex_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import Script from "next/script";
 import { themeInitScript } from "@/shared/chrome/theme";
 import "./globals.css";
@@ -28,6 +28,17 @@ const plexMono = IBM_Plex_Mono({
   variable: "--font-plex-mono",
   display: "swap",
 });
+/* Handwriting accent — same mechanism as the two faces above (self-hosted
+   via next/font/google, no new package, no runtime font service). Ported
+   2026-09-21 with the homepage hero (M3); scoped to the hero's handwritten-
+   style annotations via `var(--font-hand)`, not adopted anywhere else in
+   the type system. */
+const caveat = Caveat({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  variable: "--font-hand",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   // Absolute-URL base for social cards and canonical links. Read from the
@@ -47,7 +58,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
-      className={`${jakarta.variable} ${plexMono.variable}`}
+      className={`${jakarta.variable} ${plexMono.variable} ${caveat.variable}`}
       // The no-flash script sets `data-theme` on this element before React
       // hydrates; the server can't know a visitor's stored preference. An
       // expected, intentional mismatch on this one attribute — the pattern

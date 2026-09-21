@@ -49,7 +49,7 @@ It is deliberately separate from [`../architecture/`](../architecture/README.md)
 
 | # | Milestone | Objective | Blocked by | Status |
 |---|---|---|---|---|
-| **1** | Walking Skeleton | Prove the approved development foundation works end to end with a minimal, real, persistent vertical slice | **Nothing architectural** — only execution authorization | ✅ **COMPLETE 2026-09-21** — all ten criteria pass; [`MILESTONE_1_COMPLETION_REPORT.md`](MILESTONE_1_COMPLETION_REPORT.md). Authorised by founder direction the same day; branch `feat/production-foundation` |
+| **1** | Walking Skeleton | Prove the approved development foundation works end to end with a minimal, real, persistent vertical slice | **Nothing architectural** — only execution authorization | ✅ **COMPLETE 2026-09-21** — all ten criteria pass; [`MILESTONE_1_COMPLETION_REPORT.md`](MILESTONE_1_COMPLETION_REPORT.md). Authorised by founder direction the same day; branch `feat/production-foundation`. **M1b** (ADR-045 extension: tokens, primitives, chrome, CI) executed the same day — report §3.4 |
 | **2** | Authentication → authorization → dashboard | The first real steps of the Track B vertical slice | **ADR-006** — B1 deviation · B2 provider · B3 conditions | Not planned in detail |
 
 **Milestone 1 requires no decision that is not already approved.** The authentication decision (ADR-006) blocks Milestone 2 and can be settled in parallel.

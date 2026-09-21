@@ -1,0 +1,107 @@
+# Continuous integration for the PRODUCTION application at the repository
+# root (WIREFRAME_TO_PRODUCTION_PLAN.md §7 M1 "CI"; ADR-025/038 test layers).
+#
+# Runs the same five checks a developer runs locally, against a real
+# PostgreSQL service container — never a mock (Milestone 1 criterion 4):
+#   typecheck → unit + integration (Vitest) → build → e2e + axe (Playwright).
+#
+# Nothing here deploys. The mockup has its own workflow (deploy-pages.yml) and
+# is excluded from these triggers.
+name: CI
+
+on:
+  push:
+    branches: [main, "feat/**", "fix/**"]
+    paths-ignore:
+      - "project-artifacts/**"
+      - "docs/**"
+      - "**/*.md"
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - "project-artifacts/**"
+      - "docs/**"
+      - "**/*.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    services:
+      postgres:
+        # Same major as compose.yaml and the local Homebrew instance.
+        image: postgres:16
+        env:
+          POSTGRES_USER: p4tc
+          POSTGRES_PASSWORD: p4tc
+          POSTGRES_DB: p4tc_dev
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U p4tc"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+
+    env:
+      # tests/setup-env.ts refuses to run when these two are equal.
+      DATABASE_URL: postgresql://p4tc:p4tc@localhost:5432/p4tc_dev
+      DATABASE_URL_TEST: postgresql://p4tc:p4tc@localhost:5432/p4tc_test
+      APP_BASE_URL: http://localhost:3101
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - name: Install dependencies (exact lockfile)
+        run: npm ci
+
+      - name: Create the test database
+        # compose.yaml does this via prisma/compose-init/01-test-db.sql; the
+        # Actions service container has no init-script mount.
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c 'CREATE DATABASE p4tc_test;'
+
+      - name: Generate Prisma client
+        run: npm run db:generate
+
+      - name: Migrate and seed the test database
+        env:
+          DATABASE_URL: ${{ env.DATABASE_URL_TEST }}
+        run: |
+          npm run db:deploy
+          npm run db:seed
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Unit + integration tests
+        run: npm test
+
+      - name: Build
+        run: npm run build
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: End-to-end + accessibility tests
+        run: npm run test:e2e
+
+      - name: Upload Playwright report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report
+          retention-days: 7

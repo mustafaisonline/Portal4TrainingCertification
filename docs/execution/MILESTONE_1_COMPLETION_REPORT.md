@@ -14,7 +14,7 @@ Execute Milestone 1: prove the approved development foundation works end to end 
 
 ## 2. Understanding / scope
 
-Exactly the plan's §2 scope, plus the one extension ADR-045 attaches to M1: the `src/preview/` import fence. The **design-token / UI-primitive port** that ADR-045 also assigns to M1 is deliberately reported as a **separate step (M1b)** so that this report covers the plan as accepted, unmixed. Out of scope and untouched: authentication, users, roles, tenancy, content, credentials, deployment, CI, hosting, any real UI.
+Exactly the plan's §2 scope, plus the one extension ADR-045 attaches to M1: the `src/preview/` import fence. The **design-token / UI-primitive / chrome port and CI** that ADR-045 also assigns to M1 were executed as a **separate step (M1b, §3.4)** after the ten criteria passed, so that §6 reports the plan as accepted, unmixed. Out of scope and untouched: authentication, users, roles, tenancy, content, credentials, deployment, CI, hosting, any real UI.
 
 ## 3. Changes made
 
@@ -45,6 +45,19 @@ Exactly the plan's §2 scope, plus the one extension ADR-045 attaches to M1: the
 ### 3.3 The schema created (Rule 1 record)
 
 `domains`: `id uuid PK default gen_random_uuid()` · `code text unique` · `name text` · `slug text unique` · `description text null` · `created_at timestamptz(6) default now()` · `updated_at timestamptz(6)`. Nothing else. One migration, forward-only. Seed inserts one row (`DF · Data Foundations · data-foundations`) — the first entry of the mockup's capability-area list, ported as content per ADR-045.
+
+### 3.4 M1b — the ADR-045 extension (executed after the ten criteria passed, same day)
+
+| Item | Files | Provenance |
+|---|---|---|
+| Design tokens (light / dark / `.night`, radii, type scale, mobile-usability and print rules) | `app/globals.css` | `project-artifacts/mockup/app/globals.css` — values unchanged, history comments trimmed |
+| UI primitives | `src/shared/ui/{Button,Card,Chip}.tsx` | `mockup/components/ui/*` — unchanged apart from provenance headers |
+| Chrome | `src/shared/chrome/{PublicShell,ThemeToggle,LogoMark}.tsx` · `theme.ts` · `site-nav.ts` | `mockup/components/{PublicShell,ThemeToggle}.tsx` — **minus** the demo account menu, the "Mockup/Wireframe" footer strip and the reviewer "Wireframe index" (NEVER-PORT list). Account controls enter through `accountSlot` props in M2. Theme storage key renamed `mockup:theme` → `p4tc:theme` |
+| Root layout | `app/layout.tsx` | Fonts (Plus Jakarta Sans, IBM Plex Mono via `next/font`, self-hosted), no-flash theme script, `robots: noindex` until M10, `metadataBase` from `APP_BASE_URL` |
+| CI | `.github/workflows/ci.yml` | New — typecheck → Vitest → build → Playwright + axe against a PostgreSQL 16 service container; ignores `project-artifacts/**` and docs |
+| Tests | `tests/unit/design-tokens.test.ts` (5) · `tests/unit/site-nav.test.ts` (3) | Guards the dark-mode token contract (the founder-reported "can't read at night" bug class) and the nav contract |
+
+**M1b validation:** `tsc` clean · Vitest **17 / 17** · `next build` clean · Playwright **4 / 4** incl. axe on the token-styled pages · visual check in the browser at `localhost:3100` in both light and dark colour schemes (tokens resolve, Plus Jakarta Sans loads, no console errors). **Partially tested:** `PublicShell` compiles and type-checks but is **not yet mounted on any route** — every link it renders points at a page delivered by M3/M5/M6, and a header full of 404s is a defect, not a preview. It is mounted, and its links asserted to resolve, in the milestone that ports the public pages. CI workflow is **not yet exercised** (nothing pushed).
 
 ## 4. What was not changed
 

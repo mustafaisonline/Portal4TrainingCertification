@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+/* Milestone 1 — plain markup only. The design tokens and type scale are
+   ported from project-artifacts/mockup/app/globals.css in the same
+   milestone once the skeleton's restart proofs pass (WIREFRAME_TO_
+   PRODUCTION_PLAN.md §4, §7 M1). Until then this file is intentionally
+   minimal. */
+
+html {
+  color-scheme: light dark;
+}
+
+body {
+  margin: 0;
+  font-family:
+    -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+}

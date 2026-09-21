@@ -1,0 +1,34 @@
+# Local PostgreSQL for development and tests (ADR-005a — Compose-compatible;
+# Colima, Podman or Docker Desktop all run this file).
+#
+# On the founder's machine (2026-09-21) no container runtime was installed and
+# disk was tight, so Milestone 1 ran against the already-installed Homebrew
+# PostgreSQL 16 service instead. This file exists so any other machine — or CI —
+# gets an identical database with one command:
+#
+#   docker compose up -d        (or: colima start && docker compose up -d)
+#   DATABASE_URL=postgresql://portal:portal@localhost:5433/p4tc_dev
+#   DATABASE_URL_TEST=postgresql://portal:portal@localhost:5433/p4tc_test
+#
+# Port 5433 on the host, deliberately, so it never collides with a local 5432.
+services:
+  postgres:
+    image: postgres:16
+    container_name: p4tc-postgres
+    environment:
+      POSTGRES_USER: portal
+      POSTGRES_PASSWORD: portal
+      POSTGRES_DB: p4tc_dev
+    ports:
+      - "5433:5432"
+    volumes:
+      - p4tc-pgdata:/var/lib/postgresql/data
+      - ./prisma/compose-init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U portal -d p4tc_dev"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  p4tc-pgdata:

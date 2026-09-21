@@ -2,6 +2,13 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "portal",
+      "runtimeExecutable": "/opt/homebrew/opt/node@24/bin/npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 3100,
+      "autoPort": true
+    },
+    {
       "name": "mockup",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["--prefix", "project-artifacts/mockup", "run", "dev"],

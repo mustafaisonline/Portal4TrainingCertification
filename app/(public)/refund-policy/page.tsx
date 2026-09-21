@@ -1,31 +1,28 @@
 import type { Metadata } from "next";
-import { PolicyPlaceholder } from "@/shared/legal/PolicyPlaceholder";
+import { refundPolicy } from "@/content/legal/refund-policy";
+import { LegalDocumentView } from "@/shared/legal/LegalDocumentView";
 
 /*
  * PORTED 2026-09-21 from project-artifacts/mockup/app/refund-policy/page.tsx (ADR-045)
  * Changed: import path; metadata title shortened (root layout appends the site name).
+ *
+ * REPLACED 2026-09-21 (later the same day), founder direction: the
+ * PolicyPlaceholder ("policy undecided — OQ-2, OQ-9") gave way to a
+ * clearly-labelled DRAFT reflecting the founder's refund rule of 2026-09-21
+ * (≥14 days 100% · 7–13 days 50% · <7 days or after start 0% · one free
+ * transfer · Academy-initiated changes: refund or transfer). The draft lives
+ * in src/content/legal/refund-policy.ts; LegalDocumentView shows the "not yet
+ * in force" notice whenever status is "draft". Still linked from the footer,
+ * the checkout consent line and the FAQ; still a prerequisite for taking any
+ * payment, which means the REVIEWED version must be published first.
+ * robots noindex stays until then.
  */
-
-/** Refund & cancellation policy — PLACEHOLDER; the policy is undecided
- *  (OQ-2, OQ-9) and is a PREREQUISITE for taking any payment. Linked from the
- *  footer, the checkout consent line, the renewal screen and the FAQ. */
 export const metadata: Metadata = {
   title: "Refund & cancellation policy",
-  description: "Refund and cancellation policy (not yet published).",
+  description: "Refund and cancellation policy — draft for legal review, not yet in force.",
   robots: { index: false, follow: false },
 };
 
 export default function RefundPolicyPage() {
-  return (
-    <PolicyPlaceholder
-      title="Refund & cancellation policy"
-      governs="It will set out when a programme registration can be cancelled or moved to another date, what is refunded and when, and whether the yearly certificate renewal fee is refundable."
-      needs={[
-        "The Academy's decisions on cancellation windows, transfers and refunds per product",
-        "Consumer-protection review of the certificate renewal model",
-        "The invoicing legal entity and tax treatment",
-        "Review by legal counsel",
-      ]}
-    />
-  );
+  return <LegalDocumentView document={refundPolicy} />;
 }

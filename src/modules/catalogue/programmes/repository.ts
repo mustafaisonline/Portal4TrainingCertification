@@ -106,6 +106,28 @@ export async function listPublishedProgrammes(db: Db = getPrisma()): Promise<Pro
   return rows.map((r) => ({ ...r, formats: r.formats as string[] }));
 }
 
+export type AdminProgrammeOption = { id: string; title: string; slug: string; status: ProgrammeRecord["status"] };
+
+/** Every programme, any status — the admin offerings form lets the founder
+ *  schedule an unlisted programme (e.g. a private cohort) too. */
+export async function listProgrammesForAdmin(db: Db = getPrisma()): Promise<AdminProgrammeOption[]> {
+  return db.programme.findMany({
+    orderBy: { sortOrder: "asc" },
+    select: { id: true, title: true, slug: true, status: true },
+  });
+}
+
+export type AdminDeliveryFormatOption = { id: string; programmeId: string; code: string; name: string };
+
+/** Every delivery format of every programme, in position order — the admin
+ *  offerings form filters them by the chosen programme. */
+export async function listDeliveryFormatsForAdmin(db: Db = getPrisma()): Promise<AdminDeliveryFormatOption[]> {
+  return db.deliveryFormat.findMany({
+    orderBy: [{ programmeId: "asc" }, { position: "asc" }],
+    select: { id: true, programmeId: true, code: true, name: true },
+  });
+}
+
 /** Related programmes (by slug list) that are published. */
 export async function listPublishedProgrammesBySlugs(slugs: string[], db: Db = getPrisma()): Promise<ProgrammeSummary[]> {
   if (slugs.length === 0) return [];

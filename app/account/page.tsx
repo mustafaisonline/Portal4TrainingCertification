@@ -1,9 +1,12 @@
 import Link from "next/link";
+import { MODALITY_LABEL } from "@/modules/catalogue/offerings/repository";
 import { findFlagshipProgramme } from "@/modules/catalogue/programmes/repository";
+import { latestConfirmedRegistration } from "@/modules/commerce/registrations.service";
 import { requireUser } from "@/modules/identity/session";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { Chip } from "@/shared/ui/Chip";
+import { formatDateRange } from "@/shared/util/dates";
 
 /*
  * L01 — Participant Dashboard.
@@ -21,6 +24,9 @@ import { Chip } from "@/shared/ui/Chip";
 export default async function AccountPage() {
   const user = await requireUser("/account");
   const flagship = await findFlagshipProgramme();
+  // M4 (2026-09-21): the latest CONFIRMED registration, from `registrations`
+  // (written only by the paid webhook); the empty state stays when none.
+  const latest = await latestConfirmedRegistration(user.id);
   const interestHref = flagship ? `/contact-us?kind=programme_interest&programme=${flagship.slug}` : "/contact-us";
 
   return (
@@ -60,7 +66,21 @@ export default async function AccountPage() {
             View all
           </Link>
         </div>
-        <p className="text-body-sm text-[var(--color-ink-faint)]">You are not registered for a programme yet.</p>
+        {latest ? (
+          <Card variant="panel" className="p-5" data-testid="dash-latest-registration">
+            <div className="mb-2 flex flex-wrap gap-2">
+              <Chip tone="primary">Confirmed</Chip>
+              <Chip>{MODALITY_LABEL[latest.offering.modality]}</Chip>
+            </div>
+            <p className="text-body-lg font-medium">{latest.offering.programmeTitle}</p>
+            <p className="text-body-sm text-[var(--color-ink-quiet)]">
+              {latest.offering.format?.name ?? MODALITY_LABEL[latest.offering.modality]} ·{" "}
+              {formatDateRange(latest.offering.startsOn, latest.offering.endsOn)}
+            </p>
+          </Card>
+        ) : (
+          <p className="text-body-sm text-[var(--color-ink-faint)]">You are not registered for a programme yet.</p>
+        )}
       </section>
 
       <div className="grid gap-4 sm:grid-cols-2">

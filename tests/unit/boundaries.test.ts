@@ -89,6 +89,27 @@ describe("module boundaries", () => {
     expect(violations, violations.join("\n")).toEqual([]);
   });
 
+  it("client components never import the database layer or a repository (would bundle pg for the browser)", () => {
+    // Found the hard way in M4: a "use client" form importing constants from
+    // a repository file pulled Prisma + pg into the browser bundle and broke
+    // `next build`. Client code may import `*/constants`, `*/types`, `*/dates`,
+    // `*.actions` (server-action boundary) and `auth-client` only.
+    const violations: string[] = [];
+    // Type-only imports are erased by the compiler and never bundle anything.
+    const VALUE_IMPORT_RE = /^\s*import\s+(?!type\b)[^;]*?from\s+["']([^"']+)["']/gm;
+    for (const file of files) {
+      const src = readFileSync(file, "utf8");
+      if (!/^\s*["']use client["']/m.test(src.slice(0, 200))) continue;
+      for (const m of src.matchAll(VALUE_IMPORT_RE)) {
+        const spec = m[1]!;
+        const isModule = spec.startsWith("@/modules/") || spec.startsWith("@/db");
+        const allowed = /\/(constants|types|dates|actions|[a-z-]+\.actions|auth-client)$/.test(spec);
+        if (isModule && !allowed) violations.push(`${path.relative(ROOT, file)} → ${spec}`);
+      }
+    }
+    expect(violations, violations.join("\n")).toEqual([]);
+  });
+
   it("application code never imports the generated Prisma client directly (only src/db does)", () => {
     // Keeps the ORM behind the repository boundary (AP-10): swapping or
     // upgrading Prisma touches one folder.

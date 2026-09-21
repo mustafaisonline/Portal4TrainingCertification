@@ -1,8 +1,10 @@
 import { authorise } from "@/modules/identity/session";
+import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 
-/* Admin landing — proves the gate in M2. Operations arrive in M8 on real
-   data; nothing from the wireframe's adminSamples.ts is shown. */
+/* Admin landing — proves the gate in M2. Offerings (M4) are the first real
+   operation; registrations, orders and certificate administration arrive in
+   M8. Nothing from the wireframe's adminSamples.ts is shown. */
 export default async function AdminPage() {
   const result = await authorise("platform_admin");
   if (!result.ok) return null; // the layout has already refused
@@ -17,9 +19,21 @@ export default async function AdminPage() {
       <Card variant="panel">
         <p className="text-body-sm text-[var(--color-ink-quiet)]">
           Signed in as <strong className="text-[var(--color-ink)]">{result.user.email}</strong> with administrator
-          access. Offerings, registrations, orders and certificate administration
-          are delivered in the operations milestone.
+          access. Registrations, orders and certificate administration are delivered in the operations milestone.
         </p>
+      </Card>
+      <Card variant="panel">
+        <p className="text-label mb-2">Dates & seats</p>
+        <h2 className="text-h2">Offerings</h2>
+        <p className="text-body-sm mt-2 max-w-[60ch] text-[var(--color-ink-quiet)]">
+          Schedule the dates people register for: programme, format, dates, capacity and status. Only what you
+          create here appears on the public schedule.
+        </p>
+        <div className="mt-5">
+          <Button href="/admin/offerings" data-testid="admin-offerings-link">
+            Manage offerings
+          </Button>
+        </div>
       </Card>
     </div>
   );

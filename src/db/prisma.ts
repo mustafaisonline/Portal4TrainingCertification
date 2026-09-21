@@ -10,6 +10,10 @@ import { PrismaClient, type Prisma } from "../generated/prisma/client.ts";
 export type Tx = Prisma.TransactionClient;
 /** Either the process client or a transaction client. */
 export type Db = PrismaClient | Tx;
+/** A value storable in a `Json` column — re-exported so modules that write
+ *  JSON (e.g. the stored Stripe event payload) need not import the generated
+ *  client themselves. */
+export type JsonInput = Prisma.InputJsonValue;
 
 /*
  * The one PrismaClient for the process (ADR-005: single PostgreSQL, sole

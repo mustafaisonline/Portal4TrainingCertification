@@ -67,7 +67,15 @@ function OfferingCard({ offering, enquiryHref }: { offering: OfferingRecord; enq
           )}
         </div>
         <div className="shrink-0">
-          <Button href={enquiryHref}>Register interest</Button>
+          {/* M4 (2026-09-21): an OPEN date registers through the real
+              checkout; other statuses keep the register-interest enquiry. */}
+          {offering.status === "open" ? (
+            <Button href={`/checkout/${offering.id}`} data-testid="register">
+              Register
+            </Button>
+          ) : (
+            <Button href={enquiryHref}>Register interest</Button>
+          )}
         </div>
       </div>
     </Card>

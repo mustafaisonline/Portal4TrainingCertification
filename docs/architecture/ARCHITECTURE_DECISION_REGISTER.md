@@ -236,6 +236,8 @@ Each record: **Context · Decision/Recommendation · Alternatives considered · 
 
 **Approval.** 🔴 Required — authentication architecture is a named RED gate. **Three separate decisions: B1** approve the specification deviation · **B2** select the provider · **B3** accept conditions 1–5 if Better Auth is selected.
 
+> **Execution note — 2026-09-21.** Status remains **PENDING HUMAN APPROVAL**. Under the founder's blanket direction of 2026-09-21 and the default posted at the start of execution (`docs/execution/WIREFRAME_TO_PRODUCTION_PLAN.md` §0.1 #1), Milestone 2 was built on the **recommendation — Better Auth 1.7.5 — with conditions 1–3 enforced in code** (surface = email/password + TOTP only; no organisation/roles plugin; mapping pattern in `auth_identities`) and conditions 4–5 recorded as operational commitments. **B1/B2/B3 await the founder's ratification**; the mapping pattern keeps a switch to Clerk a one-table rewrite. See `docs/execution/MILESTONE_2_EXECUTION_PLAN.md` §3, §10 and the completion report.
+
 ---
 
 ### ADR-007 — ORM and migration tooling (OPEN)
@@ -429,6 +431,8 @@ Each record: **Context · Decision/Recommendation · Alternatives considered · 
 **Consequences.** Email delivery becomes an operational metric, not a fire-and-forget call.
 
 **Approval.** 🔴 Required.
+
+> **Execution note — 2026-09-21.** Still **OPEN**; no provider selected, no account created. Milestone 2 built the provider-independent part: every email is first a row in `outbound_emails` (status, attempts, last error), then handed to a transport chosen by `EMAIL_TRANSPORT`. Only the `log` transport exists; `resend` / `postmark` refuse to start until this decision and the sending domain (OQ-3) exist. See `src/modules/notifications/email.ts`.
 
 ---
 

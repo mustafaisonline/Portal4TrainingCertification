@@ -101,22 +101,22 @@ Nothing below is production logic. Each item has a real replacement.
 
 | `sessionStorage` key | Holds | Cleared by |
 |---|---|---|
-| `mockup:demo-session` | the demo **role** (`participant` \| `admin`) — a label, not a permission | Sign-out / "End demo session" |
+| `mockup:demo-session` | the demo **role** (`participant` \| `admin`) — a label, not a permission | Sign-out / "End demo session" · **✅ Retired by M2 (2026-09-21): server-side sessions in `auth_sessions`; roles from `user_roles`** |
 | `mockup:demo-registrations` | Simulated registrations (the fake payments) | `endDemoSession()` |
 | `mockup:demo-certificate` | The demo participant's certificate and renewals | `endDemoSession()` |
-| `mockup:demo-return-to` | Path to resume after sign-in | Consumed on sign-in |
+| `mockup:demo-return-to` | Path to resume after sign-in | Consumed on sign-in · **✅ Retired by M2: `?return-to=` validated server-side to same-site paths (`src/shared/util/return-to.ts`)** |
 | *(pre-existing, approved)* `mockup:diagnostic:in-progress`, `mockup:theme` (localStorage) | Diagnostic answers; theme | Not part of this work |
 
 ### 3.2 Files
 
 | File | Fakes | Replace with |
 |---|---|---|
-| `lib/demoCredentials.ts`, `lib/demoSession.ts` | Credentials, session flag, return-to | Real auth (C1), validated redirect (C17) |
-| `components/auth/SignInForm.tsx`, `ClearDemoSession.tsx` | Sign-in / sign-out | Real forms + server actions/routes |
+| `lib/demoCredentials.ts`, `lib/demoSession.ts` | Credentials, session flag, return-to | Real auth (C1), validated redirect (C17) · **✅ Retired by M2 (2026-09-21)** — `src/modules/identity/*`; never ported |
+| `components/auth/SignInForm.tsx`, `ClearDemoSession.tsx` | Sign-in / sign-out | Real forms + server actions/routes · **✅ Retired by M2** — `app/(auth)/sign-in`, `app/(auth)/sign-out` |
 | `lib/demoRegistrations.ts` | **A payment success created in the browser** | Server-created registrations from a verified webhook (C3, C4, C16) |
 | `lib/demoCertificate.ts` | Issuance, time travel, renewal | Server issuance, computed expiry, webhook-confirmed renewal |
 | `components/account/CheckoutFlow.tsx` (`pay()`), `RenewFlow.tsx` (`pay()`), `ConfirmationView.tsx` | Payment | Server-created payment; server-truth confirmation (C4, C15) |
-| `components/account/SignInGate.tsx`, `AccountFrame.tsx` (gate), `RegisterInterestButton.tsx`, `RegisterButton.tsx` | Client-side gating/routing on the flag | Server-side access control (C18) |
+| `components/account/SignInGate.tsx`, `AccountFrame.tsx` (gate), `RegisterInterestButton.tsx`, `RegisterButton.tsx` | Client-side gating/routing on the flag | Server-side access control (C18) · **✅ `SignInGate` and the `AccountFrame` gate retired by M2** — `app/account/layout.tsx`, `app/admin/layout.tsx` (`requireUser` / `authorise`). The two Register buttons wait for M3/M4 |
 | `data/demoParticipant.ts` | The participant, the **3 invented start dates**, generic payment methods, all currencies to everyone | Real records; decided list (A9); eligibility rule (A8) |
 | `data/certificates.ts` | The invented public registry + `DEMO_CERT_ID` | The database |
 | `data/certificateConfig.ts` | Fee/validity/window as constants | Admin-managed, effective-dated config (R-F1/F2) |

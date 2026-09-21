@@ -166,9 +166,11 @@ model User {
   createdAt       DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt       DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  identities AuthIdentity[]
-  roles      UserRole[]
-  consents   Consent[]
+  identities    AuthIdentity[]
+  roles         UserRole[]
+  consents      Consent[]
+  orders        Order[]
+  registrations Registration[]
 
   @@map("users")
 }
@@ -349,6 +351,7 @@ model Programme {
   experts   ProgrammeExpert[]
   offerings ScheduledOffering[]
   enquiries Enquiry[]
+  orders    Order[]
 
   @@index([domainId])
   @@index([status, sortOrder])
@@ -500,6 +503,9 @@ model ScheduledOffering {
   createdAt        DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt        DateTime         @updatedAt @map("updated_at") @db.Timestamptz(6)
 
+  orders        Order[]
+  registrations Registration[]
+
   @@index([programmeId, status, startsOn])
   @@map("scheduled_offerings")
 }
@@ -564,4 +570,161 @@ model Enquiry {
 
   @@index([status, createdAt])
   @@map("enquiries")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Milestone 4 — Registration & payment (MILESTONE_4_EXECUTION_PLAN.md §5).
+// OUR records are authoritative for entitlement (ADR-014); a registration
+// exists only after a verified Stripe event.
+// ─────────────────────────────────────────────────────────────────────────────
+
+enum OrderStatus {
+  pending
+  paid
+  expired
+  failed
+  cancelled
+  refunded
+  partially_refunded
+
+  @@map("order_status")
+}
+
+model Order {
+  id                      String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId                  String            @map("user_id") @db.Uuid
+  user                    User              @relation(fields: [userId], references: [id], onDelete: Restrict)
+  offeringId              String            @map("offering_id") @db.Uuid
+  offering                ScheduledOffering @relation(fields: [offeringId], references: [id], onDelete: Restrict)
+  programmeId             String            @map("programme_id") @db.Uuid
+  programme               Programme         @relation(fields: [programmeId], references: [id], onDelete: Restrict)
+  status                  OrderStatus       @default(pending)
+  region                  PriceRegion
+  currency                String            @db.Char(3)
+  amountMinor             BigInt            @map("amount_minor")
+  stripeCheckoutSessionId String?           @unique @map("stripe_checkout_session_id")
+  stripePaymentIntentId   String?           @map("stripe_payment_intent_id")
+  expiresAt               DateTime          @map("expires_at") @db.Timestamptz(6)
+  paidAt                  DateTime?         @map("paid_at") @db.Timestamptz(6)
+  createdAt               DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt               DateTime          @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  payment      Payment?
+  registration Registration?
+
+  @@index([userId, createdAt])
+  @@index([offeringId, status, expiresAt])
+  @@map("orders")
+}
+
+enum PaymentStatus {
+  succeeded
+  refunded
+  partially_refunded
+
+  @@map("payment_status")
+}
+
+model Payment {
+  id                      String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  orderId                 String        @unique @map("order_id") @db.Uuid
+  order                   Order         @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  provider                String        @default("stripe")
+  providerPaymentIntentId String        @unique @map("provider_payment_intent_id")
+  providerChargeId        String?       @map("provider_charge_id")
+  amountMinor             BigInt        @map("amount_minor")
+  currency                String        @db.Char(3)
+  receiptUrl              String?       @map("receipt_url")
+  status                  PaymentStatus @default(succeeded)
+  createdAt               DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  refunds Refund[]
+
+  @@map("payments")
+}
+
+enum RefundReason {
+  participant_cancellation
+  academy_cancellation
+  manual
+
+  @@map("refund_reason")
+}
+
+enum RefundStatus {
+  pending
+  succeeded
+  failed
+
+  @@map("refund_status")
+}
+
+model Refund {
+  id                String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  paymentId         String       @map("payment_id") @db.Uuid
+  payment           Payment      @relation(fields: [paymentId], references: [id], onDelete: Restrict)
+  providerRefundId  String?      @unique @map("provider_refund_id")
+  amountMinor       BigInt       @map("amount_minor")
+  percent           Int
+  reason            RefundReason
+  status            RefundStatus @default(pending)
+  requestedByUserId String?      @map("requested_by_user_id") @db.Uuid
+  createdAt         DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt         DateTime     @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("refunds")
+}
+
+enum RegistrationStatus {
+  confirmed
+  cancelled
+  transferred
+
+  @@map("registration_status")
+}
+
+/// A person's place in an offering (ADR-043). Created ONLY by the paid-webhook
+/// transaction (plan §6.1).
+model Registration {
+  id                         String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId                     String             @map("user_id") @db.Uuid
+  user                       User               @relation(fields: [userId], references: [id], onDelete: Restrict)
+  offeringId                 String             @map("offering_id") @db.Uuid
+  offering                   ScheduledOffering  @relation(fields: [offeringId], references: [id], onDelete: Restrict)
+  orderId                    String             @unique @map("order_id") @db.Uuid
+  order                      Order              @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  status                     RegistrationStatus @default(confirmed)
+  transferUsed               Boolean            @default(false) @map("transfer_used")
+  transferredToRegistrationId String?           @map("transferred_to_registration_id") @db.Uuid
+  cancelledAt                DateTime?          @map("cancelled_at") @db.Timestamptz(6)
+  cancellationRefundPercent  Int?               @map("cancellation_refund_percent")
+  createdAt                  DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt                  DateTime           @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([offeringId, status])
+  @@index([userId, status])
+  @@map("registrations")
+}
+
+enum StripeEventStatus {
+  received
+  processed
+  ignored
+  failed
+
+  @@map("stripe_event_status")
+}
+
+/// Every webhook event, stored BEFORE processing — idempotency + audit.
+model StripeEvent {
+  id          String            @id
+  type        String
+  status      StripeEventStatus @default(received)
+  payload     Json
+  error       String?
+  receivedAt  DateTime          @default(now()) @map("received_at") @db.Timestamptz(6)
+  processedAt DateTime?         @map("processed_at") @db.Timestamptz(6)
+
+  @@index([type, receivedAt])
+  @@map("stripe_events")
 }

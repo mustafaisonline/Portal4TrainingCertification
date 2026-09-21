@@ -18,7 +18,18 @@ export type AuditAction =
   | "profile.updated"
   | "role.granted"
   | "role.revoked"
-  | "consent.recorded";
+  | "consent.recorded"
+  // Milestone 4 — offerings, orders, payments, registrations, refunds
+  | "offering.created"
+  | "offering.updated"
+  | "order.created"
+  | "order.expired"
+  | "payment.succeeded"
+  | "registration.confirmed"
+  | "registration.cancelled"
+  | "registration.transferred"
+  | "refund.created"
+  | "refund.updated";
 
 export type AuditEntry = {
   /** Our `users.id`; null when the system acted on its own. */

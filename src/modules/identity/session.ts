@@ -22,8 +22,6 @@ export type CurrentUser = {
   name: string;
   country: string | null;
   emailVerified: boolean;
-  /** TOTP enrolled and verified (Better Auth's flag on its own user row). */
-  mfaEnabled: boolean;
   roles: ActiveRole[];
 };
 
@@ -39,7 +37,6 @@ export const getCurrentUser = cache(async (): Promise<CurrentUser | null> => {
     name: user.name,
     country: user.country,
     emailVerified: user.emailVerifiedAt !== null,
-    mfaEnabled: session.user.twoFactorEnabled === true,
     roles,
   };
 });
@@ -54,23 +51,19 @@ export async function requireUser(returnTo: string): Promise<CurrentUser> {
 export type Authorisation =
   | { ok: true; user: CurrentUser }
   | { ok: false; reason: "signed-out" }
-  | { ok: false; reason: "forbidden"; user: CurrentUser }
-  | { ok: false; reason: "mfa-required"; user: CurrentUser };
+  | { ok: false; reason: "forbidden"; user: CurrentUser };
 
 /**
- * Data-layer-style guard for a role (ADR-020). Privileged roles additionally
- * require MFA to be enrolled (plan §6.8; OQ-14 "Yes" default). Returns a
- * result rather than throwing so layouts can render the right response
- * (redirect, 403 page, or the MFA enrolment prompt).
+ * Data-layer-style guard for a role (ADR-020). Returns a result rather than
+ * throwing so layouts can render the right response (redirect or 403 page).
+ * The MFA requirement for privileged roles (M2 plan §6.8) was removed for
+ * MVP 1 by founder decision, 2026-09-21.
  */
 export async function authorise(role: Role, scope?: RoleScope): Promise<Authorisation> {
   const user = await getCurrentUser();
   if (!user) return { ok: false, reason: "signed-out" };
   if (!holdsRole(user.roles, role, scope)) return { ok: false, reason: "forbidden", user };
-  if (PRIVILEGED.has(role) && !user.mfaEnabled) return { ok: false, reason: "mfa-required", user };
   return { ok: true, user };
 }
-
-const PRIVILEGED: ReadonlySet<Role> = new Set<Role>(["platform_admin"]);
 
 export { holdsRole };

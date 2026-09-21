@@ -17,7 +17,7 @@ export default async function AdminPage() {
       <Card variant="panel">
         <p className="text-body-sm text-[var(--color-ink-quiet)]">
           Signed in as <strong className="text-[var(--color-ink)]">{result.user.email}</strong> with administrator
-          access and two-factor authentication on. Offerings, registrations, orders and certificate administration
+          access. Offerings, registrations, orders and certificate administration
           are delivered in the operations milestone.
         </p>
       </Card>

@@ -9,7 +9,6 @@ import {
   uniqueEmail,
   waitForEmail,
 } from "../helpers/identity-db";
-import { totp } from "../helpers/totp";
 
 /*
  * Identity & access — end to end through the real screens against the test
@@ -84,7 +83,6 @@ test("register → verify → signed-in account page shows OUR identity and role
   await page.goto(firstLink(mail.textBody));
   await expect(page).toHaveURL(/\/account$/);
   await expect(page.getByTestId("account-verified")).toHaveText("Verified");
-  await expect(page.getByTestId("account-mfa")).toContainText("Off");
   await expect(page.getByTestId("account-roles")).toContainText("participant");
   await expect(page.getByTestId("header-account")).toBeVisible();
   await expectNoAxeViolations(page);
@@ -147,7 +145,7 @@ test("password reset from the emailed link", async ({ page }) => {
   await expect(page).toHaveURL(/\/account$/);
 });
 
-test("admin gate: participant → 403; admin without MFA → enrol; with MFA → served; next sign-in asks for a code", async ({ page }) => {
+test("admin gate: participant → 403; platform_admin → served (roles from user_roles)", async ({ page }) => {
   const email = newEmail("e2e-admin");
   await registerViaUi(page, email, "Grace Admin");
   await verifyViaEmail(page, email);
@@ -156,38 +154,11 @@ test("admin gate: participant → 403; admin without MFA → enrol; with MFA →
   expect(forbidden?.status()).toBe(403);
   await expect(page.getByTestId("forbidden-title")).toBeVisible();
 
+  // MFA was removed for MVP 1 (founder, 2026-09-21): the role alone opens /admin.
   await grantRoleByEmail(email, "platform_admin");
   await page.goto("/admin");
-  await expect(page).toHaveURL(/\/account\/security\/mfa\?required=admin$/);
-  await expectNoAxeViolations(page);
-
-  await page.getByLabel("Current password").fill(STRONG_PASSWORD);
-  await page.getByTestId("mfa-start").click();
-  const secret = (await page.getByTestId("mfa-secret").textContent())!.trim();
-  expect(secret.length).toBeGreaterThan(10);
-  await page.getByLabel("Authenticator code").fill(totp(secret));
-  await page.getByTestId("mfa-verify").click();
-  await expect(page.getByTestId("mfa-backup-codes")).toBeVisible();
-  const codes = await page.getByTestId("mfa-backup-codes").locator("li").allTextContents();
-  expect(codes.length).toBeGreaterThan(0);
-
-  await page.goto("/admin");
   await expect(page.getByTestId("admin-title")).toHaveText("Operations");
-
-  // The next sign-in requires the second factor before any session exists.
-  await page.goto("/sign-out");
-  await expect(page.getByTestId("header-sign-in")).toBeVisible();
-  await signInViaUi(page, email);
-  await expect(page).toHaveURL(/\/sign-in\/two-factor\?return-to=%2Faccount$/);
-  await page.goto("/account"); // no session yet
-  await expect(page).toHaveURL(/\/sign-in\?return-to=%2Faccount$/);
-
-  await signInViaUi(page, email);
-  await expect(page).toHaveURL(/\/sign-in\/two-factor/);
-  await page.getByLabel("Authenticator code").fill(totp(secret));
-  await page.getByRole("button", { name: "Continue" }).click();
-  await expect(page).toHaveURL(/\/account$/);
-  await expect(page.getByTestId("account-mfa")).toContainText("On");
+  await expectNoAxeViolations(page);
 });
 
 test("a second registration with the same email is a clear error, and the password can be changed from Security", async ({ page }) => {

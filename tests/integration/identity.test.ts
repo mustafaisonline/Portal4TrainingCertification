@@ -5,7 +5,6 @@ import { activeRolesForUser, grantRole, holdsRole, revokeRole } from "@/modules/
 import { findUserByEmail } from "@/modules/identity/users.repository";
 import { listAuditForEntity } from "@/modules/platform/audit/repository";
 import { deleteTestUser, firstLink, STRONG_PASSWORD, uniqueEmail, waitForEmail } from "../helpers/identity-db";
-import { secretFromOtpauth, totp } from "../helpers/totp";
 
 /*
  * Identity & access — integration layer against the REAL test database
@@ -324,57 +323,5 @@ describe("roles (ADR-020; criterion 8 data layer)", () => {
     expect(holdsRole(roles, "expert", { scopeType: "offering", scopeId: "22222222-2222-4222-8222-222222222222" })).toBe(false);
     expect(holdsRole(roles, "expert")).toBe(false);
     expect(holdsRole(roles, "org_admin", { scopeType: "organisation", scopeId: "33333333-3333-4333-8333-333333333333" })).toBe(true);
-  });
-});
-
-describe("two-factor (criterion 9)", () => {
-  it("enrols with TOTP, then sign-in needs a code; a backup code works once; disable is audited", async () => {
-    const email = uniqueEmail("mfa");
-    await register(email);
-    await verify(email);
-    let cookie = cookieHeader((await signIn(email)).cookies);
-
-    const enable = await call("POST", "/two-factor/enable", { password: STRONG_PASSWORD }, cookie);
-    expect(enable.status, JSON.stringify(enable.json)).toBe(200);
-    const { totpURI, backupCodes } = enable.json as { totpURI: string; backupCodes: string[] };
-    const secret = secretFromOtpauth(totpURI);
-    expect(backupCodes.length).toBeGreaterThan(0);
-    // Not active until a code is verified.
-    expect((await prisma.authUser.findUnique({ where: { email } }))?.twoFactorEnabled).toBe(false);
-
-    const confirm = await call("POST", "/two-factor/verify-totp", { code: totp(secret) }, cookie);
-    expect(confirm.status, JSON.stringify(confirm.json)).toBe(200);
-    expect((await prisma.authUser.findUnique({ where: { email } }))?.twoFactorEnabled).toBe(true);
-
-    // Fresh sign-in: credential step yields a redirect flag, not a session.
-    const step1 = await signIn(email);
-    expect(step1.status).toBe(200);
-    expect((step1.json as { twoFactorRedirect?: boolean }).twoFactorRedirect).toBe(true);
-    const pending = cookieHeader(step1.cookies);
-    expect(pending).not.toContain("session_token=");
-
-    const bad = await call("POST", "/two-factor/verify-totp", { code: "000000" }, pending);
-    expect(bad.status).toBeGreaterThanOrEqual(400);
-    const good = await call("POST", "/two-factor/verify-totp", { code: totp(secret) }, pending);
-    expect(good.status, JSON.stringify(good.json)).toBe(200);
-    cookie = cookieHeader(good.cookies, pending);
-    expect((await call("GET", "/get-session", undefined, cookie)).json).not.toBeNull();
-
-    // Backup code path, once.
-    const step1b = cookieHeader((await signIn(email)).cookies);
-    const useBackup = await call("POST", "/two-factor/verify-backup-code", { code: backupCodes[0] }, step1b);
-    expect(useBackup.status, JSON.stringify(useBackup.json)).toBe(200);
-    const step1c = cookieHeader((await signIn(email)).cookies);
-    expect((await call("POST", "/two-factor/verify-backup-code", { code: backupCodes[0] }, step1c)).status).toBeGreaterThanOrEqual(400);
-
-    // Disable requires the password and is audited.
-    const disable = await call("POST", "/two-factor/disable", { password: STRONG_PASSWORD }, cookie);
-    expect(disable.status, JSON.stringify(disable.json)).toBe(200);
-    expect((await prisma.authUser.findUnique({ where: { email } }))?.twoFactorEnabled).toBe(false);
-
-    const user = (await findUserByEmail(email))!;
-    const actions = (await listAuditForEntity(prisma, "user", user.id)).map((a) => a.action);
-    expect(actions).toContain("mfa.enabled");
-    expect(actions).toContain("mfa.disabled");
   });
 });

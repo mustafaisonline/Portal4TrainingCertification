@@ -17,8 +17,6 @@ export type AuditAction =
   | "password.changed"
   | "role.granted"
   | "role.revoked"
-  | "mfa.enabled"
-  | "mfa.disabled"
   | "consent.recorded";
 
 export type AuditEntry = {

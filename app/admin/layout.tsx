@@ -7,10 +7,10 @@ import { PublicShell } from "@/shared/chrome/PublicShell";
 
 /*
  * Trainer / admin area. SERVER-SIDE gate on every request (ADR-020; ADMIN
- * reqs AD-3): `platform_admin` from OUR `user_roles`, AND two-factor enrolled.
+ * reqs AD-3): `platform_admin` from OUR `user_roles`.
  *   signed out   → sign-in with return path
  *   no role      → HTTP 403 (app/forbidden.tsx) — not a redirect that hides it
- *   no MFA yet   → the enrolment page, the only admin-area step served
+ * (The MFA requirement was removed for MVP 1 — founder, 2026-09-21.)
  * The wireframe's `AdminFrame` label-gate is replaced, not ported.
  */
 export const metadata: Metadata = { title: { default: "Admin", template: "%s · Admin · Data & AI Academy" } };
@@ -19,7 +19,6 @@ export default async function AdminLayout({ children }: { children: ReactNode })
   const result = await authorise("platform_admin");
   if (!result.ok) {
     if (result.reason === "signed-out") redirect(`/sign-in?return-to=${encodeURIComponent("/admin")}`);
-    if (result.reason === "mfa-required") redirect("/account/security/mfa?required=admin");
     forbidden();
   }
   return (

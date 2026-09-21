@@ -6,7 +6,7 @@ import { Chip } from "@/shared/ui/Chip";
 /*
  * L01 — the signed-in landing, minimal for M2: who you are, from OUR `users`
  * row and `user_roles` — never from the provider's session — plus the state
- * of verification and MFA. The programme/registration content arrives with
+ * of verification. The programme/registration content arrives with
  * M3–M5 on real data; nothing here is sample data.
  */
 export default async function AccountPage() {
@@ -34,11 +34,10 @@ export default async function AccountPage() {
             </dd>
           </div>
           <div>
-            <dt className="text-label mb-1">Two-factor authentication</dt>
-            <dd data-testid="account-mfa">
-              {user.mfaEnabled ? <Chip tone="primary">On</Chip> : <Chip>Off</Chip>}{" "}
-              <Link href="/account/security" className="ml-2 text-[var(--color-primary)] underline underline-offset-4">
-                Manage
+            <dt className="text-label mb-1">Password</dt>
+            <dd>
+              <Link href="/account/security" className="text-[var(--color-primary)] underline underline-offset-4">
+                Change password
               </Link>
             </dd>
           </div>

@@ -2,7 +2,6 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { APIError, createAuthMiddleware } from "better-auth/api";
 import { nextCookies } from "better-auth/next-js";
-import { twoFactor } from "better-auth/plugins";
 import { getPrisma, withTransaction } from "@/db/prisma";
 import { sendEmail } from "@/modules/notifications/email";
 import { writeAudit } from "@/modules/platform/audit/repository";
@@ -16,8 +15,12 @@ import { createRegisteredIdentity, findUserByAuthSubject, markEmailVerified } fr
  * PLAN.md §6 records every commitment below).
  *
  * SURFACE (condition 1): email + password, email verification, password
- * reset, sessions, TOTP two-factor. Nothing else — no organisation, admin,
- * OIDC-provider, API-key, magic-link, anonymous, device or SCIM plugins.
+ * reset, sessions. Nothing else — no organisation, admin, OIDC-provider,
+ * API-key, magic-link, anonymous, device or SCIM plugins. TOTP two-factor
+ * was built in M2 and REMOVED for MVP 1 by founder decision (2026-09-21);
+ * the `auth_two_factors` table and `auth_users.two_factor_enabled` column
+ * stay in place unused — dropping them is a destructive migration for a
+ * separate approval. Re-enabling = restoring commit 5d08cdc's plugin wiring.
  *
  * SEPARATION (conditions 2–3): Better Auth owns the `auth_*` tables and only
  * those. Our `users`, `user_roles`, `consents` and `audit_log` are written by
@@ -122,8 +125,7 @@ export const auth = betterAuth({
       "/sign-up/email": { window: 60, max: 3 },
       "/request-password-reset": { window: 60, max: 3 },
       "/send-verification-email": { window: 60, max: 3 },
-      "/two-factor/verify-totp": { window: 60, max: 5 },
-      "/two-factor/verify-backup-code": { window: 60, max: 5 },
+      "/change-password": { window: 60, max: 5 },
     },
   },
 
@@ -208,36 +210,10 @@ export const auth = betterAuth({
           }
         },
       },
-      update: {
-        before: async (update, ctx) => {
-          // MFA state changes are identity mutations → audited (AD-4).
-          if (typeof update["twoFactorEnabled"] === "boolean") {
-            const subject = ctx?.context.session?.user.id;
-            if (subject) {
-              const enabled = update["twoFactorEnabled"];
-              await withTransaction(async (tx) => {
-                const ours = await findUserByAuthSubject(subject, tx);
-                if (!ours) return;
-                await writeAudit(tx, {
-                  actorUserId: ours.id,
-                  action: enabled ? "mfa.enabled" : "mfa.disabled",
-                  entityType: "user",
-                  entityId: ours.id,
-                  after: { twoFactorEnabled: enabled },
-                });
-              });
-            }
-          }
-        },
-      },
     },
   },
 
   plugins: [
-    twoFactor({
-      issuer: APP_NAME,
-      schema: { twoFactor: { modelName: "authTwoFactor" } },
-    }),
     // Must be last: lets server actions set cookies (docs/integrations/next).
     nextCookies(),
   ],

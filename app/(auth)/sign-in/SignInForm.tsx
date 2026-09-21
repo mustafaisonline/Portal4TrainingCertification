@@ -30,7 +30,7 @@ export function SignInForm({
     const password = String(form.get("password") ?? "");
     setPending(true);
     setOutcome({ kind: "idle" });
-    const { data, error } = await authClient.signIn.email({ email, password });
+    const { error } = await authClient.signIn.email({ email, password });
     setPending(false);
     if (error) {
       if (error.code === "EMAIL_NOT_VERIFIED") {
@@ -41,12 +41,6 @@ export function SignInForm({
         // One neutral message for every credential failure (enumeration-safe).
         setOutcome({ kind: "error", message: "Email or password is incorrect." });
       }
-      return;
-    }
-    // With two-factor enabled the credential step does not create a session
-    // yet; the code step does (twoFactor plugin).
-    if (data && "twoFactorRedirect" in data && data.twoFactorRedirect) {
-      router.push(`/sign-in/two-factor?return-to=${encodeURIComponent(returnTo)}`);
       return;
     }
     router.push(returnTo);

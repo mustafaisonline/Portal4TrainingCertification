@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CERTIFICATE_STATUS_LABEL, CERTIFICATE_STATUSES, isCertificateStatus } from "@/modules/certificates/constants";
 import { formatCalendarDate } from "@/modules/certificates/dates";
+import { formatRunTime } from "@/modules/certificates/reminders";
+import { lastReminderRun } from "@/modules/certificates/reminders.service";
 import { listCertificatesForAdmin, type AdminCertificateFilters } from "@/modules/certificates/repository";
 import { authorise } from "@/modules/identity/session";
 import { Button } from "@/shared/ui/Button";
@@ -33,7 +35,7 @@ export default async function AdminCertificatesPage({ searchParams }: { searchPa
     status: statusRaw && isCertificateStatus(statusRaw) ? statusRaw : undefined,
     page: Math.max(1, Number.parseInt(param("page") ?? "1", 10) || 1),
   };
-  const page = await listCertificatesForAdmin(filters);
+  const [page, lastRun] = await Promise.all([listCertificatesForAdmin(filters), lastReminderRun()]);
 
   const query = (n: number) => {
     const q = new URLSearchParams();
@@ -58,6 +60,12 @@ export default async function AdminCertificatesPage({ searchParams }: { searchPa
           <p className="text-body-sm mt-2 max-w-[70ch] text-[var(--color-ink-quiet)]">
             Every Certificate of Completion issued from an offering&apos;s roster. Status is worked out from the expiry date in Malaysia time: active, renewal due in the last 30 days,
             expired the day after, or revoked.
+          </p>
+          {/* M7 plan §2.4: the newest job.run row of the reminder job. */}
+          <p className="text-body-sm mt-2 text-[var(--color-ink-quiet)]" data-testid="reminders-last-run">
+            {lastRun
+              ? `Reminders: last run ${formatRunTime(lastRun.ranAt)} · considered ${lastRun.considered} · queued ${lastRun.queued}${lastRun.failed > 0 ? ` · failed ${lastRun.failed}` : ""}`
+              : "Reminders have not run yet."}
           </p>
         </div>
         <Button variant="secondary" href="/admin/certificates/fee" data-testid="admin-certificates-fee-link">

@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { formatMoney } from "@/modules/catalogue/programmes/types";
 import { CERTIFICATE_STATUS_LABEL } from "@/modules/certificates/constants";
 import { formatCalendarDate, todayIso } from "@/modules/certificates/dates";
+import { REMINDER_STAGE_LABEL } from "@/modules/certificates/reminders";
+import { listRemindersForCertificate } from "@/modules/certificates/reminders.service";
 import { getCertificateForAdmin, listRenewals } from "@/modules/certificates/repository";
 import { authorise } from "@/modules/identity/session";
 import { Card } from "@/shared/ui/Card";
@@ -36,7 +38,7 @@ export default async function AdminCertificateDetailPage({ params }: { params: P
   const now = new Date();
   const certificate = await getCertificateForAdmin(id, now);
   if (!certificate) notFound();
-  const renewals = await listRenewals(certificate.id);
+  const [renewals, reminders] = await Promise.all([listRenewals(certificate.id), listRemindersForCertificate(certificate.id)]);
   const revoked = certificate.revokedAt !== null;
   const today = todayIso(now);
 
@@ -189,6 +191,28 @@ export default async function AdminCertificateDetailPage({ params }: { params: P
             )}
           </tbody>
         </table>
+      </Card>
+
+      {/* M7 plan §2.4: reminders queued for this certificate (audit rows). */}
+      <Card variant="panel" className="p-6">
+        <h2 className="text-h2 mb-4">Reminders</h2>
+        {reminders.length === 0 ? (
+          <p className="text-body-sm text-[var(--color-ink-quiet)]" data-testid="admin-certificate-reminders-none">
+            None yet.
+          </p>
+        ) : (
+          <ul className="text-body-sm flex flex-col gap-2" data-testid="admin-certificate-reminders">
+            {reminders.map((r) => (
+              <li key={`${r.stage}-${r.expiresOn}-${r.at.toISOString()}`} data-testid="admin-certificate-reminder">
+                <span className="font-medium text-[var(--color-ink)]">{REMINDER_STAGE_LABEL[r.stage]}</span>
+                <span className="text-[var(--color-ink-quiet)]">
+                  {" "}
+                  · queued {formatTimestamp(r.at)} · for expiry {formatCalendarDate(r.expiresOn)}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
       </Card>
     </div>
   );

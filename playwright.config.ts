@@ -41,13 +41,20 @@ export default defineConfig({
   },
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
   webServer: {
-    command: `npx next dev -p ${port}`,
+    // Next 16 allows ONE `next dev` per directory. When another dev server
+    // holds the lock (a second Claude session, a founder terminal), run the
+    // suite against a production build instead:
+    //   npx next build && PLAYWRIGHT_SERVER=start npm run test:e2e
+    command: process.env["PLAYWRIGHT_SERVER"] === "start" ? `npx next start -p ${port}` : `npx next dev -p ${port}`,
     url: baseURL,
     reuseExistingServer: false,
     timeout: 120_000,
     env: {
       DATABASE_URL: testDb,
       APP_BASE_URL: baseURL,
+      // A production build under test is validated as "test", not refused
+      // for its blank Stripe keys and http base URL (instrumentation.ts).
+      APP_ENV: "test",
       // Identity & access (M2): tests register accounts, so the consent gate
       // sees test-only "published" versions; email never leaves the DB row.
       LEGAL_DOCUMENT_VERSIONS: '{"terms":"test","privacy":"test"}',
@@ -61,6 +68,9 @@ export default defineConfig({
       STRIPE_WEBHOOK_SECRET: "",
       // User profile (M5a): a fixed test-only key for the ID-number column.
       PROFILE_ENCRYPTION_KEY: process.env.PROFILE_ENCRYPTION_KEY ?? Buffer.alloc(32, 42).toString("base64"),
+      // Renewal reminders (M7): the e2e spec calls the job endpoint with this
+      // test-only bearer token (tests/e2e/certificate-reminders.spec.ts).
+      JOBS_SECRET: "e2e-jobs-secret",
     },
   },
 });

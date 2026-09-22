@@ -66,3 +66,6 @@ project-artifacts/mockup/.next/
 project-artifacts/mockup/*.tsbuildinfo
 project-artifacts/mockup/next-env.d.ts
 project-artifacts/mockup/.env*.local
+
+# Database dumps written by scripts/backup.sh (Milestone 9) — never committed.
+backups/

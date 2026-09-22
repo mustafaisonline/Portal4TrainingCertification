@@ -1,0 +1,21 @@
+# Keep the build context small and secret-free (Milestone 9 §2 item 7).
+node_modules
+.next
+out
+.env
+.env.*
+!.env.example
+project-artifacts
+test-results
+playwright-report
+blob-report
+backups
+coverage
+docs
+tests
+.git
+.vscode
+.idea
+*.log
+*.tsbuildinfo
+.DS_Store

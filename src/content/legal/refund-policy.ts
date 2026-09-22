@@ -102,6 +102,7 @@ export const refundPolicy: LegalDocument = {
       heading: "6. How and when refunds are paid",
       paragraphs: [
         "Refunds are returned to the payment method you originally paid with, through Stripe, our payment processor. We cannot refund to a different card, account or person, and refunds are made in the currency you paid in.",
+        "The amount refunded is the percentage due under section 2, less the payment-processing fee that Stripe charged us on your original payment. Stripe does not return that fee when a payment is refunded, so it is deducted from the refund rather than absorbed by the Academy. The exact fee and the resulting refund are shown to you on the cancellation screen before you confirm.",
         "We instruct the refund promptly once a cancellation is confirmed. How long it then takes to appear depends on your bank or card issuer — typically 5 to 10 business days, sometimes longer for some banks and e-wallets. If a refund has not arrived after 15 business days, tell us at [contact email] and we will chase it with Stripe and give you the reference.",
         "If you paid in a currency other than the one your bank account uses, the amount that arrives may differ from the amount you paid because of exchange-rate movements and your bank's fees. Those differences are outside our control and are not refunded by us.",
       ],

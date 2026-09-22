@@ -16,8 +16,9 @@ import { ProfileForm } from "./ProfileForm";
  * is still needed before a paid registration; when the checkout gate sent
  * the person here (`?complete=1&return-to=/checkout/…`) it says so and the
  * form offers "Continue to registration" once the profile is complete.
- * Password changes stay on /account/security; the "Your data" card (export /
- * delete) waits for the Privacy policy (M5 C20).
+ * Password changes stay on /account/security. The "Your data" card offers the
+ * JSON export (M8 plan §2 item 7, GET /api/me/export); account deletion waits
+ * for the founder's policy (M8 plan §5 A5).
  */
 export const metadata: Metadata = { title: "Your profile" };
 
@@ -114,6 +115,17 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
         </p>
         <Button variant="secondary" href="/account/security">
           Change password
+        </Button>
+      </Card>
+
+      <Card variant="panel" className="p-6 sm:p-8">
+        <h2 className="text-h1 mb-2">Your data</h2>
+        <p className="text-body-sm mb-5 text-[var(--color-ink-quiet)]">
+          Download a copy of what we hold about you as a JSON file: your account and profile (ID number shown as its last four only), registrations, orders,
+          payments, refunds, reviews, certificates, renewals, consents and the actions you have taken.
+        </p>
+        <Button variant="secondary" href="/api/me/export" data-testid="download-my-data">
+          Download my data
         </Button>
       </Card>
 

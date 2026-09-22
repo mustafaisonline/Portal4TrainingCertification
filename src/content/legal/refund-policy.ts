@@ -52,6 +52,7 @@ export const refundPolicy: LegalDocument = {
       paragraphs: [
         "This policy applies to registrations for the scheduled public offerings of Data & AI Academy programmes that you register and pay for on this portal, operated by Your Partner Technologies (business registration number [SSM registration number]). It forms part of the Terms of service.",
         "It does not apply to private or corporate cohorts, which are governed by the written agreement for that cohort (see section 8).",
+        "Certificate of Completion renewal fee: the fee you pay to renew a certificate is not refundable once the renewal has been applied, because the extension to the certificate's expiry date is delivered immediately when the payment is confirmed. If you believe a renewal was charged in error — for example, you were charged twice — raise it through Contact us or by emailing [contact email], and we will look into it and handle it manually.",
         "\"Start date\" means the first scheduled session of the offering you registered for, in the time zone shown on the offering. Days are counted as calendar days before that date, not business days.",
       ],
     },

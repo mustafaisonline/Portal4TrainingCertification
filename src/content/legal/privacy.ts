@@ -63,7 +63,7 @@ export const privacyPolicy: LegalDocument = {
         "Registrations — which offerings you have registered for, their status, and attendance and completion as recorded by the trainer.",
         "Orders — what you paid, in which currency, when, by which method type (for example \"card\"), and the payment reference our payment processor gives us. We never receive or store your card number.",
         "Consents — which version of the Terms of service and this policy you accepted, and when.",
-        "Certificates — if one is issued, your name as it appears on the certificate, the programme, the completion date and the certificate identifier.",
+        "Certificates — if one is issued, your name as it appears on the certificate, the programme and format, the completion, issue and expiry dates, the certificate identifier, any renewal you pay for, and whether you have chosen to be listed in public name search (see section 6).",
         "Audit entries — a record of significant actions on your account (such as sign-in, a change of password, a registration or a refund), with a time stamp, kept so we can investigate problems and show what happened.",
         "Messages — anything you send us through the contact form or by email, so we can reply.",
       ],
@@ -108,8 +108,10 @@ export const privacyPolicy: LegalDocument = {
     {
       heading: "6. Public certificate verification",
       paragraphs: [
-        "If you are issued a Certificate of Completion, anyone who has its certificate identifier can confirm on this portal that the certificate is genuine. The verification page shows the name on the certificate, the programme, the completion date and the certificate's current status. It is reached by identifier, not by searching for a person, and it does not show your email address, country or any other details.",
-        "If you would prefer your certificate not to be verifiable publicly, write to [contact email] and we will explain the options available, which may limit how the certificate can be used.",
+        "If you are issued a Certificate of Completion, anyone who has its certificate identifier, or the link to it, can confirm on this portal that the certificate is genuine. Verification by identifier or link always works. The verification page shows the name on the certificate, the programme and its format, the completion date, the issue date, the expiry date and the certificate's current status. If a certificate has been revoked, the page says so.",
+        "The portal also offers a public search by name. That search returns only holders who have chosen to be listed in it. Being listed is optional and is off unless you turn it on from your account. When you turn it on we record that choice, with the wording you agreed to and the time. You can withdraw it at any time from your account, and the withdrawal takes effect immediately for name search; the identifier and link continue to work.",
+        "Whether reached by identifier, link or name search, the verification page never shows your email address, your country, your contact details or any identity-document details. Certificate dates are calendar dates in Malaysia time (Asia/Kuala_Lumpur).",
+        "If you have a concern about how your certificate can be verified, write to [contact email].",
       ],
     },
     {

@@ -1,6 +1,10 @@
 import Link from "next/link";
 import { MODALITY_LABEL } from "@/modules/catalogue/offerings/repository";
 import { findFlagshipProgramme } from "@/modules/catalogue/programmes/repository";
+import { CERTIFICATE_STATUS_LABEL } from "@/modules/certificates/constants";
+import { formatCalendarDate, todayIso } from "@/modules/certificates/dates";
+import { listCertificatesForUser } from "@/modules/certificates/repository";
+import { statusOf } from "@/modules/certificates/rules";
 import { latestConfirmedRegistration } from "@/modules/commerce/registrations.service";
 import { requireUser } from "@/modules/identity/session";
 import { REGISTRATION_REVIEW_STATUS_LABEL, registrationReviewStatus } from "@/modules/reviews/eligibility";
@@ -33,6 +37,10 @@ export default async function AccountPage() {
   // Awaiting review · Published) — read from `reviews`, never assumed.
   const latestReview = latest ? await findReviewByRegistration(latest.id) : null;
   const reviewStatus = latest ? registrationReviewStatus(latestReview, latest.offering.endsOn) : null;
+  // M6: the newest certificate's status, computed on read from its dates
+  // (Active · Renewal due · Expired · Revoked) — plan §5 "Holder".
+  const certificate = (await listCertificatesForUser(user.id))[0] ?? null;
+  const certificateStatus = certificate ? statusOf(certificate, todayIso(new Date())).status : null;
   const interestHref = flagship ? `/contact-us?kind=programme_interest&programme=${flagship.slug}` : "/contact-us";
 
   return (
@@ -114,12 +122,21 @@ export default async function AccountPage() {
         </Card>
         <Card variant="panel" className="p-5">
           <h2 className="text-h1 mb-3">Your certificate</h2>
-          <p className="text-body-sm text-[var(--color-ink-quiet)]">Issued when you complete the programme.</p>
+          {certificate && certificateStatus ? (
+            <p className="text-body-sm text-[var(--color-ink-quiet)]" data-testid="dash-certificate-status">
+              Certificate: <span className="font-medium text-[var(--color-ink)]">{CERTIFICATE_STATUS_LABEL[certificateStatus]}</span>
+              {certificateStatus === "revoked"
+                ? ""
+                : ` · ${certificateStatus === "expired" ? "expired" : "until"} ${formatCalendarDate(certificate.expiresOn)}`}
+            </p>
+          ) : (
+            <p className="text-body-sm text-[var(--color-ink-quiet)]">Issued when you complete the programme.</p>
+          )}
           <Link
             href="/account/certificate"
             className="text-body-sm -mb-2 mt-1 inline-block py-2 text-[var(--color-primary)] underline underline-offset-4"
           >
-            About the certificate
+            {certificate ? "View your certificate" : "About the certificate"}
           </Link>
         </Card>
       </div>

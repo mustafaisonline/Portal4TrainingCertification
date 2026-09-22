@@ -1,3 +1,4 @@
+import { countCertificates } from "@/modules/certificates/repository";
 import { authorise } from "@/modules/identity/session";
 import { countPendingReviews } from "@/modules/reviews/repository";
 import { Button } from "@/shared/ui/Button";
@@ -9,7 +10,7 @@ import { Card } from "@/shared/ui/Card";
 export default async function AdminPage() {
   const result = await authorise("platform_admin");
   if (!result.ok) return null; // the layout has already refused
-  const pendingReviews = await countPendingReviews();
+  const [pendingReviews, certificateCount] = await Promise.all([countPendingReviews(), countCertificates()]);
   return (
     <div className="flex flex-col gap-8">
       <header>
@@ -50,6 +51,25 @@ export default async function AdminPage() {
         <div className="mt-5">
           <Button href={pendingReviews > 0 ? "/admin/reviews?moderation=pending" : "/admin/reviews"} data-testid="admin-reviews-link">
             Moderate reviews
+          </Button>
+        </div>
+      </Card>
+      <Card variant="panel">
+        <p className="text-label mb-2">Completion records</p>
+        <h2 className="text-h2">Certificates</h2>
+        <p className="text-body-sm mt-2 max-w-[60ch] text-[var(--color-ink-quiet)]">
+          Certificates of Completion are issued from an offering&apos;s participants screen. Find one by ID, name or email, correct a name, revoke, and set the renewal fee.
+          <span data-testid="admin-certificates-issued">
+            {" "}
+            {certificateCount === 0 ? "None issued yet." : `${certificateCount} ${certificateCount === 1 ? "certificate" : "certificates"} issued.`}
+          </span>
+        </p>
+        <div className="mt-5 flex flex-wrap gap-3">
+          <Button href="/admin/certificates" data-testid="admin-certificates-link">
+            Manage certificates
+          </Button>
+          <Button variant="secondary" href="/admin/certificates/fee" data-testid="admin-certificates-fee-link">
+            Renewal fee
           </Button>
         </div>
       </Card>

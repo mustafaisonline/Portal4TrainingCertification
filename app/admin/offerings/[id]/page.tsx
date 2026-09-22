@@ -5,6 +5,7 @@ import { listPublishedExperts } from "@/modules/catalogue/experts/repository";
 import { formatCalendarDate } from "@/modules/catalogue/offerings/dates";
 import { findOfferingById } from "@/modules/catalogue/offerings/repository";
 import { listDeliveryFormatsForAdmin, listProgrammesForAdmin } from "@/modules/catalogue/programmes/repository";
+import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { OfferingForm } from "../OfferingForm";
 
@@ -37,6 +38,12 @@ export default async function EditOfferingPage({ params }: { params: Promise<{ i
           {offering.format?.name ?? offering.programmeTitle} · {formatCalendarDate(offering.startsOn)}
         </h1>
         <p className="text-body-sm mt-2 text-[var(--color-ink-quiet)]">{offering.programmeTitle}</p>
+        <div className="mt-4">
+          {/* M6: the roster with "Record completion" lives on its own screen. */}
+          <Button variant="secondary" href={`/admin/offerings/${offering.id}/participants`} data-testid="offering-participants-link">
+            Participants & completion
+          </Button>
+        </div>
       </header>
       <Card variant="panel" className="max-w-[760px] p-6">
         <OfferingForm

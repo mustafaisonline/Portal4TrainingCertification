@@ -111,11 +111,15 @@ async function RegistrationCard({ registration, now }: { registration: Registrat
   const active = registration.status === "confirmed";
   const future = startsInFuture(o, now);
   const percent = refundPercentFor(o.startsOn, now);
-  const refundAmount = refundAmountMinor(registration.order.amountMinor, percent);
+  const fee = registration.payment?.providerFeeMinor ?? null;
+  const refundAmount = refundAmountMinor(registration.order.amountMinor, percent, fee ?? 0);
+  const currency = registration.order.currency;
   const refundSentence =
     percent === 0
       ? "If you cancel today no refund is due under the refund policy."
-      : `If you cancel today you receive a ${percent} % refund (${formatMoney(refundAmount, registration.order.currency)}).`;
+      : fee === null
+        ? `If you cancel today you receive a ${percent} % refund less the payment-processing fee (up to ${formatMoney(refundAmount, currency)}).`
+        : `If you cancel today you receive a ${percent} % refund less the ${formatMoney(fee, currency)} payment-processing fee: ${formatMoney(refundAmount, currency)}.`;
   const targets = active && future && !registration.transferUsed ? await listTransferTargets(registration, now) : [];
 
   return (

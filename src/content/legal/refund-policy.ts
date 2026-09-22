@@ -59,7 +59,7 @@ export const refundPolicy: LegalDocument = {
       heading: "2. Cancelling your registration",
       paragraphs: [
         "You may cancel a registration at any time before the start date. How much is refunded depends on how far ahead of the start date you cancel:",
-        "The percentage is applied to the amount you actually paid for that registration, in the currency you paid in. Where a payment method's fees cannot be recovered by us, we still refund the full percentage shown; we do not deduct our own processing costs.",
+        "The percentage is applied to the amount you actually paid for that registration, in the currency you paid in. Refunds are net of the payment-processing fee charged to us by our payment provider on the original transaction, which the provider does not return when a payment is refunded; that fee is deducted from the refundable amount and is shown to you before you confirm a cancellation. We do not deduct any other administrative charge.",
         "A registration cannot be cancelled for a refund once the offering has started, and no refund is due for sessions you do not attend.",
       ],
       table: {

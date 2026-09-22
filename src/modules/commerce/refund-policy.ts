@@ -39,17 +39,32 @@ export function refundPercentFor(startsOn: Date, now: Date): RefundPercent {
   return 0;
 }
 
-/** Integer minor units — rounding half up, never a fraction of a sen. */
-export function refundAmountMinor(paidAmountMinor: number, percent: RefundPercent): number {
-  return Math.round((paidAmountMinor * percent) / 100);
+/**
+ * Integer minor units — rounding half up, never a fraction of a sen.
+ *
+ * Founder decision 2026-09-22: refunds are NET of the payment-processing fee
+ * Stripe charged on the original transaction, which Stripe does not return
+ * ("Stripe doesn't return our fees when a payment is refunded"). The fee is
+ * deducted from the refundable portion; never below zero. When the fee is
+ * not (yet) known it is treated as zero — the Academy absorbs it rather than
+ * guessing.
+ */
+export function refundAmountMinor(paidAmountMinor: number, percent: RefundPercent, processingFeeMinor = 0): number {
+  if (percent === 0) return 0;
+  const gross = Math.round((paidAmountMinor * percent) / 100);
+  return Math.max(0, gross - Math.max(0, Math.round(processingFeeMinor)));
 }
+
+/** One sentence used wherever a refund figure is shown or promised. */
+export const REFUND_NET_OF_FEE_NOTE =
+  "Refunds are net of the payment-processing fee charged to us on the original transaction, which the payment provider does not return.";
 
 /** Copy for the checkout and My registrations screens, in the order the
  *  policy states them. */
 export function describeRefundTiers(): { when: string; outcome: string }[] {
   return [
-    { when: "Cancel 14 or more days before the start date", outcome: "100 % refund" },
-    { when: "Cancel 7 to 13 days before the start date", outcome: "50 % refund" },
+    { when: "Cancel 14 or more days before the start date", outcome: "100 % refund, less the payment-processing fee" },
+    { when: "Cancel 7 to 13 days before the start date", outcome: "50 % refund, less the payment-processing fee" },
     { when: "Cancel fewer than 7 days before, or after the start date", outcome: "No refund" },
     { when: "Transfer to another date of the same programme, before it starts", outcome: "Free, once" },
   ];

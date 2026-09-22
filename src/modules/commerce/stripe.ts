@@ -39,9 +39,16 @@ export type RefundInput = {
 /** Stripe's refund states, narrowed to what the product records. */
 export type RefundResult = { id: string; status: "pending" | "succeeded" | "failed" };
 
+/** The provider's non-recoverable processing fee for a settled payment,
+ *  expressed in minor units of the CHARGE currency. */
+export type ProcessingFee = { feeMinor: number; currency: string };
+
 export interface PaymentGateway {
   createCheckoutSession(input: CheckoutSessionInput): Promise<CheckoutSessionResult>;
   createRefund(input: RefundInput): Promise<RefundResult>;
+  /** Null when the balance transaction is not available yet (or the fee
+   *  cannot be expressed in the charge currency). */
+  retrieveProcessingFee(paymentIntentId: string): Promise<ProcessingFee | null>;
   /** Verifies the `stripe-signature` header against the raw body and returns
    *  the event; throws `InvalidSignatureError` when it does not verify. */
   constructEvent(rawBody: string, signature: string): Stripe.Event;
@@ -132,6 +139,23 @@ export class StripeGateway implements PaymentGateway {
       { idempotencyKey: `refund:${input.metadata["refundId"] ?? input.paymentIntentId}:${input.amountMinor}` },
     );
     return { id: refund.id, status: mapRefundStatus(refund.status) };
+  }
+
+  async retrieveProcessingFee(paymentIntentId: string): Promise<ProcessingFee | null> {
+    const intent = await this.stripe().paymentIntents.retrieve(paymentIntentId, {
+      expand: ["latest_charge.balance_transaction"],
+    });
+    const charge = intent.latest_charge;
+    if (!charge || typeof charge === "string") return null;
+    const bt = charge.balance_transaction;
+    if (!bt || typeof bt === "string") return null;
+    const chargeCurrency = charge.currency.toUpperCase();
+    // The fee is reported in the SETTLEMENT currency (MYR for this account).
+    // For a charge in another currency Stripe supplies the exchange rate it
+    // applied (settlement per unit of charge currency); convert back.
+    if (bt.currency.toUpperCase() === chargeCurrency) return { feeMinor: bt.fee, currency: chargeCurrency };
+    if (bt.exchange_rate && bt.exchange_rate > 0) return { feeMinor: Math.round(bt.fee / bt.exchange_rate), currency: chargeCurrency };
+    return null;
   }
 
   constructEvent(rawBody: string, signature: string): Stripe.Event {

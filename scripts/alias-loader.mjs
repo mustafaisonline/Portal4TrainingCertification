@@ -29,9 +29,11 @@ export async function resolve(specifier, context, nextResolve) {
   }
   // Extensionless relative imports inside our own source (bundler-style
   // `./legal-documents`) — Node needs the `.ts`.
-  if ((specifier.startsWith("./") || specifier.startsWith("../")) && context.parentURL?.startsWith("file:") && !path.extname(specifier)) {
+  if ((specifier.startsWith("./") || specifier.startsWith("../")) && context.parentURL?.startsWith("file:")) {
     const base = path.resolve(path.dirname(fileURLToPath(context.parentURL)), specifier);
-    if (base.startsWith(SRC)) {
+    // Dotted module names (`./checkout.service`) look like they carry an
+    // extension, so test for the file itself rather than for an extension.
+    if (base.startsWith(SRC) && !existsSync(base)) {
       const found = withExtension(base);
       if (found) return nextResolve(pathToFileURL(found).href, context);
     }

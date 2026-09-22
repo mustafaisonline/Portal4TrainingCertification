@@ -50,11 +50,25 @@ describe("refundAmountMinor", () => {
     expect(refundAmountMinor(101, 50)).toBe(51);
     expect(refundAmountMinor(499_900, 0)).toBe(0);
   });
+
+  it("is net of the provider's processing fee (founder decision 2026-09-22)", () => {
+    expect(refundAmountMinor(499_900, 100, 15_197)).toBe(484_703); // RM 4,999 − RM 151.97
+    expect(refundAmountMinor(499_900, 50, 15_197)).toBe(234_753); // RM 2,499.50 − RM 151.97
+    expect(refundAmountMinor(499_900, 0, 15_197)).toBe(0); // no refund → nothing to net
+    expect(refundAmountMinor(1_000, 50, 5_000)).toBe(0); // never negative
+    expect(refundAmountMinor(499_900, 100)).toBe(499_900); // unknown fee → absorbed
+    expect(describeRefundTiers()[0]!.outcome).toContain("less the payment-processing fee");
+  });
 });
 
 describe("describeRefundTiers", () => {
   it("states the three tiers and the free transfer, in policy order", () => {
     const tiers = describeRefundTiers();
-    expect(tiers.map((t) => t.outcome)).toEqual(["100 % refund", "50 % refund", "No refund", "Free, once"]);
+    expect(tiers.map((t) => t.outcome)).toEqual([
+      "100 % refund, less the payment-processing fee",
+      "50 % refund, less the payment-processing fee",
+      "No refund",
+      "Free, once",
+    ]);
   });
 });

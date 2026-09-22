@@ -69,6 +69,19 @@ Plan (status) · this report · `README.md` · `.env.example` (Stripe names, key
 7. Refund policy's `refund` consent is recorded under the Terms version until `LEGAL_DOCUMENT_VERSIONS` carries a `refund` key.
 8. **Timestamp skew defect — found and fixed during this verification.** Stripe's event was created at 12:40:34 UTC; our `received_at` read 04:40:37 — every timestamp the application wrote was **8 hours early**, because the Prisma pg adapter sends zone-less timestamps and PostgreSQL interprets them in its session timezone (`Asia/Kuala_Lumpur` on the founder's Homebrew instance). Comparisons made entirely through Prisma were self-consistent (which is why nothing had failed), but anything mixing DB-side `now()` or external timestamps — session expiry, order holds, refund-tier day counts near a boundary, audit chronology — would have been wrong. **Fix:** `ALTER DATABASE p4tc_dev/p4tc_test SET timezone TO 'UTC'` (persistent), compose init does the same, `.env.example` documents it, and `tests/integration/timestamps.test.ts` fails on any database where the session timezone is not UTC or a written timestamp drifts from the database clock. **Production must set the database timezone to UTC.** Rows written earlier today in the dev database keep their skewed values (dev data only).
 
+## 8.1 Founder decision 2026-09-22 — refunds net of the processing fee (applied)
+
+Stripe does not return its processing fee when a payment is refunded (*"Stripe doesn't return our fees when a payment is refunded"*). The founder chose **option 2: deduct it from refunds** rather than absorb it.
+
+| Change | Where |
+|---|---|
+| `payments.provider_fee_minor` (additive migration `payment_provider_fee`) — the fee Stripe reports on the charge's balance transaction, in the charge currency (converted with Stripe's exchange rate when settlement differs) | schema; `PaymentGateway.retrieveProcessingFee` |
+| Recorded by the webhook after a settled payment (outside the order lock, non-fatal, retried on later charge events) and, failing that, fetched at cancellation; unknown fee → treated as zero (absorbed, never guessed) | `webhook.service.recordProcessingFee`, `registrations.service.cancelRegistration` |
+| `refundAmountMinor(paid, percent, fee)` = max(0, paid × % − fee); the registrations card and checkout tiers say "less the payment-processing fee" and show the exact figure once known | `refund-policy.ts`, `/account/programmes`, checkout |
+| Refund & cancellation policy §"How the refund is worked out" now states the deduction; the accounting status of a 100 %-tier cancellation is `partially_refunded` (money truth) while the card explains the tier | `src/content/legal/refund-policy.ts`; tests |
+
+**Verified for real (test mode, 2026-09-22):** second payment of RM 4,999 → fee reported by Stripe **RM 200.96** → cancellation refunded **RM 4,798.04**; Stripe's refund object shows 479804 MYR with our refund id in its metadata. Vitest 134/134 (fee maths incl. never-negative and unknown-fee cases; integration tiers net of a fake fee). **Playwright not re-run** for this change: a dev server started by another session holds the project's single dev-server lock (see §9 item 5).
+
 ## 9. Human decisions required
 | # | Item |
 |---|---|
@@ -76,5 +89,6 @@ Plan (status) · this report · `README.md` · `.env.example` (Stripe names, key
 | 2 | FPX / GrabPay: enable in Stripe Dashboard → Settings → Payment methods (no bank API needed — the account is already a Malaysian entity with charges enabled); then remove the cards-only line |
 | 3 | Production webhook endpoint + live keys when hosting exists (M9) |
 | 4 | Whether to replace free-text country with a dropdown before launch |
+| 5 | A `next dev` for this project started outside this session (20:40, 2026-09-22) predates the fee migration and holds an old Prisma client in memory — restart it (it is otherwise harmless) so the fee is recorded by the webhook there too and the e2e suite can run |
 
 **Completion status:** Implemented · **Tested** (automated + one real test-mode payment and refund) · Blocked: nothing · Requires human validation: the four items above.

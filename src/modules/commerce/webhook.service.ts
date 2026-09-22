@@ -81,6 +81,15 @@ export async function handleStripeWebhook(rawBody: string, signature: string, ga
       data: { status: result.status, processedAt: new Date(), error: result.note ?? null },
     });
     for (const message of result.emails) await sendEmail(message);
+    // Refunds are net of Stripe's fee (founder, 2026-09-22): record it as soon
+    // as a payment is settled. Outside the transaction — a network call must
+    // not hold the order lock — and never fatal: a missing fee is retried on
+    // the next charge event and, failing that, fetched at cancellation time.
+    if (result.status === "processed" && FEE_EVENTS.has(event.type)) {
+      await recordProcessingFee(paymentIntentIdOf(event), gateway).catch((err) =>
+        console.warn(`[commerce] processing fee not recorded for ${event.id}:`, err instanceof Error ? err.message : err),
+      );
+    }
     return { eventId: event.id, type: event.type, duplicate: false, status: result.status, note: result.note };
   } catch (err) {
     const message = err instanceof Error ? `${err.name}: ${err.message}` : String(err);
@@ -88,6 +97,31 @@ export async function handleStripeWebhook(rawBody: string, signature: string, ga
     await prisma.stripeEvent.update({ where: { id: event.id }, data: { status: "failed", error: message.slice(0, 2000) } });
     throw err;
   }
+}
+
+/* ---------------------------------------------------------- processing fee */
+
+const FEE_EVENTS = new Set<string>(["checkout.session.completed", "checkout.session.async_payment_succeeded", "charge.succeeded", "charge.updated"]);
+
+function paymentIntentIdOf(event: Stripe.Event): string | null {
+  const object = event.data.object as { object?: string; payment_intent?: string | { id: string } | null };
+  return idOf(object.payment_intent);
+}
+
+/** Stores the provider's fee on the payment row once, when it is known. */
+export async function recordProcessingFee(paymentIntentId: string | null, gateway: PaymentGateway): Promise<number | null> {
+  if (!paymentIntentId) return null;
+  const prisma = getPrisma();
+  const payment = await prisma.payment.findUnique({
+    where: { providerPaymentIntentId: paymentIntentId },
+    select: { id: true, currency: true, providerFeeMinor: true },
+  });
+  if (!payment) return null;
+  if (payment.providerFeeMinor !== null) return Number(payment.providerFeeMinor);
+  const fee = await gateway.retrieveProcessingFee(paymentIntentId);
+  if (!fee || fee.currency.toUpperCase() !== payment.currency.toUpperCase()) return null;
+  await prisma.payment.update({ where: { id: payment.id }, data: { providerFeeMinor: BigInt(fee.feeMinor) } });
+  return fee.feeMinor;
 }
 
 /* ------------------------------------------------------------- dispatcher */

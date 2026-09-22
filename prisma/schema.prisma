@@ -635,6 +635,11 @@ model Payment {
   amountMinor             BigInt        @map("amount_minor")
   currency                String        @db.Char(3)
   receiptUrl              String?       @map("receipt_url")
+  /// Stripe's non-recoverable processing fee for this charge, in minor units
+  /// of the charge currency (converted from the settlement currency when they
+  /// differ). Null until the balance transaction is available. Refunds are
+  /// net of it (founder decision 2026-09-22).
+  providerFeeMinor        BigInt?       @map("provider_fee_minor")
   status                  PaymentStatus @default(succeeded)
   createdAt               DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
 

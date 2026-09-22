@@ -40,7 +40,7 @@ export type RegistrationView = {
   createdAt: Date;
   offering: OfferingRecord;
   order: { id: string; status: OrderStatus; amountMinor: number; currency: string; region: PriceRegion; paidAt: Date | null };
-  payment: { id: string; receiptUrl: string | null; status: string } | null;
+  payment: { id: string; receiptUrl: string | null; status: string; providerFeeMinor: number | null } | null;
   refunds: RefundView[];
 };
 
@@ -91,7 +91,9 @@ async function toView(row: RegistrationRow): Promise<RegistrationView> {
       region: row.order.region,
       paidAt: row.order.paidAt,
     },
-    payment: payment ? { id: payment.id, receiptUrl: payment.receiptUrl, status: payment.status } : null,
+    payment: payment
+      ? { id: payment.id, receiptUrl: payment.receiptUrl, status: payment.status, providerFeeMinor: payment.providerFeeMinor == null ? null : Number(payment.providerFeeMinor) }
+      : null,
     refunds: (payment?.refunds ?? []).map((r) => ({
       id: r.id,
       amountMinor: Number(r.amountMinor),
@@ -203,7 +205,22 @@ export async function cancelRegistration(input: CancelRegistrationInput): Promis
 
   const percent = refundPercentFor(offering.startsOn, now);
   const payment = row.order.payment;
-  const amount = payment && percent > 0 ? refundAmountMinor(Number(payment.amountMinor), percent) : 0;
+  // Net of the provider's fee (founder, 2026-09-22). Recorded by the webhook
+  // when the payment settled; fetched now if it was not, and treated as zero
+  // (absorbed) if the provider still cannot report it.
+  let feeMinor = payment?.providerFeeMinor == null ? null : Number(payment.providerFeeMinor);
+  if (payment && percent > 0 && feeMinor === null) {
+    try {
+      const fee = await (input.gateway ?? stripeGateway()).retrieveProcessingFee(payment.providerPaymentIntentId);
+      if (fee && fee.currency.toUpperCase() === payment.currency.toUpperCase()) {
+        feeMinor = fee.feeMinor;
+        await getPrisma().payment.update({ where: { id: payment.id }, data: { providerFeeMinor: BigInt(feeMinor) } });
+      }
+    } catch (err) {
+      console.warn(`[commerce] processing fee unavailable for payment ${payment.id}; refunding gross`, err instanceof Error ? err.message : err);
+    }
+  }
+  const amount = payment && percent > 0 ? refundAmountMinor(Number(payment.amountMinor), percent, feeMinor ?? 0) : 0;
   const currency = payment?.currency ?? row.order.currency;
 
   const refund = await withTransaction(async (tx) => {
@@ -217,7 +234,7 @@ export async function cancelRegistration(input: CancelRegistrationInput): Promis
       entityType: "registration",
       entityId: row.id,
       before: { status: "confirmed" },
-      after: { status: "cancelled", cancelledAt: now.toISOString(), cancellationRefundPercent: percent, refundAmountMinor: amount },
+      after: { status: "cancelled", cancelledAt: now.toISOString(), cancellationRefundPercent: percent, refundAmountMinor: amount, processingFeeMinor: feeMinor },
     });
     if (!(payment && amount > 0)) return null;
     const created = await tx.refund.create({

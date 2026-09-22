@@ -31,6 +31,9 @@ const createdOfferings: string[] = [];
 
 /* ------------------------------------------------------------ fake gateway */
 
+/** RM 151.97 — the shape of a Stripe Malaysia card fee on RM 4,999 (3 % + RM 1). */
+const FAKE_FEE_MINOR = 15197;
+
 function fakeGateway(overrides: Partial<PaymentGateway> = {}) {
   const sessions: CheckoutSessionInput[] = [];
   const refunds: RefundInput[] = [];
@@ -44,6 +47,10 @@ function fakeGateway(overrides: Partial<PaymentGateway> = {}) {
     async createRefund(input) {
       refunds.push(input);
       return { id: `re_test_${randomUUID().slice(0, 12)}`, status: "succeeded" };
+    },
+    // A flat fake fee in the charge currency; tests that need "unknown" override it.
+    async retrieveProcessingFee() {
+      return { feeMinor: FAKE_FEE_MINOR, currency: "MYR" };
     },
     constructEvent(rawBody, signature) {
       return verifyStripeSignature(rawBody, signature, WEBHOOK_SECRET);
@@ -393,7 +400,11 @@ describe("cancellation — refund tier enforced (plan §3 D2, §7 criterion 7)",
     const { user, orderId, registration, payment } = await paidRegistration(days, gateway);
     const result = await cancelRegistration({ registrationId: registration.id, userId: user.id, gateway });
     expect(result.refundPercent).toBe(percent);
-    const expectedAmount = Math.round((Number(payment.amountMinor) * percent) / 100);
+    // Net of the provider's fee (recorded by the paid-webhook via the fake
+    // gateway, then deducted from the refundable portion).
+    expect(Number(payment.providerFeeMinor)).toBe(FAKE_FEE_MINOR);
+    const gross = Math.round((Number(payment.amountMinor) * percent) / 100);
+    const expectedAmount = percent === 0 ? 0 : Math.max(0, gross - FAKE_FEE_MINOR);
     expect(result.refundAmountMinor).toBe(expectedAmount);
 
     const reg = await prisma.registration.findUniqueOrThrow({ where: { id: registration.id } });
@@ -413,8 +424,11 @@ describe("cancellation — refund tier enforced (plan §3 D2, §7 criterion 7)",
       expect(refunds[0]!.providerRefundId).toMatch(/^re_test_/);
       expect(gateway.refunds).toEqual([{ paymentIntentId: payment.providerPaymentIntentId, amountMinor: expectedAmount, metadata: expect.objectContaining({ refundId: refunds[0]!.id }) }]);
       const order = await prisma.order.findUniqueOrThrow({ where: { id: orderId }, include: { payment: true } });
-      expect(order.status).toBe(percent === 100 ? "refunded" : "partially_refunded");
-      expect(order.payment!.status).toBe(percent === 100 ? "refunded" : "partially_refunded");
+      // Net of the fee, even a 100 %-tier refund returns less than was paid,
+      // so the ACCOUNTING status is "partially refunded" (money truth); the
+      // registration card explains the tier and the fee to the participant.
+      expect(order.status).toBe("partially_refunded");
+      expect(order.payment!.status).toBe("partially_refunded");
     }
     const audit = (await listAuditForEntity(prisma, "registration", registration.id)).map((a) => a.action);
     expect(audit).toEqual(["registration.confirmed", "registration.cancelled"]);

@@ -224,9 +224,18 @@ describe("recordCompletion — the gate to issuance (E2, plan §5)", () => {
   });
 
   it("gives up after five collisions without leaving a row behind", async () => {
-    const base = randomInt(ID_ALPHABET.length);
+    // Pick a symbol whose repeated ID is not already taken (the previous test
+    // leaves two such rows behind until afterAll), so the setup update cannot
+    // itself trip the unique index — the collision must come from recordCompletion.
+    const year = todayIso(new Date()).slice(0, 4);
+    const repeatedId = (i: number) => `DAA-${year}-${ID_ALPHABET[i]!.repeat(4)}-${ID_ALPHABET[i]!.repeat(4)}`;
+    let base = randomInt(ID_ALPHABET.length);
+    for (let tries = 0; tries < ID_ALPHABET.length; tries += 1) {
+      if (!(await prisma.certificate.findUnique({ where: { certificateId: repeatedId(base) }, select: { id: true } }))) break;
+      base = (base + 1) % ID_ALPHABET.length;
+    }
     const a = await issued();
-    await prisma.certificate.update({ where: { id: a.certificate.id }, data: { certificateId: `DAA-${todayIso(new Date()).slice(0, 4)}-${ID_ALPHABET[base]!.repeat(4)}-${ID_ALPHABET[base]!.repeat(4)}` } });
+    await prisma.certificate.update({ where: { id: a.certificate.id }, data: { certificateId: repeatedId(base) } });
     const b = await user();
     const offering = await createEndedOfferingFixture({ endsOnDaysAgo: 3 });
     offerings.push(offering.id);

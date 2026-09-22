@@ -1,10 +1,8 @@
 # Execution Documentation — Index
 
-> # ⛔ PLANNING & ARCHITECTURE MODE — implementation NOT authorized
+> **Status as at 2026-09-23: BUILT THROUGH MILESTONE 10 on `feat/production-foundation` (not pushed).** Implementation was authorised milestone by milestone from 2026-09-21; the August "planning mode" banner that stood here is history. **Start with [`PROJECT_STATUS.md`](PROJECT_STATUS.md)** — build state, founder decisions outstanding, how to run and resume.
 >
-> **Status as at 2026-08-30.** Nothing in this folder may be performed. Execution begins only on an explicit instruction such as *"Proceed with Milestone 1"* or *"You may start implementation."*
->
-> **Approval of a direction is not approval to execute it.** A decision may be `APPROVED` while implementation remains `NOT AUTHORIZED`.
+> **Approval of a direction is still not approval to execute it.** Every schema change, new technology, external service or production step needs the founder's explicit yes, recorded in the relevant plan.
 
 ---
 
@@ -37,6 +35,7 @@ It is deliberately separate from [`../architecture/`](../architecture/README.md)
 
 | Document | Purpose | Status |
 |---|---|---|
+| [`PROJECT_STATUS.md`](PROJECT_STATUS.md) | **Start here.** Build state per milestone with commits, the consolidated list of decisions waiting on the founder, local run/test instructions, code map, how to resume | ✅ current 2026-09-23 |
 | [`MILESTONE_1_EXECUTION_PLAN.md`](MILESTONE_1_EXECUTION_PLAN.md) | The "Walking Skeleton" — the proposed first executable milestone: scope, approved decisions relied on, RED-gate actions, deliverables, verification criteria. **Unaffected by the `DR-02` correction** | ⛔ **SCOPE ACCEPTED — EXECUTION NOT AUTHORIZED** |
 | [`MILESTONE_2_EXECUTION_PLAN.md`](MILESTONE_2_EXECUTION_PLAN.md) | **Identity & access** — Better Auth on the ADR-006 recommendation, identity-mapping pattern, scoped RBAC, admin MFA, audit, email behind an interface, consent gate; every table listed (§5); 13 pass/fail criteria (§8); six defaults for ratification (§10) | ▶ **EXECUTED 2026-09-21 — scope acceptance and ADR-006 B1/B2/B3 pending founder ratification** — [`MILESTONE_2_COMPLETION_REPORT.md`](MILESTONE_2_COMPLETION_REPORT.md) |
 | [`MILESTONE_3_EXECUTION_PLAN.md`](MILESTONE_3_EXECUTION_PLAN.md) | **Catalogue & public portal** — programmes, modules, formats, prices, experts, scheduled offerings (zero rows until a real date), FAQ, diagnostic questions and enquiries as data; every public page ported from the wireframe and rendered from the database; staging deferred to M9 (needs founder accounts) | ▶ **EXECUTED 2026-09-21 — scope acceptance pending founder ratification** — [`MILESTONE_3_COMPLETION_REPORT.md`](MILESTONE_3_COMPLETION_REPORT.md) |

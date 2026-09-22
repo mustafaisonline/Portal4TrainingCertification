@@ -41,6 +41,12 @@ Optimize for: **product integrity over speed. Understanding before modification.
 
 ---
 
+## RESUMING WORK
+
+**Read `docs/execution/PROJECT_STATUS.md` before anything else in a new session.** It records what is built (with commits), the numbered decisions waiting on the founder, how to run and test locally, and the working agreements. Update it whenever a milestone, decision or verified state changes — it is the resume point for the founder as much as for the AI.
+
+---
+
 ## SOURCE OF PRODUCT REQUIREMENTS
 
 `CuratedProductInstructions.md` and `ChatHistory.md` are **intentionally not used** on this project. Do not create them. Do not require them.

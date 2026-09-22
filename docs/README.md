@@ -1,11 +1,12 @@
 # Project Documentation
 
-> **Status as at 2026-08-30: PLANNING & ARCHITECTURE MODE — implementation not authorized.**
+> **Status as at 2026-09-23: built through Milestone 10 on `feat/production-foundation` (not pushed).** Resume from [`execution/PROJECT_STATUS.md`](execution/PROJECT_STATUS.md). Operator runbooks live in [`operations/`](operations/README.md).
 
 | Folder | Holds | Index |
 |---|---|---|
 | [`architecture/`](architecture/README.md) | **Decisions** — principles, ADRs, technology choices, data/security/integration/deployment architecture. The frozen baseline | [Architecture index](architecture/README.md) |
-| [`execution/`](execution/README.md) | **Delivery** — milestone plans, RED-gate action lists, verification criteria, completion reports | [Execution index](execution/README.md) |
+| [`execution/`](execution/README.md) | **Delivery** — milestone plans, RED-gate action lists, verification criteria, completion reports, **`PROJECT_STATUS.md` (start here)** | [Execution index](execution/README.md) |
+| [`operations/`](operations/README.md) | **Operating the portal** — deployment runbook, backup and restore, monitoring and incidents, security checklist, release gate (nothing provisioned yet) | [Operations index](operations/README.md) |
 | [`design/`](design/) | **Design specifications & governance** — what screens must communicate (below the Mockup Specification, above visual design), and the rules that govern visual refinement | [`P01_HOMEPAGE_REDESIGN_SPECIFICATION.md`](design/P01_HOMEPAGE_REDESIGN_SPECIFICATION.md) — also the durable Homepage Design Strategy record (its §3) · [`VISUAL_REFINEMENT_GOVERNANCE.md`](design/VISUAL_REFINEMENT_GOVERNANCE.md) — the design-governance blueprint, incl. the binding lesson from the reverted audit remediation (`93217e0`→`f7f826a`) · [`TYPOGRAPHY_STRATEGY.md`](design/TYPOGRAPHY_STRATEGY.md) — font exploration, recommendation and the **adoption record** (§15): Direction C / IBM Plex approved after Experiment 1 and **rolled out portal-wide 2026-09-02** |
 
 | [`REFERENCE_MATERIAL_ACCESS.md`](REFERENCE_MATERIAL_ACCESS.md) | **The founder's source archive** — where it lives (outside this repo), the read-only `reference-material` MCP server that reaches it, and the confidentiality rules that bind every session using it |

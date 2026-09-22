@@ -1,6 +1,6 @@
 # Learner Feedback & Reviews — Requirements Record and Implementation Plan
 
-> **Status: PROPOSED — Phase 1 (discovery) complete; for founder agreement before implementation** · 2026-09-22
+> **Status: AGREED 2026-09-22 — founder: "all as recommended", except D-10: the feature is named "Reviews"** (route `/reviews`, admin `/admin/reviews`, table `reviews`, sidebar item "Reviews"). Executed as Milestone 5b ([`MILESTONE_5B_EXECUTION_PLAN.md`](MILESTONE_5B_EXECUTION_PLAN.md)). · Phase 1 (discovery) completed 2026-09-22
 > **Trigger:** founder brief of 2026-09-22 (18 sections; "start by auditing the existing portal; do not begin implementation until you understand the current architecture and certificate workflow"). **Founder decision already given:** the feedback requirement is associated with **the specific certificate being downloaded**.
 > **Authorises nothing.** Tables and columns in §6 are Rule 1 items listed for approval. Open decisions are in §13.
 

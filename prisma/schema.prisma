@@ -172,6 +172,7 @@ model User {
   orders        Order[]
   registrations Registration[]
   profile       UserProfile?
+  reviews       Review[]
 
   @@map("users")
 }
@@ -227,6 +228,83 @@ model UserProfile {
   updatedAt          DateTime        @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   @@map("user_profiles")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Milestone 5b — Reviews (LEARNER_FEEDBACK_REQUIREMENTS.md §6/§13;
+// MILESTONE_5B_EXECUTION_PLAN.md §2). One review per registration = per
+// certificate (founder decision). Public only when approved + consented +
+// visible — the single visibility function in src/modules/reviews.
+// ─────────────────────────────────────────────────────────────────────────────
+
+enum ReviewKind {
+  registration
+  diagnostic
+
+  @@map("review_kind")
+}
+
+enum ReviewCategory {
+  programme_experience
+  course_content
+  certification_process
+  user_experience
+  technical_issue
+  other
+
+  @@map("review_category")
+}
+
+enum ReviewModeration {
+  pending
+  approved
+  rejected
+
+  @@map("review_moderation")
+}
+
+enum ReviewVisibility {
+  visible
+  hidden
+
+  @@map("review_visibility")
+}
+
+model Review {
+  id                  String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId              String            @map("user_id") @db.Uuid
+  user                User              @relation(fields: [userId], references: [id], onDelete: Restrict)
+  /// Null only for `kind = diagnostic`. Unique: one review per registration.
+  registrationId      String?           @unique @map("registration_id") @db.Uuid
+  registration        Registration?     @relation(fields: [registrationId], references: [id], onDelete: Restrict)
+  programmeId         String            @map("programme_id") @db.Uuid
+  programme           Programme         @relation(fields: [programmeId], references: [id], onDelete: Restrict)
+  offeringId          String?           @map("offering_id") @db.Uuid
+  offering            ScheduledOffering? @relation(fields: [offeringId], references: [id], onDelete: Restrict)
+  kind                ReviewKind
+  /// Plain text, 20–2000 chars; rendered as text, never as HTML.
+  body                String
+  rating              Int?              @db.SmallInt
+  category            ReviewCategory?
+  consentPublic       Boolean           @default(false) @map("consent_public")
+  consentPhoto        Boolean           @default(false) @map("consent_photo")
+  moderationStatus    ReviewModeration  @default(pending) @map("moderation_status")
+  visibilityStatus    ReviewVisibility  @default(visible) @map("visibility_status")
+  moderatedByUserId   String?           @map("moderated_by_user_id") @db.Uuid
+  moderatedAt         DateTime?         @map("moderated_at") @db.Timestamptz(6)
+  moderationNote      String?           @map("moderation_note")
+  /// The name shown publicly, captured at submission (a later profile change
+  /// never silently alters a published review).
+  displayNameSnapshot String            @map("display_name_snapshot")
+  submittedAt         DateTime          @default(now()) @map("submitted_at") @db.Timestamptz(6)
+  editedAt            DateTime?         @map("edited_at") @db.Timestamptz(6)
+  createdAt           DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt           DateTime          @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([moderationStatus, visibilityStatus, consentPublic, submittedAt])
+  @@index([userId])
+  @@index([programmeId, submittedAt])
+  @@map("reviews")
 }
 
 /// The ONLY place a provider subject appears (condition 3). A provider change
@@ -406,6 +484,7 @@ model Programme {
   offerings ScheduledOffering[]
   enquiries Enquiry[]
   orders    Order[]
+  reviews   Review[]
 
   @@index([domainId])
   @@index([status, sortOrder])
@@ -559,6 +638,7 @@ model ScheduledOffering {
 
   orders        Order[]
   registrations Registration[]
+  reviews       Review[]
 
   @@index([programmeId, status, startsOn])
   @@map("scheduled_offerings")
@@ -759,6 +839,8 @@ model Registration {
   cancellationRefundPercent  Int?               @map("cancellation_refund_percent")
   createdAt                  DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt                  DateTime           @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  review Review?
 
   @@index([offeringId, status])
   @@index([userId, status])

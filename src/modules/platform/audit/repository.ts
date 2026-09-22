@@ -29,7 +29,13 @@ export type AuditAction =
   | "registration.cancelled"
   | "registration.transferred"
   | "refund.created"
-  | "refund.updated";
+  | "refund.updated"
+  // Milestone 5b — reviews
+  | "review.submitted"
+  | "review.edited"
+  | "review.moderated"
+  | "review.hidden"
+  | "review.restored";
 
 export type AuditEntry = {
   /** Our `users.id`; null when the system acted on its own. */

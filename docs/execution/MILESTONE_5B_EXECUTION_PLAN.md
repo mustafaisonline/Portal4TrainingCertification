@@ -1,6 +1,6 @@
 # Milestone 5b — "Reviews" · Execution Plan
 
-> **Status:** ▶ **EXECUTING 2026-09-22** on the founder's agreement to [`LEARNER_FEEDBACK_REQUIREMENTS.md`](LEARNER_FEEDBACK_REQUIREMENTS.md) §13 ("all as recommended"; feature named **Reviews**).
+> **Status:** ✅ **EXECUTED 2026-09-22** on the founder's agreement to [`LEARNER_FEEDBACK_REQUIREMENTS.md`](LEARNER_FEEDBACK_REQUIREMENTS.md) §13 ("all as recommended"; feature named **Reviews**) — see [`MILESTONE_5B_COMPLETION_REPORT.md`](MILESTONE_5B_COMPLETION_REPORT.md). The certificate gate (item 6) is delivered as a function; M6 wires it.
 > **Depends on:** M4 (registrations), M5a (profile, photo). **Feeds:** M6 (the certificate route calls `reviewRequirement()`).
 
 ## 1. Scope (phases 2–6 of the brief)

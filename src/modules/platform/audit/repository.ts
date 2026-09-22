@@ -42,7 +42,13 @@ export type AuditAction =
   | "certificate.listing_changed"
   | "certificate.revoked"
   | "certificate.name_corrected"
-  | "certificate_fee.changed";
+  | "certificate_fee.changed"
+  // Milestone 7 — renewal reminders (idempotency lives here, plan §2.2)
+  | "certificate.reminder_queued"
+  | "job.run"
+  // Milestone 8 — admin operations
+  | "enquiry.status_changed"
+  | "profile.exported";
 
 export type AuditEntry = {
   /** Our `users.id`; null when the system acted on its own. */

@@ -14,6 +14,10 @@ export const accountNavItems: readonly AccountNavItem[] = [
   { href: "/account/programme", label: "Programme" },
   { href: "/account/programmes", label: "My registrations" },
   { href: "/account/certificate", label: "Certificate" },
+  // Milestone 5b: the reviews screen lives at the public /reviews (the same
+  // page shows the person's own forms when signed in), so this is the one
+  // item outside /account.
+  { href: "/reviews", label: "Reviews" },
   { href: "/account/orders", label: "Orders & receipts" },
   { href: "/account/skills", label: "Skills profile" },
   { href: "/account/profile", label: "Profile & security" },

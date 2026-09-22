@@ -12,6 +12,8 @@ import {
   type RegistrationView,
 } from "@/modules/commerce/registrations.service";
 import { requireUser } from "@/modules/identity/session";
+import { REGISTRATION_REVIEW_STATUS_LABEL, registrationReviewStatus } from "@/modules/reviews/eligibility";
+import { listReviewsForUser, type ReviewRecord } from "@/modules/reviews/repository";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { Chip } from "@/shared/ui/Chip";
@@ -106,9 +108,12 @@ function OrderBanner({ order, now }: { order: OrderView | null; now: Date }) {
   );
 }
 
-async function RegistrationCard({ registration, now }: { registration: RegistrationView; now: Date }) {
+async function RegistrationCard({ registration, review, now }: { registration: RegistrationView; review: ReviewRecord | null; now: Date }) {
   const o = registration.offering;
   const active = registration.status === "confirmed";
+  // M5b: the review status for a confirmed registration; "Share your
+  // experience" once the programme has ended and no review exists.
+  const reviewStatus = active ? registrationReviewStatus(review, o.endsOn, now) : null;
   const future = startsInFuture(o, now);
   const percent = refundPercentFor(o.startsOn, now);
   const fee = registration.payment?.providerFeeMinor ?? null;
@@ -152,6 +157,19 @@ async function RegistrationCard({ registration, now }: { registration: Registrat
           {registration.refunds.map((r) => ` · ${formatMoney(r.amountMinor, registration.order.currency)} ${r.status === "succeeded" ? "refunded" : r.status === "failed" ? "refund needs attention" : "refund pending"}`)}
         </p>
       )}
+      {reviewStatus ? (
+        <p className="text-body-sm mt-3 text-[var(--color-ink-quiet)]" data-testid="registration-review-status">
+          {reviewStatus === "required" ? (
+            <Link href={`/reviews#registration-${registration.id}`} className="text-[var(--color-primary)] underline underline-offset-4">
+              Share your experience
+            </Link>
+          ) : (
+            <>
+              Review: <span className="text-[var(--color-ink)]">{REGISTRATION_REVIEW_STATUS_LABEL[reviewStatus]}</span>
+            </>
+          )}
+        </p>
+      ) : null}
       {active && future && (
         <p className="text-body-sm mt-3 text-[var(--color-ink-quiet)]" data-testid="refund-now">
           {refundSentence}{" "}
@@ -186,10 +204,12 @@ export default async function MyRegistrationsPage({
   const sp = await searchParams;
   const orderParam = typeof sp["order"] === "string" ? sp["order"] : null;
   const now = new Date();
-  const [registrations, order] = await Promise.all([
+  const [registrations, order, reviews] = await Promise.all([
     listRegistrationsForUser(user.id),
     orderParam ? findOrderForUser(orderParam, user.id) : Promise.resolve(null),
+    listReviewsForUser(user.id),
   ]);
+  const reviewByRegistration = new Map(reviews.filter((r) => r.registrationId).map((r) => [r.registrationId!, r]));
 
   return (
     <div className="flex flex-col gap-8">
@@ -212,7 +232,7 @@ export default async function MyRegistrationsPage({
         <ul className="flex flex-col gap-4">
           {registrations.map((r) => (
             <li key={r.id}>
-              <RegistrationCard registration={r} now={now} />
+              <RegistrationCard registration={r} review={reviewByRegistration.get(r.id) ?? null} now={now} />
             </li>
           ))}
         </ul>

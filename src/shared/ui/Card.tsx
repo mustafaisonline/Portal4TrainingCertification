@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react";
 
 /*
  * PORTED 2026-09-21 from project-artifacts/mockup/components/ui/Card.tsx
@@ -17,6 +17,7 @@ export function Card({
   className = "",
   style,
   children,
+  ...rest
 }: {
   variant?: CardVariant;
   className?: string;
@@ -26,7 +27,7 @@ export function Card({
    *  Tailwind classes on the same property. */
   style?: CSSProperties;
   children: ReactNode;
-}) {
+} & Omit<ComponentPropsWithoutRef<"div">, "className" | "style" | "children">) {
   const variantClasses: Record<CardVariant, string> = {
     plate:
       "bg-[var(--color-ground)] border border-[var(--color-line)] rounded-[var(--radius-plate)]",
@@ -36,7 +37,9 @@ export function Card({
       "bg-[var(--color-ground-raised)] border border-[var(--color-primary)]/30 rounded-[var(--radius-feature)] p-8",
   };
   return (
-    <div className={`${variantClasses[variant]} ${className}`} style={style}>
+    // Remaining div attributes (id, aria-*, data-testid …) pass through —
+    // found in M5b when a `data-testid` on a Card silently vanished.
+    <div {...rest} className={`${variantClasses[variant]} ${className}`} style={style}>
       {children}
     </div>
   );

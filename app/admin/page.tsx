@@ -1,4 +1,5 @@
 import { authorise } from "@/modules/identity/session";
+import { countPendingReviews } from "@/modules/reviews/repository";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 
@@ -8,6 +9,7 @@ import { Card } from "@/shared/ui/Card";
 export default async function AdminPage() {
   const result = await authorise("platform_admin");
   if (!result.ok) return null; // the layout has already refused
+  const pendingReviews = await countPendingReviews();
   return (
     <div className="flex flex-col gap-8">
       <header>
@@ -32,6 +34,22 @@ export default async function AdminPage() {
         <div className="mt-5">
           <Button href="/admin/offerings" data-testid="admin-offerings-link">
             Manage offerings
+          </Button>
+        </div>
+      </Card>
+      <Card variant="panel">
+        <p className="text-label mb-2">Learner feedback</p>
+        <h2 className="text-h2">Reviews</h2>
+        <p className="text-body-sm mt-2 max-w-[60ch] text-[var(--color-ink-quiet)]">
+          Read what learners submit, approve what may be published, and hide anything that should not be public.
+          <span data-testid="admin-reviews-pending">
+            {" "}
+            {pendingReviews === 0 ? "Nothing is waiting for a decision." : `${pendingReviews} ${pendingReviews === 1 ? "review is" : "reviews are"} waiting for a decision.`}
+          </span>
+        </p>
+        <div className="mt-5">
+          <Button href={pendingReviews > 0 ? "/admin/reviews?moderation=pending" : "/admin/reviews"} data-testid="admin-reviews-link">
+            Moderate reviews
           </Button>
         </div>
       </Card>

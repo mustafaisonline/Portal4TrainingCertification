@@ -3,6 +3,8 @@ import { MODALITY_LABEL } from "@/modules/catalogue/offerings/repository";
 import { findFlagshipProgramme } from "@/modules/catalogue/programmes/repository";
 import { latestConfirmedRegistration } from "@/modules/commerce/registrations.service";
 import { requireUser } from "@/modules/identity/session";
+import { REGISTRATION_REVIEW_STATUS_LABEL, registrationReviewStatus } from "@/modules/reviews/eligibility";
+import { findReviewByRegistration } from "@/modules/reviews/repository";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { Chip } from "@/shared/ui/Chip";
@@ -27,6 +29,10 @@ export default async function AccountPage() {
   // M4 (2026-09-21): the latest CONFIRMED registration, from `registrations`
   // (written only by the paid webhook); the empty state stays when none.
   const latest = await latestConfirmedRegistration(user.id);
+  // M5b: the review status for that registration (Required · Submitted ·
+  // Awaiting review · Published) — read from `reviews`, never assumed.
+  const latestReview = latest ? await findReviewByRegistration(latest.id) : null;
+  const reviewStatus = latest ? registrationReviewStatus(latestReview, latest.offering.endsOn) : null;
   const interestHref = flagship ? `/contact-us?kind=programme_interest&programme=${flagship.slug}` : "/contact-us";
 
   return (
@@ -77,6 +83,18 @@ export default async function AccountPage() {
               {latest.offering.format?.name ?? MODALITY_LABEL[latest.offering.modality]} ·{" "}
               {formatDateRange(latest.offering.startsOn, latest.offering.endsOn)}
             </p>
+            {reviewStatus ? (
+              <p className="text-body-sm mt-2 text-[var(--color-ink-quiet)]">
+                Reviews:{" "}
+                <span className="font-medium text-[var(--color-ink)]" data-testid="dash-review-status">
+                  {REGISTRATION_REVIEW_STATUS_LABEL[reviewStatus]}
+                </span>
+                {" · "}
+                <Link href="/reviews" className="text-[var(--color-primary)] underline underline-offset-4">
+                  {reviewStatus === "required" ? "Share your experience" : "Reviews"}
+                </Link>
+              </p>
+            ) : null}
           </Card>
         ) : (
           <p className="text-body-sm text-[var(--color-ink-faint)]">You are not registered for a programme yet.</p>

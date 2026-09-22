@@ -31,6 +31,7 @@ export const footerExplore: readonly NavItem[] = [
   { href: "/schedule", label: "Schedule" },
   { href: "/for-organisations", label: "For Organisations" },
   { href: "/faq", label: "FAQ" },
+  { href: "/reviews", label: "Reviews" }, // Milestone 5b (D-10)
   { href: "/contact-us", label: "Contact Us" },
 ];
 

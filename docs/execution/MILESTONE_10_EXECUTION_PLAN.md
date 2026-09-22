@@ -1,6 +1,6 @@
 # Milestone 10 — "Launch cutover" · Execution Plan
 
-> **Status: ▶ EXECUTING 2026-09-23 (readiness audit and code items) · ⛔ the cutover itself REQUIRES THE FOUNDER** — built on the founder's overnight instruction of 2026-09-22. Launch is the one milestone that cannot be completed by an agent: it needs the lawyer's sign-off, the production accounts from Milestone 9, a domain, and the founder's decision to go live.
+> **Status: ✅ READINESS AUDIT COMPLETE 2026-09-23 · ⛔ the cutover itself REQUIRES THE FOUNDER** — see [`MILESTONE_10_COMPLETION_REPORT.md`](MILESTONE_10_COMPLETION_REPORT.md) and [`LAUNCH_READINESS_CHECKLIST.md`](LAUNCH_READINESS_CHECKLIST.md).
 > **Roadmap origin:** [`WIREFRAME_TO_PRODUCTION_PLAN.md`](WIREFRAME_TO_PRODUCTION_PLAN.md) §7 row M10 and §9 (retiring the mockup); the 2026-09-21 readiness audit's blocker list.
 
 ## 1. Scope (built now)

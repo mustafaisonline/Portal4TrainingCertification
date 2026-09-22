@@ -1,6 +1,6 @@
 # Milestone 8 — "Trainer / admin operations" · Execution Plan
 
-> **Status: ▶ EXECUTING 2026-09-23 (existing-schema scope) · ⛔ §5 items REQUIRE FOUNDER APPROVAL** — built on the founder's overnight instruction of 2026-09-22. Everything in §2 runs on tables that already exist. Everything that needs a new table or a business rule the founder has not given is listed in §5 with the schema and the question, and is **not** implemented.
+> **Status: ✅ EXECUTED 2026-09-23 (existing-schema scope, §2) · ⛔ §5 items REQUIRE FOUNDER APPROVAL and are not implemented** — see [`MILESTONE_8_COMPLETION_REPORT.md`](MILESTONE_8_COMPLETION_REPORT.md).
 > **Roadmap origin:** [`WIREFRAME_TO_PRODUCTION_PLAN.md`](WIREFRAME_TO_PRODUCTION_PLAN.md) §7 row M8; requirements record [`ADMIN_REQUIREMENTS.md`](ADMIN_REQUIREMENTS.md) (AD-1…21). Already delivered by earlier milestones: offerings (M4), reviews moderation (M5b), certificate administration and fee (M6).
 
 ## 1. What exists

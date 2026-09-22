@@ -1,6 +1,6 @@
 # Milestone 7 — "Renewal reminders" · Execution Plan
 
-> **Status: ▶ EXECUTING 2026-09-23** on the founder's overnight instruction of 2026-09-22 ("implement all the remaining milestones and their .md files as per the best practices"). **No schema change is needed, so nothing here crosses Rule 1.** Defaults taken are listed in §3 for the founder's morning review.
+> **Status: ✅ EXECUTED 2026-09-23** on the founder's overnight instruction of 2026-09-22 — see [`MILESTONE_7_COMPLETION_REPORT.md`](MILESTONE_7_COMPLETION_REPORT.md). No schema change; defaults in §3 for the founder's review.
 > **Roadmap origin:** [`WIREFRAME_TO_PRODUCTION_PLAN.md`](WIREFRAME_TO_PRODUCTION_PLAN.md) §7 row M7 "Renewal & fees". The effective-dated fee, the renewal payment and the expiry arithmetic were delivered inside Milestone 6 on decisions E4–E7. **What remains is R-L7: reminders** ([`COMPLETION_CERTIFICATE_REQUIREMENTS.md`](COMPLETION_CERTIFICATE_REQUIREMENTS.md) §3.3), deferred from M6 by decision E10 "until a scheduler and an email provider exist". This milestone builds the reminder logic so that it is ready the day either exists, without inventing a scheduler.
 
 ## 1. What exists

@@ -1,6 +1,6 @@
 # Milestone 9 — "Production readiness" · Execution Plan
 
-> **Status: ▶ EXECUTING 2026-09-23 (code and runbooks) · ⛔ §4 decisions and all provisioning REQUIRE THE FOUNDER** — built on the founder's overnight instruction of 2026-09-22. Nothing is provisioned, purchased or deployed by this milestone: hosting, database host, domain and email provider are RED-gate decisions (ADR-016, ADR-005a, ADR-032, ADR-015) and need accounts only the founder can create. What *can* be built now is everything the first deployment will need the moment those decisions are made.
+> **Status: ✅ EXECUTED 2026-09-23 (code and runbooks, §2) · ⛔ §4 decisions and all provisioning REQUIRE THE FOUNDER** — see [`MILESTONE_9_COMPLETION_REPORT.md`](MILESTONE_9_COMPLETION_REPORT.md). Nothing is provisioned, purchased or deployed.
 > **Roadmap origin:** [`WIREFRAME_TO_PRODUCTION_PLAN.md`](WIREFRAME_TO_PRODUCTION_PLAN.md) §7 row M9 = [`PROJECT_PLAN_WBS.md`](PROJECT_PLAN_WBS.md) Phase 7 (7.1–7.13); [`DEPLOYMENT_ARCHITECTURE.md`](../architecture/DEPLOYMENT_ARCHITECTURE.md), [`SECURITY_ARCHITECTURE.md`](../architecture/SECURITY_ARCHITECTURE.md), [`TESTING_ARCHITECTURE.md`](../architecture/TESTING_ARCHITECTURE.md) §6.
 
 ## 1. What exists

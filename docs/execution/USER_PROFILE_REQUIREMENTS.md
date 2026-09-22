@@ -1,6 +1,6 @@
 # User Profile — Requirements Record
 
-> **Status: PROPOSED — for founder agreement before implementation** · 2026-09-22
+> **Status: AGREED 2026-09-22 — founder decisions in §8; executed as Milestone 5a** ([`MILESTONE_5A_EXECUTION_PLAN.md`](MILESTONE_5A_EXECUTION_PLAN.md)) · originally proposed 2026-09-22
 > **Trigger:** founder direction — *"make email the unique ID at the backend, one account one email, mandatory; then add profile fields as per best practices of a training portal (location, national ID or passport number, and more)."*
 > **Authorises nothing.** Implementation starts only after the decisions in §7 are answered. Any table or column below is a **Rule 1** change and is listed for that approval.
 
@@ -115,5 +115,18 @@ Sections in the order above; each optional field states its purpose in its hint;
 | 5 | Organisation / job title mandatory or optional? | Optional; mandatory only when an HRD Corp claim is requested (M8) |
 | 6 | Keep email immutable until an email provider exists? | Yes |
 | 7 | Any field the founder wants added or removed from §3? | — |
+
+## 8. Founder decisions — 2026-09-22
+
+| # | Decision | Effect on §3 |
+|---|---|---|
+| 1 | **Yes** — collect national ID / passport | As proposed: at first paid registration, encrypted, masked |
+| 2 | **Yes** — collect date of birth | Added as required before the first paid registration (certificate data) |
+| 3 | **Yes** — mobile mandatory before paying | As proposed |
+| 4 | **No** — no emergency contact, dietary or accessibility fields | §3.4 dropped entirely |
+| 5 | **Organisation and job title mandatory** | Required before the first paid registration (registration itself stays minimal) |
+| 6 | **Yes** — email immutable until an email provider exists | As proposed |
+| 7 | **Add: country, city, postal code and full address** | Address block (line 1, line 2, city, state, postal code, country) — required before the first paid registration |
+| 7b | **Add: a profile photo**, shown in the header account menu | Photo upload on the profile page; avatar replaces the initials in `AccountMenu`. Stored as a small, browser-resized image in the database until object storage is decided (ADR-008) — see the plan |
 
 **On agreement** this record becomes the Milestone 5a execution plan: migration `user_profiles`, encryption helper + key, profile page rewrite, checkout "complete your details" step, pricing by `country_code`, tests (unit for validation/encryption, integration for masking/audit, e2e for the progressive flow, axe), and a data-export note.

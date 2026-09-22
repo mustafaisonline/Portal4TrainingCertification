@@ -171,8 +171,62 @@ model User {
   consents      Consent[]
   orders        Order[]
   registrations Registration[]
+  profile       UserProfile?
 
   @@map("users")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Milestone 5a — User profile (USER_PROFILE_REQUIREMENTS.md §8;
+// MILESTONE_5A_EXECUTION_PLAN.md §4). One row per user, created on first save.
+// ─────────────────────────────────────────────────────────────────────────────
+
+enum IdDocumentType {
+  nric
+  passport
+
+  @@map("id_document_type")
+}
+
+model UserProfile {
+  userId             String          @id @map("user_id") @db.Uuid
+  user               User            @relation(fields: [userId], references: [id], onDelete: Restrict)
+  /// As on the identity document — printed on certificates.
+  legalName          String          @map("legal_name")
+  displayName        String?         @map("display_name")
+  phoneE164          String?         @map("phone_e164")
+  addressLine1       String?         @map("address_line1")
+  addressLine2       String?         @map("address_line2")
+  city               String?
+  state              String?
+  postalCode         String?         @map("postal_code")
+  countryCode        String?         @map("country_code") @db.Char(2)
+  timezone           String?
+  organisation       String?
+  jobTitle           String?         @map("job_title")
+  industry           String?
+  experienceBand     String?         @map("experience_band")
+  linkedinUrl        String?         @map("linkedin_url")
+  idType             IdDocumentType? @map("id_type")
+  /// AES-256-GCM, application-level (src/modules/identity/profile-crypto.ts).
+  /// The clear number is never stored, logged or audited.
+  idNumberCiphertext String?         @map("id_number_ciphertext")
+  idNumberLast4      String?         @map("id_number_last4")
+  nationalityCode    String?         @map("nationality_code") @db.Char(2)
+  dateOfBirth        DateTime?       @map("date_of_birth") @db.Date
+  marketingConsentAt DateTime?       @map("marketing_consent_at") @db.Timestamptz(6)
+  heardAbout         String?         @map("heard_about")
+  /// Interim store for the avatar until object storage is decided (ADR-008):
+  /// browser-resized, ≤ 300 KB. Served only through the session-gated route.
+  photo              Bytes?
+  photoMime          String?         @map("photo_mime")
+  photoUpdatedAt     DateTime?       @map("photo_updated_at") @db.Timestamptz(6)
+  /// Set when every field required before a paid registration is present.
+  completedAt        DateTime?       @map("completed_at") @db.Timestamptz(6)
+  createdAt          DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt          DateTime        @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("user_profiles")
 }
 
 /// The ONLY place a provider subject appears (condition 3). A provider change

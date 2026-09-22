@@ -55,6 +55,8 @@ export default defineConfig({
       // order is created (M4 plan §7 criterion 10; §6 commitment 6).
       STRIPE_SECRET_KEY: "",
       STRIPE_WEBHOOK_SECRET: "",
+      // User profile (M5a): a fixed test-only key for the ID-number column.
+      PROFILE_ENCRYPTION_KEY: process.env.PROFILE_ENCRYPTION_KEY ?? Buffer.alloc(32, 42).toString("base64"),
     },
   },
 });

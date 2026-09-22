@@ -60,6 +60,8 @@ jobs:
       BETTER_AUTH_SECRET: ci-only-secret-not-for-any-real-environment-0123456789
       EMAIL_TRANSPORT: log
       LEGAL_DOCUMENT_VERSIONS: '{"terms":"ci","privacy":"ci"}'
+      # M5a — CI-only key (32 bytes of 0x2a, base64); never a real one.
+      PROFILE_ENCRYPTION_KEY: KioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKio=
 
     steps:
       - uses: actions/checkout@v4

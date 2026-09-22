@@ -37,3 +37,5 @@ process.env.LEGAL_DOCUMENT_VERSIONS ??= '{"terms":"test","privacy":"test"}';
 process.env.BETTER_AUTH_SECRET ??= "test-only-secret-not-for-any-real-environment-0123456789";
 process.env.EMAIL_TRANSPORT = "log";
 process.env.APP_BASE_URL ??= "http://localhost:3101";
+// User profile (M5a): ID numbers are encrypted; tests use a fixed key.
+process.env.PROFILE_ENCRYPTION_KEY ??= Buffer.alloc(32, 42).toString("base64");

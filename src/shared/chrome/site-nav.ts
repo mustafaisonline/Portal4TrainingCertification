@@ -21,6 +21,7 @@ export const primaryNav: readonly NavItem[] = [
   { href: "/trainers", label: "Trainers" },
   { href: "/diagnostic", label: "Free Diagnostic" },
   { href: "/about-us", label: "About Us" },
+  { href: "/reviews", label: "Reviews" }, // founder, 2026-09-23 (M5b D-10's 8th item)
   { href: "/verify", label: "Search Candidate" },
 ];
 

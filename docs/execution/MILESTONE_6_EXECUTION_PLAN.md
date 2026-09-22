@@ -1,6 +1,6 @@
 # Milestone 6 — "Certificate of Completion & verification" · Execution Plan
 
-> **Status: ⛔ PROPOSED 2026-09-22 — awaiting the founder's answers to §3. Nothing in this document is implemented.**
+> **Status: ▶ EXECUTING 2026-09-22 — founder answered §3 E1–E14 "Yes" to every recommendation (chat, 2026-09-22), which approves the §4 schema under Rule 1.**
 > **Source of requirements:** the founder's brief of 2026-09-20 and its polished record [`COMPLETION_CERTIFICATE_REQUIREMENTS.md`](COMPLETION_CERTIFICATE_REQUIREMENTS.md) (R-* requirements, D1–D15 decisions), the founder's 2026-09-22 decision that the review requirement is tied to **the specific certificate being downloaded** ([`LEARNER_FEEDBACK_REQUIREMENTS.md`](LEARNER_FEEDBACK_REQUIREMENTS.md) §8), `DR-01` / `DR-02` §6 (this certificate is **not** the earned credential), and the M6 row of [`WIREFRAME_TO_PRODUCTION_PLAN.md`](WIREFRAME_TO_PRODUCTION_PLAN.md) §7.
 > **Depends on:** M4 (registrations, Stripe, webhook), M5a (profile: legal name, country), M5b (`reviewRequirementForRegistration()`). **Rule 1:** every table and column in §4 needs the founder's approval before a migration is written.
 

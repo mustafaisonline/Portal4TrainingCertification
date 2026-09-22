@@ -25,7 +25,9 @@ export async function countSeatsTaken(tx: Tx, offeringId: string, now: Date): Pr
   // Sequential on purpose: a transaction holds ONE connection, and pg
   // deprecates overlapping queries on it.
   const confirmed = await tx.registration.count({ where: { offeringId, status: "confirmed" } });
-  const pendingHeld = await tx.order.count({ where: { offeringId, status: "pending", expiresAt: { gt: now } } });
+  // M6: a certificate-renewal order carries the offering id but takes no
+  // seat — only registration orders hold one (plan §4 "orders").
+  const pendingHeld = await tx.order.count({ where: { offeringId, kind: "registration", status: "pending", expiresAt: { gt: now } } });
   return { confirmed, pendingHeld, taken: confirmed + pendingHeld };
 }
 

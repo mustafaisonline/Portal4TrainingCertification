@@ -129,7 +129,8 @@ export async function listAllOfferings(db: Db = getPrisma()): Promise<AdminOffer
       _count: {
         select: {
           registrations: { where: { status: "confirmed" } },
-          orders: { where: { status: "pending", expiresAt: { gt: now } } },
+          // M6: renewal orders carry the offering id but hold no seat.
+          orders: { where: { kind: "registration", status: "pending", expiresAt: { gt: now } } },
         },
       },
     },

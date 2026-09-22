@@ -35,7 +35,14 @@ export type AuditAction =
   | "review.edited"
   | "review.moderated"
   | "review.hidden"
-  | "review.restored";
+  | "review.restored"
+  // Milestone 6 — certificates of completion
+  | "certificate.issued"
+  | "certificate.renewed"
+  | "certificate.listing_changed"
+  | "certificate.revoked"
+  | "certificate.name_corrected"
+  | "certificate_fee.changed";
 
 export type AuditEntry = {
   /** Our `users.id`; null when the system acted on its own. */

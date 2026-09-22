@@ -80,8 +80,10 @@ export async function startCheckout(input: StartCheckoutInput): Promise<StartChe
       select: { id: true },
     });
     if (confirmed) throw new CommerceError("already_registered", `User ${user.id} already holds registration ${confirmed.id}.`);
+    // M6: only a REGISTRATION order pending for this offering blocks another;
+    // a certificate-renewal order also carries the offering id (plan §4).
     const pending = await tx.order.findFirst({
-      where: { userId: user.id, offeringId: offering.id, status: "pending", expiresAt: { gt: now } },
+      where: { userId: user.id, offeringId: offering.id, kind: "registration", status: "pending", expiresAt: { gt: now } },
       select: { id: true },
     });
     if (pending) throw new CommerceError("order_pending", `User ${user.id} already has pending order ${pending.id} for this offering.`);
@@ -185,7 +187,7 @@ export async function previewCheckout(offeringId: string, user: { id: string; co
   const confirmed = await prisma.registration.findFirst({ where: { userId: user.id, offeringId, status: "confirmed" }, select: { id: true } });
   if (confirmed) return { ok: false, reason: "already_registered", offering };
   const pending = await prisma.order.findFirst({
-    where: { userId: user.id, offeringId, status: "pending", expiresAt: { gt: now } },
+    where: { userId: user.id, offeringId, kind: "registration", status: "pending", expiresAt: { gt: now } },
     select: { id: true },
   });
   if (pending) return { ok: false, reason: "order_pending", offering };

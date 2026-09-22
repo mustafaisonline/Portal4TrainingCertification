@@ -12,8 +12,8 @@
 // `npm run db:generate`.
 
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
   // Emit `./enums.ts`-style imports inside the generated client so plain
   // `node` (the seed runner) can resolve them as well as Next.js, Vitest and
   // Playwright. Without this, a `moduleResolution: bundler` tsconfig makes the
@@ -58,17 +58,17 @@ model Domain {
 // `auth_*` row. The only bridge is `auth_identities.provider_subject`.
 
 model AuthUser {
-  id               String    @id
+  id               String   @id
   name             String
-  email            String    @unique
-  emailVerified    Boolean   @default(false) @map("email_verified")
+  email            String   @unique
+  emailVerified    Boolean  @default(false) @map("email_verified")
   image            String?
-  twoFactorEnabled Boolean?  @default(false) @map("two_factor_enabled")
+  twoFactorEnabled Boolean? @default(false) @map("two_factor_enabled")
   /// Input carrier only: collected at registration (the reviewed form has it)
   /// and copied to `users.country` by the mapping hook. Not read afterwards.
   country          String?
-  createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt        DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+  createdAt        DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   sessions   AuthSession[]
   accounts   AuthAccount[]
@@ -173,6 +173,7 @@ model User {
   registrations Registration[]
   profile       UserProfile?
   reviews       Review[]
+  certificates  Certificate[]
 
   @@map("users")
 }
@@ -271,35 +272,35 @@ enum ReviewVisibility {
 }
 
 model Review {
-  id                  String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId              String            @map("user_id") @db.Uuid
-  user                User              @relation(fields: [userId], references: [id], onDelete: Restrict)
+  id                  String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId              String             @map("user_id") @db.Uuid
+  user                User               @relation(fields: [userId], references: [id], onDelete: Restrict)
   /// Null only for `kind = diagnostic`. Unique: one review per registration.
-  registrationId      String?           @unique @map("registration_id") @db.Uuid
-  registration        Registration?     @relation(fields: [registrationId], references: [id], onDelete: Restrict)
-  programmeId         String            @map("programme_id") @db.Uuid
-  programme           Programme         @relation(fields: [programmeId], references: [id], onDelete: Restrict)
-  offeringId          String?           @map("offering_id") @db.Uuid
+  registrationId      String?            @unique @map("registration_id") @db.Uuid
+  registration        Registration?      @relation(fields: [registrationId], references: [id], onDelete: Restrict)
+  programmeId         String             @map("programme_id") @db.Uuid
+  programme           Programme          @relation(fields: [programmeId], references: [id], onDelete: Restrict)
+  offeringId          String?            @map("offering_id") @db.Uuid
   offering            ScheduledOffering? @relation(fields: [offeringId], references: [id], onDelete: Restrict)
   kind                ReviewKind
   /// Plain text, 20–2000 chars; rendered as text, never as HTML.
   body                String
-  rating              Int?              @db.SmallInt
+  rating              Int?               @db.SmallInt
   category            ReviewCategory?
-  consentPublic       Boolean           @default(false) @map("consent_public")
-  consentPhoto        Boolean           @default(false) @map("consent_photo")
-  moderationStatus    ReviewModeration  @default(pending) @map("moderation_status")
-  visibilityStatus    ReviewVisibility  @default(visible) @map("visibility_status")
-  moderatedByUserId   String?           @map("moderated_by_user_id") @db.Uuid
-  moderatedAt         DateTime?         @map("moderated_at") @db.Timestamptz(6)
-  moderationNote      String?           @map("moderation_note")
+  consentPublic       Boolean            @default(false) @map("consent_public")
+  consentPhoto        Boolean            @default(false) @map("consent_photo")
+  moderationStatus    ReviewModeration   @default(pending) @map("moderation_status")
+  visibilityStatus    ReviewVisibility   @default(visible) @map("visibility_status")
+  moderatedByUserId   String?            @map("moderated_by_user_id") @db.Uuid
+  moderatedAt         DateTime?          @map("moderated_at") @db.Timestamptz(6)
+  moderationNote      String?            @map("moderation_note")
   /// The name shown publicly, captured at submission (a later profile change
   /// never silently alters a published review).
-  displayNameSnapshot String            @map("display_name_snapshot")
-  submittedAt         DateTime          @default(now()) @map("submitted_at") @db.Timestamptz(6)
-  editedAt            DateTime?         @map("edited_at") @db.Timestamptz(6)
-  createdAt           DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt           DateTime          @updatedAt @map("updated_at") @db.Timestamptz(6)
+  displayNameSnapshot String             @map("display_name_snapshot")
+  submittedAt         DateTime           @default(now()) @map("submitted_at") @db.Timestamptz(6)
+  editedAt            DateTime?          @map("edited_at") @db.Timestamptz(6)
+  createdAt           DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt           DateTime           @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   @@index([moderationStatus, visibilityStatus, consentPublic, submittedAt])
   @@index([userId])
@@ -477,14 +478,15 @@ model Programme {
   createdAt        DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt        DateTime        @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  modules   ProgrammeModule[]
+  modules         ProgrammeModule[]
   formatsDelivery DeliveryFormat[]
-  prices    ProgrammePrice[]
-  experts   ProgrammeExpert[]
-  offerings ScheduledOffering[]
-  enquiries Enquiry[]
-  orders    Order[]
-  reviews   Review[]
+  prices          ProgrammePrice[]
+  experts         ProgrammeExpert[]
+  offerings       ScheduledOffering[]
+  enquiries       Enquiry[]
+  orders          Order[]
+  reviews         Review[]
+  certificates    Certificate[]
 
   @@index([domainId])
   @@index([status, sortOrder])
@@ -552,26 +554,26 @@ model ProgrammePrice {
 
 /// The trainer / practitioner — a real role with a public profile (DR-02).
 model Expert {
-  id                   String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id                   String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   /// Linked when the person registers; null until then.
-  userId               String?   @map("user_id") @db.Uuid
-  slug                 String    @unique
+  userId               String?  @map("user_id") @db.Uuid
+  slug                 String   @unique
   name                 String
-  roleTitle            String    @map("role_title")
+  roleTitle            String   @map("role_title")
   location             String
   headline             String
-  experienceLine       String    @map("experience_line")
+  experienceLine       String   @map("experience_line")
   summary              String
-  photoPath            String    @map("photo_path")
+  photoPath            String   @map("photo_path")
   expertise            Json
   /// about, background, specialisations, careerAchievements, books,
   /// frameworks, frameworksUrl, podcast, communityImpact, socialLinks,
   /// technologies, certifications, education, linkedin, mediumProfile.
   profile              Json
-  hrdCorpAccreditation Json?     @map("hrd_corp_accreditation")
-  published            Boolean   @default(false)
-  createdAt            DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt            DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+  hrdCorpAccreditation Json?    @map("hrd_corp_accreditation")
+  published            Boolean  @default(false)
+  createdAt            DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt            DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   programmes    ProgrammeExpert[]
   leadOfferings ScheduledOffering[]
@@ -639,6 +641,7 @@ model ScheduledOffering {
   orders        Order[]
   registrations Registration[]
   reviews       Review[]
+  certificates  Certificate[]
 
   @@index([programmeId, status, startsOn])
   @@map("scheduled_offerings")
@@ -724,6 +727,15 @@ enum OrderStatus {
   @@map("order_status")
 }
 
+/// Milestone 6 (E14): what a paid order produces. `registration` → a seat
+/// (M4); `certificate_renewal` → 12 more months on an existing certificate.
+enum OrderKind {
+  registration
+  certificate_renewal
+
+  @@map("order_kind")
+}
+
 model Order {
   id                      String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   userId                  String            @map("user_id") @db.Uuid
@@ -733,6 +745,12 @@ model Order {
   programmeId             String            @map("programme_id") @db.Uuid
   programme               Programme         @relation(fields: [programmeId], references: [id], onDelete: Restrict)
   status                  OrderStatus       @default(pending)
+  /// M6: a renewal order keeps the original registration's offering and
+  /// programme, so neither column becomes nullable. Capacity counting and the
+  /// duplicate checks look at `registration` orders only.
+  kind                    OrderKind         @default(registration)
+  certificateId           String?           @map("certificate_id") @db.Uuid
+  certificate             Certificate?      @relation(fields: [certificateId], references: [id], onDelete: Restrict)
   region                  PriceRegion
   currency                String            @db.Char(3)
   amountMinor             BigInt            @map("amount_minor")
@@ -745,6 +763,7 @@ model Order {
 
   payment      Payment?
   registration Registration?
+  renewal      CertificateRenewal?
 
   @@index([userId, createdAt])
   @@index([offeringId, status, expiresAt])
@@ -825,22 +844,23 @@ enum RegistrationStatus {
 /// A person's place in an offering (ADR-043). Created ONLY by the paid-webhook
 /// transaction (plan §6.1).
 model Registration {
-  id                         String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId                     String             @map("user_id") @db.Uuid
-  user                       User               @relation(fields: [userId], references: [id], onDelete: Restrict)
-  offeringId                 String             @map("offering_id") @db.Uuid
-  offering                   ScheduledOffering  @relation(fields: [offeringId], references: [id], onDelete: Restrict)
-  orderId                    String             @unique @map("order_id") @db.Uuid
-  order                      Order              @relation(fields: [orderId], references: [id], onDelete: Restrict)
-  status                     RegistrationStatus @default(confirmed)
-  transferUsed               Boolean            @default(false) @map("transfer_used")
-  transferredToRegistrationId String?           @map("transferred_to_registration_id") @db.Uuid
-  cancelledAt                DateTime?          @map("cancelled_at") @db.Timestamptz(6)
-  cancellationRefundPercent  Int?               @map("cancellation_refund_percent")
-  createdAt                  DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt                  DateTime           @updatedAt @map("updated_at") @db.Timestamptz(6)
+  id                          String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId                      String             @map("user_id") @db.Uuid
+  user                        User               @relation(fields: [userId], references: [id], onDelete: Restrict)
+  offeringId                  String             @map("offering_id") @db.Uuid
+  offering                    ScheduledOffering  @relation(fields: [offeringId], references: [id], onDelete: Restrict)
+  orderId                     String             @unique @map("order_id") @db.Uuid
+  order                       Order              @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  status                      RegistrationStatus @default(confirmed)
+  transferUsed                Boolean            @default(false) @map("transfer_used")
+  transferredToRegistrationId String?            @map("transferred_to_registration_id") @db.Uuid
+  cancelledAt                 DateTime?          @map("cancelled_at") @db.Timestamptz(6)
+  cancellationRefundPercent   Int?               @map("cancellation_refund_percent")
+  createdAt                   DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt                   DateTime           @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  review Review?
+  review      Review?
+  certificate Certificate?
 
   @@index([offeringId, status])
   @@index([userId, status])
@@ -868,4 +888,96 @@ model StripeEvent {
 
   @@index([type, receivedAt])
   @@map("stripe_events")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Milestone 6 — Certificate of Completion (MILESTONE_6_EXECUTION_PLAN.md §4;
+// founder approved E1–E14 on 2026-09-22). NOT the earned credential (DR-01).
+// Status (active · renewal due · expired · revoked) is COMPUTED on read from
+// `expires_on`, `revoked_at` and today's MYT calendar date — no status column,
+// no job (R-L1).
+// ─────────────────────────────────────────────────────────────────────────────
+
+/// One per completed registration. Issued in the same transaction as the
+/// administrator's completion record (E2); the ID is never reused (R-D3).
+model Certificate {
+  id               String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  /// Human-readable `DAA-YYYY-XXXX-XXXX`, 31-symbol alphabet, server-generated
+  /// from a cryptographic source; uniqueness enforced here, not by hope.
+  certificateId    String            @unique @map("certificate_id")
+  registrationId   String            @unique @map("registration_id") @db.Uuid
+  registration     Registration      @relation(fields: [registrationId], references: [id], onDelete: Restrict)
+  userId           String            @map("user_id") @db.Uuid
+  user             User              @relation(fields: [userId], references: [id], onDelete: Restrict)
+  programmeId      String            @map("programme_id") @db.Uuid
+  programme        Programme         @relation(fields: [programmeId], references: [id], onDelete: Restrict)
+  offeringId       String            @map("offering_id") @db.Uuid
+  offering         ScheduledOffering @relation(fields: [offeringId], references: [id], onDelete: Restrict)
+  /// Snapshots: a later profile or catalogue edit must never rewrite a printed
+  /// certificate. `holder_name` is correctable by an administrator only (E8).
+  holderName       String            @map("holder_name")
+  /// Lower-cased, accent-stripped copy of `holder_name` for word-prefix search.
+  holderNameSearch String            @map("holder_name_search")
+  programmeTitle   String            @map("programme_title")
+  formatName       String            @map("format_name")
+  completedOn      DateTime          @map("completed_on") @db.Date
+  issuedOn         DateTime          @map("issued_on") @db.Date
+  /// Last day the certificate is active (inclusive), MYT calendar date.
+  expiresOn        DateTime          @map("expires_on") @db.Date
+  /// Opt-in to public NAME search (E3). ID lookup works regardless.
+  listed           Boolean           @default(false)
+  listedChangedAt  DateTime?         @map("listed_changed_at") @db.Timestamptz(6)
+  revokedAt        DateTime?         @map("revoked_at") @db.Timestamptz(6)
+  revokedByUserId  String?           @map("revoked_by_user_id") @db.Uuid
+  revocationReason String?           @map("revocation_reason")
+  issuedByUserId   String            @map("issued_by_user_id") @db.Uuid
+  createdAt        DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime          @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  renewals CertificateRenewal[]
+  orders   Order[]
+
+  @@index([userId])
+  @@index([listed, holderNameSearch])
+  @@index([expiresOn])
+  @@map("certificates")
+}
+
+/// Insert-only history of the renewal fee (R-F1/R-F2). The fee in force is
+/// the newest row whose `effective_from` is not in the future. Seeded at
+/// USD 10.00 (founder, 2026-09-20; E4). `created_by_user_id` is null for the
+/// seed row only.
+model CertificateFeeSetting {
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  amountMinor     Int      @map("amount_minor")
+  currency        String   @db.Char(3)
+  effectiveFrom   DateTime @map("effective_from") @db.Timestamptz(6)
+  createdByUserId String?  @map("created_by_user_id") @db.Uuid
+  note            String?
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  renewals CertificateRenewal[]
+
+  @@index([effectiveFrom])
+  @@map("certificate_fee_settings")
+}
+
+/// Insert-only (ADR-022). Written ONLY by the paid-webhook transaction; the
+/// certificate's `expires_on` moves in the same transaction (C3/C4).
+model CertificateRenewal {
+  id                String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  certificateId     String                @map("certificate_id") @db.Uuid
+  certificate       Certificate           @relation(fields: [certificateId], references: [id], onDelete: Restrict)
+  orderId           String                @unique @map("order_id") @db.Uuid
+  order             Order                 @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  feeSettingId      String                @map("fee_setting_id") @db.Uuid
+  feeSetting        CertificateFeeSetting @relation(fields: [feeSettingId], references: [id], onDelete: Restrict)
+  previousExpiresOn DateTime              @map("previous_expires_on") @db.Date
+  newExpiresOn      DateTime              @map("new_expires_on") @db.Date
+  amountMinor       BigInt                @map("amount_minor")
+  currency          String                @db.Char(3)
+  createdAt         DateTime              @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([certificateId, createdAt])
+  @@map("certificate_renewals")
 }

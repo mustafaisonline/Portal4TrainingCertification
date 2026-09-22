@@ -110,9 +110,30 @@ export async function deleteTestUser(email: string): Promise<void> {
     // reviews.user_id restricts deletion of the user (M5b); a review's
     // registration must already be gone (the commerce specs delete those).
     const reviewIds = (await prisma.review.findMany({ where: { userId: user.id }, select: { id: true } })).map((r) => r.id);
+    // M6: certificates restrict their registration and the user; renewal
+    // orders restrict their certificate; registrations restrict their order.
+    // Dependency order: renewals → refunds → payments → renewal orders →
+    // certificates → registrations → remaining orders. Specs that already
+    // removed their own rows find every step a no-op.
+    const certIds = (await prisma.certificate.findMany({ where: { userId: user.id }, select: { id: true } })).map((c) => c.id);
+    const renewalIds = (await prisma.certificateRenewal.findMany({ where: { certificateId: { in: certIds } }, select: { id: true } })).map((r) => r.id);
+    const renewalOrderIds = (await prisma.order.findMany({ where: { certificateId: { in: certIds } }, select: { id: true } })).map((o) => o.id);
+    const orderIds = (await prisma.order.findMany({ where: { userId: user.id }, select: { id: true } })).map((o) => o.id);
+    const paymentIds = (await prisma.payment.findMany({ where: { orderId: { in: orderIds } }, select: { id: true } })).map((p) => p.id);
+    const refundIds = (await prisma.refund.findMany({ where: { paymentId: { in: paymentIds } }, select: { id: true } })).map((r) => r.id);
+    const registrationIds = (await prisma.registration.findMany({ where: { userId: user.id }, select: { id: true } })).map((r) => r.id);
     await prisma.$transaction([
       prisma.auditLog.deleteMany({ where: { entityType: "review", entityId: { in: reviewIds } } }),
       prisma.review.deleteMany({ where: { userId: user.id } }),
+      prisma.auditLog.deleteMany({ where: { entityType: { in: ["certificate", "certificate_renewal"] }, entityId: { in: [...certIds, ...renewalIds] } } }),
+      prisma.certificateRenewal.deleteMany({ where: { id: { in: renewalIds } } }),
+      prisma.refund.deleteMany({ where: { id: { in: refundIds } } }),
+      prisma.payment.deleteMany({ where: { id: { in: paymentIds } } }),
+      prisma.order.deleteMany({ where: { id: { in: renewalOrderIds } } }),
+      prisma.certificate.deleteMany({ where: { id: { in: certIds } } }),
+      prisma.registration.deleteMany({ where: { id: { in: registrationIds } } }),
+      prisma.order.deleteMany({ where: { id: { in: orderIds } } }),
+      prisma.auditLog.deleteMany({ where: { entityId: { in: [...orderIds, ...paymentIds, ...refundIds, ...registrationIds] } } }),
       // user_profiles.user_id restricts deletion of the user (M5a).
       prisma.userProfile.deleteMany({ where: { userId: user.id } }),
       prisma.consent.deleteMany({ where: { userId: user.id } }),

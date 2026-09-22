@@ -1,6 +1,7 @@
 import type { JsonInput, Tx } from "@/db/prisma";
 import { getPrisma, withTransaction } from "@/db/prisma";
 import { MODALITY_LABEL } from "@/modules/catalogue/offerings/repository";
+import { applyPaidRenewal } from "@/modules/certificates/renewal.service";
 import { sendEmail, type EmailMessage } from "@/modules/notifications/email";
 import { writeAudit } from "@/modules/platform/audit/repository";
 import { formatDateRange } from "@/shared/util/dates";
@@ -228,11 +229,6 @@ async function sessionPaid(tx: Tx, event: Stripe.Event, session: Stripe.Checkout
     },
     update: {},
   });
-  const registration = await tx.registration.upsert({
-    where: { orderId: order.id },
-    create: { userId: order.userId, offeringId: order.offeringId, orderId: order.id, status: "confirmed" },
-    update: {},
-  });
 
   const reason = `stripe:${event.id}`;
   await writeAudit(tx, {
@@ -243,6 +239,27 @@ async function sessionPaid(tx: Tx, event: Stripe.Event, session: Stripe.Checkout
     before: { status: previousStatus },
     after: { status: "paid", paymentId: payment.id, paymentIntentId, amountMinor, currency, checkoutSessionId: session.id },
     reason,
+  });
+
+  // M6 (plan §4 "orders"): what a paid order PRODUCES depends on its kind.
+  // A renewal extends an existing certificate (certificates/renewal.service,
+  // same transaction, same lock discipline); a registration order goes on
+  // exactly as before.
+  if (order.kind === "certificate_renewal") {
+    const renewal = await applyPaidRenewal(tx, {
+      order,
+      user: order.user,
+      receiptUrl: payment.receiptUrl,
+      reason,
+      now,
+    });
+    return { status: "processed", note: renewal.note, emails: renewal.email ? [renewal.email] : [] };
+  }
+
+  const registration = await tx.registration.upsert({
+    where: { orderId: order.id },
+    create: { userId: order.userId, offeringId: order.offeringId, orderId: order.id, status: "confirmed" },
+    update: {},
   });
   await writeAudit(tx, {
     actorUserId: null,

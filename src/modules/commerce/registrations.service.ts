@@ -44,9 +44,15 @@ export type RegistrationView = {
   refunds: RefundView[];
 };
 
+export type OrderKind = "registration" | "certificate_renewal";
+
 export type OrderView = {
   id: string;
   status: OrderStatus;
+  /** M6: what the order buys — a seat, or 12 more months on a certificate. */
+  kind: OrderKind;
+  /** The printed certificate ID for a renewal order; null otherwise. */
+  certificateCode: string | null;
   createdAt: Date;
   paidAt: Date | null;
   expiresAt: Date;
@@ -130,12 +136,15 @@ export async function listOrdersForUser(userId: string): Promise<OrderView[]> {
     include: {
       payment: { select: { receiptUrl: true } },
       registration: { select: { id: true } },
+      certificate: { select: { certificateId: true } },
       offering: { include: { programme: { select: { title: true } }, deliveryFormat: { select: { name: true } } } },
     },
   });
   return rows.map((o) => ({
     id: o.id,
     status: o.status,
+    kind: o.kind,
+    certificateCode: o.certificate?.certificateId ?? null,
     createdAt: o.createdAt,
     paidAt: o.paidAt,
     expiresAt: o.expiresAt,

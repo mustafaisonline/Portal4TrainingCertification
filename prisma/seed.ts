@@ -237,12 +237,24 @@ async function seedQuestions(domainIds: Map<string, string>) {
   await prisma.diagnosticQuestion.deleteMany({ where: { code: { notIn: questions.map((q) => q.id) } } });
 }
 
+/** Milestone 6 (E4): the renewal fee is a database setting, seeded once at the
+ *  founder's USD 10.00 and changed only from the admin screen afterwards. The
+ *  seed never overwrites an existing history. */
+async function seedCertificateFee() {
+  const existing = await prisma.certificateFeeSetting.count();
+  if (existing > 0) return;
+  await prisma.certificateFeeSetting.create({
+    data: { amountMinor: 1000, currency: "USD", effectiveFrom: new Date(0), createdByUserId: null, note: "Founder-specified opening fee (2026-09-20)" },
+  });
+}
+
 async function main() {
   const domainIds = await seedDomains();
   const programmeIds = await seedProgrammes(domainIds);
   await seedExperts(programmeIds);
   await seedFaq();
   await seedQuestions(domainIds);
+  await seedCertificateFee();
 
   const [d, p, published, m, f, pr, e, faq, q, o] = await Promise.all([
     prisma.domain.count(),

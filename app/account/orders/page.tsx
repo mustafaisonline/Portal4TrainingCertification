@@ -64,7 +64,9 @@ export default async function OrdersPage() {
                       </div>
                       <p className="text-body-lg font-medium">{o.programmeTitle}</p>
                       <p className="text-body-sm text-[var(--color-ink)]">
-                        {o.formatName} · {formatDateRange(o.startsOn, o.endsOn)}
+                        {o.kind === "certificate_renewal"
+                          ? `Certificate renewal${o.certificateCode ? ` · ${o.certificateCode}` : ""}`
+                          : `${o.formatName} · ${formatDateRange(o.startsOn, o.endsOn)}`}
                       </p>
                       <p className="text-body-sm text-[var(--color-ink-quiet)]">
                         Placed {formatTimestamp(o.createdAt)}

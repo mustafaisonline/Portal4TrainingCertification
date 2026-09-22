@@ -32,18 +32,23 @@ export function Field({
 } & Omit<ComponentPropsWithoutRef<"input">, "className">) {
   const hintId = useId();
   const errorId = useId();
+  const generatedId = useId();
+  const inputId = input.id ?? generatedId;
   const described = [hint ? hintId : null, error ? errorId : null].filter(Boolean).join(" ") || undefined;
+  // Explicit htmlFor/id rather than a wrapping <label>: a wrapping label gives
+  // the input an accessible name that includes the hint and error text (found
+  // by the M5a e2e run — "Email" had no exact match). Same fix as SelectField.
   return (
-    <label className="flex flex-col gap-2">
-      <span className="text-label">
+    <div className="flex flex-col gap-2">
+      <label htmlFor={inputId} className="text-label">
         {label}
         {optional ? (
           <span className="ml-1.5 font-normal normal-case tracking-normal text-[var(--color-ink-faint)]">
             (optional)
           </span>
         ) : null}
-      </span>
-      <input {...input} aria-describedby={described} aria-invalid={error ? true : undefined} className={inputClass} />
+      </label>
+      <input {...input} id={inputId} aria-describedby={described} aria-invalid={error ? true : undefined} className={inputClass} />
       {hint ? (
         <span id={hintId} className="text-body-sm text-[var(--color-ink-faint)]">
           {hint}
@@ -54,7 +59,59 @@ export function Field({
           {error}
         </span>
       ) : null}
-    </label>
+    </div>
+  );
+}
+
+/**
+ * Select with explicit htmlFor/id rather than a wrapping <label>: a label
+ * that wraps a select gives it an accessible name containing every option's
+ * text (found by the admin offerings e2e run). Same pattern as the local
+ * SelectField in app/admin/offerings/OfferingForm.tsx; shared here for the
+ * profile and registration forms (Milestone 5a).
+ */
+export function SelectField({
+  label,
+  hint,
+  error,
+  optional,
+  children,
+  ...select
+}: {
+  label: string;
+  hint?: string;
+  error?: string;
+  optional?: boolean;
+  children: ReactNode;
+} & Omit<ComponentPropsWithoutRef<"select">, "className">) {
+  const hintId = useId();
+  const errorId = useId();
+  const selectId = useId();
+  const described = [hint ? hintId : null, error ? errorId : null].filter(Boolean).join(" ") || undefined;
+  return (
+    <div className="flex flex-col gap-2">
+      <label htmlFor={selectId} className="text-label">
+        {label}
+        {optional ? (
+          <span className="ml-1.5 font-normal normal-case tracking-normal text-[var(--color-ink-faint)]">
+            (optional)
+          </span>
+        ) : null}
+      </label>
+      <select {...select} id={selectId} aria-describedby={described} aria-invalid={error ? true : undefined} className={inputClass}>
+        {children}
+      </select>
+      {hint ? (
+        <span id={hintId} className="text-body-sm text-[var(--color-ink-faint)]">
+          {hint}
+        </span>
+      ) : null}
+      {error ? (
+        <span id={errorId} role="alert" className="text-body-sm text-[var(--color-danger)]">
+          {error}
+        </span>
+      ) : null}
+    </div>
   );
 }
 

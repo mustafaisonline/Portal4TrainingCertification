@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { countryName } from "@/content/countries";
 import { MODALITY_LABEL } from "@/modules/catalogue/offerings/repository";
 import { formatMoney } from "@/modules/catalogue/programmes/types";
 import { previewCheckout, type CheckoutPreview } from "@/modules/commerce/checkout.service";
@@ -7,6 +9,7 @@ import { PAYMENTS_NOT_CONFIGURED_MESSAGE } from "@/modules/commerce/messages";
 import { regionForCountry, regionLabel } from "@/modules/commerce/pricing";
 import { describeRefundTiers } from "@/modules/commerce/refund-policy";
 import { paymentsConfigured } from "@/modules/commerce/stripe";
+import { getProfile, isCompleteForCheckout } from "@/modules/identity/profile.repository";
 import { requireUser } from "@/modules/identity/session";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
@@ -28,6 +31,9 @@ import { CheckoutForm } from "./CheckoutForm";
  * the consent tick is real and required; Pay is the server action. The
  * mockup's simulated `pay()` was NEVER ported. `requireUser` gates the
  * screen server-side and returns the person here after sign-in.
+ * Milestone 5a: the profile gate — an incomplete profile is sent to
+ * /account/profile?complete=1&return-to=… (and `startCheckout` refuses too);
+ * the price region comes from the ISO country on the profile.
  */
 export const metadata: Metadata = {
   title: "Register and pay",
@@ -73,7 +79,12 @@ export default async function CheckoutPage({
   const { offeringId } = await params;
   const sp = await searchParams;
   const user = await requireUser(`/checkout/${offeringId}`);
-  const preview = await previewCheckout(offeringId, user);
+  const profile = await getProfile(user.id);
+  if (!isCompleteForCheckout(profile)) {
+    redirect(`/account/profile?complete=1&return-to=${encodeURIComponent(`/checkout/${offeringId}`)}`);
+  }
+  const pricing = { id: user.id, country: profile?.countryCode ?? user.country };
+  const preview = await previewCheckout(offeringId, pricing);
   const cancelled = sp["cancelled"] === "1";
 
   return (
@@ -94,7 +105,7 @@ export default async function CheckoutPage({
           </p>
         ) : null}
 
-        {preview.ok ? <Available preview={preview} user={user} /> : <Unavailable preview={preview} />}
+        {preview.ok ? <Available preview={preview} user={pricing} /> : <Unavailable preview={preview} />}
       </div>
     </section>
   );
@@ -134,6 +145,7 @@ function Available({ preview, user }: { preview: Extract<CheckoutPreview, { ok: 
   const { offering, price, seatsLeft } = preview;
   const f = offering.format;
   const region = regionForCountry(user.country);
+  const countryLabel = countryName(user.country) ?? user.country;
   const amount = formatMoney(price.offerAmountMinor, price.currency);
   const discounted = price.offerAmountMinor !== price.listAmountMinor;
   const tiers = describeRefundTiers();
@@ -176,8 +188,8 @@ function Available({ preview, user }: { preview: Extract<CheckoutPreview, { ok: 
             </p>
           )}
           <p className="text-body-sm mt-4 text-[var(--color-ink-faint)]" data-testid="checkout-region-note">
-            Prices are set by the country on your profile ({user.country ? user.country : "not set"} → {regionLabel(region)}
-            {region === "international" && !user.country ? "; without a country the international price applies" : ""}). If that is wrong,{" "}
+            Prices are set by the country on your profile ({countryLabel ? countryLabel : "not set"} → {regionLabel(region)}
+            {region === "international" && !countryLabel ? "; without a country the international price applies" : ""}). If that is wrong,{" "}
             <Link href="/account/profile" className="underline underline-offset-4">
               update your profile
             </Link>{" "}

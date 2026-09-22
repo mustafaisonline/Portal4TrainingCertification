@@ -35,8 +35,8 @@ test.afterAll(async () => {
 async function registerViaUi(page: Page, email: string, name = "Ada Test") {
   await page.goto("/register");
   await page.getByLabel("Full name").fill(name);
-  await page.getByLabel("Email").fill(email);
-  await page.getByLabel(/^Country/).fill("Malaysia");
+  await page.getByLabel("Email", { exact: true }).fill(email);
+  await page.getByLabel(/^Country/).selectOption("MY");
   await page.getByLabel("Password", { exact: true }).fill(STRONG_PASSWORD);
   await page.getByLabel("Confirm password").fill(STRONG_PASSWORD);
   await page.getByRole("checkbox").check();
@@ -47,7 +47,7 @@ async function registerViaUi(page: Page, email: string, name = "Ada Test") {
 
 async function signInViaUi(page: Page, email: string, password = STRONG_PASSWORD) {
   await page.goto("/sign-in");
-  await page.getByLabel("Email").fill(email);
+  await page.getByLabel("Email", { exact: true }).fill(email);
   await page.getByLabel("Password", { exact: true }).fill(password);
   await page.getByRole("button", { name: "Sign in" }).click();
   await expect(page).toHaveURL(/\/account$/);
@@ -139,40 +139,45 @@ test("profile: name and country are saved, audited and persist after reload", as
   await registerViaUi(page, email, "Before Rename");
   await signInViaUi(page, email);
 
+  // M5a: the profile page (tests/e2e/profile.spec.ts covers every section);
+  // here only the name/country round trip the account shell depends on.
   await page.goto("/account/profile");
   await expectNoAxeViolations(page);
-  await expect(page.getByLabel("Full name")).toHaveValue("Before Rename");
-  await expect(page.getByLabel("Email")).toHaveValue(email);
-  await expect(page.getByLabel(/^Country/)).toHaveValue("Malaysia");
+  const fullName = page.getByLabel("Full name (as on your ID)");
+  await expect(fullName).toHaveValue("Before Rename");
+  await expect(page.getByLabel("Email", { exact: true })).toHaveValue(email);
+  await expect(page.getByLabel("Country", { exact: true })).toHaveValue("MY");
 
   // A validation error keeps what was typed and writes nothing.
-  await page.getByLabel("Full name").fill("A");
+  await fullName.fill("A");
   await page.getByTestId("profile-save").click();
-  await expect(page.getByText("Please enter your full name.")).toBeVisible();
-  await expect(page.getByLabel("Full name")).toHaveValue("A");
+  await expect(page.getByText("Please enter your full name as it appears on your ID.")).toBeVisible();
+  await expect(fullName).toHaveValue("A");
 
-  await page.getByLabel("Full name").fill("After Rename");
-  await page.getByLabel(/^Country/).fill("Singapore");
+  await fullName.fill("After Rename");
+  await page.getByLabel("Country", { exact: true }).selectOption("SG");
   await page.getByTestId("profile-save").click();
-  await expect(page.getByText("Your changes have been saved.")).toBeVisible();
+  await expect(page.getByText(/Your changes have been saved\./)).toBeVisible();
 
   await page.reload();
-  await expect(page.getByLabel("Full name")).toHaveValue("After Rename");
-  await expect(page.getByLabel(/^Country/)).toHaveValue("Singapore");
+  await expect(fullName).toHaveValue("After Rename");
+  await expect(page.getByLabel("Country", { exact: true })).toHaveValue("SG");
   // The sidebar, header menu and dashboard read the same row.
   await expect(page.getByRole("navigation", { name: "Account" })).toContainText("After Rename");
   await expect(page.getByTestId("header-account")).toHaveAttribute("aria-label", "Account menu for After Rename");
   await page.goto("/account");
   await expect(page.getByTestId("welcome")).toHaveText("Welcome, After Rename");
 
-  // Persisted in OUR row, audited, and mirrored to the provider's user record.
+  // Persisted in OUR rows (the country NAME on users, the code on the
+  // profile), audited by field name, and mirrored to the provider's record.
   const user = await findUserByEmail(email);
   expect(user?.name).toBe("After Rename");
   expect(user?.country).toBe("Singapore");
+  const profile = await getPrisma().userProfile.findUnique({ where: { userId: user!.id }, select: { legalName: true, countryCode: true } });
+  expect(profile).toEqual({ legalName: "After Rename", countryCode: "SG" });
   const audit = (await listAuditForEntity(getPrisma(), "user", user!.id)).filter((a) => a.action === "profile.updated");
   expect(audit).toHaveLength(1);
-  expect(audit[0]!.before).toEqual({ name: "Before Rename", country: "Malaysia" });
-  expect(audit[0]!.after).toEqual({ name: "After Rename", country: "Singapore" });
+  expect((audit[0]!.after as { changed: string[] }).changed).toEqual(expect.arrayContaining(["legalName", "countryCode"]));
   const authUser = await getPrisma().authUser.findUnique({ where: { email }, select: { name: true } });
   expect(authUser?.name).toBe("After Rename");
 });

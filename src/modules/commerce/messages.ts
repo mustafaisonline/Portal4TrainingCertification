@@ -11,6 +11,7 @@ export const COMMERCE_MESSAGES: Record<CommerceErrorCode, string> = {
   order_pending: "You already started a payment for this date. Finish it in the Stripe tab, or try again in 30 minutes when that hold expires.",
   documents_unpublished: "Registration is closed: the Terms, Privacy and Refund documents have not been published yet.",
   consent_required: "Please tick the box to agree to the Terms of service, Privacy policy and Refund & cancellation policy.",
+  profile_incomplete: "A few profile details are needed before you can register — open Your profile, complete them, and come back to pay.",
   no_price_for_region: "No price is published for your region yet. Please contact us and we will help.",
   order_not_found: "We could not find that order.",
   registration_not_found: "We could not find that registration.",

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { accountNavItems } from "@/shared/chrome/account-nav";
+import { initialsOf } from "@/shared/util/initials";
 
 /*
  * PORTED 2026-09-21 from project-artifacts/mockup/components/account/
@@ -20,17 +21,24 @@ import { accountNavItems } from "@/shared/chrome/account-nav";
 
 const adminLinks = [{ href: "/admin", label: "Admin dashboard" }];
 
-export function initialsOf(name: string): string {
-  const parts = name.trim().split(/\s+/).filter(Boolean);
-  const first = parts[0]?.[0] ?? "";
-  const last = parts.length > 1 ? (parts[parts.length - 1]?.[0] ?? "") : "";
-  return `${first}${last}`.toUpperCase() || "?";
-}
-
 const itemClass =
   "block rounded-[var(--radius-plate)] px-3 py-2 text-body-sm text-[var(--color-ink-quiet)] hover:bg-[var(--color-ground-tint)] hover:text-[var(--color-ink)]";
 
-export function AccountMenu({ name, email, isAdmin }: { name: string; email: string; isAdmin: boolean }) {
+export function AccountMenu({
+  name,
+  email,
+  isAdmin,
+  hasPhoto = false,
+  photoVersion = 0,
+}: {
+  name: string;
+  email: string;
+  isAdmin: boolean;
+  /** Milestone 5a: show the profile photo (from the session-gated route)
+   *  instead of the initials. `photoVersion` busts the browser cache. */
+  hasPhoto?: boolean;
+  photoVersion?: number;
+}) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -63,9 +71,15 @@ export function AccountMenu({ name, email, isAdmin }: { name: string; email: str
       >
         <span
           aria-hidden="true"
-          className="grid h-8 w-8 place-items-center rounded-full bg-[var(--color-action)] text-[0.7rem] font-semibold text-[var(--color-action-ink)]"
+          data-testid="header-avatar"
+          className="grid h-8 w-8 place-items-center overflow-hidden rounded-full bg-[var(--color-action)] text-[0.7rem] font-semibold text-[var(--color-action-ink)]"
         >
-          {initialsOf(name)}
+          {hasPhoto ? (
+            // A plain <img>: the bytes are session-gated, not an optimisable asset.
+            <img src={`/api/me/photo?v=${photoVersion}`} alt="" className="h-full w-full object-cover" />
+          ) : (
+            initialsOf(name)
+          )}
         </span>
         <span className="hidden md:inline">Account</span>
       </button>

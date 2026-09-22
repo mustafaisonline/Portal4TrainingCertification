@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
-import { deleteTestUser, resetRateLimits, STRONG_PASSWORD, uniqueEmail } from "../helpers/identity-db";
+import { completeProfileByEmail, deleteTestUser, resetRateLimits, STRONG_PASSWORD, uniqueEmail } from "../helpers/identity-db";
 
 /*
  * Registration & payment — end to end through the real screens against the
@@ -8,8 +8,10 @@ import { deleteTestUser, resetRateLimits, STRONG_PASSWORD, uniqueEmail } from ".
  * playwright.config.ts starts the app with STRIPE_SECRET_KEY blank, so the
  * checkout screen states that payments are not configured and the action
  * creates no order. The schedule offers "Register" for an open date; the
- * checkout shows the price for THIS person's region (no profile country →
- * USD) and the refund tiers; submitting without consent is refused.
+ * checkout shows the price for THIS person's region (a US profile country →
+ * USD) and the refund tiers; submitting without consent is refused. The
+ * profile gate itself is covered by tests/e2e/profile.spec.ts (M5a); here
+ * the profile is completed through the repository so checkout renders.
  */
 
 test.describe.configure({ mode: "serial" });
@@ -81,7 +83,8 @@ async function registerViaUi(page: Page, email: string, name = "Cara Checkout") 
   await page.goto("/register");
   await page.getByLabel("Full name").fill(name);
   await page.getByLabel("Email").fill(email);
-  // Country deliberately left empty → the international (USD) price applies.
+  // Country deliberately left empty at registration; the profile completed
+  // below sets "US" → the international (USD) price applies.
   await page.getByLabel("Password", { exact: true }).fill(STRONG_PASSWORD);
   await page.getByLabel("Confirm password").fill(STRONG_PASSWORD);
   await page.getByRole("checkbox").check();
@@ -114,15 +117,17 @@ test("checkout requires sign-in and returns the person to it", async ({ page }) 
   await expect(page).toHaveURL(new RegExp(`/sign-in\\?return-to=${encodeURIComponent(`/checkout/${offeringId}`)}`));
 });
 
-test("checkout shows the USD price for a person without a profile country, the refund tiers, and refuses to pay without consent or keys", async ({ page }) => {
+test("checkout shows the USD price for a person with an international profile country, the refund tiers, and refuses to pay without consent or keys", async ({ page }) => {
   const email = newEmail("e2e-m4");
   await registerViaUi(page, email);
+  await completeProfileByEmail(email, { countryCode: "US", nationalityCode: "US" });
   await signInViaUi(page, email);
 
   await page.goto(`/checkout/${offeringId}`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Register and pay");
   await expect(page.getByTestId("checkout-programme")).toHaveText(flagshipTitle);
   await expect(page.getByTestId("checkout-price")).toHaveText(usdPriceLabel);
+  await expect(page.getByTestId("checkout-region-note")).toContainText("United States");
   await expect(page.getByTestId("checkout-region-note")).toContainText("International");
   const tiers = page.getByTestId("checkout-refund-tiers");
   await expect(tiers).toContainText("100 % refund");

@@ -3,6 +3,7 @@ import { findOfferingById, MODALITY_LABEL, type OfferingRecord } from "@/modules
 import { findProgrammeBySlug } from "@/modules/catalogue/programmes/repository";
 import type { ProgrammePriceRecord, ProgrammeRecord } from "@/modules/catalogue/programmes/types";
 import { publishedDocuments, refundDocumentVersion } from "@/modules/identity/legal-documents";
+import { getProfile, isCompleteForCheckout, missingForCheckout } from "@/modules/identity/profile.repository";
 import { findUserById } from "@/modules/identity/users.repository";
 import { writeAudit } from "@/modules/platform/audit/repository";
 import { formatDateRange } from "@/shared/util/dates";
@@ -61,6 +62,15 @@ export async function startCheckout(input: StartCheckoutInput): Promise<StartChe
 
   const user = await findUserById(input.userId);
   if (!user) throw new Error(`user ${input.userId} not found`);
+  // The profile gate (M5a plan §2 item 4), enforced here as well as on the
+  // checkout screen so a direct action call cannot bypass it. The pricing
+  // region comes from the ISO country on the profile (item 5), falling back
+  // to the legacy free-text country only for rows that predate the profile.
+  const profile = await getProfile(user.id);
+  if (!isCompleteForCheckout(profile)) {
+    throw new CommerceError("profile_incomplete", `User ${user.id} is missing profile details: ${missingForCheckout(profile).join(", ")}.`);
+  }
+  const pricingCountry = profile?.countryCode ?? user.country;
 
   const { order, offering } = await withTransaction(async (tx) => {
     const { offering } = await lockOfferingForSeat(tx, input.offeringId, now);
@@ -78,7 +88,7 @@ export async function startCheckout(input: StartCheckoutInput): Promise<StartChe
 
     const programme = await findProgrammeBySlug(offering.programmeSlug, tx);
     if (!programme) throw new Error(`programme ${offering.programmeSlug} not found`);
-    const price = priceForUser(programme, user);
+    const price = priceForUser(programme, { country: pricingCountry });
 
     const expiresAt = new Date(now.getTime() + ORDER_HOLD_MINUTES * 60_000);
     const order = await tx.order.create({
@@ -162,7 +172,9 @@ export type CheckoutPreview =
     };
 
 /** What the checkout screen shows before the person acts. Read-only and
- *  unlocked — the authoritative checks run again inside `startCheckout`. */
+ *  unlocked — the authoritative checks run again inside `startCheckout`.
+ *  `user.country` is the pricing country: the profile's ISO code when there
+ *  is one (the page resolves it), else the legacy free-text value. */
 export async function previewCheckout(offeringId: string, user: { id: string; country: string | null }, now = new Date()): Promise<CheckoutPreview> {
   const prisma = getPrisma();
   const offering = await findOfferingById(offeringId);

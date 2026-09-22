@@ -38,7 +38,7 @@ async function registerViaUi(page: Page, address: string, name = "Olive Operatio
   await page.goto("/register");
   await page.getByLabel("Full name").fill(name);
   await page.getByLabel("Email").fill(address);
-  await page.getByLabel(/^Country/).fill("Malaysia");
+  await page.getByLabel(/^Country/).selectOption("MY");
   await page.getByLabel("Password", { exact: true }).fill(STRONG_PASSWORD);
   await page.getByLabel("Confirm password").fill(STRONG_PASSWORD);
   await page.getByRole("checkbox").check();

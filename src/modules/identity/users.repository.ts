@@ -1,3 +1,4 @@
+import { countryName, isCountryCode } from "@/content/countries";
 import type { Db, Tx } from "@/db/prisma";
 import { getPrisma } from "@/db/prisma";
 import { writeAudit } from "@/modules/platform/audit/repository";
@@ -52,6 +53,8 @@ export type RegisterIdentityInput = {
   subject: string;
   email: string;
   name: string;
+  /** An ISO 3166-1 alpha-2 code from the registration form (Milestone 5a);
+   *  older callers may still pass a free-text name, kept as given. */
   country: string | null;
   /** The published versions the person accepted — required; registration is
    *  closed when there are none (legal-documents.ts). */
@@ -60,21 +63,28 @@ export type RegisterIdentityInput = {
 
 /**
  * Everything a registration creates on OUR side, in ONE transaction (plan
- * §6.2): users → auth_identities → user_roles(participant, platform) →
- * consents → audit rows. The caller (the Better Auth after-hook) removes the
- * provider user if this throws, so a half-registered person cannot exist.
+ * §6.2): users → auth_identities → user_profiles → user_roles(participant,
+ * platform) → consents → audit rows. The caller (the Better Auth after-hook)
+ * removes the provider user if this throws, so a half-registered person
+ * cannot exist. `users.country` keeps holding the country NAME (existing
+ * readers); the profile row holds the ISO code when one was given.
  */
 export async function createRegisteredIdentity(tx: Tx, input: RegisterIdentityInput): Promise<UserRecord> {
+  const rawCountry = input.country?.trim() || null;
+  const countryCode = rawCountry && isCountryCode(rawCountry.toUpperCase()) ? rawCountry.toUpperCase() : null;
   const user = await tx.user.create({
     data: {
       email: normaliseEmail(input.email),
       name: input.name.trim(),
-      country: input.country?.trim() || null,
+      country: countryCode ? countryName(countryCode) : rawCountry,
     },
     select,
   });
   await tx.authIdentity.create({
     data: { userId: user.id, provider: AUTH_PROVIDER, providerSubject: input.subject },
+  });
+  await tx.userProfile.create({
+    data: { userId: user.id, legalName: user.name, countryCode },
   });
   await tx.userRole.create({
     data: { userId: user.id, role: "participant", scopeType: "platform", scopeId: null, grantedByUserId: null },

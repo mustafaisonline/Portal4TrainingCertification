@@ -1,5 +1,7 @@
 import { randomUUID } from "node:crypto";
+import { countryName } from "../../src/content/countries";
 import { getPrisma, withTransaction } from "../../src/db/prisma";
+import { saveProfile, type ProfileInput, type ProfileView } from "../../src/modules/identity/profile.repository";
 import { grantRole, type Role } from "../../src/modules/identity/roles.repository";
 import { findUserByEmail } from "../../src/modules/identity/users.repository";
 
@@ -48,6 +50,48 @@ export async function grantRoleByEmail(email: string, role: Role): Promise<void>
   await withTransaction((tx) => grantRole(tx, { userId: user.id, role, grantedByUserId: null, reason: "test" }));
 }
 
+/** A profile that satisfies the checkout gate (M5a plan §3) — every required
+ *  field present; `overrides` change any of them (e.g. `countryCode`). */
+export function completeProfileInput(overrides: Partial<ProfileInput> = {}): ProfileInput {
+  return {
+    legalName: "Test Person",
+    displayName: null,
+    phoneE164: "+60123456789",
+    addressLine1: "1 Jalan Test",
+    addressLine2: null,
+    city: "Kuala Lumpur",
+    state: null,
+    postalCode: "50000",
+    countryCode: "MY",
+    timezone: null,
+    organisation: "Test Organisation",
+    jobTitle: "Analyst",
+    industry: null,
+    experienceBand: null,
+    linkedinUrl: null,
+    idType: "passport",
+    idNumber: "A1234567",
+    nationalityCode: "MY",
+    dateOfBirth: "1990-01-01",
+    marketingConsent: false,
+    heardAbout: null,
+    ...overrides,
+  };
+}
+
+/** Write a checkout-complete profile for a user through the real repository
+ *  (encryption, audit and the `users` mirror included). */
+export async function completeProfile(userId: string, overrides: Partial<ProfileInput> = {}): Promise<ProfileView> {
+  const input = completeProfileInput(overrides);
+  return withTransaction((tx) => saveProfile(tx, userId, input, countryName(input.countryCode)));
+}
+
+export async function completeProfileByEmail(email: string, overrides: Partial<ProfileInput> = {}): Promise<ProfileView> {
+  const user = await findUserByEmail(email);
+  if (!user) throw new Error(`no user ${email}`);
+  return completeProfile(user.id, overrides);
+}
+
 /** The auth endpoints are rate-limited per client and the counters live in
  *  the database (restart-safe, plan §6.7). A test run registers many accounts
  *  from one address in seconds, so each test starts with clear counters. */
@@ -64,6 +108,8 @@ export async function deleteTestUser(email: string): Promise<void> {
   const user = await prisma.user.findUnique({ where: { email: lower }, select: { id: true } });
   if (user) {
     await prisma.$transaction([
+      // user_profiles.user_id restricts deletion of the user (M5a).
+      prisma.userProfile.deleteMany({ where: { userId: user.id } }),
       prisma.consent.deleteMany({ where: { userId: user.id } }),
       prisma.userRole.deleteMany({ where: { userId: user.id } }),
       prisma.authIdentity.deleteMany({ where: { userId: user.id } }),

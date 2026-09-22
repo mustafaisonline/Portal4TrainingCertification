@@ -15,6 +15,7 @@ export type CommerceErrorCode =
   | "order_pending"
   | "documents_unpublished"
   | "consent_required"
+  | "profile_incomplete"
   | "no_price_for_region"
   | "order_not_found"
   | "registration_not_found"

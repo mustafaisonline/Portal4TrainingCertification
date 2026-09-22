@@ -4,9 +4,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useId, useState } from "react";
 import type { FormEvent } from "react";
+import { COUNTRIES } from "@/content/countries";
 import { authClient } from "@/modules/identity/auth-client";
 import { Button } from "@/shared/ui/Button";
-import { Field, FormStatus, PasswordField } from "@/shared/ui/forms";
+import { Field, FormStatus, PasswordField, SelectField } from "@/shared/ui/forms";
 
 const MIN_PASSWORD = 8; // founder decision 2026-09-21 (was 12)
 
@@ -99,7 +100,16 @@ export function RegisterForm({
         hint="As you would like it to appear on any certificate of participation."
       />
       <Field label="Email" type="email" name="email" autoComplete="email" inputMode="email" required maxLength={254} />
-      <Field label="Country" name="country" autoComplete="country-name" optional maxLength={100} />
+      {/* ISO 3166-1 code (Milestone 5a): seeds the profile's country and the
+          pricing region; the after-hook mirrors the name to `users.country`. */}
+      <SelectField label="Country" name="country" autoComplete="country" optional defaultValue="">
+        <option value="">Select your country</option>
+        {COUNTRIES.map((c) => (
+          <option key={c.code} value={c.code}>
+            {c.name}
+          </option>
+        ))}
+      </SelectField>
       <div className="grid gap-5 sm:grid-cols-2">
         <PasswordField
           label="Password"

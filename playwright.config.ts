@@ -30,6 +30,10 @@ export default defineConfig({
   // workers registering accounts at once trip that limit intermittently.
   workers: 1,
   retries: 0,
+  // Several specs are one long journey (register → grant a role → fill a
+  // multi-section form → check public pages) against a DEV server that
+  // compiles routes on first hit; 30 s (the default) is borderline cold.
+  timeout: 120_000,
   reporter: [["list"]],
   use: {
     baseURL,

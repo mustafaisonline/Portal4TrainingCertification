@@ -11,7 +11,8 @@ import type { CheckoutSessionInput, PaymentGateway, RefundInput } from "@/module
 import { verifyStripeSignature } from "@/modules/commerce/stripe";
 import { handleStripeWebhook } from "@/modules/commerce/webhook.service";
 import { listAuditForEntity } from "@/modules/platform/audit/repository";
-import { uniqueEmail } from "../helpers/identity-db";
+import { countryCodeFor } from "@/content/countries";
+import { completeProfile, uniqueEmail } from "../helpers/identity-db";
 
 /*
  * Registration & payment — integration against the REAL test database
@@ -62,9 +63,13 @@ function fakeGateway(overrides: Partial<PaymentGateway> = {}) {
 
 /* ------------------------------------------------------------ fixtures */
 
+/** A user whose profile satisfies the checkout gate (M5a). `country` is the
+ *  ISO code or name the person would have chosen; pricing reads the
+ *  profile's `countryCode`. */
 async function createUser(country: string | null) {
   const user = await prisma.user.create({ data: { email: uniqueEmail("m4"), name: `M4 ${country ?? "Nowhere"}`, country } });
   createdUsers.push(user.id);
+  await completeProfile(user.id, { countryCode: countryCodeFor(country) ?? "US", nationalityCode: countryCodeFor(country) ?? "US" });
   return user;
 }
 
@@ -167,6 +172,7 @@ afterAll(async () => {
     prisma.auditLog.deleteMany({ where: { entityId: { in: [...orderIds, ...paymentIds, ...refundIds, ...registrationIds, ...createdUsers] } } }),
     prisma.auditLog.deleteMany({ where: { actorUserId: { in: createdUsers } } }),
     prisma.consent.deleteMany({ where: { userId: { in: createdUsers } } }),
+    prisma.userProfile.deleteMany({ where: { userId: { in: createdUsers } } }),
     prisma.outboundEmail.deleteMany({ where: { templateKey: { startsWith: "commerce." }, toEmail: { endsWith: "@example.test" } } }),
     prisma.stripeEvent.deleteMany({ where: { id: { startsWith: "evt_test_" } } }),
     prisma.scheduledOffering.deleteMany({ where: { id: { in: createdOfferings } } }),
@@ -182,7 +188,9 @@ describe("checkout — server-priced by profile country (plan §3 D3, §6.3)", (
     ["Malaysia", "malaysia"],
     ["Pakistan", "pakistan"],
     ["Singapore", "international"],
-    [null, "international"],
+    // M5a: the gate requires a country, so "no country" is unreachable; a
+    // code the pricing table does not name is the international case.
+    ["US", "international"],
   ] as const)("country %j → region %s: pending order, consents, audit, gateway call with that amount and currency", async (country, region) => {
     const offering = await createOffering({ startInDays: 30, capacity: 10 });
     const user = await createUser(country);
@@ -224,6 +232,14 @@ describe("checkout — server-priced by profile country (plan §3 D3, §6.3)", (
     const offering = await createOffering({ startInDays: 30, capacity: 10 });
     const user = await createUser("Malaysia");
     await expect(startCheckout({ userId: user.id, offeringId: offering.id, consent: false, gateway: fakeGateway() })).rejects.toMatchObject({ code: "consent_required" });
+    expect(await prisma.order.count({ where: { userId: user.id } })).toBe(0);
+  });
+
+  it("refuses an incomplete profile (M5a gate) even when called directly, and creates nothing", async () => {
+    const offering = await createOffering({ startInDays: 30, capacity: 10 });
+    const user = await createUser("Malaysia");
+    await completeProfile(user.id, { organisation: null, idType: null, idNumber: null });
+    await expect(startCheckout({ userId: user.id, offeringId: offering.id, consent: true, gateway: fakeGateway() })).rejects.toMatchObject({ code: "profile_incomplete" });
     expect(await prisma.order.count({ where: { userId: user.id } })).toBe(0);
   });
 

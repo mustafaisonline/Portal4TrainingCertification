@@ -93,7 +93,9 @@ describe("module boundaries", () => {
     // Found the hard way in M4: a "use client" form importing constants from
     // a repository file pulled Prisma + pg into the browser bundle and broke
     // `next build`. Client code may import `*/constants`, `*/types`, `*/dates`,
-    // `*.actions` (server-action boundary) and `auth-client` only.
+    // `*.actions` (server-action boundary), `auth-client` and pure
+    // `*-validation` modules (M5a: the profile form shares its validators
+    // with the server action; the next test keeps those modules pure) only.
     const violations: string[] = [];
     // Type-only imports are erased by the compiler and never bundle anything.
     const VALUE_IMPORT_RE = /^\s*import\s+(?!type\b)[^;]*?from\s+["']([^"']+)["']/gm;
@@ -103,8 +105,26 @@ describe("module boundaries", () => {
       for (const m of src.matchAll(VALUE_IMPORT_RE)) {
         const spec = m[1]!;
         const isModule = spec.startsWith("@/modules/") || spec.startsWith("@/db");
-        const allowed = /\/(constants|types|dates|actions|[a-z-]+\.actions|auth-client)$/.test(spec);
+        const allowed = /\/(constants|types|dates|actions|[a-z-]+\.actions|auth-client|[a-z-]+-validation)$/.test(spec);
         if (isModule && !allowed) violations.push(`${path.relative(ROOT, file)} → ${spec}`);
+      }
+    }
+    expect(violations, violations.join("\n")).toEqual([]);
+  });
+
+  it("`*-validation` modules stay pure: no value import of the database layer or a repository", () => {
+    // They are reachable from client components (previous test), so a value
+    // import of a repository would drag Prisma + pg into the browser bundle.
+    const violations: string[] = [];
+    const VALUE_IMPORT_RE = /^\s*import\s+(?!type\b)[^;]*?from\s+["']([^"']+)["']/gm;
+    for (const file of files) {
+      if (!/-validation\.tsx?$/.test(file)) continue;
+      const src = readFileSync(file, "utf8");
+      for (const m of src.matchAll(VALUE_IMPORT_RE)) {
+        const spec = m[1]!;
+        if (spec.startsWith("@/db") || /\.repository$/.test(spec) || /^\.\.?\/.*repository$/.test(spec) || spec === "./auth" || spec === "./session") {
+          violations.push(`${path.relative(ROOT, file)} → ${spec}`);
+        }
       }
     }
     expect(violations, violations.join("\n")).toEqual([]);

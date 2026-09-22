@@ -68,6 +68,7 @@ test.afterAll(async () => {
     const user = await prisma.user.findUnique({ where: { email: e.toLowerCase() }, select: { id: true } });
     if (user) {
       const orderIds = (await prisma.order.findMany({ where: { userId: user.id }, select: { id: true } })).map((o) => o.id);
+      await prisma.review.deleteMany({ where: { userId: user.id } }); // M5b: reviews restrict registrations
       await prisma.registration.deleteMany({ where: { orderId: { in: orderIds } } });
       await prisma.payment.deleteMany({ where: { orderId: { in: orderIds } } });
       await prisma.order.deleteMany({ where: { id: { in: orderIds } } });

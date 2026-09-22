@@ -68,6 +68,9 @@ test("every sidebar screen is served to a signed-in person with an h1", async ({
     expect(res?.status(), item.href).toBe(200);
     await expect(page).toHaveURL(new RegExp(`${item.href}$`)); // hrefs are plain /a/b paths
     await expect(page.getByRole("heading", { level: 1 }), item.href).toBeVisible();
+    // M5b: "Reviews" points at the public /reviews page, which has no account
+    // sidebar; every other item is a sidebar screen that marks itself current.
+    if (!item.href.startsWith("/account")) continue;
     // The sidebar marks exactly this screen as current.
     await expect(page.getByRole("navigation", { name: "Account" }).getByRole("link", { name: item.label, exact: true })).toHaveAttribute(
       "aria-current",

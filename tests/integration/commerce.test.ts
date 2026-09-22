@@ -166,6 +166,7 @@ afterAll(async () => {
   const registrationIds = (await prisma.registration.findMany({ where: { orderId: { in: orderIds } }, select: { id: true } })).map((r) => r.id);
   await prisma.$transaction([
     prisma.refund.deleteMany({ where: { id: { in: refundIds } } }),
+    prisma.review.deleteMany({ where: { userId: { in: createdUsers } } }), // M5b: reviews restrict registrations
     prisma.registration.deleteMany({ where: { id: { in: registrationIds } } }),
     prisma.payment.deleteMany({ where: { id: { in: paymentIds } } }),
     prisma.order.deleteMany({ where: { id: { in: orderIds } } }),

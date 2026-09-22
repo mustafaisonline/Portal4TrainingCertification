@@ -7,10 +7,11 @@ import { accountNavItems, isAccountItemActive } from "@/shared/chrome/account-na
  * asserted by tests/e2e/account.spec.ts.
  */
 describe("account navigation", () => {
-  it("every href is under /account with no trailing slash, and no duplicates", () => {
+  it("every href is under /account (or the public /reviews screen, M5b) with no trailing slash, and no duplicates", () => {
     for (const item of accountNavItems) {
-      expect(item.href, item.label).toMatch(/^\/account(?:\/[A-Za-z0-9-]+)*$/);
+      expect(item.href, item.label).toMatch(/^(?:\/account(?:\/[A-Za-z0-9-]+)*|\/reviews)$/);
     }
+    expect(accountNavItems.map((i) => i.href)).toContain("/reviews");
     expect(new Set(accountNavItems.map((i) => i.href)).size).toBe(accountNavItems.length);
     expect(new Set(accountNavItems.map((i) => i.label)).size).toBe(accountNavItems.length);
   });

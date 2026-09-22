@@ -107,7 +107,12 @@ export async function deleteTestUser(email: string): Promise<void> {
   const lower = email.toLowerCase();
   const user = await prisma.user.findUnique({ where: { email: lower }, select: { id: true } });
   if (user) {
+    // reviews.user_id restricts deletion of the user (M5b); a review's
+    // registration must already be gone (the commerce specs delete those).
+    const reviewIds = (await prisma.review.findMany({ where: { userId: user.id }, select: { id: true } })).map((r) => r.id);
     await prisma.$transaction([
+      prisma.auditLog.deleteMany({ where: { entityType: "review", entityId: { in: reviewIds } } }),
+      prisma.review.deleteMany({ where: { userId: user.id } }),
       // user_profiles.user_id restricts deletion of the user (M5a).
       prisma.userProfile.deleteMany({ where: { userId: user.id } }),
       prisma.consent.deleteMany({ where: { userId: user.id } }),

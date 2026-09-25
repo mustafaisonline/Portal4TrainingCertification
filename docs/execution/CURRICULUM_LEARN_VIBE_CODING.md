@@ -1,6 +1,7 @@
 # Learn VIBE CODING — Curriculum (half-day masterclass)
 
 > **Status: DRAFT v2 for founder review — 2026-09-26.** Rewritten from the founder's outline of 2026-09-26 after the founder fixed the length at **3–4 hours**. A record only: it authorises no portal change. When agreed it becomes a second programme in the catalogue (data, not schema; `programmes` + `programme_modules`), unlisted until the founder publishes it.
+> **Reflected in the catalogue seed 2026-09-26** (slug `learn-vibe-coding`, **published**, listed first on `/programs`; prices as the founder gave them — International USD 1,000 · Malaysia RM 100 · Pakistan Rs 5,000, no discount). The founder's outline items are carried as six curriculum modules (Parts 1–5 + the optional hands-on); C1 (certificate) and C4 (title/slug/formats) are implemented as recommended; C2, C3 (credit towards the 2-day fee) and C5 remain open.
 > **Relationship:** this is the **vibe-coding block of the 2-day "DATA BLUEPRINT & AI/VIBE CODING" programme**, taught on its own for people who already know their data foundations. The 2-day programme adds the data half and the full build-test-deploy of a product; this course shows the method and starts it.
 
 ## 1. Positioning

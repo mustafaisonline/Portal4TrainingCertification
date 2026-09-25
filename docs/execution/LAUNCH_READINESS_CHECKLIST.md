@@ -26,7 +26,7 @@
 | B16 | **Lift `noindex`** — `app/layout.tsx` `robots: { index: false, follow: false }` removed at cutover, not before | Agent on founder instruction | commit | **Open** (deliberate) | `app/layout.tsx`; `app/robots.ts` |
 | B17 | **Founder admin account** granted on production | Operator | `npm run admin:grant` output | **Open** | `scripts/grant-admin.ts` |
 | B18 | **Certificate issuer name and signatory confirmed** (M6 E12) | Founder | decision recorded | **Open** | M6 completion report |
-| B19 | **Dead links fixed** — `/certifications` is linked from `hrd-corp` and `courses/[slug]` but has no page; `/courses` index is linked as a fallback on the home page and does not exist | Founder decision → agent | links point at existing pages or the pages exist | **Open** | §4 |
+| B19 | **Dead links fixed** — `/certifications` is linked from `hrd-corp` and `programs/[slug]` but has no page. *(The `/courses` index fallback is resolved 2026-09-26: the home page links the `/programs` hub, and `/courses` → `/programs` redirects.)* | Founder decision → agent | links point at existing pages or the pages exist | **Open** (`/certifications` only) | §4 |
 | B20 | **Mockup archived** — `project-artifacts/mockup` (founder asked it to stay for comparison; archiving is a separate approved step) | Founder | decision | **Open** (default K1: untouched) | WIREFRAME_TO_PRODUCTION_PLAN §9 |
 | B21 | **Content-Security-Policy** report-only on staging (J8) | Founder decision → agent | header present in report-only; one clean week | **Open** — not a hard launch blocker; recommended | M9 plan §4 |
 
@@ -48,8 +48,8 @@ Every factual statement rendered on a public or auth route, where its value come
 
 | # | Route | Claim | Origin | Source / state |
 |---|---|---|---|---|
-| C6 | `/trainers`, `/courses/[slug]`, `/about-us` | "Mustafa Qizilbash · Founder & Lead Trainer"; "24+ years · enterprise data & AI"; "banking, energy, telecom and government" | seed `practitioners.ts` (from the founder's résumé — reference material) | **UNVERIFIED in specs — founder to confirm** the figure and sectors as of launch |
-| C7 | `/DataBlueprint-AIVibeCoding` | "24+ years … 40,000+ member Big Data community … 80+ episodes" | **code** (hardcoded in the page, duplicating seeded `communityImpact`) | **UNVERIFIED — founder to confirm**; also a drift risk: the page will not follow the database if the seed changes |
+| C6 | `/trainers`, `/programs/[slug]`, `/about-us` | "Mustafa Qizilbash · Founder & Lead Trainer"; "24+ years · enterprise data & AI"; "banking, energy, telecom and government" | seed `practitioners.ts` (from the founder's résumé — reference material) | **UNVERIFIED in specs — founder to confirm** the figure and sectors as of launch |
+| C7 | `/programs/data-blueprint-ai-vibe-coding` (was `/DataBlueprint-AIVibeCoding`) | "24+ years … 40,000+ member Big Data community … 80+ episodes" | **code** (hardcoded in the page, duplicating seeded `communityImpact`) | **UNVERIFIED — founder to confirm**; also a drift risk: the page will not follow the database if the seed changes |
 | C8 | `/trainers` | "1 trainer · founder-led today" | computed from the database | **Verified** (honest count) |
 | C9 | *(not rendered)* | Certifications (DAMA CDMP, CDGE, PMI…), education, books, employer achievements | seed | Seeded but **not shown** on any public page; no PhD claim anywhere. No action |
 
@@ -57,7 +57,11 @@ Every factual statement rendered on a public or auth route, where its value come
 
 | # | Route | Claim | Origin | Source / state |
 |---|---|---|---|---|
-| C10 | programme + course pages | Malaysia "RM 4,999 / ~~RM 9,999~~ · 50% OFF · you save RM 5,000" | seed `courses.ts` | Founder direction 2026-09-06 (inline note). **UNVERIFIED in specs — founder to confirm** |
+| C10 | flagship page (`/programs/data-blueprint-ai-vibe-coding`) | Malaysia "RM 4,999 / ~~RM 9,999~~ · 50% OFF · you save RM 5,000" | seed `courses.ts` | Founder direction 2026-09-06 (inline note). **UNVERIFIED in specs — founder to confirm** |
+| C10a | `/programs/learn-vibe-coding`, `/programs` | Learn Vibe Coding: Malaysia **RM 100** · Pakistan **Rs. 5,000** · International **USD 1,000**, labelled "Launch price", **no strike-through, no saving** (list = offer) | seed `courses.ts` | **Founder-given figures 2026-09-26, implemented as written.** Note for the founder: the USD figure is ten times the RM figure at market rates — confirm this gap is intended |
+| C10b | `/programs/learn-vibe-coding` | "Start freelancing straight after the session — you leave ready to start offering vibe-coding services as a freelancer or inside your team" + five capability bullets (no income claim) | seed `courses.ts` (`afterThisTraining`) | **Founder-directed 2026-09-26.** Soft outcome claim — review alongside C30/C31 against `/terms` §11 |
+| C10c | `/programs/learn-vibe-coding` | "Certificate of Completion on attending the full session"; "This is the vibe-coding half of the 2-day Data Blueprint & AI/Vibe Coding training, taught on its own" | seed `courses.ts` | Curriculum doc C1 recommendation implemented — **founder to confirm** a half-day earns a Certificate of Completion |
+| C10d | `/programs/learn-vibe-coding` | Curriculum module points (Parts 1–5 + optional hands-on) | seed `courses.ts` | Founder's list verbatim (chat, 2026-09-26; asterisks removed) — verified |
 | C11 | same | Pakistan "Rs. 102,839.86 / ~~Rs. 342,799.53~~ · 70% OFF" ("Regional scholarship") | seed | **UNVERIFIED — founder to confirm** |
 | C12 | same | International "USD 2,811 / ~~USD 3,124~~ · 10% OFF" | seed | **UNVERIFIED — founder to confirm** |
 | C13 | same | Value stack "Total value RM 14,498+" (7 items incl. "PromptOS Starter Edition RM 1,500+") | seed | Arithmetic consistent; component values **UNVERIFIED — founder to confirm** |
@@ -80,7 +84,7 @@ Every factual statement rendered on a public or auth route, where its value come
 |---|---|---|---|---|
 | C21 | `/faq` | "active for 12 months from issue … renew each year for a fee — currently USD 10" | seed `faq.ts` | CCR R-F7; APR; fee seeded USD 10.00 — **Verified** (the amount is read from the fee table at checkout; the FAQ sentence is a snapshot the founder must update if the fee changes) |
 | C22 | `/verify`, `/verify/[id]` | "confirms Certificates of Completion. It is **not** the Academy's earned credential" | code | CCR; DR-02 — **Verified** |
-| C23 | `/courses/[slug]` | "This course awards a **certificate of participation**" | seed `courses.ts` (`certificate:` field) | **Inconsistent** with "Certificate of Completion" everywhere else — **founder to choose one term; seed change** |
+| C23 | `/programs/[slug]` (flagship seed only; Learn Vibe Coding says "Certificate of Completion") | "This course awards a **certificate of participation**" | seed `courses.ts` (`certificate:` field) | **Inconsistent** with "Certificate of Completion" everywhere else — **founder to choose one term; seed change** |
 | C24 | `/terms` §11 | "not a professional licence, an academic qualification or a guarantee of employment" | content | **Verified** — and contradicted by C27 |
 
 ### 2.6 Company, contact
@@ -97,14 +101,14 @@ Every factual statement rendered on a public or auth route, where its value come
 |---|---|---|---|---|
 | C27a | `/`, `/about-us` | "Live means live … never watching a recording"; expert-led delivery at your location incl. outside Malaysia | code | DR-02 §1–2 — **Verified** |
 | C27b | course, schedule, checkout | Bootcamp 2 days × 8 h = 16 h · Accelerator 10 days × 2 h = 20 h · Mastery 20 days × 1 h = 20 h | seed `courses.ts` | Consistent with the FAQ; **UNVERIFIED in specs — founder to confirm** |
-| C27c | `/courses/[slug]` | "All formats cover the same curriculum, learning outcomes, exercises and certification requirements" | code | **UNVERIFIED — founder to confirm** |
+| C27c | `/programs/[slug]` and the flagship page (shared `DeliveryFormats`) | "All formats cover the same curriculum, learning outcomes, exercises and certification requirements" | code | **UNVERIFIED — founder to confirm** |
 
 ### 2.8 Outcome and guarantee claims — highest risk
 
 | # | Route | Claim | Origin | Source / state |
 |---|---|---|---|---|
 | C27 | **`/` hero** | **"1–2 top candidates will be brought to Malaysia for job opportunities."** | code `HomeHero.tsx` (comment: "an open policy commitment, not yet backed by terms") | **UNVERIFIED — no spec, no terms; contradicts `/terms` §11. Founder must back it with terms or remove it before launch** |
-| C28 | `/DataBlueprint-AIVibeCoding` | "a company's workflow that used to take 25 people now runs on 5" | code | **UNVERIFIED** — unnamed client, no evidence on file. **Founder to substantiate or remove** |
+| C28 | `/programs/data-blueprint-ai-vibe-coding` | "a company's workflow that used to take 25 people now runs on 5" | code | **UNVERIFIED** — unnamed client, no evidence on file. **Founder to substantiate or remove** |
 | C29 | same | "exposed to 10–15 real frameworks" | code | **UNVERIFIED** (BP's "10–15" refers to diagnostic minutes) |
 | C30 | same | "Designed to lead to paid work"; "Freelance-ready from day one … real client work immediately"; "visibility with the practitioner network behind this Academy" | code | **UNVERIFIED**; soft outcome promises; the network is one trainer today (C8). **Founder to review against `/terms` §11** |
 | C31 | `/` hero | "Start Freelance Right After Training"; "Practical skills for a brighter tomorrow" | code | Marketing tone; note adjacency to C27 — **founder to review** |
@@ -125,19 +129,28 @@ Audit of `app/` and `src/` for `Wireframe`, `WireframeNote`, `SAMPLE`, `Mockup`,
 
 ## 4. Redirect table — mockup paths that differ (M10 §1.4)
 
-The mockup was served under `basePath` `/Portal4TrainingCertification` on a different origin; production has no basePath. When the domain exists, these are the only paths where an old link would not land on the same page. Redirects are **not** configured until the founder decides which (a `redirects()` entry in `next.config.ts`, or nothing if the mockup origin is simply retired).
+The mockup was served under `basePath` `/Portal4TrainingCertification` on a different origin; production has no basePath. When the domain exists, these are the only paths where an old link would not land on the same page. Mockup-path redirects are **not** configured until the founder decides which (a `redirects()` entry in `next.config.ts`, or nothing if the mockup origin is simply retired).
+
+**Configured 2026-09-26** (founder: catalogue renamed to `/programs` / "Trainings") — permanent (308) redirects in `next.config.ts` `redirects()`:
+
+| Old production path | Now | Status |
+|---|---|---|
+| `/DataBlueprint-AIVibeCoding` | `/programs/data-blueprint-ai-vibe-coding` (the flagship's page; bespoke landing kept) | **Configured**, asserted in `tests/e2e/trainings.spec.ts` |
+| `/courses` | `/programs` | **Configured** |
+| `/courses/:slug` | `/programs/:slug` | **Configured**, asserted in `tests/e2e/trainings.spec.ts` |
 
 | Mockup path | Production | Proposed action |
 |---|---|---|
 | `/Portal4TrainingCertification/*` (basePath prefix) | `/*` | If the mockup origin ever points at production: strip the prefix with one wildcard redirect (301) |
-| `/certifications` | **no page** (also linked from two production pages — B19) | Founder decision: create the page, or redirect to `/DataBlueprint-AIVibeCoding` and fix the two links |
+| `/certifications` | **no page** (also linked from two production pages — B19) | Founder decision: create the page, or redirect to `/programs` and fix the two links |
 | `/journey-placeholder` | no page (mockup scaffolding) | 404 — nothing to preserve |
 | `/checkout` (index) and `/checkout/confirmation` | `/checkout/[offeringId]`; confirmation is `/account/orders/[id]` via `?order=` | 301 `/checkout` → `/schedule`; `/checkout/confirmation` → `/account/orders` |
 | `/account/certificate/renew` | renewal is started from `/account/certificate` | 301 → `/account/certificate` |
 | `/account/programmes/[id]`, `/account/orders/[id]` | `/account/programmes`, `/account/orders` (detail routes not ported / different) | 301 to the list pages |
 | `/admin/emails`, `/admin/organisations`, `/admin/participants[/id]`, `/admin/programme`, `/admin/registrations`, `/admin/settings` | not ported (M8 scope differs: `/admin/reviews`, `/admin/users`, `/admin/enquiries`, `/admin/orders`, `/admin/reports`, `/admin/audit`, `/admin/certificates`) | 301 → `/admin`; behind the admin gate anyway |
-| `/courses` (index) | no page; home links to it as a fallback (B19) | Founder decision: add an index or redirect to `/DataBlueprint-AIVibeCoding` |
-| *(same path)* everything else in `site-nav.ts`, `/verify/[id]`, `/courses/[slug]`, auth routes | identical | none |
+| `/courses` (index) | `/programs` (redirect configured 2026-09-26, see above) | Done |
+| `/courses/[slug]` | `/programs/[slug]` (redirect configured 2026-09-26) | Done |
+| *(same path)* everything else in `site-nav.ts`, `/verify/[id]`, auth routes | identical | none |
 
 Production-only additions with no mockup counterpart (no redirect needed): `/reviews`, `/domains[/id]`, `/reset-password`, `/verify-email`, `/account/security`, `/admin/certificates/fee`, `/admin/offerings/new`, `/admin/offerings/[id]/participants`, `/api/*`, `/robots.txt`, `/sitemap.xml`.
 

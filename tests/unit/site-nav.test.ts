@@ -25,7 +25,19 @@ describe("site navigation", () => {
     expect(isActive("/trainers", "/")).toBe(false);
     expect(isActive("/trainers/", "/trainers")).toBe(true);
     expect(isActive("/trainers/jane", "/trainers")).toBe(true);
-    expect(isActive("/courses/anything", "/DataBlueprint-AIVibeCoding")).toBe(true);
+    // 2026-09-26: the "Trainings" item is current on the hub and every training page.
+    expect(isActive("/programs", "/programs")).toBe(true);
+    expect(isActive("/programs/learn-vibe-coding", "/programs")).toBe(true);
+    expect(isActive("/programmes-other", "/programs")).toBe(false);
     expect(isActive("/about-us", "/trainers")).toBe(false);
+  });
+
+  it("the catalogue item is 'Trainings' at /programs in the header and the footer (founder, 2026-09-26)", () => {
+    expect(primaryNav).toContainEqual({ href: "/programs", label: "Trainings" });
+    expect(footerExplore).toContainEqual({ href: "/programs", label: "Trainings" });
+    for (const item of [...primaryNav, ...footerExplore]) {
+      expect(item.label, item.href).not.toMatch(/^(Programme|Courses)$/);
+      expect(item.href).not.toMatch(/DataBlueprint-AIVibeCoding|^\/courses/);
+    }
   });
 });

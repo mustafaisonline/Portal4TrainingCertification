@@ -62,7 +62,7 @@ async function expectValidationError(fn: () => Promise<unknown>, field: keyof Of
 
 beforeAll(async () => {
   const flagshipSlug = courses.find((c) => c.flagship)!.slug;
-  const unlistedSlug = courses.find((c) => !c.flagship)!.slug;
+  const unlistedSlug = courses.find((c) => !c.flagship && c.status !== "published")!.slug;
   flagship = (await findProgrammeBySlug(flagshipSlug))!;
   unlisted = (await findProgrammeBySlug(unlistedSlug))!;
   expect(flagship.deliveryFormats.length).toBeGreaterThan(0);

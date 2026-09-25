@@ -25,14 +25,17 @@ import { uniqueEmail } from "../helpers/identity-db";
  */
 const prisma = getPrisma();
 const flagshipSeed = courses.find((c) => c.flagship)!;
-const unlistedSeed = courses.find((c) => !c.flagship)!;
+// Published = the flagship plus any entry that states `status: "published"`
+// (Learn Vibe Coding, 2026-09-26), in seed order; everything else is unlisted.
+const publishedSeeds = courses.filter((c) => c.flagship || c.status === "published");
+const unlistedSeed = courses.find((c) => !c.flagship && c.status !== "published")!;
 
 afterAll(async () => {
   await disconnectPrisma();
 });
 
 describe("programmes", () => {
-  it("the flagship is the only published programme and carries its full content", async () => {
+  it("the published programmes are exactly the seed's published entries, in order; the flagship carries its full content", async () => {
     const flagship = await findFlagshipProgramme();
     expect(flagship).not.toBeNull();
     expect(flagship!.slug).toBe(flagshipSeed.slug);
@@ -43,7 +46,28 @@ describe("programmes", () => {
     expect(flagship!.experts.length).toBeGreaterThan(0);
 
     const published = await listPublishedProgrammes();
-    expect(published.map((p) => p.slug)).toEqual([flagshipSeed.slug]);
+    expect(published.map((p) => p.slug)).toEqual(publishedSeeds.map((c) => c.slug));
+    expect(published.map((p) => p.slug)).toEqual(["learn-vibe-coding", flagshipSeed.slug]);
+  });
+
+  it("Learn Vibe Coding (2026-09-26) is published, not the flagship, priced without a discount, and carries the new sections", async () => {
+    const seed = courses.find((c) => c.slug === "learn-vibe-coding")!;
+    const row = await findPublishedProgrammeBySlug("learn-vibe-coding");
+    expect(row).not.toBeNull();
+    expect(row!.flagship).toBe(false);
+    expect(row!.title).toBe(seed.title);
+    expect(row!.modules.map((m) => m.title)).toEqual(seed.modules.map((m) => m.title));
+    expect(row!.modules).toHaveLength(6);
+    expect(row!.content.relationshipNote).toBe(seed.relationshipNote);
+    expect(row!.content.afterThisTraining).toEqual(seed.afterThisTraining);
+    expect(row!.content.faq).toEqual(seed.faq);
+    expect(row!.content.related).toEqual([flagshipSeed.slug]);
+    for (const p of row!.prices) {
+      expect(p.listAmountMinor, p.region).toBe(p.offerAmountMinor);
+      expect(formatMoney(p.offerAmountMinor, p.currency)).toBe(seed.pricing![p.region].today);
+    }
+    expect(row!.prices.map((p) => formatMoney(p.offerAmountMinor, p.currency))).toEqual(["RM 100", "Rs. 5,000", "USD 1,000"]);
+    expect(row!.experts.length).toBeGreaterThan(0);
   });
 
   it("prices render exactly as published", async () => {

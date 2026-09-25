@@ -375,10 +375,12 @@ describe("reports equal direct aggregates on the same rows (plan §4 criterion 4
   it("last job run reads the newest job.run audit row, or null", async () => {
     const jobId = `m8-test-job-${run}`;
     expect(await lastJobRun(jobId)).toBeNull();
-    await withTransaction(async (tx) => {
-      await writeAudit(tx, { actorUserId: null, action: "job.run", entityType: "job", entityId: jobId, after: { queued: 1 } });
-      await writeAudit(tx, { actorUserId: null, action: "job.run", entityType: "job", entityId: jobId, after: { queued: 2 } });
-    });
+    // Two runs = two transactions, as the reminders job writes them. In ONE
+    // transaction both rows would share PostgreSQL's transaction timestamp
+    // and "newest" would be a coin toss.
+    await withTransaction((tx) => writeAudit(tx, { actorUserId: null, action: "job.run", entityType: "job", entityId: jobId, after: { queued: 1 } }));
+    await new Promise((r) => setTimeout(r, 5));
+    await withTransaction((tx) => writeAudit(tx, { actorUserId: null, action: "job.run", entityType: "job", entityId: jobId, after: { queued: 2 } }));
     try {
       const run2 = await lastJobRun(jobId);
       expect(run2?.after).toEqual({ queued: 2 });

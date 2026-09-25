@@ -29,18 +29,16 @@ test("programme page renders the flagship from the database", async ({ page }) =
   const flagship = await findFlagshipProgramme();
   expect(flagship, "seeded flagship").not.toBeNull();
 
-  await page.goto("/DataBlueprint-AIVibeCoding");
+  // 2026-09-26: the flagship's bespoke landing is served at its /programs
+  // page and now also carries the delivery formats (formerly on the generic
+  // detail template only).
+  await page.goto(`/programs/${flagship!.slug}`);
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   const body = await page.locator("body").innerText();
   for (const m of flagship!.modules) expect(body, `module ${m.position}`).toContain(m.title);
   const my = flagship!.prices.find((p) => p.region === "malaysia")!;
   expect(body).toContain(formatMoney(my.offerAmountMinor, my.currency));
-  await expectNoAxeViolations(page);
-
-  // Delivery formats live on the detail template (as in the wireframe).
-  await page.goto(`/courses/${flagship!.slug}`);
-  const detail = await page.locator("body").innerText();
-  for (const f of flagship!.deliveryFormats) expect(detail, `format ${f.code}`).toContain(f.name);
+  for (const f of flagship!.deliveryFormats) expect(body, `format ${f.code}`).toContain(f.name);
   await expectNoAxeViolations(page);
 });
 
@@ -49,12 +47,13 @@ test("an unlisted programme is a real 404; the published one is served", async (
   const { getPrisma } = await import("../../src/db/prisma");
   const unlisted = await getPrisma().programme.findFirst({ where: { status: "unlisted" }, select: { slug: true } });
   expect(unlisted).not.toBeNull();
-  expect((await page.goto(`/courses/${unlisted!.slug}`))?.status()).toBe(404);
+  expect((await page.goto(`/programs/${unlisted!.slug}`))?.status()).toBe(404);
 
   const flagship = (await findFlagshipProgramme())!;
-  expect((await page.goto(`/courses/${flagship.slug}`))?.status()).toBe(200);
-  await expect(page.getByRole("heading", { level: 1 })).toContainText(flagship.title);
-  expect((await listPublishedProgrammes()).length).toBe(1);
+  expect((await page.goto(`/programs/${flagship.slug}`))?.status()).toBe(200);
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  // Two trainings are published since 2026-09-26 (Learn Vibe Coding + the flagship).
+  expect((await listPublishedProgrammes()).length).toBe(2);
 });
 
 test("schedule shows the honest no-dates state and a register-interest path", async ({ page }) => {

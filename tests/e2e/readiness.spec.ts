@@ -91,7 +91,7 @@ test("/robots.txt allows the public surface and disallows the private areas", as
   expect(text).toMatch(/Sitemap:\s*https?:\/\/[^\s]+\/sitemap\.xml/);
 });
 
-test("/sitemap.xml lists the navigation pages and the published programme only", async ({ request, baseURL }) => {
+test("/sitemap.xml lists the navigation pages and the published programmes only", async ({ request, baseURL }) => {
   const res = await request.get("/sitemap.xml");
   expect(res.status()).toBe(200);
   const xml = await res.text();
@@ -100,13 +100,16 @@ test("/sitemap.xml lists the navigation pages and the published programme only",
     const loc = `${baseURL}${href === "/" ? "" : href}`;
     expect(xml, href).toContain(`<loc>${loc}</loc>`);
   }
-  const { findFlagshipProgramme } = await import("../../src/modules/catalogue/programmes/repository");
+  const { listPublishedProgrammes } = await import("../../src/modules/catalogue/programmes/repository");
   const { getPrisma, disconnectPrisma } = await import("../../src/db/prisma");
-  const flagship = await findFlagshipProgramme();
-  expect(flagship).not.toBeNull();
-  expect(xml).toContain(`<loc>${baseURL}/courses/${flagship!.slug}</loc>`);
+  const published = await listPublishedProgrammes();
+  expect(published.length).toBeGreaterThan(0);
+  expect(xml).toContain(`<loc>${baseURL}/programs</loc>`);
+  for (const p of published) expect(xml, p.slug).toContain(`<loc>${baseURL}/programs/${p.slug}</loc>`);
   const unlisted = await getPrisma().programme.findFirst({ where: { status: "unlisted" }, select: { slug: true } });
-  if (unlisted) expect(xml).not.toContain(`/courses/${unlisted.slug}<`);
+  if (unlisted) expect(xml).not.toContain(`/programs/${unlisted.slug}<`);
+  expect(xml).not.toContain("/courses/");
+  expect(xml).not.toContain("/DataBlueprint-AIVibeCoding");
   // Private areas never appear.
   for (const p of ["/account", "/admin", "/api", "/checkout", "/sign-in"]) expect(xml).not.toContain(`<loc>${baseURL}${p}`);
   await disconnectPrisma();

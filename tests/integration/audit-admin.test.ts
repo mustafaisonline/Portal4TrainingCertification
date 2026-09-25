@@ -30,15 +30,26 @@ beforeAll(async () => {
   other = await prisma.user.create({ data: { email: b, name: "Audit Other", country: "Malaysia" }, select: { id: true, email: true } });
 
   firstCreated = new Date();
+  // `created_at` is stamped by Prisma at millisecond resolution; rows written
+  // back-to-back can tie and then sort by their random id. Real audit rows for
+  // one entity are never written within the same millisecond, so the fixture
+  // simply spaces them out to keep "newest first" deterministic.
+  const tick = () => new Promise((r) => setTimeout(r, 2));
   // 3 rows on entity A by the actor, 1 by the other person, 1 by the system.
   await writeAudit(prisma, { actorUserId: actor.id, action: "role.granted", entityType: "m8test", entityId: entityA, after: { role: "platform_admin" } });
+  await tick();
   await writeAudit(prisma, { actorUserId: actor.id, action: "role.revoked", entityType: "m8test", entityId: entityA, before: { role: "platform_admin" }, reason: "why" });
+  await tick();
   await writeAudit(prisma, { actorUserId: actor.id, action: "profile.updated", entityType: "m8test", entityId: entityA, after: { changed: ["city"] } });
+  await tick();
   await writeAudit(prisma, { actorUserId: other.id, action: "profile.updated", entityType: "m8test", entityId: entityA });
+  await tick();
   await writeAudit(prisma, { actorUserId: null, action: "job.run", entityType: "m8test", entityId: entityA, after: { queued: 0 } });
+  await tick();
   // AUDIT_PAGE_SIZE + 5 rows on entity B for pagination.
   for (let i = 0; i < AUDIT_PAGE_SIZE + 5; i++) {
     await writeAudit(prisma, { actorUserId: actor.id, action: "job.run", entityType: "m8test-b", entityId: entityB, after: { i } });
+    await tick();
   }
   lastCreated = new Date();
 });

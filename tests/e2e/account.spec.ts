@@ -115,7 +115,8 @@ test("dashboard greets the person by name and shows the flagship from the databa
 
   await expect(page.getByTestId("welcome")).toHaveText("Welcome, Dana Dashboard");
   await expect(page.getByTestId("flagship-title")).toHaveText(flagship!.title);
-  await expect(page.getByRole("link", { name: "View the programme" })).toHaveAttribute("href", "/DataBlueprint-AIVibeCoding");
+  // 2026-09-26: "View the training" deep-links the flagship's /programs page.
+  await expect(page.getByRole("link", { name: "View the training" })).toHaveAttribute("href", `/programs/${flagship!.slug}`);
   await expect(page.getByRole("link", { name: "Register interest" })).toHaveAttribute(
     "href",
     `/contact-us?kind=programme_interest&programme=${flagship!.slug}`,
@@ -128,6 +129,8 @@ test("dashboard greets the person by name and shows the flagship from the databa
 
   await page.goto("/account/programme");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(flagship!.title);
+  // The sidebar item is "Trainings" (founder, 2026-09-26) and is current here.
+  await expect(page.getByRole("navigation", { name: "Account" }).getByRole("link", { name: "Trainings", exact: true })).toHaveAttribute("aria-current", "page");
   const body = await page.locator("body").innerText();
   for (const f of flagship!.deliveryFormats) expect(body, `format ${f.code}`).toContain(f.name);
   await expectNoAxeViolations(page);

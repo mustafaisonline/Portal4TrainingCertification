@@ -60,7 +60,8 @@ const PROGRAMME_DOMAIN: Record<string, string> = {
   "enterprise-data-modelling": "DF",
   "enterprise-data-architecture": "DE",
   "agentic-ai-strategy-adoption": "AI",
-  "ai-powered-product-development": "AI",
+  "learn-vibe-coding": "AI",
+  "data-blueprint-ai-vibe-coding": "AI",
   "data-ai-career-mentorship": "AI",
 };
 
@@ -81,6 +82,18 @@ function levelOf(c: Course) {
 
 async function seedProgrammes(domainIds: Map<string, string>): Promise<Map<string, string>> {
   const ids = new Map<string, string>();
+
+  // 2026-09-26, founder direction: the flagship's slug changed from
+  // `ai-powered-product-development` to `data-blueprint-ai-vibe-coding`.
+  // The upsert below keys on slug, so without this pre-step a re-seed would
+  // CREATE a second flagship row and orphan the original (which orders,
+  // registrations and certificates reference by id). Renaming in place keeps
+  // the row id; idempotent — a no-op once no row carries the old slug.
+  await prisma.programme.updateMany({
+    where: { slug: "ai-powered-product-development" },
+    data: { slug: "data-blueprint-ai-vibe-coding" },
+  });
+
   for (const [index, c] of courses.entries()) {
     const domainCode = PROGRAMME_DOMAIN[c.slug];
     const domainId = domainCode ? domainIds.get(domainCode) : undefined;
@@ -101,6 +114,9 @@ async function seedProgrammes(domainIds: Map<string, string>): Promise<Map<strin
       valueStackTotal: c.valueStackTotal,
       related: c.related,
       externalResources: c.externalResources,
+      relationshipNote: c.relationshipNote,
+      afterThisTraining: c.afterThisTraining,
+      faq: c.faq,
       ...(c.slug === "data-ai-career-mentorship" ? { mentorshipPackages } : {}),
     };
     const data = {
@@ -108,7 +124,9 @@ async function seedProgrammes(domainIds: Map<string, string>): Promise<Map<strin
       title: c.title,
       subtitle: c.subtitle,
       level: levelOf(c),
-      status: c.flagship ? ("published" as const) : ("unlisted" as const),
+      // Plan §10.1 default (flagship published, the rest unlisted) unless the
+      // seed entry states its own visibility (Learn Vibe Coding, 2026-09-26).
+      status: c.status ?? (c.flagship ? ("published" as const) : ("unlisted" as const)),
       flagship: c.flagship === true,
       durationLabel: c.duration,
       prerequisites: c.prerequisites,

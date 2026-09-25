@@ -40,6 +40,14 @@ export type ProgrammeContent = {
   related: string[];
   externalResources?: { label: string; url: string; description: string }[];
   mentorshipPackages?: MentorshipPackage[];
+  /* Optional editorial sections added 2026-09-26 for the Learn Vibe Coding
+   * training (founder request). Each renders only when present. */
+  /** One sentence placing this training relative to another (shown under the hero proposition). */
+  relationshipNote?: string;
+  /** "What you can do straight after" — a founder-directed outcomes block. */
+  afterThisTraining?: { heading: string; intro: string; items: string[] };
+  /** Questions and answers rendered as native <details>. */
+  faq?: { q: string; a: string }[];
 };
 
 export type ProgrammeModuleRecord = {

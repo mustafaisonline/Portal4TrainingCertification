@@ -22,6 +22,20 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
 
   /*
+   * Permanent redirects (308) from the routes retired 2026-09-26 when the
+   * founder renamed the public catalogue to /programs ("Trainings"): the old
+   * flagship URL and the generic /courses/<slug> detail path. Kept so any
+   * link already shared keeps resolving (LAUNCH_READINESS_CHECKLIST §4).
+   */
+  async redirects() {
+    return [
+      { source: "/DataBlueprint-AIVibeCoding", destination: "/programs/data-blueprint-ai-vibe-coding", permanent: true },
+      { source: "/courses", destination: "/programs", permanent: true },
+      { source: "/courses/:slug", destination: "/programs/:slug", permanent: true },
+    ];
+  },
+
+  /*
    * Security headers (MILESTONE_9_EXECUTION_PLAN.md §2 item 2; default H2 —
    * no Content-Security-Policy yet, see plan §4 J8). Rules are applied in
    * order and a later rule overrides an earlier one for the same header key

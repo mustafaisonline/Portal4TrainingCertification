@@ -60,7 +60,7 @@ export default async function AccountPage() {
           </h2>
           <p className="text-body-sm mb-6 max-w-[60ch] text-[var(--color-ink-quiet)]">{flagship.summary}</p>
           <div className="flex flex-wrap gap-3">
-            <Button href="/DataBlueprint-AIVibeCoding">View the programme</Button>
+            <Button href={`/programs/${flagship.slug}`}>View the training</Button>
             <Button variant="secondary" href={interestHref}>
               Register interest
             </Button>

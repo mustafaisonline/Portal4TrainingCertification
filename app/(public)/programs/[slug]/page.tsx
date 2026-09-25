@@ -13,11 +13,13 @@ import {
   TeachingDetailIllustration,
 } from "@/shared/marketing/DeliveryIllustrations";
 import { CourseCard } from "@/shared/marketing/CourseCard";
+import { DeliveryFormats } from "@/shared/marketing/DeliveryFormats";
 import { TrainerCard } from "@/shared/marketing/TrainerCard";
 import { ProgrammePricing } from "@/shared/marketing/ProgrammePricing";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { Chip } from "@/shared/ui/Chip";
+import { FlagshipLanding } from "./FlagshipLanding";
 
 /*
  * PORTED 2026-09-21 from project-artifacts/mockup/app/courses/[slug]/page.tsx
@@ -30,6 +32,15 @@ import { Chip } from "@/shared/ui/Chip";
  * `PublicShell` wrapper is gone; "Register your interest" carries the
  * programme slug into the enquiry form. Copy, structure and classes are
  * otherwise unchanged.
+ *
+ * MOVED 2026-09-26 from app/(public)/courses/[slug]/page.tsx (founder:
+ * "/DataBlueprint-AIVibeCoding → /programs", "Programme → Trainings"). This
+ * is now the training detail page under the /programs hub. When the resolved
+ * programme is the flagship, the bespoke landing (./FlagshipLanding.tsx —
+ * the former /DataBlueprint-AIVibeCoding page) renders instead of this
+ * template. New optional content sections — `relationshipNote`,
+ * `afterThisTraining`, `faq` — render only when a programme publishes them
+ * (first: Learn Vibe Coding). The hero gained "See upcoming dates".
  *
  * Course detail — the P10 Course Detail realization.
  *
@@ -51,7 +62,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const course = await findPublishedProgrammeBySlug(slug);
-  return { title: course ? course.title : "Course" };
+  return { title: course ? course.title : "Training" };
 }
 
 export default async function CourseDetailPage({
@@ -68,6 +79,12 @@ export default async function CourseDetailPage({
     listPublishedProgrammesBySlugs(content.related),
     listPublishedExperts(),
   ]);
+
+  // The founder-designated flagship keeps its bespoke single-proposition
+  // landing (resolved by the row's `flagship` flag, not by slug — ADR-023).
+  if (course.flagship) {
+    return <FlagshipLanding programme={course} experts={experts} />;
+  }
   // The programme's delivering expert, with the full published profile
   // (the programme record carries only a summary).
   const founder =
@@ -99,10 +116,10 @@ export default async function CourseDetailPage({
         />
         <div className="relative mx-auto max-w-[1280px] px-6 py-14 lg:py-16">
           <Link
-            href="/DataBlueprint-AIVibeCoding"
+            href="/programs"
             className="text-body-sm mb-7 inline-block py-2 text-[var(--color-ink-quiet)] underline underline-offset-4 hover:text-[var(--color-ink)]"
           >
-            ← All courses
+            ← All trainings
           </Link>
           <div className="mb-5 flex flex-wrap items-center gap-2">
             <Chip tone="primary">{levelLabel(course.level)}</Chip>
@@ -111,11 +128,22 @@ export default async function CourseDetailPage({
           <h1 className="text-display-lg mb-4 max-w-[820px]">
             {course.title}
           </h1>
-          <p className="text-body-lg mb-8 max-w-[640px] text-[var(--color-ink-quiet)]">
+          <p className="text-body-lg mb-5 max-w-[640px] text-[var(--color-ink-quiet)]">
             {course.valueProposition}
           </p>
+          {content.relationshipNote && (
+            <p
+              data-testid="relationship-note"
+              className="text-body-sm mb-8 max-w-[640px] border-l-2 border-[var(--color-primary)] pl-4 text-[var(--color-ink-quiet)]"
+            >
+              {content.relationshipNote}
+            </p>
+          )}
           <div className="mb-10 flex flex-wrap items-center gap-4">
             <Button href={enquiryHref}>Register your interest</Button>
+            <Button variant="secondary" href="/schedule">
+              See upcoming dates
+            </Button>
             <Button variant="secondary" href="#investment">
               See the investment
             </Button>
@@ -223,57 +251,8 @@ export default async function CourseDetailPage({
         </div>
       </section>
 
-      {/* ===== Delivery formats (flagship) ===== */}
-      {course.deliveryFormats.length > 0 && (
-        <section className="mx-auto max-w-[1280px] px-6 py-16">
-          <p className="text-label mb-3 text-[var(--color-primary)]">
-            Choose your pace
-          </p>
-          <h2 className="text-display mb-4">Flexible learning formats</h2>
-          <p className="text-body-lg mb-10 max-w-[680px] text-[var(--color-ink-quiet)]">
-            All formats cover the same curriculum, learning outcomes,
-            exercises and certification requirements. The only difference is
-            the pace of delivery.
-          </p>
-          <div className="grid gap-6 lg:grid-cols-3">
-            {course.deliveryFormats.map((format) => (
-              <Card key={format.code} variant="panel" className="flex flex-col">
-                {format.badge && (
-                  <p className="text-label mb-3 text-[var(--color-primary)]">
-                    {format.badge}
-                  </p>
-                )}
-                <h3 className="text-h2 mb-4">{format.name}</h3>
-                <dl className="mb-5 flex flex-col gap-1.5 border-y border-[var(--color-line)] py-4">
-                  {[
-                    ["Duration", format.durationLabel],
-                    ["Schedule", format.scheduleLabel],
-                    ["Total time", format.totalTimeLabel],
-                  ].map(([k, v]) => (
-                    <div key={k} className="flex gap-3">
-                      <dt className="text-label w-[80px] shrink-0">{k}</dt>
-                      <dd className="text-body-sm text-[var(--color-ink-quiet)]">
-                        {v}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-                <p className="text-label mb-2">Best for</p>
-                <ul className="flex flex-col gap-1.5">
-                  {format.bestFor.map((b) => (
-                    <li
-                      key={b}
-                      className="text-body-sm text-[var(--color-ink-quiet)]"
-                    >
-                      {b}
-                    </li>
-                  ))}
-                </ul>
-              </Card>
-            ))}
-          </div>
-        </section>
-      )}
+      {/* ===== Delivery formats ===== (shared with the flagship landing) */}
+      <DeliveryFormats formats={course.deliveryFormats} />
 
       {/* ===== Learning outcomes ===== */}
       {(content.outcomes || content.outcomeGroups) && (
@@ -316,6 +295,38 @@ export default async function CourseDetailPage({
               ))}
             </ul>
           )}
+        </section>
+      )}
+
+      {/* ===== After this training — founder-directed block (2026-09-26),
+          e.g. Learn Vibe Coding's "Start freelancing straight after the
+          session". Factual capabilities only; no income claim. ===== */}
+      {content.afterThisTraining && (
+        <section
+          id="after-this-training"
+          className="border-t border-[var(--color-line)] bg-[var(--color-ground-tint)]"
+        >
+          <div className="mx-auto max-w-[1280px] px-6 py-16">
+            <p className="text-label mb-3 text-[var(--color-primary)]">
+              After this training
+            </p>
+            <h2 className="text-display mb-5 max-w-[640px]">
+              {content.afterThisTraining.heading}
+            </h2>
+            <p className="text-body-lg mb-8 max-w-[680px] text-[var(--color-ink-quiet)]">
+              {content.afterThisTraining.intro}
+            </p>
+            <ul className="grid gap-x-10 sm:grid-cols-2">
+              {content.afterThisTraining.items.map((item) => (
+                <li
+                  key={item}
+                  className="border-t border-[var(--color-line)] py-3.5 text-body-sm text-[var(--color-ink-quiet)]"
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
         </section>
       )}
 
@@ -578,6 +589,33 @@ export default async function CourseDetailPage({
         </Card>
       </section>
 
+      {/* ===== FAQ (2026-09-26) — native <details>, same disclosure pattern
+          as the curriculum; no client JS. ===== */}
+      {content.faq && content.faq.length > 0 && (
+        <section id="faq" className="mx-auto max-w-[1280px] scroll-mt-24 px-6 pb-16">
+          <p className="text-label mb-3 text-[var(--color-primary)]">
+            Questions
+          </p>
+          <h2 className="text-display mb-8">Frequently asked</h2>
+          <div className="max-w-[860px]">
+            {content.faq.map((item) => (
+              <details key={item.q} className="group border-t border-[var(--color-line)]">
+                <summary className="flex cursor-pointer list-none items-baseline gap-5 py-4 hover:text-[var(--color-primary)] [&::-webkit-details-marker]:hidden">
+                  <span className="flex-1 font-semibold">{item.q}</span>
+                  <span
+                    aria-hidden="true"
+                    className="text-[var(--color-ink-faint)] transition-transform group-open:rotate-45"
+                  >
+                    +
+                  </span>
+                </summary>
+                <p className="text-body-sm pb-5 pr-4 text-[var(--color-ink-quiet)]">{item.a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* ===== External resources ===== */}
       {content.externalResources && (
         <section className="mx-auto max-w-[1280px] px-6 pb-16">
@@ -609,7 +647,7 @@ export default async function CourseDetailPage({
       {related.length > 0 && (
         <section className="border-t border-[var(--color-line)]">
           <div className="mx-auto max-w-[1280px] px-6 py-16">
-            <h2 className="text-h1 mb-8">Related courses</h2>
+            <h2 className="text-h1 mb-8">Related trainings</h2>
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {related.map((p) => (
                 <CourseCard key={p.slug} course={p} />
@@ -640,8 +678,8 @@ export default async function CourseDetailPage({
           </p>
           <div className="flex flex-wrap items-center gap-4">
             <Button href="/contact-us">Talk to us about your team</Button>
-            <Button variant="secondary" href="/DataBlueprint-AIVibeCoding">
-              Explore other courses
+            <Button variant="secondary" href="/programs">
+              See all trainings
             </Button>
           </div>
         </div>

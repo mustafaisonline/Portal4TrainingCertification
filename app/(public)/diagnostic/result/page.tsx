@@ -26,8 +26,10 @@ export const dynamic = "force-dynamic";
 
 export default async function DiagnosticResultPage() {
   const programme = await findFlagshipProgramme();
-  const programmeHref = programme ? `/${programme.slug}` : "/DataBlueprint-AIVibeCoding";
-  const programmeLabel = programme ? `Explore ${programme.title}` : "Explore the programme";
+  // 2026-09-26: the catalogue lives at /programs ("Trainings"); the CTA
+  // deep-links the flagship's own page, or the hub when none is published.
+  const programmeHref = programme ? `/programs/${programme.slug}` : "/programs";
+  const programmeLabel = programme ? `Explore ${programme.title}` : "Explore the trainings";
 
   return <DiagnosticResultView programmeHref={programmeHref} programmeLabel={programmeLabel} />;
 }

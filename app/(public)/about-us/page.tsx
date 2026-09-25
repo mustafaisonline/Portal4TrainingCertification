@@ -235,7 +235,7 @@ export default async function AboutPage() {
       </section>
 
       {/* ===== Where we are today — the honest close =====
-          States what the Programme page (/DataBlueprint-AIVibeCoding)
+          States what the Trainings pages (/programs)
           actually presents today: one course, with real published pricing
           and an enquiry-based "Register your interest" flow — but still no
           scheduled dates. */}
@@ -256,7 +256,7 @@ export default async function AboutPage() {
             this portal follows the same rule.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button href="/DataBlueprint-AIVibeCoding">Explore courses</Button>
+            <Button href="/programs">Explore courses</Button>
             <Button variant="secondary" href="/contact-us">
               Talk to us
             </Button>

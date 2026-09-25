@@ -43,7 +43,7 @@ const routes = [
     title: "A course for yourself",
     body: "Tell us where you are and what you need to be able to do. If a course fits, we will say which one — and if none does, we will say that too.",
     cta: "Explore courses",
-    href: "/DataBlueprint-AIVibeCoding",
+    href: "/programs",
   },
   {
     label: "For organisations",

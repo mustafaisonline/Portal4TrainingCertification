@@ -11,7 +11,7 @@ export type AccountNavItem = { href: string; label: string };
 
 export const accountNavItems: readonly AccountNavItem[] = [
   { href: "/account", label: "Dashboard" },
-  { href: "/account/programme", label: "Programme" },
+  { href: "/account/programme", label: "Trainings" }, // founder, 2026-09-26: was "Programme"
   { href: "/account/programmes", label: "My registrations" },
   { href: "/account/certificate", label: "Certificate" },
   // Milestone 5b: the reviews screen lives at the public /reviews (the same

@@ -48,9 +48,9 @@ function entryPricing(course: CourseCardProgramme): Partial<Record<PriceRegion, 
 }
 
 /**
- * Reusable course card — used on /courses, the homepage preview and the
- * "related courses" rail on detail pages. Token-driven, so it renders
- * correctly on both light and night surfaces.
+ * Reusable course card — used on the /programs hub ("Trainings",
+ * 2026-09-26) and the "related courses" rail on detail pages. Token-driven,
+ * so it renders correctly on both light and night surfaces.
  *
  * Discovery and navigation: level, duration, audience, formats, a summary
  * and an indicative "from" price (Malaysia rate — the detail page carries
@@ -61,8 +61,8 @@ export function CourseCard({
   course,
   /**
    * Show the entry price in all three published regions rather than
-   * Malaysia alone. Turned on for /courses; defaults to false so the
-   * homepage preview is unchanged.
+   * Malaysia alone. Turned on for /programs; defaults to false so the
+   * related rail is unchanged.
    */
   showAllRegions = false,
 }: {
@@ -83,6 +83,12 @@ export function CourseCard({
         {course.flagship && <Chip>Flagship</Chip>}
       </div>
       <h3 className="text-h2 mb-2">{course.title}</h3>
+      {/* Subtitle shown on the hub (2026-09-26); absent on older rows. */}
+      {course.subtitle && (
+        <p className="text-body-sm mb-3 font-medium text-[var(--color-ink)]">
+          {course.subtitle}
+        </p>
+      )}
       <p className="text-body-sm mb-5 flex-1 text-[var(--color-ink-quiet)]">
         {course.summary}
       </p>
@@ -141,7 +147,7 @@ export function CourseCard({
         )}
       </dl>
       <Link
-        href={`/courses/${course.slug}`}
+        href={`/programs/${course.slug}`}
         className="text-body-sm inline-block py-2 font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
       >
         Course details →

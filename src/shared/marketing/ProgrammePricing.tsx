@@ -34,7 +34,14 @@ import {
  * Client component purely for the region tabs.
  */
 
-type Figures = { today: string; original: string; discount: string; save: string };
+type Figures = {
+  today: string;
+  original: string;
+  discount: string;
+  save: string;
+  /** False when list = offer (no discount): no strike-through, no "you save". */
+  discounted: boolean;
+};
 
 function toFigures(price: ProgrammePriceRecord): Figures {
   return {
@@ -42,7 +49,14 @@ function toFigures(price: ProgrammePriceRecord): Figures {
     original: formatMoney(price.listAmountMinor, price.currency),
     discount: price.offerLabel,
     save: formatMoney(price.listAmountMinor - price.offerAmountMinor, price.currency),
+    discounted: price.listAmountMinor > price.offerAmountMinor,
   };
+}
+
+/** Mentorship packages carry verbatim strings; a package whose "today"
+ *  equals its "original" is likewise undiscounted. */
+function packageFigures(p: { today: string; original: string; discount: string; save: string }): Figures {
+  return { ...p, discounted: p.today !== p.original };
 }
 
 function PriceFigures({ price, discountLabel }: { price: Figures; discountLabel: string }) {
@@ -54,12 +68,16 @@ function PriceFigures({ price, discountLabel }: { price: Figures; discountLabel:
         <span className="text-h1 text-[var(--color-primary)]">
           {price.today}
         </span>
-        <span className="text-body-sm text-[var(--color-ink-faint)] line-through">
-          {price.original}
-        </span>
+        {price.discounted && (
+          <span className="text-body-sm text-[var(--color-ink-faint)] line-through">
+            {price.original}
+          </span>
+        )}
       </div>
       <p className="text-body-sm text-[var(--color-ink-quiet)]">
-        {discountLabel}: {price.discount} · you save {price.save}
+        {/* 2026-09-26: an undiscounted price (Learn Vibe Coding) shows only
+            its offer name — no "was" figure, no saving of zero. */}
+        {price.discounted ? `${discountLabel}: ${price.discount} · you save ${price.save}` : price.discount}
       </p>
     </>
   );
@@ -89,6 +107,7 @@ export function ProgrammePricing({
   const [region, setRegion] = useState<PriceRegion>(regions[0]?.key ?? "malaysia");
   const activeRegion = regions.find((r) => r.key === region) ?? regions[0];
   const price = prices.find((p) => p.region === region);
+  const figures = price ? toFigures(price) : undefined;
   const enquiryHref = `/contact-us?kind=programme_interest&programme=${programmeSlug}`;
 
   if (!activeRegion) return null;
@@ -117,8 +136,17 @@ export function ProgrammePricing({
         </p>
         <h2 className="text-display mb-4">Course investment</h2>
         <p className="text-body-lg mb-8 max-w-[620px] text-[var(--color-ink-quiet)]">
-          Pricing is shown by region. {activeRegion.subtitle} —{" "}
-          <span className="text-[var(--color-ink)]">{activeRegion.badge}</span>.
+          Pricing is shown by region. {activeRegion.subtitle}
+          {/* The region's saving badge ("Save up to 50%") is only true of a
+              discounted price; an undiscounted training states none. */}
+          {figures && !figures.discounted ? (
+            "."
+          ) : (
+            <>
+              {" "}
+              — <span className="text-[var(--color-ink)]">{activeRegion.badge}</span>.
+            </>
+          )}
         </p>
 
         {/* Region tabs */}
@@ -152,16 +180,16 @@ export function ProgrammePricing({
         </div>
 
         {/* Single-course pricing */}
-        {price && (
+        {price && figures && (
           <div className="grid gap-6 lg:grid-cols-[minmax(0,420px)_1fr] lg:items-start">
             <Card
               variant="feature"
               className="border border-[var(--color-line-strong)]"
             >
-              <Chip tone="primary">{activeRegion.badge}</Chip>
+              <Chip tone="primary">{figures.discounted ? activeRegion.badge : figures.discount}</Chip>
               <p className="text-label mb-2 mt-4">Today&rsquo;s investment</p>
               <PriceFigures
-                price={toFigures(price)}
+                price={figures}
                 discountLabel={activeRegion.discountLabel}
               />
               <div className="mt-7 flex flex-wrap gap-3">
@@ -224,7 +252,7 @@ export function ProgrammePricing({
                 </p>
                 {pkg.pricing[region] && (
                   <PriceFigures
-                    price={pkg.pricing[region]}
+                    price={packageFigures(pkg.pricing[region])}
                     discountLabel={activeRegion.discountLabel}
                   />
                 )}

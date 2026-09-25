@@ -1,14 +1,13 @@
-import type { Metadata } from "next";
 import Image from "next/image";
-import { notFound } from "next/navigation";
-import { findFlagshipProgramme } from "@/modules/catalogue/programmes/repository";
-import { listPublishedExperts } from "@/modules/catalogue/experts/repository";
+import type { ProgrammeRecord } from "@/modules/catalogue/programmes/types";
+import type { ExpertRecord } from "@/modules/catalogue/experts/repository";
 import { ImageFrame } from "@/shared/marketing/ImageFrame";
 import {
   CohortBuildingIllustration,
   FounderTeachingIllustration,
   TeachingDetailIllustration,
 } from "@/shared/marketing/DeliveryIllustrations";
+import { DeliveryFormats } from "@/shared/marketing/DeliveryFormats";
 import { ProgrammePricing } from "@/shared/marketing/ProgrammePricing";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
@@ -25,16 +24,21 @@ import { Card } from "@/shared/ui/Card";
  * editorial history; `docs/course_landing_page.md` there is its content
  * source.
  *
- * Programme hub — a single-proposition page for the founder-designated
- * flagship. The route is the founder-chosen URL; the programme is resolved
- * by `flagship = true`, never by slug (ADR-023).
+ * MOVED 2026-09-26 (founder: "/DataBlueprint-AIVibeCoding → /programs",
+ * "Programme → Trainings"). Formerly the page at that route; now a server
+ * component the training detail page (./page.tsx) renders in place of the
+ * generic template whenever the resolved programme is the flagship. The
+ * programme and the published experts are passed in — this file no longer
+ * reads the database or exports route metadata. The old URL redirects here
+ * permanently (next.config.ts). The section that was only ever on the generic
+ * template — "Flexible learning formats" — is now included below (shared
+ * `DeliveryFormats`), so nothing the flagship published disappears; the
+ * closing CTA's "Explore the course" link, which pointed at that template,
+ * is now the enquiry link. Everything else is unchanged.
+ *
+ * A single-proposition page for the founder-designated flagship, resolved by
+ * `flagship = true`, never by a slug literal (ADR-023).
  */
-
-export const metadata: Metadata = {
-  title: "Data Blueprint & AI/Vibe Coding",
-};
-
-export const dynamic = "force-dynamic";
 
 /** Original inline glyph, local to this page — identical markup to
  *  the trainers page's own `GlyphArrowRight`, so the "View full profile"
@@ -138,18 +142,21 @@ const journey = [
   },
 ] as const;
 
-export default async function ProgrammeHubPage() {
-  const flagship = await findFlagshipProgramme();
-  if (!flagship) notFound();
-
+export function FlagshipLanding({
+  programme: flagship,
+  experts,
+}: {
+  programme: ProgrammeRecord;
+  experts: ExpertRecord[];
+}) {
   // The programme's lead expert, with the full published profile (the
   // programme record carries only a summary). Falls back to the first
   // published expert if no association exists.
-  const experts = await listPublishedExperts();
   const lead =
     experts.find((e) => flagship.experts.some((x) => x.id === e.id)) ??
     experts[0];
   const accreditation = lead?.hrdCorpAccreditation;
+  const enquiryHref = `/contact-us?kind=programme_interest&programme=${flagship.slug}`;
 
   return (
     <>
@@ -434,6 +441,10 @@ export default async function ProgrammeHubPage() {
         </div>
       </section>
 
+      {/* ===== Delivery formats — moved here from the generic detail
+          template, 2026-09-26 (see header). ===== */}
+      <DeliveryFormats formats={flagship.deliveryFormats} />
+
       {/* ===== Who teaches you — §8.6 =====
           Reflects the experts repository honestly: one genuine
           practitioner today, founder-led — same convention as the homepage
@@ -572,9 +583,7 @@ export default async function ProgrammeHubPage() {
             immediately.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <Button href={`/courses/${flagship.slug}`}>
-              Explore the course
-            </Button>
+            <Button href={enquiryHref}>Register your interest</Button>
             <Button variant="secondary" href="/contact-us">
               Talk to us
             </Button>

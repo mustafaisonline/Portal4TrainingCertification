@@ -19,7 +19,8 @@ import { Chip } from "@/shared/ui/Chip";
  * date). Investment, outcomes, "included" and the curriculum are not
  * repeated here — the public programme page, linked below, carries them.
  */
-export const metadata: Metadata = { title: "Programme" };
+// "Programme" → "Trainings", founder 2026-09-26 (menu rename).
+export const metadata: Metadata = { title: "Trainings" };
 
 const dayMonth = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });
 const dayMonthYear = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
@@ -58,11 +59,11 @@ export default async function ProgrammePage() {
     return (
       <div className="flex flex-col gap-8">
         <header>
-          <p className="text-label mb-2 text-[var(--color-primary)]">Programme</p>
-          <h1 className="text-display">Programme</h1>
+          <p className="text-label mb-2 text-[var(--color-primary)]">Trainings</p>
+          <h1 className="text-display">Your trainings</h1>
         </header>
         <Card variant="panel" className="p-6 sm:p-8">
-          <p className="text-body-sm text-[var(--color-ink-quiet)]">No programme is published yet.</p>
+          <p className="text-body-sm text-[var(--color-ink-quiet)]">No training is published yet.</p>
         </Card>
       </div>
     );
@@ -71,7 +72,7 @@ export default async function ProgrammePage() {
   return (
     <div className="flex flex-col gap-8">
       <header>
-        <p className="text-label mb-2 text-[var(--color-primary)]">Programme</p>
+        <p className="text-label mb-2 text-[var(--color-primary)]">Trainings</p>
         <h1 className="text-display">{course.title}</h1>
         {course.subtitle && <p className="text-body-lg mt-3 max-w-[62ch] text-[var(--color-ink-quiet)]">{course.subtitle}</p>}
         <p className="text-body-sm mt-3 max-w-[62ch] text-[var(--color-ink-quiet)]">{course.summary}</p>
@@ -141,8 +142,12 @@ export default async function ProgrammePage() {
 
       <p className="text-body-sm text-[var(--color-ink-quiet)]">
         Investment, outcomes and the full curriculum are on the{" "}
-        <Link href="/DataBlueprint-AIVibeCoding" className="text-[var(--color-primary)] underline underline-offset-4">
-          programme page
+        <Link href={`/programs/${course.slug}`} className="text-[var(--color-primary)] underline underline-offset-4">
+          training page
+        </Link>
+        , and every training is listed under{" "}
+        <Link href="/programs" className="text-[var(--color-primary)] underline underline-offset-4">
+          Trainings
         </Link>
         .
       </p>

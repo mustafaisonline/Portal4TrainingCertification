@@ -284,7 +284,7 @@ export default async function CertificatePage({ searchParams }: { searchParams: 
           <Card variant="panel" className="p-6" data-testid="certificate-none">
             <p className="text-body-lg font-medium">No certificate has been issued yet.</p>
             <p className="text-body-sm mt-2 mb-4 text-[var(--color-ink-quiet)]">Issued when you complete the programme.</p>
-            <Button href="/DataBlueprint-AIVibeCoding">View the programme</Button>
+            <Button href="/programs">View the trainings</Button>
           </Card>
         </>
       ) : (

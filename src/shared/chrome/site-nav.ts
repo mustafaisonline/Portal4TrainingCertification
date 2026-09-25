@@ -17,7 +17,7 @@ export type NavItem = { href: string; label: string };
 export const primaryNav: readonly NavItem[] = [
   { href: "/", label: "Home" },
   { href: "/hrd-corp", label: "HRD Corp" },
-  { href: "/DataBlueprint-AIVibeCoding", label: "Programme" },
+  { href: "/programs", label: "Trainings" }, // founder, 2026-09-26: was "Programme" → /DataBlueprint-AIVibeCoding
   { href: "/trainers", label: "Trainers" },
   { href: "/diagnostic", label: "Free Diagnostic" },
   { href: "/about-us", label: "About Us" },
@@ -26,7 +26,7 @@ export const primaryNav: readonly NavItem[] = [
 ];
 
 export const footerExplore: readonly NavItem[] = [
-  { href: "/DataBlueprint-AIVibeCoding", label: "Courses" },
+  { href: "/programs", label: "Trainings" }, // founder, 2026-09-26: was "Courses"
   { href: "/trainers", label: "Trainers" },
   { href: "/about-us", label: "About Us" },
   { href: "/schedule", label: "Schedule" },
@@ -49,14 +49,10 @@ export const footerLegal: readonly NavItem[] = [
 
 export const verifyLink: NavItem = { href: "/verify", label: "Search completion certificates" };
 
-/** Active-page test for the nav. Trailing slashes are normalised and
- *  `/courses/<slug>` counts as "Programme", since that hub links straight
- *  into those detail pages. */
+/** Active-page test for the nav. Trailing slashes are normalised; a nested
+ *  path (`/programs/<slug>`, `/trainers/<slug>`) marks its parent item. */
 export function isActive(pathname: string, href: string): boolean {
   const path = pathname.replace(/\/+$/, "") || "/";
   if (href === "/") return path === "/";
-  if (href === "/DataBlueprint-AIVibeCoding") {
-    return path === href || path.startsWith("/courses");
-  }
   return path === href || path.startsWith(`${href}/`);
 }

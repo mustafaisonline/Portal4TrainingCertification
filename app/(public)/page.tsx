@@ -85,9 +85,10 @@ export default async function HomePage() {
     listDiagnosticQuestions(),
   ]);
 
-  // The founder-chosen flagship URL resolves `flagship = true` in its own
-  // route; with no published flagship the CTAs fall back to the catalogue.
-  const coursesHref = flagship ? "/DataBlueprint-AIVibeCoding" : "/courses";
+  // 2026-09-26 (founder): the public catalogue is the /programs hub
+  // ("Trainings"), which lists every published training; the flagship's own
+  // page is /programs/<slug>. The hero CTA points at the hub either way.
+  const coursesHref = "/programs";
   const founder = experts[0] ?? null;
 
   return (

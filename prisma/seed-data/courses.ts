@@ -249,6 +249,10 @@ export type Course = {
   level: CourseLevel;
   /** Marks the founder's designated flagship course. */
   flagship?: boolean;
+  /** Public visibility. When absent the seed applies the M3 §10.1 default:
+   *  flagship → published, every other course → unlisted. Set explicitly
+   *  where the founder has published a second training (2026-09-26). */
+  status?: "published" | "unlisted";
   /** Free-text as published — never a fabricated schedule. */
   duration: string;
   prerequisites: string;
@@ -302,6 +306,13 @@ export type Course = {
   /** Genuinely external resources — YPT service pages with no Academy
    *  equivalent. Internal training links were migrated to portal routes. */
   externalResources?: { label: string; url: string; description: string }[];
+  /** One sentence placing this training relative to another — shown under
+   *  the hero proposition (added 2026-09-26). */
+  relationshipNote?: string;
+  /** Founder-directed "what you can do straight after" block (2026-09-26). */
+  afterThisTraining?: { heading: string; intro: string; items: string[] };
+  /** Questions and answers for the detail page (2026-09-26). */
+  faq?: { q: string; a: string }[];
 };
 
 export const courseLevels: {
@@ -1029,7 +1040,7 @@ export const courses: Course[] = [
       pakistan: { original: "Rs. 274,434.11", discount: "70% OFF", save: "Rs. 192,103.88", today: "Rs. 82,330.23" },
       international: { original: "USD 2,499", discount: "10% OFF", save: "USD 250", today: "USD 2,249" },
     },
-    related: ["data-ai-essentials", "ai-powered-product-development"],
+    related: ["data-ai-essentials", "data-blueprint-ai-vibe-coding"],
     externalResources: [
       {
         label: "Value Discovery Canvas™",
@@ -1050,10 +1061,251 @@ export const courses: Course[] = [
   },
 
   /* ------------------------------------------------------------------ */
+  /* Learn Vibe Coding — ADDED 2026-09-26 at the founder's direction (the
+   * curriculum is docs/execution/CURRICULUM_LEARN_VIBE_CODING.md). The
+   * vibe-coding half of the two-day flagship, taught on its own. Published
+   * and listed FIRST on /programs (founder's order); not the flagship.
+   * Prices are the founder's figures verbatim (USD 1,000 · RM 100 ·
+   * Rs 5,000) with NO discount, so list = offer and the components hide the
+   * strike-through. The module points restate the agenda blocks of the
+   * curriculum document (the founder's outline items 1–13). */
   {
-    slug: "ai-powered-product-development",
-    title: "AI-Powered Product Development",
-    subtitle: "Build real applications faster with AI (vibe coding)",
+    slug: "learn-vibe-coding",
+    title: "Learn Vibe Coding",
+    subtitle: "Build software by directing AI — the method, the tools and a real build, in one afternoon",
+    level: "Builder",
+    status: "published",
+    duration: "3–4 hours",
+    prerequisites: "None — bring a laptop and one AI account",
+    formats: ["Half-day workshop", "Live online"],
+    certificate: "Certificate of Completion",
+    audienceSummary: "Founders, product owners, analysts, managers, curious professionals",
+    summary:
+      "A half-day, expert-led session on building software by directing AI: what an LLM, an agent and a skill are, the document-first Vibe Coding Method, and a live build on a real repository — no coding background needed.",
+    valueProposition:
+      "Software is now built by directing AI. This afternoon gives you the method that keeps it reliable — the eight documents, the guardrails and the build sequence — shown live on a real repository, and a starter kit to use the next morning.",
+    relationshipNote:
+      "This is the vibe-coding half of the 2-day Data Blueprint & AI/Vibe Coding training, taught on its own.",
+    highlights: [
+      "No coding background needed",
+      "The eight-document Vibe Coding Method, shown on a real product",
+      "A live build on a real repository — wireframe to admin panel",
+      "Agents and skills made in front of you",
+      "The Vibe Coding Starter Kit to take home",
+      "Certificate of Completion on attending the full session",
+    ],
+    whoShouldAttend: {
+      intro:
+        "For people who want to build with AI rather than only talk about it — no coding background needed. Developers new to AI-assisted work are welcome; the method makes them faster, it does not start them over.",
+      roles: [
+        "Founders and entrepreneurs",
+        "Product owners and product managers",
+        "Business and data analysts",
+        "Managers who commission software",
+        "Curious professionals",
+        "Developers new to AI-assisted work",
+      ],
+    },
+    rationale: {
+      heading: "Why you need this training",
+      paragraphs: [
+        "Software is now built by directing AI. A person who can describe what they want, set the rules the AI must keep and check what comes back can produce a working product in an afternoon — work that used to need a team and a budget.",
+        "The people who win are not the fastest typists. They are the ones who can specify, direct and verify: write the documents an AI needs, keep it inside a constitution, and know when to accept its output and when to send it back.",
+        "Most people skip the method. They prompt, get something that almost works, and get stuck when the AI forgets, invents a rule or breaks what it built yesterday. This session gives you the method in one afternoon, on a real repository, so you leave able to start.",
+      ],
+      problems: [
+        "You have tried AI coding tools and got a demo that fell apart when you changed one thing",
+        "You know what you want built but cannot brief a developer — or an AI — precisely enough",
+        "You are paying for software that a small internal tool could replace",
+        "You do not know which tools to use, what they cost, or when you still need a professional developer",
+      ],
+    },
+    outcomes: [
+      "Explain what vibe coding is and is not, and what an LLM, RAG, an agent and a skill are, in plain language",
+      "Choose a starting toolset (chat tool, coding agent, Git) and a minimum tech stack, and know what each costs",
+      "Write prompts that get reliable results, and write a constitution file that keeps the AI inside the rules",
+      "Follow the document-first Vibe Coding Method: Vision → BRD → FSD → HLD → LLD → WBS → TechStack → GuardRails, with reference designs and a theme",
+      "Recognise the build sequence — wireframe → physical data model → product → admin panel — and the checks that belong between steps",
+      "Name the five ways vibe-coded projects fail and how the method prevents each",
+      "Leave with your own Vision.md written with AI and a wireframe prompt ready to run (hands-on option)",
+    ],
+    afterThisTraining: {
+      heading: "Start freelancing straight after the session",
+      intro: "You leave ready to start offering vibe-coding services as a freelancer or inside your team:",
+      items: [
+        "Build landing pages, internal tools and prototypes for clients",
+        "Turn a client brief into Vision, BRD and FSD documents an AI can build from",
+        "Scope and quote a small build with a work breakdown you can defend",
+        "Run an AI coding agent inside a constitution and Git, with every change reviewed before it is accepted",
+        "Know when a job needs a professional developer — and what to hand them",
+      ],
+    },
+    // Module points are the founder's list VERBATIM (chat, 2026-09-26),
+    // asterisks removed; the parenthesised minutes are the founder's too.
+    modules: [
+      {
+        title: "Part 1 · Foundations (about 60 minutes)",
+        points: [
+          "What is Vibe Coding, and what it is not",
+          "What is an LLM, and what is RAG",
+          "Tokens, context window and why the AI forgets",
+          "Hallucination and how to verify what the AI tells you",
+          "Tools: ChatGPT, Gemini, Grok, Claude, and the coding agents (Claude Code, Cursor, Gemini CLI, Copilot)",
+          "Git and GitHub: your undo button",
+          "What is a framework, and the minimum stack you need (front end, back end, database, hosting)",
+          "What AI tools cost, and what is free",
+        ],
+      },
+      {
+        title: "Part 2 · Working with AI (about 45 minutes)",
+        points: [
+          "What is Prompt Engineering, and the prompt patterns that work (role, context, constraints, examples, output format, iterate)",
+          "The constitution file: rules the AI must follow in every session",
+          "What is an Agent",
+          "How to make an Agent (live demo)",
+          "What is a Skill",
+          "How to make a Skill (live demo)",
+          "When not to use an Agent",
+        ],
+      },
+      {
+        title: "Part 3 · The Vibe Coding Method (about 30 minutes)",
+        points: [
+          "Step 1 · Create Vision.md",
+          "Step 2 · Create BRD.md",
+          "Step 3 · Create FSD.md",
+          "Step 4 · Create HLD.md",
+          "Step 5 · Create LLD.md, including the data model",
+          "Step 6 · Create Project Plan WBS.md for the whole project",
+          "Step 7 · Create TechStack.md",
+          "Step 8 · Create GuardRails.md",
+          "Find sample sites or product designs to share with the AI",
+          "Give a theme image",
+          "Keep a decision log",
+        ],
+      },
+      {
+        title: "Part 4 · Watch it build (about 35 minutes, live on a real repository)",
+        points: [
+          "Build the wireframe",
+          "Build the physical data model, and approve it before it is applied",
+          "Build the production product, milestone by milestone",
+          "Build the admin panel",
+          "Commit after every step, review what the AI changed, test before saying \"done\"",
+        ],
+      },
+      {
+        title: "Part 5 · Guardrails and next steps (about 20 minutes)",
+        points: [
+          "Five ways vibe-coded projects fail: scope creep, invented rules, unverified claims, secrets pasted into chat, no version control",
+          "What comes after: testing, security, deployment, running it (covered in the 2-day programme)",
+          "Your Starter Kit: the eight templates, constitution template, prompt sheet, tool and cost sheet",
+          "The 30-day capstone challenge",
+        ],
+      },
+      {
+        title: "Optional hands-on (30 minutes)",
+        points: ["Write your own Vision.md with AI, and generate the wireframe prompt from it"],
+      },
+    ],
+    deliveryFormats: [
+      {
+        name: "Half-day workshop",
+        badge: "Face-to-face",
+        duration: "3.5–4 hours",
+        schedule: "One afternoon",
+        totalTime: "Up to 4 hours",
+        bestFor: [
+          "Groups of up to about 15 who want the hands-on option",
+          "Corporate and private cohorts on site",
+          "People who learn best in a room with the trainer",
+        ],
+      },
+      {
+        name: "Live online",
+        duration: "3.5–4 hours",
+        schedule: "One session",
+        totalTime: "Up to 4 hours",
+        bestFor: [
+          "Participants outside Kuala Lumpur or outside Malaysia",
+          "Distributed teams",
+          "Anyone who wants the same agenda without travelling",
+        ],
+      },
+    ],
+    methodology: {
+      name: "The Vibe Coding Method",
+      steps: [
+        { title: "Vision", body: "What you are building, for whom, and why — on one page." },
+        { title: "BRD", body: "The business requirements: what the product must achieve." },
+        { title: "FSD", body: "The functional specification: what each screen and rule does." },
+        { title: "HLD", body: "The high-level design: the parts and how they connect." },
+        { title: "LLD", body: "The low-level design: the data model and the details the AI builds from." },
+        { title: "Project Plan / WBS", body: "The work broken down and sequenced into milestones." },
+        { title: "TechStack", body: "One choice per layer — front end, back end, database, hosting." },
+        { title: "GuardRails", body: "The constitution: the rules the AI must never break." },
+      ],
+    },
+    included: [
+      "The Vibe Coding Starter Kit — the eight document templates",
+      "A constitution (guardrails) template",
+      "A prompt-pattern sheet",
+      "A tool-and-cost sheet",
+      "The \"before you accept AI output\" checklist",
+      "The 30-day capstone challenge brief",
+    ],
+    pedagogy: {
+      intro:
+        "Live demonstrations on a real repository the trainer owns — never slides alone. Participants prompt along on their own laptops, and the optional last half hour is their own first document.",
+      methods: [
+        "Live demos on a real repository",
+        "Two short prompt exercises",
+        "An agent and a skill made in front of you",
+        "The build sequence run end to end",
+        "Your own Vision.md and wireframe prompt (hands-on option)",
+        "A starter kit to continue with the next day",
+      ],
+    },
+    faq: [
+      {
+        q: "Do I need to be able to code?",
+        a: "No. The session is designed for people with no coding background. If you already code, the method makes you faster and more reliable — it does not start you over.",
+      },
+      {
+        q: "What do I bring?",
+        a: "A laptop and one AI account — a free tier is enough. A GitHub account is optional but useful for the hands-on part.",
+      },
+      {
+        q: "Is this the same as the 2-day Data Blueprint & AI/Vibe Coding training?",
+        a: "It is the vibe-coding half of it, taught on its own. The 2-day training adds the data foundations and a full hands-on build, test and deploy of a product. This session shows the method and starts it.",
+      },
+      {
+        q: "Do I get a certificate?",
+        a: "Yes — a Certificate of Completion for this training, issued on attending the full session. It names this training, so it cannot be mistaken for the 2-day one.",
+      },
+      {
+        q: "Can I take the 2-day training afterwards?",
+        a: "Yes. The module titles here are reused there, so you will recognise the ground you have covered. Talk to us about dates and how this session counts towards it.",
+      },
+    ],
+    // Founder's figures 2026-09-26, no discount: list = offer, so the
+    // components render no strike-through and no "you save" line.
+    pricing: {
+      malaysia: { original: "RM 100", discount: "Launch price", save: "RM 0", today: "RM 100" },
+      pakistan: { original: "Rs. 5,000", discount: "Launch price", save: "Rs. 0", today: "Rs. 5,000" },
+      international: { original: "USD 1,000", discount: "Launch price", save: "USD 0", today: "USD 1,000" },
+    },
+    related: ["data-blueprint-ai-vibe-coding"],
+  },
+
+  /* ------------------------------------------------------------------ */
+  // Slug and title renamed 2026-09-26 (founder): was
+  // `ai-powered-product-development` / "AI-Powered Product Development".
+  // prisma/seed.ts renames the existing row in place so its id is kept.
+  {
+    slug: "data-blueprint-ai-vibe-coding",
+    title: "Data Blueprint & AI/Vibe Coding",
+    subtitle: "Data foundations plus building real products with AI, in two days",
     level: "Builder",
     flagship: true,
     duration: "2 days – 4 weeks",
@@ -1410,7 +1662,7 @@ export const courses: Course[] = [
       international: { original: "USD 3,124", discount: "10% OFF", save: "USD 313", today: "USD 2,811" },
     },
     valueStack: [
-      { item: "AI-Powered Product Development training", value: "RM 9,999" },
+      { item: "Data Blueprint & AI/Vibe Coding training", value: "RM 9,999" },
       { item: "PromptOS Starter Edition", value: "RM 1,500+" },
       { item: "Data Blueprint Foundations module", value: "RM 1,499" },
       { item: "Product development templates", value: "RM 500+" },
@@ -1666,7 +1918,7 @@ export const learningPathway: {
   {
     stage: "Build products",
     level: "Builder",
-    slugs: ["ai-powered-product-development"],
+    slugs: ["learn-vibe-coding", "data-blueprint-ai-vibe-coding"],
   },
   {
     stage: "Leadership track",

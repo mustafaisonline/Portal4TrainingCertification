@@ -1,6 +1,6 @@
 import type { Db } from "@/db/prisma";
 import { getPrisma } from "@/db/prisma";
-import type { ProgrammeContent, ProgrammeRecord, ProgrammeSummary } from "./types";
+import type { ProgrammeContent, ProgrammePriceRecord, ProgrammeRecord, ProgrammeSummary } from "./types";
 
 /*
  * Programme repository (module: catalogue). Pages read programmes ONLY
@@ -104,6 +104,35 @@ export async function listPublishedProgrammes(db: Db = getPrisma()): Promise<Pro
     },
   });
   return rows.map((r) => ({ ...r, formats: r.formats as string[] }));
+}
+
+/** Listing card with its published prices — the /programs hub (2026-09-26). */
+export type ProgrammeCard = ProgrammeSummary & { prices: ProgrammePriceRecord[] };
+
+export async function listPublishedProgrammesWithPrices(db: Db = getPrisma()): Promise<ProgrammeCard[]> {
+  const rows = await db.programme.findMany({
+    where: { status: "published" },
+    orderBy: { sortOrder: "asc" },
+    select: {
+      id: true, slug: true, title: true, subtitle: true, level: true, status: true, flagship: true,
+      durationLabel: true, formats: true, certificateLabel: true, audienceSummary: true, summary: true, sortOrder: true,
+      prices: true,
+    },
+  });
+  return rows.map((r) => ({
+    ...r,
+    formats: r.formats as string[],
+    prices: r.prices
+      .map((p) => ({
+        region: p.region,
+        currency: p.currency,
+        listAmountMinor: Number(p.listAmountMinor),
+        offerAmountMinor: Number(p.offerAmountMinor),
+        offerLabel: p.offerLabel,
+        offerName: p.offerName,
+      }))
+      .sort((a, b) => order(a.region) - order(b.region)),
+  }));
 }
 
 export type AdminProgrammeOption = { id: string; title: string; slug: string; status: ProgrammeRecord["status"] };

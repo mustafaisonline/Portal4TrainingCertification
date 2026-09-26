@@ -1,7 +1,7 @@
 import { getPrisma, withTransaction } from "@/db/prisma";
 import { findOfferingById, MODALITY_LABEL, type OfferingRecord } from "@/modules/catalogue/offerings/repository";
 import { findProgrammeBySlug } from "@/modules/catalogue/programmes/repository";
-import type { ProgrammePriceRecord, ProgrammeRecord } from "@/modules/catalogue/programmes/types";
+import { cardPaymentAvailable, type ProgrammePriceRecord, type ProgrammeRecord } from "@/modules/catalogue/programmes/types";
 import { publishedDocuments, refundDocumentVersion } from "@/modules/identity/legal-documents";
 import { getProfile, isCompleteForCheckout, missingForCheckout } from "@/modules/identity/profile.repository";
 import { findUserById } from "@/modules/identity/users.repository";
@@ -9,7 +9,7 @@ import { writeAudit } from "@/modules/platform/audit/repository";
 import { formatDateRange } from "@/shared/util/dates";
 import { countSeatsTaken, lockOfferingForSeat, ORDER_HOLD_MINUTES, startsInFuture } from "./capacity";
 import { CommerceError, PaymentsNotConfiguredError } from "./errors";
-import { priceForUser } from "./pricing";
+import { priceForUser, regionForCountry } from "./pricing";
 import { paymentsConfigured, stripeGateway, type PaymentGateway } from "./stripe";
 
 /*
@@ -71,6 +71,13 @@ export async function startCheckout(input: StartCheckoutInput): Promise<StartChe
     throw new CommerceError("profile_incomplete", `User ${user.id} is missing profile details: ${missingForCheckout(profile).join(", ")}.`);
   }
   const pricingCountry = profile?.countryCode ?? user.country;
+  // Founder rule 2026-09-26: a region that pays through the local partner
+  // (Pakistan) cannot pay by card. Refused HERE — before the transaction —
+  // so no order and no seat hold ever exists for it.
+  const region = regionForCountry(pricingCountry);
+  if (!cardPaymentAvailable(region)) {
+    throw new CommerceError("card_payment_unavailable", `Region "${region}" does not pay by card; user ${user.id} must be routed to the local partner.`);
+  }
 
   const { order, offering } = await withTransaction(async (tx) => {
     const { offering } = await lockOfferingForSeat(tx, input.offeringId, now);
@@ -171,7 +178,11 @@ export type CheckoutPreview =
       ok: false;
       reason: "offering_not_open" | "offering_started" | "offering_full" | "already_registered" | "order_pending" | "no_price_for_region";
       offering: OfferingRecord;
-    };
+    }
+  /** The person's region pays through the local partner, not by card
+   *  (Pakistan — founder rule 2026-09-26). The screen shows the partner
+   *  message and a Contact us link instead of a pay button. */
+  | { ok: false; reason: "card_payment_unavailable"; offering: OfferingRecord };
 
 /** What the checkout screen shows before the person acts. Read-only and
  *  unlocked — the authoritative checks run again inside `startCheckout`.
@@ -195,6 +206,8 @@ export async function previewCheckout(offeringId: string, user: { id: string; co
   const seats = await withTransaction((tx) => countSeatsTaken(tx, offeringId, now));
   const seatsLeft = offering.capacity === null ? null : Math.max(0, offering.capacity - seats.taken);
   if (seatsLeft === 0) return { ok: false, reason: "offering_full", offering };
+
+  if (!cardPaymentAvailable(regionForCountry(user.country))) return { ok: false, reason: "card_payment_unavailable", offering };
 
   const programme = await findProgrammeBySlug(offering.programmeSlug);
   if (!programme) return { ok: false, reason: "offering_not_found" };

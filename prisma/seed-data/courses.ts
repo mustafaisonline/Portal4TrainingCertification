@@ -67,7 +67,12 @@ export type RegionPrice = {
 
 export type CoursePricing = Record<RegionKey, RegionPrice>;
 
-/** Region metadata exactly as published on the source site. */
+/** Region metadata — mirrors `PRICE_REGIONS` in
+ *  src/modules/catalogue/programmes/types.ts; `subtitle` is persisted as
+ *  `programme_prices.offer_name` (shown on the checkout screen).
+ *  2026-09-26 (founder): the "Save up to 50%" / "Regional scholarship"
+ *  framing is retired; each region states how it pays and the badge names
+ *  the 75% launch discount. */
 export const pricingRegions: {
   key: RegionKey;
   label: string;
@@ -83,24 +88,24 @@ export const pricingRegions: {
     key: "malaysia",
     label: "Malaysia",
     short: "MY",
-    subtitle: "Founder's launch offer",
-    badge: "Save up to 50%",
+    subtitle: "Card payment in RM",
+    badge: "75% launch discount",
     discountLabel: "Discount",
   },
   {
     key: "pakistan",
     label: "Pakistan",
     short: "PK",
-    subtitle: "Regional scholarship programme",
-    badge: "Regional scholarship",
-    discountLabel: "Scholarship",
+    subtitle: "Payment through our local partner",
+    badge: "75% launch discount",
+    discountLabel: "Discount",
   },
   {
     key: "international",
     label: "International",
     short: "INT",
-    subtitle: "Global professional pricing",
-    badge: "Global launch offer",
+    subtitle: "Card payment in USD",
+    badge: "75% launch discount",
     discountLabel: "Discount",
   },
 ];
@@ -313,6 +318,17 @@ export type Course = {
   afterThisTraining?: { heading: string; intro: string; items: string[] };
   /** Questions and answers for the detail page (2026-09-26). */
   faq?: { q: string; a: string }[];
+  /** "What you get out of this training" (founder change list 2026-09-26). */
+  whatYouGet?: string[];
+  /** Participant numbers per format, under the "Choose your pace" cards (2026-09-26). */
+  paceNotes?: string[];
+  /** Per-region pricing notes and, where a region publishes two figures,
+   *  the options (2026-09-26). `pricing` above stays the ONE amount per
+   *  region that reaches `programme_prices` and checkout; when `options`
+   *  exist, one of them must equal it. */
+  regionalPricing?: Partial<
+    Record<RegionKey, { note?: string; options?: { label: string; original: string; today: string; minParticipants?: number }[] }>
+  >;
 };
 
 export const courseLevels: {
@@ -1094,15 +1110,19 @@ export const courses: Course[] = [
       "The Vibe Coding Starter Kit to take home",
       "Certificate of Completion on attending the full session",
     ],
+    // "Who can take this training" — rewritten 2026-09-26 (founder change
+    // list): no coding background needed; anyone with a laptop and an AI
+    // account.
     whoShouldAttend: {
       intro:
-        "For people who want to build with AI rather than only talk about it — no coding background needed. Developers new to AI-assisted work are welcome; the method makes them faster, it does not start them over.",
+        "Anyone with a laptop and an AI account can take this training — no coding background is needed. It is for people who want to build with AI rather than only talk about it; developers new to AI-assisted work are welcome too, because the method makes them faster rather than starting them over.",
       roles: [
         "Founders and entrepreneurs",
         "Product owners and product managers",
         "Business and data analysts",
         "Managers who commission software",
-        "Curious professionals",
+        "Students and recent graduates",
+        "Freelancers",
         "Developers new to AI-assisted work",
       ],
     },
@@ -1208,30 +1228,38 @@ export const courses: Course[] = [
         points: ["Write your own Vision.md with AI, and generate the wireframe prompt from it"],
       },
     ],
+    // Participant numbers 2026-09-26 (founder): live online is sold per
+    // seat; the in-person half day needs a minimum of 25 participants and
+    // is costed separately. `bestFor`/`schedule` were adjusted so they do
+    // not contradict `paceNotes`.
     deliveryFormats: [
       {
         name: "Half-day workshop",
         badge: "Face-to-face",
         duration: "3.5–4 hours",
-        schedule: "One afternoon",
+        schedule: "One afternoon, on site — minimum 25 participants",
         totalTime: "Up to 4 hours",
         bestFor: [
-          "Groups of up to about 15 who want the hands-on option",
-          "Corporate and private cohorts on site",
+          "Corporate and private cohorts of 25 or more, on site",
+          "Teams who want the hands-on option in one room",
           "People who learn best in a room with the trainer",
         ],
       },
       {
         name: "Live online",
         duration: "3.5–4 hours",
-        schedule: "One session",
+        schedule: "One session — individual seats",
         totalTime: "Up to 4 hours",
         bestFor: [
+          "Individuals — priced per person",
           "Participants outside Kuala Lumpur or outside Malaysia",
-          "Distributed teams",
-          "Anyone who wants the same agenda without travelling",
+          "Distributed teams who want the same agenda without travelling",
         ],
       },
+    ],
+    paceNotes: [
+      "Live online — individual seats, priced per person",
+      "In-person half-day workshop — minimum 25 participants; cost discussed separately",
     ],
     methodology: {
       name: "The Vibe Coding Method",
@@ -1246,13 +1274,12 @@ export const courses: Course[] = [
         { title: "GuardRails", body: "The constitution: the rules the AI must never break." },
       ],
     },
-    included: [
-      "The Vibe Coding Starter Kit — the eight document templates",
-      "A constitution (guardrails) template",
-      "A prompt-pattern sheet",
-      "A tool-and-cost sheet",
-      "The \"before you accept AI output\" checklist",
-      "The 30-day capstone challenge brief",
+    // `included` removed 2026-09-26 (founder: no "Included" list); what a
+    // participant takes away is stated once, in `whatYouGet`.
+    whatYouGet: [
+      "A Certificate of Completion with a unique ID and public verification page",
+      "Course material — a hard copy when you attend in person, a soft copy when you attend online",
+      "The Vibe Coding Starter Kit (templates, constitution, prompt sheet, tool and cost sheet, capstone challenge)",
     ],
     pedagogy: {
       intro:
@@ -1288,12 +1315,19 @@ export const courses: Course[] = [
         a: "Yes. The module titles here are reused there, so you will recognise the ground you have covered. Talk to us about dates and how this session counts towards it.",
       },
     ],
-    // Founder's figures 2026-09-26, no discount: list = offer, so the
-    // components render no strike-through and no "you save" line.
+    // Founder's figures 2026-09-26 (second round): today's price is 75% off
+    // the original — Malaysia RM 500 (was RM 2,000), Pakistan Rs 5,000 (was
+    // Rs 20,000), International USD 200 (was USD 800; the founder typed
+    // "RM200" under USD — read as USD 200, to confirm). Supersedes the
+    // earlier undiscounted RM 100 / Rs 5,000 / USD 1,000.
     pricing: {
-      malaysia: { original: "RM 100", discount: "Launch price", save: "RM 0", today: "RM 100" },
-      pakistan: { original: "Rs. 5,000", discount: "Launch price", save: "Rs. 0", today: "Rs. 5,000" },
-      international: { original: "USD 1,000", discount: "Launch price", save: "USD 0", today: "USD 1,000" },
+      malaysia: { original: "RM 2,000", discount: "75% OFF", save: "RM 1,500", today: "RM 500" },
+      pakistan: { original: "Rs. 20,000", discount: "75% OFF", save: "Rs. 15,000", today: "Rs. 5,000" },
+      international: { original: "USD 800", discount: "75% OFF", save: "USD 600", today: "USD 200" },
+    },
+    regionalPricing: {
+      malaysia: { note: "Online training price. In-person training needs a minimum of 25 participants; cost discussed separately." },
+      international: { note: "Online training price. In-person training needs a minimum of 25 participants; cost discussed separately." },
     },
     related: ["data-blueprint-ai-vibe-coding"],
   },
@@ -1325,18 +1359,20 @@ export const courses: Course[] = [
       "Includes PromptOS Starter Edition",
       "Includes Data Blueprint Foundations",
     ],
+    // "Who can take this training" — rewritten 2026-09-26 (founder change
+    // list): professionals who want the data foundations AND to build with
+    // AI; basic business or technology awareness helps; no coding required.
+    // Rendered by FlagshipLanding.tsx (it no longer hardcodes its audience).
     whoShouldAttend: {
       intro:
-        "Hands-on training for entrepreneurs, startup founders, product managers, citizen developers and corporate innovation teams.",
+        "For professionals who want the data foundations and to build with AI — not one without the other. Basic business or technology awareness helps; no coding is required.",
       roles: [
-        "Entrepreneurs",
-        "Startup founders",
-        "Product managers",
-        "Citizen developers",
-        "Innovation teams",
-        "Business analysts",
-        "Product owners",
-        "Career transitioners",
+        "Business and data analysts",
+        "Data and software engineers",
+        "Product and innovation teams",
+        "Entrepreneurs and startup founders",
+        "Corporate cohorts and internal teams",
+        "Professionals moving into data and AI work",
       ],
     },
     rationale: {
@@ -1395,13 +1431,15 @@ export const courses: Course[] = [
         ],
       },
     ],
-    included: [
-      "AI-Powered Product Development training",
-      "PromptOS Starter Edition",
-      "Data Blueprint Foundations module",
-      "Product development templates",
-      "Prompt libraries",
-      "Capstone project",
+    // `included` removed 2026-09-26 (founder: no "Included" list).
+    whatYouGet: [
+      "A Certificate of Completion with a unique ID and public verification page",
+      "Course material — a hard copy when you attend in person, a soft copy when you attend online",
+    ],
+    paceNotes: [
+      "Malaysia — in person only, minimum 25 participants",
+      "Outside Malaysia — online per person; in person from 100 participants, cost discussed separately",
+      "Pakistan — in person from 100 participants, online from 10 participants, arranged through our local partner",
     ],
     outcomes: [
       "Transform ideas into product requirements",
@@ -1647,30 +1685,32 @@ export const courses: Course[] = [
         "Reduce time-to-market",
       ],
     },
-    // Malaysia price changed 2026-09-06, founder direction: RM 4,998 →
-    // RM 9,999 (original), discounted/"today" price RM 2,499 → RM 4,999.
-    // `discount` ("50% OFF") stays accurate — 5,000 saved on 9,999 is
-    // still ~50%. `save` recomputed (9,999 − 4,999 = 5,000). Pakistan and
-    // international prices deliberately untouched — not in scope.
-    // `valueStack`'s training line and `valueStackTotal` recomputed to
-    // match the new original price, so the Investment section doesn't
-    // visibly contradict itself (9,999 + 1,500 + 1,499 + 500 + 500 + 500
-    // = 14,498).
+    // Prices 2026-09-26 (founder change list): today's figures are the
+    // founder's — Malaysia RM 4,999, International USD 1,999, Pakistan
+    // Rs 99,999 online / Rs 199,999 in person — shown as 75% off. The
+    // ORIGINALS (RM 19,999 / USD 7,999 / Rs 399,999 / Rs 799,999) were set
+    // by the orchestrator to make 75% arithmetic exact — FOUNDER TO CONFIRM.
+    // History: 2026-09-06 Malaysia was RM 9,999 → RM 4,999 (50% OFF);
+    // Pakistan Rs. 342,799.53 → Rs. 102,839.86 (70% OFF); International
+    // USD 3,124 → USD 2,811 (10% OFF).
+    // `programme_prices` keeps ONE Pakistan row — the ONLINE figure; the
+    // in-person figure is display-only in `regionalPricing.pakistan.options`.
+    // `valueStack` / `valueStackTotal` removed (founder: no value stack).
     pricing: {
-      malaysia: { original: "RM 9,999", discount: "50% OFF", save: "RM 5,000", today: "RM 4,999" },
-      pakistan: { original: "Rs. 342,799.53", discount: "70% OFF", save: "Rs. 239,959.67", today: "Rs. 102,839.86" },
-      international: { original: "USD 3,124", discount: "10% OFF", save: "USD 313", today: "USD 2,811" },
+      malaysia: { original: "RM 19,999", discount: "75% OFF", save: "RM 15,000", today: "RM 4,999" },
+      pakistan: { original: "Rs. 399,999", discount: "75% OFF", save: "Rs. 300,000", today: "Rs. 99,999" },
+      international: { original: "USD 7,999", discount: "75% OFF", save: "USD 6,000", today: "USD 1,999" },
     },
-    valueStack: [
-      { item: "Data Blueprint & AI/Vibe Coding training", value: "RM 9,999" },
-      { item: "PromptOS Starter Edition", value: "RM 1,500+" },
-      { item: "Data Blueprint Foundations module", value: "RM 1,499" },
-      { item: "Product development templates", value: "RM 500+" },
-      { item: "Prompt engineering library", value: "RM 500+" },
-      { item: "Capstone project assets", value: "RM 500+" },
-      { item: "Certificate of participation", value: "Included" },
-    ],
-    valueStackTotal: "RM 14,498+",
+    regionalPricing: {
+      malaysia: { note: "In-person training price. Minimum 25 participants. There is no online option for this training in Malaysia." },
+      international: { note: "Online training price. In-person training needs a minimum of 100 participants; cost discussed separately." },
+      pakistan: {
+        options: [
+          { label: "In-person", original: "Rs. 799,999", today: "Rs. 199,999", minParticipants: 100 },
+          { label: "Online", original: "Rs. 399,999", today: "Rs. 99,999", minParticipants: 10 },
+        ],
+      },
+    },
     related: ["data-blueprint", "agentic-ai-strategy-adoption"],
     externalResources: [
       {

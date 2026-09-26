@@ -9,8 +9,12 @@ import type { DeliveryFormatRecord } from "@/modules/catalogue/programmes/types"
  * generic detail template (which was the only place the flagship's three
  * formats appeared publicly). Renders nothing when a programme has no
  * formats.
+ *
+ * `notes` (2026-09-26, founder): the participant numbers per format —
+ * `content.paceNotes` — listed under the cards, so a reader sees the
+ * minimum group size next to the format it applies to.
  */
-export function DeliveryFormats({ formats }: { formats: DeliveryFormatRecord[] }) {
+export function DeliveryFormats({ formats, notes }: { formats: DeliveryFormatRecord[]; notes?: string[] }) {
   if (formats.length === 0) return null;
   return (
     <section id="formats" className="mx-auto max-w-[1280px] scroll-mt-24 px-6 py-16">
@@ -60,6 +64,21 @@ export function DeliveryFormats({ formats }: { formats: DeliveryFormatRecord[] }
           </Card>
         ))}
       </div>
+      {notes && notes.length > 0 && (
+        <div className="mt-8 max-w-[760px]">
+          <p className="text-label mb-3">Participant numbers</p>
+          <ul className="flex flex-col" data-testid="pace-notes">
+            {notes.map((note) => (
+              <li
+                key={note}
+                className="border-t border-[var(--color-line)] py-3 text-body-sm text-[var(--color-ink-quiet)]"
+              >
+                {note}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </section>
   );
 }

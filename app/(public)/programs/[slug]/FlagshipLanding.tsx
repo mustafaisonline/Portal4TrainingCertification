@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { ProgrammeRecord } from "@/modules/catalogue/programmes/types";
 import type { ExpertRecord } from "@/modules/catalogue/experts/repository";
 import { ImageFrame } from "@/shared/marketing/ImageFrame";
@@ -36,6 +37,15 @@ import { Card } from "@/shared/ui/Card";
  * closing CTA's "Explore the course" link, which pointed at that template,
  * is now the enquiry link. Everything else is unchanged.
  *
+ * 2026-09-26 (founder change list, second round): "← All trainings" link at
+ * the top, as on the generic template; "Who can take this training" is now
+ * read from `content.whoShouldAttend` (the hardcoded audience cards are
+ * gone); the delivery formats list participant numbers (`content.paceNotes`);
+ * a "What you get out of this training" section (`content.whatYouGet`)
+ * precedes the Investment cards; the Investment section is the shared
+ * region-card layout with per-region notes/options (`content.regionalPricing`)
+ * and no value stack.
+ *
  * A single-proposition page for the founder-designated flagship, resolved by
  * `flagship = true`, never by a slug literal (ADR-023).
  */
@@ -57,37 +67,6 @@ function GlyphArrowRight() {
     </svg>
   );
 }
-
-/** §8.2 of course_landing_page.md. Rendered as description cards rather
- *  than short tags — each role carries a full one-line reason, not just
- *  a label, which the existing `whoShouldAttend`/Chip pattern (built for
- *  short tags) doesn't fit. */
-const audienceRoles = [
-  [
-    "Aspiring freelance developers",
-    "Want client-ready skills, not another tutorial.",
-  ],
-  [
-    "Career changers",
-    "Moving into tech from a completely different field.",
-  ],
-  [
-    "Entrepreneurs & startup founders",
-    "Need to build and ship an MVP without hiring a dev team.",
-  ],
-  [
-    "Product managers & business analysts",
-    "Want to go from idea to working product themselves.",
-  ],
-  [
-    "Students & graduates",
-    "Building a portfolio that gets freelance work, not just a certificate.",
-  ],
-  [
-    "Working professionals",
-    "Want to use AI properly at work, not just experiment with it.",
-  ],
-] as const;
 
 /** §8.3. Order is founder-confirmed and locked. */
 const benefits = [
@@ -176,7 +155,15 @@ export function FlagshipLanding({
               "radial-gradient(55% 75% at 78% 25%, rgba(47,95,224,0.13), transparent 70%)",
           }}
         />
-        <div className="relative mx-auto grid max-w-[1280px] gap-12 px-6 py-16 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:py-20">
+        <div className="relative mx-auto max-w-[1280px] px-6 pt-10 lg:pt-12">
+          <Link
+            href="/programs"
+            className="text-body-sm inline-block py-2 text-[var(--color-ink-quiet)] underline underline-offset-4 hover:text-[var(--color-ink)]"
+          >
+            ← All trainings
+          </Link>
+        </div>
+        <div className="relative mx-auto grid max-w-[1280px] gap-12 px-6 pb-16 pt-6 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:pb-20">
           <div>
             <p className="text-label mb-4 text-[var(--color-primary)]">
               Data Blueprint & AI/Vibe Coding
@@ -216,33 +203,24 @@ export function FlagshipLanding({
         className="mx-auto max-w-[1280px] scroll-mt-24 px-6 py-16"
       >
         <p className="text-label mb-3 text-[var(--color-primary)]">
-          Who can take this training
+          Who is this for
         </p>
         <h2 className="text-display mb-5 max-w-[640px]">
-          Built for people who want to build
+          Who can take this training
         </h2>
-        <p className="text-body-lg mb-12 max-w-[640px] text-[var(--color-ink-quiet)]">
-          This is built for people who want to build — not just talk about
-          building. Whether you&rsquo;ve never opened a code editor or you
-          already write code every day, the method works the same way:
-          that&rsquo;s the point of teaching it as a method, not a set of
-          tricks.
+        <p className="text-body-lg mb-10 max-w-[680px] text-[var(--color-ink-quiet)]">
+          {flagship.content.whoShouldAttend.intro}
         </p>
-        <div className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
-          {audienceRoles.map(([title, body]) => (
-            <Card key={title} variant="plate" className="p-5">
-              <h3 className="text-h2 mb-2">{title}</h3>
-              <p className="text-body-sm text-[var(--color-ink-quiet)]">
-                {body}
-              </p>
-            </Card>
+        <ul className="grid max-w-[960px] gap-x-10 sm:grid-cols-2 lg:grid-cols-3" data-testid="who-can-take">
+          {flagship.content.whoShouldAttend.roles.map((role) => (
+            <li
+              key={role}
+              className="border-t border-[var(--color-line)] py-3.5 text-body-sm text-[var(--color-ink-quiet)]"
+            >
+              {role}
+            </li>
           ))}
-        </div>
-        <p className="mt-10 max-w-[640px] text-body-sm text-[var(--color-ink-quiet)]">
-          No prior coding experience required. If you already code, the
-          method makes you faster and more reliable — it doesn&rsquo;t
-          start you over.
-        </p>
+        </ul>
       </section>
 
       {/* ===== Benefits of this training — §8.3 =====
@@ -443,7 +421,7 @@ export function FlagshipLanding({
 
       {/* ===== Delivery formats — moved here from the generic detail
           template, 2026-09-26 (see header). ===== */}
-      <DeliveryFormats formats={flagship.deliveryFormats} />
+      <DeliveryFormats formats={flagship.deliveryFormats} notes={flagship.content.paceNotes} />
 
       {/* ===== Who teaches you — §8.6 =====
           Reflects the experts repository honestly: one genuine
@@ -557,15 +535,34 @@ export function FlagshipLanding({
         </div>
       </section>
 
+      {/* ===== What you get out of this training (2026-09-26) ===== */}
+      {flagship.content.whatYouGet && flagship.content.whatYouGet.length > 0 && (
+        <section id="what-you-get" className="mx-auto max-w-[1280px] scroll-mt-24 px-6 py-16">
+          <p className="text-label mb-3 text-[var(--color-primary)]">
+            Take-aways
+          </p>
+          <h2 className="text-display mb-8">What you get out of this training</h2>
+          <ul className="grid max-w-[960px] gap-x-10 sm:grid-cols-2" data-testid="what-you-get">
+            {flagship.content.whatYouGet.map((item) => (
+              <li
+                key={item}
+                className="border-t border-[var(--color-line)] py-3.5 text-body-sm text-[var(--color-ink-quiet)]"
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       {/* ===== Investment — §8.7 =====
           The same `ProgrammePricing` component the detail page uses, fed
-          the flagship's own prices/valueStack — so the two pages can never
-          show different numbers for the same programme. */}
+          the flagship's own prices and regional notes — so the two pages can
+          never show different numbers for the same programme. */}
       {flagship.prices.length > 0 && (
         <ProgrammePricing
           prices={flagship.prices}
-          valueStack={flagship.content.valueStack}
-          valueStackTotal={flagship.content.valueStackTotal}
+          regionalPricing={flagship.content.regionalPricing}
           programmeSlug={flagship.slug}
         />
       )}

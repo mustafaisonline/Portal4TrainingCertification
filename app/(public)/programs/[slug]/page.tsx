@@ -41,6 +41,13 @@ import { FlagshipLanding } from "./FlagshipLanding";
  * template. New optional content sections — `relationshipNote`,
  * `afterThisTraining`, `faq` — render only when a programme publishes them
  * (first: Learn Vibe Coding). The hero gained "See upcoming dates".
+ * 2026-09-26 (founder change list, second round): "Who should attend" is
+ * "Who can take this training"; a "What you get out of this training"
+ * section (`content.whatYouGet`) precedes the Investment cards; the delivery
+ * formats list participant numbers (`content.paceNotes`); the Investment
+ * section no longer takes a value stack (the two published programmes
+ * publish none — `included`, `valueStack` stay in the type for the unlisted
+ * rows).
  *
  * Course detail — the P10 Course Detail realization.
  *
@@ -233,13 +240,16 @@ export default async function CourseDetailPage({
         </div>
       </section>
 
-      {/* ===== Who should attend ===== */}
-      <section className="border-t border-[var(--color-line)] bg-[var(--color-ground-raised)]">
+      {/* ===== Who can take this training ===== */}
+      <section
+        id="who-can-take-this-training"
+        className="scroll-mt-24 border-t border-[var(--color-line)] bg-[var(--color-ground-raised)]"
+      >
         <div className="mx-auto max-w-[1280px] px-6 py-16">
           <p className="text-label mb-3 text-[var(--color-primary)]">
             Who is this for
           </p>
-          <h2 className="text-display mb-5">Who should attend</h2>
+          <h2 className="text-display mb-5">Who can take this training</h2>
           <p className="text-body-lg mb-9 max-w-[680px] text-[var(--color-ink-quiet)]">
             {content.whoShouldAttend.intro}
           </p>
@@ -252,7 +262,7 @@ export default async function CourseDetailPage({
       </section>
 
       {/* ===== Delivery formats ===== (shared with the flagship landing) */}
-      <DeliveryFormats formats={course.deliveryFormats} />
+      <DeliveryFormats formats={course.deliveryFormats} notes={content.paceNotes} />
 
       {/* ===== Learning outcomes ===== */}
       {(content.outcomes || content.outcomeGroups) && (
@@ -541,12 +551,31 @@ export default async function CourseDetailPage({
         </section>
       )}
 
-      {/* ===== Investment (regional pricing) ===== */}
+      {/* ===== What you get out of this training (2026-09-26) ===== */}
+      {content.whatYouGet && content.whatYouGet.length > 0 && (
+        <section id="what-you-get" className="mx-auto max-w-[1280px] scroll-mt-24 px-6 py-16">
+          <p className="text-label mb-3 text-[var(--color-primary)]">
+            Take-aways
+          </p>
+          <h2 className="text-display mb-8">What you get out of this training</h2>
+          <ul className="grid max-w-[960px] gap-x-10 sm:grid-cols-2" data-testid="what-you-get">
+            {content.whatYouGet.map((item) => (
+              <li
+                key={item}
+                className="border-t border-[var(--color-line)] py-3.5 text-body-sm text-[var(--color-ink-quiet)]"
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* ===== Investment (regional pricing cards) ===== */}
       <ProgrammePricing
         prices={course.prices}
         packages={content.mentorshipPackages}
-        valueStack={content.valueStack}
-        valueStackTotal={content.valueStackTotal}
+        regionalPricing={content.regionalPricing}
         programmeSlug={course.slug}
       />
 

@@ -28,19 +28,32 @@ export type CourseCardProgramme = ProgrammeSummary & {
   content?: ProgrammeContent;
 };
 
-/** The "today" figure per region, as published. */
-function entryPricing(course: CourseCardProgramme): Partial<Record<PriceRegion, string>> | undefined {
+/** The published price per region, or — for a mentorship programme, which
+ *  is priced per package — its entry package's "today" figure as text. */
+type EntryPrice = { today: string; original?: string; offerLabel?: string; discounted: boolean };
+
+function entryPricing(course: CourseCardProgramme): Partial<Record<PriceRegion, EntryPrice>> | undefined {
   if (course.prices && course.prices.length > 0) {
-    const out: Partial<Record<PriceRegion, string>> = {};
-    for (const p of course.prices) out[p.region] = formatMoney(p.offerAmountMinor, p.currency);
+    const out: Partial<Record<PriceRegion, EntryPrice>> = {};
+    for (const p of course.prices) {
+      out[p.region] = {
+        today: formatMoney(p.offerAmountMinor, p.currency),
+        original: formatMoney(p.listAmountMinor, p.currency),
+        offerLabel: p.offerLabel,
+        discounted: p.listAmountMinor > p.offerAmountMinor,
+      };
+    }
     return out;
   }
   // Mentorship is priced per package; show its entry package as the "from".
   if (course.level === "mentorship") {
     const pkg = course.content?.mentorshipPackages?.[0];
     if (pkg) {
-      const out: Partial<Record<PriceRegion, string>> = {};
-      for (const region of PRICE_REGIONS) out[region.key] = pkg.pricing[region.key].today;
+      const out: Partial<Record<PriceRegion, EntryPrice>> = {};
+      for (const region of PRICE_REGIONS) {
+        const r = pkg.pricing[region.key];
+        out[region.key] = { today: r.today, original: r.original, offerLabel: r.discount, discounted: r.today !== r.original };
+      }
       return out;
     }
   }
@@ -56,6 +69,11 @@ function entryPricing(course: CourseCardProgramme): Partial<Record<PriceRegion, 
  * and an indicative "from" price (Malaysia rate — the detail page carries
  * all three regions). Still no dates or capacity: scheduled offerings are
  * read separately.
+ *
+ * 2026-09-26 (founder change list, item 2): on the hub every region is
+ * named in full — "Malaysia", never "(MY)", which read as a currency code
+ * next to "RM" — with today's price, the original struck through, the offer
+ * label ("75% OFF") and the region's note from `content.regionalPricing`.
  */
 export function CourseCard({
   course,
@@ -111,41 +129,49 @@ export function CourseCard({
           {course.formats.join(" · ")}
         </dd>
 
-        {pricing && homeRegion && homePrice && (
+        {pricing && homeRegion && homePrice && !showAllRegions && (
           <>
             <dt className="text-label">From</dt>
             <dd className="leading-snug">
-              {showAllRegions ? (
-                /* Tabular so the three figures align down the column —
-                   .text-mono carries font-variant-numeric: tabular-nums. */
-                <span className="flex flex-col gap-1">
-                  {PRICE_REGIONS.map((region) => {
-                    const figure = pricing[region.key];
-                    if (!figure) return null;
-                    return (
-                      <span key={region.key} className="flex items-baseline gap-2">
-                        <span className="font-medium text-[var(--color-primary)]">
-                          {figure}
-                        </span>
-                        <span className="text-mono text-[0.7rem] text-[var(--color-ink-faint)]">
-                          {region.short}
-                        </span>
-                      </span>
-                    );
-                  })}
+              <span className="font-medium text-[var(--color-primary)]">
+                {homePrice.today}{" "}
+                <span className="font-normal text-[var(--color-ink-faint)]">
+                  ({homeRegion.label})
                 </span>
-              ) : (
-                <span className="font-medium text-[var(--color-primary)]">
-                  {homePrice}{" "}
-                  <span className="font-normal text-[var(--color-ink-faint)]">
-                    ({homeRegion.short})
-                  </span>
-                </span>
-              )}
+              </span>
             </dd>
           </>
         )}
       </dl>
+      {pricing && showAllRegions && (
+        <div className="mb-5 border-t border-[var(--color-line)] pt-4">
+          <p className="text-label mb-3">Investment</p>
+          <ul className="flex flex-col gap-3" data-testid="card-prices">
+            {PRICE_REGIONS.map((region) => {
+              const figure = pricing[region.key];
+              if (!figure) return null;
+              const note = course.content?.regionalPricing?.[region.key]?.note;
+              return (
+                <li key={region.key} data-testid={`card-price-${region.key}`}>
+                  <span className="text-body-sm block font-medium text-[var(--color-ink)]">{region.label}</span>
+                  <span className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                    <span className="text-body-lg font-medium text-[var(--color-primary)]">{figure.today}</span>
+                    {figure.discounted && figure.original && (
+                      <>
+                        <span className="text-body-sm text-[var(--color-ink-faint)] line-through">{figure.original}</span>
+                        {figure.offerLabel && <Chip tone="primary">{figure.offerLabel}</Chip>}
+                      </>
+                    )}
+                  </span>
+                  {note && (
+                    <span className="text-body-sm mt-1 block leading-snug text-[var(--color-ink-quiet)]">{note}</span>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      )}
       <Link
         href={`/programs/${course.slug}`}
         className="text-body-sm inline-block py-2 font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"

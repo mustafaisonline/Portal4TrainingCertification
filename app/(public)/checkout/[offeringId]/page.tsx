@@ -5,7 +5,7 @@ import { countryName } from "@/content/countries";
 import { MODALITY_LABEL } from "@/modules/catalogue/offerings/repository";
 import { formatMoney } from "@/modules/catalogue/programmes/types";
 import { previewCheckout, type CheckoutPreview } from "@/modules/commerce/checkout.service";
-import { PAYMENTS_NOT_CONFIGURED_MESSAGE } from "@/modules/commerce/messages";
+import { LOCAL_PARTNER_PAYMENT_MESSAGE, PAYMENTS_NOT_CONFIGURED_MESSAGE } from "@/modules/commerce/messages";
 import { regionForCountry, regionLabel } from "@/modules/commerce/pricing";
 import { describeRefundTiers } from "@/modules/commerce/refund-policy";
 import { paymentsConfigured } from "@/modules/commerce/stripe";
@@ -34,6 +34,10 @@ import { CheckoutForm } from "./CheckoutForm";
  * Milestone 5a: the profile gate — an incomplete profile is sent to
  * /account/profile?complete=1&return-to=… (and `startCheckout` refuses too);
  * the price region comes from the ISO country on the profile.
+ * 2026-09-26 (founder rule): a Pakistan-profile participant sees the
+ * local-partner message and a Contact us link instead of a pay button —
+ * `previewCheckout` returns `card_payment_unavailable`, and `startCheckout`
+ * refuses the same way before any order or seat hold exists.
  */
 export const metadata: Metadata = {
   title: "Register and pay",
@@ -67,6 +71,7 @@ const UNAVAILABLE: Record<Exclude<CheckoutPreview, { ok: true }>["reason"], { ti
     body: "Finish it in the Stripe page you opened, or come back in 30 minutes when that hold expires. Nothing is charged until Stripe confirms the payment.",
   },
   no_price_for_region: { title: "No price is published for your region yet", body: "Please contact us and we will help you register." },
+  card_payment_unavailable: { title: "Card payment is not available in Pakistan", body: LOCAL_PARTNER_PAYMENT_MESSAGE },
 };
 
 export default async function CheckoutPage({
@@ -113,6 +118,28 @@ export default async function CheckoutPage({
 
 function Unavailable({ preview }: { preview: Exclude<CheckoutPreview, { ok: true }> }) {
   const copy = UNAVAILABLE[preview.reason];
+  // The local-partner route (Pakistan): the enquiry carries the programme so
+  // the partner knows which training the person wants to pay for.
+  if (preview.reason === "card_payment_unavailable") {
+    const o = preview.offering;
+    return (
+      <Card variant="panel" className="max-w-[640px] p-6 sm:p-8" data-testid="checkout-local-partner">
+        <h2 className="text-h1 mb-2" data-testid="checkout-unavailable">
+          {copy.title}
+        </h2>
+        <p className="text-body-sm mb-2 text-[var(--color-ink)]">
+          {o.programmeTitle} · {o.format?.name ?? MODALITY_LABEL[o.modality]} · {formatDateRange(o.startsOn, o.endsOn)}
+        </p>
+        <p className="text-body-sm mb-5 text-[var(--color-ink-quiet)]">{copy.body}</p>
+        <div className="flex flex-wrap gap-3">
+          <Button href={`/contact-us?kind=programme_interest&programme=${o.programmeSlug}`}>Contact us</Button>
+          <Button variant="secondary" href="/schedule">
+            Upcoming dates
+          </Button>
+        </div>
+      </Card>
+    );
+  }
   return (
     <Card variant="panel" className="max-w-[640px] p-6 sm:p-8">
       <h2 className="text-h1 mb-2" data-testid="checkout-unavailable">

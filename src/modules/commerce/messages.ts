@@ -1,4 +1,11 @@
+import { LOCAL_PARTNER_PAYMENT_MESSAGE } from "@/modules/catalogue/programmes/types";
 import type { CommerceErrorCode } from "./errors";
+
+/** Founder rule 2026-09-26: participants in Pakistan do not pay by card.
+ *  The same sentence appears on the pricing cards and on the checkout
+ *  screen when a Pakistan-profile participant reaches it (defined beside
+ *  `PRICE_REGIONS`, re-exported here for the commerce callers). */
+export { LOCAL_PARTNER_PAYMENT_MESSAGE };
 
 /** The sentence a person sees for each service error — shared by the
  *  checkout and registration server actions. */
@@ -13,6 +20,7 @@ export const COMMERCE_MESSAGES: Record<CommerceErrorCode, string> = {
   consent_required: "Please tick the box to agree to the Terms of service, Privacy policy and Refund & cancellation policy.",
   profile_incomplete: "A few profile details are needed before you can register — open Your profile, complete them, and come back to pay.",
   no_price_for_region: "No price is published for your region yet. Please contact us and we will help.",
+  card_payment_unavailable: LOCAL_PARTNER_PAYMENT_MESSAGE,
   order_not_found: "We could not find that order.",
   registration_not_found: "We could not find that registration.",
   registration_not_active: "That registration is no longer active.",

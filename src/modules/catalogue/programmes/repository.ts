@@ -106,8 +106,10 @@ export async function listPublishedProgrammes(db: Db = getPrisma()): Promise<Pro
   return rows.map((r) => ({ ...r, formats: r.formats as string[] }));
 }
 
-/** Listing card with its published prices — the /programs hub (2026-09-26). */
-export type ProgrammeCard = ProgrammeSummary & { prices: ProgrammePriceRecord[] };
+/** Listing card with its published prices and editorial content — the
+ *  /programs hub (2026-09-26). `content` is carried so the card can show the
+ *  per-region pricing notes (`content.regionalPricing`). */
+export type ProgrammeCard = ProgrammeSummary & { prices: ProgrammePriceRecord[]; content: ProgrammeContent };
 
 export async function listPublishedProgrammesWithPrices(db: Db = getPrisma()): Promise<ProgrammeCard[]> {
   const rows = await db.programme.findMany({
@@ -117,11 +119,13 @@ export async function listPublishedProgrammesWithPrices(db: Db = getPrisma()): P
       id: true, slug: true, title: true, subtitle: true, level: true, status: true, flagship: true,
       durationLabel: true, formats: true, certificateLabel: true, audienceSummary: true, summary: true, sortOrder: true,
       prices: true,
+      content: true,
     },
   });
   return rows.map((r) => ({
     ...r,
     formats: r.formats as string[],
+    content: r.content as ProgrammeContent,
     prices: r.prices
       .map((p) => ({
         region: p.region,

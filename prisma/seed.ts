@@ -117,6 +117,9 @@ async function seedProgrammes(domainIds: Map<string, string>): Promise<Map<strin
       relationshipNote: c.relationshipNote,
       afterThisTraining: c.afterThisTraining,
       faq: c.faq,
+      whatYouGet: c.whatYouGet,
+      paceNotes: c.paceNotes,
+      regionalPricing: c.regionalPricing,
       ...(c.slug === "data-ai-career-mentorship" ? { mentorshipPackages } : {}),
     };
     const data = {

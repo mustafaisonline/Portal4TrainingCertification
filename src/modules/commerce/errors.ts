@@ -17,6 +17,7 @@ export type CommerceErrorCode =
   | "consent_required"
   | "profile_incomplete"
   | "no_price_for_region"
+  | "card_payment_unavailable"
   | "order_not_found"
   | "registration_not_found"
   | "registration_not_active"

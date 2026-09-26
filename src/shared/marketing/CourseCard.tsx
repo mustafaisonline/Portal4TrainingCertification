@@ -107,7 +107,14 @@ export function CourseCard({
           {course.subtitle}
         </p>
       )}
-      <p className="text-body-sm mb-5 flex-1 text-[var(--color-ink-quiet)]">
+      {/* No `flex-1` here (removed 2026-09-26, founder-reported: "why so
+          much gap before Duration?"). Cards in one /programs grid row are
+          stretched to equal height, and `flex-1` on THIS paragraph made the
+          shorter card's summary box swallow all the surplus — a blank area
+          under one sentence. The surplus now collapses at the bottom via
+          `mt-auto` on the CTA link below, so every card's content stacks
+          naturally and only the link is pinned to the bottom edge. */}
+      <p className="text-body-sm mb-5 text-[var(--color-ink-quiet)]">
         {course.summary}
       </p>
       {/* Specification grid: `items-baseline` puts label and value on one
@@ -150,21 +157,56 @@ export function CourseCard({
             {PRICE_REGIONS.map((region) => {
               const figure = pricing[region.key];
               if (!figure) return null;
-              const note = course.content?.regionalPricing?.[region.key]?.note;
+              const regional = course.content?.regionalPricing?.[region.key];
+              const options = regional?.options;
               return (
                 <li key={region.key} data-testid={`card-price-${region.key}`}>
-                  <span className="text-body-sm block font-medium text-[var(--color-ink)]">{region.label}</span>
-                  <span className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                    <span className="text-body-lg font-medium text-[var(--color-primary)]">{figure.today}</span>
-                    {figure.discounted && figure.original && (
-                      <>
-                        <span className="text-body-sm text-[var(--color-ink-faint)] line-through">{figure.original}</span>
-                        {figure.offerLabel && <Chip tone="primary">{figure.offerLabel}</Chip>}
-                      </>
+                  <span className="mb-1 flex flex-wrap items-center gap-2">
+                    <span className="text-body-sm font-medium text-[var(--color-ink)]">{region.label}</span>
+                    {/* When a region publishes two figures (e.g. Malaysia's
+                        "Via HRD Corp" vs "Without HRD Corp", 2026-09-26),
+                        there is no single price line left to carry the
+                        discount chip, so it sits beside the region name
+                        instead — same figures.offerLabel used below when
+                        there's only one price. */}
+                    {options && options.length > 0 && figure.discounted && figure.offerLabel && (
+                      <Chip tone="primary">{figure.offerLabel}</Chip>
                     )}
                   </span>
-                  {note && (
-                    <span className="text-body-sm mt-1 block leading-snug text-[var(--color-ink-quiet)]">{note}</span>
+                  {options && options.length > 0 ? (
+                    <dl className="flex flex-col gap-2.5" data-testid={`card-price-options-${region.key}`}>
+                      {options.map((o) => (
+                        <div key={o.label}>
+                          <dt className="text-body-sm font-medium text-[var(--color-ink-quiet)]">{o.label}</dt>
+                          <dd>
+                            <span className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                              <span className="text-body-lg font-medium text-[var(--color-primary)]">{o.today}</span>
+                              {o.original !== o.today && (
+                                <span className="text-body-sm text-[var(--color-ink-faint)] line-through">{o.original}</span>
+                              )}
+                            </span>
+                            {o.minParticipants !== undefined && (
+                              <span className="text-body-sm block text-[var(--color-ink-quiet)]">
+                                minimum {o.minParticipants} participants
+                              </span>
+                            )}
+                          </dd>
+                        </div>
+                      ))}
+                    </dl>
+                  ) : (
+                    <span className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                      <span className="text-body-lg font-medium text-[var(--color-primary)]">{figure.today}</span>
+                      {figure.discounted && figure.original && (
+                        <>
+                          <span className="text-body-sm text-[var(--color-ink-faint)] line-through">{figure.original}</span>
+                          {figure.offerLabel && <Chip tone="primary">{figure.offerLabel}</Chip>}
+                        </>
+                      )}
+                    </span>
+                  )}
+                  {regional?.note && (
+                    <span className="text-body-sm mt-1 block leading-snug text-[var(--color-ink-quiet)]">{regional.note}</span>
                   )}
                 </li>
               );
@@ -174,7 +216,7 @@ export function CourseCard({
       )}
       <Link
         href={`/programs/${course.slug}`}
-        className="text-body-sm inline-block py-2 font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
+        className="text-body-sm mt-auto inline-block py-2 font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
       >
         Course details →
       </Link>

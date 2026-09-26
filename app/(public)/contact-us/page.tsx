@@ -116,10 +116,12 @@ export default async function ContactPage({
                 {r.label}
               </p>
               <h2 className="text-h1 mb-3">{r.title}</h2>
-              <p className="text-body-sm mb-6 flex-1 text-[var(--color-ink-quiet)]">
+              {/* `flex-1` removed from the body, `mt-auto` on the CTA
+                  wrapper (2026-09-26): same fix as CourseCard.tsx. */}
+              <p className="text-body-sm mb-6 text-[var(--color-ink-quiet)]">
                 {r.body}
               </p>
-              <div>
+              <div className="mt-auto">
                 <Button variant="secondary" href={r.href}>
                   {r.cta}
                 </Button>

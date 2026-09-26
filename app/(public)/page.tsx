@@ -165,12 +165,16 @@ export default async function HomePage() {
               </div>
               <p className="text-label mb-2">{p.label}</p>
               <h3 className="text-h2 mb-2">{p.title}</h3>
-              <p className="text-body-sm mb-6 flex-1 text-[var(--color-ink-quiet)]">
+              {/* `flex-1` removed from the body, `mt-auto` on the CTA
+                  (2026-09-26): same fix as CourseCard.tsx — equal-height
+                  grid cards must shed surplus height at the bottom, not
+                  inside a short paragraph. */}
+              <p className="text-body-sm mb-6 text-[var(--color-ink-quiet)]">
                 {p.body}
               </p>
               <Link
                 href={p.href}
-                className={`inline-flex items-center justify-center gap-2 self-start rounded-[var(--radius-plate)] px-5 py-2.5 text-body-sm font-medium text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2563eb] ${p.btn}`}
+                className={`mt-auto inline-flex items-center justify-center gap-2 self-start rounded-[var(--radius-plate)] px-5 py-2.5 text-body-sm font-medium text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2563eb] ${p.btn}`}
               >
                 {p.cta}
               </Link>

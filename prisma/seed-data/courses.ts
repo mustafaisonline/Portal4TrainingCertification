@@ -1685,31 +1685,51 @@ export const courses: Course[] = [
         "Reduce time-to-market",
       ],
     },
-    // Prices 2026-09-26 (founder change list): today's figures are the
-    // founder's — Malaysia RM 4,999, International USD 1,999, Pakistan
-    // Rs 99,999 online / Rs 199,999 in person — shown as 75% off. The
-    // ORIGINALS (RM 19,999 / USD 7,999 / Rs 399,999 / Rs 799,999) were set
-    // by the orchestrator to make 75% arithmetic exact — FOUNDER TO CONFIRM.
-    // History: 2026-09-06 Malaysia was RM 9,999 → RM 4,999 (50% OFF);
-    // Pakistan Rs. 342,799.53 → Rs. 102,839.86 (70% OFF); International
-    // USD 3,124 → USD 2,811 (10% OFF).
-    // `programme_prices` keeps ONE Pakistan row — the ONLINE figure; the
-    // in-person figure is display-only in `regionalPricing.pakistan.options`.
+    // Prices UPDATED 2026-09-26, later the same day, at the founder's
+    // explicit direction (chat: "Please update the card content... Please
+    // note, I have added another line for Malaysia"). RELABELLED the same
+    // day, later still (founder: "Launch offer change this to Without HRD
+    // Corp" — also asked for both figures to show on the /programs listing
+    // card, not just the detail page; see CourseCard.tsx):
+    // - Malaysia now publishes TWO figures on one card, via `options`
+    //   (the same mechanism Pakistan used to use — see below): "Via HRD
+    //   Corp" at the undiscounted RM 5,000, and "Without HRD Corp" at
+    //   RM 2,500 (50% off). `programme_prices`/checkout is wired to the
+    //   LOWER, generally-available figure (RM 2,500) — the same pattern
+    //   already used for Pakistan below (the broader, self-serve option is
+    //   the row that reaches checkout; the other is display-only).
+    //   FOUNDER TO CONFIRM this checkout-wiring choice.
+    // - Pakistan DROPS its previous two-figure (in-person/online) display
+    //   and now publishes ONE figure — Rs 100,000, down from Rs 200,000 —
+    //   with a note identical in wording to International's, replacing the
+    //   `options` array entirely.
+    // - International: today's figure is USD 1,000 (was USD 1,999),
+    //   discounted from a new original USD 4,000 (was USD 7,999); the
+    //   note is unchanged.
+    // ⚠ Pakistan's figures (Rs 200,000 → Rs 100,000) are exactly 50% off,
+    // not the "55% OFF" the founder's message stated — the founder's
+    // amounts are used verbatim below (nothing was silently corrected);
+    // FOUNDER TO CONFIRM which is right: the label or one of the amounts.
+    // History: this course's price has changed on 2026-09-01 (migration),
+    // 2026-09-06 (50%/70%/10% off), and twice on 2026-09-26 (first to
+    // RM 4,999 / Rs 99,999 online·199,999 in-person / USD 1,999 at 75%
+    // off, now to the figures below).
     // `valueStack` / `valueStackTotal` removed (founder: no value stack).
     pricing: {
-      malaysia: { original: "RM 19,999", discount: "75% OFF", save: "RM 15,000", today: "RM 4,999" },
-      pakistan: { original: "Rs. 399,999", discount: "75% OFF", save: "Rs. 300,000", today: "Rs. 99,999" },
-      international: { original: "USD 7,999", discount: "75% OFF", save: "USD 6,000", today: "USD 1,999" },
+      malaysia: { original: "RM 5,000", discount: "50% OFF", save: "RM 2,500", today: "RM 2,500" },
+      pakistan: { original: "Rs. 200,000", discount: "55% OFF", save: "Rs. 100,000", today: "Rs. 100,000" },
+      international: { original: "USD 4,000", discount: "75% OFF", save: "USD 3,000", today: "USD 1,000" },
     },
     regionalPricing: {
-      malaysia: { note: "In-person training price. Minimum 25 participants. There is no online option for this training in Malaysia." },
-      international: { note: "Online training price. In-person training needs a minimum of 100 participants; cost discussed separately." },
-      pakistan: {
+      malaysia: {
+        note: "In-person training price. Minimum 25 participants. There is no online option for this training in Malaysia.",
         options: [
-          { label: "In-person", original: "Rs. 799,999", today: "Rs. 199,999", minParticipants: 100 },
-          { label: "Online", original: "Rs. 399,999", today: "Rs. 99,999", minParticipants: 10 },
+          { label: "Via HRD Corp", original: "RM 5,000", today: "RM 5,000", minParticipants: 25 },
+          { label: "Without HRD Corp", original: "RM 5,000", today: "RM 2,500", minParticipants: 25 },
         ],
       },
+      international: { note: "Online training price. In-person training needs a minimum of 100 participants; cost discussed separately." },
+      pakistan: { note: "Online training price. In-person training needs a minimum of 100 participants; cost discussed separately." },
     },
     related: ["data-blueprint", "agentic-ai-strategy-adoption"],
     externalResources: [

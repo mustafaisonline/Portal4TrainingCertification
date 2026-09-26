@@ -309,7 +309,12 @@ export function ProgrammePricing({
                       {pkg.includesLead}
                     </p>
                   )}
-                  <ul className="mb-7 flex flex-1 flex-col gap-1.5">
+                  {/* `flex-1` removed from the list, `mt-auto` on the button
+                      (2026-09-26): same fix as CourseCard.tsx — the three
+                      package cards are one equal-height grid row, and a
+                      shorter "includes" list must not stretch into blank
+                      space; the button is pinned to the bottom instead. */}
+                  <ul className="mb-7 flex flex-col gap-1.5">
                     {pkg.includes.map((item) => (
                       <li
                         key={item}
@@ -322,6 +327,7 @@ export function ProgrammePricing({
                   <Button
                     variant={pkg.featured ? "primary" : "secondary"}
                     href={enquiryHref}
+                    className="mt-auto"
                   >
                     Enquire about this package
                   </Button>

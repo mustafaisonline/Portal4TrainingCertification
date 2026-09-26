@@ -91,7 +91,16 @@ test("/programs lists exactly the published trainings in order, Learn Vibe Codin
     await expect(item).not.toContainText("(MY)");
     await expect(item).not.toContainText("(PK)");
     await expect(item).not.toContainText("(INT)");
-    await expect(item.getByText("75% OFF", { exact: true })).toHaveCount(3);
+    // Learn Vibe Coding is 75% off in every region; the flagship's prices
+    // were updated 2026-09-26 (second time that day) to a different
+    // discount per region — see the flagship's own test below.
+    if (p.slug === "data-blueprint-ai-vibe-coding") {
+      await expect(item.getByText("50% OFF", { exact: true })).toHaveCount(1);
+      await expect(item.getByText("55% OFF", { exact: true })).toHaveCount(1);
+      await expect(item.getByText("75% OFF", { exact: true })).toHaveCount(1);
+    } else {
+      await expect(item.getByText("75% OFF", { exact: true })).toHaveCount(3);
+    }
   }
 
   // Learn Vibe Coding: RM 500 (was 2,000) · Rs 5,000 (was 20,000) · USD 200 (was 800), plus the note.
@@ -111,12 +120,14 @@ test("/programs lists exactly the published trainings in order, Learn Vibe Codin
   await expect(lvc.getByTestId("card-price-international")).toContainText(lvcNote);
   await expect(lvc.getByTestId("card-price-pakistan")).not.toContainText(lvcNote);
 
-  // Flagship: RM 4,999 (was 19,999) · Rs 99,999 (was 399,999) · USD 1,999 (was 7,999).
+  // Flagship (updated 2026-09-26, second time that day): RM 2,500 (was
+  // 5,000, 50% OFF) · Rs 100,000 (was 200,000, 55% OFF) · USD 1,000 (was
+  // 4,000, 75% OFF).
   const flagship = items.nth(1);
   const flagshipExpected: [string, string, string][] = [
-    ["malaysia", "RM 4,999", "RM 19,999"],
-    ["pakistan", "Rs. 99,999", "Rs. 399,999"],
-    ["international", "USD 1,999", "USD 7,999"],
+    ["malaysia", "RM 2,500", "RM 5,000"],
+    ["pakistan", "Rs. 100,000", "Rs. 200,000"],
+    ["international", "USD 1,000", "USD 4,000"],
   ];
   for (const [region, today, original] of flagshipExpected) {
     const row = flagship.getByTestId(`card-price-${region}`);
@@ -125,6 +136,24 @@ test("/programs lists exactly the published trainings in order, Learn Vibe Codin
   }
   await expect(flagship.getByTestId("card-price-malaysia")).toContainText("no online option for this training in Malaysia");
   await expect(flagship.getByTestId("card-price-international")).toContainText("minimum of 100 participants");
+  // Pakistan now carries a note too (it used to have none — this listing
+  // card doesn't show Malaysia's or Pakistan's old `options`, so the
+  // Pakistan card previously had no note text at all).
+  await expect(flagship.getByTestId("card-price-pakistan")).toContainText("minimum of 100 participants");
+
+  // Malaysia's HRD Corp fee — 2026-09-26, later still (founder: "Bring in
+  // HRD Corp fee as well" on this listing card too, not just the detail
+  // page). Both options render here via CourseCard.tsx's own `options`
+  // branch, same data as the detail page's price card.
+  const myListingOptions = flagship.getByTestId("card-price-options-malaysia");
+  const hrdCorpRow = myListingOptions.locator("> div").filter({ hasText: "Via HRD Corp" });
+  await expect(hrdCorpRow.getByText("RM 5,000", { exact: true })).toBeVisible();
+  await expect(hrdCorpRow.locator(".line-through")).toHaveCount(0);
+  await expect(hrdCorpRow).toContainText(/minimum 25 participants/i);
+  const withoutHrdCorpRow = myListingOptions.locator("> div").filter({ hasText: "Without HRD Corp" });
+  await expect(withoutHrdCorpRow.getByText("RM 2,500", { exact: true })).toBeVisible();
+  await expect(withoutHrdCorpRow.locator(".line-through")).toHaveText("RM 5,000");
+  await expect(withoutHrdCorpRow).toContainText(/minimum 25 participants/i);
 
   // No unlisted programme is offered.
   const { getPrisma } = await import("../../src/db/prisma");
@@ -266,21 +295,74 @@ test("/programs/data-blueprint-ai-vibe-coding serves the flagship's bespoke land
   expect((await whatYouGet.boundingBox())!.y).toBeLessThan((await page.locator("#investment").boundingBox())!.y);
   await expect(page.getByText("Included", { exact: true })).toHaveCount(0);
 
-  // Investment cards: RM 4,999 (was 19,999) · USD 1,999 (was 7,999) · Pakistan two figures.
-  await expectInvestmentCards(page, flagship!.slug, {
-    international: { today: "USD 1,999", original: "USD 7,999" },
-    malaysia: { today: "RM 4,999", original: "RM 19,999" },
-    pakistan: { today: "Rs. 99,999", original: "Rs. 399,999" },
-  });
-  const pk = page.getByTestId("price-card-pakistan");
-  await expect(pk.getByText("In-person", { exact: true })).toBeVisible();
-  await expect(pk.getByText("Rs. 199,999", { exact: true })).toBeVisible();
-  await expect(pk.locator(".line-through").filter({ hasText: "Rs. 799,999" })).toBeVisible();
-  await expect(pk).toContainText("minimum 100 participants");
-  await expect(pk.getByText("Online", { exact: true })).toBeVisible();
-  await expect(pk).toContainText("minimum 10 participants");
+  // Investment cards — UPDATED 2026-09-26, second time that day: Malaysia
+  // now shows two figures (via `options`, like Pakistan used to), Pakistan
+  // now shows one figure (like International always has), each region has
+  // its own discount label, so `expectInvestmentCards` (which assumes a
+  // flat "75% OFF" and the simple today/original layout everywhere) no
+  // longer fits this card set — asserted directly instead.
+  const investment = page.locator("#investment");
+  const enquiry = `/contact-us?kind=programme_interest&programme=${flagship!.slug}`;
+  await expect(investment.getByRole("heading", { name: "Course investment" })).toBeVisible();
+  await expect(investment.getByRole("tab")).toHaveCount(0);
+  const cards = investment.getByTestId("price-cards").locator("> *");
+  await expect(cards).toHaveCount(4);
+  await expect(cards.nth(0)).toHaveAttribute("data-testid", "price-card-international");
+  await expect(cards.nth(1)).toHaveAttribute("data-testid", "price-card-malaysia");
+  await expect(cards.nth(2)).toHaveAttribute("data-testid", "price-card-pakistan");
+  await expect(cards.nth(3)).toHaveAttribute("data-testid", "price-card-no-card");
+
+  // International — simple figure, unchanged layout, new amounts, 75% OFF.
+  const intl = investment.getByTestId("price-card-international");
+  await expect(intl.getByText("USD 1,000", { exact: true })).toBeVisible();
+  await expect(intl.locator(".line-through").filter({ hasText: "USD 4,000" })).toBeVisible();
+  await expect(intl.getByText("75% OFF", { exact: true })).toBeVisible();
+  await expect(intl).toContainText("Card payment in USD");
+  await expect(intl).toContainText(/you save/i);
+
+  // Malaysia — the two-figure `options` layout: "Via HRD Corp" at the
+  // undiscounted RM 5,000 (its today and original are equal, so no
+  // strike-through), "Without HRD Corp" at RM 2,500, RM 5,000 struck
+  // through (the checkout price; relabelled from "Launch offer" 2026-09-26,
+  // later the same day, founder direction). Each option's own row is
+  // scoped by its `<dt>` label text — "RM 5,000" appears twice on this
+  // card (once per option), so an unscoped `my.getByText("RM 5,000")` is
+  // ambiguous.
+  const my = investment.getByTestId("price-card-malaysia");
+  await expect(my.getByText("50% OFF", { exact: true })).toBeVisible();
+  const hrdCorpRow = my.locator("dl > div").filter({ hasText: "Via HRD Corp" });
+  await expect(hrdCorpRow.getByText("RM 5,000", { exact: true })).toBeVisible();
+  await expect(hrdCorpRow.locator(".line-through")).toHaveCount(0);
+  await expect(hrdCorpRow).toContainText(/minimum 25 participants/i);
+  const withoutHrdCorpRow = my.locator("dl > div").filter({ hasText: "Without HRD Corp" });
+  await expect(withoutHrdCorpRow.getByText("RM 2,500", { exact: true })).toBeVisible();
+  await expect(withoutHrdCorpRow.locator(".line-through")).toHaveText("RM 5,000");
+  await expect(withoutHrdCorpRow).toContainText(/minimum 25 participants/i);
+  await expect(my).toContainText("Card payment in RM");
+
+  // Pakistan — now the simple single-figure layout (no `options`), 55% OFF.
+  const pk = investment.getByTestId("price-card-pakistan");
+  await expect(pk.getByText("Rs. 100,000", { exact: true })).toBeVisible();
+  await expect(pk.locator(".line-through").filter({ hasText: "Rs. 200,000" })).toBeVisible();
+  await expect(pk.getByText("55% OFF", { exact: true })).toBeVisible();
+  await expect(pk.getByText("In-person", { exact: true })).toHaveCount(0);
+  await expect(pk).toContainText("Payment through our local partner");
+  await expect(pk.getByTestId("local-partner-message")).toHaveText(LOCAL_PARTNER);
+  await expect(pk.getByRole("link", { name: "Contact us" })).toHaveAttribute("href", enquiry);
+
+  // The fourth card, and no stray value-stack/old-payment text.
+  const noCard = investment.getByTestId("price-card-no-card");
+  await expect(noCard.getByRole("heading", { name: "Can’t pay by card?" })).toBeVisible();
+  await expect(noCard.getByRole("link", { name: "Contact us" })).toHaveAttribute("href", enquiry);
+  await expect(investment.getByText("What is included")).toHaveCount(0);
+  await expect(investment.getByText("Total value")).toHaveCount(0);
+  await expect(investment.getByText(/no online payment yet/i)).toHaveCount(0);
+
   await expect(page.getByTestId("price-note-malaysia")).toHaveText(
     "In-person training price. Minimum 25 participants. There is no online option for this training in Malaysia.",
+  );
+  await expect(page.getByTestId("price-note-pakistan")).toHaveText(
+    "Online training price. In-person training needs a minimum of 100 participants; cost discussed separately.",
   );
   await expect(page.getByTestId("price-note-international")).toHaveText(
     "Online training price. In-person training needs a minimum of 100 participants; cost discussed separately.",

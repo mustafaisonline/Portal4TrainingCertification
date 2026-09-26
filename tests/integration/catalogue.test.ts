@@ -85,28 +85,39 @@ describe("programmes", () => {
     expect(row!.experts.length).toBeGreaterThan(0);
   });
 
-  it("the flagship (2026-09-26) is priced at 75% off in every region; Pakistan's second figure lives in content, one of its options equals the price row", async () => {
+  it("the flagship (updated 2026-09-26, second time that day) is priced per region — Malaysia's second figure lives in content, one of its options equals the price row", async () => {
     const flagship = (await findFlagshipProgramme())!;
     const byRegion = Object.fromEntries(flagship.prices.map((p) => [p.region, p]));
-    expect(formatMoney(byRegion["malaysia"]!.offerAmountMinor, "MYR")).toBe("RM 4,999");
-    expect(formatMoney(byRegion["malaysia"]!.listAmountMinor, "MYR")).toBe("RM 19,999");
-    expect(formatMoney(byRegion["international"]!.offerAmountMinor, "USD")).toBe("USD 1,999");
-    expect(formatMoney(byRegion["international"]!.listAmountMinor, "USD")).toBe("USD 7,999");
-    // ONE Pakistan row — the online figure — currency PKR.
+    expect(formatMoney(byRegion["malaysia"]!.offerAmountMinor, "MYR")).toBe("RM 2,500");
+    expect(formatMoney(byRegion["malaysia"]!.listAmountMinor, "MYR")).toBe("RM 5,000");
+    expect(byRegion["malaysia"]!.offerLabel).toBe("50% OFF");
+    expect(formatMoney(byRegion["international"]!.offerAmountMinor, "USD")).toBe("USD 1,000");
+    expect(formatMoney(byRegion["international"]!.listAmountMinor, "USD")).toBe("USD 4,000");
+    expect(byRegion["international"]!.offerLabel).toBe("75% OFF");
+    // ONE Pakistan row (unchanged shape from before this update) — currency PKR.
     expect(byRegion["pakistan"]!.currency).toBe("PKR");
-    expect(formatMoney(byRegion["pakistan"]!.offerAmountMinor, "PKR")).toBe("Rs. 99,999");
-    expect(formatMoney(byRegion["pakistan"]!.listAmountMinor, "PKR")).toBe("Rs. 399,999");
+    expect(formatMoney(byRegion["pakistan"]!.offerAmountMinor, "PKR")).toBe("Rs. 100,000");
+    expect(formatMoney(byRegion["pakistan"]!.listAmountMinor, "PKR")).toBe("Rs. 200,000");
+    expect(byRegion["pakistan"]!.offerLabel).toBe("55% OFF");
     expect(flagship.prices.filter((p) => p.region === "pakistan")).toHaveLength(1);
-    for (const p of flagship.prices) expect(p.offerLabel, p.region).toBe("75% OFF");
 
-    const pk = flagship.content.regionalPricing?.pakistan;
-    expect(pk?.options?.map((o) => o.label)).toEqual(["In-person", "Online"]);
-    expect(pk?.options?.map((o) => o.minParticipants)).toEqual([100, 10]);
+    // Malaysia now carries the two-figure `options` display Pakistan used
+    // to carry (before this update) — "Via HRD Corp" (undiscounted) and
+    // "Without HRD Corp" (50% off, relabelled from "Launch offer" the same
+    // day), both minimum 25 participants.
+    const my = flagship.content.regionalPricing?.malaysia;
+    expect(my?.options?.map((o) => o.label)).toEqual(["Via HRD Corp", "Without HRD Corp"]);
+    expect(my?.options?.map((o) => o.minParticipants)).toEqual([25, 25]);
     // The display options must never drift from the amount checkout charges.
-    const online = pk!.options!.find((o) => o.label === "Online")!;
-    expect(online.today).toBe(formatMoney(byRegion["pakistan"]!.offerAmountMinor, "PKR"));
-    expect(online.original).toBe(formatMoney(byRegion["pakistan"]!.listAmountMinor, "PKR"));
-    expect(flagship.content.regionalPricing?.malaysia?.note).toMatch(/no online option/);
+    const withoutHrdCorp = my!.options!.find((o) => o.label === "Without HRD Corp")!;
+    expect(withoutHrdCorp.today).toBe(formatMoney(byRegion["malaysia"]!.offerAmountMinor, "MYR"));
+    expect(withoutHrdCorp.original).toBe(formatMoney(byRegion["malaysia"]!.listAmountMinor, "MYR"));
+    expect(my?.note).toMatch(/no online option/);
+
+    // Pakistan no longer carries `options` — a single note, same wording
+    // pattern as International's.
+    expect(flagship.content.regionalPricing?.pakistan?.options).toBeUndefined();
+    expect(flagship.content.regionalPricing?.pakistan?.note).toMatch(/minimum of 100 participants/);
     expect(flagship.content.regionalPricing?.international?.note).toMatch(/minimum of 100 participants/);
     expect(flagship.content.whatYouGet).toHaveLength(2);
     expect(flagship.content.paceNotes).toHaveLength(3);

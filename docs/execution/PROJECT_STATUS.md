@@ -1,7 +1,7 @@
 # Project Status — START HERE when returning
 
 > **As at 2026-09-26.** Maintained as the single resume point. If this file and any completion report disagree, the completion report is more detailed; if this file and `git log` disagree, `git log` wins — update this file.
-> **Branch:** `feat/production-foundation` · **never pushed** (the founder pushes or opens the PR to `main` on request) · working tree clean (see `git log`).
+> **Branch:** `feat/production-foundation` · **pushed to `origin/feat/production-foundation` on 2026-09-26** (founder direction: "commit and push this to dev" — no `dev` branch exists on this repo, so this branch is the development line; opening the PR to `main` remains the founder's call) · working tree clean (see `git log`).
 > **Read next, in order:** `CLAUDE.md` (constitution) → this file → the plan and completion report of whatever you are about to touch → the specifications only as needed.
 
 ## 1. What the product is (one paragraph)

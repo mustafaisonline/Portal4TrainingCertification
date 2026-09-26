@@ -29,9 +29,9 @@ test("programme page renders the flagship from the database", async ({ page }) =
   const flagship = await findFlagshipProgramme();
   expect(flagship, "seeded flagship").not.toBeNull();
 
-  // 2026-09-26: the flagship's bespoke landing is served at its /programs
-  // page and now also carries the delivery formats (formerly on the generic
-  // detail template only).
+  // 2026-09-26: the flagship renders through the shared training template
+  // at its /programs page (its bespoke landing was retired that day); the
+  // curriculum is two modules whose titles appear as the accordion summaries.
   await page.goto(`/programs/${flagship!.slug}`);
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   const body = await page.locator("body").innerText();

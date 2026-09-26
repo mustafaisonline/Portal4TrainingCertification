@@ -11,8 +11,9 @@ import {
   findPublishedProgrammeBySlug,
   listPublishedProgrammes,
 } from "@/modules/catalogue/programmes/repository";
-import { formatMoney } from "@/modules/catalogue/programmes/types";
-import { courses } from "../../prisma/seed-data/courses";
+import { isModulePointGroup } from "@/modules/catalogue/programmes/module-points";
+import { formatMoney, type ModulePointGroup } from "@/modules/catalogue/programmes/types";
+import { courses, LEARN_VIBE_CODING_MODULES } from "../../prisma/seed-data/courses";
 import { faqGroups } from "../../prisma/seed-data/faq";
 import { questions } from "../../prisma/seed-data/questions";
 import { uniqueEmail } from "../helpers/identity-db";
@@ -124,6 +125,56 @@ describe("programmes", () => {
     expect(flagship.content.included).toBeUndefined();
     expect(flagship.content.valueStack).toBeUndefined();
     expect(flagship.content.valueStackTotal).toBeUndefined();
+  });
+
+  it("the flagship's curriculum is TWO modules (founder, 2026-09-26): Module 1 groups the ten Data Blueprint topics, Module 2 IS the Learn Vibe Coding curriculum; Certificate of Completion; 2 days", async () => {
+    const flagship = (await findFlagshipProgramme())!;
+    expect(flagship.modules).toHaveLength(2);
+    expect(flagship.modules.map((m) => m.title)).toEqual(["Module 1 · Data Blueprint", "Module 2 · Learn Vibe Coding"]);
+
+    const m1 = flagship.modules[0]!.points!;
+    expect(m1).toHaveLength(10);
+    expect(m1.every(isModulePointGroup)).toBe(true);
+    expect((m1 as ModulePointGroup[]).map((g) => g.title)).toEqual([
+      "AI-powered product development fundamentals",
+      "Decision support systems (DSS)",
+      "What is data",
+      "What is metadata",
+      "Building blocks of data",
+      "Data modelling",
+      "Data processing & storage",
+      "DAC Architecture",
+      "Data governance, security, privacy & quality",
+      "Agentic AI",
+    ]);
+    for (const g of m1 as ModulePointGroup[]) {
+      expect(g.description, g.title).toBeTruthy();
+      expect(g.points!.length, g.title).toBeGreaterThan(0);
+    }
+
+    // Module 2 == the shared constant == what the Learn Vibe Coding row holds.
+    const m2 = flagship.modules[1]!.points!;
+    expect(m2).toEqual(LEARN_VIBE_CODING_MODULES.map((m) => ({ title: m.title, points: m.points })));
+    const lvc = (await findPublishedProgrammeBySlug("learn-vibe-coding"))!;
+    expect(lvc.modules).toHaveLength(6);
+    expect(lvc.modules.map((m) => ({ title: m.title, points: m.points }))).toEqual(m2);
+
+    // The page sections the founder asked for, and the retired copy gone.
+    expect(flagship.certificateLabel).toBe("Certificate of Completion");
+    expect(flagship.durationLabel).toBe("2 days");
+    expect(flagship.deliveryFormats).toHaveLength(3);
+    expect(flagship.content.relationshipNote).toMatch(/Learn Vibe Coding/);
+    expect(flagship.content.rationale.heading).toBe("Why you need this training");
+    expect(flagship.content.rationale.paragraphs.length).toBeGreaterThanOrEqual(2);
+    expect(flagship.content.rationale.problems).toHaveLength(4);
+    expect(flagship.content.afterThisTraining?.heading).toBe("Start freelancing or lead data-and-AI work straight after");
+    expect(flagship.content.afterThisTraining?.items.length).toBeGreaterThanOrEqual(5);
+    expect(flagship.content.outcomes).toContain("Direct an AI coding agent from a written vision to a working product with guardrails");
+    expect(flagship.content.faq).toHaveLength(5);
+    expect(flagship.content.related).toContain("learn-vibe-coding");
+    expect(flagship.content.methodology?.name).toBe("Your learning journey");
+    expect(flagship.content.methodology?.steps.map((s) => s.title)).toEqual(expect.arrayContaining(["Plan", "Build", "Test", "Deploy", "Improve"]));
+    expect(JSON.stringify(flagship.content)).not.toMatch(/PromptOS|4 weeks|17 modules/);
   });
 
   it("prices render exactly as published", async () => {

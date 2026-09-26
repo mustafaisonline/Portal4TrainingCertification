@@ -235,7 +235,10 @@ test("/programs/learn-vibe-coding renders the training with its sections, the re
   await expect(curriculum).toContainText("6 modules");
   for (const m of training!.modules) await expect(curriculum.getByText(m.title, { exact: true })).toBeVisible();
   await curriculum.getByText(training!.modules[0]!.title, { exact: true }).click();
-  await expect(curriculum.getByText(training!.modules[0]!.points![0]!)).toBeVisible();
+  // Learn Vibe Coding's points are plain strings (no groups).
+  const firstPoint = training!.modules[0]!.points![0]!;
+  expect(typeof firstPoint).toBe("string");
+  await expect(curriculum.getByText(firstPoint as string)).toBeVisible();
 
   // FAQ as native <details>.
   const faq = page.locator("#faq");
@@ -257,35 +260,96 @@ test("/programs/learn-vibe-coding renders the training with its sections, the re
   await expectNoAxeViolations(page);
 });
 
-test("/programs/data-blueprint-ai-vibe-coding serves the flagship's bespoke landing with the back link, the rewritten audience, take-aways, pace notes and the price cards", async ({ page }) => {
+test("/programs/data-blueprint-ai-vibe-coding renders the flagship on the shared training template: the two-module curriculum, the Learn Vibe Coding sections and the price cards", async ({ page }) => {
   const { findFlagshipProgramme } = await import("../../src/modules/catalogue/programmes/repository");
+  const { LEARN_VIBE_CODING_MODULES } = await import("../../prisma/seed-data/courses");
   const flagship = await findFlagshipProgramme();
   expect(flagship).not.toBeNull();
   expect(flagship!.slug).toBe("data-blueprint-ai-vibe-coding");
 
   const res = await page.goto(`/programs/${flagship!.slug}`);
   expect(res?.status()).toBe(200);
-  // The landing's own headline, not the generic template's title h1.
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("It’s a method");
-  // "← All trainings" at the top, as on the generic template.
+  // The generic template's title h1 — the bespoke landing (retired
+  // 2026-09-26) and its "It's a method" headline are gone.
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Data Blueprint & AI/Vibe Coding");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(flagship!.title);
+  await expect(page.locator("#the-method")).toHaveCount(0);
+  await expect(page.getByText("What participants say")).toHaveCount(0);
+  await expect(page.getByText("Stop prompting. Start building properly.")).toHaveCount(0);
   const back = page.getByRole("link", { name: "← All trainings" });
   await expect(back).toHaveAttribute("href", "/programs");
-  const backBox = await back.boundingBox();
-  const h1Box = await page.getByRole("heading", { level: 1 }).boundingBox();
-  expect(backBox!.y).toBeLessThan(h1Box!.y);
-  await expect(page.locator("#the-method")).toBeVisible();
+  expect((await back.boundingBox())!.y).toBeLessThan((await page.getByRole("heading", { level: 1 }).boundingBox())!.y);
+  await expect(page.getByTestId("relationship-note")).toHaveText(flagship!.content.relationshipNote!);
+  await expect(page.getByTestId("relationship-note")).toContainText("Module 2 of this training is our standalone Learn Vibe Coding masterclass");
+
+  // Hero CTAs and meta: duration "2 days", Certificate of Completion.
+  const hero = page.locator("section").first();
+  await expect(hero.getByRole("link", { name: "Register your interest" })).toHaveAttribute(
+    "href",
+    `/contact-us?kind=programme_interest&programme=${flagship!.slug}`,
+  );
+  await expect(hero.getByRole("link", { name: "See upcoming dates" })).toHaveAttribute("href", "/schedule");
+  await expect(hero.locator("dl")).toContainText("2 days");
+  await expect(hero.locator("dl")).toContainText("Certificate of Completion");
+  await expect(hero.locator("dl")).not.toContainText("4 weeks");
+  await expect(hero.locator("dl")).not.toContainText(/participation/i);
+
+  // The sections Learn Vibe Coding has, now on the flagship too.
+  await expect(page.getByRole("heading", { name: "Why you need this training" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: flagship!.content.afterThisTraining!.heading })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Start freelancing or lead data-and-AI work straight after" })).toBeVisible();
+  const after = page.locator("#after-this-training");
+  await expect(after.getByRole("listitem")).toHaveText(flagship!.content.afterThisTraining!.items);
+  await expect(after).not.toContainText(/income|earn/i);
 
   // Who can take this training — from the seed, no coding required.
   await expect(page.getByRole("heading", { name: "Who can take this training" })).toBeVisible();
   const who = page.locator("#who-can-take-this-training");
   await expect(who).toContainText(flagship!.content.whoShouldAttend.intro);
   await expect(who).toContainText("no coding is required");
-  await expect(who.getByTestId("who-can-take").getByRole("listitem")).toHaveText(flagship!.content.whoShouldAttend.roles);
+  for (const role of flagship!.content.whoShouldAttend.roles) await expect(who.getByText(role, { exact: true })).toBeVisible();
 
-  // Participant numbers under the formats.
-  const paceNotes = page.locator("#formats").getByTestId("pace-notes").getByRole("listitem");
+  // Participant numbers under the formats (the three formats are kept).
+  const formats = page.locator("#formats");
+  await expect(formats.getByRole("heading", { name: "Flexible learning formats" })).toBeVisible();
+  for (const f of flagship!.deliveryFormats) await expect(formats.getByText(f.name, { exact: true }).first()).toBeVisible();
+  const paceNotes = formats.getByTestId("pace-notes").getByRole("listitem");
   await expect(paceNotes).toHaveText(flagship!.content.paceNotes!);
   await expect(paceNotes).toHaveText([/Malaysia — in person only, minimum 25 participants/, /Outside Malaysia — online per person; in person from 100 participants/, /Pakistan — in person from 100 participants, online from 10 participants/]);
+
+  // Curriculum: exactly TWO modules (founder, 2026-09-26). Module 1 groups the
+  // ten Data Blueprint topics; Module 2 IS the Learn Vibe Coding curriculum.
+  expect(flagship!.modules).toHaveLength(2);
+  const curriculum = page.locator("#curriculum");
+  await expect(curriculum).toContainText("2 modules");
+  await expect(curriculum).not.toContainText("17 modules");
+  await expect(curriculum.getByText("Module 1 · Data Blueprint", { exact: true })).toBeVisible();
+  await expect(curriculum.getByText("Module 2 · Learn Vibe Coding", { exact: true })).toBeVisible();
+  const modules = curriculum.locator("details");
+  await expect(modules).toHaveCount(2);
+  const module2 = modules.nth(1);
+  await curriculum.getByText("Module 2 · Learn Vibe Coding", { exact: true }).click();
+  await expect(module2.getByTestId("module-point-group")).toHaveCount(LEARN_VIBE_CODING_MODULES.length);
+  await expect(module2.getByTestId("module-point-group")).toHaveCount(6);
+  await expect(module2.getByRole("heading", { level: 4, name: "Part 1 · Foundations (about 60 minutes)" })).toBeVisible();
+  await expect(module2.getByText("What is Vibe Coding, and what it is not")).toBeVisible();
+  await expect(module2.getByText(LEARN_VIBE_CODING_MODULES[0]!.points[0]!)).toBeVisible();
+  for (const m of LEARN_VIBE_CODING_MODULES) await expect(module2.getByRole("heading", { level: 4, name: m.title })).toBeVisible();
+  const module1 = modules.nth(0);
+  await curriculum.getByText("Module 1 · Data Blueprint", { exact: true }).click();
+  await expect(module1.getByTestId("module-point-group")).toHaveCount(10);
+  await expect(module1.getByRole("heading", { level: 4, name: "Decision support systems (DSS)" })).toBeVisible();
+  await expect(module1.getByRole("heading", { level: 4, name: "Agentic AI" })).toBeVisible();
+  await expect(module1.getByText("OLTP vs OLAP — operational systems vs analytical systems")).toBeVisible();
+  // The retired modules 11–17 do not render.
+  for (const gone of ["Product discovery & validation", "Prompt engineering & PromptOS", "Capstone project"]) {
+    await expect(curriculum.getByText(gone, { exact: true })).toHaveCount(0);
+  }
+
+  // The learning journey carries the plan → build → test → deploy → improve loop.
+  for (const step of ["Plan", "Build", "Test", "Deploy", "Improve"]) {
+    await expect(page.getByRole("heading", { level: 3, name: step, exact: true })).toBeVisible();
+  }
 
   // What you get — two items, before the Investment section.
   const whatYouGet = page.locator("#what-you-get");
@@ -294,6 +358,23 @@ test("/programs/data-blueprint-ai-vibe-coding serves the flagship's bespoke land
   await expect(whatYouGet).not.toContainText("Starter Kit");
   expect((await whatYouGet.boundingBox())!.y).toBeLessThan((await page.locator("#investment").boundingBox())!.y);
   await expect(page.getByText("Included", { exact: true })).toHaveCount(0);
+
+  // Trainer: the template's TrainerCard shows the published expert.
+  await expect(page.getByRole("heading", { name: "Taught by a practitioner" })).toBeVisible();
+  expect(flagship!.experts.length).toBeGreaterThan(0);
+  await expect(page.getByText(flagship!.experts[0]!.name, { exact: true }).first()).toBeVisible();
+
+  // Certification note and FAQ (five questions, native <details>).
+  await expect(page.getByText(/This course awards a/)).toContainText("certificate of completion");
+  const faq = page.locator("#faq");
+  expect(flagship!.content.faq).toHaveLength(5);
+  await expect(faq.locator("details")).toHaveCount(5);
+  await faq.getByText("Is Module 2 the same as the Learn Vibe Coding training?", { exact: true }).click();
+  await expect(faq.getByText(flagship!.content.faq![1]!.a)).toBeVisible();
+
+  // Related trainings: Learn Vibe Coding is linked.
+  await expect(page.getByRole("heading", { name: "Related trainings" })).toBeVisible();
+  await expect(page.locator('a[href="/programs/learn-vibe-coding"]').first()).toBeVisible();
 
   // Investment cards — UPDATED 2026-09-26, second time that day: Malaysia
   // now shows two figures (via `options`, like Pakistan used to), Pakistan

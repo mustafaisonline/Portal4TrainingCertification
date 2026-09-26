@@ -4,7 +4,7 @@ import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vites
 import { disconnectPrisma, getPrisma } from "@/db/prisma";
 import { findFlagshipProgramme } from "@/modules/catalogue/programmes/repository";
 import type { ProgrammeRecord } from "@/modules/catalogue/programmes/types";
-import { startCheckout } from "@/modules/commerce/checkout.service";
+import { previewCheckout, startCheckout } from "@/modules/commerce/checkout.service";
 import { CommerceError, InvalidSignatureError, PaymentsNotConfiguredError } from "@/modules/commerce/errors";
 import { cancelRegistration, listOrdersForUser, listRegistrationsForUser, transferRegistration } from "@/modules/commerce/registrations.service";
 import type { CheckoutSessionInput, PaymentGateway, RefundInput } from "@/modules/commerce/stripe";
@@ -187,11 +187,13 @@ afterAll(async () => {
 describe("checkout — server-priced by profile country (plan §3 D3, §6.3)", () => {
   it.each([
     ["Malaysia", "malaysia"],
-    ["Pakistan", "pakistan"],
     ["Singapore", "international"],
+    ["GB", "international"],
     // M5a: the gate requires a country, so "no country" is unreachable; a
     // code the pricing table does not name is the international case.
     ["US", "international"],
+    // Pakistan is no longer here: it cannot pay by card (founder rule
+    // 2026-09-26) — see the test below.
   ] as const)("country %j → region %s: pending order, consents, audit, gateway call with that amount and currency", async (country, region) => {
     const offering = await createOffering({ startInDays: 30, capacity: 10 });
     const user = await createUser(country);
@@ -227,6 +229,38 @@ describe("checkout — server-priced by profile country (plan §3 D3, §6.3)", (
     const audit = await listAuditForEntity(prisma, "order", order.id);
     expect(audit.map((a) => a.action)).toEqual(["order.created"]);
     expect(audit[0]!.actorUserId).toBe(user.id);
+  });
+
+  it("Pakistan (founder rule 2026-09-26): previewCheckout says card_payment_unavailable and startCheckout refuses before any order or hold exists; MY → MYR and GB → USD still work", async () => {
+    const offering = await createOffering({ startInDays: 30, capacity: 1 });
+    const pk = await createUser("PK");
+    const preview = await previewCheckout(offering.id, { id: pk.id, country: "PK" });
+    expect(preview.ok).toBe(false);
+    expect(preview).toMatchObject({ ok: false, reason: "card_payment_unavailable" });
+    expect("offering" in preview && preview.offering.id).toBe(offering.id);
+
+    const gateway = fakeGateway();
+    await expect(startCheckout({ userId: pk.id, offeringId: offering.id, consent: true, gateway })).rejects.toMatchObject({ code: "card_payment_unavailable" });
+    expect(gateway.sessions).toHaveLength(0);
+    expect(await prisma.order.count({ where: { userId: pk.id } })).toBe(0);
+    expect(await prisma.consent.count({ where: { userId: pk.id } })).toBe(0);
+    expect(await prisma.auditLog.count({ where: { actorUserId: pk.id, action: "order.created" } })).toBe(0);
+
+    // The one seat was NOT held: a Malaysian participant takes it in MYR …
+    const my = await createUser("Malaysia");
+    const myPreview = await previewCheckout(offering.id, { id: my.id, country: "MY" });
+    expect(myPreview).toMatchObject({ ok: true, price: { currency: "MYR", region: "malaysia" } });
+    const held = await startCheckout({ userId: my.id, offeringId: offering.id, consent: true, gateway });
+    expect((await prisma.order.findUniqueOrThrow({ where: { id: held.orderId } })).currency).toBe("MYR");
+
+    // … and a British participant is priced in USD (refused here only
+    // because the single seat is now held).
+    const other = await createOffering({ startInDays: 30, capacity: 5 });
+    const gb = await createUser("GB");
+    const gbPreview = await previewCheckout(other.id, { id: gb.id, country: "GB" });
+    expect(gbPreview).toMatchObject({ ok: true, price: { currency: "USD", region: "international" } });
+    const gbOrder = await startCheckout({ userId: gb.id, offeringId: other.id, consent: true, gateway });
+    expect((await prisma.order.findUniqueOrThrow({ where: { id: gbOrder.orderId } })).currency).toBe("USD");
   });
 
   it("refuses without consent, and creates nothing", async () => {
@@ -525,19 +559,21 @@ describe("transfer — once, free, same programme, with a seat (plan §7 criteri
 describe("read models", () => {
   it("list registrations and orders for the person, with amounts as recorded", async () => {
     const offering = await createOffering({ startInDays: 30, capacity: 3 });
-    const user = await createUser("Pakistan");
+    // A non-MYR region, to show the currency is the one recorded. (Was
+    // Pakistan until 2026-09-26; Pakistan no longer pays by card.)
+    const user = await createUser("Singapore");
     const { orderId } = await startCheckout({ userId: user.id, offeringId: offering.id, consent: true, gateway: fakeGateway() });
     await payOrder(orderId);
-    const pk = flagship.prices.find((p) => p.region === "pakistan")!;
+    const intl = flagship.prices.find((p) => p.region === "international")!;
 
     const regs = await listRegistrationsForUser(user.id);
     expect(regs).toHaveLength(1);
     expect(regs[0]!.offering.id).toBe(offering.id);
-    expect(regs[0]!.order).toMatchObject({ id: orderId, status: "paid", amountMinor: pk.offerAmountMinor, currency: "PKR", region: "pakistan" });
+    expect(regs[0]!.order).toMatchObject({ id: orderId, status: "paid", amountMinor: intl.offerAmountMinor, currency: "USD", region: "international" });
 
     const orders = await listOrdersForUser(user.id);
     expect(orders).toHaveLength(1);
-    expect(orders[0]).toMatchObject({ id: orderId, status: "paid", amountMinor: pk.offerAmountMinor, currency: "PKR", programmeTitle: flagship.title });
+    expect(orders[0]).toMatchObject({ id: orderId, status: "paid", amountMinor: intl.offerAmountMinor, currency: "USD", programmeTitle: flagship.title });
     expect(orders[0]!.registrationId).toBe(regs[0]!.id);
   });
 

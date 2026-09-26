@@ -12,6 +12,8 @@ import { completeProfileByEmail, deleteTestUser, resetRateLimits, STRONG_PASSWOR
  * USD) and the refund tiers; submitting without consent is refused. The
  * profile gate itself is covered by tests/e2e/profile.spec.ts (M5a); here
  * the profile is completed through the repository so checkout renders.
+ * 2026-09-26 (founder rule): a Pakistan-profile participant sees the
+ * local-partner message and no pay button.
  */
 
 test.describe.configure({ mode: "serial" });
@@ -162,6 +164,33 @@ test("checkout shows the USD price for a person with an international profile co
   await expectNoAxeViolations(page);
   await page.goto("/account/orders");
   await expect(page.getByText("No orders yet.")).toBeVisible();
+});
+
+test("a Pakistan-profile participant sees the local-partner message and no pay button (founder rule 2026-09-26)", async ({ page }) => {
+  const email = newEmail("e2e-pk");
+  await registerViaUi(page, email, "Parveen Pakistan");
+  await completeProfileByEmail(email, { countryCode: "PK", nationalityCode: "PK", phoneE164: "+923001234567", city: "Karachi", postalCode: "74000" });
+  await signInViaUi(page, email);
+
+  await page.goto(`/checkout/${offeringId}`);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Register and pay");
+  const block = page.getByTestId("checkout-local-partner");
+  await expect(block).toBeVisible();
+  await expect(block.getByTestId("checkout-unavailable")).toHaveText("Card payment is not available in Pakistan");
+  await expect(block).toContainText(flagshipTitle);
+  await expect(block).toContainText("Please contact us — our local partner will contact you to arrange payment through local banks or in cash.");
+  await expect(block.getByRole("link", { name: "Contact us" })).toHaveAttribute(
+    "href",
+    "/contact-us?kind=programme_interest&programme=data-blueprint-ai-vibe-coding",
+  );
+  await expect(page.getByTestId("pay")).toHaveCount(0);
+  await expect(page.getByTestId("checkout-consent")).toHaveCount(0);
+  await expect(page.getByTestId("checkout-price")).toHaveCount(0);
+  await expectNoAxeViolations(page);
+
+  const { getPrisma } = await import("../../src/db/prisma");
+  const user = await getPrisma().user.findUnique({ where: { email: email.toLowerCase() }, select: { id: true } });
+  expect(await getPrisma().order.count({ where: { userId: user!.id } })).toBe(0);
 });
 
 test("the confirmation page never trusts the redirect: an unknown order says so", async ({ page }) => {

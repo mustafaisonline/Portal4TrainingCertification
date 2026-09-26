@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { CommerceError } from "@/modules/commerce/errors";
 import { normaliseCountry, priceForUser, regionForCountry } from "@/modules/commerce/pricing";
-import type { ProgrammeRecord } from "@/modules/catalogue/programmes/types";
+import { cardPaymentAvailable, PRICE_REGIONS, type ProgrammeRecord } from "@/modules/catalogue/programmes/types";
 
 /*
  * Server-side pricing by profile country (M4 plan §3 D3, §6.3). The free-text
@@ -57,6 +57,26 @@ describe("priceForUser", () => {
       priceForUser(programme, { country: "Pakistan" });
     } catch (err) {
       expect((err as CommerceError).code).toBe("no_price_for_region");
+    }
+  });
+});
+
+describe("cardPaymentAvailable (founder rule 2026-09-26)", () => {
+  it("Malaysia and International pay by card; Pakistan pays through the local partner", () => {
+    expect(cardPaymentAvailable("malaysia")).toBe(true);
+    expect(cardPaymentAvailable("international")).toBe(true);
+    expect(cardPaymentAvailable("pakistan")).toBe(false);
+    expect(PRICE_REGIONS.map((r) => [r.key, r.payment])).toEqual([
+      ["malaysia", "card"],
+      ["pakistan", "local_partner"],
+      ["international", "card"],
+    ]);
+  });
+
+  it("the presentation no longer says 'Save up to 50%' or 'Regional scholarship'", () => {
+    for (const r of PRICE_REGIONS) {
+      expect(r.subtitle + r.badge).not.toMatch(/scholarship|save up to 50/i);
+      expect(r.badge).toBe("75% launch discount");
     }
   });
 });

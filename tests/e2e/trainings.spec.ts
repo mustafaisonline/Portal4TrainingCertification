@@ -4,10 +4,14 @@ import { expect, test, type Page } from "@playwright/test";
 /*
  * Trainings hub and training pages — end to end (founder request 2026-09-26:
  * "/DataBlueprint-AIVibeCoding → /programs", "Programme → Trainings", the
- * Learn Vibe Coding training). Expected values are read from the database
- * through the repository, never typed here, except the three founder-given
- * Learn Vibe Coding prices, which are asserted literally because the request
- * fixed them.
+ * Learn Vibe Coding training; second round the same day: prices at 75% off
+ * with the original struck through, the Investment section as region CARDS
+ * with the payment rule per region, "Who can take this training", "What you
+ * get out of this training", participant numbers under the formats, no
+ * "Included" list, and the "← All trainings" link on the flagship page).
+ * Expected values are read from the database through the repository, never
+ * typed here, except the founder-given prices, which are asserted literally
+ * because the request fixed them.
  */
 
 async function expectNoAxeViolations(page: Page) {
@@ -15,20 +19,113 @@ async function expectNoAxeViolations(page: Page) {
   expect(results.violations, JSON.stringify(results.violations, null, 2)).toEqual([]);
 }
 
-test("/programs lists exactly the published trainings in order, Learn Vibe Coding first, each linked", async ({ page }) => {
+const LOCAL_PARTNER = "Please contact us — our local partner will contact you to arrange payment through local banks or in cash.";
+const NO_CARD_ANYWHERE =
+  "Please contact us — we will make sure our local partner contacts you, anywhere in the world, to arrange payment through local banks or in cash.";
+
+/** The shared Investment cards: four cards in the founder's order, the
+ *  price per region with its original struck through and "75% OFF", the
+ *  payment rule per region, the Pakistan local-partner message and the
+ *  fourth "Can't pay by card?" card. */
+async function expectInvestmentCards(page: Page, slug: string, figures: Record<"international" | "malaysia" | "pakistan", { today: string; original: string }>) {
+  const investment = page.locator("#investment");
+  const enquiry = `/contact-us?kind=programme_interest&programme=${slug}`;
+  await expect(investment.getByRole("heading", { name: "Course investment" })).toBeVisible();
+  await expect(investment.getByRole("tab")).toHaveCount(0);
+  const cards = investment.getByTestId("price-cards").locator("> *");
+  await expect(cards).toHaveCount(4);
+  await expect(cards.nth(0)).toHaveAttribute("data-testid", "price-card-international");
+  await expect(cards.nth(1)).toHaveAttribute("data-testid", "price-card-malaysia");
+  await expect(cards.nth(2)).toHaveAttribute("data-testid", "price-card-pakistan");
+  await expect(cards.nth(3)).toHaveAttribute("data-testid", "price-card-no-card");
+
+  for (const [region, f] of Object.entries(figures) as ["international" | "malaysia" | "pakistan", { today: string; original: string }][]) {
+    const card = investment.getByTestId(`price-card-${region}`);
+    await expect(card.getByText(f.today, { exact: true })).toBeVisible();
+    await expect(card.locator(".line-through").filter({ hasText: f.original })).toBeVisible();
+    await expect(card.getByText("75% OFF", { exact: true })).toBeVisible();
+    await expect(card.getByText("How you pay")).toBeVisible();
+  }
+  await expect(investment.getByTestId("price-card-malaysia")).toContainText("Card payment in RM");
+  await expect(investment.getByTestId("price-card-malaysia")).toContainText(/you save/i);
+  await expect(investment.getByTestId("price-card-international")).toContainText("Card payment in USD");
+  await expect(investment.getByTestId("price-card-international")).toContainText(/you save/i);
+
+  // Pakistan: no card — the local-partner message and a Contact us button.
+  const pk = investment.getByTestId("price-card-pakistan");
+  await expect(pk).toContainText("Payment through our local partner");
+  await expect(pk.getByTestId("local-partner-message")).toHaveText(LOCAL_PARTNER);
+  await expect(pk.getByRole("link", { name: "Contact us" })).toHaveAttribute("href", enquiry);
+  await expect(pk.getByRole("link", { name: /see upcoming dates/i })).toHaveCount(0);
+
+  // The fourth card.
+  const noCard = investment.getByTestId("price-card-no-card");
+  await expect(noCard.getByRole("heading", { name: "Can’t pay by card?" })).toBeVisible();
+  await expect(noCard).toContainText(NO_CARD_ANYWHERE);
+  await expect(noCard.getByRole("link", { name: "Contact us" })).toHaveAttribute("href", enquiry);
+
+  // No value stack, no stale "no online payment" sentence.
+  await expect(investment.getByText("What is included")).toHaveCount(0);
+  await expect(investment.getByText("Total value")).toHaveCount(0);
+  await expect(investment.getByText(/no online payment yet/i)).toHaveCount(0);
+}
+
+test("/programs lists exactly the published trainings in order, Learn Vibe Coding first, each linked, priced per region in full words at 75% off", async ({ page }) => {
   const { listPublishedProgrammes } = await import("../../src/modules/catalogue/programmes/repository");
   const published = await listPublishedProgrammes();
   expect(published.map((p) => p.slug)).toEqual(["learn-vibe-coding", "data-blueprint-ai-vibe-coding"]);
 
   await page.goto("/programs");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Trainings");
-  const items = page.getByTestId("trainings-list").getByRole("listitem");
+  // Direct children only: each card carries its own per-region price list.
+  const items = page.getByTestId("trainings-list").locator("> li");
   await expect(items).toHaveCount(published.length);
   for (const [i, p] of published.entries()) {
     const item = items.nth(i);
     await expect(item.getByRole("heading", { level: 3 })).toHaveText(p.title);
     await expect(item.getByRole("link", { name: /details/i })).toHaveAttribute("href", `/programs/${p.slug}`);
+    // Every region named in full — never a code that could read as a currency.
+    for (const region of ["Malaysia", "Pakistan", "International"]) {
+      await expect(item.getByTestId(`card-price-${region.toLowerCase()}`).getByText(region, { exact: true })).toBeVisible();
+    }
+    await expect(item).not.toContainText("(MY)");
+    await expect(item).not.toContainText("(PK)");
+    await expect(item).not.toContainText("(INT)");
+    await expect(item.getByText("75% OFF", { exact: true })).toHaveCount(3);
   }
+
+  // Learn Vibe Coding: RM 500 (was 2,000) · Rs 5,000 (was 20,000) · USD 200 (was 800), plus the note.
+  const lvc = items.nth(0);
+  const lvcExpected: [string, string, string][] = [
+    ["malaysia", "RM 500", "RM 2,000"],
+    ["pakistan", "Rs. 5,000", "Rs. 20,000"],
+    ["international", "USD 200", "USD 800"],
+  ];
+  for (const [region, today, original] of lvcExpected) {
+    const row = lvc.getByTestId(`card-price-${region}`);
+    await expect(row.getByText(today, { exact: true })).toBeVisible();
+    await expect(row.locator(".line-through")).toHaveText(original);
+  }
+  const lvcNote = "Online training price. In-person training needs a minimum of 25 participants; cost discussed separately.";
+  await expect(lvc.getByTestId("card-price-malaysia")).toContainText(lvcNote);
+  await expect(lvc.getByTestId("card-price-international")).toContainText(lvcNote);
+  await expect(lvc.getByTestId("card-price-pakistan")).not.toContainText(lvcNote);
+
+  // Flagship: RM 4,999 (was 19,999) · Rs 99,999 (was 399,999) · USD 1,999 (was 7,999).
+  const flagship = items.nth(1);
+  const flagshipExpected: [string, string, string][] = [
+    ["malaysia", "RM 4,999", "RM 19,999"],
+    ["pakistan", "Rs. 99,999", "Rs. 399,999"],
+    ["international", "USD 1,999", "USD 7,999"],
+  ];
+  for (const [region, today, original] of flagshipExpected) {
+    const row = flagship.getByTestId(`card-price-${region}`);
+    await expect(row.getByText(today, { exact: true })).toBeVisible();
+    await expect(row.locator(".line-through")).toHaveText(original);
+  }
+  await expect(flagship.getByTestId("card-price-malaysia")).toContainText("no online option for this training in Malaysia");
+  await expect(flagship.getByTestId("card-price-international")).toContainText("minimum of 100 participants");
+
   // No unlisted programme is offered.
   const { getPrisma } = await import("../../src/db/prisma");
   const unlisted = await getPrisma().programme.findMany({ where: { status: "unlisted" }, select: { title: true } });
@@ -47,7 +144,7 @@ test("/programs lists exactly the published trainings in order, Learn Vibe Codin
   await expectNoAxeViolations(page);
 });
 
-test("/programs/learn-vibe-coding renders the training with its new sections and undiscounted prices", async ({ page }) => {
+test("/programs/learn-vibe-coding renders the training with its sections, the region price cards and the payment rule", async ({ page }) => {
   const { findPublishedProgrammeBySlug } = await import("../../src/modules/catalogue/programmes/repository");
   const training = await findPublishedProgrammeBySlug("learn-vibe-coding");
   expect(training, "seeded Learn Vibe Coding").not.toBeNull();
@@ -55,6 +152,7 @@ test("/programs/learn-vibe-coding renders the training with its new sections and
   const res = await page.goto("/programs/learn-vibe-coding");
   expect(res?.status()).toBe(200);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(training!.title);
+  await expect(page.getByRole("link", { name: "← All trainings" })).toHaveAttribute("href", "/programs");
   await expect(page.getByTestId("relationship-note")).toHaveText(training!.content.relationshipNote!);
   await expect(page.getByRole("heading", { name: "Why you need this training" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Start freelancing straight after the session" })).toBeVisible();
@@ -72,6 +170,36 @@ test("/programs/learn-vibe-coding renders the training with its new sections and
     "page",
   );
 
+  // Who can take this training (renamed; content from the seed) — no coding background needed.
+  await expect(page.getByRole("heading", { name: "Who can take this training" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Who should attend" })).toHaveCount(0);
+  const who = page.locator("#who-can-take-this-training");
+  await expect(who).toContainText(training!.content.whoShouldAttend.intro);
+  await expect(who).toContainText("no coding background is needed");
+  for (const role of training!.content.whoShouldAttend.roles) await expect(who.getByText(role, { exact: true })).toBeVisible();
+
+  // Choose your pace — participant numbers.
+  const formats = page.locator("#formats");
+  await expect(formats.getByRole("heading", { name: "Flexible learning formats" })).toBeVisible();
+  const paceNotes = formats.getByTestId("pace-notes").getByRole("listitem");
+  await expect(paceNotes).toHaveText(training!.content.paceNotes!);
+  await expect(paceNotes).toHaveText([/Live online — individual seats, priced per person/, /minimum 25 participants; cost discussed separately/]);
+  await expect(formats).not.toContainText("up to about 15");
+
+  // What you get out of this training — before the Investment section, incl. the Starter Kit.
+  const whatYouGet = page.locator("#what-you-get");
+  await expect(whatYouGet.getByRole("heading", { name: "What you get out of this training" })).toBeVisible();
+  await expect(whatYouGet.getByTestId("what-you-get").getByRole("listitem")).toHaveText(training!.content.whatYouGet!);
+  await expect(whatYouGet).toContainText("Certificate of Completion with a unique ID and public verification page");
+  await expect(whatYouGet).toContainText("hard copy when you attend in person, a soft copy when you attend online");
+  await expect(whatYouGet).toContainText("Vibe Coding Starter Kit");
+  const whatYouGetBox = await whatYouGet.boundingBox();
+  const investmentBox = await page.locator("#investment").boundingBox();
+  expect(whatYouGetBox!.y).toBeLessThan(investmentBox!.y);
+
+  // No "Included" list.
+  await expect(page.getByText("Included", { exact: true })).toHaveCount(0);
+
   // Six curriculum modules, each a disclosure; the first point of Part 1.
   expect(training!.modules).toHaveLength(6);
   const curriculum = page.locator("#curriculum");
@@ -87,26 +215,20 @@ test("/programs/learn-vibe-coding renders the training with its new sections and
   await faq.getByText(training!.content.faq![0]!.q, { exact: true }).click();
   await expect(faq.getByText(training!.content.faq![0]!.a)).toBeVisible();
 
-  // Investment: the founder's figures, one per region tab, no strike-through,
-  // no "you save".
-  const investment = page.locator("#investment");
-  await expect(investment.getByRole("heading", { name: "Course investment" })).toBeVisible();
-  const expected: [string, string][] = [
-    ["Malaysia", "RM 100"],
-    ["Pakistan", "Rs. 5,000"],
-    ["International", "USD 1,000"],
-  ];
-  for (const [tab, figure] of expected) {
-    await investment.getByRole("tab", { name: tab }).click();
-    await expect(investment.getByText(figure, { exact: true })).toBeVisible();
-    await expect(investment.locator(".line-through")).toHaveCount(0);
-    await expect(investment.getByText(/you save/i)).toHaveCount(0);
-    await expect(investment.getByText("Launch price", { exact: true }).first()).toBeVisible();
-  }
+  // Investment: four cards, the founder's figures at 75% off, the payment rule.
+  await expectInvestmentCards(page, "learn-vibe-coding", {
+    international: { today: "USD 200", original: "USD 800" },
+    malaysia: { today: "RM 500", original: "RM 2,000" },
+    pakistan: { today: "Rs. 5,000", original: "Rs. 20,000" },
+  });
+  const lvcNote = "Online training price. In-person training needs a minimum of 25 participants; cost discussed separately.";
+  await expect(page.getByTestId("price-note-malaysia")).toHaveText(lvcNote);
+  await expect(page.getByTestId("price-note-international")).toHaveText(lvcNote);
+  await expect(page.getByTestId("price-note-pakistan")).toHaveCount(0);
   await expectNoAxeViolations(page);
 });
 
-test("/programs/data-blueprint-ai-vibe-coding serves the flagship's bespoke landing", async ({ page }) => {
+test("/programs/data-blueprint-ai-vibe-coding serves the flagship's bespoke landing with the back link, the rewritten audience, take-aways, pace notes and the price cards", async ({ page }) => {
   const { findFlagshipProgramme } = await import("../../src/modules/catalogue/programmes/repository");
   const flagship = await findFlagshipProgramme();
   expect(flagship).not.toBeNull();
@@ -116,8 +238,53 @@ test("/programs/data-blueprint-ai-vibe-coding serves the flagship's bespoke land
   expect(res?.status()).toBe(200);
   // The landing's own headline, not the generic template's title h1.
   await expect(page.getByRole("heading", { level: 1 })).toContainText("It’s a method");
+  // "← All trainings" at the top, as on the generic template.
+  const back = page.getByRole("link", { name: "← All trainings" });
+  await expect(back).toHaveAttribute("href", "/programs");
+  const backBox = await back.boundingBox();
+  const h1Box = await page.getByRole("heading", { level: 1 }).boundingBox();
+  expect(backBox!.y).toBeLessThan(h1Box!.y);
   await expect(page.locator("#the-method")).toBeVisible();
-  await expect(page.locator("#investment")).toBeVisible();
+
+  // Who can take this training — from the seed, no coding required.
+  await expect(page.getByRole("heading", { name: "Who can take this training" })).toBeVisible();
+  const who = page.locator("#who-can-take-this-training");
+  await expect(who).toContainText(flagship!.content.whoShouldAttend.intro);
+  await expect(who).toContainText("no coding is required");
+  await expect(who.getByTestId("who-can-take").getByRole("listitem")).toHaveText(flagship!.content.whoShouldAttend.roles);
+
+  // Participant numbers under the formats.
+  const paceNotes = page.locator("#formats").getByTestId("pace-notes").getByRole("listitem");
+  await expect(paceNotes).toHaveText(flagship!.content.paceNotes!);
+  await expect(paceNotes).toHaveText([/Malaysia — in person only, minimum 25 participants/, /Outside Malaysia — online per person; in person from 100 participants/, /Pakistan — in person from 100 participants, online from 10 participants/]);
+
+  // What you get — two items, before the Investment section.
+  const whatYouGet = page.locator("#what-you-get");
+  await expect(whatYouGet.getByRole("heading", { name: "What you get out of this training" })).toBeVisible();
+  await expect(whatYouGet.getByTestId("what-you-get").getByRole("listitem")).toHaveText(flagship!.content.whatYouGet!);
+  await expect(whatYouGet).not.toContainText("Starter Kit");
+  expect((await whatYouGet.boundingBox())!.y).toBeLessThan((await page.locator("#investment").boundingBox())!.y);
+  await expect(page.getByText("Included", { exact: true })).toHaveCount(0);
+
+  // Investment cards: RM 4,999 (was 19,999) · USD 1,999 (was 7,999) · Pakistan two figures.
+  await expectInvestmentCards(page, flagship!.slug, {
+    international: { today: "USD 1,999", original: "USD 7,999" },
+    malaysia: { today: "RM 4,999", original: "RM 19,999" },
+    pakistan: { today: "Rs. 99,999", original: "Rs. 399,999" },
+  });
+  const pk = page.getByTestId("price-card-pakistan");
+  await expect(pk.getByText("In-person", { exact: true })).toBeVisible();
+  await expect(pk.getByText("Rs. 199,999", { exact: true })).toBeVisible();
+  await expect(pk.locator(".line-through").filter({ hasText: "Rs. 799,999" })).toBeVisible();
+  await expect(pk).toContainText("minimum 100 participants");
+  await expect(pk.getByText("Online", { exact: true })).toBeVisible();
+  await expect(pk).toContainText("minimum 10 participants");
+  await expect(page.getByTestId("price-note-malaysia")).toHaveText(
+    "In-person training price. Minimum 25 participants. There is no online option for this training in Malaysia.",
+  );
+  await expect(page.getByTestId("price-note-international")).toHaveText(
+    "Online training price. In-person training needs a minimum of 100 participants; cost discussed separately.",
+  );
   await expectNoAxeViolations(page);
 });
 

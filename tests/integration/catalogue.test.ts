@@ -50,7 +50,7 @@ describe("programmes", () => {
     expect(published.map((p) => p.slug)).toEqual(["learn-vibe-coding", flagshipSeed.slug]);
   });
 
-  it("Learn Vibe Coding (2026-09-26) is published, not the flagship, priced without a discount, and carries the new sections", async () => {
+  it("Learn Vibe Coding (2026-09-26) is published, not the flagship, priced at 75% off, and carries the new sections", async () => {
     const seed = courses.find((c) => c.slug === "learn-vibe-coding")!;
     const row = await findPublishedProgrammeBySlug("learn-vibe-coding");
     expect(row).not.toBeNull();
@@ -62,12 +62,57 @@ describe("programmes", () => {
     expect(row!.content.afterThisTraining).toEqual(seed.afterThisTraining);
     expect(row!.content.faq).toEqual(seed.faq);
     expect(row!.content.related).toEqual([flagshipSeed.slug]);
+    // Founder's figures 2026-09-26 (second round): today = 25% of the original.
     for (const p of row!.prices) {
-      expect(p.listAmountMinor, p.region).toBe(p.offerAmountMinor);
+      expect(p.offerAmountMinor * 4, p.region).toBe(p.listAmountMinor);
+      expect(p.offerLabel, p.region).toBe("75% OFF");
       expect(formatMoney(p.offerAmountMinor, p.currency)).toBe(seed.pricing![p.region].today);
+      expect(formatMoney(p.listAmountMinor, p.currency)).toBe(seed.pricing![p.region].original);
     }
-    expect(row!.prices.map((p) => formatMoney(p.offerAmountMinor, p.currency))).toEqual(["RM 100", "Rs. 5,000", "USD 1,000"]);
+    expect(row!.prices.map((p) => formatMoney(p.offerAmountMinor, p.currency))).toEqual(["RM 500", "Rs. 5,000", "USD 200"]);
+    expect(row!.prices.map((p) => formatMoney(p.listAmountMinor, p.currency))).toEqual(["RM 2,000", "Rs. 20,000", "USD 800"]);
+    // The new editorial keys (founder change list 2026-09-26).
+    expect(row!.content.whoShouldAttend).toEqual(seed.whoShouldAttend);
+    expect(row!.content.whatYouGet).toEqual(seed.whatYouGet);
+    expect(row!.content.whatYouGet).toHaveLength(3);
+    expect(row!.content.paceNotes).toEqual(seed.paceNotes);
+    expect(row!.content.regionalPricing).toEqual(seed.regionalPricing);
+    expect(row!.content.regionalPricing?.malaysia?.note).toMatch(/minimum of 25 participants/);
+    expect(row!.content.regionalPricing?.international?.note).toMatch(/minimum of 25 participants/);
+    // No "Included" list and no value stack on a published page.
+    expect(row!.content.included).toBeUndefined();
+    expect(row!.content.valueStack).toBeUndefined();
     expect(row!.experts.length).toBeGreaterThan(0);
+  });
+
+  it("the flagship (2026-09-26) is priced at 75% off in every region; Pakistan's second figure lives in content, one of its options equals the price row", async () => {
+    const flagship = (await findFlagshipProgramme())!;
+    const byRegion = Object.fromEntries(flagship.prices.map((p) => [p.region, p]));
+    expect(formatMoney(byRegion["malaysia"]!.offerAmountMinor, "MYR")).toBe("RM 4,999");
+    expect(formatMoney(byRegion["malaysia"]!.listAmountMinor, "MYR")).toBe("RM 19,999");
+    expect(formatMoney(byRegion["international"]!.offerAmountMinor, "USD")).toBe("USD 1,999");
+    expect(formatMoney(byRegion["international"]!.listAmountMinor, "USD")).toBe("USD 7,999");
+    // ONE Pakistan row — the online figure — currency PKR.
+    expect(byRegion["pakistan"]!.currency).toBe("PKR");
+    expect(formatMoney(byRegion["pakistan"]!.offerAmountMinor, "PKR")).toBe("Rs. 99,999");
+    expect(formatMoney(byRegion["pakistan"]!.listAmountMinor, "PKR")).toBe("Rs. 399,999");
+    expect(flagship.prices.filter((p) => p.region === "pakistan")).toHaveLength(1);
+    for (const p of flagship.prices) expect(p.offerLabel, p.region).toBe("75% OFF");
+
+    const pk = flagship.content.regionalPricing?.pakistan;
+    expect(pk?.options?.map((o) => o.label)).toEqual(["In-person", "Online"]);
+    expect(pk?.options?.map((o) => o.minParticipants)).toEqual([100, 10]);
+    // The display options must never drift from the amount checkout charges.
+    const online = pk!.options!.find((o) => o.label === "Online")!;
+    expect(online.today).toBe(formatMoney(byRegion["pakistan"]!.offerAmountMinor, "PKR"));
+    expect(online.original).toBe(formatMoney(byRegion["pakistan"]!.listAmountMinor, "PKR"));
+    expect(flagship.content.regionalPricing?.malaysia?.note).toMatch(/no online option/);
+    expect(flagship.content.regionalPricing?.international?.note).toMatch(/minimum of 100 participants/);
+    expect(flagship.content.whatYouGet).toHaveLength(2);
+    expect(flagship.content.paceNotes).toHaveLength(3);
+    expect(flagship.content.included).toBeUndefined();
+    expect(flagship.content.valueStack).toBeUndefined();
+    expect(flagship.content.valueStackTotal).toBeUndefined();
   });
 
   it("prices render exactly as published", async () => {

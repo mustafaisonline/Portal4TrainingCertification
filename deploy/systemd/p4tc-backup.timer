@@ -1,0 +1,10 @@
+[Unit]
+Description=p4tc — nightly production backup at 02:00 UTC
+
+[Timer]
+OnCalendar=*-*-* 02:00:00 UTC
+Persistent=true
+RandomizedDelaySec=600
+
+[Install]
+WantedBy=timers.target

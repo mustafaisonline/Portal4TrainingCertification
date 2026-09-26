@@ -49,6 +49,26 @@ const MIN_JOBS_SECRET = 16;
 const ENCRYPTION_KEY_BYTES = 32;
 const VERSION_RE = /^[A-Za-z0-9._-]{1,64}$/;
 
+/*
+ * Stripe API key shapes (MILESTONE_11_EXECUTION_PLAN.md §1.2, decision K1,
+ * approved 2026-09-26). Two kinds are accepted:
+ *   sk_  — standard secret key: every permission on the account.
+ *   rk_  — restricted key: only the permissions granted when it was created.
+ *          Stripe now recommends these over sk_ keys; the permission set the
+ *          portal needs is documented in docs/operations/DEPLOYMENT_RUNBOOK.md
+ *          §2 (Checkout Sessions write · Refunds write · PaymentIntents,
+ *          Charges and Balance transactions read).
+ * The second segment names the mode. Publishable keys (pk_) and anything
+ * else are rejected: the server would start and every checkout would fail.
+ */
+const STRIPE_API_KEY_RE = /^(sk|rk)_(live|test)_/;
+
+/** "live" | "test" for an accepted key; null for anything else. */
+export function stripeKeyMode(key: string): "live" | "test" | null {
+  const m = STRIPE_API_KEY_RE.exec(key);
+  return m ? (m[2] as "live" | "test") : null;
+}
+
 function present(env: EnvLike, name: string): boolean {
   const v = env[name];
   return typeof v === "string" && v.trim().length > 0;
@@ -140,13 +160,13 @@ export function validateEnv(env: EnvLike = process.env, mode: EnvMode = env["NOD
       why: "STRIPE_SECRET_KEY and STRIPE_WEBHOOK_SECRET must be set together or not at all",
     });
   }
-  if (hasKey && !/^sk_(live|test)_/.test(env["STRIPE_SECRET_KEY"]!)) {
-    invalid.push({ name: "STRIPE_SECRET_KEY", why: "must be a Stripe secret key (sk_live_… or sk_test_…)" });
+  if (hasKey && !STRIPE_API_KEY_RE.test(env["STRIPE_SECRET_KEY"]!)) {
+    invalid.push({ name: "STRIPE_SECRET_KEY", why: "must be a Stripe API key (sk_live_…, sk_test_…, rk_live_… or rk_test_…)" });
   }
   if (hasWebhook && !/^whsec_/.test(env["STRIPE_WEBHOOK_SECRET"]!)) {
     invalid.push({ name: "STRIPE_WEBHOOK_SECRET", why: "must be a Stripe webhook signing secret (whsec_…)" });
   }
-  if (production && hasKey && /^sk_test_/.test(env["STRIPE_SECRET_KEY"]!)) {
+  if (production && hasKey && stripeKeyMode(env["STRIPE_SECRET_KEY"]!) === "test") {
     // A test key in production is not a crash, but it must be loud: no real
     // payment can succeed and every checkout would fail at Stripe.
     warnings.push({ name: "STRIPE_SECRET_KEY", why: "is a TEST-mode key; production payments will not work" });

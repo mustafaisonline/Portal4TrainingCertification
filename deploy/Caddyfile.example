@@ -1,0 +1,34 @@
+# deploy/Caddyfile.example — rendered to /etc/caddy/Caddyfile by the server
+# bootstrap ({{DOMAIN}}, {{PRODUCTION_PORT}}, {{STAGING_PORT}} substituted).
+# Caddy terminates TLS with automatic certificates (K8) and forwards to the
+# containers, which are bound to 127.0.0.1 only. X-Forwarded-* headers are
+# set by Caddy by default; the application's own security headers
+# (next.config.ts) pass through untouched.
+
+{{DOMAIN}} {
+	encode zstd gzip
+	reverse_proxy 127.0.0.1:{{PRODUCTION_PORT}}
+	log {
+		output file /var/log/caddy/production.log {
+			roll_size 20mb
+			roll_keep 5
+		}
+	}
+}
+
+www.{{DOMAIN}} {
+	redir https://{{DOMAIN}}{uri} permanent
+}
+
+staging.{{DOMAIN}} {
+	encode zstd gzip
+	# Staging must never be indexed, whatever the app's own robots setting.
+	header X-Robots-Tag "noindex, nofollow"
+	reverse_proxy 127.0.0.1:{{STAGING_PORT}}
+	log {
+		output file /var/log/caddy/staging.log {
+			roll_size 10mb
+			roll_keep 3
+		}
+	}
+}

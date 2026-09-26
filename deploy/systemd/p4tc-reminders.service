@@ -1,0 +1,13 @@
+# Renewal reminders — one authenticated POST a day (DEPLOYMENT_RUNBOOK §7,
+# M11 K12). JOBS_SECRET comes from the root-owned env file via
+# EnvironmentFile; systemd expands ${JOBS_SECRET} without a shell, so the
+# value never appears in a process list or a log line.
+[Unit]
+Description=p4tc — certificate renewal reminders (POST /api/jobs/certificate-reminders)
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/p4tc/production.env
+ExecStart=/usr/bin/curl -fsS -m 120 -X POST -H "Authorization: Bearer ${JOBS_SECRET}" https://{{DOMAIN}}/api/jobs/certificate-reminders

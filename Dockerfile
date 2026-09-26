@@ -4,9 +4,12 @@
 # default H3). For the "single container on a managed host" option of
 # ADR-016 (Fly.io, Railway, a small VPS). Vercel does not use this file.
 #
-# Status: WRITTEN, NOT BUILT — no container runtime was available on the
-# machine that produced it (docker info failed). First build must be verified
-# by the operator: docs/operations/DEPLOYMENT_RUNBOOK.md §3.
+# Status (2026-09-26, Milestone 11 Phase A): built AND run by CI on every
+# v* tag — .github/workflows/release.yml builds the `runtime` and `migrate`
+# targets, migrates a throwaway PostgreSQL with the migrate image, starts the
+# runtime image against it and requires /api/health → 200 before pushing
+# either image to the registry (K6). No container runtime exists on the
+# founder's machine; the server only pulls (deploy/README.md).
 #
 # Layout choice — `next start`, NOT the standalone server:
 #   Next.js can emit a self-contained `.next/standalone/server.js` when
@@ -47,6 +50,24 @@ COPY . .
 RUN DATABASE_URL="postgresql://build:build@localhost:5432/build" npx prisma generate \
  && npm run build
 
+# ── 2b. migrate: the operator's tools image (Milestone 11, deploy/) ──────────
+# Everything the build stage has (full node_modules incl. the Prisma CLI, the
+# migrations, prisma.config.ts, the seed and the generated client), so the
+# server can run — as a one-off container, never as a service —
+#   npx prisma migrate deploy | migrate status      (deploy/lib/server-promote.sh, 03-…)
+#   npm run db:seed                                  (first deploy of an environment)
+# without any repository checkout or Node toolchain on the server. The
+# migration SQL travels with the tag it belongs to, which is what makes the
+# sandbox (deploy/03-migration-sandbox-serverscript.sh) exact.
+FROM build AS migrate
+WORKDIR /app
+ARG GIT_SHA=unknown
+LABEL org.opencontainers.image.title="p4tc-portal-migrate" \
+      org.opencontainers.image.revision="${GIT_SHA}"
+ENV NODE_ENV=production \
+    NEXT_TELEMETRY_DISABLED=1
+CMD ["npx", "prisma", "migrate", "deploy"]
+
 # ── 3. prod-deps: production dependencies only ───────────────────────────────
 FROM node:24-alpine AS prod-deps
 WORKDIR /app
@@ -56,6 +77,10 @@ RUN npm ci --omit=dev
 # ── 4. runtime: non-root, minimal ─────────────────────────────────────────────
 FROM node:24-alpine AS runtime
 WORKDIR /app
+ARG GIT_SHA=unknown
+LABEL org.opencontainers.image.title="p4tc-portal" \
+      org.opencontainers.image.source="https://github.com/mustafaisonline/Portal4TrainingCertification" \
+      org.opencontainers.image.revision="${GIT_SHA}"
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
     PORT=3000 \

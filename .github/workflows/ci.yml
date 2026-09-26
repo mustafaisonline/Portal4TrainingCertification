@@ -6,10 +6,13 @@
 #   typecheck → unit + integration (Vitest) → build → e2e + axe (Playwright).
 #
 # Nothing here deploys. The mockup has its own workflow (deploy-pages.yml) and
-# is excluded from these triggers.
+# is excluded from these triggers. release.yml (Milestone 11) calls this
+# workflow (`workflow_call`) so a tagged release is gated by exactly the same
+# checks before its image is built.
 name: CI
 
 on:
+  workflow_call:
   push:
     branches: [main, "feat/**", "fix/**"]
     paths-ignore:

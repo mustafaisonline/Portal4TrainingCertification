@@ -1,6 +1,6 @@
-# Release Gate — proposal for OQ-18 (J6)
+# Release Gate — OQ-18 (J6)
 
-> **Status: PROPOSED 2026-09-23 — awaiting the founder's decision.** WBS 7.10 asks: must the test set pass before **every** production deploy, or only at milestones? This document proposes the answer and gives the exact commands so the decision can be ratified as a policy and folded into the Definition of Done.
+> **Status: ADOPTED 2026-09-26 as written, Playwright blocking (Milestone 11 decision K11; ADR-046).** Implemented twice, identically: `deploy/04-release-gate.sh` on the operator's machine (every step below with a timeout; Playwright runs against the production build the gate has just made) and the `verify` job that `.github/workflows/release.yml` runs before it will build an image for a tag. `deploy/start.sh` refuses to deploy a tag the release workflow has not built, so the gate is structural, not procedural. The proposal text is kept below as the record.
 
 ## Proposal
 
@@ -32,8 +32,7 @@ Until CI exists (ADR-025 tooling is decided but no pipeline is provisioned), the
 
 A hotfix that only changes copy or a runbook may skip Playwright **if** the diff touches no `.ts`/`.tsx` outside `docs/` — the operator states this in the deploy note. Nothing else is exempt.
 
-## Decision requested
+## Decision
 
-- [ ] Adopt as written · [ ] Adopt with changes: ______ · [ ] Milestones only (record the reasoning)
-
-Once decided, record in `ARCHITECTURE_DECISION_REGISTER.md` against OQ-18 and add the table to `CLAUDE.md` "Definition of Done" as a referenced policy.
+- [x] **Adopt as written** — founder, 2026-09-26 ("K1 = yes, all recommendations accepted"; K11 = adopt, blocking). Recorded as ADR-046 in `ARCHITECTURE_DECISION_REGISTER.md`.
+- The hotfix exception above stands, but `deploy/04-release-gate.sh` has no flag for it: a docs-only hotfix that must skip Playwright is deployed by tagging it — the release workflow's `verify` job still runs the full suite in CI, which is where the exception is cheap.

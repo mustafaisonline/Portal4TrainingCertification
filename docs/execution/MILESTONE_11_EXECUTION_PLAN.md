@@ -1,6 +1,6 @@
 # Milestone 11 — "DigitalOcean deployment framework & Stripe go-live" · Execution Plan
 
-> **Status: PROPOSED 2026-09-26 — awaiting the founder's answers to §5 (K1–K16). Nothing in this plan has been built, provisioned or configured.**
+> **Status: K1–K16 APPROVED 2026-09-26 as recommended (founder: "K1 = yes, all recommendations accepted, start Phase A"; recorded as ADR-046). Phase A BUILT 2026-09-26 — see the completion note at the end (§8). Phases B and C are NOT started: nothing is provisioned, no account, server, database, registry, domain or live Stripe endpoint exists.**
 > **Founder request (chat, 2026-09-26):** *"implement Stripe as Payment Gateway for this portal … refer to [the eCard repo] … implement it as production ready. Once we test everything in dev, then … implement our portal on DigitalOcean server"* and *"build deployment framework in our this workspace … [like] eCard"*.
 > **Reference material read:** `mustafaisonline/eCard` (cloned read-only into this session's scratchpad, not into this repository): `Deployement-Steps/` (scripts 00–11, `start.sh`, `lib/`, `config.env`, `nginx/`), `reports/DEPLOYMENT-FRAMEWORK-BASELINE-2026.06.md`, `reports/DEPLOYMENT-FRAMEWORK-019-report.md`, `docs/pricing/IMPLEMENTATION.md` (its Stripe report), `backend/services/billingService.js`, `backend/config/env.js`.
 
@@ -180,3 +180,16 @@ Three phases, deliberately separable so the founder can stop after any of them.
 ## 7. How to proceed
 
 Answer §5 by number. Phase A starts on K1–K12; Phase B needs K5 (with J1), K13 and the DigitalOcean account; Phase C is Milestone 10's cutover. Each phase ends with a completion report in the standard format, and `PROJECT_STATUS.md` is updated at each verified state.
+
+## 8. Phase A — completion note (2026-09-26)
+
+| Item | Delivered | Verified |
+|---|---|---|
+| §2.1 restricted keys | `src/config/env.ts`: `STRIPE_API_KEY_RE = /^(sk\|rk)_(live\|test)_/`, `stripeKeyMode()`; `.env.example`, runbook §2 and §6, MONITORING §4.6 carry the permission set | **V1** ✅ `tests/unit/env-config.test.ts` +18 cases (accept `rk_live_`/`rk_test_`, warn on test in production, reject `pk_`, unknown mode, case, whitespace; values never echoed) — 22/22; full Vitest 399/399; tsc clean |
+| §2.2 `deploy/` framework | 13 scripts + `config.env`, `compose.production.yaml`, `Caddyfile.example`, `systemd/`, `README.md` — see [`deploy/README.md`](../../deploy/README.md) §2 | **V2** ✅ every laptop script and both server scripts ran end to end in `--dry-run` against a throwaway `config.local.env` and a fake server layout; `start.sh --audit` returned NO-GO listing exactly the four missing preconditions (gh, HMAC key, dirty tree, no server); the whole pipeline (`start.sh --dry-run --no-gate`) produced the summary and manifest; refusals proven for a direct `05` call, `FORCE_DEPLOY=1`, `--no-gate` without `--dry-run`, `--skip-gate`. Token round trip proven: a token signed by `lib/governance.sh` verifies with `lib/server-promote.sh`'s verbatim `jf`/`hmac_of` code; a tampered tag and a wrong key are rejected (promote and rollback tokens, with and without a backup name) |
+| §2.3 release workflow | `.github/workflows/release.yml` (`v*` tags; `workflow_dispatch` proves without pushing); `ci.yml` gains `workflow_call`; `Dockerfile` gains the `migrate` target and OCI revision labels | **V3** ⏳ **not yet run** — it needs a tag push (or a manual dispatch from GitHub). This is the first thing to do after this commit: it is the first time the Dockerfile is built anywhere. Until it is green, the alpine base and Prisma 7's schema engine on musl are an assumption |
+| §2.4 gate rehearsed | `deploy/04-release-gate.sh` ran for real: tsc → Vitest → build → Playwright against the production build → `npm audit` | ✅ **PASSED 2026-09-26**: tsc clean · Vitest 399/399 · `next build` · Playwright 67/67 (`next start -p 3101`) · `npm audit` advisory: 4 high in transitive production deps (`deepmerge-ts` via `prisma`, `mysql2` via `better-auth`/`prisma`) — reported in PROJECT_STATUS §3 item 11, not changed. First attempt failed on the Next 16 one-`next dev`-per-directory lock; the gate now runs Playwright against the build it just made (`PLAYWRIGHT_SERVER=start`), which is also the more honest gate |
+| K11 | `RELEASE_GATE.md` status ADOPTED | — |
+| Records | ADR-046; ops README J-table; runbook Option C; execution README; PROJECT_STATUS | — |
+
+**Not done, by design:** nothing under Phase B (§2 items 5–8) or C. **Deviations from the plan text:** tags are `v*` (a `/` is not a valid image tag), the reminders job also gets a nightly backup timer, and the migration step runs on the server from the tag's `migrate` image rather than "from the laptop" — so the production `DATABASE_URL` never has to be on a laptop (the stricter reading of "production data never on laptops").

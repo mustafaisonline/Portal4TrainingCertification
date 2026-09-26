@@ -1,0 +1,39 @@
+# =============================================================================
+# deploy/compose.production.yaml — one environment of the portal on the
+# Droplet. Never run by hand: deploy/lib/server-promote.sh runs it as
+#   docker compose -p p4tc-<env> --env-file /etc/p4tc/<env>.release -f <this> up -d app
+# where the release file (written by the wrapper) supplies TAG, PREVIOUS_TAG,
+# REGISTRY, IMAGE_NAME, P4TC_ENV_FILE, P4TC_PORT, COMPOSE_PROJECT_NAME.
+#
+# The app listens on 3000 inside the container (Dockerfile) and is published
+# on 127.0.0.1:<P4TC_PORT> only — Caddy is the only public listener.
+# Migrations are NOT run here (ADR-029): the wrapper runs the -migrate image
+# as a one-off before switching the app.
+# =============================================================================
+services:
+  app:
+    image: ${REGISTRY}/${IMAGE_NAME}:${TAG}
+    env_file: ${P4TC_ENV_FILE}
+    environment:
+      PORT: "3000"
+      HOSTNAME: "0.0.0.0"
+      NODE_ENV: production
+      NEXT_TELEMETRY_DISABLED: "1"
+    ports:
+      - "127.0.0.1:${P4TC_PORT}:3000"
+    restart: unless-stopped
+    stop_grace_period: 20s
+    init: true
+    security_opt:
+      - no-new-privileges:true
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/api/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3

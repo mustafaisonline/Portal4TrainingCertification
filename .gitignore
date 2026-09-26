@@ -69,3 +69,10 @@ project-artifacts/mockup/.env*.local
 
 # Database dumps written by scripts/backup.sh (Milestone 9) — never committed.
 backups/
+
+# Deployment framework (Milestone 11, deploy/): run output, the shared
+# HMAC key copied from the server, per-machine config. Never committed.
+deploy/logs/
+deploy/reports/
+deploy/.governance-hmac.key
+deploy/config.local.env

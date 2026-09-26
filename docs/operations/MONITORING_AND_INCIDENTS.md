@@ -82,7 +82,7 @@ Symptoms: `stripe_events.status='failed'`, Stripe Dashboard → Webhooks shows n
 |---|---|---|
 | `BETTER_AUTH_SECRET` | set a new value, restart | every session invalid — people sign in again; announce if planned |
 | `JOBS_SECRET` | new value in the app **and** the scheduler at the same time | a mismatch = 401s until both agree; the job is idempotent, missing a day only delays reminders |
-| `STRIPE_SECRET_KEY` | Stripe → API keys → **Roll key** (old key valid for a chosen grace period) → set new value → restart → confirm a test checkout on staging | **Do this now for the test key pasted in chat (J9)** |
+| `STRIPE_SECRET_KEY` | Stripe → API keys → **Roll key** (old key valid for a chosen grace period) → set new value → restart → confirm a test checkout on staging. For a restricted key (`rk_`, K1) re-check its permissions after rolling: Checkout Sessions write · Refunds write · PaymentIntents, Charges, Balance transactions read | **Do this now for BOTH keys pasted in chat — the test key (2026-09-21) and the live restricted key (2026-09-26)** |
 | `STRIPE_WEBHOOK_SECRET` | Stripe → endpoint → Roll secret → update variable → restart; events sent in between fail signature and are retried | short 400 burst, self-healing |
 | `PROFILE_ENCRYPTION_KEY` | **Not a variable swap.** Rows are `v1:` AES-GCM under the current key; rotating requires a re-encryption pass (decrypt with old, encrypt with new, in a transaction per row, audited) — a small script to be written and approved when needed. Until then: never lose this key; losing it makes every stored ID number unreadable | planned, not built |
 | `DATABASE_URL` password | rotate on the host → update variable → restart | seconds of 503 |

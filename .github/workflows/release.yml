@@ -1,0 +1,153 @@
+# Release — build, PROVE and push the container images for a tag.
+# (MILESTONE_11_EXECUTION_PLAN.md §2 item 3; decision K6: images are built
+# only here, never on a laptop or on the server.)
+#
+#   git tag v2026.10.03 && git push origin v2026.10.03
+#
+# 1. verify  — the whole CI gate (ci.yml via workflow_call) on the tagged commit
+# 2. image   — build Dockerfile targets `runtime` and `migrate`, then prove
+#              them against a throwaway PostgreSQL: the migrate image applies
+#              every migration; the runtime image starts in NODE_ENV=production
+#              with CI-only configuration and must answer /api/health 200 with
+#              db:up and the newest migration. Only then are both images pushed
+#              to ${REGISTRY} (a repository VARIABLE, e.g.
+#              registry.digitalocean.com/<name>) using the DIGITALOCEAN_ACCESS_TOKEN
+#              secret. With the variable unset the images are proven but not
+#              pushed — Phase A can run this before any registry exists.
+#
+# Nothing here deploys: the server pulls a tag only through deploy/start.sh.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    uses: ./.github/workflows/ci.yml
+
+  image:
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      REGISTRY: ${{ vars.P4TC_REGISTRY }}
+      IMAGE_NAME: p4tc-portal
+
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: p4tc
+          POSTGRES_PASSWORD: p4tc
+          POSTGRES_DB: p4tc_ci
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U p4tc"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve the image tag
+        # A tag push → the tag itself. A manual run on a branch → "branch-<name>"
+        # with "/" replaced (a valid image tag) — proven, never pushed.
+        run: |
+          if [ "${{ github.ref_type }}" = "tag" ]; then tag="${GITHUB_REF_NAME}"; else tag="branch-$(printf '%s' "${GITHUB_REF_NAME}" | tr '/' '-')"; fi
+          echo "TAG=$tag" >> "$GITHUB_ENV"; echo "image tag: $tag"
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build runtime image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: runtime
+          load: true
+          tags: ${{ env.IMAGE_NAME }}:${{ env.TAG }}
+          build-args: GIT_SHA=${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Build migrate image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: migrate
+          load: true
+          tags: ${{ env.IMAGE_NAME }}-migrate:${{ env.TAG }}
+          build-args: GIT_SHA=${{ github.sha }}
+          cache-from: type=gha
+
+      - name: Set the database timezone to UTC (as production must)
+        run: psql postgresql://p4tc:p4tc@localhost:5432/p4tc_ci -v ON_ERROR_STOP=1 -c "ALTER DATABASE p4tc_ci SET timezone TO 'UTC';"
+
+      - name: Prove the migrate image (prisma migrate deploy + status)
+        run: |
+          docker run --rm --network host -e DATABASE_URL=postgresql://p4tc:p4tc@localhost:5432/p4tc_ci \
+            "$IMAGE_NAME-migrate:$TAG"
+          docker run --rm --network host -e DATABASE_URL=postgresql://p4tc:p4tc@localhost:5432/p4tc_ci \
+            "$IMAGE_NAME-migrate:$TAG" npx prisma migrate status | tee status.txt
+          grep -q "Database schema is up to date" status.txt
+
+      - name: Prove the runtime image (starts in production mode, /api/health 200)
+        # CI-only values. NODE_ENV=production makes instrumentation.ts refuse
+        # to start on any missing/malformed variable — which is the point: the
+        # image must come up under the same rule the server applies.
+        run: |
+          docker run -d --name portal --network host \
+            -e DATABASE_URL=postgresql://p4tc:p4tc@localhost:5432/p4tc_ci \
+            -e APP_BASE_URL=https://ci.invalid \
+            -e BETTER_AUTH_SECRET=ci-only-secret-not-for-any-real-environment-0123456789 \
+            -e PROFILE_ENCRYPTION_KEY=KioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKio= \
+            -e EMAIL_TRANSPORT=log \
+            -e JOBS_SECRET=ci-only-jobs-secret-0123456789 \
+            -e STRIPE_SECRET_KEY=rk_test_ci_only_not_a_real_key \
+            -e STRIPE_WEBHOOK_SECRET=whsec_ci_only_not_a_real_secret \
+            "$IMAGE_NAME:$TAG"
+          for i in $(seq 1 30); do
+            body="$(curl -s http://127.0.0.1:3000/api/health || true)"
+            if printf '%s' "$body" | grep -q '"db":"up"'; then echo "$body"; break; fi
+            sleep 2
+          done
+          printf '%s' "$body" | grep -q '"status":"ok"' || { docker logs portal; exit 1; }
+          newest="$(ls -1 prisma/migrations | grep -E '^[0-9]{14}_' | sort | tail -1)"
+          printf '%s' "$body" | grep -q "\"migration\":\"$newest\"" || { echo "health reports a different migration than $newest"; exit 1; }
+          docker logs portal 2>&1 | grep -q 'refusing to start' && exit 1
+          code="$(curl -s -o /dev/null -w '%{http_code}' -X POST -H 'Content-Type: application/json' -d '{}' http://127.0.0.1:3000/api/stripe/webhook)"
+          [ "$code" = "400" ] || { echo "unsigned webhook POST returned $code, expected 400"; exit 1; }
+          curl -sI http://127.0.0.1:3000/ | grep -qi 'x-frame-options: DENY'
+          docker rm -f portal
+
+      - name: Log in to the registry
+        if: env.REGISTRY != '' && github.ref_type == 'tag'
+        uses: docker/login-action@v3
+        with:
+          registry: registry.digitalocean.com
+          username: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+          password: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Push both images (tag + commit sha)
+        if: env.REGISTRY != '' && github.ref_type == 'tag'
+        run: |
+          for img in "$IMAGE_NAME" "$IMAGE_NAME-migrate"; do
+            docker tag "$img:$TAG" "$REGISTRY/$img:$TAG"
+            docker tag "$img:$TAG" "$REGISTRY/$img:sha-${GITHUB_SHA::12}"
+            docker push "$REGISTRY/$img:$TAG"
+            docker push "$REGISTRY/$img:sha-${GITHUB_SHA::12}"
+          done
+          echo "pushed $REGISTRY/$IMAGE_NAME:$TAG and $REGISTRY/$IMAGE_NAME-migrate:$TAG" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Images proven but not pushed
+        if: env.REGISTRY == '' || github.ref_type != 'tag'
+        run: echo "Images $IMAGE_NAME:$TAG and $IMAGE_NAME-migrate:$TAG were built and PROVEN, not pushed (P4TC_REGISTRY unset, or this is not a tag)." >> "$GITHUB_STEP_SUMMARY"

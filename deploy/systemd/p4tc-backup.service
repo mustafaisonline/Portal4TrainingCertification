@@ -1,0 +1,12 @@
+# Nightly logical backup of production (K10: second layer beside the managed
+# cluster's own backups + PITR). Kept on the server; retention BACKUP_KEEP.
+[Unit]
+Description=p4tc — nightly pg_dump of the production database
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=deploy
+Group=deploy
+ExecStart={{OPT}}/deploy/01-backup-serverscript.sh --env production --tag nightly

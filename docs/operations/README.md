@@ -14,7 +14,8 @@ The **operator's manual** for the portal: how to deploy it, keep it up, back it 
 | [`BACKUP_AND_RESTORE.md`](BACKUP_AND_RESTORE.md) | Setting the backup schedule; running the restore rehearsal (`scripts/backup.sh`, `scripts/restore-rehearsal.sh`); an actual restore |
 | [`MONITORING_AND_INCIDENTS.md`](MONITORING_AND_INCIDENTS.md) | Configuring uptime checks on `/api/health` and `/verify`; what log lines mean an alert; step-by-step incident runbooks (webhook failing, database unreachable, Stripe degraded, key rotation) |
 | [`SECURITY_CHECKLIST.md`](SECURITY_CHECKLIST.md) | Before the first production deploy and after any security-relevant change; mapped section by section to `SECURITY_ARCHITECTURE.md` |
-| [`RELEASE_GATE.md`](RELEASE_GATE.md) | Deciding OQ-18 (what must pass before a production deploy); the proposed gate and the exact commands |
+| [`RELEASE_GATE.md`](RELEASE_GATE.md) | The gate that must pass before every production deploy — **adopted 2026-09-26 (K11)**; implemented as `deploy/04-release-gate.sh` and as the `verify` job of `release.yml` |
+| [`../../deploy/README.md`](../../deploy/README.md) | **The governed deployment framework (Milestone 11).** Provisioning checklist for the DigitalOcean Droplet + Managed PostgreSQL, server bootstrap, `deploy/start.sh` for every deploy (audit → gate → signed token → backup → sandbox → migrate → switch → validate), rollback and restore, how to rehearse with no server |
 
 ## Founder decisions these documents depend on (all OPEN)
 
@@ -22,15 +23,15 @@ From `docs/execution/MILESTONE_9_EXECUTION_PLAN.md` §4. Each document marks whe
 
 | # | Decision | Recommendation (AP-12, free-first) | State |
 |---|---|---|---|
-| J1 | Data residency (ADR-032) | Verify the seven inputs; if none binds, Singapore region | **OPEN** |
-| J2 | Hosting (ADR-016) | Vercel Pro (Hobby is non-commercial) or one container on Fly.io / Railway / VPS via `Dockerfile` | **OPEN** |
-| J3 | Production PostgreSQL (ADR-005a) | Neon (Singapore; pooled connection string) | **OPEN** |
-| J4 | Domain and email sending domain | One apex domain; `/verify` on it (ADR-039); SPF/DKIM/DMARC before the first real email | **OPEN** |
-| J5 | Email provider (ADR-015) | Resend free tier; `EMAIL_TRANSPORT=resend` once the transport is implemented | **OPEN** |
-| J6 | Release gate (OQ-18) | Full Vitest + Playwright + build before every production deploy | **OPEN** — proposal in `RELEASE_GATE.md` |
-| J7 | RPO / RTO (OQ-10), retention | RPO 24 h until PITR, RTO 4 h; retention per Data Arch §7.1 assumptions | **OPEN** |
+| J1 | Data residency (ADR-032) | Verify the seven inputs; if none binds, Singapore region | **SGP1 accepted 2026-09-26 (K5)** — the residency *question* (law/contract/preference) is still to be confirmed before production data is provisioned (ADR-032 sequencing rule) |
+| J2 | Hosting (ADR-016) | ~~Vercel Pro or one container on Fly.io / Railway / VPS~~ | **DECIDED 2026-09-26 (K2, ADR-046): one DigitalOcean Droplet, container image behind Caddy** — `deploy/` |
+| J3 | Production PostgreSQL (ADR-005a) | ~~Neon~~ | **DECIDED 2026-09-26 (K3, ADR-046): DigitalOcean Managed PostgreSQL 16, same VPC** — not yet provisioned |
+| J4 | Domain and email sending domain | One apex domain; `/verify` on it (ADR-039); SPF/DKIM/DMARC before the first real email | **OPEN (K13)** — blocks Phase B |
+| J5 | Email provider (ADR-015) | Resend free tier; `EMAIL_TRANSPORT=resend` once the transport is implemented | **DEFERRED at go-live (K14)** — `EMAIL_TRANSPORT=log` |
+| J6 | Release gate (OQ-18) | Full Vitest + Playwright + build before every production deploy | **ADOPTED 2026-09-26 (K11)** — Playwright blocking; `deploy/04-release-gate.sh` |
+| J7 | RPO / RTO (OQ-10), retention | RPO 24 h until PITR, RTO 4 h; retention per Data Arch §7.1 assumptions | **Backups decided (K10)**: managed PITR primary + nightly on-server dump (`BACKUP_KEEP=7`) + weekly off-host copy; RPO/RTO figures themselves still to be recorded |
 | J8 | Content-Security-Policy | Report-only on staging first; enforce after a clean week | **OPEN** |
-| J9 | Stripe production | Activate live mode; add the production webhook; rotate the test key pasted in chat | **OPEN** |
+| J9 | Stripe production | Activate live mode; add the production webhook; rotate the pasted keys | **Partly decided (K1, K15, K16)**: restricted key accepted; the nine webhook events as-is; one real payment + refund at go-live. **Both pasted keys still to be rolled** |
 
 ## Conventions
 

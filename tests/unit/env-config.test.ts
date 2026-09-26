@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { describeValidation, validateEnv } from "@/config/env";
+import { describeValidation, stripeKeyMode, validateEnv } from "@/config/env";
 
 /*
  * Configuration validation (M9 plan §2 item 3; §5 criterion 3). Pure function
@@ -105,6 +105,51 @@ describe("validateEnv — production", () => {
     const r = validateEnv({ ...complete(), STRIPE_SECRET_KEY: "sk_test_0123456789" }, "production");
     expect(r.ok).toBe(true);
     expect(r.warnings.map((w) => w.name)).toContain("STRIPE_SECRET_KEY");
+  });
+});
+
+describe("validateEnv — Stripe key kinds (M11 decision K1: restricted keys accepted)", () => {
+  it("accepts a live RESTRICTED key in production with no warning", () => {
+    const r = validateEnv({ ...complete(), STRIPE_SECRET_KEY: "rk_live_0123456789abcdef" }, "production");
+    expect(r.ok).toBe(true);
+    expect(r.invalid).toEqual([]);
+    expect(r.warnings).toEqual([]);
+  });
+
+  it("a test RESTRICTED key in production is the same warning as a test secret key", () => {
+    const r = validateEnv({ ...complete(), STRIPE_SECRET_KEY: "rk_test_0123456789abcdef" }, "production");
+    expect(r.ok).toBe(true);
+    expect(r.warnings.map((w) => w.name)).toEqual(["STRIPE_SECRET_KEY"]);
+    expect(r.warnings[0]!.why).toMatch(/TEST-mode/);
+  });
+
+  it("accepts a test restricted key in development", () => {
+    const env = { ...complete(), APP_BASE_URL: "http://localhost:3100", STRIPE_SECRET_KEY: "rk_test_0123456789abcdef" };
+    expect(validateEnv(env, "development").ok).toBe(true);
+  });
+
+  it.each([
+    ["pk_live_publishable", "a publishable key"],
+    ["pk_test_publishable", "a test publishable key"],
+    ["rk_0123456789", "a restricted key without a mode segment"],
+    ["sk_prod_0123456789", "an unknown mode"],
+    ["whsec_0123456789", "a webhook secret in the key slot"],
+    ["RK_LIVE_0123456789", "wrong case"],
+    [" rk_live_0123456789", "leading whitespace"],
+  ])("rejects %s (%s)", (key) => {
+    const r = validateEnv({ ...complete(), STRIPE_SECRET_KEY: key }, "production");
+    expect(r.ok).toBe(false);
+    expect(r.invalid.map((p) => p.name)).toEqual(["STRIPE_SECRET_KEY"]);
+    expect(describeValidation(r)).not.toContain(key.trim());
+  });
+
+  it("stripeKeyMode names the mode of an accepted key and null otherwise", () => {
+    expect(stripeKeyMode("sk_live_x")).toBe("live");
+    expect(stripeKeyMode("rk_live_x")).toBe("live");
+    expect(stripeKeyMode("sk_test_x")).toBe("test");
+    expect(stripeKeyMode("rk_test_x")).toBe("test");
+    expect(stripeKeyMode("pk_live_x")).toBeNull();
+    expect(stripeKeyMode("")).toBeNull();
   });
 });
 

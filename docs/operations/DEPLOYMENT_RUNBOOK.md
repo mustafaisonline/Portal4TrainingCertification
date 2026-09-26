@@ -1,6 +1,6 @@
 # Deployment Runbook
 
-> **Status: DRAFT 2026-09-23 (Milestone 9 §2 item 8). Nothing is provisioned.** Hosting (J2), database (J3), domain (J4) and email (J5) are the founder's decisions; this runbook covers **both** hosting options of ADR-016 so either can be executed the day the decision is made.
+> **Status: UPDATED 2026-09-26 (Milestone 11). Nothing is provisioned.** Hosting and database were **decided 2026-09-26 (ADR-046, K2/K3): one DigitalOcean Droplet running the container image behind Caddy, with DigitalOcean Managed PostgreSQL** — that is **Option C (§4a)**, executed through the governed framework in [`deploy/`](../../deploy/README.md). Options A and B are retained below as the record of what was considered; they are no longer the plan. Domain (J4/K13) and email (J5/K14) remain the founder's.
 
 ## 0. What is being deployed
 
@@ -41,7 +41,7 @@ Names come from `.env.example`; **values live only in the host's secret store** 
 | `PROFILE_ENCRYPTION_KEY` | yes | base64 of exactly 32 bytes | `openssl rand -base64 32` | AES-256-GCM for the ID-number column; rotation = re-encrypt rows (see MONITORING_AND_INCIDENTS §5.4) |
 | `EMAIL_TRANSPORT` | yes | `log` \| `resend` \| `postmark` | — | Only `log` is implemented (ADR-015 open). `resend`/`postmark` refuse at first send until the transport exists; do not set them before J5 is done **and** the transport is built |
 | `JOBS_SECRET` | yes | ≥ 16 chars | `openssl rand -base64 32` | Bearer for `POST /api/jobs/certificate-reminders`; unset → the endpoint answers 503 |
-| `STRIPE_SECRET_KEY` | yes | `sk_live_…` | Stripe → Developers → API keys | A `sk_test_` key in production starts with a **warning** and every payment fails at Stripe — treat it as a defect |
+| `STRIPE_SECRET_KEY` | yes | `rk_live_…` (restricted, **recommended**) or `sk_live_…` (standard) | Stripe → Developers → API keys → **Create restricted key** with exactly: **Checkout Sessions — Write · Refunds — Write · PaymentIntents — Read · Charges — Read · Balance transactions — Read** (what `src/modules/commerce/stripe.ts` calls; nothing else). Accepted since M11 decision K1 (2026-09-26) | A `*_test_` key in production starts with a **warning** and every payment fails at Stripe — treat it as a defect. Publishable keys (`pk_`) are refused at start-up |
 | `STRIPE_WEBHOOK_SECRET` | yes | `whsec_…` | the production endpoint's signing secret (§6) | Both Stripe values together or neither |
 | `LEGAL_DOCUMENT_VERSIONS` | **no — warning only** | JSON `{"terms":"<v>","privacy":"<v>"[,"refund":"<v>"]}` | set the day counsel publishes | Unset = **registration closed** (consent gate shut) — a supported launch state (M10 §2). Set-but-malformed **is** fatal |
 | `ENQUIRY_NOTIFY_EMAIL` | no | email address | founder's inbox | Where contact-form enquiries are announced through the outbox; without a real email transport the row is written but nothing is delivered |
@@ -86,9 +86,26 @@ Notes on the image: Node 24 alpine, non-root user `portal`, `HEALTHCHECK` on `/a
 - **Railway:** New project → Deploy from GitHub → detected Dockerfile; Variables from §2; Settings → Healthcheck path `/api/health`; Cron: a second service or an external scheduler (§7).
 - **VPS:** Docker Engine + a reverse proxy that terminates TLS (Caddy gives automatic certificates); `docker run --restart unless-stopped --env-file … -p 127.0.0.1:3000:3000 p4tc-portal`; proxy `https://<domain>` → `127.0.0.1:3000`; crontab from §7. Keep the env file `chmod 600`, owned by the deploy user.
 
+## 4a. Option C — DigitalOcean Droplet + Managed PostgreSQL through `deploy/` (CHOSEN 2026-09-26, ADR-046)
+
+The whole procedure — provisioning checklist, server bootstrap, env files, every deploy, rollback and restore — is in [`deploy/README.md`](../../deploy/README.md). In one screen:
+
+| Step | Command / action | Who |
+|---|---|---|
+| Provision | Droplet (Ubuntu 24.04, SGP1, 2 GiB/2 vCPU) · Managed PostgreSQL 16 (same VPC; databases `p4tc_production`, `p4tc_staging`, `p4tc_migration`, each `SET timezone TO 'UTC'`) · Container Registry · DNS A records (apex, `www`, `staging`) | founder (RED) |
+| Bootstrap once | `rsync -az deploy/ root@<droplet>:/opt/p4tc/deploy/` → `ssh root@<droplet> 'bash /opt/p4tc/deploy/10-server-bootstrap-serverscript.sh --domain <apex>'` → copy `/etc/p4tc/governance-hmac.key` to `deploy/.governance-hmac.key` | founder |
+| Secrets | Type `/etc/p4tc/staging.env` and `/etc/p4tc/production.env` **on the server** (names from §2; root:deploy 0640). Never through the framework, chat or a document | founder |
+| Build | `git tag vX && git push origin vX` → `.github/workflows/release.yml` verifies (ci.yml), builds `runtime` + `migrate` images, **proves** them (migrates a throwaway PostgreSQL, boots in production mode, `/api/health` 200) and pushes to the registry | CI |
+| Deploy | `deploy/start.sh --audit --env staging --tag vX` (GO) → `deploy/start.sh --env staging --tag vX` → exercise staging → `deploy/start.sh --env production --tag vX` | operator |
+| Migrations | Run by the server wrapper from the tag's `migrate` image, **after** a backup and a sandbox rehearsal on a copy of the database, **before** the code switch (ADR-029). Never by hand, never by the app container | wrapper |
+| Roll back | `deploy/07-rollback.sh --env production` (previous tag) · `--restore-db <dump>` for data (safety snapshot first, confirmed) | operator |
+| Scheduler | `p4tc-reminders.timer` (01:00 UTC) installed by the bootstrap — §7's crontab is not needed | bootstrap |
+
 ## 5. Every subsequent deploy
 
-1. Release gate green on the exact commit (`RELEASE_GATE.md`).
+**Under Option C this section is executed by `deploy/start.sh`, which enforces every line of it** (gate, migration-before-code, health, rollback). The steps remain the policy:
+
+1. Release gate green on the exact commit (`RELEASE_GATE.md` — adopted 2026-09-26, K11; `deploy/04-release-gate.sh`).
 2. If the release includes a migration: `npm run db:deploy` **first**, then deploy the code (forward-only migrations are written to be compatible with the previous code for the minutes between the two steps — a migration that is not must be flagged in its PR). Never in the reverse order; never automatically.
 3. Deploy. Watch the start log for `[config]` lines and the first `/api/health`.
 4. Smoke: `/`, `/verify`, `/api/health`, sign-in, one Stripe test-mode checkout on **staging** (not production).
@@ -102,7 +119,8 @@ Stripe Dashboard (live mode) → Developers → Webhooks → **Add endpoint**:
 - Events the application handles (`src/modules/commerce/webhook.service.ts`): `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `checkout.session.expired`, `checkout.session.async_payment_failed`, `charge.succeeded`, `charge.updated`, `charge.refunded`, `refund.created`, `refund.updated`. Any other event is stored and marked `ignored`.
 - Copy the endpoint's **signing secret** → `STRIPE_WEBHOOK_SECRET` (production). The test-mode `whsec_` from `stripe listen` is not it.
 - Verify: Stripe → the endpoint → "Send test webhook" → the row appears in `stripe_events` (admin → Orders shows the effect) and the response is `200 {"received":true}`.
-- **Rotate the test secret key that was pasted in chat** (Developers → API keys → roll key) before go-live, and update `.env.local`.
+- **Rotate both keys that were pasted in chat** — the test secret key (2026-09-21) and the live restricted key (2026-09-26) — (Developers → API keys → roll key) before go-live; update `.env.local` for the test one. The live key goes into `/etc/p4tc/production.env` on the server only.
+- The key may be a **restricted key** (`rk_live_…`, recommended) with exactly the permissions in §2, or a standard secret key (`sk_live_…`). Both are accepted since M11 K1.
 
 ## 7. Reminders scheduler
 

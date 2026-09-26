@@ -1,6 +1,6 @@
 # Data Blueprint & AI/Vibe Coding — Curriculum (2 days)
 
-> **Status: DRAFT v1 for founder review — 2026-09-26**, written from the founder's instruction of the same day: *two modules — Module 1 "Data Blueprint" = the current curriculum items 1–10; Module 2 = the Learn Vibe Coding curriculum, copied in; Learn Vibe Coding is the last module of this training.* Implemented in the dev catalogue the same day (slug `data-blueprint-ai-vibe-coding`); Module 2 is rendered from the **same source** as the standalone course, so the two cannot drift.
+> **Status: DRAFT v1 for founder review — 2026-09-26**, written from the founder's instruction of the same day: *two modules — Module 1 "Data Blueprint" = the current curriculum items 1–10; Module 2 = the Learn Vibe Coding curriculum, copied in; Learn Vibe Coding is the last module of this training.* Implemented in the dev catalogue the same day (slug `data-blueprint-ai-vibe-coding`, page on the shared training template, bespoke landing retired); Module 2 is rendered from the **same source** as the standalone course, so the two cannot drift.
 > **Companion:** [`CURRICULUM_LEARN_VIBE_CODING.md`](CURRICULUM_LEARN_VIBE_CODING.md) (Module 2 in full, with its agenda and minutes).
 
 ## 1. Positioning

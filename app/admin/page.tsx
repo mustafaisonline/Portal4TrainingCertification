@@ -1,9 +1,12 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
+import { forbidden, redirect } from "next/navigation";
 import { countOpenEnquiries } from "@/modules/catalogue/enquiries/admin.repository";
+import { trainingAccess } from "@/modules/catalogue/programmes/admin-access";
+import { FEE_REGIONS } from "@/modules/catalogue/programmes/constants";
+import { listTrainings, type TrainingListItem } from "@/modules/catalogue/programmes/admin.repository";
 import { formatMoney } from "@/modules/catalogue/programmes/types";
 import { countCertificates } from "@/modules/certificates/repository";
-import { authorise } from "@/modules/identity/session";
 import { currentMonthKey, monthLabel } from "@/modules/reports/months";
 import { certificatesSummary, confirmedUpcomingRegistrations, lastJobRun, revenueByMonth } from "@/modules/reports/queries";
 import { countPendingReviews } from "@/modules/reviews/repository";
@@ -17,6 +20,11 @@ import { formatTimestamp } from "@/shared/util/dates";
  * remembered. Each card links to the screen that acts on it. The
  * data-testids the earlier milestones' e2e specs rely on (offerings,
  * reviews, certificates) are kept.
+ *
+ * Milestone 12 (founder request 2026-09-26): three launch cards at the top
+ * — Trainings (add / edit), Schedule (dates) and Fees (the four rows per
+ * training) — and a REDUCED board for a Trainer (L3): their trainings,
+ * dates and fees only, nothing operational.
  */
 export const dynamic = "force-dynamic";
 
@@ -38,9 +46,101 @@ function Stat({ label, value, testId, children }: { label: string; value: ReactN
   );
 }
 
+/** The three launch cards (M12 WP4) — shown to administrators and Trainers
+ *  alike, over the caller's scope. */
+function LaunchCards({ trainings, isAdmin }: { trainings: TrainingListItem[]; isAdmin: boolean }) {
+  const published = trainings.filter((t) => t.status === "published").length;
+  const drafts = trainings.filter((t) => t.status === "unlisted").length;
+  const openDates = trainings.reduce((n, t) => n + t.openDates, 0);
+  const withoutDates = trainings.filter((t) => t.status === "published" && t.openDates === 0);
+  const incompleteFees = trainings.filter((t) => t.feeCount < FEE_REGIONS.length);
+  return (
+    <>
+      <Card variant="panel" data-testid="admin-card-trainings">
+        <p className="text-label mb-2">Catalogue</p>
+        <h2 className="text-h2">{isAdmin ? "Trainings" : "My trainings"}</h2>
+        <p className="text-body-sm mt-2 text-[var(--color-ink-quiet)]">
+          <span data-testid="admin-trainings-counts">
+            {trainings.length === 0 ? "No trainings yet." : `${plural(published, "published training", "published trainings")} · ${plural(drafts, "draft", "drafts")}.`}
+          </span>
+        </p>
+        <div className="mt-5 flex flex-wrap gap-3">
+          <Button href="/admin/trainings" data-testid="admin-trainings-link">
+            Manage trainings
+          </Button>
+          <Button variant="secondary" href="/admin/trainings/new" data-testid="admin-trainings-new-link">
+            Add a training
+          </Button>
+        </div>
+      </Card>
+
+      <Card variant="panel" data-testid="admin-card-schedule">
+        <p className="text-label mb-2">Dates & seats</p>
+        <h2 className="text-h2">Schedule</h2>
+        <p className="text-body-sm mt-2 text-[var(--color-ink-quiet)]">
+          <span data-testid="admin-schedule-open">{openDates === 0 ? "No open dates." : `${plural(openDates, "open date", "open dates")} taking registrations.`}</span>
+          {withoutDates.length > 0 ? <span data-testid="admin-schedule-missing"> {plural(withoutDates.length, "published training has", "published trainings have")} no open date.</span> : null}
+        </p>
+        <div className="mt-5 flex flex-wrap gap-3">
+          <Button href="/admin/offerings" data-testid="admin-offerings-link">
+            Manage offerings
+          </Button>
+          <Button variant="secondary" href="/admin/offerings/new" data-testid="admin-schedule-new-link">
+            Add a date
+          </Button>
+        </div>
+      </Card>
+
+      <Card variant="panel" data-testid="admin-card-fees">
+        <p className="text-label mb-2">Fee structure</p>
+        <h2 className="text-h2">Fees</h2>
+        <p className="text-body-sm mt-2 text-[var(--color-ink-quiet)]">
+          <span data-testid="admin-fees-incomplete">
+            {incompleteFees.length === 0
+              ? `Every training has its ${FEE_REGIONS.length} fee rows.`
+              : `${plural(incompleteFees.length, "training is", "trainings are")} missing fee rows: ${incompleteFees
+                  .slice(0, 3)
+                  .map((t) => `${t.title} (${t.feeCount}/${FEE_REGIONS.length})`)
+                  .join(", ")}${incompleteFees.length > 3 ? ", …" : ""}.`}
+          </span>
+        </p>
+        <div className="mt-5">
+          <Button href={incompleteFees[0] ? `/admin/trainings/${incompleteFees[0].id}/fees` : "/admin/trainings"} data-testid="admin-fees-link">
+            {incompleteFees[0] ? "Set fees" : "Review fees"}
+          </Button>
+        </div>
+      </Card>
+    </>
+  );
+}
+
 export default async function AdminPage() {
-  const result = await authorise("platform_admin");
-  if (!result.ok) return null; // the layout has already refused
+  const access = await trainingAccess();
+  if (!access.ok) {
+    if (access.reason === "signed-out") redirect(`/sign-in?return-to=${encodeURIComponent("/admin")}`);
+    forbidden();
+  }
+  const trainings = await listTrainings(access.scope);
+
+  if (!access.isAdmin) {
+    return (
+      <div className="flex flex-col gap-8" data-testid="trainer-dashboard">
+        <header>
+          <p className="text-label mb-2 text-[var(--color-primary)]">Trainer</p>
+          <h1 className="text-display" data-testid="admin-title">
+            Your trainings
+          </h1>
+          <p className="text-body-sm mt-2 text-[var(--color-ink-quiet)]">
+            Signed in as <strong className="text-[var(--color-ink)]">{access.user.email}</strong> as a trainer. You see the trainings linked to your profile; an administrator publishes them.
+          </p>
+        </header>
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <LaunchCards trainings={trainings} isAdmin={false} />
+        </div>
+      </div>
+    );
+  }
+
   const now = new Date();
   const month = currentMonthKey(now);
   const [pendingReviews, openEnquiries, certificateCount, certificates, upcomingRegistrations, revenue, reminderRun] = await Promise.all([
@@ -62,11 +162,28 @@ export default async function AdminPage() {
           Operations
         </h1>
         <p className="text-body-sm mt-2 text-[var(--color-ink-quiet)]">
-          Signed in as <strong className="text-[var(--color-ink)]">{result.user.email}</strong> with administrator access. Figures below are live from the database.
+          Signed in as <strong className="text-[var(--color-ink)]">{access.user.email}</strong> with administrator access. Figures below are live from the database.
         </p>
       </header>
 
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        <LaunchCards trainings={trainings} isAdmin />
+
+        <Card variant="panel" data-testid="admin-card-registrations">
+          <p className="text-label mb-2">Upcoming</p>
+          <h2 className="text-h2">Registrations</h2>
+          <p className="text-body-sm mt-2 text-[var(--color-ink-quiet)]">
+            <span data-testid="admin-registrations-upcoming">
+              {upcomingRegistrations === 0 ? "No confirmed registrations on upcoming dates." : `${plural(upcomingRegistrations, "confirmed registration", "confirmed registrations")} on upcoming dates.`}
+            </span>
+          </p>
+          <div className="mt-5">
+            <Button variant="secondary" href="/admin/offerings" data-testid="admin-registrations-link">
+              See the dates
+            </Button>
+          </div>
+        </Card>
+
         <Card variant="panel" data-testid="admin-card-reviews">
           <p className="text-label mb-2">Learner feedback</p>
           <h2 className="text-h2">Reviews</h2>
@@ -113,21 +230,6 @@ export default async function AdminPage() {
             </Button>
             <Button variant="secondary" href="/admin/certificates/fee" data-testid="admin-certificates-fee-link">
               Renewal fee
-            </Button>
-          </div>
-        </Card>
-
-        <Card variant="panel" data-testid="admin-card-registrations">
-          <p className="text-label mb-2">Dates & seats</p>
-          <h2 className="text-h2">Offerings</h2>
-          <p className="text-body-sm mt-2 text-[var(--color-ink-quiet)]">
-            <span data-testid="admin-registrations-upcoming">
-              {upcomingRegistrations === 0 ? "No confirmed registrations on upcoming dates." : `${plural(upcomingRegistrations, "confirmed registration", "confirmed registrations")} on upcoming dates.`}
-            </span>
-          </p>
-          <div className="mt-5">
-            <Button href="/admin/offerings" data-testid="admin-offerings-link">
-              Manage offerings
             </Button>
           </div>
         </Card>

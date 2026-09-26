@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { withTransaction } from "@/db/prisma";
 import { isUuid } from "@/modules/catalogue/offerings/repository";
-import { AdminUserNotFoundError, grantPlatformAdmin, revokePlatformAdmin, RoleChangeRefusedError } from "./admin-users.repository";
+import { AdminUserNotFoundError, grantPlatformAdmin, grantTrainer, revokePlatformAdmin, revokeTrainer, RoleChangeRefusedError } from "./admin-users.repository";
 import { authorise } from "./session";
 
 /*
@@ -43,7 +43,7 @@ function failure(err: unknown, verb: string): AdminUserActionState {
   if (err instanceof RoleChangeRefusedError) return { status: "error", message: err.message };
   if (err instanceof AdminUserNotFoundError) return { status: "error", message: "This person could not be found." };
   console.error(`[admin-users] ${verb} failed`, err);
-  return { status: "error", message: `We could not ${verb} administrator access. Please try again.` };
+  return { status: "error", message: `We could not ${verb} this access. Please try again.` };
 }
 
 /** Fields: `userId` (uuid). */
@@ -58,6 +58,44 @@ export async function grantAdminAction(_prev: AdminUserActionState, formData: Fo
     return { status: "done", message: granted ? "Platform administrator access granted." : "This person already holds administrator access." };
   } catch (err) {
     return failure(err, "grant");
+  }
+}
+
+/** Milestone 12 — Trainer role (L1/L10). Fields: `userId` (uuid). */
+export async function grantTrainerAction(_prev: AdminUserActionState, formData: FormData): Promise<AdminUserActionState> {
+  const gate = await refuseUnlessAdmin();
+  if ("status" in gate) return gate;
+  const userId = targetFrom(formData);
+  if (!userId) return { status: "error", message: "This person could not be found." };
+  try {
+    const result = await withTransaction((tx) => grantTrainer(tx, userId, gate.userId));
+    revalidate(userId);
+    revalidatePath("/admin/trainings");
+    return {
+      status: "done",
+      message: result.granted
+        ? `Trainer access granted.${result.profileCreated ? " A Trainer profile was created (unpublished) so they can be linked to trainings." : ""}`
+        : "This person is already a trainer.",
+    };
+  } catch (err) {
+    return failure(err, "grant");
+  }
+}
+
+/** Fields: `userId` (uuid), `confirm` = "yes". */
+export async function revokeTrainerAction(_prev: AdminUserActionState, formData: FormData): Promise<AdminUserActionState> {
+  const gate = await refuseUnlessAdmin();
+  if ("status" in gate) return gate;
+  const userId = targetFrom(formData);
+  if (!userId) return { status: "error", message: "This person could not be found." };
+  if (String(formData.get("confirm") ?? "") !== "yes") return { status: "error", message: "Tick the confirmation before revoking." };
+  try {
+    const revoked = await withTransaction((tx) => revokeTrainer(tx, userId, gate.userId));
+    revalidate(userId);
+    revalidatePath("/admin/trainings");
+    return { status: "done", message: revoked ? "Trainer access revoked. Their profile and training links are kept." : "This person is not a trainer." };
+  } catch (err) {
+    return failure(err, "revoke");
   }
 }
 

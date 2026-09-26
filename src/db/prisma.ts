@@ -3,7 +3,7 @@ import { PrismaPg } from "@prisma/adapter-pg";
 // by plain `node` (prisma/seed.ts), which resolves neither the `@/` alias nor
 // extensionless TypeScript specifiers. Next.js, Vitest and Playwright all
 // accept this form too.
-import { PrismaClient, type Prisma } from "../generated/prisma/client.ts";
+import { Prisma, PrismaClient } from "../generated/prisma/client.ts";
 
 /** A client bound to an open transaction — what repositories accept so that a
  *  business change and its audit row commit together (ADR-022). */
@@ -14,6 +14,12 @@ export type Db = PrismaClient | Tx;
  *  JSON (e.g. the stored Stripe event payload) need not import the generated
  *  client themselves. */
 export type JsonInput = Prisma.InputJsonValue;
+/** A JSON object for a `Json` column (Milestone 12: `programmes.content`). */
+export type JsonObjectInput = Prisma.InputJsonObject;
+/** SQL NULL for a nullable `Json` column. Prisma distinguishes it from JSON
+ *  `null`, and `undefined` would mean "leave the stored value alone" — so a
+ *  module that must CLEAR a column (M12: a module's points) uses this. */
+export const JSON_NULL = Prisma.DbNull;
 
 /*
  * The one PrismaClient for the process (ADR-005: single PostgreSQL, sole

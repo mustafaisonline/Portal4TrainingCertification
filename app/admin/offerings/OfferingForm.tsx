@@ -46,10 +46,10 @@ type Values = {
   leadExpertId: string;
 };
 
-function initialValues(offering: OfferingRecord | undefined, programmes: AdminProgrammeOption[]): Values {
+function initialValues(offering: OfferingRecord | undefined, programmes: AdminProgrammeOption[], initialProgrammeId?: string): Values {
   if (!offering) {
     return {
-      programmeId: programmes[0]?.id ?? "",
+      programmeId: initialProgrammeId ?? programmes[0]?.id ?? "",
       deliveryFormatId: "",
       modality: "live_online",
       status: "planned",
@@ -119,18 +119,21 @@ export function OfferingForm({
   programmes,
   formats,
   experts,
+  initialProgrammeId,
 }: {
   /** Present in edit mode; absent when creating. */
   offering?: OfferingRecord;
   programmes: AdminProgrammeOption[];
   formats: AdminDeliveryFormatOption[];
   experts: ExpertOption[];
+  /** Create mode: the training to pre-select (M12 — "Add a date" from a training). */
+  initialProgrammeId?: string;
 }) {
   const mode = offering ? "edit" : "create";
   const [state, action, pending] = useActionState(mode === "edit" ? updateOfferingAction : createOfferingAction, initial);
   const fieldErrors = state.status === "error" ? state.fieldErrors : {};
   const noteErrorId = useId();
-  const [values, setValues] = useState<Values>(() => initialValues(offering, programmes));
+  const [values, setValues] = useState<Values>(() => initialValues(offering, programmes, initialProgrammeId));
   const bind = (field: keyof Values) => ({
     name: field,
     value: values[field],

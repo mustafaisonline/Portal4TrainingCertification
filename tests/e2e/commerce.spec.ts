@@ -131,7 +131,7 @@ test("checkout shows the USD price for a person with an international profile co
   await expect(page.getByTestId("checkout-programme")).toHaveText(flagshipTitle);
   await expect(page.getByTestId("checkout-price")).toHaveText(usdPriceLabel);
   await expect(page.getByTestId("checkout-region-note")).toContainText("United States");
-  await expect(page.getByTestId("checkout-region-note")).toContainText("International");
+  await expect(page.getByTestId("checkout-region-note")).toContainText("Rest of the world");
   const tiers = page.getByTestId("checkout-refund-tiers");
   await expect(tiers).toContainText("100 % refund");
   await expect(tiers).toContainText("50 % refund");

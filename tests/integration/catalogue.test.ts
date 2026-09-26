@@ -12,7 +12,8 @@ import {
   listPublishedProgrammes,
 } from "@/modules/catalogue/programmes/repository";
 import { isModulePointGroup } from "@/modules/catalogue/programmes/module-points";
-import { formatMoney, type ModulePointGroup } from "@/modules/catalogue/programmes/types";
+import { cardPaymentAvailable, formatMoney, priceRegionMeta, pricesForCard, type ModulePointGroup } from "@/modules/catalogue/programmes/types";
+import { priceForUser } from "@/modules/commerce/pricing";
 import { courses, LEARN_VIBE_CODING_MODULES } from "../../prisma/seed-data/courses";
 import { faqGroups } from "../../prisma/seed-data/faq";
 import { questions } from "../../prisma/seed-data/questions";
@@ -65,11 +66,14 @@ describe("programmes", () => {
     expect(row!.content.related).toEqual([flagshipSeed.slug]);
     // Founder's figures 2026-09-26 (second round): today = 25% of the original.
     for (const p of row!.prices) {
+      const seeded = seed.pricing![p.region]!;
       expect(p.offerAmountMinor * 4, p.region).toBe(p.listAmountMinor);
       expect(p.offerLabel, p.region).toBe("75% OFF");
-      expect(formatMoney(p.offerAmountMinor, p.currency)).toBe(seed.pricing![p.region].today);
-      expect(formatMoney(p.listAmountMinor, p.currency)).toBe(seed.pricing![p.region].original);
+      expect(formatMoney(p.offerAmountMinor, p.currency)).toBe(seeded.today);
+      expect(formatMoney(p.listAmountMinor, p.currency)).toBe(seeded.original);
     }
+    // Three rows — no HRD Corp row has been published for this training (M12 WP1).
+    expect(row!.prices.map((p) => p.region)).toEqual(["malaysia", "pakistan", "international"]);
     expect(row!.prices.map((p) => formatMoney(p.offerAmountMinor, p.currency))).toEqual(["RM 500", "Rs. 5,000", "USD 200"]);
     expect(row!.prices.map((p) => formatMoney(p.listAmountMinor, p.currency))).toEqual(["RM 2,000", "Rs. 20,000", "USD 800"]);
     // The new editorial keys (founder change list 2026-09-26).
@@ -77,18 +81,24 @@ describe("programmes", () => {
     expect(row!.content.whatYouGet).toEqual(seed.whatYouGet);
     expect(row!.content.whatYouGet).toHaveLength(3);
     expect(row!.content.paceNotes).toEqual(seed.paceNotes);
-    expect(row!.content.regionalPricing).toEqual(seed.regionalPricing);
-    expect(row!.content.regionalPricing?.malaysia?.note).toMatch(/minimum of 25 participants/);
-    expect(row!.content.regionalPricing?.international?.note).toMatch(/minimum of 25 participants/);
+    // M12 WP1: the region notes are columns of the fee rows, not content JSON.
+    const byRegion = Object.fromEntries(row!.prices.map((p) => [p.region, p]));
+    expect(byRegion["malaysia"]!.note).toMatch(/minimum of 25 participants/);
+    expect(byRegion["international"]!.note).toMatch(/minimum of 25 participants/);
+    expect(byRegion["pakistan"]!.note).toBeNull();
+    expect(row!.prices.every((p) => p.minParticipants === null)).toBe(true);
+    expect("regionalPricing" in row!.content).toBe(false);
     // No "Included" list and no value stack on a published page.
     expect(row!.content.included).toBeUndefined();
     expect(row!.content.valueStack).toBeUndefined();
     expect(row!.experts.length).toBeGreaterThan(0);
   });
 
-  it("the flagship (updated 2026-09-26, second time that day) is priced per region — Malaysia's second figure lives in content, one of its options equals the price row", async () => {
+  it("the flagship has the FOUR fee rows (M12 WP1): Malaysia via HRD Corp · Malaysia not via HRD Corp · Pakistan · Rest of the world — each a programme_prices row with its minimum and note", async () => {
     const flagship = (await findFlagshipProgramme())!;
     const byRegion = Object.fromEntries(flagship.prices.map((p) => [p.region, p]));
+    // Founder's fee-row order (PRICE_REGIONS).
+    expect(flagship.prices.map((p) => p.region)).toEqual(["malaysia_hrdcorp", "malaysia", "pakistan", "international"]);
     expect(formatMoney(byRegion["malaysia"]!.offerAmountMinor, "MYR")).toBe("RM 2,500");
     expect(formatMoney(byRegion["malaysia"]!.listAmountMinor, "MYR")).toBe("RM 5,000");
     expect(byRegion["malaysia"]!.offerLabel).toBe("50% OFF");
@@ -102,24 +112,34 @@ describe("programmes", () => {
     expect(byRegion["pakistan"]!.offerLabel).toBe("55% OFF");
     expect(flagship.prices.filter((p) => p.region === "pakistan")).toHaveLength(1);
 
-    // Malaysia now carries the two-figure `options` display Pakistan used
-    // to carry (before this update) — "Via HRD Corp" (undiscounted) and
-    // "Without HRD Corp" (50% off, relabelled from "Launch offer" the same
-    // day), both minimum 25 participants.
-    const my = flagship.content.regionalPricing?.malaysia;
-    expect(my?.options?.map((o) => o.label)).toEqual(["Via HRD Corp", "Without HRD Corp"]);
-    expect(my?.options?.map((o) => o.minParticipants)).toEqual([25, 25]);
-    // The display options must never drift from the amount checkout charges.
-    const withoutHrdCorp = my!.options!.find((o) => o.label === "Without HRD Corp")!;
-    expect(withoutHrdCorp.today).toBe(formatMoney(byRegion["malaysia"]!.offerAmountMinor, "MYR"));
-    expect(withoutHrdCorp.original).toBe(formatMoney(byRegion["malaysia"]!.listAmountMinor, "MYR"));
-    expect(my?.note).toMatch(/no online option/);
+    // "Via HRD Corp" is its OWN row (was a display option in content JSON
+    // until M12 WP1): the full RM 5,000, undiscounted, minimum 25, and it
+    // is display-only — claimed through the employer, never charged (L5).
+    const hrd = byRegion["malaysia_hrdcorp"]!;
+    expect(hrd.currency).toBe("MYR");
+    expect(formatMoney(hrd.offerAmountMinor, "MYR")).toBe("RM 5,000");
+    expect(hrd.listAmountMinor).toBe(hrd.offerAmountMinor);
+    expect(hrd.minParticipants).toBe(25);
+    expect(hrd.note).toMatch(/no online option/);
+    expect(cardPaymentAvailable("malaysia_hrdcorp")).toBe(false);
+    expect(priceRegionMeta("malaysia_hrdcorp").payment).toBe("hrd_corp");
+    // "Without HRD Corp" = the `malaysia` row a Malaysian card payment is
+    // charged (L6) — RM 2,500 (50% off RM 5,000), minimum 25, same note.
+    expect(byRegion["malaysia"]!.minParticipants).toBe(25);
+    expect(byRegion["malaysia"]!.note).toMatch(/no online option/);
+    expect(priceForUser(flagship, { country: "Malaysia" }).region).toBe("malaysia");
+    expect(priceForUser(flagship, { country: "Malaysia" }).offerAmountMinor).toBe(250_000);
+    // Both Malaysian rows sit on the one "Malaysia" public card, HRD Corp first.
+    expect(pricesForCard(flagship.prices, "malaysia").map((p) => p.region)).toEqual(["malaysia_hrdcorp", "malaysia"]);
+    expect(pricesForCard(flagship.prices, "international").map((p) => p.region)).toEqual(["international"]);
 
-    // Pakistan no longer carries `options` — a single note, same wording
-    // pattern as International's.
-    expect(flagship.content.regionalPricing?.pakistan?.options).toBeUndefined();
-    expect(flagship.content.regionalPricing?.pakistan?.note).toMatch(/minimum of 100 participants/);
-    expect(flagship.content.regionalPricing?.international?.note).toMatch(/minimum of 100 participants/);
+    // Pakistan and Rest of the world: one row each, note on the row, no minimum.
+    expect(byRegion["pakistan"]!.note).toMatch(/minimum of 100 participants/);
+    expect(byRegion["international"]!.note).toMatch(/minimum of 100 participants/);
+    expect(byRegion["pakistan"]!.minParticipants).toBeNull();
+    expect(byRegion["international"]!.minParticipants).toBeNull();
+    // The presentation JSON is retired (migration 20260926130859).
+    expect("regionalPricing" in flagship.content).toBe(false);
     expect(flagship.content.whatYouGet).toHaveLength(2);
     expect(flagship.content.paceNotes).toHaveLength(3);
     expect(flagship.content.included).toBeUndefined();
@@ -177,14 +197,17 @@ describe("programmes", () => {
     expect(JSON.stringify(flagship.content)).not.toMatch(/PromptOS|4 weeks|17 modules/);
   });
 
-  it("prices render exactly as published", async () => {
+  it("prices render exactly as published — all four rows", async () => {
     const flagship = (await findFlagshipProgramme())!;
     const byRegion = Object.fromEntries(flagship.prices.map((p) => [p.region, p]));
-    for (const region of ["malaysia", "pakistan", "international"] as const) {
+    for (const region of ["malaysia_hrdcorp", "malaysia", "pakistan", "international"] as const) {
       const p = byRegion[region]!;
-      expect(formatMoney(p.offerAmountMinor, p.currency)).toBe(flagshipSeed.pricing![region].today);
-      expect(formatMoney(p.listAmountMinor, p.currency)).toBe(flagshipSeed.pricing![region].original);
-      expect(p.offerLabel).toBe(flagshipSeed.pricing![region].discount);
+      const seeded = flagshipSeed.pricing![region]!;
+      expect(formatMoney(p.offerAmountMinor, p.currency)).toBe(seeded.today);
+      expect(formatMoney(p.listAmountMinor, p.currency)).toBe(seeded.original);
+      expect(p.offerLabel).toBe(seeded.discount);
+      expect(p.minParticipants).toBe(seeded.minParticipants ?? null);
+      expect(p.note).toBe(seeded.note ?? null);
     }
   });
 

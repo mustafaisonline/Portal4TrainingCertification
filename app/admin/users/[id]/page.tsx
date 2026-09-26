@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { forbidden, notFound } from "next/navigation";
 import { formatMoney } from "@/modules/catalogue/programmes/types";
 import { CERTIFICATE_STATUS_LABEL } from "@/modules/certificates/constants";
 import { dateColumnToIso, todayIso } from "@/modules/certificates/dates";
@@ -11,7 +11,7 @@ import { REVIEW_MODERATION_LABEL, REVIEW_VISIBILITY_LABEL } from "@/modules/revi
 import { Card } from "@/shared/ui/Card";
 import { Chip } from "@/shared/ui/Chip";
 import { formatCalendarDate, formatDateRange, formatTimestamp } from "@/shared/util/dates";
-import { GrantAdmin, RevokeAdmin } from "./RoleActions";
+import { GrantAdmin, GrantTrainer, RevokeAdmin, RevokeTrainer } from "./RoleActions";
 
 /*
  * /admin/users/[id] — one person in full (M8 plan §2 item 4): identity
@@ -28,7 +28,7 @@ const dash = "—";
 
 export default async function AdminUserDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const result = await authorise("platform_admin");
-  if (!result.ok) return null; // the layout has already refused
+  if (!result.ok) forbidden(); // M12: a Trainer may enter /admin but not this screen (403, never a blank page)
   const { id } = await params;
   const user = await getUserForAdmin(id);
   if (!user) notFound();
@@ -148,13 +148,28 @@ export default async function AdminUserDetailPage({ params }: { params: Promise<
         </Card>
       </div>
 
-      <Card variant="panel" className="p-6" data-testid="admin-user-role-actions">
-        <h2 className="text-h2 mb-1">Administrator access</h2>
-        <p className="text-body-sm mb-4 text-[var(--color-ink-faint)]">
-          Platform administrator is the only role granted from here in the MVP. Every change is written to the audit log with the acting administrator.
-        </p>
-        {user.isPlatformAdmin ? <RevokeAdmin userId={user.id} name={user.name} isSelf={isSelf} /> : <GrantAdmin userId={user.id} name={user.name} />}
-      </Card>
+      <div className="grid gap-6 lg:grid-cols-2">
+        <Card variant="panel" className="p-6" data-testid="admin-user-role-actions">
+          <h2 className="text-h2 mb-1">Administrator access</h2>
+          <p className="text-body-sm mb-4 text-[var(--color-ink-faint)]">
+            Every screen under /admin. Every change is written to the audit log with the acting administrator.
+          </p>
+          {user.isPlatformAdmin ? <RevokeAdmin userId={user.id} name={user.name} isSelf={isSelf} /> : <GrantAdmin userId={user.id} name={user.name} />}
+        </Card>
+        <Card variant="panel" className="p-6" data-testid="admin-user-trainer-actions">
+          <h2 className="text-h2 mb-1">Trainer access</h2>
+          <p className="text-body-sm mb-4 text-[var(--color-ink-faint)]">
+            The Trainings area only — their own trainings, dates and fees (Milestone 12).
+            {user.trainerProfile ? (
+              <>
+                {" "}
+                Trainer profile: <span className="text-mono">/trainers/{user.trainerProfile.slug}</span> ({user.trainerProfile.published ? "published" : "unpublished"}).
+              </>
+            ) : null}
+          </p>
+          {user.isTrainer ? <RevokeTrainer userId={user.id} name={user.name} /> : <GrantTrainer userId={user.id} name={user.name} />}
+        </Card>
+      </div>
 
       <Card variant="panel" className="overflow-x-auto p-0">
         <h2 className="text-h2 px-6 pt-6">Roles</h2>

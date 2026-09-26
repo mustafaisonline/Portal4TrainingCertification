@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { forbidden, notFound } from "next/navigation";
 import { authorise } from "@/modules/identity/session";
 import { getAuditForAdmin } from "@/modules/platform/audit/admin.repository";
 import { Card } from "@/shared/ui/Card";
@@ -22,7 +22,7 @@ function pretty(value: unknown): string {
 
 export default async function AdminAuditDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const result = await authorise("platform_admin");
-  if (!result.ok) return null; // the layout has already refused
+  if (!result.ok) forbidden(); // M12: a Trainer may enter /admin but not this screen (403, never a blank page)
   const { id } = await params;
   const row = await getAuditForAdmin(id);
   if (!row) notFound();

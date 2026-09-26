@@ -101,14 +101,16 @@ export async function findOfferingById(id: string, db: Db = getPrisma()): Promis
   return row ? toRecord(row) : null;
 }
 
-/** Public, upcoming offerings: planned/open/full, not yet ended, and not
- *  private cohorts. Optionally for one programme. */
+/** Public, upcoming offerings: planned/open/full, not yet ended, not
+ *  private cohorts, and (Milestone 12) only of PUBLISHED trainings — a
+ *  draft's dates are never public. Optionally for one programme. */
 export async function listUpcomingPublicOfferings(programmeId?: string, db: Db = getPrisma()): Promise<OfferingRecord[]> {
   const today = new Date();
   today.setUTCHours(0, 0, 0, 0);
   const rows = await db.scheduledOffering.findMany({
     where: {
       ...(programmeId ? { programmeId } : {}),
+      programme: { status: "published" },
       status: { in: ["planned", "open", "full"] },
       endsOn: { gte: today },
       organisationId: null,
@@ -119,10 +121,13 @@ export async function listUpcomingPublicOfferings(programmeId?: string, db: Db =
   return rows.map(toRecord);
 }
 
-/** Every offering, any status, newest start first — the admin list. */
-export async function listAllOfferings(db: Db = getPrisma()): Promise<AdminOfferingRecord[]> {
+/** Every offering, any status, newest start first — the admin list.
+ *  Milestone 12: a Trainer's list is limited to the trainings linked to
+ *  their profile (`programmeIds`); an administrator passes nothing. */
+export async function listAllOfferings(db: Db = getPrisma(), programmeIds?: string[]): Promise<AdminOfferingRecord[]> {
   const now = new Date();
   const rows = await db.scheduledOffering.findMany({
+    where: programmeIds ? { programmeId: { in: programmeIds } } : undefined,
     orderBy: [{ startsOn: "desc" }, { createdAt: "desc" }],
     include: {
       ...include,

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { forbidden, redirect } from "next/navigation";
 import { formatCalendarDate } from "@/modules/catalogue/offerings/dates";
 import {
   listAllOfferings,
@@ -7,6 +8,8 @@ import {
   OFFERING_STATUS_LABEL,
   type AdminOfferingRecord,
 } from "@/modules/catalogue/offerings/repository";
+import { trainingAccess } from "@/modules/catalogue/programmes/admin-access";
+import { listTrainings } from "@/modules/catalogue/programmes/admin.repository";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { Chip } from "@/shared/ui/Chip";
@@ -21,8 +24,12 @@ import { Chip } from "@/shared/ui/Chip";
  * unexpired pending orders; "Add a date" is a working link; with no rows the
  * page says so plainly — nothing is ever invented (DR-02 §4.1). Waitlist,
  * roster, sessions and attendance are M8.
+ *
+ * Milestone 12 (L7): a Trainer sees only the dates of their own trainings;
+ * an administrator sees every date.
  */
 export const metadata: Metadata = { title: "Offerings" };
+export const dynamic = "force-dynamic";
 
 const columns = ["Programme", "Format", "Delivery", "Dates", "Capacity", "Confirmed", "Pending", "Status", ""];
 
@@ -31,7 +38,12 @@ function StatusChip({ status }: { status: AdminOfferingRecord["status"] }) {
 }
 
 export default async function AdminOfferingsPage() {
-  const offerings = await listAllOfferings();
+  const access = await trainingAccess();
+  if (!access.ok) {
+    if (access.reason === "signed-out") redirect(`/sign-in?return-to=${encodeURIComponent("/admin/offerings")}`);
+    forbidden();
+  }
+  const offerings = access.isAdmin ? await listAllOfferings() : await listAllOfferings(undefined, (await listTrainings(access.scope)).map((t) => t.id));
   return (
     <div className="flex flex-col gap-6">
       <header className="flex flex-wrap items-end justify-between gap-4">

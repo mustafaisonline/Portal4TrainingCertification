@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { forbidden, notFound } from "next/navigation";
 import { formatMoney } from "@/modules/catalogue/programmes/types";
 import { CERTIFICATE_STATUS_LABEL } from "@/modules/certificates/constants";
 import { formatCalendarDate, todayIso } from "@/modules/certificates/dates";
@@ -33,7 +33,7 @@ function daysInWords(status: string, days: number): string {
 
 export default async function AdminCertificateDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const result = await authorise("platform_admin");
-  if (!result.ok) return null; // the layout has already refused
+  if (!result.ok) forbidden(); // M12: a Trainer may enter /admin but not this screen (403, never a blank page)
   const { id } = await params;
   const now = new Date();
   const certificate = await getCertificateForAdmin(id, now);

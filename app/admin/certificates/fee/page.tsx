@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { forbidden } from "next/navigation";
 import Link from "next/link";
 import { CERTIFICATE_TIMEZONE, VALIDITY_MONTHS } from "@/modules/certificates/constants";
 import { currentFeeSetting, FEE_DEFAULT_CURRENCY, listFeeHistory } from "@/modules/certificates/fee.repository";
@@ -32,7 +33,7 @@ function when(d: Date): string {
 
 export default async function AdminCertificateFeePage() {
   const result = await authorise("platform_admin");
-  if (!result.ok) return null; // the layout has already refused
+  if (!result.ok) forbidden(); // M12: a Trainer may enter /admin but not this screen (403, never a blank page)
   const now = new Date();
   const [current, history] = await Promise.all([currentFeeSetting(now), listFeeHistory()]);
 

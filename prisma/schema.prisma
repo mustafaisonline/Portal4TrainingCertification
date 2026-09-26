@@ -526,10 +526,18 @@ model DeliveryFormat {
   @@map("delivery_formats")
 }
 
+/// Fee rows per training (M12 WP1, founder 2026-09-26 — four rows):
+///   malaysia          Malaysia, NOT via HRD Corp — the card price a Malaysian
+///                     participant is charged at checkout (L6)
+///   malaysia_hrdcorp  Malaysia via HRD Corp — display only; claimed through
+///                     the employer, never charged by Stripe (L5)
+///   pakistan          paid through the local partner (no card)
+///   international     "Rest of the world" — card in USD
 enum PriceRegion {
   malaysia
   pakistan
   international
+  malaysia_hrdcorp
 
   @@map("price_region")
 }
@@ -547,6 +555,10 @@ model ProgrammePrice {
   offerName        String      @map("offer_name")
   validFrom        DateTime?   @map("valid_from") @db.Timestamptz(6)
   validTo          DateTime?   @map("valid_to") @db.Timestamptz(6)
+  /// "Minimum 25 participants" — data, not presentation JSON (M12 L4).
+  minParticipants  Int?        @map("min_participants")
+  /// Region note shown under the figure ("no online option in Malaysia").
+  note             String?
 
   @@unique([programmeId, region])
   @@map("programme_prices")

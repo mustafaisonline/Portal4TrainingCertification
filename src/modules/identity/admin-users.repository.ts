@@ -22,7 +22,9 @@ export const ADMIN_USERS_PAGE_SIZE = 25;
 
 export const ROLE_LABEL: Record<Role, string> = {
   participant: "Participant",
-  expert: "Expert",
+  // Milestone 12 (decision L1): the `expert` role IS the Trainer role and is
+  // shown as "Trainer" everywhere; the enum value is unchanged.
+  expert: "Trainer",
   assessor: "Assessor",
   org_admin: "Organisation administrator",
   platform_admin: "Platform administrator",
@@ -37,7 +39,7 @@ export class AdminUserNotFoundError extends Error {
   }
 }
 
-export type RoleChangeRefusalCode = "self_revoke" | "last_admin" | "not_admin";
+export type RoleChangeRefusalCode = "self_revoke" | "last_admin" | "not_admin" | "not_trainer";
 
 /** A rule refused the change; `code` is stable for actions and tests. */
 export class RoleChangeRefusedError extends Error {
@@ -227,6 +229,10 @@ export type AdminUserDetail = {
   roles: AdminUserRoleRow[];
   roleHistory: AdminUserRoleEvent[];
   isPlatformAdmin: boolean;
+  /** Holds the Trainer role (`expert`, platform scope) — Milestone 12. */
+  isTrainer: boolean;
+  /** The Trainer profile linked to this account, if any (`experts.user_id`). */
+  trainerProfile: { id: string; slug: string; published: boolean } | null;
 };
 
 async function emailsById(ids: (string | null)[], db: Db): Promise<Map<string, string>> {
@@ -394,7 +400,71 @@ export async function getUserForAdmin(id: string, db: Db = getPrisma()): Promise
       };
     }),
     isPlatformAdmin: roleRows.some((r) => r.role === "platform_admin" && r.scopeType === "platform" && r.revokedAt === null),
+    isTrainer: roleRows.some((r) => r.role === "expert" && r.scopeType === "platform" && r.revokedAt === null),
+    trainerProfile: await db.expert.findFirst({ where: { userId: id }, select: { id: true, slug: true, published: true } }),
   };
+}
+
+/* ---------------------------------------------------------------- trainer */
+
+function expertSlugFrom(name: string): string {
+  const base = name
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 60);
+  return base || "trainer";
+}
+
+/**
+ * Grant the Trainer role (`expert`, platform scope — Milestone 12, L1) and
+ * make sure the person has a Trainer profile (`experts` row linked by
+ * `user_id`, decision L10): created UNPUBLISHED with the account's name and
+ * empty sections, so they can be linked to trainings at once and appear on
+ * /trainers only when the profile is filled in and published. Returns what
+ * happened so the screen can say it.
+ */
+export async function grantTrainer(tx: Tx, targetUserId: string, actorUserId: string, reason?: string): Promise<{ granted: boolean; profileCreated: boolean }> {
+  if (!isUuid(targetUserId)) throw new AdminUserNotFoundError(targetUserId);
+  const user = await tx.user.findUnique({ where: { id: targetUserId }, select: { id: true, name: true } });
+  if (!user) throw new AdminUserNotFoundError(targetUserId);
+  const granted = await grantRole(tx, { userId: targetUserId, role: "expert", scope: PLATFORM, grantedByUserId: actorUserId, reason: reason ?? "granted from /admin/users (Trainer)" });
+  let profileCreated = false;
+  const existing = await tx.expert.findFirst({ where: { userId: targetUserId }, select: { id: true } });
+  if (!existing) {
+    const base = expertSlugFrom(user.name);
+    let slug = base;
+    for (let n = 2; await tx.expert.findUnique({ where: { slug }, select: { id: true } }); n++) slug = `${base}-${n}`;
+    await tx.expert.create({
+      data: {
+        userId: targetUserId,
+        slug,
+        name: user.name,
+        roleTitle: "Trainer",
+        location: "",
+        headline: "",
+        experienceLine: "",
+        summary: "",
+        photoPath: "",
+        expertise: [],
+        profile: { about: [], background: [], specialisations: [], technologies: [], certifications: [], education: [] },
+        published: false,
+      },
+    });
+    profileCreated = true;
+  }
+  return { granted, profileCreated };
+}
+
+/** Revoke the Trainer role. The Trainer profile and its links to trainings
+ *  are kept (history; a re-grant restores access to the same trainings). */
+export async function revokeTrainer(tx: Tx, targetUserId: string, actorUserId: string, reason?: string): Promise<boolean> {
+  if (!isUuid(targetUserId)) throw new AdminUserNotFoundError(targetUserId);
+  const active = await tx.userRole.findFirst({ where: { userId: targetUserId, role: "expert", scopeType: "platform", scopeId: null, revokedAt: null }, select: { id: true } });
+  if (!active) throw new RoleChangeRefusedError("not_trainer", "This person is not a trainer.");
+  return revokeRole(tx, { userId: targetUserId, role: "expert", scope: PLATFORM, revokedByUserId: actorUserId, reason: reason ?? "revoked from /admin/users (Trainer)" });
 }
 
 /* ------------------------------------------------------------------- roles */

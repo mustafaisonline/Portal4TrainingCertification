@@ -48,7 +48,17 @@ export type AuditAction =
   | "job.run"
   // Milestone 8 — admin operations
   | "enquiry.status_changed"
-  | "profile.exported";
+  | "profile.exported"
+  // Milestone 12 — trainings managed in the portal (details, editorial
+  // content, curriculum, pace formats, the four fee rows, visibility)
+  | "programme.created"
+  | "programme.updated"
+  | "programme.content_updated"
+  | "programme.modules_updated"
+  | "programme.formats_updated"
+  | "programme.fee_updated"
+  | "programme.fee_removed"
+  | "programme.status_changed";
 
 export type AuditEntry = {
   /** Our `users.id`; null when the system acted on its own. */

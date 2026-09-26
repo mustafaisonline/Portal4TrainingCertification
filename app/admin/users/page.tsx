@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { forbidden } from "next/navigation";
 import Link from "next/link";
 import { type AdminUserFilters, listUsersForAdmin, parseRoleFilter, ROLE_LABEL } from "@/modules/identity/admin-users.repository";
 import { ROLES } from "@/modules/identity/roles.repository";
@@ -23,7 +24,7 @@ const columns = ["Person", "Roles", "Registrations", "Certificates", "Joined", "
 
 export default async function AdminUsersPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const result = await authorise("platform_admin");
-  if (!result.ok) return null; // the layout has already refused
+  if (!result.ok) forbidden(); // M12: a Trainer may enter /admin but not this screen (403, never a blank page)
   const sp = await searchParams;
   const param = (k: string) => (typeof sp[k] === "string" ? (sp[k] as string).trim() : null);
   const filters: AdminUserFilters = {

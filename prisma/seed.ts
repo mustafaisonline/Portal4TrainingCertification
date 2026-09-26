@@ -13,6 +13,7 @@
  */
 import { existsSync } from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { disconnectPrisma, getPrisma } from "../src/db/prisma.ts";
 import { domains as domainSeeds } from "./seed-data/domains.ts";
 import { courses, mentorshipPackages, pricingRegions, type Course, type RegionKey } from "./seed-data/courses.ts";
@@ -36,7 +37,7 @@ const DOMAIN_SLUGS: Record<string, string> = {
   GT: "governance-technology",
 };
 
-async function seedDomains(): Promise<Map<string, string>> {
+export async function seedDomains(): Promise<Map<string, string>> {
   const ids = new Map<string, string>();
   for (const d of domainSeeds) {
     const slug = DOMAIN_SLUGS[d.code];
@@ -65,7 +66,7 @@ const PROGRAMME_DOMAIN: Record<string, string> = {
   "data-ai-career-mentorship": "AI",
 };
 
-const CURRENCY: Record<RegionKey, string> = { malaysia: "MYR", pakistan: "PKR", international: "USD" };
+const CURRENCY: Record<RegionKey, string> = { malaysia: "MYR", malaysia_hrdcorp: "MYR", pakistan: "PKR", international: "USD" };
 
 /** "RM 4,999" → 499900 · "Rs. 102,839.86" → 10283986 · "USD 2,811" → 281100 */
 function minor(published: string): bigint {
@@ -80,8 +81,10 @@ function levelOf(c: Course) {
   return c.level.toLowerCase() as "foundation" | "practitioner" | "architect" | "executive" | "builder" | "mentorship";
 }
 
-async function seedProgrammes(domainIds: Map<string, string>): Promise<Map<string, string>> {
+export async function seedProgrammes(domainIds: Map<string, string>): Promise<Map<string, string>> {
   const ids = new Map<string, string>();
+  let inserted = 0;
+  let kept = 0;
 
   // 2026-09-26, founder direction: the flagship's slug changed from
   // `ai-powered-product-development` to `data-blueprint-ai-vibe-coding`.
@@ -98,6 +101,23 @@ async function seedProgrammes(domainIds: Map<string, string>): Promise<Map<strin
     const domainCode = PROGRAMME_DOMAIN[c.slug];
     const domainId = domainCode ? domainIds.get(domainCode) : undefined;
     if (!domainId) throw new Error(`no domain mapping for programme ${c.slug}`);
+
+    // Milestone 12, decision L8 (2026-09-26): trainings are managed IN THE
+    // PORTAL (/admin/trainings) and the database is the truth. This file is
+    // the initial import: a training that already exists is left exactly as
+    // it is — its details, sections, curriculum, formats and fee rows are
+    // whatever an administrator or trainer last saved, and a re-seed must
+    // never undo that. Reference data with no admin screen (domains, FAQ,
+    // diagnostic questions, expert profiles) is still refreshed below. To
+    // re-import everything from these files on a throwaway database:
+    //   DATABASE_URL=<test db> npm run db:reset
+    const existing = await prisma.programme.findUnique({ where: { slug: c.slug }, select: { id: true } });
+    if (existing) {
+      ids.set(c.slug, existing.id);
+      kept += 1;
+      continue;
+    }
+    inserted += 1;
 
     const content = {
       highlights: c.highlights,
@@ -119,7 +139,6 @@ async function seedProgrammes(domainIds: Map<string, string>): Promise<Map<strin
       faq: c.faq,
       whatYouGet: c.whatYouGet,
       paceNotes: c.paceNotes,
-      regionalPricing: c.regionalPricing,
       ...(c.slug === "data-ai-career-mentorship" ? { mentorshipPackages } : {}),
     };
     const data = {
@@ -175,15 +194,23 @@ async function seedProgrammes(domainIds: Map<string, string>): Promise<Map<strin
     });
 
     // Prices — by (programme, region). Amounts from the published strings.
+    // M12 WP1: up to four rows; a region the seed does not price (the HRD
+    // Corp row on most trainings) has no row. Minimum and note are columns.
     if (c.pricing) {
       for (const region of pricingRegions) {
         const p = c.pricing[region.key];
+        if (!p) {
+          await prisma.programmePrice.deleteMany({ where: { programmeId: row.id, region: region.key } });
+          continue;
+        }
         const pd = {
           currency: CURRENCY[region.key],
           listAmountMinor: minor(p.original),
           offerAmountMinor: minor(p.today),
           offerLabel: p.discount,
           offerName: region.subtitle,
+          minParticipants: p.minParticipants ?? null,
+          note: p.note ?? null,
         };
         await prisma.programmePrice.upsert({
           where: { programmeId_region: { programmeId: row.id, region: region.key } },
@@ -195,6 +222,7 @@ async function seedProgrammes(domainIds: Map<string, string>): Promise<Map<strin
       await prisma.programmePrice.deleteMany({ where: { programmeId: row.id } });
     }
   }
+  console.log(`seed: programmes inserted=${inserted} kept as saved in the portal=${kept}`);
   return ids;
 }
 
@@ -294,9 +322,14 @@ async function main() {
   );
 }
 
-main()
-  .catch((err) => {
-    console.error("seed failed:", err);
-    process.exitCode = 1;
-  })
-  .finally(() => disconnectPrisma());
+// Runs only when invoked as a script (`npm run db:seed`). The exported
+// functions are also called in-process by tests/integration/trainings-
+// admin.test.ts to prove decision L8 without spawning a second seed.
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main()
+    .catch((err) => {
+      console.error("seed failed:", err);
+      process.exitCode = 1;
+    })
+    .finally(() => disconnectPrisma());
+}

@@ -15,7 +15,10 @@ import { Chip } from "@/shared/ui/Chip";
 import {
   formatMoney,
   levelLabel,
-  PRICE_REGIONS,
+  priceCardMeta,
+  priceRegionMeta,
+  pricesForCard,
+  type PriceCard,
   type PriceRegion,
   type ProgrammeContent,
   type ProgrammePriceRecord,
@@ -32,17 +35,19 @@ export type CourseCardProgramme = ProgrammeSummary & {
  *  is priced per package — its entry package's "today" figure as text. */
 type EntryPrice = { today: string; original?: string; offerLabel?: string; discounted: boolean };
 
+function toEntry(p: ProgrammePriceRecord): EntryPrice {
+  return {
+    today: formatMoney(p.offerAmountMinor, p.currency),
+    original: formatMoney(p.listAmountMinor, p.currency),
+    offerLabel: p.offerLabel,
+    discounted: p.listAmountMinor > p.offerAmountMinor,
+  };
+}
+
 function entryPricing(course: CourseCardProgramme): Partial<Record<PriceRegion, EntryPrice>> | undefined {
   if (course.prices && course.prices.length > 0) {
     const out: Partial<Record<PriceRegion, EntryPrice>> = {};
-    for (const p of course.prices) {
-      out[p.region] = {
-        today: formatMoney(p.offerAmountMinor, p.currency),
-        original: formatMoney(p.listAmountMinor, p.currency),
-        offerLabel: p.offerLabel,
-        discounted: p.listAmountMinor > p.offerAmountMinor,
-      };
-    }
+    for (const p of course.prices) out[p.region] = toEntry(p);
     return out;
   }
   // Mentorship is priced per package; show its entry package as the "from".
@@ -50,15 +55,23 @@ function entryPricing(course: CourseCardProgramme): Partial<Record<PriceRegion, 
     const pkg = course.content?.mentorshipPackages?.[0];
     if (pkg) {
       const out: Partial<Record<PriceRegion, EntryPrice>> = {};
-      for (const region of PRICE_REGIONS) {
-        const r = pkg.pricing[region.key];
-        out[region.key] = { today: r.today, original: r.original, offerLabel: r.discount, discounted: r.today !== r.original };
+      for (const region of LISTING_CARD_ORDER) {
+        const r = pkg.pricing[region];
+        out[region] = { today: r.today, original: r.original, offerLabel: r.discount, discounted: r.today !== r.original };
       }
       return out;
     }
   }
   return undefined;
 }
+
+/** The listing card's region order (unchanged since 2026-09-02): Malaysia,
+ *  Pakistan, Rest of the world. Each is a `PriceCard`; the Malaysia entry
+ *  shows both Malaysian fee rows (M12 WP1). */
+const LISTING_CARD_ORDER: PriceCard[] = ["malaysia", "pakistan", "international"];
+
+/** The "From" figure: the Malaysian card price (the checkout row). */
+const HOME_REGION: PriceRegion = "malaysia";
 
 /**
  * Reusable course card — used on the /programs hub ("Trainings",
@@ -73,7 +86,10 @@ function entryPricing(course: CourseCardProgramme): Partial<Record<PriceRegion, 
  * 2026-09-26 (founder change list, item 2): on the hub every region is
  * named in full — "Malaysia", never "(MY)", which read as a currency code
  * next to "RM" — with today's price, the original struck through, the offer
- * label ("75% OFF") and the region's note from `content.regionalPricing`.
+ * label ("75% OFF") and the region's note. M12 WP1 (same day, later): the
+ * note and the participant minimum are columns of the fee row, and the
+ * Malaysia entry lists both Malaysian rows ("Via HRD Corp" / "Without HRD
+ * Corp") — `pricesForCard`.
  */
 export function CourseCard({
   course,
@@ -88,8 +104,8 @@ export function CourseCard({
   showAllRegions?: boolean;
 }) {
   const pricing = entryPricing(course);
-  const homeRegion = PRICE_REGIONS[0];
-  const homePrice = homeRegion ? pricing?.[homeRegion.key] : undefined;
+  const homeRegion = priceRegionMeta(HOME_REGION);
+  const homePrice = pricing?.[HOME_REGION];
 
   return (
     <Card
@@ -154,45 +170,45 @@ export function CourseCard({
         <div className="mb-5 border-t border-[var(--color-line)] pt-4">
           <p className="text-label mb-3">Investment</p>
           <ul className="flex flex-col gap-3" data-testid="card-prices">
-            {PRICE_REGIONS.map((region) => {
-              const figure = pricing[region.key];
+            {LISTING_CARD_ORDER.map((card) => {
+              const meta = priceCardMeta(card);
+              const figure = pricing[card];
               if (!figure) return null;
-              const regional = course.content?.regionalPricing?.[region.key];
-              const options = regional?.options;
+              // The fee rows this card shows (two for Malaysia when the HRD
+              // Corp row is published); a mentorship "from" has no rows.
+              const rows = course.prices ? pricesForCard(course.prices, card) : [];
+              const multi = rows.length > 1;
+              const notes = rows.flatMap((p) => (p.note ? [p.note] : [])).filter((n, i, all) => all.indexOf(n) === i);
               return (
-                <li key={region.key} data-testid={`card-price-${region.key}`}>
+                <li key={card} data-testid={`card-price-${card}`}>
                   <span className="mb-1 flex flex-wrap items-center gap-2">
-                    <span className="text-body-sm font-medium text-[var(--color-ink)]">{region.label}</span>
-                    {/* When a region publishes two figures (e.g. Malaysia's
-                        "Via HRD Corp" vs "Without HRD Corp", 2026-09-26),
-                        there is no single price line left to carry the
-                        discount chip, so it sits beside the region name
-                        instead — same figures.offerLabel used below when
-                        there's only one price. */}
-                    {options && options.length > 0 && figure.discounted && figure.offerLabel && (
-                      <Chip tone="primary">{figure.offerLabel}</Chip>
-                    )}
+                    <span className="text-body-sm font-medium text-[var(--color-ink)]">{meta.label}</span>
+                    {/* When a card lists two fee rows (Malaysia's "Via HRD
+                        Corp" / "Without HRD Corp"), there is no single price
+                        line left to carry the discount chip, so it sits
+                        beside the region name instead — the checkout row's
+                        offer label, the same one used below for one price. */}
+                    {multi && figure.discounted && figure.offerLabel && <Chip tone="primary">{figure.offerLabel}</Chip>}
                   </span>
-                  {options && options.length > 0 ? (
-                    <dl className="flex flex-col gap-2.5" data-testid={`card-price-options-${region.key}`}>
-                      {options.map((o) => (
-                        <div key={o.label}>
-                          <dt className="text-body-sm font-medium text-[var(--color-ink-quiet)]">{o.label}</dt>
-                          <dd>
-                            <span className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
-                              <span className="text-body-lg font-medium text-[var(--color-primary)]">{o.today}</span>
-                              {o.original !== o.today && (
-                                <span className="text-body-sm text-[var(--color-ink-faint)] line-through">{o.original}</span>
-                              )}
-                            </span>
-                            {o.minParticipants !== undefined && (
-                              <span className="text-body-sm block text-[var(--color-ink-quiet)]">
-                                minimum {o.minParticipants} participants
+                  {multi ? (
+                    <dl className="flex flex-col gap-2.5" data-testid={`card-price-options-${card}`}>
+                      {rows.map((p) => {
+                        const f = toEntry(p);
+                        return (
+                          <div key={p.region} data-testid={`card-price-row-${p.region}`}>
+                            <dt className="text-body-sm font-medium text-[var(--color-ink-quiet)]">{priceRegionMeta(p.region).optionLabel}</dt>
+                            <dd>
+                              <span className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+                                <span className="text-body-lg font-medium text-[var(--color-primary)]">{f.today}</span>
+                                {f.discounted && <span className="text-body-sm text-[var(--color-ink-faint)] line-through">{f.original}</span>}
                               </span>
-                            )}
-                          </dd>
-                        </div>
-                      ))}
+                              {p.minParticipants !== null && (
+                                <span className="text-body-sm block text-[var(--color-ink-quiet)]">minimum {p.minParticipants} participants</span>
+                              )}
+                            </dd>
+                          </div>
+                        );
+                      })}
                     </dl>
                   ) : (
                     <span className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
@@ -205,9 +221,12 @@ export function CourseCard({
                       )}
                     </span>
                   )}
-                  {regional?.note && (
-                    <span className="text-body-sm mt-1 block leading-snug text-[var(--color-ink-quiet)]">{regional.note}</span>
+                  {!multi && rows[0]?.minParticipants != null && (
+                    <span className="text-body-sm mt-1 block leading-snug text-[var(--color-ink-quiet)]">minimum {rows[0].minParticipants} participants</span>
                   )}
+                  {notes.map((note) => (
+                    <span key={note} className="text-body-sm mt-1 block leading-snug text-[var(--color-ink-quiet)]">{note}</span>
+                  ))}
                 </li>
               );
             })}

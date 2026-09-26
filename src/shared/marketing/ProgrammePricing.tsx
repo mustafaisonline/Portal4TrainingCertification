@@ -7,12 +7,14 @@ import { Card } from "@/shared/ui/Card";
 import { Chip } from "@/shared/ui/Chip";
 import {
   LOCAL_PARTNER_PAYMENT_MESSAGE,
-  PRICE_REGIONS,
+  PRICE_CARD_ORDER,
   currencyPrefix,
   formatMoney,
+  priceCardMeta,
+  priceRegionMeta,
+  pricesForCard,
+  type CheckoutRegion,
   type MentorshipPackage,
-  type PriceRegion,
-  type ProgrammeContent,
   type ProgrammePriceRecord,
 } from "@/modules/catalogue/programmes/types";
 
@@ -29,10 +31,14 @@ import {
  * Each card states how that region pays (the rule the checkout service
  * enforces — `cardPaymentAvailable`): Malaysia by card in RM, everyone
  * outside Malaysia and Pakistan by card in USD, Pakistan through our local
- * partner (no card). The value-stack block is gone. Per-region notes and, for
- * a region that publishes two figures, the options come from
- * `content.regionalPricing`; the amount that reaches checkout is always the
- * `programme_prices` row.
+ * partner (no card). The value-stack block is gone.
+ *
+ * M12 WP1 (2026-09-26, later): every figure is a `programme_prices` ROW —
+ * four per training (Malaysia via HRD Corp · Malaysia not via HRD Corp ·
+ * Pakistan · Rest of the world). A card shows the rows `PRICE_REGIONS` maps
+ * to it: the Malaysia card carries both Malaysian rows, one figure each,
+ * labelled "Via HRD Corp" / "Without HRD Corp"; the checkout amount is the
+ * `malaysia` row (L6). Minimum participants and the note are columns.
  *
  * The region TABS survive only for the mentorship packages (an unlisted
  * programme priced per package) — that path is unchanged. The `useState`
@@ -90,71 +96,78 @@ function PriceFigures({ price, discountLabel }: { price: Figures; discountLabel:
   );
 }
 
-/** The founder's order for the cards (item 2.1): USD, RM, Rs. */
-const CARD_ORDER: PriceRegion[] = ["international", "malaysia", "pakistan"];
-
 /** Sentence for the fourth card — anyone, anywhere, who cannot pay by card. */
 const NO_CARD_ANYWHERE_MESSAGE =
   "Please contact us — we will make sure our local partner contacts you, anywhere in the world, to arrange payment through local banks or in cash.";
 
-type RegionalPricing = NonNullable<ProgrammeContent["regionalPricing"]>[PriceRegion];
+/** The distinct notes of a card's rows, in row order (both Malaysian rows
+ *  usually carry the same sentence — shown once). */
+function cardNotes(rows: ProgrammePriceRecord[]): string[] {
+  return rows.flatMap((p) => (p.note ? [p.note] : [])).filter((n, i, all) => all.indexOf(n) === i);
+}
 
 function RegionCard({
-  region,
-  price,
-  regional,
+  card,
+  rows,
   enquiryHref,
 }: {
-  region: (typeof PRICE_REGIONS)[number];
-  price: ProgrammePriceRecord;
-  regional: RegionalPricing | undefined;
+  card: CheckoutRegion;
+  /** The fee rows this card shows (`pricesForCard`), at least one. */
+  rows: ProgrammePriceRecord[];
   enquiryHref: string;
 }) {
-  const figures = toFigures(price);
-  const options = regional?.options;
+  const region = priceCardMeta(card);
+  // The checkout row (the card's own region) carries the discount chip and
+  // the single-figure layout; the Malaysia card's HRD Corp row is a second
+  // figure beside it.
+  const checkoutRow = rows.find((p) => p.region === card) ?? rows[0]!;
+  const figures = toFigures(checkoutRow);
   const byCard = region.payment === "card";
+  const notes = cardNotes(rows);
   return (
     <Card
       variant="panel"
       className="flex h-full flex-col border border-[var(--color-line-strong)]"
-      data-testid={`price-card-${region.key}`}
+      data-testid={`price-card-${card}`}
     >
       <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
         <h3 className="text-h2">
           {region.label}{" "}
-          <span className="text-body-sm font-normal text-[var(--color-ink-faint)]">({currencyPrefix(price.currency)})</span>
+          <span className="text-body-sm font-normal text-[var(--color-ink-faint)]">({currencyPrefix(checkoutRow.currency)})</span>
         </h3>
         {figures.discounted && <Chip tone="primary">{figures.discount}</Chip>}
       </div>
 
-      {options && options.length > 0 ? (
-        /* Two published figures on one card (the flagship in Pakistan):
-           each option shows its own original, today's price and the
-           participant minimum. One of them is the `programme_prices` row. */
+      {rows.length > 1 ? (
+        /* More than one fee row on a card (Malaysia: via / without HRD
+           Corp): each row shows its label, today's figure, the original
+           struck through when it differs, and the participant minimum. */
         <dl className="mb-4 flex flex-col gap-4">
-          {options.map((o) => (
-            <div key={o.label}>
-              <dt className="text-label mb-1">{o.label}</dt>
-              <dd>
-                <span className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                  <span className="text-h1 text-[var(--color-primary)]">{o.today}</span>
-                  {o.original !== o.today && (
-                    <span className="text-body-sm text-[var(--color-ink-faint)] line-through">{o.original}</span>
-                  )}
-                </span>
-                {o.minParticipants !== undefined && (
-                  <span className="text-body-sm block text-[var(--color-ink-quiet)]">
-                    minimum {o.minParticipants} participants
+          {rows.map((p) => {
+            const f = toFigures(p);
+            return (
+              <div key={p.region} data-testid={`price-row-${p.region}`}>
+                <dt className="text-label mb-1">{priceRegionMeta(p.region).optionLabel}</dt>
+                <dd>
+                  <span className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <span className="text-h1 text-[var(--color-primary)]">{f.today}</span>
+                    {f.discounted && <span className="text-body-sm text-[var(--color-ink-faint)] line-through">{f.original}</span>}
                   </span>
-                )}
-              </dd>
-            </div>
-          ))}
+                  {p.minParticipants !== null && (
+                    <span className="text-body-sm block text-[var(--color-ink-quiet)]">minimum {p.minParticipants} participants</span>
+                  )}
+                </dd>
+              </div>
+            );
+          })}
         </dl>
       ) : (
         <>
           <p className="text-label mb-2">Today&rsquo;s investment</p>
           <PriceFigures price={figures} discountLabel={region.discountLabel} />
+          {checkoutRow.minParticipants !== null && (
+            <p className="text-body-sm text-[var(--color-ink-quiet)]">minimum {checkoutRow.minParticipants} participants</p>
+          )}
         </>
       )}
 
@@ -162,11 +175,11 @@ function RegionCard({
         <span className="text-label">How you pay</span>
         <span className="mt-1 block text-[var(--color-ink)]">{region.subtitle}</span>
       </p>
-      {regional?.note && (
-        <p className="text-body-sm mt-3 text-[var(--color-ink-quiet)]" data-testid={`price-note-${region.key}`}>
-          {regional.note}
+      {notes.map((note) => (
+        <p key={note} className="text-body-sm mt-3 text-[var(--color-ink-quiet)]" data-testid={`price-note-${card}`}>
+          {note}
         </p>
-      )}
+      ))}
 
       <div className="mt-auto pt-6">
         {byCard ? (
@@ -192,28 +205,25 @@ function RegionCard({
 export function ProgrammePricing({
   prices,
   packages,
-  regionalPricing,
   programmeSlug,
 }: {
   prices: ProgrammePriceRecord[];
   packages?: MentorshipPackage[];
-  /** `content.regionalPricing` — notes and options per region. */
-  regionalPricing?: ProgrammeContent["regionalPricing"];
   /** Carried into the enquiry link so the contact form knows which
    *  programme the interest is for. */
   programmeSlug: string;
 }) {
-  // Mentorship packages only: regions that actually have a published figure get a tab.
-  const regions = PRICE_REGIONS.filter((r) => packages?.some((pkg) => Boolean(pkg.pricing[r.key])) ?? false);
-  const [region, setRegion] = useState<PriceRegion>(regions[0]?.key ?? "malaysia");
+  // Mentorship packages only: the three checkout regions that actually have
+  // a published figure get a tab (packages are not priced via HRD Corp).
+  const regions = PRICE_CARD_ORDER.map(priceCardMeta).filter((r) => packages?.some((pkg) => Boolean(pkg.pricing[r.key as CheckoutRegion])) ?? false);
+  const [region, setRegion] = useState<CheckoutRegion>((regions[0]?.key as CheckoutRegion | undefined) ?? "malaysia");
   const activeRegion = regions.find((r) => r.key === region) ?? regions[0];
   const enquiryHref = `/contact-us?kind=programme_interest&programme=${programmeSlug}`;
 
-  // Training cards, in the founder's order, only for regions with a price.
-  const cards = CARD_ORDER.flatMap((key) => {
-    const price = prices.find((p) => p.region === key);
-    const meta = PRICE_REGIONS.find((r) => r.key === key);
-    return price && meta ? [{ meta, price }] : [];
+  // Training cards, in the founder's order, only for cards with a fee row.
+  const cards = PRICE_CARD_ORDER.flatMap((card) => {
+    const rows = pricesForCard(prices, card);
+    return rows.length > 0 ? [{ card, rows }] : [];
   });
 
   if (packages ? !activeRegion : cards.length === 0) return null;
@@ -261,7 +271,7 @@ export function ProgrammePricing({
                     key={r.key}
                     role="tab"
                     aria-selected={active}
-                    onClick={() => setRegion(r.key)}
+                    onClick={() => setRegion(r.key as CheckoutRegion)}
                     // `.text-label` is unlayered CSS that sets `color`, so it would
                     // beat the text-* utilities below and leave ink-faint text on the
                     // selected tab's blue fill (axe: 1.9:1 — inherited from the
@@ -346,14 +356,8 @@ export function ProgrammePricing({
 
             {/* One card per region, plus the "Can't pay by card?" card. */}
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4" data-testid="price-cards">
-              {cards.map(({ meta, price }) => (
-                <RegionCard
-                  key={meta.key}
-                  region={meta}
-                  price={price}
-                  regional={regionalPricing?.[meta.key]}
-                  enquiryHref={enquiryHref}
-                />
+              {cards.map(({ card, rows }) => (
+                <RegionCard key={card} card={card} rows={rows} enquiryHref={enquiryHref} />
               ))}
               <Card
                 variant="plate"

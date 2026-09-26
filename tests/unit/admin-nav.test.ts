@@ -2,7 +2,7 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
-import { adminNavItems, isAdminItemActive } from "@/shared/chrome/admin-nav";
+import { adminNavItems, isAdminItemActive, trainerNavItems } from "@/shared/chrome/admin-nav";
 
 /*
  * The admin navigation contract (src/shared/chrome/admin-nav.ts) — one list
@@ -29,7 +29,8 @@ describe("admin navigation", () => {
   });
 
   it("lists every screen the milestone delivers, overview first", () => {
-    expect(adminNavItems.map((i) => i.label)).toEqual(["Overview", "Offerings", "Orders", "Enquiries", "Reviews", "Certificates", "Users", "Audit log", "Reports"]);
+    // "Trainings" added by Milestone 12 (trainings managed in the portal).
+    expect(adminNavItems.map((i) => i.label)).toEqual(["Overview", "Trainings", "Offerings", "Orders", "Enquiries", "Reviews", "Certificates", "Users", "Audit log", "Reports"]);
     expect(adminNavItems[0]!.href).toBe("/admin");
   });
 
@@ -42,6 +43,11 @@ describe("admin navigation", () => {
       expect(existsSync(pagePath), `${href} → ${path.relative(APP_DIR, pagePath)}`).toBe(true);
     });
   }
+
+  it("a Trainer's bar is exactly Overview and Trainings (Milestone 12, L3)", () => {
+    expect(trainerNavItems.map((i) => i.href)).toEqual(["/admin", "/admin/trainings"]);
+    for (const item of trainerNavItems) expect(adminNavItems).toContain(item);
+  });
 
   it("isAdminItemActive: exact for the overview, nested otherwise, trailing slashes normalised", () => {
     expect(isAdminItemActive("/admin", "/admin")).toBe(true);

@@ -5,7 +5,9 @@ import {
   findPublishedProgrammeBySlug,
   listPublishedProgrammesBySlugs,
 } from "@/modules/catalogue/programmes/repository";
+import { listUpcomingPublicOfferings } from "@/modules/catalogue/offerings/repository";
 import { levelLabel } from "@/modules/catalogue/programmes/types";
+import { ProgrammeDates } from "@/shared/marketing/ProgrammeDates";
 import { isModulePointGroup } from "@/modules/catalogue/programmes/module-points";
 import { listPublishedExperts } from "@/modules/catalogue/experts/repository";
 import { ImageFrame } from "@/shared/marketing/ImageFrame";
@@ -90,10 +92,14 @@ export default async function CourseDetailPage({
   if (!course) notFound();
 
   const content = course.content;
-  const [related, experts] = await Promise.all([
+  // Milestone 12 (L11): this training's own upcoming public dates, so a
+  // person can register from here — not only from /schedule.
+  const [related, experts, offerings] = await Promise.all([
     listPublishedProgrammesBySlugs(content.related),
     listPublishedExperts(),
+    listUpcomingPublicOfferings(course.id),
   ]);
+  const openDates = offerings.filter((o) => o.status === "open").length;
 
   // The programme's delivering expert, with the full published profile
   // (the programme record carries only a summary).
@@ -150,8 +156,16 @@ export default async function CourseDetailPage({
             </p>
           )}
           <div className="mb-10 flex flex-wrap items-center gap-4">
-            <Button href={enquiryHref}>Register your interest</Button>
-            <Button variant="secondary" href="/schedule">
+            {/* M12 (L11): with an OPEN date the primary action is to register
+                for it; otherwise it stays the enquiry, as before. */}
+            {openDates > 0 ? (
+              <Button href="#dates" data-testid="hero-register">
+                Register for a date
+              </Button>
+            ) : (
+              <Button href={enquiryHref}>Register your interest</Button>
+            )}
+            <Button variant="secondary" href={offerings.length > 0 ? "#dates" : "/schedule"}>
               See upcoming dates
             </Button>
             <Button variant="secondary" href="#investment">
@@ -608,11 +622,13 @@ export default async function CourseDetailPage({
         </section>
       )}
 
+      {/* ===== Dates (M12 L11) — rendered only when this training has upcoming public dates ===== */}
+      <ProgrammeDates offerings={offerings} enquiryHref={enquiryHref} />
+
       {/* ===== Investment (regional pricing cards) ===== */}
       <ProgrammePricing
         prices={course.prices}
         packages={content.mentorshipPackages}
-        regionalPricing={content.regionalPricing}
         programmeSlug={course.slug}
       />
 
@@ -738,9 +754,9 @@ export default async function CourseDetailPage({
             Bring this course to your team
           </h2>
           <p className="text-body-lg mb-9 max-w-[620px] text-[var(--color-ink-quiet)]">
-            Public dates are not yet published. Register your interest, or talk
-            to us about running this as a private cohort — on-site, live
-            online, or internationally.
+            {offerings.length > 0
+              ? "Public dates are above. Or talk to us about running this as a private cohort — on-site, live online, or internationally."
+              : "Public dates are not yet published. Register your interest, or talk to us about running this as a private cohort — on-site, live online, or internationally."}
           </p>
           <div className="flex flex-wrap items-center gap-4">
             <Button href="/contact-us">Talk to us about your team</Button>

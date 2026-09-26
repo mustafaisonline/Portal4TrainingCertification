@@ -216,7 +216,7 @@ function Available({ preview, user }: { preview: Extract<CheckoutPreview, { ok: 
           )}
           <p className="text-body-sm mt-4 text-[var(--color-ink-faint)]" data-testid="checkout-region-note">
             Prices are set by the country on your profile ({countryLabel ? countryLabel : "not set"} → {regionLabel(region)}
-            {region === "international" && !countryLabel ? "; without a country the international price applies" : ""}). If that is wrong,{" "}
+            {region === "international" && !countryLabel ? "; without a country the rest-of-the-world price applies" : ""}). If that is wrong,{" "}
             <Link href="/account/profile" className="underline underline-offset-4">
               update your profile
             </Link>{" "}

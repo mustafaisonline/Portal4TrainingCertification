@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { forbidden } from "next/navigation";
 import { authorise } from "@/modules/identity/session";
 import { buildAllReports } from "@/modules/reports/registry";
 import { Button } from "@/shared/ui/Button";
@@ -17,7 +18,7 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminReportsPage() {
   const gate = await authorise("platform_admin");
-  if (!gate.ok) return null; // the layout has already refused
+  if (!gate.ok) forbidden(); // M12: a Trainer may enter /admin but not this screen (403, never a blank page)
   const now = new Date();
   const reports = await buildAllReports(now);
 

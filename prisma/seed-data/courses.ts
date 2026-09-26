@@ -55,7 +55,13 @@ export type CourseLevel =
   | "Builder"
   | "Mentorship";
 
-export type RegionKey = "malaysia" | "pakistan" | "international";
+/** The fee rows (M12 WP1, founder 2026-09-26): Malaysia via HRD Corp ·
+ *  Malaysia not via HRD Corp (`malaysia`, the card price) · Pakistan ·
+ *  Rest of the world (`international`). Mirrors `PriceRegion`. */
+export type RegionKey = "malaysia" | "malaysia_hrdcorp" | "pakistan" | "international";
+/** The three regions a participant can be assigned at checkout — also the
+ *  mentorship packages' tabs. */
+export type CheckoutRegionKey = Exclude<RegionKey, "malaysia_hrdcorp">;
 
 /** One region's published price for one course (or mentorship package). */
 export type RegionPrice = {
@@ -63,9 +69,16 @@ export type RegionPrice = {
   discount: string;
   save: string;
   today: string;
+  /** "minimum N participants" — persisted as `programme_prices.min_participants`. */
+  minParticipants?: number;
+  /** Note under the figure — persisted as `programme_prices.note`. */
+  note?: string;
 };
 
-export type CoursePricing = Record<RegionKey, RegionPrice>;
+/** Three rows every priced course has, plus the HRD Corp row where the
+ *  founder has published one (the flagship). The admin Fees screen (M12
+ *  WP2) edits all four from then on; this file is the initial import. */
+export type CoursePricing = Record<CheckoutRegionKey, RegionPrice> & { malaysia_hrdcorp?: RegionPrice };
 
 /** Region metadata — mirrors `PRICE_REGIONS` in
  *  src/modules/catalogue/programmes/types.ts; `subtitle` is persisted as
@@ -85,6 +98,14 @@ export const pricingRegions: {
   discountLabel: string;
 }[] = [
   {
+    key: "malaysia_hrdcorp",
+    label: "Malaysia — via HRD Corp",
+    short: "MY·HRD",
+    subtitle: "Claimed through your employer under HRD Corp",
+    badge: "HRD Corp claimable",
+    discountLabel: "Discount",
+  },
+  {
     key: "malaysia",
     label: "Malaysia",
     short: "MY",
@@ -101,9 +122,10 @@ export const pricingRegions: {
     discountLabel: "Discount",
   },
   {
+    // Renamed from "International" 2026-09-26 (M12 L12, founder's wording).
     key: "international",
-    label: "International",
-    short: "INT",
+    label: "Rest of the world",
+    short: "RoW",
     subtitle: "Card payment in USD",
     badge: "75% launch discount",
     discountLabel: "Discount",
@@ -112,7 +134,7 @@ export const pricingRegions: {
 
 /** Mentorship uses different discount rates from the training courses
  *  (20/30/10 rather than 50/70/10), so its region badges differ. */
-export const mentorshipRegionBadges: Record<RegionKey, string> = {
+export const mentorshipRegionBadges: Record<CheckoutRegionKey, string> = {
   malaysia: "Save up to 20%",
   pakistan: "Regional scholarship — save 30%",
   international: "Global launch offer — save 10%",
@@ -331,13 +353,9 @@ export type Course = {
   whatYouGet?: string[];
   /** Participant numbers per format, under the "Choose your pace" cards (2026-09-26). */
   paceNotes?: string[];
-  /** Per-region pricing notes and, where a region publishes two figures,
-   *  the options (2026-09-26). `pricing` above stays the ONE amount per
-   *  region that reaches `programme_prices` and checkout; when `options`
-   *  exist, one of them must equal it. */
-  regionalPricing?: Partial<
-    Record<RegionKey, { note?: string; options?: { label: string; original: string; today: string; minParticipants?: number }[] }>
-  >;
+  /* `regionalPricing` (notes + "Via / Without HRD Corp" options, 2026-09-26)
+   * was retired by M12 WP1 the same day: each figure, minimum and note is
+   * now its own `pricing` row (`RegionPrice.minParticipants` / `.note`). */
 };
 
 export const courseLevels: {
@@ -1341,14 +1359,26 @@ export const courses: Course[] = [
     // Rs 20,000), International USD 200 (was USD 800; the founder typed
     // "RM200" under USD — read as USD 200, to confirm). Supersedes the
     // earlier undiscounted RM 100 / Rs 5,000 / USD 1,000.
+    // M12 WP1 (2026-09-26, later): the per-region notes moved from the
+    // retired `regionalPricing` block onto the rows themselves. No HRD Corp
+    // row has been published for this training yet — the admin Fees screen
+    // adds it when the founder sets one.
     pricing: {
-      malaysia: { original: "RM 2,000", discount: "75% OFF", save: "RM 1,500", today: "RM 500" },
+      malaysia: {
+        original: "RM 2,000",
+        discount: "75% OFF",
+        save: "RM 1,500",
+        today: "RM 500",
+        note: "Online training price. In-person training needs a minimum of 25 participants; cost discussed separately.",
+      },
       pakistan: { original: "Rs. 20,000", discount: "75% OFF", save: "Rs. 15,000", today: "Rs. 5,000" },
-      international: { original: "USD 800", discount: "75% OFF", save: "USD 600", today: "USD 200" },
-    },
-    regionalPricing: {
-      malaysia: { note: "Online training price. In-person training needs a minimum of 25 participants; cost discussed separately." },
-      international: { note: "Online training price. In-person training needs a minimum of 25 participants; cost discussed separately." },
+      international: {
+        original: "USD 800",
+        discount: "75% OFF",
+        save: "USD 600",
+        today: "USD 200",
+        note: "Online training price. In-person training needs a minimum of 25 participants; cost discussed separately.",
+      },
     },
     related: ["data-blueprint-ai-vibe-coding"],
   },
@@ -1733,21 +1763,43 @@ export const courses: Course[] = [
     // RM 4,999 / Rs 99,999 online·199,999 in-person / USD 1,999 at 75%
     // off, now to the figures below).
     // `valueStack` / `valueStackTotal` removed (founder: no value stack).
+    // M12 WP1 (2026-09-26, later still — founder decisions L4/L5/L6): the
+    // four fee rows. "Via HRD Corp" is its own row (`malaysia_hrdcorp`),
+    // display-only — claimed through the employer, never charged by
+    // Stripe; "Without HRD Corp" is the `malaysia` row that checkout
+    // charges (L6 confirms the 2026-09-26 wiring above). Minimums and notes
+    // are row columns; the `regionalPricing` block is gone.
     pricing: {
-      malaysia: { original: "RM 5,000", discount: "50% OFF", save: "RM 2,500", today: "RM 2,500" },
-      pakistan: { original: "Rs. 200,000", discount: "55% OFF", save: "Rs. 100,000", today: "Rs. 100,000" },
-      international: { original: "USD 4,000", discount: "75% OFF", save: "USD 3,000", today: "USD 1,000" },
-    },
-    regionalPricing: {
-      malaysia: {
+      malaysia_hrdcorp: {
+        original: "RM 5,000",
+        discount: "Full fee",
+        save: "RM 0",
+        today: "RM 5,000",
+        minParticipants: 25,
         note: "In-person training price. Minimum 25 participants. There is no online option for this training in Malaysia.",
-        options: [
-          { label: "Via HRD Corp", original: "RM 5,000", today: "RM 5,000", minParticipants: 25 },
-          { label: "Without HRD Corp", original: "RM 5,000", today: "RM 2,500", minParticipants: 25 },
-        ],
       },
-      international: { note: "Online training price. In-person training needs a minimum of 100 participants; cost discussed separately." },
-      pakistan: { note: "Online training price. In-person training needs a minimum of 100 participants; cost discussed separately." },
+      malaysia: {
+        original: "RM 5,000",
+        discount: "50% OFF",
+        save: "RM 2,500",
+        today: "RM 2,500",
+        minParticipants: 25,
+        note: "In-person training price. Minimum 25 participants. There is no online option for this training in Malaysia.",
+      },
+      pakistan: {
+        original: "Rs. 200,000",
+        discount: "55% OFF",
+        save: "Rs. 100,000",
+        today: "Rs. 100,000",
+        note: "Online training price. In-person training needs a minimum of 100 participants; cost discussed separately.",
+      },
+      international: {
+        original: "USD 4,000",
+        discount: "75% OFF",
+        save: "USD 3,000",
+        today: "USD 1,000",
+        note: "Online training price. In-person training needs a minimum of 100 participants; cost discussed separately.",
+      },
     },
     // "learn-vibe-coding" added 2026-09-26 — Module 2 is that training.
     related: ["learn-vibe-coding", "data-blueprint", "agentic-ai-strategy-adoption"],

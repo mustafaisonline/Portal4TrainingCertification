@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { forbidden } from "next/navigation";
 import Link from "next/link";
 import { isUuid } from "@/modules/catalogue/offerings/repository";
 import { authorise } from "@/modules/identity/session";
@@ -34,7 +35,7 @@ function summarise(value: unknown): string {
 
 export default async function AdminAuditPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const result = await authorise("platform_admin");
-  if (!result.ok) return null; // the layout has already refused
+  if (!result.ok) forbidden(); // M12: a Trainer may enter /admin but not this screen (403, never a blank page)
   const sp = await searchParams;
   const param = (k: string) => (typeof sp[k] === "string" ? (sp[k] as string).trim() : null);
 

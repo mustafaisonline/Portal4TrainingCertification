@@ -12,6 +12,8 @@ export type AdminNavItem = { href: string; label: string };
 
 export const adminNavItems: readonly AdminNavItem[] = [
   { href: "/admin", label: "Overview" },
+  // Milestone 12: trainings (details, sections, curriculum, formats, fees, dates).
+  { href: "/admin/trainings", label: "Trainings" },
   { href: "/admin/offerings", label: "Offerings" },
   { href: "/admin/orders", label: "Orders" },
   { href: "/admin/enquiries", label: "Enquiries" },
@@ -21,6 +23,11 @@ export const adminNavItems: readonly AdminNavItem[] = [
   { href: "/admin/audit", label: "Audit log" },
   { href: "/admin/reports", label: "Reports" },
 ];
+
+/** What a Trainer sees (Milestone 12, decisions L3/L7): the overview (their
+ *  reduced dashboard) and the Trainings area. Every other admin screen
+ *  answers 403 to them regardless of what the bar shows. */
+export const trainerNavItems: readonly AdminNavItem[] = adminNavItems.filter((i) => i.href === "/admin" || i.href === "/admin/trainings");
 
 /** Exact match for the overview (every other item is under /admin), nested
  *  match for the rest; trailing slashes are normalised. */

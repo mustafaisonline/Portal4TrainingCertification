@@ -1,12 +1,14 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { withTransaction } from "@/db/prisma";
-import { authorise } from "@/modules/identity/session";
+import { getPrisma, withTransaction } from "@/db/prisma";
+import { trainingAccess } from "@/modules/catalogue/programmes/admin-access";
+import { canManageTraining, type TrainingScope } from "@/modules/catalogue/programmes/admin.repository";
 import {
   createOffering,
   DEFAULT_TIMEZONE,
   DELIVERY_MODALITIES,
+  findOfferingById,
   isUuid,
   OFFERING_STATUSES,
   OfferingValidationError,
@@ -79,32 +81,41 @@ function parseForm(formData: FormData): { input: OfferingWriteInput; fieldErrors
   };
 }
 
-async function refuseUnlessAdmin(): Promise<OfferingFormState | { userId: string }> {
-  const result = await authorise("platform_admin");
-  if (!result.ok) {
+/* Milestone 12 (L7): an administrator may schedule any training; a Trainer
+   only the trainings linked to their profile. The scope is re-checked on the
+   programme of the offering being written, never taken from the form. */
+async function refuseUnlessAllowed(): Promise<OfferingFormState | { userId: string; scope: TrainingScope }> {
+  const access = await trainingAccess();
+  if (!access.ok) {
     return {
       status: "error",
       message:
-        result.reason === "signed-out"
+        access.reason === "signed-out"
           ? "Your session has ended. Please sign in again."
           : "You do not have permission to manage offerings.",
       fieldErrors: {},
     };
   }
-  return { userId: result.user.id };
+  return { userId: access.user.id, scope: access.scope };
 }
+
+const NOT_YOURS: OfferingFormState = { status: "error", message: "You can only schedule dates for your own trainings.", fieldErrors: { programmeId: "Choose one of your trainings." } };
 
 function revalidate() {
   revalidatePath("/admin/offerings");
+  revalidatePath("/admin/trainings");
+  revalidatePath("/admin");
   revalidatePath("/schedule");
+  revalidatePath("/programs");
 }
 
 export async function createOfferingAction(_prev: OfferingFormState, formData: FormData): Promise<OfferingFormState> {
-  const gate = await refuseUnlessAdmin();
+  const gate = await refuseUnlessAllowed();
   if ("status" in gate) return gate;
 
   const { input, fieldErrors } = parseForm(formData);
   if (Object.keys(fieldErrors).length) return { status: "error", message: CHECK_FIELDS, fieldErrors };
+  if (!(await canManageTraining(getPrisma(), gate.scope, input.programmeId))) return NOT_YOURS;
 
   try {
     const created = await withTransaction((tx) => createOffering(tx, input, gate.userId));
@@ -118,7 +129,7 @@ export async function createOfferingAction(_prev: OfferingFormState, formData: F
 }
 
 export async function updateOfferingAction(_prev: OfferingFormState, formData: FormData): Promise<OfferingFormState> {
-  const gate = await refuseUnlessAdmin();
+  const gate = await refuseUnlessAllowed();
   if ("status" in gate) return gate;
 
   const id = text(formData, "id");
@@ -126,6 +137,11 @@ export async function updateOfferingAction(_prev: OfferingFormState, formData: F
 
   const { input, fieldErrors } = parseForm(formData);
   if (Object.keys(fieldErrors).length) return { status: "error", message: CHECK_FIELDS, fieldErrors };
+  // Both the offering's current training and the one it is being moved to
+  // must be in scope — a Trainer cannot take over or give away a date.
+  const existing = await findOfferingById(id);
+  if (!existing) return { status: "error", message: "This offering could not be found.", fieldErrors: {} };
+  if (!(await canManageTraining(getPrisma(), gate.scope, existing.programmeId)) || !(await canManageTraining(getPrisma(), gate.scope, input.programmeId))) return NOT_YOURS;
 
   try {
     const updated = await withTransaction((tx) => updateOffering(tx, id, input, gate.userId));

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { forbidden, notFound } from "next/navigation";
 import { MODALITY_LABEL } from "@/modules/catalogue/offerings/repository";
 import { dateColumnToIso, formatCalendarDate } from "@/modules/certificates/dates";
 import { listRoster } from "@/modules/certificates/issuance.service";
@@ -30,7 +30,7 @@ const REGISTRATION_LABEL = { confirmed: "Confirmed", cancelled: "Cancelled", tra
 
 export default async function OfferingParticipantsPage({ params }: { params: Promise<{ id: string }> }) {
   const result = await authorise("platform_admin");
-  if (!result.ok) return null; // the layout has already refused
+  if (!result.ok) forbidden(); // M12: a Trainer may enter /admin but not this screen (403, never a blank page)
   const { id } = await params;
   const roster = await listRoster(id);
   if (!roster) notFound();

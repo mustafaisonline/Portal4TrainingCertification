@@ -1,7 +1,7 @@
 import type { Db } from "@/db/prisma";
 import { getPrisma } from "@/db/prisma";
 import { normaliseModulePoints } from "./module-points";
-import type { ProgrammeContent, ProgrammePriceRecord, ProgrammeRecord, ProgrammeSummary } from "./types";
+import { PRICE_REGIONS, type PriceRegion, type ProgrammeContent, type ProgrammePriceRecord, type ProgrammeRecord, type ProgrammeSummary } from "./types";
 
 /*
  * Programme repository (module: catalogue). Pages read programmes ONLY
@@ -60,22 +60,37 @@ function toRecord(row: Row): ProgrammeRecord {
       bestFor: f.bestFor as string[],
       position: f.position,
     })),
-    prices: row.prices
-      .map((p) => ({
-        region: p.region,
-        currency: p.currency,
-        listAmountMinor: Number(p.listAmountMinor),
-        offerAmountMinor: Number(p.offerAmountMinor),
-        offerLabel: p.offerLabel,
-        offerName: p.offerName,
-      }))
-      .sort((a, b) => order(a.region) - order(b.region)),
+    prices: row.prices.map(toPriceRecord).sort((a, b) => order(a.region) - order(b.region)),
     experts: row.experts.map((e) => e.expert),
   };
 }
 
+/** One fee row (M12 WP1: four rows per training; minimum and note are columns). */
+function toPriceRecord(p: {
+  region: PriceRegion;
+  currency: string;
+  listAmountMinor: bigint;
+  offerAmountMinor: bigint;
+  offerLabel: string;
+  offerName: string;
+  minParticipants: number | null;
+  note: string | null;
+}): ProgrammePriceRecord {
+  return {
+    region: p.region,
+    currency: p.currency,
+    listAmountMinor: Number(p.listAmountMinor),
+    offerAmountMinor: Number(p.offerAmountMinor),
+    offerLabel: p.offerLabel,
+    offerName: p.offerName,
+    minParticipants: p.minParticipants,
+    note: p.note,
+  };
+}
+
+/** Rows in the founder's fee-row order (`PRICE_REGIONS`). */
 function order(region: string): number {
-  return ["malaysia", "pakistan", "international"].indexOf(region);
+  return PRICE_REGIONS.findIndex((r) => r.key === region);
 }
 
 /** The founder-designated flagship, if it is published. */
@@ -109,8 +124,8 @@ export async function listPublishedProgrammes(db: Db = getPrisma()): Promise<Pro
 }
 
 /** Listing card with its published prices and editorial content — the
- *  /programs hub (2026-09-26). `content` is carried so the card can show the
- *  per-region pricing notes (`content.regionalPricing`). */
+ *  /programs hub (2026-09-26). `content` is carried for the mentorship
+ *  programme's per-package entry price; fee notes are on the rows. */
 export type ProgrammeCard = ProgrammeSummary & { prices: ProgrammePriceRecord[]; content: ProgrammeContent };
 
 export async function listPublishedProgrammesWithPrices(db: Db = getPrisma()): Promise<ProgrammeCard[]> {
@@ -128,16 +143,7 @@ export async function listPublishedProgrammesWithPrices(db: Db = getPrisma()): P
     ...r,
     formats: r.formats as string[],
     content: r.content as ProgrammeContent,
-    prices: r.prices
-      .map((p) => ({
-        region: p.region,
-        currency: p.currency,
-        listAmountMinor: Number(p.listAmountMinor),
-        offerAmountMinor: Number(p.offerAmountMinor),
-        offerLabel: p.offerLabel,
-        offerName: p.offerName,
-      }))
-      .sort((a, b) => order(a.region) - order(b.region)),
+    prices: r.prices.map(toPriceRecord).sort((a, b) => order(a.region) - order(b.region)),
   }));
 }
 

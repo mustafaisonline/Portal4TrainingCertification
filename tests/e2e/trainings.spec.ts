@@ -85,12 +85,14 @@ test("/programs lists exactly the published trainings in order, Learn Vibe Codin
     await expect(item.getByRole("heading", { level: 3 })).toHaveText(p.title);
     await expect(item.getByRole("link", { name: /details/i })).toHaveAttribute("href", `/programs/${p.slug}`);
     // Every region named in full — never a code that could read as a currency.
-    for (const region of ["Malaysia", "Pakistan", "International"]) {
-      await expect(item.getByTestId(`card-price-${region.toLowerCase()}`).getByText(region, { exact: true })).toBeVisible();
+    // "International" became "Rest of the world" (M12 L12, 2026-09-26).
+    for (const [card, label] of [["malaysia", "Malaysia"], ["pakistan", "Pakistan"], ["international", "Rest of the world"]] as const) {
+      await expect(item.getByTestId(`card-price-${card}`).getByText(label, { exact: true })).toBeVisible();
     }
     await expect(item).not.toContainText("(MY)");
     await expect(item).not.toContainText("(PK)");
     await expect(item).not.toContainText("(INT)");
+    await expect(item).not.toContainText("International");
     // Learn Vibe Coding is 75% off in every region; the flagship's prices
     // were updated 2026-09-26 (second time that day) to a different
     // discount per region — see the flagship's own test below.
@@ -143,9 +145,13 @@ test("/programs lists exactly the published trainings in order, Learn Vibe Codin
 
   // Malaysia's HRD Corp fee — 2026-09-26, later still (founder: "Bring in
   // HRD Corp fee as well" on this listing card too, not just the detail
-  // page). Both options render here via CourseCard.tsx's own `options`
-  // branch, same data as the detail page's price card.
+  // page). M12 WP1 (later that day): both figures are now their own
+  // `programme_prices` rows (`malaysia_hrdcorp`, `malaysia`), rendered on
+  // the one Malaysia entry — same data as the detail page's price card.
   const myListingOptions = flagship.getByTestId("card-price-options-malaysia");
+  await expect(myListingOptions.locator("> div")).toHaveCount(2);
+  await expect(myListingOptions.locator("> div").nth(0)).toHaveAttribute("data-testid", "card-price-row-malaysia_hrdcorp");
+  await expect(myListingOptions.locator("> div").nth(1)).toHaveAttribute("data-testid", "card-price-row-malaysia");
   const hrdCorpRow = myListingOptions.locator("> div").filter({ hasText: "Via HRD Corp" });
   await expect(hrdCorpRow.getByText("RM 5,000", { exact: true })).toBeVisible();
   await expect(hrdCorpRow.locator(".line-through")).toHaveCount(0);
@@ -401,16 +407,15 @@ test("/programs/data-blueprint-ai-vibe-coding renders the flagship on the shared
   await expect(intl).toContainText("Card payment in USD");
   await expect(intl).toContainText(/you save/i);
 
-  // Malaysia — the two-figure `options` layout: "Via HRD Corp" at the
-  // undiscounted RM 5,000 (its today and original are equal, so no
-  // strike-through), "Without HRD Corp" at RM 2,500, RM 5,000 struck
-  // through (the checkout price; relabelled from "Launch offer" 2026-09-26,
-  // later the same day, founder direction). Each option's own row is
-  // scoped by its `<dt>` label text — "RM 5,000" appears twice on this
-  // card (once per option), so an unscoped `my.getByText("RM 5,000")` is
-  // ambiguous.
+  // Malaysia — two fee ROWS on one card (M12 WP1): "Via HRD Corp"
+  // (`malaysia_hrdcorp`) at the undiscounted RM 5,000 (today = original,
+  // so no strike-through), "Without HRD Corp" (`malaysia`, the checkout
+  // row) at RM 2,500 with RM 5,000 struck through. Each row is scoped by
+  // its `<dt>` label — "RM 5,000" appears twice on this card.
   const my = investment.getByTestId("price-card-malaysia");
   await expect(my.getByText("50% OFF", { exact: true })).toBeVisible();
+  await expect(my.getByTestId("price-row-malaysia_hrdcorp")).toBeVisible();
+  await expect(my.getByTestId("price-row-malaysia")).toBeVisible();
   const hrdCorpRow = my.locator("dl > div").filter({ hasText: "Via HRD Corp" });
   await expect(hrdCorpRow.getByText("RM 5,000", { exact: true })).toBeVisible();
   await expect(hrdCorpRow.locator(".line-through")).toHaveCount(0);

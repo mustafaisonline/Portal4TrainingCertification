@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { forbidden } from "next/navigation";
 import Link from "next/link";
 import { formatMoney } from "@/modules/catalogue/programmes/types";
 import { isIsoDate } from "@/modules/certificates/dates";
@@ -35,7 +36,7 @@ const columns = ["Placed", "Buyer", "Programme", "Kind", "Amount", "Status", "Re
 
 export default async function AdminOrdersPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const gate = await authorise("platform_admin");
-  if (!gate.ok) return null; // the layout has already refused
+  if (!gate.ok) forbidden(); // M12: a Trainer may enter /admin but not this screen (403, never a blank page)
   const sp = await searchParams;
   const param = (k: string) => (typeof sp[k] === "string" ? (sp[k] as string).trim() : null);
   const statusRaw = param("status");

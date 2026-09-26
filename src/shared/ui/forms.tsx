@@ -173,6 +173,53 @@ export function PasswordField({
   );
 }
 
+/**
+ * Multi-line field in the same family (Milestone 12 — the trainings editor
+ * is mostly text). Explicit htmlFor/id like `Field`; `rows` defaults to 4.
+ */
+export function TextAreaField({
+  label,
+  hint,
+  error,
+  optional,
+  rows = 4,
+  ...textarea
+}: {
+  label: string;
+  hint?: string;
+  error?: string;
+  optional?: boolean;
+} & Omit<ComponentPropsWithoutRef<"textarea">, "className">) {
+  const hintId = useId();
+  const errorId = useId();
+  const generatedId = useId();
+  const id = textarea.id ?? generatedId;
+  const described = [hint ? hintId : null, error ? errorId : null].filter(Boolean).join(" ") || undefined;
+  return (
+    <div className="flex flex-col gap-2">
+      <label htmlFor={id} className="text-label">
+        {label}
+        {optional ? (
+          <span className="ml-1.5 font-normal normal-case tracking-normal text-[var(--color-ink-faint)]">
+            (optional)
+          </span>
+        ) : null}
+      </label>
+      <textarea {...textarea} id={id} rows={rows} aria-describedby={described} aria-invalid={error ? true : undefined} className={`${inputClass} resize-y`} />
+      {hint ? (
+        <span id={hintId} className="text-body-sm text-[var(--color-ink-faint)]">
+          {hint}
+        </span>
+      ) : null}
+      {error ? (
+        <span id={errorId} role="alert" className="text-body-sm text-[var(--color-danger)]">
+          {error}
+        </span>
+      ) : null}
+    </div>
+  );
+}
+
 /** Form-level status line (success or failure), announced politely. */
 export function FormStatus({ tone, children }: { tone: "error" | "success" | "info"; children: ReactNode }) {
   const colour =

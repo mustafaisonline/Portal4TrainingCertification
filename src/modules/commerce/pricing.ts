@@ -1,4 +1,4 @@
-import type { PriceRegion, ProgrammePriceRecord, ProgrammeRecord } from "@/modules/catalogue/programmes/types";
+import type { CheckoutRegion, PriceRegion, ProgrammePriceRecord, ProgrammeRecord } from "@/modules/catalogue/programmes/types";
 import { PRICE_REGIONS } from "@/modules/catalogue/programmes/types";
 import { CommerceError } from "./errors";
 
@@ -12,6 +12,11 @@ import { CommerceError } from "./errors";
  * match is deliberately forgiving: trimmed, lower-cased, punctuation removed.
  * "Pakistan", "PK", "Pakistan." → pakistan; "Malaysia", "MY" → malaysia;
  * anything else (including an empty profile) → international.
+ *
+ * M12 WP1 (founder decisions L5/L6, 2026-09-26): a Malaysian participant is
+ * charged the `malaysia` row — "not via HRD Corp". The `malaysia_hrdcorp`
+ * row is never returned here: an HRD Corp claim is the employer's, made
+ * outside this checkout, so Stripe must never charge that figure.
  */
 
 export function normaliseCountry(country: string | null | undefined): string {
@@ -22,7 +27,7 @@ export function normaliseCountry(country: string | null | undefined): string {
     .trim();
 }
 
-export function regionForCountry(country: string | null | undefined): PriceRegion {
+export function regionForCountry(country: string | null | undefined): CheckoutRegion {
   const c = normaliseCountry(country);
   if (c === "pk" || c.includes("pakistan")) return "pakistan";
   if (c === "my" || c.includes("malaysia")) return "malaysia";

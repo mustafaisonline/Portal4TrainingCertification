@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { forbidden } from "next/navigation";
 import Link from "next/link";
 import { CERTIFICATE_STATUS_LABEL, CERTIFICATE_STATUSES, isCertificateStatus } from "@/modules/certificates/constants";
 import { formatCalendarDate } from "@/modules/certificates/dates";
@@ -26,7 +27,7 @@ const columns = ["Certificate ID", "Holder", "Email", "Programme", "Issued", "Ex
 
 export default async function AdminCertificatesPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const result = await authorise("platform_admin");
-  if (!result.ok) return null; // the layout has already refused
+  if (!result.ok) forbidden(); // M12: a Trainer may enter /admin but not this screen (403, never a blank page)
   const sp = await searchParams;
   const param = (k: string) => (typeof sp[k] === "string" ? (sp[k] as string).trim() : null);
   const statusRaw = param("status");

@@ -4,11 +4,11 @@ import type { DeliveryFormatRecord } from "@/modules/catalogue/programmes/types"
 /*
  * "Flexible learning formats" — EXTRACTED 2026-09-26 from the course detail
  * page (app/(public)/programs/[slug]/page.tsx, formerly courses/[slug]),
- * markup and classes unchanged, so the flagship's bespoke landing can show
- * the same section now that it is served at /programs/<slug> in place of the
- * generic detail template (which was the only place the flagship's three
- * formats appeared publicly). Renders nothing when a programme has no
- * formats.
+ * markup and classes unchanged, so the flagship's then-bespoke landing could
+ * show the same section. That landing was retired 2026-09-26 (every training
+ * now renders through the one detail template), so this is simply the
+ * template's formats section as a component. Renders nothing when a
+ * programme has no formats.
  *
  * `notes` (2026-09-26, founder): the participant numbers per format —
  * `content.paceNotes` — listed under the cards, so a reader sees the

@@ -1,5 +1,6 @@
 import type { Db } from "@/db/prisma";
 import { getPrisma } from "@/db/prisma";
+import { normaliseModulePoints } from "./module-points";
 import type { ProgrammeContent, ProgrammePriceRecord, ProgrammeRecord, ProgrammeSummary } from "./types";
 
 /*
@@ -45,7 +46,8 @@ function toRecord(row: Row): ProgrammeRecord {
       position: m.position,
       title: m.title,
       description: m.description,
-      points: (m.points as string[] | null) ?? null,
+      // Plain points or groups (2026-09-26) — validated lightly, never cast.
+      points: normaliseModulePoints(m.points),
     })),
     deliveryFormats: row.formatsDelivery.map((f) => ({
       id: f.id,

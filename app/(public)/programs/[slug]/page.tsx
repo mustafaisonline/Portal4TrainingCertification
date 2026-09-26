@@ -6,6 +6,7 @@ import {
   listPublishedProgrammesBySlugs,
 } from "@/modules/catalogue/programmes/repository";
 import { levelLabel } from "@/modules/catalogue/programmes/types";
+import { isModulePointGroup } from "@/modules/catalogue/programmes/module-points";
 import { listPublishedExperts } from "@/modules/catalogue/experts/repository";
 import { ImageFrame } from "@/shared/marketing/ImageFrame";
 import {
@@ -19,7 +20,6 @@ import { ProgrammePricing } from "@/shared/marketing/ProgrammePricing";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { Chip } from "@/shared/ui/Chip";
-import { FlagshipLanding } from "./FlagshipLanding";
 
 /*
  * PORTED 2026-09-21 from project-artifacts/mockup/app/courses/[slug]/page.tsx
@@ -35,12 +35,10 @@ import { FlagshipLanding } from "./FlagshipLanding";
  *
  * MOVED 2026-09-26 from app/(public)/courses/[slug]/page.tsx (founder:
  * "/DataBlueprint-AIVibeCoding → /programs", "Programme → Trainings"). This
- * is now the training detail page under the /programs hub. When the resolved
- * programme is the flagship, the bespoke landing (./FlagshipLanding.tsx —
- * the former /DataBlueprint-AIVibeCoding page) renders instead of this
- * template. New optional content sections — `relationshipNote`,
- * `afterThisTraining`, `faq` — render only when a programme publishes them
- * (first: Learn Vibe Coding). The hero gained "See upcoming dates".
+ * is now the training detail page under the /programs hub. New optional
+ * content sections — `relationshipNote`, `afterThisTraining`, `faq` — render
+ * only when a programme publishes them (first: Learn Vibe Coding). The hero
+ * gained "See upcoming dates".
  * 2026-09-26 (founder change list, second round): "Who should attend" is
  * "Who can take this training"; a "What you get out of this training"
  * section (`content.whatYouGet`) precedes the Investment cards; the delivery
@@ -48,6 +46,16 @@ import { FlagshipLanding } from "./FlagshipLanding";
  * section no longer takes a value stack (the two published programmes
  * publish none — `included`, `valueStack` stay in the type for the unlisted
  * rows).
+ *
+ * 2026-09-26 (founder: the flagship's curriculum becomes two modules and its
+ * page gets the same sections as Learn Vibe Coding): the flagship's bespoke
+ * landing (./FlagshipLanding.tsx, the former /DataBlueprint-AIVibeCoding
+ * page — removed; git history keeps it) no longer renders here. EVERY
+ * training, the flagship included, renders through this one template; what
+ * the landing said that was still true moved into the flagship's seed
+ * content (`rationale`, `methodology`). The curriculum renderer now accepts
+ * GROUPED points — `programme_modules.points` may hold a sub-heading with
+ * its own list as well as plain strings (see `module-points.ts`).
  *
  * Course detail — the P10 Course Detail realization.
  *
@@ -87,11 +95,6 @@ export default async function CourseDetailPage({
     listPublishedExperts(),
   ]);
 
-  // The founder-designated flagship keeps its bespoke single-proposition
-  // landing (resolved by the row's `flagship` flag, not by slug — ADR-023).
-  if (course.flagship) {
-    return <FlagshipLanding programme={course} experts={experts} />;
-  }
   // The programme's delivering expert, with the full published profile
   // (the programme record carries only a summary).
   const founder =
@@ -396,15 +399,49 @@ export default async function CourseDetailPage({
                       </p>
                     )}
                     {module.points && (
-                      <ul className="flex flex-col gap-1.5">
-                        {module.points.map((point) => (
-                          <li
-                            key={point}
-                            className="text-body-sm text-[var(--color-ink-quiet)]"
-                          >
-                            · {point}
-                          </li>
-                        ))}
+                      <ul className="flex flex-col gap-1.5" data-testid="module-points">
+                        {module.points.map((point) =>
+                          isModulePointGroup(point) ? (
+                            /* A grouped point (2026-09-26): its own heading,
+                               optional description and nested list — the
+                               flagship's Module 1 holds the ten Data Blueprint
+                               topics this way, its Module 2 the six Learn Vibe
+                               Coding parts. */
+                            <li
+                              key={point.title}
+                              className="pt-3 first:pt-0"
+                              data-testid="module-point-group"
+                            >
+                              <h4 className="text-body-sm mb-1 font-semibold text-[var(--color-ink)]">
+                                {point.title}
+                              </h4>
+                              {point.description && (
+                                <p className="text-body-sm mb-1.5 text-[var(--color-ink-quiet)]">
+                                  {point.description}
+                                </p>
+                              )}
+                              {point.points && (
+                                <ul className="flex flex-col gap-1 pl-4">
+                                  {point.points.map((sub) => (
+                                    <li
+                                      key={sub}
+                                      className="text-body-sm text-[var(--color-ink-quiet)]"
+                                    >
+                                      · {sub}
+                                    </li>
+                                  ))}
+                                </ul>
+                              )}
+                            </li>
+                          ) : (
+                            <li
+                              key={point}
+                              className="text-body-sm text-[var(--color-ink-quiet)]"
+                            >
+                              · {point}
+                            </li>
+                          ),
+                        )}
                       </ul>
                     )}
                   </div>

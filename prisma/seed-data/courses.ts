@@ -246,6 +246,15 @@ export const mentorshipPackages: MentorshipPackage[] = [
   },
 ];
 
+/** One entry of a module's `points`: a plain sub-topic, or — since
+ *  2026-09-26 (the flagship's two-module curriculum) — a GROUP with its own
+ *  title, optional description and list. Persisted as-is into the existing
+ *  `programme_modules.points` JSON column; no schema change. Mirrors
+ *  `ModulePoint` in src/modules/catalogue/programmes/types.ts. */
+export type CourseModulePoint = string | { title: string; description?: string; points?: string[] };
+
+export type CourseModule = { title: string; description?: string; points?: CourseModulePoint[] };
+
 export type Course = {
   slug: string;
   title: string;
@@ -282,7 +291,7 @@ export type Course = {
   /** Grouped outcomes (topic → sub-topics), where the source groups them. */
   outcomeGroups?: { title: string; items: string[] }[];
   /** Curriculum. `points` carries the sub-topics where the source has them. */
-  modules: { title: string; description?: string; points?: string[] }[];
+  modules: CourseModule[];
   /** Delivery-pace variants — currently only the flagship publishes these. */
   deliveryFormats?: {
     name: string;
@@ -341,6 +350,82 @@ export const courseLevels: {
   { level: "Executive", description: "Strategy, governance and adoption decisions" },
   { level: "Builder", description: "Building real products with AI" },
   { level: "Mentorship", description: "One-to-one career direction" },
+];
+
+/* Learn Vibe Coding — the SIX curriculum modules, in one place.
+ * Used by the `learn-vibe-coding` entry's `modules` AND, verbatim, as the
+ * groups inside the flagship's "Module 2 · Learn Vibe Coding" (founder,
+ * 2026-09-26: "Our other training Learn Vibe Coding is the last module of
+ * this training … Module 2: copy-paste the Learn Vibe Coding curriculum").
+ * Keeping one constant means the two curricula can never drift; edit the
+ * points HERE and both programmes follow on the next seed.
+ * Module points are the founder's list VERBATIM (chat, 2026-09-26),
+ * asterisks removed; the parenthesised minutes are the founder's too. */
+export const LEARN_VIBE_CODING_MODULES: { title: string; points: string[] }[] = [
+  {
+    title: "Part 1 · Foundations (about 60 minutes)",
+    points: [
+      "What is Vibe Coding, and what it is not",
+      "What is an LLM, and what is RAG",
+      "Tokens, context window and why the AI forgets",
+      "Hallucination and how to verify what the AI tells you",
+      "Tools: ChatGPT, Gemini, Grok, Claude, and the coding agents (Claude Code, Cursor, Gemini CLI, Copilot)",
+      "Git and GitHub: your undo button",
+      "What is a framework, and the minimum stack you need (front end, back end, database, hosting)",
+      "What AI tools cost, and what is free",
+    ],
+  },
+  {
+    title: "Part 2 · Working with AI (about 45 minutes)",
+    points: [
+      "What is Prompt Engineering, and the prompt patterns that work (role, context, constraints, examples, output format, iterate)",
+      "The constitution file: rules the AI must follow in every session",
+      "What is an Agent",
+      "How to make an Agent (live demo)",
+      "What is a Skill",
+      "How to make a Skill (live demo)",
+      "When not to use an Agent",
+    ],
+  },
+  {
+    title: "Part 3 · The Vibe Coding Method (about 30 minutes)",
+    points: [
+      "Step 1 · Create Vision.md",
+      "Step 2 · Create BRD.md",
+      "Step 3 · Create FSD.md",
+      "Step 4 · Create HLD.md",
+      "Step 5 · Create LLD.md, including the data model",
+      "Step 6 · Create Project Plan WBS.md for the whole project",
+      "Step 7 · Create TechStack.md",
+      "Step 8 · Create GuardRails.md",
+      "Find sample sites or product designs to share with the AI",
+      "Give a theme image",
+      "Keep a decision log",
+    ],
+  },
+  {
+    title: "Part 4 · Watch it build (about 35 minutes, live on a real repository)",
+    points: [
+      "Build the wireframe",
+      "Build the physical data model, and approve it before it is applied",
+      "Build the production product, milestone by milestone",
+      "Build the admin panel",
+      "Commit after every step, review what the AI changed, test before saying \"done\"",
+    ],
+  },
+  {
+    title: "Part 5 · Guardrails and next steps (about 20 minutes)",
+    points: [
+      "Five ways vibe-coded projects fail: scope creep, invented rules, unverified claims, secrets pasted into chat, no version control",
+      "What comes after: testing, security, deployment, running it (covered in the 2-day programme)",
+      "Your Starter Kit: the eight templates, constitution template, prompt sheet, tool and cost sheet",
+      "The 30-day capstone challenge",
+    ],
+  },
+  {
+    title: "Optional hands-on (30 minutes)",
+    points: ["Write your own Vision.md with AI, and generate the wireframe prompt from it"],
+  },
 ];
 
 export const courses: Course[] = [
@@ -1160,74 +1245,10 @@ export const courses: Course[] = [
         "Know when a job needs a professional developer — and what to hand them",
       ],
     },
-    // Module points are the founder's list VERBATIM (chat, 2026-09-26),
-    // asterisks removed; the parenthesised minutes are the founder's too.
-    modules: [
-      {
-        title: "Part 1 · Foundations (about 60 minutes)",
-        points: [
-          "What is Vibe Coding, and what it is not",
-          "What is an LLM, and what is RAG",
-          "Tokens, context window and why the AI forgets",
-          "Hallucination and how to verify what the AI tells you",
-          "Tools: ChatGPT, Gemini, Grok, Claude, and the coding agents (Claude Code, Cursor, Gemini CLI, Copilot)",
-          "Git and GitHub: your undo button",
-          "What is a framework, and the minimum stack you need (front end, back end, database, hosting)",
-          "What AI tools cost, and what is free",
-        ],
-      },
-      {
-        title: "Part 2 · Working with AI (about 45 minutes)",
-        points: [
-          "What is Prompt Engineering, and the prompt patterns that work (role, context, constraints, examples, output format, iterate)",
-          "The constitution file: rules the AI must follow in every session",
-          "What is an Agent",
-          "How to make an Agent (live demo)",
-          "What is a Skill",
-          "How to make a Skill (live demo)",
-          "When not to use an Agent",
-        ],
-      },
-      {
-        title: "Part 3 · The Vibe Coding Method (about 30 minutes)",
-        points: [
-          "Step 1 · Create Vision.md",
-          "Step 2 · Create BRD.md",
-          "Step 3 · Create FSD.md",
-          "Step 4 · Create HLD.md",
-          "Step 5 · Create LLD.md, including the data model",
-          "Step 6 · Create Project Plan WBS.md for the whole project",
-          "Step 7 · Create TechStack.md",
-          "Step 8 · Create GuardRails.md",
-          "Find sample sites or product designs to share with the AI",
-          "Give a theme image",
-          "Keep a decision log",
-        ],
-      },
-      {
-        title: "Part 4 · Watch it build (about 35 minutes, live on a real repository)",
-        points: [
-          "Build the wireframe",
-          "Build the physical data model, and approve it before it is applied",
-          "Build the production product, milestone by milestone",
-          "Build the admin panel",
-          "Commit after every step, review what the AI changed, test before saying \"done\"",
-        ],
-      },
-      {
-        title: "Part 5 · Guardrails and next steps (about 20 minutes)",
-        points: [
-          "Five ways vibe-coded projects fail: scope creep, invented rules, unverified claims, secrets pasted into chat, no version control",
-          "What comes after: testing, security, deployment, running it (covered in the 2-day programme)",
-          "Your Starter Kit: the eight templates, constitution template, prompt sheet, tool and cost sheet",
-          "The 30-day capstone challenge",
-        ],
-      },
-      {
-        title: "Optional hands-on (30 minutes)",
-        points: ["Write your own Vision.md with AI, and generate the wireframe prompt from it"],
-      },
-    ],
+    // Modules: the shared constant `LEARN_VIBE_CODING_MODULES` (top of this
+    // file) — the flagship's Module 2 reuses it verbatim, so the two can
+    // never drift.
+    modules: LEARN_VIBE_CODING_MODULES,
     // Participant numbers 2026-09-26 (founder): live online is sold per
     // seat; the in-person half day needs a minimum of 25 participants and
     // is costed separately. `bestFor`/`schedule` were adjusted so they do
@@ -1342,27 +1363,41 @@ export const courses: Course[] = [
     subtitle: "Data foundations plus building real products with AI, in two days",
     level: "Builder",
     flagship: true,
-    duration: "2 days – 4 weeks",
+    // 2026-09-26 (founder: "the training is 2 days"); was "2 days – 4 weeks".
+    // The three delivery formats below keep their own durations.
+    duration: "2 days",
     prerequisites: "None",
     formats: ["Bootcamp", "Accelerator", "Mastery"],
-    certificate: "Certificate of participation",
+    // M6 decision E1 (Certificate of Completion replaces "participation"),
+    // applied to this entry 2026-09-26 with the two-module rewrite.
+    certificate: "Certificate of Completion",
     audienceSummary: "Entrepreneurs, builders, innovators",
+    // REWRITTEN 2026-09-26 (founder: two modules — Data Blueprint, then the
+    // Learn Vibe Coding masterclass; fill the page with "Why you need this
+    // training", freelancing, standard sections and a CTA; the page now
+    // renders on the same template as every training, the bespoke landing
+    // having been retired). Copy that named PromptOS or the retired modules
+    // 11–17 is gone; the landing's "a method, not a course" framing and its
+    // plan → build → test → deploy → improve loop live in `rationale` and
+    // `methodology` below.
     summary:
-      "Transform ideas into working apps, MVPs and portfolio projects using AI-assisted development, PromptOS and trusted data foundations — for freelance clients, corporate innovation, or your next startup.",
+      "Two days, one method: the data foundations every AI-era builder needs, then the Learn Vibe Coding masterclass in full and hands-on build time — working apps, MVPs and portfolio projects for freelance clients, corporate innovation, or your next startup.",
     valueProposition:
-      "Not a traditional coding bootcamp. A hands-on product-building course — from idea validation to deployment — designed for builders who want results, not syntax drills.",
+      "Not a traditional coding bootcamp, and not a prompt trick. Two days that give you trusted data foundations and a method for building real products with AI — for builders who want results, not syntax drills.",
+    relationshipNote:
+      "Module 2 of this training is our standalone Learn Vibe Coding masterclass — if you already know your data foundations, you can take that on its own.",
     highlights: [
       "Build AI-powered applications",
       "Explore freelance opportunities",
       "Create corporate solutions",
       "Launch startup MVPs",
-      "Includes PromptOS Starter Edition",
-      "Includes Data Blueprint Foundations",
+      "Module 1 · Data Blueprint — ten data-foundations topics in one day",
+      "Module 2 · the full Learn Vibe Coding masterclass, then build time on your own idea",
     ],
     // "Who can take this training" — rewritten 2026-09-26 (founder change
     // list): professionals who want the data foundations AND to build with
     // AI; basic business or technology awareness helps; no coding required.
-    // Rendered by FlagshipLanding.tsx (it no longer hardcodes its audience).
+    // Rendered by the shared training template (app/(public)/programs/[slug]/page.tsx).
     whoShouldAttend: {
       intro:
         "For professionals who want the data foundations and to build with AI — not one without the other. Basic business or technology awareness helps; no coding is required.",
@@ -1376,18 +1411,17 @@ export const courses: Course[] = [
       ],
     },
     rationale: {
-      heading: "After this course, you will be able to",
+      heading: "Why you need this training",
       paragraphs: [
-        "Participants learn not only how to build applications using AI, but also how to ensure those applications are supported by trusted data, strong requirements, quality processes and real-world deployment practices.",
-        "Unlike many AI development courses that focus only on coding tools, this course teaches a complete end-to-end approach to building production-ready AI solutions.",
+        "Software is now built by directing AI — and the products that hold up are the ones built on data that is understood, modelled and governed. Most people learn only one half. They know their data but cannot build, or they can prompt an AI into a demo that falls apart the moment a real dataset, a real business rule or a real user arrives.",
+        "This training teaches both halves, in the order they belong. Day 1 is the Data Blueprint: decision support systems, what data and metadata are, the building blocks, modelling, processing and storage, architecture, governance and agentic AI. Day 2 is the Learn Vibe Coding masterclass in full — the eight documents, the guardrails and the build sequence, shown live on a real repository — followed by hands-on time on your own idea.",
+        "It is a method, not a course of slides: plan, build, test, deploy, improve. You leave with the documents, the constitution file and the habits that keep an AI coding agent reliable — and with the data foundations that make what it builds worth trusting.",
       ],
       problems: [
-        "Build AI-powered applications — websites, portals, dashboards, assistants and business applications",
-        "Pursue freelance opportunities with portfolio projects and practical skills",
-        "Create corporate solutions — internal apps, workflow automation, productivity tools",
-        "Strengthen your professional portfolio with tangible projects",
-        "Launch startup MVPs without traditional development timelines",
-        "Apply AI development in real projects using frameworks, workflows and accelerators",
+        "You can describe the product you want but cannot brief a developer — or an AI — precisely enough to get it",
+        "You have tried AI coding tools and got something that almost worked, then broke when the data or the rules changed",
+        "You work with data every day but have never been shown how it should be modelled, governed and made trustworthy",
+        "You are paying for software, or waiting in a queue for it, that a small well-built internal tool could replace",
       ],
     },
     deliveryFormats: [
@@ -1441,236 +1475,220 @@ export const courses: Course[] = [
       "Outside Malaysia — online per person; in person from 100 participants, cost discussed separately",
       "Pakistan — in person from 100 participants, online from 10 participants, arranged through our local partner",
     ],
+    // Reviewed 2026-09-26 for the two-module curriculum: the eight
+    // build-side outcomes still hold (Module 2); three data-side outcomes
+    // (Module 1) and the agent-direction outcome were added.
     outcomes: [
+      "Explain how an organisation turns data into decisions, and what data, metadata, master, reference and transactional data are",
+      "Model data from business concepts to a physical, AI-ready design, and choose the storage and processing pattern that fits the workload",
+      "Apply the DAC Architecture framework and the four pillars of data trust — governance, security, privacy and quality — to a real data landscape",
       "Transform ideas into product requirements",
       "Generate product specifications using AI",
       "Design user interfaces",
       "Create prototypes",
       "Build applications using AI-assisted development tools",
+      "Direct an AI coding agent from a written vision to a working product with guardrails",
       "Test and improve solutions",
       "Deploy working applications",
       "Iterate and enhance products",
     ],
-    modules: [
+    // Founder, 2026-09-26: "trainees will be able to start freelancing
+    // immediately". Factual capabilities only — no income claim.
+    afterThisTraining: {
+      heading: "Start freelancing or lead data-and-AI work straight after",
+      intro: "You leave able to offer, scope and deliver work that combines trusted data with AI-built software:",
+      items: [
+        "Audit and model a client's data landscape — entities, master and reference data, metadata, and where it all lives",
+        "Write the Vision, BRD and FSD documents for a product so an AI — or a developer — can build from them",
+        "Build landing pages, internal tools and prototypes with an AI coding agent, inside a constitution and Git",
+        "Set up the governance, quality and privacy basics an organisation needs before it can trust its data",
+        "Scope and quote a small build with a work breakdown you can defend",
+        "Know when a job needs a professional developer or data engineer — and what to hand them",
+      ],
+    },
+    faq: [
       {
-        title: "AI-powered product development fundamentals",
-        description:
-          "Outcome: understand how AI is changing the way products are designed and delivered.",
-        points: [
-          "Traditional versus AI-assisted development",
-          "What is vibe coding?",
-          "Opportunities and limitations",
-          "Product thinking",
-          "AI-powered innovation",
-        ],
-      },
-      /* Data Blueprint Foundations — 2026-09-07, founder direction: expanded
-         from the single placeholder module above (now replaced) into nine
-         modules, one per deck in the founder's own training archive
-         (`My Training Material/`, decks numbered 1–9; see
-         docs/course_landing_page.md §7 open item 1). Content is drawn from
-         the decks' actual slide text — outcomes, terminology and case
-         studies are the founder's own, not invented. Deck 7 has two files
-         sharing that number: "DAC Architecture1.1.pptx" (2026, newest) and
-         the older "Data Architecture.pptx" (2025) — the newer, more
-         developed deck was used below; the older one appears superseded
-         but wasn't confirmed as such, so it's flagged rather than
-         discarded. See the completion report for this session for the
-         full flag. */
-      {
-        title: "Decision support systems (DSS)",
-        description:
-          "Outcome: understand how organisations turn data into decisions, and the anatomy of a Decision Support System.",
-        points: [
-          "What a system is — people, process and technology working together",
-          "OLTP vs OLAP — operational systems vs analytical systems",
-          "Components of a Decision Support System",
-          "Real-world DSS examples across banking, telecom, oil & gas and healthcare",
-        ],
+        q: "Do I need to be able to code?",
+        a: "No. Neither module assumes a coding background. Day 1 is about data, not programming; Day 2 teaches you to direct an AI coding agent rather than to type code yourself. If you already code, the method makes you faster and more reliable — it does not start you over.",
       },
       {
-        title: "What is data",
-        description:
-          "Outcome: build data literacy from first principles — entities, attributes and how raw data becomes insight.",
-        points: [
-          "Entities, attributes and instances",
-          "Tables, columns and rows",
-          "States and types of data",
-          "The DIKW pyramid — Data, Information, Knowledge, Wisdom",
-          "Best practices and guidelines for working with data",
-        ],
+        q: "Is Module 2 the same as the Learn Vibe Coding training?",
+        a: "Yes. Module 2 is the Learn Vibe Coding masterclass in full — the same six parts, from the same curriculum — followed by hands-on build time on your own idea that the half-day session does not have room for.",
       },
       {
-        title: "What is metadata",
-        description:
-          "Outcome: understand metadata as the layer that gives data meaning, trust and usability.",
-        points: [
-          "Business, technical and operational metadata",
-          "Data assets, and why metadata unlocks their value",
-          "Case studies — banking, telecom, oil & gas and retail",
-          "The cost of inaction: what happens without metadata",
-        ],
+        q: "Can I take only Module 2?",
+        a: "Yes. Learn Vibe Coding is offered on its own as a half-day session for people who already know their data foundations. If you take it first and want the data half later, talk to us about dates and how that session counts towards this training.",
       },
       {
-        title: "Building blocks of data",
-        description:
-          "Outcome: understand the four building blocks every enterprise depends on, and how they work together.",
-        points: [
-          "Master data — stable, reusable core entities",
-          "Reference data — codes, classifications and standardisation",
-          "Transactional data — high-volume business events",
-          "Case studies — banking, telecommunications, oil & gas and healthcare",
-        ],
+        q: "What do I bring?",
+        a: "A laptop and one AI account — a free tier is enough. A GitHub account is optional but useful for the build time on Day 2. Bring a real idea, or a real dataset, if you have one: the hands-on time is yours.",
       },
       {
-        title: "Data modelling",
-        description:
-          "Outcome: navigate the full modelling landscape, from business concepts through to physical, AI-ready design.",
-        points: [
-          "Business, conceptual and information modelling (NIAM, ORM, FCO-IM, ontologies, knowledge graphs)",
-          "Conceptual, logical and physical data modelling, including normalisation (1NF–6NF, BCNF, DKNF)",
-          "Specialised techniques — dimensional, Data Vault, Anchor, Focal Point, NoSQL, temporal, event-driven",
-          "Governance and AI extensions — metadata modelling, access control, ML feature modelling",
-        ],
-      },
-      {
-        title: "Data processing & storage",
-        description:
-          "Outcome: understand how data is stored and processed at scale, and which pattern fits which workload.",
-        points: [
-          "Data warehouse, data lake, lakehouse, data hub and data fabric",
-          "Relational vs NoSQL — key-value, document, columnar and graph databases",
-          "Specialised datastores — Hadoop, object storage, file and table formats",
-        ],
-      },
-      {
-        title: "DAC Architecture",
-        description:
-          "Outcome: apply the founder's own DAC (Data & AI Cognitive) Architecture framework to modern data platform design.",
-        points: [
-          "Why traditional architecture fails, and the cost of architectural drift",
-          "Operating models — centralised, decentralised, data mesh, data hub, data fabric",
-          "DAC's design principles, layers and \"one door in, one window out\" integration",
-          "Traditional architecture vs DAC — what changes and why",
-        ],
-      },
-      {
-        title: "Data governance, security, privacy & quality",
-        description:
-          "Outcome: understand the four pillars of trust in enterprise data, and the roles that keep them working.",
-        points: [
-          "Data governance — ownership, stewardship, policies and decision rights",
-          "Security vs privacy — the CIA triad and responsible data use",
-          "The six dimensions of data quality",
-          "The real cost of getting any one pillar wrong",
-        ],
-      },
-      {
-        title: "Agentic AI",
-        description:
-          "Outcome: understand what agentic AI actually is, why many projects get scrapped, and where it creates real business value.",
-        points: [
-          "The evolution of AI, and the current reality of agentic AI adoption",
-          "Core agent types and how agentic AI works",
-          "The PVP (Productionizable Viable Product) approach",
-          "Real business use cases — HR onboarding, meeting automation, policy discovery",
-        ],
-      },
-      {
-        title: "Product discovery & validation",
-        description: "Outcome: transform ideas into validated product opportunities.",
-        points: [
-          "Problem identification",
-          "Opportunity discovery",
-          "User personas",
-          "Customer journeys",
-          "Product vision",
-          "Value proposition design",
-        ],
-      },
-      {
-        title: "AI-assisted requirements engineering",
-        description:
-          "Outcome: create structured requirements faster using AI-powered approaches.",
-        points: [
-          "Product requirements documents (PRD)",
-          "Functional and non-functional requirements",
-          "User stories",
-          "Acceptance criteria",
-          "AI-assisted documentation",
-        ],
-      },
-      {
-        title: "Prompt engineering & PromptOS",
-        description:
-          "Outcome: learn how to consistently generate better outputs from AI tools.",
-        points: [
-          "Prompt engineering principles",
-          "Structured prompt design",
-          "Context management",
-          "Iterative refinement",
-          "The PromptOS framework",
-          "Reusable prompt libraries",
-        ],
-      },
-      {
-        title: "Rapid application development",
-        description: "Outcome: create functional applications significantly faster.",
-        points: [
-          "User interface generation",
-          "Workflow design",
-          "AI-assisted development",
-          "Low-code and AI-assisted approaches",
-          "Building working prototypes",
-        ],
-      },
-      {
-        title: "Quality engineering & testing",
-        description: "Outcome: improve reliability and quality before deployment.",
-        points: [
-          "Test planning",
-          "AI-assisted testing",
-          "User acceptance testing",
-          "Data quality validation",
-          "Product review frameworks",
-        ],
-      },
-      {
-        title: "Deployment & production readiness",
-        description: "Outcome: prepare solutions for real-world adoption.",
-        points: [
-          "Deployment fundamentals",
-          "Security awareness",
-          "Governance considerations",
-          "Operational readiness",
-          "Production best practices",
-        ],
-      },
-      {
-        title: "Capstone project",
-        description:
-          "Participants apply the complete framework to build a practical AI-powered solution and leave with real-world experience.",
-        points: [
-          "Internal business applications",
-          "Knowledge management systems",
-          "AI assistants",
-          "Workflow automation solutions",
-          "Customer portals",
-          "Startup MVPs",
-        ],
+        q: "Do I get a certificate?",
+        a: "Yes — a Certificate of Completion for this training, with a unique ID and a public verification page, issued on attending both days. It records completion of the training; it is not the Academy's earned credential.",
       },
     ],
+    modules: [
+      /* TWO MODULES — founder, 2026-09-26: "Curriculum in two modules:
+         Module 1: Data Blueprint = the current curriculum items 1–10.
+         Module 2: copy-paste the Learn Vibe Coding curriculum." Each former
+         module 1–10 is kept VERBATIM (title, description, points) as a
+         GROUP inside Module 1's `points`; Module 2's groups are the shared
+         `LEARN_VIBE_CODING_MODULES`. The former modules 11–17 are retired
+         (see the commented block at the end of this entry). */
+      {
+        title: "Module 1 · Data Blueprint",
+        description:
+          "Day 1 — the data foundations every AI-era builder needs: from decision support systems to governance and agentic AI.",
+        points: [
+          {
+            title: "AI-powered product development fundamentals",
+            description:
+              "Outcome: understand how AI is changing the way products are designed and delivered.",
+            points: [
+              "Traditional versus AI-assisted development",
+              "What is vibe coding?",
+              "Opportunities and limitations",
+              "Product thinking",
+              "AI-powered innovation",
+            ],
+          },
+          /* Data Blueprint Foundations — 2026-09-07, founder direction: expanded
+             from the single placeholder module above (now replaced) into nine
+             modules, one per deck in the founder's own training archive
+             (`My Training Material/`, decks numbered 1–9; see
+             docs/course_landing_page.md §7 open item 1). Content is drawn from
+             the decks' actual slide text — outcomes, terminology and case
+             studies are the founder's own, not invented. Deck 7 has two files
+             sharing that number: "DAC Architecture1.1.pptx" (2026, newest) and
+             the older "Data Architecture.pptx" (2025) — the newer, more
+             developed deck was used below; the older one appears superseded
+             but wasn't confirmed as such, so it's flagged rather than
+             discarded. See the completion report for this session for the
+             full flag. */
+          {
+            title: "Decision support systems (DSS)",
+            description:
+              "Outcome: understand how organisations turn data into decisions, and the anatomy of a Decision Support System.",
+            points: [
+              "What a system is — people, process and technology working together",
+              "OLTP vs OLAP — operational systems vs analytical systems",
+              "Components of a Decision Support System",
+              "Real-world DSS examples across banking, telecom, oil & gas and healthcare",
+            ],
+          },
+          {
+            title: "What is data",
+            description:
+              "Outcome: build data literacy from first principles — entities, attributes and how raw data becomes insight.",
+            points: [
+              "Entities, attributes and instances",
+              "Tables, columns and rows",
+              "States and types of data",
+              "The DIKW pyramid — Data, Information, Knowledge, Wisdom",
+              "Best practices and guidelines for working with data",
+            ],
+          },
+          {
+            title: "What is metadata",
+            description:
+              "Outcome: understand metadata as the layer that gives data meaning, trust and usability.",
+            points: [
+              "Business, technical and operational metadata",
+              "Data assets, and why metadata unlocks their value",
+              "Case studies — banking, telecom, oil & gas and retail",
+              "The cost of inaction: what happens without metadata",
+            ],
+          },
+          {
+            title: "Building blocks of data",
+            description:
+              "Outcome: understand the four building blocks every enterprise depends on, and how they work together.",
+            points: [
+              "Master data — stable, reusable core entities",
+              "Reference data — codes, classifications and standardisation",
+              "Transactional data — high-volume business events",
+              "Case studies — banking, telecommunications, oil & gas and healthcare",
+            ],
+          },
+          {
+            title: "Data modelling",
+            description:
+              "Outcome: navigate the full modelling landscape, from business concepts through to physical, AI-ready design.",
+            points: [
+              "Business, conceptual and information modelling (NIAM, ORM, FCO-IM, ontologies, knowledge graphs)",
+              "Conceptual, logical and physical data modelling, including normalisation (1NF–6NF, BCNF, DKNF)",
+              "Specialised techniques — dimensional, Data Vault, Anchor, Focal Point, NoSQL, temporal, event-driven",
+              "Governance and AI extensions — metadata modelling, access control, ML feature modelling",
+            ],
+          },
+          {
+            title: "Data processing & storage",
+            description:
+              "Outcome: understand how data is stored and processed at scale, and which pattern fits which workload.",
+            points: [
+              "Data warehouse, data lake, lakehouse, data hub and data fabric",
+              "Relational vs NoSQL — key-value, document, columnar and graph databases",
+              "Specialised datastores — Hadoop, object storage, file and table formats",
+            ],
+          },
+          {
+            title: "DAC Architecture",
+            description:
+              "Outcome: apply the founder's own DAC (Data & AI Cognitive) Architecture framework to modern data platform design.",
+            points: [
+              "Why traditional architecture fails, and the cost of architectural drift",
+              "Operating models — centralised, decentralised, data mesh, data hub, data fabric",
+              "DAC's design principles, layers and \"one door in, one window out\" integration",
+              "Traditional architecture vs DAC — what changes and why",
+            ],
+          },
+          {
+            title: "Data governance, security, privacy & quality",
+            description:
+              "Outcome: understand the four pillars of trust in enterprise data, and the roles that keep them working.",
+            points: [
+              "Data governance — ownership, stewardship, policies and decision rights",
+              "Security vs privacy — the CIA triad and responsible data use",
+              "The six dimensions of data quality",
+              "The real cost of getting any one pillar wrong",
+            ],
+          },
+          {
+            title: "Agentic AI",
+            description:
+              "Outcome: understand what agentic AI actually is, why many projects get scrapped, and where it creates real business value.",
+            points: [
+              "The evolution of AI, and the current reality of agentic AI adoption",
+              "Core agent types and how agentic AI works",
+              "The PVP (Productionizable Viable Product) approach",
+              "Real business use cases — HR onboarding, meeting automation, policy discovery",
+            ],
+          },
+        ],
+      },
+      {
+        title: "Module 2 · Learn Vibe Coding",
+        description:
+          "Day 2 — the Learn Vibe Coding masterclass in full (also offered on its own), then hands-on build time on your own idea.",
+        points: LEARN_VIBE_CODING_MODULES.map((m) => ({ title: m.title, points: m.points })),
+      },
+    ],
+    // Steps revised 2026-09-26 with the two-module curriculum: "Product
+    // discovery", "Requirements" and "PromptOS" named retired modules; the
+    // steps now follow Module 1 → Module 2 and carry the plan → build →
+    // test → deploy → improve loop the retired landing described.
     methodology: {
       name: "Your learning journey",
       steps: [
         { title: "Idea", body: "Start from a real problem worth solving." },
-        { title: "Data foundations", body: "Trusted, governed data underneath." },
-        { title: "Product discovery", body: "Validate the opportunity." },
-        { title: "Requirements", body: "Structure what you are building." },
-        { title: "PromptOS", body: "Consistent, reusable AI outputs." },
-        { title: "Build", body: "AI-assisted rapid development." },
-        { title: "Test", body: "Quality before deployment." },
+        { title: "Data foundations", body: "Trusted, governed data underneath — Module 1." },
+        { title: "Plan", body: "The eight documents, Vision through GuardRails — Module 2." },
+        { title: "Guardrails", body: "The constitution the AI must never break, and Git as the undo button." },
+        { title: "Build", body: "Direct an AI coding agent milestone by milestone, inside the rules." },
+        { title: "Test", body: "Review every change and test before saying \"done\"." },
         { title: "Deploy", body: "Production readiness and adoption." },
+        { title: "Improve", body: "Iterate on what you shipped — the loop starts again." },
       ],
     },
     benefits: {
@@ -1731,7 +1749,8 @@ export const courses: Course[] = [
       international: { note: "Online training price. In-person training needs a minimum of 100 participants; cost discussed separately." },
       pakistan: { note: "Online training price. In-person training needs a minimum of 100 participants; cost discussed separately." },
     },
-    related: ["data-blueprint", "agentic-ai-strategy-adoption"],
+    // "learn-vibe-coding" added 2026-09-26 — Module 2 is that training.
+    related: ["learn-vibe-coding", "data-blueprint", "agentic-ai-strategy-adoption"],
     externalResources: [
       {
         label: "AI-Powered Consulting",
@@ -1739,6 +1758,93 @@ export const courses: Course[] = [
         description: "When you would rather have the product built for you",
       },
     ],
+    /* Retired from the curriculum on the founder's 2026-09-26 two-module
+       instruction; kept for reference. These were modules 11–17 of the
+       former 17-module curriculum, verbatim:
+          {
+            title: "Product discovery & validation",
+            description: "Outcome: transform ideas into validated product opportunities.",
+            points: [
+              "Problem identification",
+              "Opportunity discovery",
+              "User personas",
+              "Customer journeys",
+              "Product vision",
+              "Value proposition design",
+            ],
+          },
+          {
+            title: "AI-assisted requirements engineering",
+            description:
+              "Outcome: create structured requirements faster using AI-powered approaches.",
+            points: [
+              "Product requirements documents (PRD)",
+              "Functional and non-functional requirements",
+              "User stories",
+              "Acceptance criteria",
+              "AI-assisted documentation",
+            ],
+          },
+          {
+            title: "Prompt engineering & PromptOS",
+            description:
+              "Outcome: learn how to consistently generate better outputs from AI tools.",
+            points: [
+              "Prompt engineering principles",
+              "Structured prompt design",
+              "Context management",
+              "Iterative refinement",
+              "The PromptOS framework",
+              "Reusable prompt libraries",
+            ],
+          },
+          {
+            title: "Rapid application development",
+            description: "Outcome: create functional applications significantly faster.",
+            points: [
+              "User interface generation",
+              "Workflow design",
+              "AI-assisted development",
+              "Low-code and AI-assisted approaches",
+              "Building working prototypes",
+            ],
+          },
+          {
+            title: "Quality engineering & testing",
+            description: "Outcome: improve reliability and quality before deployment.",
+            points: [
+              "Test planning",
+              "AI-assisted testing",
+              "User acceptance testing",
+              "Data quality validation",
+              "Product review frameworks",
+            ],
+          },
+          {
+            title: "Deployment & production readiness",
+            description: "Outcome: prepare solutions for real-world adoption.",
+            points: [
+              "Deployment fundamentals",
+              "Security awareness",
+              "Governance considerations",
+              "Operational readiness",
+              "Production best practices",
+            ],
+          },
+          {
+            title: "Capstone project",
+            description:
+              "Participants apply the complete framework to build a practical AI-powered solution and leave with real-world experience.",
+            points: [
+              "Internal business applications",
+              "Knowledge management systems",
+              "AI assistants",
+              "Workflow automation solutions",
+              "Customer portals",
+              "Startup MVPs",
+            ],
+          },
+    */
   },
 
   /* ------------------------------------------------------------------ */

@@ -73,11 +73,21 @@ export type ProgrammeContent = {
   >;
 };
 
+/** A group of points inside a module — a sub-heading with its own list.
+ *  Introduced 2026-09-26 for the flagship's two-module curriculum, whose
+ *  Module 1 groups the ten Data Blueprint topics and whose Module 2 groups
+ *  the six Learn Vibe Coding parts. Stored in the existing
+ *  `programme_modules.points` JSON column (no schema change). */
+export type ModulePointGroup = { title: string; description?: string | null; points?: string[] };
+
+/** One entry of `programme_modules.points`: a plain point, or a group. */
+export type ModulePoint = string | ModulePointGroup;
+
 export type ProgrammeModuleRecord = {
   position: number;
   title: string;
   description: string | null;
-  points: string[] | null;
+  points: ModulePoint[] | null;
 };
 
 export type DeliveryFormatRecord = {

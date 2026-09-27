@@ -85,7 +85,7 @@ test("/search: a training by a word in its title; a certificate by ID and by lis
   await expect(page.getByTestId("search-hint")).toBeVisible();
 });
 
-test("Trainings & HRD Corp is one page; Free Training & Certification lists its two items, the book and the take-away; the diagnostic says nothing is saved", async ({ page }) => {
+test("Trainings & HRD Corp is one page; Free Training & Certification lists its two items; the diagnostic says nothing is saved", async ({ page }) => {
   await page.goto("/programs");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Trainings");
   await expect(page.getByTestId("hrd-corp-sections")).toContainText("What HRD Corp is");
@@ -96,8 +96,8 @@ test("Trainings & HRD Corp is one page; Free Training & Certification lists its 
   await expect(page.getByTestId("learn-free")).toContainText("I Am Datapedia!");
   await expect(page.getByTestId("datapedia-amazon")).toHaveAttribute("href", /amazon\.com\/dp\/B0F1NT87CL/);
   await expect(page.getByTestId("free-test")).toContainText("50, 100 or 200 questions");
-  await expect(page.getByTestId("free-learning-take-away").getByTestId("take-away-book")).toHaveCount(5);
-  await expect(page.getByTestId("free-learning-take-away").getByRole("link", { name: /see price on Amazon/i }).first()).toHaveAttribute("target", "_blank");
+  // Founder, 2026-09-27: "Take away" removed from this page — the trainer's other books stay off it.
+  await expect(page.getByTestId("free-learning-take-away")).toHaveCount(0);
   await expectNoAxeViolations(page);
 
   await page.goto("/free-learning/diagnostic");

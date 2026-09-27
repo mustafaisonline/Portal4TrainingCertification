@@ -4,7 +4,6 @@ import { listPublishedExperts } from "@/modules/catalogue/experts/repository";
 import { countPublishedTopics } from "@/modules/free-learning/book.repository";
 import { bankSize } from "@/modules/free-learning/knowledge-check.repository";
 import { questionCountsByTopic } from "@/modules/free-learning/quiz.repository";
-import { TakeAwayBooks } from "@/shared/marketing/TakeAwayBooks";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { Chip } from "@/shared/ui/Chip";
@@ -22,8 +21,10 @@ import { Chip } from "@/shared/ui/Chip";
  *      free ten-question diagnostic remains the taster, unchanged and unsaved.
  *
  * Nothing here is invented: the two items are described as what they will
- * be, and what exists today is what is linked. "Take away" lists the
- * trainer's books with Amazon links (P5: see price on Amazon).
+ * be, and what exists today is what is linked. The "book on Amazon" link
+ * inside the Learn Free card carries P5 (see price on Amazon); the standalone
+ * "Take away" books section was removed 2026-09-27 on the founder's
+ * instruction — the trainer's other books stay off this page.
  */
 export const metadata: Metadata = {
   title: "Free Training & Certification",
@@ -126,20 +127,6 @@ export default async function FreeLearningPage() {
           .
         </p>
       </section>
-
-      {/* Take away — the trainer's books (M14 item A; P5, P6). */}
-      {author && author.profile.books && author.profile.books.length > 0 ? (
-        <section className="border-t border-[var(--color-line)] bg-[var(--color-ground-tint)]" data-testid="free-learning-take-away">
-          <div className="mx-auto max-w-[1280px] px-6 py-16">
-            <p className="text-label mb-3 text-[var(--color-primary)]">Take away</p>
-            <h2 className="text-display mb-3">Books by {author.name}</h2>
-            <p className="text-body-lg mb-8 max-w-[640px] text-[var(--color-ink-quiet)]">
-              The trainer&rsquo;s published work. Prices are Amazon&rsquo;s; soft copies will be offered here once they are ready.
-            </p>
-            <TakeAwayBooks books={author.profile.books} author={author.name} />
-          </div>
-        </section>
-      ) : null}
     </>
   );
 }

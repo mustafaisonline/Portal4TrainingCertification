@@ -10,6 +10,12 @@ import { Field } from "@/shared/ui/forms";
  * order, with a search box (Milestone 14 Phase 2; the founder's "all topics
  * visible … with a search option"). Reading is free and anonymous; nothing
  * about the reader is stored (P11).
+ *
+ * Paginated ten a page (founder, 2026-09-27), against the full matching list
+ * — `listPublishedTopics` returns lightweight rows (no body HTML, no image
+ * bytes), so slicing in memory here is cheap even at the book's full 383
+ * topics; a new search always lands back on page 1 because the search
+ * form's GET submits only `q`, dropping any existing `page`.
  */
 export const metadata: Metadata = {
   title: "Learn free — topics",
@@ -18,10 +24,17 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
+const PAGE_SIZE = 10;
+
 export default async function TopicsPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const sp = await searchParams;
   const q = typeof sp["q"] === "string" ? sp["q"].trim().slice(0, 120) : "";
-  const topics = await listPublishedTopics(q);
+  const allTopics = await listPublishedTopics(q);
+  const totalPages = Math.max(1, Math.ceil(allTopics.length / PAGE_SIZE));
+  const requestedPage = typeof sp["page"] === "string" ? Number.parseInt(sp["page"], 10) : 1;
+  const page = Math.min(Math.max(Number.isFinite(requestedPage) ? requestedPage : 1, 1), totalPages);
+  const topics = allTopics.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+  const pageHref = (p: number) => `/free-learning/topics?${new URLSearchParams({ ...(q ? { q } : {}), page: String(p) })}`;
 
   return (
     <section className="bg-[var(--color-ground-tint)]">
@@ -49,7 +62,8 @@ export default async function TopicsPage({ searchParams }: { searchParams: Promi
         </Card>
 
         <p className="text-body-sm mb-4 text-[var(--color-ink-quiet)]" data-testid="topics-count" role="status">
-          {q ? `${topics.length} ${topics.length === 1 ? "topic matches" : "topics match"} “${q}”` : `${topics.length} topics`}
+          {q ? `${allTopics.length} ${allTopics.length === 1 ? "topic matches" : "topics match"} “${q}”` : `${allTopics.length} topics`}
+          {allTopics.length > PAGE_SIZE ? ` · page ${page} of ${totalPages}` : ""}
           {q ? (
             <>
               {" · "}
@@ -68,19 +82,43 @@ export default async function TopicsPage({ searchParams }: { searchParams: Promi
             </p>
           </Card>
         ) : (
-          <ol className="grid list-none gap-3 p-0 sm:grid-cols-2" data-testid="topics-list">
-            {topics.map((t) => (
-              <li key={t.id} className="min-w-0">
-                <Link href={`/free-learning/topics/${t.slug}`} className="block h-full" data-testid="topic-card" data-slug={t.slug}>
-                  <Card variant="panel" className="h-full p-4 transition-colors hover:border-[var(--color-primary)]">
-                    <p className="text-label mb-1 text-[var(--color-ink-faint)]">{t.position}</p>
-                    <p className="text-body-lg font-medium">{t.title}</p>
-                    <p className="text-body-sm mt-1 text-[var(--color-ink-quiet)]">{t.excerpt}</p>
-                  </Card>
-                </Link>
-              </li>
-            ))}
-          </ol>
+          <>
+            <ol className="grid list-none gap-3 p-0 sm:grid-cols-2" data-testid="topics-list">
+              {topics.map((t) => (
+                <li key={t.id} className="min-w-0">
+                  <Link href={`/free-learning/topics/${t.slug}`} className="block h-full" data-testid="topic-card" data-slug={t.slug}>
+                    <Card variant="panel" className="h-full p-4 transition-colors hover:border-[var(--color-primary)]">
+                      <p className="text-label mb-1 text-[var(--color-ink-faint)]">{t.position}</p>
+                      <p className="text-body-lg font-medium">{t.title}</p>
+                      <p className="text-body-sm mt-1 text-[var(--color-ink-quiet)]">{t.excerpt}</p>
+                    </Card>
+                  </Link>
+                </li>
+              ))}
+            </ol>
+
+            {totalPages > 1 ? (
+              <nav aria-label="Topics pages" className="mt-6 flex flex-wrap items-center justify-between gap-3" data-testid="topics-pagination">
+                {page > 1 ? (
+                  <Button variant="secondary" href={pageHref(page - 1)} data-testid="topics-page-prev">
+                    ← Previous
+                  </Button>
+                ) : (
+                  <span />
+                )}
+                <p className="text-body-sm text-[var(--color-ink-quiet)]">
+                  Page {page} of {totalPages}
+                </p>
+                {page < totalPages ? (
+                  <Button variant="secondary" href={pageHref(page + 1)} data-testid="topics-page-next">
+                    Next →
+                  </Button>
+                ) : (
+                  <span />
+                )}
+              </nav>
+            ) : null}
+          </>
         )}
       </div>
     </section>

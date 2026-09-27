@@ -97,6 +97,47 @@ test("topics list and search; a topic page with its database-served image and ne
   await expect(page.getByTestId("browse-topics")).toContainText("topics");
 });
 
+test("the topics list paginates ten a page (founder, 2026-09-27)", async ({ page }) => {
+  // A dedicated set of 12 topics, isolated by a search word unique to this
+  // test, so the page count is exact regardless of other fixtures in the
+  // shared test database. Cleaned up by this file's afterAll (same PREFIX).
+  const { withTransaction } = await import("../../src/db/prisma");
+  const { replaceTopicFromImport } = await import("../../src/modules/free-learning/book.repository");
+  const word = "e2epagequertyzz";
+  for (let i = 1; i <= 12; i += 1) {
+    await withTransaction((tx) =>
+      replaceTopicFromImport(
+        tx,
+        { position: 84000 + i, slug: `${PREFIX}-page-${i}`, title: `E2E Page Topic ${i} ${word}`, sourceHeading: `E2E Page Topic ${i}`, bodyHtml: `<p>${word}</p>`, bodyText: word, wordCount: 1, images: [], publish: true, importedAt: new Date() },
+        (id) => id,
+      ),
+    );
+  }
+
+  await page.goto(`/free-learning/topics?q=${word}`);
+  await expect(page.getByTestId("topics-count")).toContainText("12 topics match");
+  await expect(page.getByTestId("topics-count")).toContainText("page 1 of 2");
+  await expect(page.getByTestId("topic-card")).toHaveCount(10);
+  await expect(page.getByTestId("topics-page-prev")).toHaveCount(0);
+  await expectNoAxeViolations(page);
+
+  await page.getByTestId("topics-page-next").click();
+  await expect(page).toHaveURL(new RegExp(`q=${word}.*page=2|page=2.*q=${word}`));
+  await expect(page.getByTestId("topic-card")).toHaveCount(2);
+  await expect(page.getByTestId("topics-page-next")).toHaveCount(0);
+  await expectNoAxeViolations(page);
+
+  await page.getByTestId("topics-page-prev").click();
+  await expect(page.getByTestId("topic-card")).toHaveCount(10);
+
+  // A fresh search drops any earlier ?page and lands back on page 1.
+  await page.goto("/free-learning/topics?page=2");
+  await page.getByRole("searchbox", { name: "Search topics" }).fill(word);
+  await page.getByTestId("topics-search").click();
+  await expect(page).toHaveURL(new RegExp(`\\?q=${word}$`));
+  await expect(page.getByTestId("topic-card")).toHaveCount(10);
+});
+
 test("the administrator unpublishes a topic — page and image become 404, the list hides it — and publishes it again; both audited", async ({ page, request }) => {
   await page.goto("/register");
   await page.getByLabel("Full name").fill("Ada Admin");

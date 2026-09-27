@@ -15,19 +15,26 @@ export const adminNavItems: readonly AdminNavItem[] = [
   // Milestone 12: trainings (details, sections, curriculum, formats, fees, dates).
   { href: "/admin/trainings", label: "Trainings" },
   { href: "/admin/offerings", label: "Offerings" },
+  // Milestone 13 (founder decision 9): attendance recorded per date.
+  { href: "/admin/attendance", label: "Attendance" },
   { href: "/admin/orders", label: "Orders" },
   { href: "/admin/enquiries", label: "Enquiries" },
   { href: "/admin/reviews", label: "Reviews" },
   { href: "/admin/certificates", label: "Certificates" },
+  // Milestone 14 Phase 2: the book's topics — publish / unpublish.
+  { href: "/admin/free-learning", label: "Free Learning" },
   { href: "/admin/users", label: "Users" },
   { href: "/admin/audit", label: "Audit log" },
   { href: "/admin/reports", label: "Reports" },
 ];
 
 /** What a Trainer sees (Milestone 12, decisions L3/L7): the overview (their
- *  reduced dashboard) and the Trainings area. Every other admin screen
- *  answers 403 to them regardless of what the bar shows. */
-export const trainerNavItems: readonly AdminNavItem[] = adminNavItems.filter((i) => i.href === "/admin" || i.href === "/admin/trainings");
+ *  reduced dashboard), the Trainings area and — Milestone 13, N7 — the
+ *  Attendance sheet for their own dates. Every other admin screen answers
+ *  403 to them regardless of what the bar shows. */
+export const trainerNavItems: readonly AdminNavItem[] = adminNavItems.filter(
+  (i) => i.href === "/admin" || i.href === "/admin/trainings" || i.href === "/admin/attendance",
+);
 
 /** Exact match for the overview (every other item is under /admin), nested
  *  match for the rest; trailing slashes are normalised. */

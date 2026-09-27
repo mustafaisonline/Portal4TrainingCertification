@@ -39,6 +39,7 @@ async function registerViaUi(page: Page, address: string, name = "Olive Operatio
   await page.getByLabel("Full name").fill(name);
   await page.getByLabel("Email").fill(address);
   await page.getByLabel(/^Country/).selectOption("MY");
+  await page.getByLabel("Date of birth").fill("1990-01-01");
   await page.getByLabel("Password", { exact: true }).fill(STRONG_PASSWORD);
   await page.getByLabel("Confirm password").fill(STRONG_PASSWORD);
   await page.getByRole("checkbox").check();
@@ -51,7 +52,7 @@ async function signInViaUi(page: Page, address: string) {
   await page.getByLabel("Email").fill(address);
   await page.getByLabel("Password", { exact: true }).fill(STRONG_PASSWORD);
   await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page).toHaveURL(/\/account$/);
+  await expect(page).toHaveURL(/\/(account\/profile|admin)$/); // an administrator lands on /admin (2026-09-27)
 }
 
 async function expectNoAxeViolations(page: Page) {

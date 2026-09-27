@@ -17,7 +17,7 @@ export const metadata: Metadata = { title: { default: "My account", template: "%
 
 export default async function AccountLayout({ children }: { children: ReactNode }) {
   // Layouts do not know the leaf path; pages that need a precise return path
-  // call requireUser themselves (e.g. /account/security/mfa).
+  // call requireUser themselves (e.g. /account/trainings/<id>).
   const user = await requireUser("/account");
   return (
     <PublicShell accountSlot={<AccountControls />} mobileAccountSlot={<AccountControls variant="mobile" />}>

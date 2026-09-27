@@ -6,7 +6,10 @@ import { StatusChip } from "@/modules/certificates/components/StatusChip";
 import { daysBetween, formatCalendarDate, todayIso } from "@/modules/certificates/dates";
 import type { PublicCertificateView } from "@/modules/certificates/repository";
 import { publicCertificateById } from "@/modules/certificates/search.service";
+import { findResultByPublicId, KNOWLEDGE_CHECK_ID_RE, type PublicKnowledgeCheckView } from "@/modules/free-learning/knowledge-check.repository";
 import { Card } from "@/shared/ui/Card";
+import { Chip } from "@/shared/ui/Chip";
+import { formatTimestamp } from "@/shared/util/dates";
 
 /*
  * /verify/[id] — the unique, shareable URL of ONE Certificate of Completion
@@ -31,6 +34,10 @@ const load = cache(async (id: string): Promise<PublicCertificateView | null> => 
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
+  if (KNOWLEDGE_CHECK_ID_RE.test(id.trim().toUpperCase())) {
+    const kc = await findResultByPublicId(id);
+    return { title: kc ? `Knowledge Check ${kc.publicId}` : "Result not found", description: "A free Knowledge Check result — not a credential.", robots: { index: false, follow: false } };
+  }
   const view = await load(id);
   return {
     title: view ? `Certificate ${view.certificateId}` : "Certificate not found",
@@ -55,8 +62,65 @@ function statusSentence(view: PublicCertificateView, today: string): string {
   }
 }
 
+/** A Knowledge Check ID (M14 Phase 4): the result, plainly NOT a credential. */
+function KnowledgeCheckResult({ view }: { view: PublicKnowledgeCheckView }) {
+  return (
+    <section className="bg-[var(--color-ground-tint)]">
+      <div className="mx-auto max-w-[760px] px-4 py-10 sm:px-6 sm:py-14">
+        <div className="flex flex-col gap-8">
+          <header>
+            <p className="text-label mb-2 text-[var(--color-primary)]">Knowledge Check result</p>
+            <h1 className="text-display mb-4" data-testid="verify-holder">
+              {view.holderName}
+            </h1>
+            <div className="mb-3">
+              <Chip tone={view.passed ? "primary" : "neutral"}>{view.passed ? "Passed" : "Not passed"}</Chip>
+            </div>
+            <p className="text-body-lg max-w-[62ch] text-[var(--color-ink-quiet)]" data-testid="verify-status-sentence">
+              {view.holderName} answered {view.score} of {view.size} questions correctly ({view.percent} %) on the free Knowledge Check on{" "}
+              {formatTimestamp(view.finishedAt)} — {view.passed ? "a pass at the 70 % mark" : "below the 70 % pass mark"}.
+            </p>
+          </header>
+          <Card variant="panel" className="p-5 sm:p-6">
+            <dl className="text-body-sm grid gap-x-8 gap-y-4 sm:grid-cols-2" data-testid="verify-details">
+              <div>
+                <dt className="text-label mb-1">Questions</dt>
+                <dd>{view.size}, drawn from the reviewed topics of I Am Datapedia!</dd>
+              </div>
+              <div>
+                <dt className="text-label mb-1">Score</dt>
+                <dd>
+                  {view.score} of {view.size} ({view.percent} %)
+                </dd>
+              </div>
+              <div className="sm:col-span-2">
+                <dt className="text-label mb-1">Knowledge Check ID</dt>
+                <dd className="text-mono break-all" data-testid="verify-certificate-id">
+                  {view.publicId}
+                </dd>
+              </div>
+            </dl>
+            <p className="text-body-sm mt-4 text-[var(--color-ink-faint)]" data-testid="verify-not-credential">
+              A Knowledge Check is a free, self-paced test of reading. It is not a Certificate of Completion and not the Academy&rsquo;s credential, which is
+              earned by attending an expert-led training.
+            </p>
+          </Card>
+          <Link href="/verify" className="text-body-sm inline-block self-start py-2 text-[var(--color-primary)] underline underline-offset-4" data-testid="verify-search-another">
+            Search another certificate
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export default async function VerifyCertificatePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
+  if (KNOWLEDGE_CHECK_ID_RE.test(id.trim().toUpperCase())) {
+    const kc = await findResultByPublicId(id);
+    if (!kc) notFound();
+    return <KnowledgeCheckResult view={kc} />;
+  }
   const view = await load(id);
   if (!view) notFound();
   const today = todayIso(new Date());

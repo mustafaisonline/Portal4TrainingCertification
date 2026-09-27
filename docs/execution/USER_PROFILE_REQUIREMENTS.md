@@ -130,3 +130,16 @@ Sections in the order above; each optional field states its purpose in its hint;
 | 7b | **Add: a profile photo**, shown in the header account menu | Photo upload on the profile page; avatar replaces the initials in `AccountMenu`. Stored as a small, browser-resized image in the database until object storage is decided (ADR-008) — see the plan |
 
 **On agreement** this record becomes the Milestone 5a execution plan: migration `user_profiles`, encryption helper + key, profile page rewrite, checkout "complete your details" step, pricing by `country_code`, tests (unit for validation/encryption, integration for masking/audit, e2e for the progressive flow, axe), and a data-export note.
+
+## 9. Founder decision — 2026-09-27: mandatory at registration, straight to payment
+
+**Trigger:** on `/account/programme`, *Register* sent a new account to the profile page ("this is confusing"). Founder direction, verbatim in substance: *"While user is registering as a new account, let's take mandatory fields while registering — Email (unique), Full name (as on your government ID), Date of Birth (as on your government ID), Country (as on your government ID). If these fields' data is there then the Registration button should take the user to the Stripe payment page."*
+
+| # | Decision | Effect |
+|---|---|---|
+| 1 | **Four mandatory fields at registration:** email (unique — already so), full name, date of birth, country — each "as on your government ID" | `/register` gains a required **Date of birth** field; **Country** becomes required; the name and country hints say "As on your government ID". Enforced on the sign-up endpoint too (`REGISTRATION_DETAILS_INVALID`), so a direct POST meets the same rule |
+| 2 | **Checkout requires exactly those fields** — `REQUIRED_FOR_CHECKOUT` = legal name · date of birth · country | A new account reaches `/checkout/<date>` → Stripe directly. The gate still closes if one of the three is later removed on the profile page |
+| 3 | The §8 "required before the first paid registration" fields — mobile, address block, organisation, job title, ID document type and number, nationality — become **optional** on the profile | **Supersedes §8 rows 2, 3, 5 and 7 as checkout requirements.** The fields, their validation, encryption and masking are unchanged; nothing is dropped from `user_profiles`. HRD Corp claims (M8) may still need organisation and ID — that rule is unchanged |
+| 4 | The date of birth is stored on **our** profile row only (`user_profiles.date_of_birth`, existing column) | No schema change. The auth provider's user carries the country as before (input only) and never the date of birth; the sign-up hook reads it from the request it runs inside of |
+
+Where §3 and §8 above say **M@checkout**, read: *mandatory at registration for name, date of birth and country; optional otherwise* — the original wording is kept for traceability.

@@ -1,16 +1,19 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 import { accountNavItems } from "../../src/shared/chrome/account-nav";
-import { deleteTestUser, resetRateLimits, STRONG_PASSWORD, uniqueEmail } from "../helpers/identity-db";
+import { createAdminUser, createCertificateUser, createEndedOfferingFixture, createPaidRegistrationFixture, deleteTestOffering } from "../helpers/certificates-db";
+import { completeProfileByEmail, deleteTestUser, resetRateLimits, STRONG_PASSWORD, uniqueEmail } from "../helpers/identity-db";
 
 /*
  * Signed-in account shell — end to end through the real screens against the
- * test database (account shell port, 2026-09-21). Every sidebar screen
- * resolves for a signed-in person; the header avatar menu lists the same
- * screens; the dashboard greets the person by OUR `users` name and shows the
- * flagship from the DATABASE (read through the repository, never typed
- * here); the profile form persists a real change; the main screens have no
- * WCAG 2.2 AA violations.
+ * test database. Milestone 13 (founder decisions 2026-09-27): the account
+ * opens on Profile (first tab, Security folded in); every sidebar screen
+ * resolves; the header menu lists the same screens in the same order with
+ * no Dashboard item; the retired routes redirect; My Trainings splits paid
+ * registrations into "Yet to attend" (Cancel, no Transfer) and "Attended"
+ * (the date has passed), whose detail page shows the certificate ID once
+ * issued; the profile form persists a real change; no WCAG 2.2 AA
+ * violations on the main screens.
  */
 
 test.describe.configure({ mode: "serial" });
@@ -21,12 +24,14 @@ function newEmail(prefix: string) {
   emails.push(e);
   return e;
 }
+const offerings: string[] = [];
 
 test.beforeEach(async () => {
   await resetRateLimits();
 });
 
 test.afterAll(async () => {
+  for (const id of offerings) await deleteTestOffering(id);
   for (const e of emails) await deleteTestUser(e);
   const { disconnectPrisma } = await import("../../src/db/prisma");
   await disconnectPrisma();
@@ -37,6 +42,7 @@ async function registerViaUi(page: Page, email: string, name = "Ada Test") {
   await page.getByLabel("Full name").fill(name);
   await page.getByLabel("Email", { exact: true }).fill(email);
   await page.getByLabel(/^Country/).selectOption("MY");
+  await page.getByLabel("Date of birth").fill("1990-01-01");
   await page.getByLabel("Password", { exact: true }).fill(STRONG_PASSWORD);
   await page.getByLabel("Confirm password").fill(STRONG_PASSWORD);
   await page.getByRole("checkbox").check();
@@ -50,7 +56,8 @@ async function signInViaUi(page: Page, email: string, password = STRONG_PASSWORD
   await page.getByLabel("Email", { exact: true }).fill(email);
   await page.getByLabel("Password", { exact: true }).fill(password);
   await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page).toHaveURL(/\/account$/);
+  // /account (the landing) opens Profile, the first tab (N2 a).
+  await expect(page).toHaveURL(/\/account\/profile$/);
 }
 
 async function expectNoAxeViolations(page: Page) {
@@ -58,28 +65,38 @@ async function expectNoAxeViolations(page: Page) {
   expect(results.violations, JSON.stringify(results.violations, null, 2)).toEqual([]);
 }
 
-test("every sidebar screen is served to a signed-in person with an h1", async ({ page }) => {
+test("every sidebar screen is served with an h1; the retired routes redirect; Security lives on Profile", async ({ page }) => {
   const email = newEmail("e2e-acct-nav");
   await registerViaUi(page, email);
   await signInViaUi(page, email);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Your profile");
+  await expect(page.getByTestId("profile-security")).toContainText("Change password");
 
   for (const item of accountNavItems) {
     const res = await page.goto(item.href);
     expect(res?.status(), item.href).toBe(200);
     await expect(page).toHaveURL(new RegExp(`${item.href}$`)); // hrefs are plain /a/b paths
     await expect(page.getByRole("heading", { level: 1 }), item.href).toBeVisible();
-    // M5b: "Reviews" points at the public /reviews page, which has no account
-    // sidebar; every other item is a sidebar screen that marks itself current.
-    if (!item.href.startsWith("/account")) continue;
-    // The sidebar marks exactly this screen as current.
+    // Every item — including the public /reviews, framed for signed-in
+    // visitors since M13 — marks itself current in the sidebar.
     await expect(page.getByRole("navigation", { name: "Account" }).getByRole("link", { name: item.label, exact: true })).toHaveAttribute(
       "aria-current",
       "page",
     );
   }
+
+  // Retired routes (bookmarks, emails already sent) keep resolving.
+  await page.goto("/account/programmes");
+  await expect(page).toHaveURL(/\/account\/trainings$/);
+  await page.goto("/account/certificate");
+  await expect(page).toHaveURL(/\/account\/certifications$/);
+  await page.goto("/account/security");
+  await expect(page).toHaveURL(/\/account\/profile$/);
+  await page.goto("/account/programme");
+  await expect(page).toHaveURL(/\/programs$/);
 });
 
-test("the header avatar menu opens and lists the account screens and Sign out", async ({ page }) => {
+test("the header menu opens and lists the account screens in the sidebar's order, no Dashboard item, then Sign out", async ({ page }) => {
   const email = newEmail("e2e-acct-menu");
   await registerViaUi(page, email, "Grace Hopper");
   await signInViaUi(page, email);
@@ -93,6 +110,9 @@ test("the header avatar menu opens and lists the account screens and Sign out", 
   const menu = page.getByTestId("account-menu");
   await expect(menu).toContainText("Grace Hopper");
   await expect(menu).toContainText(email);
+  const labels = await menu.getByRole("link").allTextContents();
+  expect(labels.map((l) => l.trim())).toEqual([...accountNavItems.map((i) => i.label), "Sign out"]);
+  expect(labels).not.toContain("Dashboard");
   for (const item of accountNavItems) {
     await expect(menu.getByRole("link", { name: item.label, exact: true })).toHaveAttribute("href", item.href);
   }
@@ -104,41 +124,73 @@ test("the header avatar menu opens and lists the account screens and Sign out", 
   await expect(page.getByTestId("account-menu")).toHaveCount(0);
 });
 
-test("dashboard greets the person by name; shows what is open to register for, honest empty states, roles in words; the Trainings screen lists every published training (M12)", async ({ page }) => {
-  const { listPublishedProgrammes } = await import("../../src/modules/catalogue/programmes/repository");
-  const published = await listPublishedProgrammes();
-  expect(published.length, "seeded published trainings").toBeGreaterThan(0);
+test("My Trainings: honest empty state; Yet to attend with Cancel and no Transfer; Attended once the date has passed, with the detail page and the certificate ID", async ({ page }) => {
+  const upcoming = await createEndedOfferingFixture({ endsOnDaysAgo: -20, status: "open", durationDays: 1 }); // starts in 19 days → the 100 % tier
+  const past = await createEndedOfferingFixture({ endsOnDaysAgo: 3 });
+  offerings.push(upcoming.id, past.id);
 
-  const email = newEmail("e2e-acct-dash");
-  await registerViaUi(page, email, "Dana Dashboard");
+  const email = newEmail("e2e-acct-trainings");
+  await registerViaUi(page, email, "Tara Trainings");
   await signInViaUi(page, email);
-
-  await expect(page.getByTestId("welcome")).toHaveText("Welcome, Dana Dashboard");
-  // Either open dates to register for, or the honest "no open dates" card — never a fixed promo.
-  await expect(page.getByTestId("dash-open-dates").or(page.getByTestId("dash-browse"))).toBeVisible();
-  await expect(page.getByRole("link", { name: "Full schedule" })).toHaveAttribute("href", "/schedule");
-  // Honest empty states — nothing is registered, ordered or issued yet.
-  await expect(page.getByTestId("dash-no-registrations")).toHaveText("You are not registered for a training yet.");
-  await expect(page.getByText("No orders yet.")).toBeVisible();
-  await expect(page.getByText("Issued when you complete a training.")).toBeVisible();
-  await expect(page.getByTestId("account-roles")).toHaveText("Participant");
-  await expect(page.getByTestId("dash-admin-link")).toHaveCount(0);
+  await page.goto("/account/trainings");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Your trainings");
+  await expect(page.getByTestId("trainings-empty")).toContainText("You have not registered for a training yet");
+  await expect(page.getByRole("link", { name: "See dates and register" })).toHaveAttribute("href", "/schedule");
   await expectNoAxeViolations(page);
 
-  await page.goto("/account/programme");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Trainings");
-  // The sidebar item is "Trainings" (founder, 2026-09-26) and is current here.
-  await expect(page.getByRole("navigation", { name: "Account" }).getByRole("link", { name: "Trainings", exact: true })).toHaveAttribute("aria-current", "page");
-  const cards = page.getByTestId("account-training");
-  await expect(cards).toHaveCount(published.length);
-  for (const t of published) {
-    await expect(page.locator(`[data-testid="account-training"][data-slug="${t.slug}"]`)).toContainText(t.title);
-    await expect(page.locator(`[data-testid="account-training"][data-slug="${t.slug}"]`).getByRole("link", { name: "View the training" })).toHaveAttribute("href", `/programs/${t.slug}`);
-  }
+  const { findUserByEmail } = await import("../../src/modules/identity/users.repository");
+  const user = (await findUserByEmail(email))!;
+  await completeProfileByEmail(email, { legalName: "Tara Trainings" });
+  await createPaidRegistrationFixture(user.id, upcoming.id);
+  const regPast = await createPaidRegistrationFixture(user.id, past.id);
+
+  await page.reload();
+  const yet = page.locator('[data-testid="training-card"][data-section="upcoming"]');
+  const attended = page.locator('[data-testid="training-card"][data-section="attended"]');
+  await expect(yet).toHaveCount(1);
+  await expect(attended).toHaveCount(1);
+  await expect(yet.getByTestId("refund-now")).toContainText("100 % refund");
+  await expect(yet.getByRole("button", { name: /Cancel/ })).toBeVisible();
+  await expect(yet.getByRole("button", { name: /Transfer/ })).toHaveCount(0); // N1
+  await expect(attended.getByTestId("training-attendance")).toHaveText("Attendance not recorded");
+  await expect(attended.getByTestId("training-certificate-status")).toContainText("not yet issued");
+
+  // The detail page for the attended training: facts, no certificate yet (N4).
+  await attended.getByTestId("training-detail-link").click();
+  await expect(page).toHaveURL(new RegExp(`/account/trainings/${regPast.registrationId}$`));
+  await expect(page.getByTestId("training-title")).toBeVisible();
+  await expect(page.getByTestId("training-attendance")).toHaveText("Attendance not recorded");
+  await expect(page.getByTestId("training-no-certificate")).toContainText("Not yet issued");
   await expectNoAxeViolations(page);
+
+  // Once issued (the real completion service), the unique ID is shown,
+  // copyable, and links to the public page; without a review the DOCUMENT
+  // is gated, the ID is not (N4).
+  const { recordCompletion } = await import("../../src/modules/certificates/issuance.service");
+  const admin = await createAdminUser("e2e-acct-admin");
+  emails.push(admin.email);
+  const issued = await recordCompletion({ registrationId: regPast.registrationId, completedOn: past.endsOn, adminUserId: admin.id });
+  await page.reload();
+  await expect(page.getByTestId("training-certificate")).toBeVisible();
+  await expect(page.getByTestId("certificate-id-link")).toHaveText(issued.certificate.certificateId);
+  await expect(page.getByTestId("certificate-id-link")).toHaveAttribute("href", `/verify/${issued.certificate.certificateId}`);
+  await expect(page.getByTestId("copy-certificate-id")).toBeVisible();
+  await expect(page.getByTestId("certificate-gate")).toBeVisible();
+  await expectNoAxeViolations(page);
+  await page.getByTestId("certificate-id-link").click();
+  await expect(page).toHaveURL(new RegExp(`/verify/${issued.certificate.certificateId}$`));
+  await expect(page.getByTestId("verify-holder")).toContainText("Tara Trainings");
+  await expect(page.getByTestId("verify-certificate-id")).toHaveText(issued.certificate.certificateId);
+
+  // Another person's registration is a 404.
+  const other = await createCertificateUser({ prefix: "e2e-acct-other" });
+  emails.push(other.email);
+  const otherReg = await createPaidRegistrationFixture(other.id, past.id);
+  const res = await page.goto(`/account/trainings/${otherReg.registrationId}`);
+  expect(res?.status()).toBe(404);
 });
 
-test("profile: name and country are saved, audited and persist after reload", async ({ page }) => {
+test("profile: name and country are saved, audited and persist after reload; the account opens on Profile", async ({ page }) => {
   const { findUserByEmail } = await import("../../src/modules/identity/users.repository");
   const { listAuditForEntity } = await import("../../src/modules/platform/audit/repository");
   const { getPrisma } = await import("../../src/db/prisma");
@@ -149,7 +201,6 @@ test("profile: name and country are saved, audited and persist after reload", as
 
   // M5a: the profile page (tests/e2e/profile.spec.ts covers every section);
   // here only the name/country round trip the account shell depends on.
-  await page.goto("/account/profile");
   await expectNoAxeViolations(page);
   const fullName = page.getByLabel("Full name (as on your ID)");
   await expect(fullName).toHaveValue("Before Rename");
@@ -170,11 +221,11 @@ test("profile: name and country are saved, audited and persist after reload", as
   await page.reload();
   await expect(fullName).toHaveValue("After Rename");
   await expect(page.getByLabel("Country", { exact: true })).toHaveValue("SG");
-  // The sidebar, header menu and dashboard read the same row.
+  // The sidebar and the header menu read the same row.
   await expect(page.getByRole("navigation", { name: "Account" })).toContainText("After Rename");
   await expect(page.getByTestId("header-account")).toHaveAttribute("aria-label", "Account menu for After Rename");
   await page.goto("/account");
-  await expect(page.getByTestId("welcome")).toHaveText("Welcome, After Rename");
+  await expect(page).toHaveURL(/\/account\/profile$/);
 
   // Persisted in OUR rows (the country NAME on users, the code on the
   // profile), audited by field name, and mirrored to the provider's record.

@@ -147,7 +147,7 @@ export function HomeDiagnostic({ questions }: { questions: DiagnosticQuestionRec
       } catch {
         // Best-effort only.
       }
-      router.push("/diagnostic/result");
+      router.push("/free-learning/diagnostic/result");
       return;
     }
 
@@ -236,7 +236,7 @@ export function HomeDiagnostic({ questions }: { questions: DiagnosticQuestionRec
               </p>
               <div className="mt-5">
                 <Button
-                  href="/diagnostic"
+                  href="/free-learning/diagnostic"
                   className="shadow-[0_10px_26px_rgba(37,99,235,0.45)] transition-shadow hover:shadow-[0_14px_32px_rgba(37,99,235,0.55)]"
                 >
                   Free Diagnostic
@@ -245,14 +245,15 @@ export function HomeDiagnostic({ questions }: { questions: DiagnosticQuestionRec
               </div>
               {/* Fine print — the "quieter note under a CTA" pattern, so this
                   reads as a disclaimer, not more pitch copy. */}
-              <p className="mt-5 max-w-[480px] border-t border-[var(--color-line)] pt-4 text-body-sm text-[var(--color-ink-faint)]">
-                The diagnostic itself is always free — no account needed. A
-                Certificate of Attempt for a strong result is a separate,
-                optional step: it needs a free account and a one-time USD
-                10 fee. See &ldquo;Certificate of attempt&rdquo; on your
-                result page for details. To attempt the 50, 100 or
-                200-question diagnostics, click &ldquo;Free
-                Diagnostic&rdquo; above.
+              {/* Founder direction 2026-09-27 (M14 item C): the ten questions
+                  stay free and NOTHING is saved — say so here. The mockup's
+                  "Certificate of Attempt … USD 10 … 50/100/200 diagnostics"
+                  sentence described things that did not exist and is gone;
+                  the Knowledge Check arrives with M14 Phase 4. */}
+              <p className="mt-5 max-w-[480px] border-t border-[var(--color-line)] pt-4 text-body-sm text-[var(--color-ink-faint)]" data-testid="diagnostic-not-saved">
+                Always free, no account needed — and your answers stay in your browser: we do not save your diagnostic
+                results. For the book, the topic self-checks and the free Knowledge Check, see Free Training &amp;
+                Certification.
               </p>
             </div>
           </div>

@@ -20,7 +20,9 @@
     "db:deploy": "prisma migrate deploy",
     "db:seed": "node --experimental-transform-types prisma/seed.ts",
     "db:reset": "prisma migrate reset --force",
-    "admin:grant": "node --experimental-transform-types --import ./scripts/register-alias.mjs scripts/grant-admin.ts"
+    "admin:grant": "node --experimental-transform-types --import ./scripts/register-alias.mjs scripts/grant-admin.ts",
+    "learning:import": "node --experimental-transform-types --import ./scripts/register-alias.mjs scripts/ingest-datapedia.ts",
+    "learning:import-questions": "node --experimental-transform-types --import ./scripts/register-alias.mjs scripts/import-questions.ts"
   },
   "dependencies": {
     "@prisma/adapter-pg": "7.10.0",
@@ -39,6 +41,7 @@
     "@types/node": "26.6.2",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.5",
+    "mammoth": "^1.13.0",
     "prisma": "7.10.0",
     "tailwindcss": "4.3.3",
     "typescript": "7.0.2",

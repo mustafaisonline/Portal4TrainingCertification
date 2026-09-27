@@ -76,38 +76,42 @@ describe("saveProfile", () => {
     expect(decryptSecret(changed.idNumberCiphertext!)).toBe("A9876543");
   });
 
-  it("missingForCheckout shrinks as fields are added; completedAt is set only when nothing is missing", async () => {
+  it("missingForCheckout is the three government-ID fields (2026-09-27); completedAt is set only when none is missing", async () => {
     const user = await createUser();
-    expect(missingForCheckout(await getProfile(user.id))).toEqual(REQUIRED_FOR_CHECKOUT.map(([, label]) => label));
+    expect(REQUIRED_FOR_CHECKOUT.map(([field]) => field)).toEqual(["legalName", "dateOfBirth", "countryCode"]);
+    expect(missingForCheckout(await getProfile(user.id))).toEqual(["Full name as on your ID", "Date of birth", "Country"]);
 
+    // Only the name: the M5a fields (mobile, address, organisation, ID
+    // document, nationality) are optional and never demanded.
     const empty = completeProfileInput({
       phoneE164: null, addressLine1: null, city: null, postalCode: null, countryCode: null, organisation: null, jobTitle: null,
       idType: null, idNumber: null, nationalityCode: null, dateOfBirth: null,
     });
     const step1 = await withTransaction((tx) => saveProfile(tx, user.id, empty));
     const m1 = missingForCheckout(step1);
-    expect(m1).not.toContain("Full name as on your ID");
-    expect(m1).toContain("Mobile number");
-    expect(m1).toContain("ID number");
+    expect(m1).toEqual(["Date of birth", "Country"]);
     expect(step1.completedAt).toBeNull();
     expect(isCompleteForCheckout(step1)).toBe(false);
 
-    const step2 = await withTransaction((tx) => saveProfile(tx, user.id, { ...empty, phoneE164: "+60123456789", addressLine1: "1 Jalan", city: "KL", postalCode: "50000", countryCode: "MY" }));
-    const m2 = missingForCheckout(step2);
-    expect(m2.length).toBeLessThan(m1.length);
-    expect(m2).toEqual(["Organisation", "Job title", "ID document type", "ID number", "Nationality", "Date of birth"]);
+    const step2 = await withTransaction((tx) => saveProfile(tx, user.id, { ...empty, countryCode: "MY" }));
+    expect(missingForCheckout(step2)).toEqual(["Date of birth"]);
+    expect(step2.completedAt).toBeNull();
 
-    const step3 = await withTransaction((tx) => saveProfile(tx, user.id, completeProfileInput({ idType: "nric", idNumber: NRIC })));
+    const step3 = await withTransaction((tx) => saveProfile(tx, user.id, { ...empty, countryCode: "MY", dateOfBirth: "1990-01-01" }));
     expect(missingForCheckout(step3)).toEqual([]);
     expect(isCompleteForCheckout(step3)).toBe(true);
     expect(step3.completedAt).toBeInstanceOf(Date);
     const row = await prisma.userProfile.findUniqueOrThrow({ where: { userId: user.id }, select: { completedAt: true } });
     expect(row.completedAt).not.toBeNull();
 
-    // Removing a required field un-completes it again.
-    const step4 = await withTransaction((tx) => saveProfile(tx, user.id, completeProfileInput({ organisation: null })));
-    expect(step4.completedAt).toBeNull();
-    expect(missingForCheckout(step4)).toEqual(["Organisation"]);
+    // Removing an optional field keeps it complete; removing a required one
+    // un-completes it again.
+    const step4 = await withTransaction((tx) => saveProfile(tx, user.id, completeProfileInput({ organisation: null, idType: null, idNumber: null })));
+    expect(step4.completedAt).toBeInstanceOf(Date);
+    expect(missingForCheckout(step4)).toEqual([]);
+    const step5 = await withTransaction((tx) => saveProfile(tx, user.id, completeProfileInput({ dateOfBirth: null })));
+    expect(step5.completedAt).toBeNull();
+    expect(missingForCheckout(step5)).toEqual(["Date of birth"]);
   });
 });
 

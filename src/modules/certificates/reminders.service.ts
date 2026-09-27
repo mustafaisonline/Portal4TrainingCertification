@@ -151,7 +151,7 @@ export async function runCertificateReminders(opts: { now?: Date; db?: Db } = {}
       certificateId: row.certificateId,
       programmeTitle: row.programmeTitle,
       expiresOn,
-      renewalUrl: `${base}/account/certificate`,
+      renewalUrl: `${base}/account/certifications`,
       fee,
     });
     try {

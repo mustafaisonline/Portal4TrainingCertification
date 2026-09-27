@@ -82,7 +82,7 @@ describe("runCertificateReminders — stages, idempotency, re-arming", () => {
     expect(outbox[0]!.status).toBe("queued");
     expect(outbox[0]!.subject).toContain(a.certificate.certificateId);
     expect(outbox[0]!.textBody).toContain("USD 10.00");
-    expect(outbox[0]!.textBody).toContain("/account/certificate");
+    expect(outbox[0]!.textBody).toContain("/account/certifications");
     expect(reminders[0]!.outboundEmailId).toBe(outbox[0]!.id);
 
     const audit = await listAuditForEntity(prisma, "certificate", a.certificate.id);

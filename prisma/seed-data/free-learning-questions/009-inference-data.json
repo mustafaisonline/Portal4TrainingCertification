@@ -1,0 +1,125 @@
+{
+  "topic": "inference-data",
+  "questions": [
+    {
+      "stem": "What is inference data, according to the chapter?",
+      "options": [
+        "Data produced by the machine-learning process of drawing conclusions, making predictions or generalising from a features dataset",
+        "A list of database tables",
+        "Data that has been deleted",
+        "The raw text of a document",
+        "A backup of the training data"
+      ],
+      "correct": 0,
+      "explanation": "Inference data is what a model produces when it draws conclusions or predictions from analysed features."
+    },
+    {
+      "stem": "In the school example, what does the smaller group of students you ask represent?",
+      "options": [
+        "The population",
+        "A sample",
+        "A database",
+        "An outlier",
+        "A prediction"
+      ],
+      "correct": 1,
+      "explanation": "Instead of asking every student, you ask a smaller, representative group — a sample."
+    },
+    {
+      "stem": "In simple terms, inference is described as:",
+      "options": [
+        "Asking every single person before deciding",
+        "Making smart guesses about everyone by looking at a few representative people first",
+        "Refusing to guess without complete data",
+        "Copying data from one system to another",
+        "Sorting people by name"
+      ],
+      "correct": 1,
+      "explanation": "\"I can figure out what most people like by asking a few of them, because they're probably a lot like everyone else.\""
+    },
+    {
+      "stem": "Why does a sample allow useful conclusions about the whole group?",
+      "options": [
+        "Because it is larger than the population",
+        "Because the sample is assumed to be representative of everyone else",
+        "Because computers are fast",
+        "Because samples never contain errors",
+        "Because it is stored in the cloud"
+      ],
+      "correct": 1,
+      "explanation": "The representative few are \"probably a lot like everyone else\", which is what makes the generalisation reasonable."
+    },
+    {
+      "stem": "Inference is described as a fundamental aspect of which discipline?",
+      "options": [
+        "Statistical reasoning and data analysis",
+        "Graphic design",
+        "Network cabling",
+        "Accounting standards",
+        "Project scheduling"
+      ],
+      "correct": 0,
+      "explanation": "Drawing conclusions about a larger dataset from observed data is fundamental to statistical reasoning and data analysis."
+    },
+    {
+      "stem": "In machine learning, what is a trained model doing when it predicts on new, unseen data?",
+      "options": [
+        "Deleting the training data",
+        "Generalising patterns learned from training data to new instances — an act of inference",
+        "Memorising the new data",
+        "Encrypting the results",
+        "Retraining from scratch every time"
+      ],
+      "correct": 1,
+      "explanation": "The model generalises what it learned from the training data to make predictions on new instances."
+    },
+    {
+      "stem": "Which is a reason the chapter gives for using a sample rather than everyone?",
+      "options": [
+        "Asking every single person could be too much work",
+        "Samples are always more accurate",
+        "The population does not exist",
+        "Databases cannot hold everyone",
+        "Everyone gives the same answer"
+      ],
+      "correct": 0,
+      "explanation": "Asking every student in a school could be too much work; a representative sample makes the task practical."
+    },
+    {
+      "stem": "Inference often involves the application of what?",
+      "options": [
+        "Statistical methods",
+        "Paint colours",
+        "Legal contracts",
+        "Hardware upgrades",
+        "Font choices"
+      ],
+      "correct": 0,
+      "explanation": "Drawing meaningful conclusions from data often involves statistical methods."
+    },
+    {
+      "stem": "What is the relationship between the features dataset and inference data?",
+      "options": [
+        "Inference data is produced by analysing the features dataset",
+        "They are the same thing",
+        "The features dataset is produced from inference data",
+        "Neither is used in machine learning",
+        "Inference data replaces the features dataset"
+      ],
+      "correct": 0,
+      "explanation": "Conclusions and predictions (inference data) come from the analysis of the features dataset."
+    },
+    {
+      "stem": "Which statement best matches the chapter's view of inference?",
+      "options": [
+        "It is a crucial step in extracting meaningful insights from data",
+        "It is an optional final formatting step",
+        "It is only relevant to spreadsheets",
+        "It requires no data at all",
+        "It replaces data collection entirely"
+      ],
+      "correct": 0,
+      "explanation": "Inference is a crucial step in extracting meaningful insights from data."
+    }
+  ]
+}

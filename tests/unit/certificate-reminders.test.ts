@@ -79,7 +79,7 @@ describe("reminder messages", () => {
     certificateId: "DAA-2026-ABCD-EFGH",
     programmeTitle: "Data & AI Foundations",
     expiresOn: "2026-10-23",
-    renewalUrl: "http://localhost:3101/account/certificate",
+    renewalUrl: "http://localhost:3101/account/certifications",
     fee: { amountMinor: 1000, currency: "USD" },
   };
 

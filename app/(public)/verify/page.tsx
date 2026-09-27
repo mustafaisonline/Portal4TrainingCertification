@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import Link from "next/link";
-import { getPrisma } from "@/db/prisma";
+import { redirect } from "next/navigation";
 import { StatusChip } from "@/modules/certificates/components/StatusChip";
+import { KNOWLEDGE_CHECK_ID_RE } from "@/modules/free-learning/knowledge-check.repository";
+import { certificateSearchOverLimit, searchClientKey } from "@/modules/certificates/search-limit";
 import { MAX_NAME_RESULTS, MIN_NAME_QUERY } from "@/modules/certificates/constants";
 import { formatCalendarDate } from "@/modules/certificates/dates";
 import type { PublicCertificateView } from "@/modules/certificates/repository";
@@ -33,32 +34,12 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-const WINDOW_MS = 60 * 1000;
-const MAX_PER_WINDOW = 10;
 const NOT_EARNED = "This page confirms Certificates of Completion. It is not the Academy’s earned credential.";
 
-async function overLimit(clientKey: string): Promise<boolean> {
-  const prisma = getPrisma();
-  const key = `verify:${clientKey}`;
-  const now = Date.now();
-  const row = await prisma.authRateLimit.findUnique({ where: { key } });
-  if (!row || now - Number(row.lastRequest) > WINDOW_MS) {
-    await prisma.authRateLimit.upsert({
-      where: { key },
-      create: { id: key, key, count: 1, lastRequest: BigInt(now) },
-      update: { count: 1, lastRequest: BigInt(now) },
-    });
-    return false;
-  }
-  if (row.count >= MAX_PER_WINDOW) return true;
-  await prisma.authRateLimit.update({ where: { key }, data: { count: { increment: 1 } } });
-  return false;
-}
-
-async function clientKey(): Promise<string> {
-  const h = await headers();
-  return (h.get("x-forwarded-for") ?? h.get("x-real-ip") ?? "local").split(",")[0]!.trim();
-}
+// The rate limit moved to src/modules/certificates/search-limit.ts (M14
+// Phase 1) so the header search shares it — one budget, not two.
+const overLimit = certificateSearchOverLimit;
+const clientKey = searchClientKey;
 
 function ResultCard({ c }: { c: PublicCertificateView }) {
   return (
@@ -155,6 +136,8 @@ export default async function VerifyPage({ searchParams }: { searchParams: Promi
   const sp = await searchParams;
   const q = typeof sp["q"] === "string" ? sp["q"] : "";
   const trimmed = q.trim();
+  // A Knowledge Check ID (M14 Phase 4) has its own page.
+  if (KNOWLEDGE_CHECK_ID_RE.test(trimmed.toUpperCase())) redirect(`/verify/${trimmed.toUpperCase()}`);
 
   // Only a submission that would reach the database counts against the
   // limit; an empty or too-short query is answered without a lookup.

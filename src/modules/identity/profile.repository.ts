@@ -48,21 +48,16 @@ export type ProfileView = {
   completedAt: Date | null;
 };
 
-/** Fields a participant must have before the first paid registration
- *  (plan §3; founder decisions §8). Order = the order they are asked. */
+/** Fields a participant must have before the first paid registration.
+ *  Founder decision 2026-09-27 (USER_PROFILE_REQUIREMENTS.md §9): these are
+ *  the three government-ID fields collected AT REGISTRATION (with the unique
+ *  email), so a new account reaches Stripe directly; the M5a list (§8 —
+ *  mobile, address, organisation, job title, ID document, nationality)
+ *  stays on the profile as optional. Order = the order they are asked. */
 export const REQUIRED_FOR_CHECKOUT = [
   ["legalName", "Full name as on your ID"],
-  ["phoneE164", "Mobile number"],
-  ["addressLine1", "Address"],
-  ["city", "City"],
-  ["postalCode", "Postal code"],
-  ["countryCode", "Country"],
-  ["organisation", "Organisation"],
-  ["jobTitle", "Job title"],
-  ["idType", "ID document type"],
-  ["idNumberMasked", "ID number"],
-  ["nationalityCode", "Nationality"],
   ["dateOfBirth", "Date of birth"],
+  ["countryCode", "Country"],
 ] as const satisfies readonly (readonly [keyof ProfileView, string])[];
 
 export function missingForCheckout(view: ProfileView | null): string[] {

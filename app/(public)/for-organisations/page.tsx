@@ -76,7 +76,7 @@ export default async function ForOrganisationsPage() {
               </strong>
               . We will say plainly when that changes.
             </p>
-            <Link href="/hrd-corp" className="text-body-sm inline-block py-2 text-[var(--color-primary)] underline underline-offset-4">
+            <Link href="/programs#hrd-corp" className="text-body-sm inline-block py-2 text-[var(--color-primary)] underline underline-offset-4">
               Read the current HRD Corp status →
             </Link>
             <h2 className="text-h1 mb-3 mt-10">Team dashboard</h2>

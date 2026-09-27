@@ -1,7 +1,7 @@
 import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
 import { disconnectPrisma, getPrisma, withTransaction } from "@/db/prisma";
 import { auth } from "@/modules/identity/auth";
-import { activeRolesForUser, grantRole, holdsRole, revokeRole } from "@/modules/identity/roles.repository";
+import { activeRolesForUser, grantRole, holdsRole, landingPathFor, revokeRole } from "@/modules/identity/roles.repository";
 import { findUserByEmail } from "@/modules/identity/users.repository";
 import { listAuditForEntity } from "@/modules/platform/audit/repository";
 import { deleteTestUser, firstLink, STRONG_PASSWORD, uniqueEmail, waitForEmail } from "../helpers/identity-db";
@@ -61,11 +61,14 @@ function cookieHeader(setCookies: string[], previous = ""): string {
 
 async function register(email: string, extra: Record<string, unknown> = {}) {
   created.push(email);
+  // The four mandatory details (founder decision 2026-09-27): unique email,
+  // and name / date of birth / country as on the government ID.
   return call("POST", "/sign-up/email", {
     name: "Test Person",
     email,
     password: STRONG_PASSWORD,
-    country: "Malaysia",
+    country: "MY",
+    dateOfBirth: "1990-01-01",
     consent: true,
     callbackURL: "/account",
     ...extra,
@@ -105,8 +108,18 @@ describe("registration (criterion 2)", () => {
 
     const user = await findUserByEmail(email);
     expect(user).not.toBeNull();
-    expect(user!.country).toBe("Malaysia");
+    expect(user!.country).toBe("Malaysia"); // the NAME, mirrored from the ISO code
     expect(user!.emailVerifiedAt).toBeNull();
+
+    // The profile row is seeded with the government-ID fields and is already
+    // complete for checkout (2026-09-27): no further step before payment.
+    const profile = await prisma.userProfile.findUniqueOrThrow({ where: { userId: user!.id } });
+    expect(profile.legalName).toBe("Test Person");
+    expect(profile.countryCode).toBe("MY");
+    expect(profile.dateOfBirth?.toISOString().slice(0, 10)).toBe("1990-01-01");
+    expect(profile.completedAt).not.toBeNull();
+    // The auth provider's row never carries the date of birth.
+    expect(await prisma.authUser.findUnique({ where: { email } })).not.toHaveProperty("dateOfBirth");
 
     const identity = await prisma.authIdentity.findFirst({ where: { userId: user!.id } });
     expect(identity?.provider).toBe("better-auth");
@@ -131,6 +144,26 @@ describe("registration (criterion 2)", () => {
     const res = await register(email, { consent: false });
     expect(res.status).toBe(400);
     expect((res.json as { code?: string }).code).toBe("CONSENT_REQUIRED");
+    expect(await prisma.authUser.findUnique({ where: { email } })).toBeNull();
+    expect(await findUserByEmail(email)).toBeNull();
+  });
+
+  it("is refused without the government-ID details — name, ISO country, valid date of birth — and leaves no rows behind (2026-09-27)", async () => {
+    const email = uniqueEmail("nodetails");
+    const attempts: Record<string, unknown>[] = [
+      { dateOfBirth: undefined }, // missing
+      { country: "Malaysia" }, // a free-text name, not an ISO code
+      { dateOfBirth: new Date().toISOString().slice(0, 10) }, // born today: under the minimum age
+      { name: "A" }, // shorter than a legal name can be
+    ];
+    for (const extra of attempts) {
+      const res = await register(email, extra);
+      expect(res.status, JSON.stringify(extra)).toBe(400);
+      expect((res.json as { code?: string }).code, JSON.stringify(extra)).toBe("REGISTRATION_DETAILS_INVALID");
+      expect(typeof (res.json as { message?: string }).message).toBe("string");
+      // The endpoint allows three sign-ups a minute per client; refusals count.
+      await prisma.authRateLimit.deleteMany({});
+    }
     expect(await prisma.authUser.findUnique({ where: { email } })).toBeNull();
     expect(await findUserByEmail(email)).toBeNull();
   });
@@ -294,6 +327,17 @@ describe("change password (founder request 2026-09-21)", () => {
 });
 
 describe("roles (ADR-020; criterion 8 data layer)", () => {
+  it("landingPathFor: a platform administrator lands on /admin, everyone else on /account (founder direction 2026-09-27)", () => {
+    const platform = { scopeType: "platform" as const, scopeId: null };
+    expect(landingPathFor([])).toBe("/account");
+    expect(landingPathFor([{ role: "participant", ...platform }])).toBe("/account");
+    expect(landingPathFor([{ role: "expert", ...platform }])).toBe("/account"); // a Trainer
+    expect(landingPathFor([{ role: "participant", ...platform }, { role: "platform_admin", ...platform }])).toBe("/admin");
+    // Only a PLATFORM-scoped admin grant counts; a narrower scope does not open the dashboard.
+    expect(landingPathFor([{ role: "platform_admin", scopeType: "organisation", scopeId: "org-1" }])).toBe("/account");
+  });
+
+
   it("grant → holds; revoke → does not; re-grant reactivates the same row; every step audited", async () => {
     const email = uniqueEmail("roles");
     await register(email);

@@ -1,5 +1,6 @@
 import type { Db } from "@/db/prisma";
 import { getPrisma } from "@/db/prisma";
+import { offeringlessOrderTitle } from "@/modules/commerce/registrations.service";
 import { getProfile } from "./profile.repository";
 
 /*
@@ -190,7 +191,7 @@ export async function buildDataExport(userId: string, db: Db = getPrisma(), now 
         timezone: r.offering.timezone,
       })),
     ),
-    orders: asRecords(orders.map(({ programme, ...o }) => ({ ...o, programmeTitle: programme?.title ?? "Support the Academy" }))),
+    orders: asRecords(orders.map(({ programme, ...o }) => ({ ...o, programmeTitle: programme?.title ?? offeringlessOrderTitle(o.kind) }))),
     payments: asRecords(payments),
     refunds: asRecords(refunds),
     reviews: asRecords(reviews.map(({ programme, ...r }) => ({ ...r, programmeTitle: programme.title }))),

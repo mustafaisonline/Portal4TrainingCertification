@@ -167,8 +167,8 @@ describe("startRenewalCheckout — window, owner, fee (E4, E5)", () => {
       currency: seedFee.currency,
       customerEmail: owner.email,
       productName: `Certificate renewal ${certificate.certificateId} — 12 months`,
-      successUrl: `${process.env.APP_BASE_URL}/account/certificate?order=${order.id}`,
-      cancelUrl: `${process.env.APP_BASE_URL}/account/certificate?cancelled=1`,
+      successUrl: `${process.env.APP_BASE_URL}/account/certifications?order=${order.id}`,
+      cancelUrl: `${process.env.APP_BASE_URL}/account/certifications?cancelled=1`,
     });
     const audit = await listAuditForEntity(prisma, "order", order.id);
     expect(audit.map((a) => a.action)).toEqual(["order.created"]);

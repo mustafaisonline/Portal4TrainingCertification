@@ -4,6 +4,7 @@ import { getPrisma } from "@/db/prisma";
 import { writeAudit } from "@/modules/platform/audit/repository";
 import type { PublishedDocuments } from "./legal-documents";
 import { REQUIRED_DOCUMENTS } from "./legal-documents";
+import { REQUIRED_FOR_CHECKOUT } from "./profile.repository";
 
 /*
  * Business identity (`users`) and the provider mapping (`auth_identities`).
@@ -56,6 +57,10 @@ export type RegisterIdentityInput = {
   /** An ISO 3166-1 alpha-2 code from the registration form (Milestone 5a);
    *  older callers may still pass a free-text name, kept as given. */
   country: string | null;
+  /** YYYY-MM-DD as on the person's government ID (founder decision
+   *  2026-09-27), already validated by the sign-up endpoint; null only for
+   *  callers that predate the field. */
+  dateOfBirth: string | null;
   /** The published versions the person accepted — required; registration is
    *  closed when there are none (legal-documents.ts). */
   consented: PublishedDocuments;
@@ -68,10 +73,16 @@ export type RegisterIdentityInput = {
  * removes the provider user if this throws, so a half-registered person
  * cannot exist. `users.country` keeps holding the country NAME (existing
  * readers); the profile row holds the ISO code when one was given.
+ *
+ * The profile row is seeded with the government-ID fields the form collects
+ * (legal name, country, date of birth). Since 2026-09-27 those are exactly
+ * the fields checkout requires, so `completedAt` is set here when all three
+ * are present — the same rule `saveProfile` applies on later edits.
  */
 export async function createRegisteredIdentity(tx: Tx, input: RegisterIdentityInput): Promise<UserRecord> {
   const rawCountry = input.country?.trim() || null;
   const countryCode = rawCountry && isCountryCode(rawCountry.toUpperCase()) ? rawCountry.toUpperCase() : null;
+  const dateOfBirth = input.dateOfBirth && /^\d{4}-\d{2}-\d{2}$/.test(input.dateOfBirth) ? new Date(`${input.dateOfBirth}T00:00:00Z`) : null;
   const user = await tx.user.create({
     data: {
       email: normaliseEmail(input.email),
@@ -83,8 +94,11 @@ export async function createRegisteredIdentity(tx: Tx, input: RegisterIdentityIn
   await tx.authIdentity.create({
     data: { userId: user.id, provider: AUTH_PROVIDER, providerSubject: input.subject },
   });
+  const seed = { legalName: user.name, countryCode, dateOfBirth };
+  const given: Partial<Record<string, unknown>> = seed;
+  const complete = REQUIRED_FOR_CHECKOUT.every(([field]) => given[field] !== null && given[field] !== undefined && given[field] !== "");
   await tx.userProfile.create({
-    data: { userId: user.id, legalName: user.name, countryCode },
+    data: { userId: user.id, ...seed, completedAt: complete ? new Date() : null },
   });
   await tx.userRole.create({
     data: { userId: user.id, role: "participant", scopeType: "platform", scopeId: null, grantedByUserId: null },

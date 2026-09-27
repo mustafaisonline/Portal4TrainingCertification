@@ -155,7 +155,7 @@ function Unavailable({ preview }: { preview: Exclude<CheckoutPreview, { ok: true
       <div className="flex flex-wrap gap-3">
         <Button href="/schedule">Upcoming dates</Button>
         {preview.reason === "already_registered" || preview.reason === "order_pending" ? (
-          <Button variant="secondary" href="/account/programmes">
+          <Button variant="secondary" href="/account/trainings">
             My registrations
           </Button>
         ) : (

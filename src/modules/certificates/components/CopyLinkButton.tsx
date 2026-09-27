@@ -10,11 +10,27 @@ import { Button } from "@/shared/ui/Button";
  * server page (an absolute link, or a path made absolute here against the
  * page's origin); when the clipboard is blocked the link is shown in a
  * read-only field so it can be copied by hand — no silent failure.
+ *
+ * M13 (founder: the certificate ID "will be copyable so user can copy and
+ * share … add on LinkedIn"): with `literal`, the text is copied exactly as
+ * given (the ID), and `label` / `testId` name the button.
  */
-export function CopyLinkButton({ href }: { href: string }) {
+export function CopyLinkButton({
+  href,
+  label = "Copy verification link",
+  testId = "copy-link",
+  literal = false,
+}: {
+  href: string;
+  label?: string;
+  testId?: string;
+  /** Copy `href` verbatim instead of resolving it to an absolute URL. */
+  literal?: boolean;
+}) {
   const [state, setState] = useState<"idle" | "copied" | "fallback">("idle");
 
   function resolve(): string {
+    if (literal) return href;
     return /^https?:\/\//.test(href) ? href : new URL(href, window.location.origin).toString();
   }
 
@@ -32,16 +48,16 @@ export function CopyLinkButton({ href }: { href: string }) {
   return (
     <div className="flex flex-col gap-2">
       <div className="flex flex-wrap items-center gap-3">
-        <Button type="button" variant="secondary" onClick={copy} data-testid="copy-link">
-          Copy verification link
+        <Button type="button" variant="secondary" onClick={copy} data-testid={testId}>
+          {label}
         </Button>
-        <span role="status" className="text-body-sm text-[var(--color-success)]" data-testid="copy-link-status">
+        <span role="status" className="text-body-sm text-[var(--color-success)]" data-testid={`${testId}-status`}>
           {state === "copied" ? "Copied" : ""}
         </span>
       </div>
       {state === "fallback" ? (
         <label className="text-body-sm flex flex-col gap-1 text-[var(--color-ink-quiet)]">
-          Copying is blocked in this browser — select and copy the link:
+          Copying is blocked in this browser — select and copy {literal ? "the text" : "the link"}:
           <input
             type="text"
             readOnly

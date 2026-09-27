@@ -5,9 +5,31 @@ import { nextCookies } from "better-auth/next-js";
 import { getPrisma, withTransaction } from "@/db/prisma";
 import { sendEmail } from "@/modules/notifications/email";
 import { writeAudit } from "@/modules/platform/audit/repository";
+import { isCountryCode } from "@/content/countries";
 import { resetPasswordMessage, verifyEmailMessage } from "./emails";
 import { publishedDocuments } from "./legal-documents";
+import { LIMITS, validateDateOfBirth } from "./profile-validation";
 import { createRegisteredIdentity, findUserByAuthSubject, markEmailVerified } from "./users.repository";
+
+/**
+ * The registration details rule (founder decision 2026-09-27): full name,
+ * country and date of birth "as on your government ID" are mandatory at
+ * sign-up. Returns the first problem in words, or null when all is well.
+ * The same limits the profile form applies (profile-validation.ts).
+ */
+export function registrationDetailsProblem(body: Record<string, unknown>): string | null {
+  const name = typeof body["name"] === "string" ? body["name"].trim() : "";
+  if (name.length < LIMITS.legalNameMin || name.length > LIMITS.legalNameMax) {
+    return "Please enter your full name as it appears on your government ID.";
+  }
+  const country = typeof body["country"] === "string" ? body["country"].trim().toUpperCase() : "";
+  if (!isCountryCode(country)) return "Please choose your country as on your government ID.";
+  const dob = typeof body["dateOfBirth"] === "string" ? body["dateOfBirth"].trim() : "";
+  if (!dob) return "Please enter your date of birth as on your government ID.";
+  const checked = validateDateOfBirth(dob);
+  if (!checked.ok) return checked.message;
+  return null;
+}
 
 /*
  * Better Auth — the authentication provider (ADR-006 recommendation, executed
@@ -163,6 +185,12 @@ export const auth = betterAuth({
             message: "An account with this email already exists. Sign in, or reset your password.",
           });
         }
+        // Founder decision 2026-09-27: the government-ID fields — full name,
+        // date of birth, country — are mandatory AT registration (with the
+        // unique email), so a new account can go straight to payment. The
+        // form checks the same rules; this is the guard a direct POST meets.
+        const problem = registrationDetailsProblem(body);
+        if (problem) throw new APIError("BAD_REQUEST", { code: "REGISTRATION_DETAILS_INVALID", message: problem });
       }
     }),
     after: createAuthMiddleware(async (ctx) => {
@@ -188,11 +216,16 @@ export const auth = betterAuth({
   databaseHooks: {
     user: {
       create: {
-        after: async (user) => {
+        after: async (user, ctx) => {
           // The mapping, atomically (plan §6.2). `publishedDocuments()` was
           // non-null in the before-hook of this same request.
           const consented = publishedDocuments();
           if (!consented) throw new APIError("FORBIDDEN", { code: "REGISTRATION_CLOSED", message: "Registration is not open yet." });
+          // The date of birth is NOT a Better Auth field (no column on
+          // auth_users): it is read from the sign-up request the hook runs
+          // inside of — validated by the before-hook — and stored on OUR
+          // profile row only.
+          const body = (ctx?.body ?? {}) as Record<string, unknown>;
           try {
             await withTransaction((tx) =>
               createRegisteredIdentity(tx, {
@@ -200,6 +233,7 @@ export const auth = betterAuth({
                 email: user.email,
                 name: user.name,
                 country: typeof user["country"] === "string" ? user["country"] : null,
+                dateOfBirth: typeof body["dateOfBirth"] === "string" ? body["dateOfBirth"] : null,
                 consented,
               }),
             );

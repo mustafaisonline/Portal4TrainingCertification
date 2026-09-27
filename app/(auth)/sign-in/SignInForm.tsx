@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { authClient } from "@/modules/identity/auth-client";
+import { landingAfterSignInAction } from "@/modules/identity/session.actions";
 import { Button } from "@/shared/ui/Button";
 import { Field, FormStatus, PasswordField } from "@/shared/ui/forms";
 
@@ -15,7 +16,9 @@ export function SignInForm({
   passwordWasReset,
   justRegistered = false,
 }: {
-  returnTo: string;
+  /** The validated `return-to` path, or null when none was asked for — the
+   *  server then chooses the landing page by role (session.actions.ts). */
+  returnTo: string | null;
   passwordWasReset: boolean;
   justRegistered?: boolean;
 }) {
@@ -43,7 +46,9 @@ export function SignInForm({
       }
       return;
     }
-    router.push(returnTo);
+    // Founder direction 2026-09-27: with no return path, an administrator
+    // lands on the admin dashboard; the server decides from `user_roles`.
+    router.push(returnTo ?? (await landingAfterSignInAction()));
     router.refresh();
   }
 
@@ -53,7 +58,7 @@ export function SignInForm({
       {justRegistered && (
         <FormStatus tone="success">Your account has been created. Sign in with your email and password.</FormStatus>
       )}
-      {returnTo !== "/account" && (
+      {returnTo !== null && (
         <p role="status" className="text-body-sm font-medium text-[var(--color-ink)]">
           Sign in to continue.
         </p>

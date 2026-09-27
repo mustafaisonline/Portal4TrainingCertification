@@ -40,7 +40,7 @@ function text(formData: FormData, name: string): string {
 
 function revalidateCertificate(offeringId?: string) {
   revalidatePath("/verify", "layout");
-  revalidatePath("/account/certificate");
+  revalidatePath("/account/certifications");
   revalidatePath("/account", "layout");
   revalidatePath("/admin/certificates", "layout");
   revalidatePath("/admin");
@@ -53,6 +53,7 @@ const COMPLETION_REFUSALS: Record<string, string> = {
   offering_not_ended: "Completion can be recorded from the day after the offering ends.",
   completed_on_out_of_range: "The completion date must be between the offering's first day and today.",
   profile_incomplete: "This participant has not entered their legal name on their profile yet, so the certificate cannot name them. Ask them to complete their profile first.",
+  not_attended: "This participant is recorded as not attended on the attendance sheet. Correct the sheet first if that is wrong.", // M13 N6
   id_generation_failed: "A unique certificate ID could not be generated. Please try again.",
 };
 

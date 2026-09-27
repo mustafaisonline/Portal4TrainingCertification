@@ -1,10 +1,15 @@
 import type { Metadata } from "next";
 import { countryCodeFor } from "@/content/countries";
 import { EXPERIENCE_BANDS, getProfile, HEARD_ABOUT, INDUSTRIES, missingForCheckout, type ProfileView } from "@/modules/identity/profile.repository";
+import { formatMoney } from "@/modules/catalogue/programmes/types";
+import { enabledSupportSetting } from "@/modules/commerce/support.repository";
+import { ROLE_LABEL } from "@/modules/identity/admin-users.repository";
 import { requireUser } from "@/modules/identity/session";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
+import { Chip } from "@/shared/ui/Chip";
 import { safeReturnTo } from "@/shared/util/return-to";
+import { ChangePasswordForm } from "./ChangePasswordForm";
 import { PhotoUploader } from "./PhotoUploader";
 import { ProfileForm } from "./ProfileForm";
 
@@ -16,8 +21,11 @@ import { ProfileForm } from "./ProfileForm";
  * is still needed before a paid registration; when the checkout gate sent
  * the person here (`?complete=1&return-to=/checkout/…`) it says so and the
  * form offers "Continue to registration" once the profile is complete.
- * Password changes stay on /account/security. The "Your data" card offers the
- * JSON export (M8 plan §2 item 7, GET /api/me/export); account deletion waits
+ * Milestone 13 (founder decisions 5–6, 2026-09-27): Profile is the FIRST
+ * tab and the account's landing screen; the Security page (password change)
+ * is folded in below the form, and the "Support the Academy" card moved
+ * here from the retired dashboard. The "Your data" card offers the JSON
+ * export (M8 plan §2 item 7, GET /api/me/export); account deletion waits
  * for the founder's policy (M8 plan §5 A5).
  */
 export const metadata: Metadata = { title: "Your profile" };
@@ -31,6 +39,7 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
 
   const view = await getProfile(user.id);
   const missing = missingForCheckout(view);
+  const support = await enabledSupportSetting(new Date()); // the instant, not midnight (ADR-048)
   // A person registered before the profile table existed has no row yet:
   // seed the form from the identity row so nothing they gave us is retyped.
   const initial: ProfileView =
@@ -108,14 +117,52 @@ export default async function ProfilePage({ searchParams }: { searchParams: Prom
         isComplete={missing.length === 0}
       />
 
-      <Card variant="panel" className="p-6 sm:p-8">
-        <h2 className="text-h1 mb-2">Password</h2>
+      {/* Security — folded into Profile (founder decision 6, 2026-09-27);
+          /account/security redirects here. */}
+      <Card variant="panel" className="p-6 sm:p-8" id="security" data-testid="profile-security">
+        <p className="text-label mb-2 text-[var(--color-primary)]">Security</p>
+        <h2 className="text-h1 mb-2">Change password</h2>
         <p className="text-body-sm mb-5 text-[var(--color-ink-quiet)]">
-          Change your password from the Security page. Other devices signed in to your account will be signed out.
+          Confirm your current password, then choose a new one of at least 8 characters. Other devices signed in to
+          your account will be signed out.
         </p>
-        <Button variant="secondary" href="/account/security">
-          Change password
-        </Button>
+        <ChangePasswordForm />
+      </Card>
+
+      {support ? (
+        <Card variant="plate" className="flex flex-wrap items-center justify-between gap-4 p-5" data-testid="dash-support">
+          <div>
+            <p className="text-label mb-1 text-[var(--color-primary)]">Support</p>
+            <p className="text-body-lg font-medium">{support.label}</p>
+            <p className="text-body-sm text-[var(--color-ink-quiet)]">A one-off {formatMoney(support.amountMinor, support.currency)} by card — a thank you that unlocks nothing.</p>
+          </div>
+          <Button variant="secondary" href="/support" data-testid="dash-support-link">
+            Support the Academy
+          </Button>
+        </Card>
+      ) : null}
+
+      {/* The account facts the retired dashboard showed (N2 a: nothing lost). */}
+      <Card variant="panel" className="p-6 sm:p-8">
+        <h2 className="text-h2 mb-4">Your account</h2>
+        <dl className="text-body-sm grid gap-x-8 gap-y-3 sm:grid-cols-2">
+          <div>
+            <dt className="text-label mb-1">Email</dt>
+            <dd data-testid="account-email">{user.email}</dd>
+          </div>
+          <div>
+            <dt className="text-label mb-1">Email verification</dt>
+            <dd data-testid="account-verified">{user.emailVerified ? <Chip tone="primary">Verified</Chip> : <Chip>Not verified</Chip>}</dd>
+          </div>
+          <div>
+            <dt className="text-label mb-1">Roles</dt>
+            <dd data-testid="account-roles" className="flex flex-wrap gap-2">
+              {user.roles.map((r) => (
+                <Chip key={`${r.role}:${r.scopeType}:${r.scopeId ?? ""}`}>{ROLE_LABEL[r.role]}</Chip>
+              ))}
+            </dd>
+          </div>
+        </dl>
       </Card>
 
       <Card variant="panel" className="p-6 sm:p-8">

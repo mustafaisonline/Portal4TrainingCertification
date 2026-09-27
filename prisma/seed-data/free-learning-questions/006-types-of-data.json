@@ -1,0 +1,125 @@
+{
+  "topic": "types-of-data",
+  "questions": [
+    {
+      "stem": "What are the three fundamental data types named in the chapter?",
+      "options": [
+        "Numeric, text and date",
+        "Structured, semi-structured and unstructured",
+        "Public, private and secret",
+        "Hot, warm and cold",
+        "Raw, clean and archived"
+      ],
+      "correct": 1,
+      "explanation": "In data management the three fundamental types are structured, semi-structured and unstructured data."
+    },
+    {
+      "stem": "Which description fits STRUCTURED data?",
+      "options": [
+        "Organised in a predefined format, typically rows and columns",
+        "Free text with no format",
+        "Images and videos only",
+        "Data that changes structure on every entry",
+        "Data that cannot be exported"
+      ],
+      "correct": 0,
+      "explanation": "Structured data has a stable, predefined format known before data entry, which makes extraction easy and automated."
+    },
+    {
+      "stem": "A table with 6 columns and 10 rows is exported. Some cells are empty. What does the chapter say about its structure?",
+      "options": [
+        "The empty rows are dropped",
+        "The structure stays intact: every row keeps the same number of columns",
+        "Columns with empty cells are removed",
+        "It becomes unstructured",
+        "It must be converted to JSON"
+      ],
+      "correct": 1,
+      "explanation": "Structured data keeps its format regardless of missing entries — 6 columns and 10 rows remain."
+    },
+    {
+      "stem": "Which formats does the chapter give as examples of semi-structured data?",
+      "options": [
+        "CSV and spreadsheets",
+        "XML and JSON",
+        "MP4 and MP3",
+        "PDF and Word",
+        "JPEG and PNG"
+      ],
+      "correct": 1,
+      "explanation": "XML and JSON allow flexibility in structure, so they are often categorised as semi-structured."
+    },
+    {
+      "stem": "How does semi-structured data differ from structured data when exported, in the employee-contact example?",
+      "options": [
+        "It always has more rows",
+        "Rows may have varying numbers of columns because only populated fields are included",
+        "It cannot be exported at all",
+        "Every row has exactly six columns",
+        "It is always encrypted"
+      ],
+      "correct": 1,
+      "explanation": "Semi-structured data does not keep a consistent set of fields across entries; empty fields may be omitted, so column counts vary."
+    },
+    {
+      "stem": "Which platforms does the chapter give as examples of semi-structured data?",
+      "options": [
+        "Bank ledgers",
+        "Facebook and Twitter",
+        "Spreadsheets",
+        "Payroll systems",
+        "Barcode scanners"
+      ],
+      "correct": 1,
+      "explanation": "User-generated content on platforms like Facebook or Twitter varies widely in format."
+    },
+    {
+      "stem": "Which of these is typical UNSTRUCTURED data?",
+      "options": [
+        "A CSV file",
+        "A relational table",
+        "Images, videos, audio files, emails and PDFs",
+        "A JSON document with fixed keys",
+        "A spreadsheet"
+      ],
+      "correct": 2,
+      "explanation": "Unstructured data lacks a predefined structure — images, videos, audio, emails, documents, presentations and PDFs."
+    },
+    {
+      "stem": "What can sometimes impose a semblance of structure on unstructured data, according to the chapter?",
+      "options": [
+        "Deleting half of it",
+        "Metadata",
+        "Printing it",
+        "Renaming the files",
+        "Compressing it"
+      ],
+      "correct": 1,
+      "explanation": "Metadata can help impose a semblance of structure on unstructured data such as an image library."
+    },
+    {
+      "stem": "Which is a characteristic of unstructured data listed in the chapter?",
+      "options": [
+        "Known structure before data entry",
+        "Easy, automated extraction",
+        "Format unknown until examined, with continuous analysis required",
+        "A fixed number of columns",
+        "No possibility of machine-learning insights"
+      ],
+      "correct": 2,
+      "explanation": "Unstructured data's format is unknown until examined; it needs ongoing assumptions and continuous analysis, and machine learning can find insights in it."
+    },
+    {
+      "stem": "In the facial-image illustration, what makes it possible for algorithms to extract features consistently?",
+      "options": [
+        "Randomly rotating each image",
+        "Aligning all images consistently in a structured grid, helped by metadata",
+        "Storing images as text",
+        "Reducing every image to one pixel",
+        "Removing all metadata"
+      ],
+      "correct": 1,
+      "explanation": "If all images are aligned in a structured grid and metadata ensures consistency, coded algorithms can extract the facial features."
+    }
+  ]
+}

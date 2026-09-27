@@ -308,6 +308,15 @@ async function seedSupportPayment() {
   });
 }
 
+/** Opening unlock setting (M14 Phase 5, founder: US$10; Pakistan exempt) — once, never overwritten. */
+async function seedKnowledgeCheckUnlock() {
+  const existing = await prisma.knowledgeCheckUnlockSetting.count();
+  if (existing > 0) return;
+  await prisma.knowledgeCheckUnlockSetting.create({
+    data: { enabled: true, amountMinor: 1000, currency: "USD", label: "Knowledge Check result document", effectiveFrom: new Date(0), createdByUserId: null, note: "Opening setting (founder, 2026-09-27, P13): US$10 to unlock a Knowledge Check result document; Pakistan exempt" },
+  });
+}
+
 async function main() {
   const domainIds = await seedDomains();
   const programmeIds = await seedProgrammes(domainIds);
@@ -316,6 +325,7 @@ async function main() {
   await seedQuestions(domainIds);
   await seedCertificateFee();
   await seedSupportPayment();
+  await seedKnowledgeCheckUnlock();
 
   const [d, p, published, m, f, pr, e, faq, q, o] = await Promise.all([
     prisma.domain.count(),

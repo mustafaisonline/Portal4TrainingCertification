@@ -4,6 +4,7 @@ import { listPublishedExperts } from "@/modules/catalogue/experts/repository";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { Chip } from "@/shared/ui/Chip";
+import { TakeAwayBooks } from "@/shared/marketing/TakeAwayBooks";
 
 /*
  * PORTED 2026-09-21 from project-artifacts/mockup/app/trainers/page.tsx (ADR-045)
@@ -233,6 +234,14 @@ export default async function TrainersPage() {
               <p className="mb-5 border-t border-[var(--color-line)] pt-5 text-body-sm text-[var(--color-ink-quiet)]">
                 {lead.summary}
               </p>
+
+              {/* Take away — M14 Phase 1 (P6: on the trainer profile too). */}
+              {lead.profile.books && lead.profile.books.length > 0 ? (
+                <div className="mb-6" id="take-away" data-testid="trainer-take-away">
+                  <p className="text-label mb-3">Take away — published work</p>
+                  <TakeAwayBooks books={lead.profile.books} author={lead.name} compact />
+                </div>
+              ) : null}
 
               <div className="mb-6">
                 <p className="text-label mb-3">Expertise areas</p>

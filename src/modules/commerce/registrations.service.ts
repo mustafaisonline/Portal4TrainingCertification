@@ -19,7 +19,7 @@ import { stripeGateway, type PaymentGateway } from "./stripe";
 
 /*
  * A person's registrations and orders (M4 plan §2 items 5 and 6): the read
- * models for /account/programmes and /account/orders, participant
+ * models for /account/trainings and /account/orders, participant
  * cancellation with the refund tier ENFORCED by `refundPercentFor`, and the
  * one free transfer. Every write carries its audit row in the same
  * transaction; every email goes through the outbox after the commit.
@@ -44,7 +44,7 @@ export type RegistrationView = {
   refunds: RefundView[];
 };
 
-export type OrderKind = "registration" | "certificate_renewal" | "support";
+export type OrderKind = "registration" | "certificate_renewal" | "support" | "knowledge_check_unlock";
 
 export type OrderView = {
   id: string;
@@ -71,6 +71,13 @@ export type OrderView = {
 
 /** What a support order is called in every order list. */
 export const SUPPORT_ORDER_TITLE = "Support the Academy";
+/** What a Knowledge Check unlock order is called in every order list (M14 Phase 5). */
+export const UNLOCK_ORDER_TITLE = "Knowledge Check result document";
+
+/** The title of an order with no offering: the two one-off kinds. */
+export function offeringlessOrderTitle(kind: OrderKind): string {
+  return kind === "knowledge_check_unlock" ? UNLOCK_ORDER_TITLE : SUPPORT_ORDER_TITLE;
+}
 
 const registrationInclude = {
   order: { include: { payment: { include: { refunds: { orderBy: { createdAt: "asc" as const } } } } } },
@@ -156,8 +163,8 @@ export async function listOrdersForUser(userId: string): Promise<OrderView[]> {
     amountMinor: Number(o.amountMinor),
     currency: o.currency,
     region: o.region,
-    programmeTitle: o.offering ? o.offering.programme.title : SUPPORT_ORDER_TITLE,
-    formatName: o.offering ? (o.offering.deliveryFormat?.name ?? MODALITY_LABEL[o.offering.modality]) : "One-off payment",
+    programmeTitle: o.offering ? o.offering.programme.title : offeringlessOrderTitle(o.kind),
+    formatName: o.offering ? (o.offering.deliveryFormat?.name ?? MODALITY_LABEL[o.offering.modality]) : o.kind === "knowledge_check_unlock" ? "One-time unlock" : "One-off payment",
     startsOn: o.offering?.startsOn ?? null,
     endsOn: o.offering?.endsOn ?? null,
     receiptUrl: o.payment?.receiptUrl ?? null,
@@ -388,7 +395,7 @@ export async function transferRegistration(input: TransferRegistrationInput): Pr
       name: user.name,
       from: offeringLine(from),
       to_: offeringLine(to),
-      accountUrl: `${appBaseUrl()}/account/programmes`,
+      accountUrl: `${appBaseUrl()}/account/trainings`,
     }),
   );
   return { registrationId: row.id, from, to };

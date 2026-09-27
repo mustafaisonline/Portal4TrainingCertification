@@ -150,7 +150,7 @@ export default async function HomePage() {
               label: "Not sure where to start?",
               title: "Assess your capability",
               body: "Ten minutes, free, and you get a specific answer about where you stand — not a score.",
-              href: "/diagnostic",
+              href: "/free-learning/diagnostic",
               cta: "Start free diagnostic (10 min)",
             },
           ].map((p) => (

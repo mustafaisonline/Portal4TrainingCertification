@@ -19,12 +19,13 @@ import { Field, FormStatus } from "@/shared/ui/forms";
  * "Certificate … issued" with its link after the form itself has gone.
  */
 
-export type RosterBlock = "registration_not_confirmed" | "offering_not_ended" | "profile_incomplete" | "already_issued";
+export type RosterBlock = "registration_not_confirmed" | "offering_not_ended" | "profile_incomplete" | "not_attended" | "already_issued";
 
 const BLOCK_TEXT: Record<RosterBlock, string> = {
   registration_not_confirmed: "Registration cancelled",
   offering_not_ended: "Offering not ended",
   profile_incomplete: "Profile incomplete — legal name required",
+  not_attended: "Recorded as not attended — correct the attendance sheet first", // M13 N6
   already_issued: "Certificate already issued",
 };
 

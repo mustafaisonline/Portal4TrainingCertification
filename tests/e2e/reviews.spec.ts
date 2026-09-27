@@ -24,8 +24,15 @@ function newEmail(prefix: string) {
 }
 
 const LEARNER_NAME = `Riya Reviewer ${randomUUID().slice(0, 4)}`;
-const BODY = `The cohort format kept me accountable and the labs were directly usable at work. ${randomUUID().slice(0, 8)}`;
-const PRIVATE_BODY = `A private note that must never be restored to public view. ${randomUUID().slice(0, 8)}`;
+// At least 300 characters (founder decision 2026-09-27, M13): five short lines' worth.
+const BODY =
+  `The cohort format kept me accountable and the labs were directly usable at work. ` +
+  `Each session moved from a concrete business question to a working artefact, and the trainer stayed with the room until every table had one. ` +
+  `The pre-reading was short and to the point, the pace never dragged, and the follow-up notes arrived the same evening. ${randomUUID().slice(0, 8)}`;
+const PRIVATE_BODY =
+  `A private note that must never be restored to public view. ` +
+  `The sessions were useful and the trainer was patient with every question, but I would rather my words stayed between me and the Academy. ` +
+  `The labs were the best part: hands on, well paced, and directly reusable at work the following week. ${randomUUID().slice(0, 8)}`;
 
 let offeringId: string;
 let flagshipTitle: string;
@@ -116,6 +123,7 @@ async function registerViaUi(page: Page, email: string, name: string) {
   await page.getByLabel("Full name").fill(name);
   await page.getByLabel("Email", { exact: true }).fill(email);
   await page.getByLabel(/^Country/).selectOption("MY");
+  await page.getByLabel("Date of birth").fill("1990-01-01");
   await page.getByLabel("Password", { exact: true }).fill(STRONG_PASSWORD);
   await page.getByLabel("Confirm password").fill(STRONG_PASSWORD);
   await page.getByRole("checkbox").check();
@@ -128,7 +136,7 @@ async function signInViaUi(page: Page, email: string) {
   await page.getByLabel("Email", { exact: true }).fill(email);
   await page.getByLabel("Password", { exact: true }).fill(STRONG_PASSWORD);
   await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page).toHaveURL(/\/account$/);
+  await expect(page).toHaveURL(/\/(account\/profile|admin)$/); // an administrator lands on /admin (2026-09-27)
 }
 
 async function signOut(page: Page) {
@@ -164,16 +172,17 @@ test("a signed-in learner with a completed registration reviews it: profile-head
   learnerUserId = userId;
   await signInViaUi(page, learnerEmail);
 
-  // Dashboard and registrations say a review is required, linking to /reviews.
-  await expect(page.getByTestId("dash-review-status")).toHaveText("Required");
-  await page.goto("/account/programmes");
+  // My Trainings says a review is required, linking to /reviews (M13: no dashboard).
+  await page.goto("/account/trainings");
   const share = page.getByTestId("registration-review-status").getByRole("link", { name: "Share your experience" });
   await expect(share).toHaveAttribute("href", `/reviews#registration-${registrationId}`);
   await share.click();
   await expect(page).toHaveURL(new RegExp(`/reviews#registration-${registrationId}$`));
 
-  // The sidebar item exists and the form is headed by the person's own name and programme.
-  await expect(page.getByRole("navigation", { name: "Account" })).toHaveCount(0); // public page, no account sidebar
+  // M13 (founder decision 8): the public page is framed for a signed-in
+  // visitor — the account sidebar is there with "Reviews" current — and the
+  // form is headed by the person's own name and programme.
+  await expect(page.getByRole("navigation", { name: "Account" }).getByRole("link", { name: "Reviews", exact: true })).toHaveAttribute("aria-current", "page");
   const form = page.getByTestId("review-form").first();
   await expect(form).toBeVisible();
   await expect(form.getByTestId("review-form-name")).toHaveText(LEARNER_NAME);
@@ -184,9 +193,9 @@ test("a signed-in learner with a completed registration reviews it: profile-head
   const textarea = form.getByLabel("Share your experience");
   await textarea.fill("ten chars!");
   await expect(form.getByTestId("review-counter")).toContainText("10 / 2,000 characters");
-  await expect(form.getByTestId("review-counter")).toContainText("at least 20");
+  await expect(form.getByTestId("review-counter")).toContainText("at least 300"); // founder decision 2026-09-27 (M13)
   await form.getByTestId("review-submit").click();
-  await expect(form.getByText("Please write at least 20 characters.")).toBeVisible();
+  await expect(form.getByText("Please write at least 300 characters.")).toBeVisible();
   await expect(textarea).toHaveValue("ten chars!"); // typed text survives the error
 
   // Consent defaults to private; the photo checkbox appears only with Yes.
@@ -218,9 +227,7 @@ test("a signed-in learner with a completed registration reviews it: profile-head
   expect(row).toMatchObject({ userId, moderationStatus: "pending", visibilityStatus: "visible", consentPublic: true, rating: 5, displayNameSnapshot: LEARNER_NAME });
   expect((await listAuditForEntity(getPrisma(), "review", row.id)).map((a) => a.action)).toEqual(["review.submitted"]);
 
-  await page.goto("/account");
-  await expect(page.getByTestId("dash-review-status")).toHaveText("Awaiting review");
-  await page.goto("/account/programmes");
+  await page.goto("/account/trainings");
   await expect(page.getByTestId("registration-review-status")).toContainText("Awaiting review");
 
   // A participant is refused at the admin screen.

@@ -6,7 +6,7 @@ import { sendEmail, type EmailMessage } from "@/modules/notifications/email";
 import { writeAudit } from "@/modules/platform/audit/repository";
 import { formatDateRange } from "@/shared/util/dates";
 import { appBaseUrl } from "./checkout.service";
-import { registrationConfirmedMessage, supportPaymentReceivedMessage } from "./emails";
+import { knowledgeCheckUnlockedMessage, registrationConfirmedMessage, supportPaymentReceivedMessage } from "./emails";
 import { recomputePaymentStatus } from "./payments";
 import { mapRefundStatus, stripeGateway, type PaymentGateway, type Stripe } from "./stripe";
 
@@ -278,8 +278,31 @@ async function sessionPaid(tx: Tx, event: Stripe.Event, session: Stripe.Checkout
     };
   }
 
+  // M14 Phase 5: a Knowledge Check unlock payment grants the result DOCUMENT
+  // (the gate reads paid unlock orders); the row already names the attempt.
+  if (order.kind === "knowledge_check_unlock") {
+    const attempt = order.knowledgeCheckAttemptId ? await tx.knowledgeCheckAttempt.findUnique({ where: { id: order.knowledgeCheckAttemptId }, select: { id: true, publicId: true } }) : null;
+    if (!attempt) throw new Error(`unlock order ${order.id} names no attempt`);
+    return {
+      status: "processed",
+      note: `knowledge check ${attempt.publicId ?? attempt.id} result document unlocked`,
+      emails: [
+        knowledgeCheckUnlockedMessage({
+          to: order.user.email,
+          name: order.user.name,
+          publicId: attempt.publicId ?? attempt.id,
+          orderId: order.id,
+          amountMinor,
+          currency,
+          receiptUrl: payment.receiptUrl,
+          documentUrl: `${appBaseUrl()}/free-learning/knowledge-check/${attempt.id}/document`,
+        }),
+      ],
+    };
+  }
+
   // A registration order always carries its offering (the column is null
-  // only for kind = support); a row that does not is corrupt, never guessed.
+  // only for the one-off kinds); a row that does not is corrupt, never guessed.
   if (!order.offeringId || !order.offering) throw new Error(`registration order ${order.id} has no offering`);
 
   const registration = await tx.registration.upsert({
@@ -308,7 +331,7 @@ async function sessionPaid(tx: Tx, event: Stripe.Event, session: Stripe.Checkout
     orderId: order.id,
     amountMinor,
     currency,
-    accountUrl: `${appBaseUrl()}/account/programmes`,
+    accountUrl: `${appBaseUrl()}/account/trainings`,
   });
   return { status: "processed", emails: [email] };
 }

@@ -21,7 +21,7 @@ import { getCurrentUser } from "./session";
  * encrypts it; it is never logged, audited or echoed back.
  *
  * Email is read-only here (ADR-015: no email provider). Password changes stay
- * on /account/security.
+ * on /account/profile (Security section, M13).
  */
 
 export type ProfileFormState =

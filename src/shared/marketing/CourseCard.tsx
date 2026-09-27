@@ -237,7 +237,7 @@ export function CourseCard({
         href={`/programs/${course.slug}`}
         className="text-body-sm mt-auto inline-block py-2 font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
       >
-        Course details →
+        Register or check course details →
       </Link>
     </Card>
   );

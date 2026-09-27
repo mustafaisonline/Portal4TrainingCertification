@@ -6,7 +6,7 @@ import { useState } from "react";
 import type { ReactNode } from "react";
 import { LogoMark } from "./LogoMark";
 import { ThemeToggle } from "./ThemeToggle";
-import { footerExplore, footerLegal, isActive, primaryNav, verifyLink } from "./site-nav";
+import { footerExplore, footerLegal, isActive, primaryNav, siteSearch, verifyLink } from "./site-nav";
 
 /*
  * Global public shell — header, mobile menu and footer.
@@ -94,6 +94,21 @@ export function PublicShell({
               );
             })}
           </nav>
+          {/* M14 P17: the search bar replaces the "Search Candidate" item. */}
+          <form role="search" action={siteSearch.action} method="get" className="hidden min-w-0 items-center lg:flex" data-testid="site-search">
+            <label htmlFor="site-search-q" className="sr-only">
+              {siteSearch.label}
+            </label>
+            <input
+              id="site-search-q"
+              type="search"
+              name="q"
+              placeholder={siteSearch.placeholder}
+              autoComplete="off"
+              maxLength={200}
+              className="text-body-sm w-56 rounded-[var(--radius-plate)] border border-[var(--color-line-strong)] bg-[var(--color-ground)] px-3 py-1.5 text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] xl:w-64"
+            />
+          </form>
           <div className="flex shrink-0 items-center gap-3">
             {accountSlot ? <span className="hidden sm:inline-flex">{accountSlot}</span> : null}
             <ThemeToggle />
@@ -115,6 +130,20 @@ export function PublicShell({
             this component (e.g. same-page anchors). */}
         {menuOpen && (
           <div id="mobile-nav" className="border-t border-[var(--color-line)] px-4 pb-4 pt-2 sm:px-6 xl:hidden">
+            <form role="search" action={siteSearch.action} method="get" className="mb-2 flex items-center gap-2 lg:hidden" data-testid="site-search-mobile">
+              <label htmlFor="site-search-q-mobile" className="sr-only">
+                {siteSearch.label}
+              </label>
+              <input
+                id="site-search-q-mobile"
+                type="search"
+                name="q"
+                placeholder={siteSearch.placeholder}
+                autoComplete="off"
+                maxLength={200}
+                className="text-body-sm w-full rounded-[var(--radius-plate)] border border-[var(--color-line-strong)] bg-[var(--color-ground)] px-3 py-2 text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
+              />
+            </form>
             <nav aria-label="Primary, mobile" className="flex flex-col">
               {primaryNav.map((item) => {
                 const active = isActive(pathname, item.href);

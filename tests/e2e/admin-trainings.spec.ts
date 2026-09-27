@@ -49,6 +49,7 @@ async function registerViaUi(page: Page, address: string, name = "Tara Trainings
   await page.getByLabel("Full name").fill(name);
   await page.getByLabel("Email", { exact: true }).fill(address);
   await page.getByLabel(/^Country/).selectOption("MY");
+  await page.getByLabel("Date of birth").fill("1990-01-01");
   await page.getByLabel("Password", { exact: true }).fill(STRONG_PASSWORD);
   await page.getByLabel("Confirm password").fill(STRONG_PASSWORD);
   await page.getByRole("checkbox").check();
@@ -61,7 +62,7 @@ async function signInViaUi(page: Page, address: string) {
   await page.getByLabel("Email").fill(address);
   await page.getByLabel("Password", { exact: true }).fill(STRONG_PASSWORD);
   await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page).toHaveURL(/\/account$/);
+  await expect(page).toHaveURL(/\/(account\/profile|admin)$/); // an administrator lands on /admin (2026-09-27)
 }
 
 async function expectNoAxeViolations(page: Page) {
@@ -218,12 +219,16 @@ test("an administrator launches a training from the portal: draft → sections �
   await expect(investment.getByTestId("price-row-malaysia")).toContainText("RM 2,500");
   await expect(investment.getByTestId("price-card-international")).toContainText("USD 1,000");
   await expectNoAxeViolations(page);
-  // Bookable from its own page (M12 L11) and from the grouped /schedule.
+  // Bookable from its own page (the hero and the Investment cards lead to
+  // the schedule filtered to this training — M13, the page lists no dates
+  // itself) and from the grouped /schedule.
   await page.goto(`/programs/${slug}`);
-  await expect(page.getByTestId("hero-register")).toHaveAttribute("href", "#dates");
-  const dates = page.getByTestId("programme-dates");
-  await expect(dates.getByTestId("offering-card")).toHaveCount(1);
-  await expect(dates.getByTestId("register")).toHaveAttribute("href", /^\/checkout\/[0-9a-f-]+$/);
+  await expect(page.getByTestId("hero-register")).toHaveAttribute("href", `/schedule?training=${slug}`);
+  await expect(page.getByTestId("programme-dates")).toHaveCount(0);
+  await page.goto(`/schedule?training=${slug}`);
+  await expect(page.getByTestId("schedule-title")).toHaveText(`Dates for ${title}`);
+  await expect(page.getByTestId("offering-card")).toHaveCount(1);
+  await expect(page.getByTestId("register")).toHaveAttribute("href", /^\/checkout\/[0-9a-f-]+$/);
   await page.goto("/schedule");
   const group = page.getByTestId("schedule-group").filter({ has: page.locator(`[data-slug="${slug}"]`) }).or(page.locator(`[data-testid="schedule-group"][data-slug="${slug}"]`));
   await expect(group.first()).toBeVisible();
@@ -262,7 +267,7 @@ test("a Trainer sees only the Trainings area, creates their own draft, cannot pu
   // Reduced dashboard and bar.
   await page.goto("/admin");
   await expect(page.getByTestId("trainer-dashboard")).toBeVisible();
-  await expect(page.getByTestId("admin-nav").getByRole("link")).toHaveCount(2);
+  await expect(page.getByTestId("admin-nav").getByRole("link")).toHaveCount(3); // Overview · Trainings · Attendance (M13 N7)
   await expect(page.getByTestId("admin-card-trainings")).toContainText("No trainings yet");
   await expect(page.getByTestId("admin-card-reviews")).toHaveCount(0);
   // Every other screen is a 403 — and the flagship's workspace a 404 (not theirs).

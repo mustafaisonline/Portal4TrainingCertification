@@ -46,6 +46,14 @@ export function holdsRole(roles: readonly ActiveRole[], role: Role, scope: RoleS
   );
 }
 
+/** Where a sign-in lands when no `return-to` was asked for (founder
+ *  direction 2026-09-27): a platform administrator on the admin dashboard,
+ *  everyone else — participants and Trainers alike — on their account. Pure;
+ *  the sign-in page and the post-sign-in action both use it. */
+export function landingPathFor(roles: readonly ActiveRole[]): "/admin" | "/account" {
+  return holdsRole(roles, "platform_admin") ? "/admin" : "/account";
+}
+
 export type GrantInput = {
   userId: string;
   role: Role;

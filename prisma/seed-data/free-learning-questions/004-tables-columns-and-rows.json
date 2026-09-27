@@ -1,0 +1,125 @@
+{
+  "topic": "tables-columns-and-rows",
+  "questions": [
+    {
+      "stem": "In the chapter's family example, what does the whole family represent?",
+      "options": [
+        "A column",
+        "A row",
+        "A table",
+        "A database",
+        "A key"
+      ],
+      "correct": 2,
+      "explanation": "The family is the table; each member's details form a row and each kind of detail is a column."
+    },
+    {
+      "stem": "Name, Relationship and Date of Birth for each family member are called what in a table?",
+      "options": [
+        "Rows",
+        "Columns or fields",
+        "Tables",
+        "Databases",
+        "Records"
+      ],
+      "correct": 1,
+      "explanation": "These properties or attributes of each member are the columns, also called fields."
+    },
+    {
+      "stem": "\"John, Grandfather, born 1 January 1950\" — the details of one person — form what?",
+      "options": [
+        "A column",
+        "A row",
+        "A table",
+        "A database",
+        "A field"
+      ],
+      "correct": 1,
+      "explanation": "The details of one person in the family are a row; details of all the members are multiple rows."
+    },
+    {
+      "stem": "What is a table made of, according to the chapter?",
+      "options": [
+        "Only columns",
+        "Only rows",
+        "All rows and columns together",
+        "A single value",
+        "Several databases"
+      ],
+      "correct": 2,
+      "explanation": "Having all rows and columns together is called a table."
+    },
+    {
+      "stem": "What does a database consist of?",
+      "options": [
+        "Exactly one table",
+        "Many tables with different kinds of datasets, such as salary, employee and department",
+        "Only unstructured files",
+        "One row per database",
+        "A single column"
+      ],
+      "correct": 1,
+      "explanation": "A database consists of many tables holding different kinds of dataset."
+    },
+    {
+      "stem": "Another word the chapter uses for \"columns\" is:",
+      "options": [
+        "Fields",
+        "Rows",
+        "Keys",
+        "Tables",
+        "Indexes"
+      ],
+      "correct": 0,
+      "explanation": "Columns are also called fields."
+    },
+    {
+      "stem": "How many members were in the chapter's example family?",
+      "options": [
+        "Three",
+        "Four",
+        "Five",
+        "Six",
+        "Eight"
+      ],
+      "correct": 3,
+      "explanation": "Grandfather, grandmother, father, mother, son and daughter — six members, so six rows."
+    },
+    {
+      "stem": "If a Family table has six members and three details each, how many rows and columns does it have?",
+      "options": [
+        "Three rows and six columns",
+        "Six rows and three columns",
+        "Eighteen rows",
+        "One row and eighteen columns",
+        "Six rows and six columns"
+      ],
+      "correct": 1,
+      "explanation": "One row per member (six) and one column per detail (three)."
+    },
+    {
+      "stem": "Which of these would be a sensible name for the table in the chapter's example?",
+      "options": [
+        "Family",
+        "Grandfather",
+        "1 January 1950",
+        "Name",
+        "Row"
+      ],
+      "correct": 0,
+      "explanation": "The example table is named Family; Grandfather is a value, Name is a column, and 1 January 1950 is a value."
+    },
+    {
+      "stem": "Which statement is TRUE?",
+      "options": [
+        "A row describes one kind of property across all members",
+        "A column holds the details of one member",
+        "A row holds the details of one member; a column is one kind of detail across members",
+        "Tables and databases are the same thing",
+        "A table can have rows but no columns"
+      ],
+      "correct": 2,
+      "explanation": "Rows are per member (one record each); columns are per kind of detail; a database groups many tables."
+    }
+  ]
+}

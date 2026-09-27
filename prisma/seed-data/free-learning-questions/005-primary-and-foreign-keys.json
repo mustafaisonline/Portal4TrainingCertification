@@ -1,0 +1,125 @@
+{
+  "topic": "primary-and-foreign-keys",
+  "questions": [
+    {
+      "stem": "What are the short names the chapter gives for Primary Key and Foreign Key?",
+      "options": [
+        "PK1 and FK1",
+        "Pkey and Fkey",
+        "Main and Link",
+        "Index and Pointer",
+        "Head and Tail"
+      ],
+      "correct": 1,
+      "explanation": "Primary Key is also known as Pkey and Foreign Key as Fkey."
+    },
+    {
+      "stem": "Why does the chapter say primary and foreign keys are so important?",
+      "options": [
+        "They make tables load faster",
+        "A proper data model cannot be created without them",
+        "They replace the need for tables",
+        "They encrypt the data",
+        "They are required by law"
+      ],
+      "correct": 1,
+      "explanation": "They are among the most important terms without which a proper data model cannot be created."
+    },
+    {
+      "stem": "What problem did repeating \"United States of America\" in the Family table illustrate?",
+      "options": [
+        "Spelling errors",
+        "Wasted space from storing a long value many times",
+        "Missing rows",
+        "Too few columns",
+        "Slow network access"
+      ],
+      "correct": 1,
+      "explanation": "The long country name was used many times, so a separate Birth Location table with country codes saves space."
+    },
+    {
+      "stem": "After the change, what does the Family table store in the Birth Location column?",
+      "options": [
+        "The full country name",
+        "A country code such as 001",
+        "A map image",
+        "The member's date of birth",
+        "Nothing — the column is removed"
+      ],
+      "correct": 1,
+      "explanation": "The Family table holds a code that refers to a row in the Birth_Location table, where the full name lives."
+    },
+    {
+      "stem": "In the chapter's example, which column is declared the PRIMARY key?",
+      "options": [
+        "Location_ID in the Family table",
+        "ID in the Birth_Location table",
+        "Name in the Family table",
+        "Date of Birth in the Family table",
+        "Country name in Birth_Location"
+      ],
+      "correct": 1,
+      "explanation": "ID in Birth_Location is the primary key; Location_ID in Family is the foreign key that refers to it."
+    },
+    {
+      "stem": "And which column is declared the FOREIGN key?",
+      "options": [
+        "ID in Birth_Location",
+        "Location_ID in Family",
+        "Name in Family",
+        "Relationship in Family",
+        "Country name in Birth_Location"
+      ],
+      "correct": 1,
+      "explanation": "The foreign key in Family points at the primary key in Birth_Location."
+    },
+    {
+      "stem": "What does declaring the keys make possible?",
+      "options": [
+        "Joining the two tables to extract the full country names",
+        "Deleting the Birth_Location table",
+        "Storing images in the table",
+        "Sorting rows by colour",
+        "Running the database without a server"
+      ],
+      "correct": 0,
+      "explanation": "With the keys declared, the tables can be joined and the relevant full country names extracted."
+    },
+    {
+      "stem": "How do you find which country the code \"001\" refers to?",
+      "options": [
+        "By guessing",
+        "By joining Family to Birth_Location on the key columns",
+        "By deleting the code",
+        "By asking the grandfather",
+        "By storing the name in every row again"
+      ],
+      "correct": 1,
+      "explanation": "The foreign key value 001 matches the primary key value in Birth_Location, whose row holds the full name."
+    },
+    {
+      "stem": "A primary key value in a table should be:",
+      "options": [
+        "Repeated in several rows",
+        "Unique for each row",
+        "Left empty when unknown",
+        "The same as the table name",
+        "A long descriptive text"
+      ],
+      "correct": 1,
+      "explanation": "A primary key identifies exactly one row, so each value is unique — like ID in Birth_Location."
+    },
+    {
+      "stem": "Which sentence best describes a foreign key?",
+      "options": [
+        "A column that stores a value from another table's primary key to link the two",
+        "A column that must be the first in a table",
+        "A key from a foreign country",
+        "A column that cannot be joined",
+        "A duplicate of the primary key in the same table"
+      ],
+      "correct": 0,
+      "explanation": "A foreign key refers to another table's primary key, which is how two tables are joined."
+    }
+  ]
+}

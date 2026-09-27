@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { landingPathFor } from "@/modules/identity/roles.repository";
 import { getCurrentUser } from "@/modules/identity/session";
 import { AuthScreen } from "@/shared/chrome/AuthScreen";
 import { safeReturnTo } from "@/shared/util/return-to";
@@ -23,8 +24,14 @@ export default async function SignInPage({
   searchParams: Promise<{ "return-to"?: string; reset?: string; registered?: string }>;
 }) {
   const params = await searchParams;
-  const returnTo = safeReturnTo(params["return-to"]);
-  if (await getCurrentUser()) redirect(returnTo);
+  const requested = params["return-to"];
+  const returnTo = safeReturnTo(requested);
+  // An explicit, accepted return path always wins; without one, the landing
+  // page depends on the person's roles (founder direction 2026-09-27: an
+  // administrator lands on the admin dashboard, everyone else on /account).
+  const explicit = typeof requested === "string" && returnTo === requested;
+  const user = await getCurrentUser();
+  if (user) redirect(explicit ? returnTo : landingPathFor(user.roles));
   return (
     <AuthScreen
       eyebrow="Your account"
@@ -42,7 +49,7 @@ export default async function SignInPage({
         </>
       }
     >
-      <SignInForm returnTo={returnTo} passwordWasReset={params.reset === "1"} justRegistered={params.registered === "1"} />
+      <SignInForm returnTo={explicit ? returnTo : null} passwordWasReset={params.reset === "1"} justRegistered={params.registered === "1"} />
     </AuthScreen>
   );
 }

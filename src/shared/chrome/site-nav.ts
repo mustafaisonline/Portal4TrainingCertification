@@ -1,34 +1,40 @@
 /*
  * Site information architecture — the founder-reviewed navigation of the
  * wireframe, PORTED 2026-09-21 from project-artifacts/mockup/components/
- * PublicShell.tsx (ADR-045 PORT list, row 3). Labels, order and destinations
- * are carried over unchanged; the mockup file records the history of each.
+ * PublicShell.tsx (ADR-045 PORT list, row 3).
+ *
+ * RESTRUCTURED 2026-09-27 — Milestone 14 Phase 1 (founder's "Keep only these
+ * menu items in Header", decisions P15–P17): Home · Trainings & HRD Corp
+ * (the two pages merged at /programs) · Free Training & Certification
+ * (/free-learning, was "Free Diagnostic" at /diagnostic) · Trainers ·
+ * Reviews · a SEARCH BAR ("Search Candidates or Training" → /search) ·
+ * the burger. About Us is footer-only. The retired routes redirect
+ * (next.config.ts).
  *
  * One source for the desktop nav, the mobile panel and the footer, so they
- * can never list different links by accident. Routes here are delivered by
- * later milestones (WIREFRAME_TO_PRODUCTION_PLAN.md §7: public pages in M3,
- * account in M5, verification in M6); PublicShell is mounted on a route only
- * once every link it renders resolves — tests/unit/site-nav.test.ts checks
- * that every href below has a page under app/.
+ * can never list different links by accident; tests/unit/site-nav.test.ts
+ * checks that every href below has a page under app/.
  */
 
 export type NavItem = { href: string; label: string };
 
 export const primaryNav: readonly NavItem[] = [
   { href: "/", label: "Home" },
-  { href: "/hrd-corp", label: "HRD Corp" },
-  { href: "/programs", label: "Trainings" }, // founder, 2026-09-26: was "Programme" → /DataBlueprint-AIVibeCoding
+  { href: "/programs", label: "Trainings & HRD Corp" },
+  { href: "/free-learning", label: "Free Training & Certification" },
   { href: "/trainers", label: "Trainers" },
-  { href: "/diagnostic", label: "Free Diagnostic" },
-  { href: "/about-us", label: "About Us" },
   { href: "/reviews", label: "Reviews" }, // founder, 2026-09-23 (M5b D-10's 8th item)
-  { href: "/verify", label: "Search Candidate" },
 ];
 
+/** The header search bar (M14 P17): one input for certificates (by ID or
+ *  listed holder name) and published trainings; results on /search. */
+export const siteSearch = { action: "/search", placeholder: "Search Candidates or Training", label: "Find a candidate or a training" } as const;
+
 export const footerExplore: readonly NavItem[] = [
-  { href: "/programs", label: "Trainings" }, // founder, 2026-09-26: was "Courses"
+  { href: "/programs", label: "Trainings & HRD Corp" },
+  { href: "/free-learning", label: "Free Training & Certification" },
   { href: "/trainers", label: "Trainers" },
-  { href: "/about-us", label: "About Us" },
+  { href: "/about-us", label: "About Us" }, // footer only since 2026-09-27 (P15)
   { href: "/schedule", label: "Schedule" },
   { href: "/for-organisations", label: "For Organisations" },
   { href: "/faq", label: "FAQ" },

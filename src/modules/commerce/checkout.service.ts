@@ -150,7 +150,7 @@ export async function startCheckout(input: StartCheckoutInput): Promise<StartChe
       productName: describeOfferingForStripe(offering),
       customerEmail: user.email,
       expiresAt: order.expiresAt,
-      successUrl: `${baseUrl}/account/programmes?order=${order.id}`,
+      successUrl: `${baseUrl}/account/trainings?order=${order.id}`,
       cancelUrl: `${baseUrl}/checkout/${offering.id}?cancelled=1`,
     });
     await prisma.order.update({ where: { id: order.id }, data: { stripeCheckoutSessionId: session.id } });

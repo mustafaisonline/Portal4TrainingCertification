@@ -68,6 +68,7 @@ async function registerViaUi(page: Page, email: string, name: string) {
   await page.getByLabel("Full name").fill(name);
   await page.getByLabel("Email", { exact: true }).fill(email);
   await page.getByLabel(/^Country/).selectOption("MY");
+  await page.getByLabel("Date of birth").fill("1990-01-01");
   await page.getByLabel("Password", { exact: true }).fill(STRONG_PASSWORD);
   await page.getByLabel("Confirm password").fill(STRONG_PASSWORD);
   await page.getByRole("checkbox").check();
@@ -80,7 +81,7 @@ async function signInViaUi(page: Page, email: string) {
   await page.getByLabel("Email", { exact: true }).fill(email);
   await page.getByLabel("Password", { exact: true }).fill(STRONG_PASSWORD);
   await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page).toHaveURL(/\/account$/);
+  await expect(page).toHaveURL(/\/account\/profile$/);
 }
 
 async function expectNoAxeViolations(page: Page) {
@@ -144,17 +145,22 @@ test("a new person is told what is missing; every section saves; the ID shows on
 
   await page.goto("/account/profile");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Your profile");
-  const banner = page.getByTestId("profile-missing");
-  await expect(banner).toContainText("Before you can register for a date, please add:");
-  await expect(banner).toContainText("Mobile number");
-  await expect(banner).toContainText("ID number");
-  await expect(banner).toContainText("Date of birth");
-  // Registration already gave the name and the country.
-  await expect(banner).not.toContainText("Full name");
-  await expect(banner).not.toContainText("Country");
+  // Founder decision 2026-09-27: registration already collected everything
+  // checkout needs (name, date of birth, country as on the government ID),
+  // so a new person is NOT told anything is missing; the rest is optional.
+  await expect(page.getByTestId("profile-missing")).toHaveCount(0);
+  // The three gate fields are starred and the legend says why (founder
+  // request 2026-09-27); the star is aria-hidden, so the labels still match.
+  await expect(page.getByTestId("profile-star-legend")).toContainText("Needed before you can register for a date");
+  for (const label of ["Full name (as on your ID)", "Date of birth", "Country"]) {
+    const row = page.locator("label", { hasText: label }).locator("xpath=..");
+    await expect(row.locator('span[aria-hidden="true"]', { hasText: "*" })).toHaveCount(1);
+  }
+  await expect(page.locator("label", { hasText: "Mobile number" }).locator("xpath=..").locator('span[aria-hidden="true"]', { hasText: "*" })).toHaveCount(0);
   await expect(page.getByLabel("Email", { exact: true })).toHaveValue(email);
   await expect(page.getByLabel("Email", { exact: true })).toHaveAttribute("readonly", "");
   await expect(page.getByLabel("Country", { exact: true })).toHaveValue("MY");
+  await expect(page.getByLabel("Date of birth")).toHaveValue("1990-01-01");
   await expectNoAxeViolations(page);
 
   // Identity & contact
@@ -284,17 +290,27 @@ test("a validation error keeps what was typed and stores nothing", async ({ page
   expect(row.idType).toBeNull();
 });
 
-test("checkout gate: an incomplete profile is sent to the profile page with the missing list; a complete one reaches checkout", async ({ page }) => {
+test("checkout gate: a new account reaches checkout directly (2026-09-27); a profile missing a government-ID field is sent to the profile page with the missing list", async ({ page }) => {
   const email = newEmail("e2e-m5a-gate");
   await registerViaUi(page, email, "Gate Keeper");
   await signInViaUi(page, email);
 
+  // Straight to "Register and pay": registration collected name, date of
+  // birth and country, which is all checkout requires now.
+  await page.goto(`/checkout/${offeringId}`);
+  await expect(page).toHaveURL(new RegExp(`/checkout/${offeringId}$`));
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Register and pay");
+
+  // Take the date of birth away (repository path) and the gate closes again,
+  // naming only what is missing — the M5a optional fields are not demanded.
+  await completeProfileByEmail(email, { legalName: "Gate Keeper", dateOfBirth: null });
   await page.goto(`/checkout/${offeringId}`);
   await expect(page).toHaveURL(new RegExp(`/account/profile\\?complete=1&return-to=${encodeURIComponent(`/checkout/${offeringId}`)}$`));
   const banner = page.getByTestId("profile-missing");
   await expect(banner).toContainText("A few details are needed before you can register for that date.");
-  await expect(banner).toContainText("Mobile number");
-  await expect(banner).toContainText("Organisation");
+  await expect(banner).toContainText("Date of birth");
+  await expect(banner).not.toContainText("Mobile number");
+  await expect(banner).not.toContainText("Organisation");
   await expect(page.getByTestId("profile-continue")).toHaveCount(0);
 
   // Complete it (the repository path; the form path is covered above) and

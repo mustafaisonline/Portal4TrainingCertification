@@ -3,24 +3,27 @@ import { listPublishedProgrammesWithPrices } from "@/modules/catalogue/programme
 import { formatMoney } from "@/modules/catalogue/programmes/types";
 import { enabledSupportSetting } from "@/modules/commerce/support.repository";
 import { CourseCard } from "@/shared/marketing/CourseCard";
+import { HrdCorpSections } from "@/shared/marketing/HrdCorpSections";
 import { Button } from "@/shared/ui/Button";
 
 /*
- * /programs — the "Trainings" hub (founder direction 2026-09-26: the menu
- * item "Programme" becomes "Trainings" and the catalogue URL becomes
- * /programs). Lists every PUBLISHED programme in `sortOrder` (Learn Vibe
- * Coding first, the flagship second — the founder's order, set in the seed),
- * read through the catalogue repository (ADR-023: nothing here knows a slug,
- * title or price). Each card links to /programs/<slug>; an unlisted
- * programme is absent here and 404s there.
+ * /programs — "Trainings & HRD Corp" (Milestone 14 Phase 1, founder decision
+ * P16, 2026-09-27: the Trainings and HRD Corp pages merged; /hrd-corp
+ * redirects to #hrd-corp here). Lists every PUBLISHED programme in
+ * `sortOrder` (Learn Vibe Coding first, the flagship second — the founder's
+ * order, set in the seed), read through the catalogue repository (ADR-023:
+ * nothing here knows a slug, title or price). Each card links to
+ * /programs/<slug>; an unlisted programme is absent here and 404s there.
+ * Below the cards: the HRD Corp sections, copy unchanged from the retired
+ * page (src/shared/marketing/HrdCorpSections.tsx).
  *
  * No dates or capacity — scheduled offerings live on /schedule.
  */
 
 export const metadata: Metadata = {
-  title: "Trainings",
+  title: "Trainings & HRD Corp",
   description:
-    "Expert-led trainings, delivered face-to-face and live online, each with its own Certificate of Completion.",
+    "Expert-led trainings, delivered face-to-face and live online, each with its own Certificate of Completion — and an honest account of what our trainer's HRD Corp accreditation means.",
 };
 
 export const dynamic = "force-dynamic";
@@ -41,11 +44,14 @@ export default async function TrainingsPage() {
           }}
         />
         <div className="relative mx-auto max-w-[1280px] px-6 py-14 lg:py-16">
-          <p className="text-label mb-4 text-[var(--color-primary)]">Trainings</p>
+          <p className="text-label mb-4 text-[var(--color-primary)]">Trainings &amp; HRD Corp</p>
           <h1 className="text-display-lg mb-4 max-w-[820px]">Trainings</h1>
           <p className="text-body-lg max-w-[640px] text-[var(--color-ink-quiet)]">
             Expert-led trainings, delivered face-to-face and live online, each
-            with its own Certificate of Completion.
+            with its own Certificate of Completion.{" "}
+            <a href="#hrd-corp" className="font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]">
+              About HRD Corp ↓
+            </a>
           </p>
         </div>
       </section>
@@ -69,6 +75,9 @@ export default async function TrainingsPage() {
           </ol>
         )}
       </section>
+
+      {/* ===== HRD Corp (merged here 2026-09-27) ===== */}
+      <HrdCorpSections />
 
       {/* ===== Support the Academy (2026-09-27, M5) — shown only while the setting is enabled ===== */}
       {support ? (
@@ -96,7 +105,7 @@ export default async function TrainingsPage() {
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-4">
-            <Button href="/diagnostic">Take the free diagnostic</Button>
+            <Button href="/free-learning/diagnostic">Take the free diagnostic</Button>
             <Button variant="secondary" href="/for-organisations">
               Training for a team?
             </Button>

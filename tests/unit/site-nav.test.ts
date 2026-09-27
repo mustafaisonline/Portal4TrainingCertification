@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { footerExplore, footerLegal, isActive, primaryNav, verifyLink } from "@/shared/chrome/site-nav";
+import { footerExplore, footerLegal, isActive, primaryNav, siteSearch, verifyLink } from "@/shared/chrome/site-nav";
 
 /*
  * The navigation contract (src/shared/chrome/site-nav.ts). Route existence is
@@ -32,12 +32,18 @@ describe("site navigation", () => {
     expect(isActive("/about-us", "/trainers")).toBe(false);
   });
 
-  it("the catalogue item is 'Trainings' at /programs in the header and the footer (founder, 2026-09-26)", () => {
-    expect(primaryNav).toContainEqual({ href: "/programs", label: "Trainings" });
-    expect(footerExplore).toContainEqual({ href: "/programs", label: "Trainings" });
+  it("the header is exactly the founder's five items (M14 Phase 1, 2026-09-27); About Us is footer-only; the search bar targets /search", () => {
+    expect(primaryNav.map((i) => i.label)).toEqual(["Home", "Trainings & HRD Corp", "Free Training & Certification", "Trainers", "Reviews"]);
+    expect(primaryNav).toContainEqual({ href: "/programs", label: "Trainings & HRD Corp" });
+    expect(primaryNav).toContainEqual({ href: "/free-learning", label: "Free Training & Certification" });
+    expect(primaryNav.map((i) => i.href)).not.toContain("/about-us");
+    expect(footerExplore).toContainEqual({ href: "/about-us", label: "About Us" });
+    expect(footerExplore).toContainEqual({ href: "/free-learning", label: "Free Training & Certification" });
+    expect(siteSearch.action).toBe("/search");
+    expect(siteSearch.placeholder).toBe("Search Candidates or Training");
     for (const item of [...primaryNav, ...footerExplore]) {
-      expect(item.label, item.href).not.toMatch(/^(Programme|Courses)$/);
-      expect(item.href).not.toMatch(/DataBlueprint-AIVibeCoding|^\/courses/);
+      expect(item.label, item.href).not.toMatch(/^(Programme|Courses|HRD Corp|Free Diagnostic|Search Candidate)$/);
+      expect(item.href).not.toMatch(/DataBlueprint-AIVibeCoding|^\/courses|^\/hrd-corp|^\/diagnostic/);
     }
   });
 });

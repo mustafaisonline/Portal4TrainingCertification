@@ -171,8 +171,8 @@ export async function startRenewalCheckout(input: StartRenewalInput): Promise<St
       productName: `Certificate renewal ${certificate.certificateId} — ${VALIDITY_MONTHS} months`,
       customerEmail: user.email,
       expiresAt: order.expiresAt,
-      successUrl: `${baseUrl}/account/certificate?order=${order.id}`,
-      cancelUrl: `${baseUrl}/account/certificate?cancelled=1`,
+      successUrl: `${baseUrl}/account/certifications?order=${order.id}`,
+      cancelUrl: `${baseUrl}/account/certifications?cancelled=1`,
     });
     await prisma.order.update({ where: { id: order.id }, data: { stripeCheckoutSessionId: session.id } });
     return { orderId: order.id, url: session.url };
@@ -255,7 +255,7 @@ export async function applyPaidRenewal(tx: Tx, input: ApplyPaidRenewalInput): Pr
       currency: order.currency,
       orderId: order.id,
       receiptUrl: input.receiptUrl,
-      accountUrl: `${appBaseUrl()}/account/certificate`,
+      accountUrl: `${appBaseUrl()}/account/certifications`,
     }),
   };
 }

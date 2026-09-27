@@ -1,0 +1,125 @@
+{
+  "topic": "master-andreference-data-management",
+  "questions": [
+    {
+      "stem": "What does the chapter say Master Data refers to?",
+      "options": [
+        "Temporary files created during a backup",
+        "The core datasets essential for business operations that act as the foundation for all other data",
+        "Log files from web servers",
+        "Any data older than one year",
+        "The largest table in a database"
+      ],
+      "correct": 1,
+      "explanation": "Master Data represents key entities critical to the business, used across multiple systems, processes and applications."
+    },
+    {
+      "stem": "Which of these is given as an example of Master Data?",
+      "options": [
+        "A single sales transaction",
+        "Customer data such as names, addresses and customer IDs",
+        "A CPU temperature reading",
+        "A one-off marketing email",
+        "A user's browsing history"
+      ],
+      "correct": 1,
+      "explanation": "Customer, product, supplier, employee and geographic data are the examples — relatively stable entities reused across processes."
+    },
+    {
+      "stem": "By what nickname is Master Data often known?",
+      "options": [
+        "The Silver Copy",
+        "The Golden Record",
+        "The Big Table",
+        "The Data Swamp",
+        "The Reference Point"
+      ],
+      "correct": 1,
+      "explanation": "Master Data is often called the \"Golden Record\" because it ensures consistency, accuracy and uniformity across the organisation."
+    },
+    {
+      "stem": "In the banking example, what problem does Master Data Management solve?",
+      "options": [
+        "Slow internet in branches",
+        "The same customer being created several times across systems with different identifiers",
+        "Customers forgetting their PINs",
+        "Too many debit cards being printed",
+        "Long queues at the counter"
+      ],
+      "correct": 1,
+      "explanation": "MDM gives each customer one unique identifier across all systems, so decision makers do not count one person as several customers."
+    },
+    {
+      "stem": "How does the chapter characterise Reference Data compared with Master Data?",
+      "options": [
+        "Much larger in volume and changing constantly",
+        "Very close to Master Data but small in volume, with little change expected",
+        "Unrelated to Master Data",
+        "Only used in spreadsheets",
+        "Always unstructured"
+      ],
+      "correct": 1,
+      "explanation": "Reference Data is close to Master Data but small and stable — lists, cross-lists, classifications, codes and descriptions."
+    },
+    {
+      "stem": "A system code such as \"DbCrd\" standing for Debit Card is an example of what?",
+      "options": [
+        "Master Data",
+        "Reference Data",
+        "Transactional Data",
+        "Metadata",
+        "Inference Data"
+      ],
+      "correct": 1,
+      "explanation": "Codes and descriptions for entities are Reference Data; the customer is Master Data."
+    },
+    {
+      "stem": "According to the chapter's chain of consequences, what happens if Master and Reference Data are not in place?",
+      "options": [
+        "Metadata becomes enormous, lineage is lost, data becomes a swamp, and analytics needs far more processing power",
+        "Nothing changes",
+        "Databases become smaller",
+        "Reports run faster",
+        "ROI shortens"
+      ],
+      "correct": 0,
+      "explanation": "No MDM/RDM → unmanageable metadata → no lineage → a data swamp → more infrastructure, CAPEX, OPEX and a lengthy ROI."
+    },
+    {
+      "stem": "In the merger example, several companies have different codes for Glass. What is MDM's job?",
+      "options": [
+        "Delete all the codes",
+        "Bring all the codes together and generate a single code for Glass for future use",
+        "Keep every code and let each system choose",
+        "Rename the product",
+        "Move the codes to a spreadsheet"
+      ],
+      "correct": 1,
+      "explanation": "MDM consolidates the codes into one, so metadata and lineage no longer have to hunt for the right code."
+    },
+    {
+      "stem": "What is the difference in focus between MDM and RDM?",
+      "options": [
+        "MDM focuses on master data consistency across systems; RDM on standardising values and definitions",
+        "MDM is for reports; RDM is for backups",
+        "They are identical",
+        "RDM manages customers; MDM manages codes",
+        "MDM is only for analytics; RDM only for operations"
+      ],
+      "correct": 0,
+      "explanation": "MDM: consistency of master data within and across systems. RDM: standardisation of values and definitions."
+    },
+    {
+      "stem": "Which MDM data-sharing style keeps a golden copy in a central hub that sends it to subscribing systems?",
+      "options": [
+        "Consolidated style",
+        "Registry style",
+        "Coexistence style",
+        "Centralized style",
+        "Distributed style"
+      ],
+      "correct": 2,
+      "explanation": "Coexistence keeps authority distributed but maintains a golden copy in a central hub sent to subscribers; Centralized authors and stores master data in the hub itself."
+    }
+  ]
+}

@@ -36,6 +36,8 @@ export type CertificateStateCode =
   | "offering_not_ended"
   | "completed_on_out_of_range"
   | "profile_incomplete"
+  // M13 N6: attendance recorded as "No" on the sheet.
+  | "not_attended"
   | "already_revoked"
   | "revoked"
   | "window_closed"

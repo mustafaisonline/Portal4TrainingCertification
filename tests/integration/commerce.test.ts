@@ -221,7 +221,7 @@ describe("checkout — server-priced by profile country (plan §3 D3, §6.3)", (
       customerEmail: user.email,
     });
     expect(gateway.sessions[0]!.productName).toContain(flagship.title);
-    expect(gateway.sessions[0]!.successUrl).toBe(`${process.env.APP_BASE_URL}/account/programmes?order=${order.id}`);
+    expect(gateway.sessions[0]!.successUrl).toBe(`${process.env.APP_BASE_URL}/account/trainings?order=${order.id}`);
     expect(gateway.sessions[0]!.cancelUrl).toBe(`${process.env.APP_BASE_URL}/checkout/${offering.id}?cancelled=1`);
 
     const consents = await prisma.consent.findMany({ where: { userId: user.id }, select: { documentKey: true, documentVersion: true } });
@@ -270,12 +270,18 @@ describe("checkout — server-priced by profile country (plan §3 D3, §6.3)", (
     expect(await prisma.order.count({ where: { userId: user.id } })).toBe(0);
   });
 
-  it("refuses an incomplete profile (M5a gate) even when called directly, and creates nothing", async () => {
+  it("refuses a profile missing a government-ID field (the gate, 2026-09-27) even when called directly, and creates nothing; the optional fields are not demanded", async () => {
     const offering = await createOffering({ startInDays: 30, capacity: 10 });
     const user = await createUser("Malaysia");
-    await completeProfile(user.id, { organisation: null, idType: null, idNumber: null });
+    // No date of birth → refused, no order.
+    await completeProfile(user.id, { dateOfBirth: null });
     await expect(startCheckout({ userId: user.id, offeringId: offering.id, consent: true, gateway: fakeGateway() })).rejects.toMatchObject({ code: "profile_incomplete" });
     expect(await prisma.order.count({ where: { userId: user.id } })).toBe(0);
+    // Date of birth back, the M5a optional fields blank → checkout proceeds.
+    await completeProfile(user.id, { organisation: null, jobTitle: null, idType: null, idNumber: null, phoneE164: null, addressLine1: null, city: null, postalCode: null, nationalityCode: null });
+    const started = await startCheckout({ userId: user.id, offeringId: offering.id, consent: true, gateway: fakeGateway() });
+    expect(started.orderId).toBeTruthy();
+    expect(await prisma.order.count({ where: { userId: user.id } })).toBe(1);
   });
 
   it("refuses a date that is not open", async () => {

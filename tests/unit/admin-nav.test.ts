@@ -29,8 +29,9 @@ describe("admin navigation", () => {
   });
 
   it("lists every screen the milestone delivers, overview first", () => {
-    // "Trainings" added by Milestone 12 (trainings managed in the portal).
-    expect(adminNavItems.map((i) => i.label)).toEqual(["Overview", "Trainings", "Offerings", "Orders", "Enquiries", "Reviews", "Certificates", "Users", "Audit log", "Reports"]);
+    // "Trainings" added by Milestone 12 (trainings managed in the portal);
+    // "Attendance" by Milestone 13 (founder decision 9).
+    expect(adminNavItems.map((i) => i.label)).toEqual(["Overview", "Trainings", "Offerings", "Attendance", "Orders", "Enquiries", "Reviews", "Certificates", "Free Learning", "Users", "Audit log", "Reports"]);
     expect(adminNavItems[0]!.href).toBe("/admin");
   });
 
@@ -44,8 +45,8 @@ describe("admin navigation", () => {
     });
   }
 
-  it("a Trainer's bar is exactly Overview and Trainings (Milestone 12, L3)", () => {
-    expect(trainerNavItems.map((i) => i.href)).toEqual(["/admin", "/admin/trainings"]);
+  it("a Trainer's bar is exactly Overview, Trainings and Attendance (Milestone 12 L3; Milestone 13 N7)", () => {
+    expect(trainerNavItems.map((i) => i.href)).toEqual(["/admin", "/admin/trainings", "/admin/attendance"]);
     for (const item of trainerNavItems) expect(adminNavItems).toContain(item);
   });
 

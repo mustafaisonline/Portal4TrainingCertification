@@ -1,6 +1,7 @@
 import type { Db, Tx } from "@/db/prisma";
 import { getPrisma } from "@/db/prisma";
 import { isUuid } from "@/modules/catalogue/offerings/repository";
+import { offeringlessOrderTitle } from "@/modules/commerce/registrations.service";
 import { getProfile } from "./profile.repository";
 import { type ActiveRole, grantRole, isRole, PLATFORM, type Role, revokeRole } from "./roles.repository";
 
@@ -156,7 +157,7 @@ export type AdminUserRegistration = {
 
 export type AdminUserOrder = {
   id: string;
-  kind: "registration" | "certificate_renewal" | "support";
+  kind: "registration" | "certificate_renewal" | "support" | "knowledge_check_unlock";
   status: "pending" | "paid" | "expired" | "failed" | "cancelled" | "refunded" | "partially_refunded";
   currency: string;
   amountMinor: number;
@@ -358,7 +359,7 @@ export async function getUserForAdmin(id: string, db: Db = getPrisma()): Promise
       amountMinor: Number(o.amountMinor),
       createdAt: o.createdAt,
       paidAt: o.paidAt,
-      programmeTitle: o.programme?.title ?? "Support the Academy",
+      programmeTitle: o.programme?.title ?? offeringlessOrderTitle(o.kind),
       certificateCode: o.certificate?.certificateId ?? null,
     })),
     certificates: certificates.map((c) => ({ ...c })),

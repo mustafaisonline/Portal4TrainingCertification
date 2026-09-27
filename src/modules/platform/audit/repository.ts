@@ -60,7 +60,17 @@ export type AuditAction =
   | "programme.fee_removed"
   | "programme.status_changed"
   // 2026-09-27 — the "Support the Academy" payment's admin setting
-  | "support_payment.changed";
+  | "support_payment.changed"
+  // Milestone 13: attendance saved or changed for one registration.
+  | "attendance.recorded"
+  // Milestone 14 Phase 2: a Free Learning topic published or unpublished.
+  | "book_topic.published_changed"
+  // Milestone 14 Phase 3: a topic question marked reviewed or returned to draft.
+  | "topic_question.status_changed"
+  // Milestone 14 Phase 4: a Knowledge Check attempt finished (score, pass, public ID).
+  | "knowledge_check.finished"
+  // Milestone 14 Phase 5: the unlock fee setting appended.
+  | "knowledge_check_unlock.changed";
 
 export type AuditEntry = {
   /** Our `users.id`; null when the system acted on its own. */

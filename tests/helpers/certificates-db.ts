@@ -194,6 +194,9 @@ export async function deleteTestOffering(offeringId: string): Promise<void> {
   const paymentIds = (await prisma.payment.findMany({ where: { orderId: { in: orderIds } }, select: { id: true } })).map((p) => p.id);
   await prisma.$transaction([
     prisma.review.deleteMany({ where: { registrationId: { in: registrationIds } } }),
+    // M13: attendance rows restrict their registration.
+    prisma.auditLog.deleteMany({ where: { action: "attendance.recorded", entityId: { in: registrationIds } } }),
+    prisma.attendanceRecord.deleteMany({ where: { registrationId: { in: registrationIds } } }),
     prisma.refund.deleteMany({ where: { paymentId: { in: paymentIds } } }),
     prisma.registration.deleteMany({ where: { id: { in: registrationIds } } }),
     prisma.payment.deleteMany({ where: { id: { in: paymentIds } } }),

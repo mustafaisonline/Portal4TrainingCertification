@@ -27,7 +27,13 @@ export type CommerceErrorCode =
   | "refund_failed"
   // 2026-09-27 — the "Support the Academy" payment
   | "support_unavailable"
-  | "support_order_pending";
+  | "support_order_pending"
+  // M14 Phase 5: the Knowledge Check result-document unlock.
+  | "unlock_unavailable"
+  | "unlock_order_pending"
+  | "unlock_not_finished"
+  | "unlock_already_paid"
+  | "unlock_fee_exempt";
 
 export class CommerceError extends Error {
   readonly code: CommerceErrorCode;

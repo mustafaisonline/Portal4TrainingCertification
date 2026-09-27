@@ -86,8 +86,11 @@ async function registerViaUi(page: Page, email: string, name = "Cara Checkout") 
   await page.goto("/register");
   await page.getByLabel("Full name").fill(name);
   await page.getByLabel("Email").fill(email);
-  // Country deliberately left empty at registration; the profile completed
-  // below sets "US" → the international (USD) price applies.
+  // Country and date of birth are mandatory at registration (2026-09-27);
+  // "US" here → the international (USD) price applies, and the profile
+  // completed below (repository path) keeps or overrides the country.
+  await page.getByLabel(/^Country/).selectOption("US");
+  await page.getByLabel("Date of birth").fill("1990-01-01");
   await page.getByLabel("Password", { exact: true }).fill(STRONG_PASSWORD);
   await page.getByLabel("Confirm password").fill(STRONG_PASSWORD);
   await page.getByRole("checkbox").check();
@@ -100,7 +103,7 @@ async function signInViaUi(page: Page, email: string, password = STRONG_PASSWORD
   await page.getByLabel("Email").fill(email);
   await page.getByLabel("Password", { exact: true }).fill(password);
   await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page).toHaveURL(/\/account$/);
+  await expect(page).toHaveURL(/\/account\/profile$/);
 }
 
 async function expectNoAxeViolations(page: Page) {
@@ -159,8 +162,8 @@ test("checkout shows the USD price for a person with an international profile co
   await expect(page.getByTestId("checkout-cancelled")).toContainText("nothing was charged");
 
   // My registrations and Orders render their honest empty states.
-  await page.goto("/account/programmes");
-  await expect(page.getByText("You are not registered for a programme yet")).toBeVisible();
+  await page.goto("/account/trainings");
+  await expect(page.getByText("You have not registered for a training yet")).toBeVisible(); // My Trainings (M13)
   await expectNoAxeViolations(page);
   await page.goto("/account/orders");
   await expect(page.getByText("No orders yet.")).toBeVisible();
@@ -197,6 +200,6 @@ test("the confirmation page never trusts the redirect: an unknown order says so"
   const email = newEmail("e2e-m4-order");
   await registerViaUi(page, email, "Orla Order");
   await signInViaUi(page, email);
-  await page.goto("/account/programmes?order=00000000-0000-0000-0000-000000000000");
+  await page.goto("/account/trainings?order=00000000-0000-0000-0000-000000000000");
   await expect(page.getByText("We could not find that order.")).toBeVisible();
 });

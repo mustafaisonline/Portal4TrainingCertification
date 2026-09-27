@@ -75,6 +75,7 @@ async function registerViaUi(page: Page, email: string, name: string) {
   await page.getByLabel("Full name").fill(name);
   await page.getByLabel("Email", { exact: true }).fill(email);
   await page.getByLabel(/^Country/).selectOption("MY");
+  await page.getByLabel("Date of birth").fill("1990-01-01");
   await page.getByLabel("Password", { exact: true }).fill(STRONG_PASSWORD);
   await page.getByLabel("Confirm password").fill(STRONG_PASSWORD);
   await page.getByRole("checkbox").check();
@@ -87,7 +88,7 @@ async function signInViaUi(page: Page, email: string) {
   await page.getByLabel("Email", { exact: true }).fill(email);
   await page.getByLabel("Password", { exact: true }).fill(STRONG_PASSWORD);
   await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page).toHaveURL(/\/account$/);
+  await expect(page).toHaveURL(/\/account\/profile$/);
 }
 
 async function signOut(page: Page) {
@@ -237,12 +238,8 @@ test("a signed-in holder without a review sees the gate and no document; after s
   offeringIds.push(holder.offeringId);
   await signInViaUi(page, holderEmail);
 
-  // Dashboard chip line.
-  const dash = page.getByTestId("dash-certificate-status");
-  await expect(dash).toContainText("Certificate: Active");
-  await expect(dash).toContainText(`until ${formatCalendarDate(holder.certificate.expiresOn)}`);
-
-  await page.goto("/account/certificate");
+  // M13: no dashboard any more — the Certifications tab is the one place.
+  await page.goto("/account/certifications");
   await expect(page.getByTestId("certificate-id")).toHaveText(holder.certificate.certificateId);
   await expect(page.getByTestId("certificate-status")).toContainText("Active");
   await expect(page.getByTestId("certificate-expiry-sentence")).toHaveText(`Active until ${formatCalendarDate(holder.certificate.expiresOn)}.`);
@@ -283,7 +280,7 @@ test("a signed-in holder without a review sees the gate and no document; after s
 
 test("the listing toggle: on → found by name in public search (consent row written); off → not found", async ({ page }) => {
   await signInViaUi(page, holderEmail);
-  await page.goto("/account/certificate");
+  await page.goto("/account/certifications");
   const toggle = page.getByTestId("listing-toggle");
   await expect(toggle).not.toBeChecked();
   await expect(page.getByTestId("listing-save")).toBeDisabled();
@@ -299,7 +296,7 @@ test("the listing toggle: on → found by name in public search (consent row wri
   await page.goto(`/verify?q=${encodeURIComponent(`hana ${SUFFIX}`)}`);
   await expect(page.getByTestId("verify-result").filter({ hasText: HOLDER_NAME })).toHaveCount(1);
 
-  await page.goto("/account/certificate");
+  await page.goto("/account/certifications");
   await expect(page.getByTestId("listing-toggle")).toBeChecked();
   await page.getByTestId("listing-toggle").uncheck();
   await page.getByTestId("listing-save").click();
@@ -316,7 +313,7 @@ test("renewal: inside the window the exact fee is offered and, with payments unc
 
   // 10 days left → renewal due, form present with the fee in force.
   await setCertificateExpiry(holder.certificate.id, addDays(today, 10));
-  await page.goto("/account/certificate");
+  await page.goto("/account/certifications");
   await expect(page.getByTestId("certificate-status")).toHaveAttribute("data-status", "renewal_due");
   await expect(page.getByTestId("certificate-status")).toContainText("renewal due");
   await expect(page.getByTestId("certificate-expiry-sentence")).toContainText("10 days left");
@@ -327,22 +324,19 @@ test("renewal: inside the window the exact fee is offered and, with payments unc
   await expect(page.getByText("Nothing has been charged.", { exact: false })).toBeVisible();
   const { getPrisma } = await import("../../src/db/prisma");
   expect(await getPrisma().order.count({ where: { certificateId: holder.certificate.id } })).toBe(0);
-  await expect(page.getByTestId("dash-certificate-status")).toHaveCount(0); // not the dashboard
-  await page.goto("/account");
-  await expect(page.getByTestId("dash-certificate-status")).toContainText("renewal due");
 
   // 60 days left → window closed; the page states the opening date.
   const later = addDays(today, 60);
   await setCertificateExpiry(holder.certificate.id, later);
-  await page.goto("/account/certificate");
+  await page.goto("/account/certifications");
   await expect(page.getByTestId("renew-form")).toHaveCount(0);
   await expect(page.getByTestId("renewal-closed")).toHaveText(`Renewal opens 30 days before expiry, on ${formatCalendarDate(addDays(later, -30))}.`);
   await expect(page.getByTestId("renewal-history")).toContainText(`Issued ${formatCalendarDate(holder.certificate.issuedOn)}`);
 
   // Stripe's cancel return is a quiet note; an unknown order id is honest.
-  await page.goto("/account/certificate?cancelled=1");
+  await page.goto("/account/certifications?cancelled=1");
   await expect(page.getByTestId("renewal-cancelled")).toBeVisible();
-  await page.goto(`/account/certificate?order=${randomUUID()}`);
+  await page.goto(`/account/certifications?order=${randomUUID()}`);
   await expect(page.getByTestId("renewal-order-missing")).toBeVisible();
   await expectNoAxeViolations(page);
   await signOut(page);

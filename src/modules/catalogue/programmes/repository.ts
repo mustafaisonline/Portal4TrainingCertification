@@ -128,6 +128,29 @@ export async function listPublishedProgrammes(db: Db = getPrisma()): Promise<Pro
  *  programme's per-package entry price; fee notes are on the rows. */
 export type ProgrammeCard = ProgrammeSummary & { prices: ProgrammePriceRecord[]; content: ProgrammeContent };
 
+/** Published trainings whose title, subtitle or summary contains the words
+ *  typed (case-insensitive, every word must match) — the training half of the
+ *  header search (Milestone 14 Phase 1, P17). At most 20, in catalogue order. */
+export async function searchPublishedProgrammes(query: string, db: Db = getPrisma()): Promise<ProgrammeSummary[]> {
+  const words = query.trim().split(/\s+/).filter((w) => w.length > 0).slice(0, 8);
+  if (words.length === 0) return [];
+  const rows = await db.programme.findMany({
+    where: {
+      status: "published",
+      AND: words.map((w) => ({
+        OR: [{ title: { contains: w, mode: "insensitive" } }, { subtitle: { contains: w, mode: "insensitive" } }, { summary: { contains: w, mode: "insensitive" } }],
+      })),
+    },
+    orderBy: { sortOrder: "asc" },
+    take: 20,
+    select: {
+      id: true, slug: true, title: true, subtitle: true, level: true, status: true, flagship: true,
+      durationLabel: true, formats: true, certificateLabel: true, audienceSummary: true, summary: true, sortOrder: true,
+    },
+  });
+  return rows.map((r) => ({ ...r, formats: r.formats as string[] }));
+}
+
 export async function listPublishedProgrammesWithPrices(db: Db = getPrisma()): Promise<ProgrammeCard[]> {
   const rows = await db.programme.findMany({
     where: { status: "published" },

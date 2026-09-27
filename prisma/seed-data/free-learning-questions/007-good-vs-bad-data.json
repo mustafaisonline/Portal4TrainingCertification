@@ -1,0 +1,125 @@
+{
+  "topic": "good-vs-bad-data",
+  "questions": [
+    {
+      "stem": "Which quality of good data means the information aligns with the real-world context it represents, free from errors?",
+      "options": [
+        "Completeness",
+        "Accuracy",
+        "Timeliness",
+        "Accessibility",
+        "Relevance"
+      ],
+      "correct": 1,
+      "explanation": "Accurate data represents its real-world context without errors or inconsistencies."
+    },
+    {
+      "stem": "Financial records that include all income, expenses and taxes illustrate which quality?",
+      "options": [
+        "Validity",
+        "Consistency",
+        "Completeness",
+        "Reliability",
+        "Timeliness"
+      ],
+      "correct": 2,
+      "explanation": "Completeness means all necessary details are present, with no missing or incomplete records."
+    },
+    {
+      "stem": "A product catalogue with uniform formatting and standardised units illustrates which quality?",
+      "options": [
+        "Consistency",
+        "Accuracy",
+        "Accessibility",
+        "Relevance",
+        "Validity"
+      ],
+      "correct": 0,
+      "explanation": "Consistency means standardised formats and structures, which make integration and comparison easy."
+    },
+    {
+      "stem": "Stock market data updated in real time is the chapter's example of which quality?",
+      "options": [
+        "Reliability",
+        "Timeliness",
+        "Completeness",
+        "Consistency",
+        "Validity"
+      ],
+      "correct": 1,
+      "explanation": "Timely data is up to date, reflecting the most recent and relevant information."
+    },
+    {
+      "stem": "Scientific research data collected through rigorous, peer-reviewed methods illustrates which quality?",
+      "options": [
+        "Accessibility",
+        "Timeliness",
+        "Reliability",
+        "Relevance",
+        "Completeness"
+      ],
+      "correct": 2,
+      "explanation": "Reliability is trustworthiness — unbiased data collected through reliable, documented methods."
+    },
+    {
+      "stem": "Medical records that adhere to industry standards and regulations illustrate which quality?",
+      "options": [
+        "Validity",
+        "Timeliness",
+        "Accessibility",
+        "Consistency",
+        "Accuracy"
+      ],
+      "correct": 0,
+      "explanation": "Validity is adherence to predefined rules and standards."
+    },
+    {
+      "stem": "What does bad data's \"inconsistency\" mean, according to the chapter?",
+      "options": [
+        "The data is too recent",
+        "Variations in formatting, units or structure that complicate integration and analysis",
+        "The data is stored in the cloud",
+        "The data belongs to another department",
+        "There is too much of it"
+      ],
+      "correct": 1,
+      "explanation": "Inconsistent inventory records, with varying product names or units, are the chapter's example."
+    },
+    {
+      "stem": "Social media metrics that do not contribute to marketing goals illustrate which bad-data characteristic?",
+      "options": [
+        "Inaccuracy",
+        "Irrelevance",
+        "Incompleteness",
+        "Invalidity",
+        "Inaccessibility"
+      ],
+      "correct": 1,
+      "explanation": "Irrelevance is including unnecessary or unrelated information that does not serve the intended purpose."
+    },
+    {
+      "stem": "Which of these is an example of INACCESSIBLE data given in the chapter?",
+      "options": [
+        "Invalid email addresses",
+        "Outdated product information on a website",
+        "Employee records stored where they are difficult to retrieve",
+        "Sales figures with data-entry errors",
+        "Survey responses affected by bias"
+      ],
+      "correct": 2,
+      "explanation": "Inaccessible employee records impede HR processes because the information cannot be retrieved promptly."
+    },
+    {
+      "stem": "According to the chapter's summary, what is the impact of bad data?",
+      "options": [
+        "Faster decisions",
+        "Incorrect conclusions, inefficiencies and unreliable outcomes",
+        "Lower storage costs",
+        "Better customer service",
+        "No impact if it is stored securely"
+      ],
+      "correct": 1,
+      "explanation": "Good data is foundational for informed decisions; bad data leads to incorrect conclusions, inefficiencies and unreliable outcomes."
+    }
+  ]
+}

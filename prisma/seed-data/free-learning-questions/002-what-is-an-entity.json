@@ -1,0 +1,125 @@
+{
+  "topic": "what-is-an-entity",
+  "questions": [
+    {
+      "stem": "In data modelling, what is an entity?",
+      "options": [
+        "A column in a spreadsheet",
+        "Anything that can be uniquely identified and described",
+        "A database server",
+        "A calculation performed on data",
+        "A report for management"
+      ],
+      "correct": 1,
+      "explanation": "An entity is anything that can be uniquely identified and described — a real-world object, person, concept or event that matters within a system."
+    },
+    {
+      "stem": "Which three components does the chapter break an entity into?",
+      "options": [
+        "Table, index and view",
+        "Entity type, entity attribute and entity instance",
+        "Schema, query and result",
+        "Object, class and method",
+        "Key, value and pair"
+      ],
+      "correct": 1,
+      "explanation": "The chapter decodes an entity into its type (the blueprint), its attributes (the properties) and its instances (the real, data-filled objects)."
+    },
+    {
+      "stem": "What does an Entity Type contain?",
+      "options": [
+        "The actual data of every record",
+        "Only one record",
+        "The structure and attributes of a category, but no actual data",
+        "A single attribute value",
+        "The physical storage location of data"
+      ],
+      "correct": 2,
+      "explanation": "An entity type is a template or schema: it defines which attributes entities of that type have, but holds no data."
+    },
+    {
+      "stem": "In a relational database, an Entity Type maps directly to which structure?",
+      "options": [
+        "A row",
+        "A column",
+        "A table",
+        "An index",
+        "A stored procedure"
+      ],
+      "correct": 2,
+      "explanation": "Entity type → table; entity attribute → column; entity instance → row."
+    },
+    {
+      "stem": "An Entity Attribute maps to which structure in a relational database table?",
+      "options": [
+        "A row",
+        "A column or field",
+        "A whole table",
+        "A foreign database",
+        "A backup"
+      ],
+      "correct": 1,
+      "explanation": "Attributes are the properties that describe an entity; each maps to a column or field in the table."
+    },
+    {
+      "stem": "Which is an example of a COMPOSITE attribute?",
+      "options": [
+        "Age",
+        "Date of Birth",
+        "Full Name, which breaks down into First Name and Last Name",
+        "ISBN",
+        "Publication Year"
+      ],
+      "correct": 2,
+      "explanation": "A composite attribute can be broken down into sub-attributes; a simple attribute such as Age is indivisible."
+    },
+    {
+      "stem": "Age calculated from Date of Birth is an example of which attribute type?",
+      "options": [
+        "Key attribute",
+        "Multi-valued attribute",
+        "Composite attribute",
+        "Derived attribute",
+        "Simple attribute"
+      ],
+      "correct": 3,
+      "explanation": "A derived attribute is calculated from other data — Age from Date of Birth is the chapter's example."
+    },
+    {
+      "stem": "Which attribute type uniquely identifies an entity instance?",
+      "options": [
+        "Key attribute, such as an ISBN for a book",
+        "Derived attribute",
+        "Multi-valued attribute",
+        "Composite attribute",
+        "Descriptive attribute"
+      ],
+      "correct": 0,
+      "explanation": "Key attributes uniquely identify an instance — ISBN for books, Employee ID for staff."
+    },
+    {
+      "stem": "Phone Numbers, where one person may have several, is an example of which attribute type?",
+      "options": [
+        "Single-valued",
+        "Multi-valued",
+        "Derived",
+        "Key",
+        "Composite"
+      ],
+      "correct": 1,
+      "explanation": "A multi-valued attribute holds several values per entity; Date of Birth, with one value, is single-valued."
+    },
+    {
+      "stem": "The specific book \"I Am Data!\" with its title, author, ISBN and year is an example of what?",
+      "options": [
+        "An entity type",
+        "An entity attribute",
+        "An entity instance",
+        "A database schema",
+        "A composite key"
+      ],
+      "correct": 2,
+      "explanation": "An entity instance is one specific, real record built from the entity type's blueprint — a single row in the Book table."
+    }
+  ]
+}

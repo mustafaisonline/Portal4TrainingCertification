@@ -17,11 +17,24 @@ import type { ComponentPropsWithoutRef, ReactNode } from "react";
 export const inputClass =
   "w-full rounded-[var(--radius-plate)] border border-[var(--color-line-strong)] bg-[var(--color-ground)] px-3.5 py-2.5 text-body-sm text-[var(--color-ink)] outline-none placeholder:text-[var(--color-ink-faint)] focus-visible:border-[var(--color-primary)] focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]/35 disabled:opacity-60";
 
+/** The "*" beside a label the profile page uses for the fields checkout
+ *  needs (founder request 2026-09-27). Rendered as a SIBLING of the label,
+ *  never inside it, so the field's accessible name is unchanged (a Playwright
+ *  exact-label match found it otherwise); the form's legend explains it. */
+function RequiredStar() {
+  return (
+    <span aria-hidden="true" className="ml-1 text-[var(--color-danger)]">
+      *
+    </span>
+  );
+}
+
 export function Field({
   label,
   hint,
   error,
   optional,
+  star,
   ...input
 }: {
   label: string;
@@ -29,6 +42,8 @@ export function Field({
   /** Field-level validation message; sets aria-invalid and is announced. */
   error?: string;
   optional?: boolean;
+  /** Show the "*" marker (see RequiredStar). Visual only. */
+  star?: boolean;
 } & Omit<ComponentPropsWithoutRef<"input">, "className">) {
   const hintId = useId();
   const errorId = useId();
@@ -40,14 +55,17 @@ export function Field({
   // by the M5a e2e run — "Email" had no exact match). Same fix as SelectField.
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={inputId} className="text-label">
-        {label}
-        {optional ? (
-          <span className="ml-1.5 font-normal normal-case tracking-normal text-[var(--color-ink-faint)]">
-            (optional)
-          </span>
-        ) : null}
-      </label>
+      <div className="flex items-baseline">
+        <label htmlFor={inputId} className="text-label">
+          {label}
+          {optional ? (
+            <span className="ml-1.5 font-normal normal-case tracking-normal text-[var(--color-ink-faint)]">
+              (optional)
+            </span>
+          ) : null}
+        </label>
+        {star ? <RequiredStar /> : null}
+      </div>
       <input {...input} id={inputId} aria-describedby={described} aria-invalid={error ? true : undefined} className={inputClass} />
       {hint ? (
         <span id={hintId} className="text-body-sm text-[var(--color-ink-faint)]">
@@ -75,6 +93,7 @@ export function SelectField({
   hint,
   error,
   optional,
+  star,
   children,
   ...select
 }: {
@@ -82,6 +101,8 @@ export function SelectField({
   hint?: string;
   error?: string;
   optional?: boolean;
+  /** Show the "*" marker (see RequiredStar). Visual only. */
+  star?: boolean;
   children: ReactNode;
 } & Omit<ComponentPropsWithoutRef<"select">, "className">) {
   const hintId = useId();
@@ -90,14 +111,17 @@ export function SelectField({
   const described = [hint ? hintId : null, error ? errorId : null].filter(Boolean).join(" ") || undefined;
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={selectId} className="text-label">
-        {label}
-        {optional ? (
-          <span className="ml-1.5 font-normal normal-case tracking-normal text-[var(--color-ink-faint)]">
-            (optional)
-          </span>
-        ) : null}
-      </label>
+      <div className="flex items-baseline">
+        <label htmlFor={selectId} className="text-label">
+          {label}
+          {optional ? (
+            <span className="ml-1.5 font-normal normal-case tracking-normal text-[var(--color-ink-faint)]">
+              (optional)
+            </span>
+          ) : null}
+        </label>
+        {star ? <RequiredStar /> : null}
+      </div>
       <select {...select} id={selectId} aria-describedby={described} aria-invalid={error ? true : undefined} className={inputClass}>
         {children}
       </select>

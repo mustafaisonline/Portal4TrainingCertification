@@ -10,7 +10,10 @@ import { RegisterForm } from "./RegisterForm";
  * S02 — Create account. Structure and copy PORTED 2026-09-21 from
  * project-artifacts/mockup/app/register/page.tsx; the inert form is replaced
  * by a real one. Fields are the identity fields the data architecture names
- * (name, email, country) plus the password — nothing else is collected.
+ * (name, email, country) plus the password — and, since the founder's
+ * 2026-09-27 decision, the date of birth: name, date of birth and country
+ * are collected "as on your government ID" and are mandatory, so a new
+ * account can register for a date and pay without a further profile step.
  *
  * The consent control follows the mockup's convention exactly: it is blocked,
  * with the reason shown, until the legal documents are published

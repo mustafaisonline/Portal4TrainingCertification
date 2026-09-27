@@ -7,7 +7,6 @@ import {
 } from "@/modules/catalogue/programmes/repository";
 import { listUpcomingPublicOfferings } from "@/modules/catalogue/offerings/repository";
 import { levelLabel } from "@/modules/catalogue/programmes/types";
-import { ProgrammeDates } from "@/shared/marketing/ProgrammeDates";
 import { isModulePointGroup } from "@/modules/catalogue/programmes/module-points";
 import { listPublishedExperts } from "@/modules/catalogue/experts/repository";
 import { ImageFrame } from "@/shared/marketing/ImageFrame";
@@ -100,6 +99,7 @@ export default async function CourseDetailPage({
     listUpcomingPublicOfferings(course.id),
   ]);
   const openDates = offerings.filter((o) => o.status === "open").length;
+  const datesHref = `/schedule?training=${course.slug}`;
 
   // The programme's delivering expert, with the full published profile
   // (the programme record carries only a summary).
@@ -157,15 +157,17 @@ export default async function CourseDetailPage({
           )}
           <div className="mb-10 flex flex-wrap items-center gap-4">
             {/* M12 (L11): with an OPEN date the primary action is to register
-                for it; otherwise it stays the enquiry, as before. */}
+                for it; otherwise it stays the enquiry. M13 (founder, 2026-09-27):
+                the page no longer lists dates itself — both buttons lead to
+                the schedule filtered to THIS training, where Register lives. */}
             {openDates > 0 ? (
-              <Button href="#dates" data-testid="hero-register">
+              <Button href={datesHref} data-testid="hero-register">
                 Register for a date
               </Button>
             ) : (
               <Button href={enquiryHref}>Register your interest</Button>
             )}
-            <Button variant="secondary" href={offerings.length > 0 ? "#dates" : "/schedule"}>
+            <Button variant="secondary" href={datesHref} data-testid="hero-dates">
               See upcoming dates
             </Button>
             <Button variant="secondary" href="#investment">
@@ -622,8 +624,9 @@ export default async function CourseDetailPage({
         </section>
       )}
 
-      {/* ===== Dates (M12 L11) — rendered only when this training has upcoming public dates ===== */}
-      <ProgrammeDates offerings={offerings} enquiryHref={enquiryHref} />
+      {/* The M12 "Dates" section was REMOVED 2026-09-27 (founder: with several
+          trainings, dates belong on the schedule; "See dates and register" on
+          the Investment cards below opens /schedule?training=<slug>). */}
 
       {/* ===== Investment (regional pricing cards) ===== */}
       <ProgrammePricing
@@ -755,7 +758,7 @@ export default async function CourseDetailPage({
           </h2>
           <p className="text-body-lg mb-9 max-w-[620px] text-[var(--color-ink-quiet)]">
             {offerings.length > 0
-              ? "Public dates are above. Or talk to us about running this as a private cohort — on-site, live online, or internationally."
+              ? "Public dates are on the schedule. Or talk to us about running this as a private cohort — on-site, live online, or internationally."
               : "Public dates are not yet published. Register your interest, or talk to us about running this as a private cohort — on-site, live online, or internationally."}
           </p>
           <div className="flex flex-wrap items-center gap-4">

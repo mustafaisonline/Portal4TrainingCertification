@@ -32,6 +32,18 @@ const nextConfig: NextConfig = {
       { source: "/DataBlueprint-AIVibeCoding", destination: "/programs/data-blueprint-ai-vibe-coding", permanent: true },
       { source: "/courses", destination: "/programs", permanent: true },
       { source: "/courses/:slug", destination: "/programs/:slug", permanent: true },
+      // Milestone 13 (founder decisions 5–7, 2026-09-27): the account tabs
+      // were renamed and re-ordered; links already sent by email (order
+      // confirmations, certificate reminders) keep resolving.
+      { source: "/account/programmes", destination: "/account/trainings", permanent: true },
+      { source: "/account/certificate", destination: "/account/certifications", permanent: true },
+      { source: "/account/programme", destination: "/programs", permanent: true },
+      { source: "/account/security", destination: "/account/profile", permanent: true },
+      // Milestone 14 Phase 1 (founder decisions P15–P17, 2026-09-27): HRD
+      // Corp merged into Trainings; the diagnostic lives under Free Learning.
+      { source: "/hrd-corp", destination: "/programs#hrd-corp", permanent: true },
+      { source: "/diagnostic", destination: "/free-learning", permanent: true },
+      { source: "/diagnostic/result", destination: "/free-learning/diagnostic/result", permanent: true },
     ];
   },
 

@@ -40,6 +40,7 @@ async function registerViaUi(page: Page, email: string, name = "Ada Test") {
   await page.getByLabel("Full name").fill(name);
   await page.getByLabel("Email").fill(email);
   await page.getByLabel(/^Country/).selectOption("MY");
+  await page.getByLabel("Date of birth").fill("1990-01-01");
   await page.getByLabel("Password", { exact: true }).fill(STRONG_PASSWORD);
   await page.getByLabel("Confirm password").fill(STRONG_PASSWORD);
   await page.getByRole("checkbox").check();
@@ -53,7 +54,7 @@ async function registerViaUi(page: Page, email: string, name = "Ada Test") {
 /** Sign in right after registering — no verification step required. */
 async function verifyViaEmail(page: Page, email: string) {
   await signInViaUi(page, email);
-  await expect(page).toHaveURL(/\/account$/);
+  await expect(page).toHaveURL(/\/account\/profile$/);
 }
 
 async function signInViaUi(page: Page, email: string, password = STRONG_PASSWORD) {
@@ -74,14 +75,15 @@ test("register → verify → signed-in account page shows OUR identity and role
   await expectNoAxeViolations(page);
   await verifyViaEmail(page, email);
 
-  await expect(page.getByTestId("welcome")).toHaveText("Welcome, Ada Test");
+  // M13: the account opens on Profile; the account facts live there now.
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Your profile");
   await expect(page.getByTestId("account-email")).toHaveText(email);
   await expect(page.getByTestId("account-verified")).toContainText("Not verified");
   // The verification link is still recorded in the outbox and still works,
   // so the address can be confirmed once an email provider delivers it.
   const mail = await waitForEmail(email, "identity.verify-email");
   await page.goto(firstLink(mail.textBody));
-  await expect(page).toHaveURL(/\/account$/);
+  await expect(page).toHaveURL(/\/account\/profile$/);
   await expect(page.getByTestId("account-verified")).toHaveText("Verified");
   await expect(page.getByTestId("account-roles")).toContainText("Participant"); // roles in words since the M12 dashboard rework
   await expect(page.getByTestId("header-account")).toBeVisible();
@@ -116,7 +118,7 @@ test("sign-in: neutral error on a wrong password; an off-site return-to is ignor
   await page.getByLabel("Email").fill(email);
   await page.getByLabel("Password", { exact: true }).fill(STRONG_PASSWORD);
   await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page).toHaveURL(/\/account$/);
+  await expect(page).toHaveURL(/\/account\/profile$/);
 });
 
 test("password reset from the emailed link", async ({ page }) => {
@@ -142,7 +144,7 @@ test("password reset from the emailed link", async ({ page }) => {
   await expect(page).toHaveURL(/\/sign-in\?reset=1$/);
 
   await signInViaUi(page, email, fresh);
-  await expect(page).toHaveURL(/\/account$/);
+  await expect(page).toHaveURL(/\/account\/profile$/);
 });
 
 test("admin gate: participant → 403; platform_admin → served (roles from user_roles)", async ({ page }) => {
@@ -159,6 +161,25 @@ test("admin gate: participant → 403; platform_admin → served (roles from use
   await page.goto("/admin");
   await expect(page.getByTestId("admin-title")).toHaveText("Operations");
   await expectNoAxeViolations(page);
+
+  // Founder direction 2026-09-27: an administrator's sign-in lands on the
+  // admin dashboard (the participant sign-ins above landed on /account)…
+  await page.goto("/sign-out");
+  await expect(page.getByTestId("header-sign-in")).toBeVisible();
+  await signInViaUi(page, email);
+  await expect(page).toHaveURL(/\/admin$/);
+  await expect(page.getByTestId("admin-title")).toHaveText("Operations");
+  // …unless a return path was asked for, which still wins.
+  await page.goto("/sign-out");
+  await expect(page.getByTestId("header-sign-in")).toBeVisible();
+  await page.goto("/sign-in?return-to=%2Faccount%2Fprofile");
+  await page.getByLabel("Email").fill(email);
+  await page.getByLabel("Password", { exact: true }).fill(STRONG_PASSWORD);
+  await page.getByRole("button", { name: "Sign in" }).click();
+  await expect(page).toHaveURL(/\/account\/profile$/);
+  // And a signed-in administrator visiting /sign-in is sent to the dashboard.
+  await page.goto("/sign-in");
+  await expect(page).toHaveURL(/\/admin$/);
 });
 
 test("a second registration with the same email is a clear error, and the password can be changed from Security", async ({ page }) => {
@@ -168,6 +189,8 @@ test("a second registration with the same email is a clear error, and the passwo
   await page.goto("/register");
   await page.getByLabel("Full name").fill("Someone Else");
   await page.getByLabel("Email").fill(email);
+  await page.getByLabel(/^Country/).selectOption("MY");
+  await page.getByLabel("Date of birth").fill("1990-01-01");
   await page.getByLabel("Password", { exact: true }).fill("another-pass-1");
   await page.getByLabel("Confirm password").fill("another-pass-1");
   await page.getByRole("checkbox").check();
@@ -176,8 +199,8 @@ test("a second registration with the same email is a clear error, and the passwo
   await expect(page).toHaveURL(/\/register$/);
 
   await signInViaUi(page, email); // the original password still applies
-  await expect(page).toHaveURL(/\/account$/);
-  await page.goto("/account/security");
+  await expect(page).toHaveURL(/\/account\/profile$/);
+  await page.goto("/account/profile#security"); // Security is a section of Profile (M13)
   await expectNoAxeViolations(page);
   await page.getByLabel("Current password").fill(STRONG_PASSWORD);
   await page.getByLabel("New password", { exact: true }).fill("my-new-password-8");
@@ -188,7 +211,7 @@ test("a second registration with the same email is a clear error, and the passwo
   await page.goto("/sign-out");
   await expect(page.getByTestId("header-sign-in")).toBeVisible();
   await signInViaUi(page, email, "my-new-password-8");
-  await expect(page).toHaveURL(/\/account$/);
+  await expect(page).toHaveURL(/\/account\/profile$/);
 });
 
 test("register and sign-in screens have no WCAG 2.2 AA violations", async ({ page }) => {

@@ -10,6 +10,7 @@ import { getOwnReviews, listReviewableRegistrations, OWN_REVIEW_STATUS_LABEL, ow
 import { editWindowOpen, findReviewById, listPublicReviews, type PublicReview, type ReviewRecord } from "@/modules/reviews/repository";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
+import { AccountFrame } from "@/shared/chrome/AccountFrame";
 import { Chip } from "@/shared/ui/Chip";
 import { formatDateRange } from "@/shared/util/dates";
 import { ReviewForm } from "./ReviewForm";
@@ -123,9 +124,12 @@ export default async function ReviewsPage({ searchParams }: { searchParams: Prom
     ? { name: signedIn.name, photoSrc: signedIn.hasPhoto ? `/api/me/photo?v=${signedIn.photoVersion}` : null, hasPhoto: signedIn.hasPhoto }
     : null;
 
-  return (
-    <section className="bg-[var(--color-ground-tint)]">
-      <div className="mx-auto max-w-[1080px] px-4 py-12 sm:px-6 sm:py-16">
+  // Milestone 13 (founder decision 8, 2026-09-27): the page stays public;
+  // a signed-in visitor sees it inside the account frame with the sidebar
+  // tabs, "Reviews" marked current — the same page, the same forms.
+  const view = (
+    <section className={signedIn ? "" : "bg-[var(--color-ground-tint)]"}>
+      <div className={signedIn ? "max-w-[1080px]" : "mx-auto max-w-[1080px] px-4 py-12 sm:px-6 sm:py-16"}>
         <p className="text-label mb-3 text-[var(--color-primary)]">Learner reviews</p>
         <h1 className="mb-3 text-display" data-testid="reviews-title">
           Reviews
@@ -201,14 +205,14 @@ export default async function ReviewsPage({ searchParams }: { searchParams: Prom
             </section>
 
             {header && signedIn.flagshipTitle ? (
-              <details className="rounded-[var(--radius-panel)] border border-[var(--color-line)] bg-[var(--color-ground-raised)] px-5 py-4">
+              <details className="rounded-[var(--radius-panel)] border border-[var(--color-line)] bg-[var(--color-ground-raised)] px-5 py-4" id="free-learning">
                 <summary className="text-body-sm cursor-pointer font-medium" data-testid="diagnostic-review-toggle">
-                  Tried the free diagnostic? Share a private note
+                  Tried Free Learning or the free diagnostic? Share a review
                 </summary>
                 <p className="text-body-sm mt-2 mb-4 text-[var(--color-ink-quiet)]">
                   This is not tied to a certificate. It is private unless you choose otherwise.
                 </p>
-                <ReviewForm mode="create" kind="diagnostic" header={{ ...header, programmeTitle: "Free diagnostic", dates: null }} />
+                <ReviewForm mode="create" kind="diagnostic" header={{ ...header, programmeTitle: "Free Learning & the free diagnostic", dates: null }} />
               </details>
             ) : null}
 
@@ -229,7 +233,7 @@ export default async function ReviewsPage({ searchParams }: { searchParams: Prom
                           <div className="mb-2 flex flex-wrap items-center gap-2">
                             <Chip tone={status === "published" ? "primary" : "neutral"}>{OWN_REVIEW_STATUS_LABEL[status]}</Chip>
                             <span className="text-body-sm text-[var(--color-ink-quiet)]">
-                              {r.kind === "diagnostic" ? "Free diagnostic" : r.programmeTitle}
+                              {r.kind === "diagnostic" ? "Free Learning & the free diagnostic" : r.programmeTitle}
                               {r.offeringStartsOn && r.offeringEndsOn ? ` · ${formatDateRange(r.offeringStartsOn, r.offeringEndsOn)}` : ""}
                               {" · "}
                               {formatMonthYear(r.submittedAt)}
@@ -292,4 +296,5 @@ export default async function ReviewsPage({ searchParams }: { searchParams: Prom
       </div>
     </section>
   );
+  return signedIn ? <AccountFrame userName={signedIn.name}>{view}</AccountFrame> : view;
 }

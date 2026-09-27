@@ -105,6 +105,10 @@ List with avatar, name, programme/offering, rating, excerpt, date, consent, mode
 ## 8. Certificate-download enforcement (for M6)
 `src/modules/feedback/eligibility.ts` → `feedbackRequirement(registrationId): "satisfied" | "required" | "not_applicable"`. M6's certificate route handler/action calls it **after** the ownership check and **before** rendering or streaming any certificate; direct URL access, old links, refresh and parameter tampering all hit the same server function. Hidden/rejected feedback = satisfied. Certificates issued before the feature = not applicable (D-7).
 
+### 8.1 Founder decision 2026-09-27 (Milestone 13) — minimum length 300 characters
+
+The founder asked that the certificate be shown only after "a minimum of 5 lines of review". Lines cannot be measured in a text box, so the rule is **at least 300 characters** (`REVIEW_BODY_MIN`, was 20), applied by the form and the server action to every NEW review. Reviews already written under the 20-character rule keep satisfying the gate above (N3 a) — nobody loses a certificate they had unlocked. The gate itself is unchanged: the certificate **document** is withheld until a review exists; the certificate ID and the public `/verify` page are never withheld (N4). Record: [`MILESTONE_13_EXECUTION_PLAN.md`](MILESTONE_13_EXECUTION_PLAN.md) §1.2 rows 3–4, §3 WP3.
+
 ## 9. Security
 Session on every write; ownership on every read/write of a specific row; admin role on moderation; input validated and length-checked server-side; text stored and rendered as plain text (React escaping — no `dangerouslySetInnerHTML`); DB-backed rate limit; public queries filtered by the single visibility function; emails never in public output; internal IDs exposed only as opaque UUIDs where a route needs one (photo route by feedback id); audit on every state change.
 

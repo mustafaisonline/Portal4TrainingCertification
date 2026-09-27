@@ -166,14 +166,19 @@ model User {
   createdAt       DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt       DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  identities    AuthIdentity[]
-  roles         UserRole[]
-  consents      Consent[]
-  orders        Order[]
-  registrations Registration[]
-  profile       UserProfile?
-  reviews       Review[]
-  certificates  Certificate[]
+  identities             AuthIdentity[]
+  roles                  UserRole[]
+  consents               Consent[]
+  orders                 Order[]
+  registrations          Registration[]
+  profile                UserProfile?
+  reviews                Review[]
+  certificates           Certificate[]
+  /// Attendance rows this person saved as administrator or Trainer (M13).
+  attendanceRecorded     AttendanceRecord[]      @relation("attendance_recorded_by")
+  /// Topic questions this administrator marked reviewed (M14 Phase 3).
+  topicQuestionsReviewed TopicQuestion[]         @relation("topic_question_reviewed_by")
+  knowledgeCheckAttempts KnowledgeCheckAttempt[]
 
   @@map("users")
 }
@@ -750,37 +755,42 @@ enum OrderKind {
   registration
   certificate_renewal
   support
+  /// M14 Phase 5: the US$10 unlock of a Knowledge Check result document.
+  knowledge_check_unlock
 
   @@map("order_kind")
 }
 
 model Order {
-  id                      String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId                  String            @map("user_id") @db.Uuid
-  user                    User              @relation(fields: [userId], references: [id], onDelete: Restrict)
+  id                      String                 @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId                  String                 @map("user_id") @db.Uuid
+  user                    User                   @relation(fields: [userId], references: [id], onDelete: Restrict)
   /// Null ONLY for kind = support (2026-09-27): a support payment buys no
   /// seat and belongs to no training. Registration and renewal orders always
   /// carry both (a renewal keeps the original registration's).
-  offeringId              String?           @map("offering_id") @db.Uuid
-  offering                ScheduledOffering? @relation(fields: [offeringId], references: [id], onDelete: Restrict)
-  programmeId             String?           @map("programme_id") @db.Uuid
-  programme               Programme?        @relation(fields: [programmeId], references: [id], onDelete: Restrict)
-  status                  OrderStatus       @default(pending)
+  offeringId              String?                @map("offering_id") @db.Uuid
+  offering                ScheduledOffering?     @relation(fields: [offeringId], references: [id], onDelete: Restrict)
+  programmeId             String?                @map("programme_id") @db.Uuid
+  programme               Programme?             @relation(fields: [programmeId], references: [id], onDelete: Restrict)
+  status                  OrderStatus            @default(pending)
   /// M6: a renewal order keeps the original registration's offering and
   /// programme. Capacity counting and the duplicate checks look at
   /// `registration` orders only.
-  kind                    OrderKind         @default(registration)
-  certificateId           String?           @map("certificate_id") @db.Uuid
-  certificate             Certificate?      @relation(fields: [certificateId], references: [id], onDelete: Restrict)
+  kind                    OrderKind              @default(registration)
+  certificateId           String?                @map("certificate_id") @db.Uuid
+  certificate             Certificate?           @relation(fields: [certificateId], references: [id], onDelete: Restrict)
+  /// M14 Phase 5: the attempt an unlock order pays for (kind = knowledge_check_unlock only).
+  knowledgeCheckAttemptId String?                @map("knowledge_check_attempt_id") @db.Uuid
+  knowledgeCheckAttempt   KnowledgeCheckAttempt? @relation(fields: [knowledgeCheckAttemptId], references: [id], onDelete: Restrict)
   region                  PriceRegion
-  currency                String            @db.Char(3)
-  amountMinor             BigInt            @map("amount_minor")
-  stripeCheckoutSessionId String?           @unique @map("stripe_checkout_session_id")
-  stripePaymentIntentId   String?           @map("stripe_payment_intent_id")
-  expiresAt               DateTime          @map("expires_at") @db.Timestamptz(6)
-  paidAt                  DateTime?         @map("paid_at") @db.Timestamptz(6)
-  createdAt               DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt               DateTime          @updatedAt @map("updated_at") @db.Timestamptz(6)
+  currency                String                 @db.Char(3)
+  amountMinor             BigInt                 @map("amount_minor")
+  stripeCheckoutSessionId String?                @unique @map("stripe_checkout_session_id")
+  stripePaymentIntentId   String?                @map("stripe_payment_intent_id")
+  expiresAt               DateTime               @map("expires_at") @db.Timestamptz(6)
+  paidAt                  DateTime?              @map("paid_at") @db.Timestamptz(6)
+  createdAt               DateTime               @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt               DateTime               @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   payment      Payment?
   registration Registration?
@@ -882,10 +892,34 @@ model Registration {
 
   review      Review?
   certificate Certificate?
+  attendance  AttendanceRecord?
 
   @@index([offeringId, status])
   @@index([userId, status])
   @@map("registrations")
+}
+
+/// Attendance as recorded by an administrator or the training's Trainer on
+/// the day (Milestone 13, founder decision 9 / §4 approved 2026-09-27). One
+/// row per registration holding the CURRENT answer; every save is audited
+/// (`attendance.recorded`), so the history lives in the audit log. Separate
+/// from completion (certificates): attendance is a fact about the day,
+/// completion is the Academy's decision to certify (N6 links them).
+model AttendanceRecord {
+  id               String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  registrationId   String       @unique @map("registration_id") @db.Uuid
+  registration     Registration @relation(fields: [registrationId], references: [id], onDelete: Restrict)
+  /// The founder's Yes / No.
+  attended         Boolean
+  /// Optional, e.g. "arrived late", "left after lunch".
+  note             String?
+  recordedByUserId String       @map("recorded_by_user_id") @db.Uuid
+  recordedBy       User         @relation("attendance_recorded_by", fields: [recordedByUserId], references: [id], onDelete: Restrict)
+  createdAt        DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
+  /// The founder's "UpdateDate": set on every save.
+  updatedAt        DateTime     @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@map("attendance_records")
 }
 
 enum StripeEventStatus {
@@ -1023,4 +1057,147 @@ model CertificateRenewal {
 
   @@index([certificateId, createdAt])
   @@map("certificate_renewals")
+}
+
+/// ---------------------------------------------------------------------------
+/// Free Learning — Milestone 14 Phase 2 (DR-03; §4 rows 1–2 approved
+/// 2026-09-27). The founder's book *I Am Datapedia!* as topics: one row per
+/// top-level heading of the source document, imported by
+/// scripts/ingest-datapedia.ts, published topic by topic. Images are stored
+/// here as bytes (founder decision P8: PostgreSQL, not object storage) and
+/// served by /free-learning/images/<id>.
+model BookTopic {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  /// Order in the book.
+  position      Int      @unique
+  slug          String   @unique
+  title         String
+  /// Sanitised HTML from the import; image `src`s point at the image route.
+  bodyHtml      String   @map("body_html")
+  /// Plain text of the body, for search and word counts.
+  bodyText      String   @map("body_text")
+  /// The heading exactly as it appears in the source, for traceability.
+  sourceHeading String   @map("source_heading")
+  wordCount     Int      @map("word_count")
+  published     Boolean  @default(false)
+  importedAt    DateTime @map("imported_at") @db.Timestamptz(6)
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  images    BookTopicImage[]
+  questions TopicQuestion[]
+
+  @@index([published, position])
+  @@map("book_topics")
+}
+
+model BookTopicImage {
+  id       String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  topicId  String    @map("topic_id") @db.Uuid
+  topic    BookTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  /// Order within the topic.
+  position Int
+  mime     String
+  bytes    Bytes
+  alt      String?
+
+  @@unique([topicId, position])
+  @@map("book_topic_images")
+}
+
+/// Topic self-check questions — Milestone 14 Phase 3 (§4 row 3 approved
+/// 2026-09-27). Drafted from the topic's text and held as `draft` until an
+/// administrator marks them `reviewed`; readers are served REVIEWED questions
+/// only. Exactly one correct option per question is enforced by the
+/// repository (a partial unique index would drift against Prisma's diff).
+enum TopicQuestionStatus {
+  draft
+  reviewed
+
+  @@map("topic_question_status")
+}
+
+model TopicQuestion {
+  id               String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  topicId          String              @map("topic_id") @db.Uuid
+  topic            BookTopic           @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  position         Int
+  stem             String
+  /// Shown with the answer after Submit; optional.
+  explanation      String?
+  status           TopicQuestionStatus @default(draft)
+  reviewedByUserId String?             @map("reviewed_by_user_id") @db.Uuid
+  reviewedBy       User?               @relation("topic_question_reviewed_by", fields: [reviewedByUserId], references: [id], onDelete: Restrict)
+  reviewedAt       DateTime?           @map("reviewed_at") @db.Timestamptz(6)
+  createdAt        DateTime            @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime            @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  options TopicQuestionOption[]
+
+  @@unique([topicId, position])
+  @@index([topicId, status])
+  @@map("topic_questions")
+}
+
+model TopicQuestionOption {
+  id         String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  questionId String        @map("question_id") @db.Uuid
+  question   TopicQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  position   Int
+  text       String
+  isCorrect  Boolean       @map("is_correct")
+
+  @@unique([questionId, position])
+  @@map("topic_question_options")
+}
+
+/// The free Knowledge Check — Milestone 14 Phase 4 (§4 row 4 approved
+/// 2026-09-27; DR-03 §2.4, §3). One row per attempt by a signed-in account
+/// holder: the questions served (ids, in order), the answers so far, and —
+/// once finished — the score, pass (≥ 70 %), the holder's name at that
+/// moment and a public ID that /verify resolves. NOT a credential (DR-01).
+model KnowledgeCheckAttempt {
+  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId      String    @map("user_id") @db.Uuid
+  user        User      @relation(fields: [userId], references: [id], onDelete: Restrict)
+  /// 50, 100 or 200.
+  size        Int
+  /// string[] — reviewed question ids in the order served.
+  questionIds Json      @map("question_ids")
+  /// { [questionId]: optionPosition } — saved page by page.
+  answers     Json      @default("{}")
+  score       Int?
+  passed      Boolean?
+  /// KC-YYYY-XXXX-XXXX, set when finished; what /verify resolves.
+  publicId    String?   @unique @map("public_id")
+  /// The profile's legal name when finished, as the result shows it.
+  holderName  String?   @map("holder_name")
+  startedAt   DateTime  @default(now()) @map("started_at") @db.Timestamptz(6)
+  finishedAt  DateTime? @map("finished_at") @db.Timestamptz(6)
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  unlockOrders Order[]
+
+  @@index([userId, startedAt])
+  @@map("knowledge_check_attempts")
+}
+
+/// The Knowledge Check result-document unlock fee — Milestone 14 Phase 5
+/// (§4 row 5 approved 2026-09-27; DR-03 §3; P13 Pakistan exempt, P14
+/// non-refundable). Same shape and rules as `SupportPaymentSetting`:
+/// admin-managed, effective-dated, insert-only; `enabled` is the switch.
+model KnowledgeCheckUnlockSetting {
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  enabled         Boolean  @default(true)
+  amountMinor     Int      @map("amount_minor")
+  currency        String   @db.Char(3)
+  label           String
+  effectiveFrom   DateTime @map("effective_from") @db.Timestamptz(6)
+  createdByUserId String?  @map("created_by_user_id") @db.Uuid
+  note            String?
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([effectiveFrom])
+  @@map("knowledge_check_unlock_settings")
 }

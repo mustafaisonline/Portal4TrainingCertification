@@ -57,6 +57,23 @@ export function supportPaymentReceivedMessage(input: { to: string; name: string;
   };
 }
 
+/** M14 Phase 5: the unlock is paid — the result document is now shown. */
+export function knowledgeCheckUnlockedMessage(input: { to: string; name: string; publicId: string; orderId: string; amountMinor: number; currency: string; receiptUrl: string | null; documentUrl: string }): EmailMessage {
+  return {
+    to: input.to,
+    templateKey: "commerce.knowledge-check-unlocked",
+    subject: `Your Knowledge Check result document — ${input.publicId}`,
+    text:
+      `Hello ${input.name},\n\n` +
+      `Thank you. Your payment has been received and the result document for Knowledge Check ${input.publicId} is now available.\n\n` +
+      `Order ${input.orderId.slice(0, 8).toUpperCase()} · Paid ${formatMoney(input.amountMinor, input.currency)}\n\n` +
+      (input.receiptUrl ? `Your Stripe receipt: ${input.receiptUrl}\n\n` : "") +
+      `View or print it here (a review of Free Learning is also needed, if you have not written one yet):\n${input.documentUrl}\n\n` +
+      `A Knowledge Check result is not the Academy's credential; the Certificate of Completion is earned by attending an expert-led training.` +
+      SIGN_OFF,
+  };
+}
+
 export function registrationCancelledMessage(input: {
   to: string;
   name: string;

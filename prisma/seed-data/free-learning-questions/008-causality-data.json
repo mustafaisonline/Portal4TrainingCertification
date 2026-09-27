@@ -1,0 +1,125 @@
+{
+  "topic": "causality-data",
+  "questions": [
+    {
+      "stem": "What does causality data help establish?",
+      "options": [
+        "The storage cost of a dataset",
+        "A cause-and-effect relationship between variables or events",
+        "The alphabetical order of records",
+        "The size of a database table",
+        "Which users can log in"
+      ],
+      "correct": 1,
+      "explanation": "Causality data helps establish how changes in one variable influence another — cause and effect."
+    },
+    {
+      "stem": "Which statement does the chapter stress about correlation?",
+      "options": [
+        "Correlation always proves causation",
+        "Correlation does not imply causation",
+        "Correlation is the same as a counterfactual",
+        "Correlation only exists in experiments",
+        "Correlation cannot be measured"
+      ],
+      "correct": 1,
+      "explanation": "Two variables may be correlated without one causing the other — the chapter repeats this in every example."
+    },
+    {
+      "stem": "In the ice cream and sunscreen example, what is the likely common factor behind both increases?",
+      "options": [
+        "Cheaper ice cream",
+        "Hot weather",
+        "A marketing campaign",
+        "School holidays",
+        "Sunscreen shortages"
+      ],
+      "correct": 1,
+      "explanation": "Hot weather leads people to buy both; neither purchase causes the other."
+    },
+    {
+      "stem": "Which method is best suited to establishing causality, according to the chapter?",
+      "options": [
+        "Observational studies alone",
+        "Controlled experiments that manipulate one variable while keeping others constant",
+        "Collecting more correlations",
+        "Asking an expert's opinion",
+        "Sorting the data by date"
+      ],
+      "correct": 1,
+      "explanation": "Controlled experiments isolate the variable of interest, which allows conclusions about its impact."
+    },
+    {
+      "stem": "Why is causality harder to establish in observational studies?",
+      "options": [
+        "The data is always too old",
+        "Potential confounding factors cannot be controlled",
+        "Observational data cannot be stored",
+        "They use too many participants",
+        "They require expensive software"
+      ],
+      "correct": 1,
+      "explanation": "Without manipulating variables, confounding factors may explain the observed relationship."
+    },
+    {
+      "stem": "What is a counterfactual analysis?",
+      "options": [
+        "Counting the number of facts in a dataset",
+        "Comparing what happened with what might have happened without a particular intervention",
+        "Checking data for spelling errors",
+        "Measuring how fast a query runs",
+        "Removing outliers from a sample"
+      ],
+      "correct": 1,
+      "explanation": "Causality often involves comparing the observed outcome with the outcome that would have occurred absent the change."
+    },
+    {
+      "stem": "What does \"temporal order\" require for causation?",
+      "options": [
+        "The effect must come before the cause",
+        "The cause must precede the effect in time",
+        "Both must happen at exactly the same instant",
+        "Neither has to happen",
+        "The data must be sorted alphabetically"
+      ],
+      "correct": 1,
+      "explanation": "Causality requires that the cause precedes the effect in time."
+    },
+    {
+      "stem": "Which of these is a statistical technique the chapter names for inferring causal relationships?",
+      "options": [
+        "Propensity score matching",
+        "Alphabetical sorting",
+        "Data compression",
+        "Backup rotation",
+        "Colour coding"
+      ],
+      "correct": 0,
+      "explanation": "Regression analysis, propensity score matching and instrumental variable analysis are named."
+    },
+    {
+      "stem": "In the studying and exam example, what alternative explanation does the chapter offer for the correlation?",
+      "options": [
+        "Exams are getting easier",
+        "Naturally diligent students both study more and perform better",
+        "Teachers grade studious students more kindly",
+        "Studying has no effect at all",
+        "Exams are scheduled at random"
+      ],
+      "correct": 1,
+      "explanation": "Diligence could drive both behaviours; a controlled experiment would be needed to establish causation."
+    },
+    {
+      "stem": "In which fields does the chapter say causality data is particularly valuable?",
+      "options": [
+        "Healthcare, economics, social sciences and marketing",
+        "Only astronomy",
+        "Only sports",
+        "Only computer gaming",
+        "Only agriculture"
+      ],
+      "correct": 0,
+      "explanation": "Understanding the impact of interventions matters most where decisions depend on it — healthcare, economics, social sciences, marketing."
+    }
+  ]
+}

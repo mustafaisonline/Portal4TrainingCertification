@@ -125,6 +125,14 @@ export async function deleteTestUser(email: string): Promise<void> {
     await prisma.$transaction([
       prisma.auditLog.deleteMany({ where: { entityType: "review", entityId: { in: reviewIds } } }),
       prisma.review.deleteMany({ where: { userId: user.id } }),
+      // M13: attendance rows restrict both their registration and the person
+      // who recorded them (an administrator or Trainer created by a spec).
+      prisma.auditLog.deleteMany({ where: { action: "attendance.recorded", entityId: { in: registrationIds } } }),
+      prisma.attendanceRecord.deleteMany({ where: { OR: [{ registrationId: { in: registrationIds } }, { recordedByUserId: user.id }] } }),
+      // M14: a reviewer restricts the questions they reviewed (the review
+      // stands, the attribution is cleared); attempts restrict their user.
+      prisma.topicQuestion.updateMany({ where: { reviewedByUserId: user.id }, data: { reviewedByUserId: null } }),
+      prisma.knowledgeCheckAttempt.deleteMany({ where: { userId: user.id } }),
       prisma.auditLog.deleteMany({ where: { entityType: { in: ["certificate", "certificate_renewal"] }, entityId: { in: [...certIds, ...renewalIds] } } }),
       prisma.certificateRenewal.deleteMany({ where: { id: { in: renewalIds } } }),
       prisma.refund.deleteMany({ where: { id: { in: refundIds } } }),

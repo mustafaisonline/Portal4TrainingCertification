@@ -26,7 +26,7 @@ function text(formData: FormData, name: string): string {
 }
 
 function revalidateHolder() {
-  revalidatePath("/account/certificate");
+  revalidatePath("/account/certifications");
   revalidatePath("/account", "layout");
   revalidatePath("/verify");
   revalidatePath("/admin/certificates");

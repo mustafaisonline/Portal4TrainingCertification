@@ -21,16 +21,28 @@ export function formatOfferingDates(startsOn: Date, endsOn: Date): string {
   return `${sameYear ? dayMonth.format(startsOn) : dayMonthYear.format(startsOn)} – ${dayMonthYear.format(endsOn)}`;
 }
 
-export function OfferingDateCard({ offering, enquiryHref }: { offering: OfferingRecord; enquiryHref: string }) {
+/** A date whose first day is today or earlier (UTC calendar day, the same
+ *  rule checkout applies) has started: it is shown, but not sold. Found by
+ *  the founder on 2026-09-27 — Register led to "This date has already
+ *  started". */
+export function offeringStarted(offering: { startsOn: Date }, now = new Date()): boolean {
+  const today = new Date(now);
+  today.setUTCHours(0, 0, 0, 0);
+  return offering.startsOn.getTime() <= today.getTime();
+}
+
+export function OfferingDateCard({ offering, enquiryHref, now = new Date() }: { offering: OfferingRecord; enquiryHref: string; now?: Date }) {
   const f = offering.format;
+  const started = offeringStarted(offering, now);
   return (
-    <Card variant="panel" className="p-5 sm:p-6" data-testid="offering-card" data-offering-id={offering.id} data-status={offering.status}>
+    <Card variant="panel" className="p-5 sm:p-6" data-testid="offering-card" data-offering-id={offering.id} data-status={started ? "started" : offering.status}>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
           <div className="mb-2 flex flex-wrap gap-2">
             {f?.badge && <Chip tone="primary">{f.badge}</Chip>}
             <Chip>{MODALITY_LABEL[offering.modality]}</Chip>
             {offering.capacity !== null && <Chip>Capacity {offering.capacity}</Chip>}
+            {started && <Chip data-testid="offering-started">Started</Chip>}
           </div>
           <p className="text-body-lg font-medium">{f?.name ?? offering.programmeTitle}</p>
           <p className="text-body-sm text-[var(--color-ink-quiet)]">
@@ -46,8 +58,14 @@ export function OfferingDateCard({ offering, enquiryHref }: { offering: Offering
         </div>
         <div className="shrink-0">
           {/* M4 (2026-09-21): an OPEN date registers through the real
-              checkout; other statuses keep the register-interest enquiry. */}
-          {offering.status === "open" ? (
+              checkout; other statuses keep the register-interest enquiry;
+              a started date (M13) offers neither — the next date is the
+              answer, via the enquiry. */}
+          {started ? (
+            <Button variant="secondary" href={enquiryHref}>
+              Ask about the next date
+            </Button>
+          ) : offering.status === "open" ? (
             <Button href={`/checkout/${offering.id}`} data-testid="register">
               Register
             </Button>

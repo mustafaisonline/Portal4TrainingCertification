@@ -83,6 +83,11 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
             Support payment setting
           </Link>{" "}
           <span className="text-[var(--color-ink-faint)]">— the small &ldquo;Support the Academy&rdquo; card payment: on/off, amount, label.</span>
+          <br />
+          <Link href="/admin/orders/unlock" className="text-[var(--color-primary)] underline underline-offset-4" data-testid="admin-unlock-setting-link">
+            Knowledge Check unlock fee
+          </Link>{" "}
+          <span className="text-[var(--color-ink-faint)]">— the one-time fee for a result document (US$10; Pakistan exempt): on/off, amount, label.</span>
         </p>
       </header>
 

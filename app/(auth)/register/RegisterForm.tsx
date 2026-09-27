@@ -6,10 +6,12 @@ import { useId, useState } from "react";
 import type { FormEvent } from "react";
 import { COUNTRIES } from "@/content/countries";
 import { authClient } from "@/modules/identity/auth-client";
+import { dobBounds, LIMITS, validateDateOfBirth } from "@/modules/identity/profile-validation";
 import { Button } from "@/shared/ui/Button";
 import { Field, FormStatus, PasswordField, SelectField } from "@/shared/ui/forms";
 
 const MIN_PASSWORD = 8; // founder decision 2026-09-21 (was 12)
+const AS_ON_ID = "As on your government ID.";
 
 export function RegisterForm({
   registrationOpen,
@@ -24,7 +26,8 @@ export function RegisterForm({
   const [consent, setConsent] = useState(false);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [fieldErrors, setFieldErrors] = useState<{ password?: string; confirm?: string }>({});
+  const [fieldErrors, setFieldErrors] = useState<{ name?: string; dateOfBirth?: string; country?: string; password?: string; confirm?: string }>({});
+  const dob = dobBounds();
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -32,11 +35,23 @@ export function RegisterForm({
     const form = new FormData(e.currentTarget);
     const name = String(form.get("name") ?? "").trim();
     const email = String(form.get("email") ?? "").trim();
+    const dateOfBirth = String(form.get("date-of-birth") ?? "").trim();
     const country = String(form.get("country") ?? "").trim();
     const password = String(form.get("password") ?? "");
     const confirm = String(form.get("password-confirm") ?? "");
 
+    // Founder decision 2026-09-27: name, date of birth and country "as on
+    // your government ID" are mandatory here, so a new account can register
+    // for a date and pay without a further profile step. The endpoint
+    // enforces the same rules (src/modules/identity/auth.ts).
     const errs: typeof fieldErrors = {};
+    if (name.length < LIMITS.legalNameMin || name.length > LIMITS.legalNameMax) errs.name = "Please enter your full name as it appears on your government ID.";
+    if (!dateOfBirth) errs.dateOfBirth = "Please enter your date of birth.";
+    else {
+      const checked = validateDateOfBirth(dateOfBirth);
+      if (!checked.ok) errs.dateOfBirth = checked.message;
+    }
+    if (!country) errs.country = "Please choose your country.";
     if (password.length < MIN_PASSWORD) errs.password = `Use at least ${MIN_PASSWORD} characters.`;
     if (confirm !== password) errs.confirm = "The two passwords do not match.";
     setFieldErrors(errs);
@@ -49,11 +64,14 @@ export function RegisterForm({
     setPending(true);
     // `consent` is not a stored field: the server's before-hook requires it on
     // this request and refuses without it (src/modules/identity/auth.ts).
+    // `dateOfBirth` is likewise not a provider field: the server reads it from
+    // this request and stores it on the person's profile row.
     const body = {
       name,
       email,
       password,
-      country: country || undefined,
+      country,
+      dateOfBirth,
       consent: true,
       callbackURL: "/account",
     };
@@ -61,7 +79,7 @@ export function RegisterForm({
     setPending(false);
     if (err) {
       setError(
-        err.code === "REGISTRATION_CLOSED" || err.code === "CONSENT_REQUIRED" || err.code === "USER_ALREADY_EXISTS"
+        err.code === "REGISTRATION_CLOSED" || err.code === "CONSENT_REQUIRED" || err.code === "USER_ALREADY_EXISTS" || err.code === "REGISTRATION_DETAILS_INVALID"
           ? err.message ?? "Registration is not available."
           : err.status === 429
             ? "Too many attempts. Please wait a minute and try again."
@@ -96,20 +114,45 @@ export function RegisterForm({
         name="name"
         autoComplete="name"
         required
-        maxLength={200}
-        hint="As you would like it to appear on any certificate of participation."
+        maxLength={LIMITS.legalNameMax}
+        hint={`${AS_ON_ID} This is the name printed on your certificate.`}
+        error={fieldErrors.name}
       />
-      <Field label="Email" type="email" name="email" autoComplete="email" inputMode="email" required maxLength={254} />
-      {/* ISO 3166-1 code (Milestone 5a): seeds the profile's country and the
-          pricing region; the after-hook mirrors the name to `users.country`. */}
-      <SelectField label="Country" name="country" autoComplete="country" optional defaultValue="">
-        <option value="">Select your country</option>
-        {COUNTRIES.map((c) => (
-          <option key={c.code} value={c.code}>
-            {c.name}
-          </option>
-        ))}
-      </SelectField>
+      <Field
+        label="Email"
+        type="email"
+        name="email"
+        autoComplete="email"
+        inputMode="email"
+        required
+        maxLength={254}
+        hint="One account per email address; this is how you sign in."
+      />
+      <div className="grid gap-5 sm:grid-cols-2">
+        {/* Stored on the profile row (user_profiles.date_of_birth), not on the
+            provider's user; mandatory since 2026-09-27 (certificate data). */}
+        <Field
+          label="Date of birth"
+          type="date"
+          name="date-of-birth"
+          autoComplete="bday"
+          required
+          min={dob.min}
+          max={dob.max}
+          hint={AS_ON_ID}
+          error={fieldErrors.dateOfBirth}
+        />
+        {/* ISO 3166-1 code (Milestone 5a): seeds the profile's country and the
+            pricing region; the after-hook mirrors the name to `users.country`. */}
+        <SelectField label="Country" name="country" autoComplete="country" required defaultValue="" hint={AS_ON_ID} error={fieldErrors.country}>
+          <option value="">Select your country</option>
+          {COUNTRIES.map((c) => (
+            <option key={c.code} value={c.code}>
+              {c.name}
+            </option>
+          ))}
+        </SelectField>
+      </div>
       <div className="grid gap-5 sm:grid-cols-2">
         <PasswordField
           label="Password"

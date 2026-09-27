@@ -98,7 +98,15 @@ async function createConfirmedRegistration(userId: string, offeringId: string, s
   return reg;
 }
 
-const BODY = "The sessions were practical and the trainer answered every question with real examples.";
+// ≥ 300 characters (founder decision 2026-09-27, M13 — "5 lines of review").
+const BODY =
+  "The sessions were practical and the trainer answered every question with real examples. " +
+  "We worked from a real dataset from the first hour, built the pipeline step by step, and left with something we could show our own teams. " +
+  "The pace was steady, the labs were well sequenced, and the follow-up notes arrived the same evening so nothing was lost.";
+// Padding so the shorter distinctive bodies below also clear the 300-character rule.
+const PAD =
+  " The exercises built on each other, the trainer checked every table before moving on, and the closing recap tied the labs back to the opening question so the whole day held together; the notes arrived the same evening." +
+  " I would recommend the training to any colleague who has to turn a business question into a working data product within a quarter.";
 
 function input(overrides: Partial<{ body: string; rating: number | null; category: string | null; consentPublic: boolean; consentPhoto: boolean }> = {}) {
   const v = validateReviewInput({
@@ -218,7 +226,7 @@ describe("createReview — snapshot, audit, one per registration", () => {
     const reg = await createConfirmedRegistration(user.id, off.id);
     const base = { userId: user.id, kind: "registration" as const, registrationId: reg.id, programmeId: flagship.id, offeringId: off.id };
     const first = await withTransaction((tx) => createReview(tx, { ...input(), ...base }));
-    const second = await withTransaction((tx) => createReview(tx, { ...input({ body: "A completely different second attempt at the same registration." }), ...base }));
+    const second = await withTransaction((tx) => createReview(tx, { ...input({ body: "A completely different second attempt at the same registration." + PAD }), ...base }));
     expect(second.created).toBe(false);
     expect(second.review.id).toBe(first.review.id);
     expect(second.review.body).toBe(BODY);
@@ -345,7 +353,7 @@ describe("moderation — approve, reject, hide, restore, with audit", () => {
     const user = await createUser("Searchable Person");
     const off = await createOffering(-2);
     const reg = await createConfirmedRegistration(user.id, off.id);
-    const { review } = await withTransaction((tx) => createReview(tx, { ...input({ rating: 2, category: "technical_issue", body: "Distinctive phrase zebra-quartz for the admin search test." }), userId: user.id, kind: "registration", registrationId: reg.id, programmeId: flagship.id, offeringId: off.id }));
+    const { review } = await withTransaction((tx) => createReview(tx, { ...input({ rating: 2, category: "technical_issue", body: "Distinctive phrase zebra-quartz for the admin search test." + PAD }), userId: user.id, kind: "registration", registrationId: reg.id, programmeId: flagship.id, offeringId: off.id }));
     const email = (await prisma.user.findUniqueOrThrow({ where: { id: user.id } })).email;
 
     const byEmail = await listReviewsForAdmin({ q: email.toUpperCase() });
@@ -382,7 +390,7 @@ describe("edit window — the author only, 7 days, back to pending", () => {
 
     await expect(withTransaction((tx) => updateOwnReview(tx, review.id, other.id, input()))).rejects.toBeInstanceOf(ReviewNotFoundError);
 
-    const edited = await withTransaction((tx) => updateOwnReview(tx, review.id, user.id, input({ body: "An edited version of my review, still long enough to be valid.", rating: 4, consentPublic: false })));
+    const edited = await withTransaction((tx) => updateOwnReview(tx, review.id, user.id, input({ body: "An edited version of my review, still long enough to be valid." + PAD, rating: 4, consentPublic: false })));
     expect(edited).toMatchObject({ rating: 4, consentPublic: false, consentPhoto: false, moderationStatus: "pending", moderatedByUserId: null, moderationNote: null });
     expect(edited.editedAt).not.toBeNull();
     expect(edited.body).toContain("edited version");

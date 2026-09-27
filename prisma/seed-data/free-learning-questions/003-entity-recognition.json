@@ -1,0 +1,125 @@
+{
+  "topic": "entity-recognition",
+  "questions": [
+    {
+      "stem": "What is Entity Recognition, commonly known as NER, used for?",
+      "options": [
+        "Compressing database tables",
+        "Identifying and extracting meaningful entities from unstructured text",
+        "Encrypting personal data",
+        "Designing user interfaces",
+        "Scheduling database backups"
+      ],
+      "correct": 1,
+      "explanation": "Named Entity Recognition identifies and extracts entities — people, organisations, locations, dates, amounts and domain terms — from unstructured text."
+    },
+    {
+      "stem": "By what other names does the chapter say Entity Recognition is known?",
+      "options": [
+        "Data cleansing and data masking",
+        "Entity identification and entity extraction",
+        "Schema design and normalisation",
+        "Indexing and partitioning",
+        "Tokenisation and hashing"
+      ],
+      "correct": 1,
+      "explanation": "It is also referred to as entity identification or entity extraction."
+    },
+    {
+      "stem": "In the data science lifecycle, at which stage is Entity Recognition typically applied?",
+      "options": [
+        "During model deployment",
+        "During data wrangling and preprocessing",
+        "After the final report is written",
+        "During database backup",
+        "During user acceptance testing"
+      ],
+      "correct": 1,
+      "explanation": "Before modelling or analytics, unstructured text must be transformed into structured features — that is where NER is applied."
+    },
+    {
+      "stem": "In the sentence \"Ali visited Kuala Lumpur on 5 January 2026 to meet PETRONAS executives\", what type of entity is PETRONAS?",
+      "options": [
+        "Person",
+        "Location",
+        "Date",
+        "Organization",
+        "Product"
+      ],
+      "correct": 3,
+      "explanation": "The chapter's example identifies Ali as a Person, Kuala Lumpur as a Location, 5 January 2026 as a Date and PETRONAS as an Organization."
+    },
+    {
+      "stem": "Which extraction approach compares text against known dictionaries or master data lists?",
+      "options": [
+        "Deep neural network extractors",
+        "Pattern matching extractors",
+        "Exact-match processors",
+        "Random sampling",
+        "Manual review"
+      ],
+      "correct": 2,
+      "explanation": "Exact-match processors compare text against known dictionaries or master data lists; hybrids combine statistical learning with rules."
+    },
+    {
+      "stem": "What is the first step in any data model, according to the chapter?",
+      "options": [
+        "Choosing a database vendor",
+        "Entity identification",
+        "Writing SQL queries",
+        "Building dashboards",
+        "Defining backup schedules"
+      ],
+      "correct": 1,
+      "explanation": "The first step in any data model is entity identification; Entity Recognition helps dig entities out of unstructured datasets."
+    },
+    {
+      "stem": "How does Entity Recognition support data governance, as the chapter describes?",
+      "options": [
+        "By deleting sensitive data automatically",
+        "By enriching metadata and improving data lineage tracking back to unstructured origins",
+        "By replacing the need for a data catalogue",
+        "By encrypting all text files",
+        "By limiting who can log in"
+      ],
+      "correct": 1,
+      "explanation": "Consistently identified entities can be tagged and catalogued, improving lineage tracking even to unstructured origins."
+    },
+    {
+      "stem": "Which is an example of a more advanced Entity Recognition capability named in the chapter?",
+      "options": [
+        "Sorting rows alphabetically",
+        "Distinguishing between two different people who share the same name",
+        "Converting a table to CSV",
+        "Counting the words in a document",
+        "Changing a file's encoding"
+      ],
+      "correct": 1,
+      "explanation": "Advanced capabilities include distinguishing identical entities, extracting relationships between entities and linking entities to master reference systems."
+    },
+    {
+      "stem": "In the school example \"I met Mr. Ahmad on Monday to discuss the Math exam\", what would \"Math\" be identified as?",
+      "options": [
+        "A Person",
+        "A Date",
+        "A Subject",
+        "An Organization",
+        "A Location"
+      ],
+      "correct": 2,
+      "explanation": "Mr. Ahmad is a Teacher (Person), Monday a Date, and Math a Subject — which then become columns in a simple school table."
+    },
+    {
+      "stem": "How does the chapter describe Entity Recognition from a data modeller's point of view?",
+      "options": [
+        "A replacement for stakeholder interviews",
+        "A bridge between unstructured chaos and structured clarity",
+        "A purely academic exercise",
+        "A way to avoid conceptual modelling",
+        "A technique only for social media data"
+      ],
+      "correct": 1,
+      "explanation": "Entity Recognition acts as a bridge between unstructured chaos and structured clarity, surfacing real-world entities embedded in narrative data."
+    }
+  ]
+}

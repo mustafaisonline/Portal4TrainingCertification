@@ -1,0 +1,125 @@
+{
+  "topic": "what-is-data",
+  "questions": [
+    {
+      "stem": "According to the author's own definition, what is data?",
+      "options": [
+        "The features and activities of an object",
+        "Any number stored in a computer",
+        "Information that has already been analysed",
+        "A report produced for management",
+        "The software that stores records"
+      ],
+      "correct": 0,
+      "explanation": "The chapter's key phrase is \"Features and Activities of an Object is Data\": the descriptive features of an object and the actions associated with it."
+    },
+    {
+      "stem": "The word \"data\" comes from the Latin \"datum\". What does datum mean?",
+      "options": [
+        "Something measured",
+        "Something given",
+        "Something stored",
+        "Something calculated",
+        "Something written"
+      ],
+      "correct": 1,
+      "explanation": "Datum means \"something given\" — a foundational input, a starting point; the French \"données\" carries the same root."
+    },
+    {
+      "stem": "In the data world, what is an \"object\" called?",
+      "options": [
+        "A record",
+        "A field",
+        "An entity",
+        "A transaction",
+        "A schema"
+      ],
+      "correct": 2,
+      "explanation": "The chapter notes that in the data world an object is called an entity, its features are attributes, and its activities are transactions."
+    },
+    {
+      "stem": "Which of these is an example of an INTERNAL activity of a car, as the chapter describes it?",
+      "options": [
+        "The car being sold to a new owner",
+        "An insurance policy affecting its value",
+        "Its mileage decreasing over time through engine wear",
+        "A modification made by the owner",
+        "The car being leased to a company"
+      ],
+      "correct": 2,
+      "explanation": "Internal activities are changes that occur within the object itself, driven by its own properties and conditions; buying, selling, leasing and modifications are external."
+    },
+    {
+      "stem": "What does the chapter say corporate data must be tied to in order to be valuable?",
+      "options": [
+        "A database vendor",
+        "Return on Investment (ROI) of at least one line of business",
+        "A government regulation",
+        "The volume of storage available",
+        "The number of employees who use it"
+      ],
+      "correct": 1,
+      "explanation": "\"For Corporate, 'Data MUST tag with ROI'\" — each line of business has data and an ROI model, and data should align with those business goals."
+    },
+    {
+      "stem": "What criticism does the chapter make of the traditional DIKW model?",
+      "options": [
+        "It has too many stages",
+        "It treats wisdom as unimportant",
+        "It does not capture the continuous, iterative nature of the data cycle",
+        "It ignores information entirely",
+        "It applies only to machine learning"
+      ],
+      "correct": 2,
+      "explanation": "Data → Information → Knowledge → Wisdom is helpful but linear; in reality one cycle's output becomes another's input, perpetually."
+    },
+    {
+      "stem": "Which of the following is NOT one of the three states of data named in the chapter?",
+      "options": [
+        "Data-at-rest",
+        "Data-in-transit",
+        "Data-in-use",
+        "Data-in-archive",
+        "All of these are named states"
+      ],
+      "correct": 3,
+      "explanation": "The three states are data-at-rest, data-in-transit and data-in-use; \"data-in-archive\" is not one of them."
+    },
+    {
+      "stem": "What is metadata, as described in the chapter?",
+      "options": [
+        "Data that has been deleted",
+        "Data about data, which offers context and improves accessibility",
+        "Core entities such as customers or products",
+        "Records of user actions and habits",
+        "Data that is currently being transferred"
+      ],
+      "correct": 1,
+      "explanation": "Metadata is data about data; master and reference data are the core entities; transactional data captures actions and habits."
+    },
+    {
+      "stem": "How does data differ from traditional assets such as machinery, according to the chapter?",
+      "options": [
+        "Data depreciates faster than machinery",
+        "Data must be replaced every year",
+        "Data gains value through use instead of being depleted",
+        "Data cannot be owned by an organisation",
+        "Data has a fixed expiry date"
+      ],
+      "correct": 2,
+      "explanation": "Physical assets deplete or depreciate with use; data's utility increases with each use, it generates more data, and it has no expiry date."
+    },
+    {
+      "stem": "What does every interaction with data produce, according to the chapter's list of data's unique properties?",
+      "options": [
+        "A backup copy",
+        "Metadata such as who accessed it, when and why",
+        "A new database table",
+        "A financial charge",
+        "A loss of accuracy"
+      ],
+      "correct": 1,
+      "explanation": "\"Generates more data\": every interaction produces metadata — who accessed it, when and for what purpose — which is itself useful data."
+    }
+  ]
+}

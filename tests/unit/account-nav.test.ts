@@ -16,15 +16,20 @@ describe("account navigation", () => {
     expect(new Set(accountNavItems.map((i) => i.label)).size).toBe(accountNavItems.length);
   });
 
-  it("isAccountItemActive: exact for the dashboard and for /account/programme, nested otherwise", () => {
-    expect(isAccountItemActive("/account", "/account")).toBe(true);
-    expect(isAccountItemActive("/account/", "/account")).toBe(true);
-    expect(isAccountItemActive("/account/orders", "/account")).toBe(false);
-    expect(isAccountItemActive("/account/programme", "/account/programme")).toBe(true);
-    expect(isAccountItemActive("/account/programmes", "/account/programme")).toBe(false);
-    expect(isAccountItemActive("/account/programmes", "/account/programmes")).toBe(true);
-    expect(isAccountItemActive("/account/programmes/abc", "/account/programmes")).toBe(true);
+  it("lists the tabs in the founder's order (Milestone 13, decisions 5–7): Profile first, no Dashboard, no catalogue tab", () => {
+    expect(accountNavItems.map((i) => i.label)).toEqual(["Profile", "My Trainings", "Certifications", "Reviews", "Orders & receipts", "Skills profile", "Notifications", "Help"]);
+    expect(accountNavItems[0]!.href).toBe("/account/profile");
+    expect(accountNavItems.map((i) => i.href)).not.toContain("/account");
+    expect(accountNavItems.map((i) => i.href)).not.toContain("/account/programme");
+  });
+
+  it("isAccountItemActive: exact or nested, trailing slashes normalised", () => {
+    expect(isAccountItemActive("/account/profile", "/account/profile")).toBe(true);
+    expect(isAccountItemActive("/account/profile/", "/account/profile")).toBe(true);
+    expect(isAccountItemActive("/account/trainings", "/account/trainings")).toBe(true);
+    expect(isAccountItemActive("/account/trainings/abc", "/account/trainings")).toBe(true);
     expect(isAccountItemActive("/account/orders/123", "/account/orders")).toBe(true);
-    expect(isAccountItemActive("/account/security", "/account/profile")).toBe(false);
+    expect(isAccountItemActive("/account/orders", "/account/profile")).toBe(false);
+    expect(isAccountItemActive("/reviews", "/reviews")).toBe(true);
   });
 });

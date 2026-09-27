@@ -24,7 +24,7 @@ import { initialExpiry, normaliseName } from "./rules";
  * so a later catalogue edit never rewrites a printed certificate.
  */
 
-export type RosterBlockReason = "registration_not_confirmed" | "offering_not_ended" | "profile_incomplete" | "already_issued";
+export type RosterBlockReason = "registration_not_confirmed" | "offering_not_ended" | "profile_incomplete" | "not_attended" | "already_issued";
 
 export type RosterEntry = {
   registrationId: string;
@@ -33,6 +33,8 @@ export type RosterEntry = {
   user: { id: string; name: string; email: string };
   /** The profile's legal name — what the certificate will print. */
   legalName: string | null;
+  /** Attendance as recorded on the sheet (M13): true / false / not recorded. */
+  attended: boolean | null;
   certificate: CertificateRecord | null;
   /** True when "Record completion" may be submitted for this row now. */
   canRecord: boolean;
@@ -66,26 +68,32 @@ export async function listRoster(offeringId: string, now = new Date(), db: Db = 
     include: {
       user: { select: { id: true, name: true, email: true, profile: { select: { legalName: true } } } },
       certificate: true,
+      attendance: { select: { attended: true } },
     },
   });
   const entries = rows.map((r): RosterEntry => {
     const legalName = r.user.profile?.legalName?.trim() || null;
     const certificate = r.certificate ? toRecord(r.certificate) : null;
+    const attended = r.attendance?.attended ?? null;
+    // M13 N6: a recorded "No" blocks completion; "not recorded" does not.
     const reason: RosterBlockReason | null = certificate
       ? "already_issued"
       : r.status !== "confirmed"
         ? "registration_not_confirmed"
         : !ended
           ? "offering_not_ended"
-          : !legalName
-            ? "profile_incomplete"
-            : null;
+          : attended === false
+            ? "not_attended"
+            : !legalName
+              ? "profile_incomplete"
+              : null;
     return {
       registrationId: r.id,
       status: r.status,
       registeredAt: r.createdAt,
       user: { id: r.user.id, name: r.user.name, email: r.user.email },
       legalName,
+      attended,
       certificate,
       canRecord: reason === null,
       reason,
@@ -127,6 +135,7 @@ const registrationInclude = {
   user: { select: { id: true, name: true, email: true, profile: { select: { legalName: true } } } },
   offering: { include: { programme: { select: { title: true } }, deliveryFormat: { select: { name: true } } } },
   certificate: true,
+  attendance: { select: { attended: true } },
 } as const;
 
 async function lockRegistration(tx: Tx, registrationId: string) {
@@ -156,6 +165,12 @@ export async function recordCompletion(input: RecordCompletionInput): Promise<Re
     const startsOn = dateColumnToIso(reg.offering.startsOn);
     if (!isIsoDate(input.completedOn) || input.completedOn < startsOn || input.completedOn > today) {
       throw new CertificateStateError("completed_on_out_of_range", `completedOn must be a date from ${startsOn} to ${today}; got "${input.completedOn}".`);
+    }
+    // M13 N6 (founder, 2026-09-27): attendance recorded as "No" refuses the
+    // certificate; nothing recorded is allowed (a small training may skip
+    // the sheet). Corrected to "Yes" on the sheet, completion proceeds.
+    if (reg.attendance?.attended === false) {
+      throw new CertificateStateError("not_attended", `Registration ${reg.id} is recorded as not attended; correct the attendance sheet before recording completion.`);
     }
     const legalName = reg.user.profile?.legalName?.trim();
     if (!legalName) {
@@ -236,7 +251,7 @@ export async function recordCompletion(input: RecordCompletionInput): Promise<Re
           certificateId: c.certificateId,
           expiresOn: c.expiresOn,
           verifyUrl: `${base}/verify/${c.certificateId}`,
-          accountUrl: `${base}/account/certificate`,
+          accountUrl: `${base}/account/certifications`,
         }),
       );
     } catch (err) {

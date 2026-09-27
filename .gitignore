@@ -76,3 +76,6 @@ deploy/logs/
 deploy/reports/
 deploy/.governance-hmac.key
 deploy/config.local.env
+
+# Founder source material (Milestone 14, P18): the book files stay in the ReferenceMaterial archive, never in the repository
+Book/

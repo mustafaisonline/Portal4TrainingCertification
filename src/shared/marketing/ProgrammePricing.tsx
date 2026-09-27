@@ -110,11 +110,14 @@ function RegionCard({
   card,
   rows,
   enquiryHref,
+  datesHref,
 }: {
   card: CheckoutRegion;
   /** The fee rows this card shows (`pricesForCard`), at least one. */
   rows: ProgrammePriceRecord[];
   enquiryHref: string;
+  /** The schedule filtered to this training (M13: "See dates and register"). */
+  datesHref: string;
 }) {
   const region = priceCardMeta(card);
   // The checkout row (the card's own region) carries the discount chip and
@@ -183,10 +186,12 @@ function RegionCard({
 
       <div className="mt-auto pt-6">
         {byCard ? (
+          // Founder decisions 2026-09-27 (M13, review question 1): ONE button,
+          // "See dates and register", to this training's dates on the
+          // schedule; "See upcoming dates" removed. Pakistan keeps "Contact us".
           <div className="flex flex-wrap gap-3">
-            <Button href="/schedule">See upcoming dates</Button>
-            <Button variant="secondary" href={enquiryHref}>
-              Register your interest
+            <Button href={datesHref} data-testid={`see-dates-${card}`}>
+              See dates and register
             </Button>
           </div>
         ) : (
@@ -357,7 +362,7 @@ export function ProgrammePricing({
             {/* One card per region, plus the "Can't pay by card?" card. */}
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4" data-testid="price-cards">
               {cards.map(({ card, rows }) => (
-                <RegionCard key={card} card={card} rows={rows} enquiryHref={enquiryHref} />
+                <RegionCard key={card} card={card} rows={rows} enquiryHref={enquiryHref} datesHref={`/schedule?training=${programmeSlug}`} />
               ))}
               <Card
                 variant="plate"

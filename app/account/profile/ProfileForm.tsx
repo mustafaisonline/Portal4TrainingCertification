@@ -131,12 +131,23 @@ export function ProfileForm({
 
   return (
     <form action={action} aria-label="Your profile" className="flex flex-col gap-8" noValidate>
+      {/* Founder request 2026-09-27: the fields checkout needs (the gate's
+          REQUIRED_FOR_CHECKOUT — name, date of birth, country) are starred
+          so it is clear which ones stand between Register and payment. */}
+      <p data-testid="profile-star-legend" className="text-body-sm text-[var(--color-ink-quiet)]">
+        <span aria-hidden="true" className="text-[var(--color-danger)]">
+          *
+        </span>{" "}
+        Needed before you can register for a date — with these filled in, Register takes you straight to payment. Everything
+        else is optional.
+      </p>
       <Card variant="panel" className="p-6 sm:p-8">
         <SectionTitle>Identity &amp; contact</SectionTitle>
         <div className="flex flex-col gap-5">
           <Field label="Email" name="email" type="email" defaultValue={view.email} readOnly hint="Changing your email is not available yet." />
           <Field
             label="Full name (as on your ID)"
+            star
             autoComplete="name"
             required
             minLength={LIMITS.legalNameMin}
@@ -202,8 +213,9 @@ export function ProfileForm({
             <Field label="Postal code" autoComplete="postal-code" maxLength={LIMITS.postalCodeMax} error={fieldErrors.postalCode} {...bind("postalCode")} />
             <SelectField
               label="Country"
+              star
               autoComplete="country"
-              hint="Sets the price region you are charged in."
+              hint="As on your government ID. Sets the price region you are charged in."
               error={fieldErrors.countryCode}
               {...bind("countryCode")}
             >
@@ -294,7 +306,7 @@ export function ProfileForm({
                 </option>
               ))}
             </SelectField>
-            <Field label="Date of birth" type="date" autoComplete="bday" min={dob.min} max={dob.max} error={fieldErrors.dateOfBirth} {...bind("dateOfBirth")} />
+            <Field label="Date of birth" star type="date" autoComplete="bday" min={dob.min} max={dob.max} hint="As on your government ID." error={fieldErrors.dateOfBirth} {...bind("dateOfBirth")} />
           </div>
         </div>
       </Card>

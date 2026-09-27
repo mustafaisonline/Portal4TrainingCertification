@@ -5,7 +5,10 @@
  * module named `constants`).
  */
 
-export const REVIEW_BODY_MIN = 20;
+// Founder decision 2026-09-27 (Milestone 13, review question 3): "5 lines of
+// review" → at least 300 characters. Reviews written under the earlier
+// 20-character rule keep satisfying the certificate gate (N3 a).
+export const REVIEW_BODY_MIN = 300;
 export const REVIEW_BODY_MAX = 2000;
 export const REVIEW_RATING_MIN = 1;
 export const REVIEW_RATING_MAX = 5;

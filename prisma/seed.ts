@@ -297,6 +297,17 @@ async function seedCertificateFee() {
   });
 }
 
+/** 2026-09-27 (founder decisions M1–M5): the "Support the Academy" payment
+ *  setting — seeded ONCE, enabled, at RM 2.00 (Stripe's MYR minimum); changed
+ *  only from Admin → Orders → Support payment afterwards. Never overwritten. */
+async function seedSupportPayment() {
+  const existing = await prisma.supportPaymentSetting.count();
+  if (existing > 0) return;
+  await prisma.supportPaymentSetting.create({
+    data: { enabled: true, amountMinor: 200, currency: "MYR", label: "Support the Academy", effectiveFrom: new Date(0), createdByUserId: null, note: "Opening setting (founder, 2026-09-27) — the card-payment check" },
+  });
+}
+
 async function main() {
   const domainIds = await seedDomains();
   const programmeIds = await seedProgrammes(domainIds);
@@ -304,6 +315,7 @@ async function main() {
   await seedFaq();
   await seedQuestions(domainIds);
   await seedCertificateFee();
+  await seedSupportPayment();
 
   const [d, p, published, m, f, pr, e, faq, q, o] = await Promise.all([
     prisma.domain.count(),

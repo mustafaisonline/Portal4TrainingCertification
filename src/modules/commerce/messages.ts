@@ -29,6 +29,8 @@ export const COMMERCE_MESSAGES: Record<CommerceErrorCode, string> = {
   transfer_wrong_programme: "Transfers are only possible between dates of the same programme.",
   refund_failed:
     "Your registration is cancelled, but the refund could not be issued automatically. It has been recorded and we will resolve it with you by email — nothing further is needed from you.",
+  support_unavailable: "The support payment is not available at the moment.",
+  support_order_pending: "You already started a support payment. Finish it in the Stripe tab, or try again in 30 minutes when that hold expires.",
 };
 
 export const PAYMENTS_NOT_CONFIGURED_MESSAGE =

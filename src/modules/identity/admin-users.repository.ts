@@ -156,7 +156,7 @@ export type AdminUserRegistration = {
 
 export type AdminUserOrder = {
   id: string;
-  kind: "registration" | "certificate_renewal";
+  kind: "registration" | "certificate_renewal" | "support";
   status: "pending" | "paid" | "expired" | "failed" | "cancelled" | "refunded" | "partially_refunded";
   currency: string;
   amountMinor: number;
@@ -358,7 +358,7 @@ export async function getUserForAdmin(id: string, db: Db = getPrisma()): Promise
       amountMinor: Number(o.amountMinor),
       createdAt: o.createdAt,
       paidAt: o.paidAt,
-      programmeTitle: o.programme.title,
+      programmeTitle: o.programme?.title ?? "Support the Academy",
       certificateCode: o.certificate?.certificateId ?? null,
     })),
     certificates: certificates.map((c) => ({ ...c })),

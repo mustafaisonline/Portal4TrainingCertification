@@ -741,9 +741,15 @@ enum OrderStatus {
 
 /// Milestone 6 (E14): what a paid order produces. `registration` → a seat
 /// (M4); `certificate_renewal` → 12 more months on an existing certificate.
+/// M12 follow-up (founder decisions M1–M5, 2026-09-27): `support` — a small
+/// one-off "Support the Academy" payment that grants nothing; it exists so
+/// the live card-payment path can be proven end to end (Stripe test mode in
+/// development, the real go-live check in production) and can be switched
+/// off in `support_payment_settings`.
 enum OrderKind {
   registration
   certificate_renewal
+  support
 
   @@map("order_kind")
 }
@@ -752,14 +758,17 @@ model Order {
   id                      String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   userId                  String            @map("user_id") @db.Uuid
   user                    User              @relation(fields: [userId], references: [id], onDelete: Restrict)
-  offeringId              String            @map("offering_id") @db.Uuid
-  offering                ScheduledOffering @relation(fields: [offeringId], references: [id], onDelete: Restrict)
-  programmeId             String            @map("programme_id") @db.Uuid
-  programme               Programme         @relation(fields: [programmeId], references: [id], onDelete: Restrict)
+  /// Null ONLY for kind = support (2026-09-27): a support payment buys no
+  /// seat and belongs to no training. Registration and renewal orders always
+  /// carry both (a renewal keeps the original registration's).
+  offeringId              String?           @map("offering_id") @db.Uuid
+  offering                ScheduledOffering? @relation(fields: [offeringId], references: [id], onDelete: Restrict)
+  programmeId             String?           @map("programme_id") @db.Uuid
+  programme               Programme?        @relation(fields: [programmeId], references: [id], onDelete: Restrict)
   status                  OrderStatus       @default(pending)
   /// M6: a renewal order keeps the original registration's offering and
-  /// programme, so neither column becomes nullable. Capacity counting and the
-  /// duplicate checks look at `registration` orders only.
+  /// programme. Capacity counting and the duplicate checks look at
+  /// `registration` orders only.
   kind                    OrderKind         @default(registration)
   certificateId           String?           @map("certificate_id") @db.Uuid
   certificate             Certificate?      @relation(fields: [certificateId], references: [id], onDelete: Restrict)
@@ -959,6 +968,28 @@ model Certificate {
 /// the newest row whose `effective_from` is not in the future. Seeded at
 /// USD 10.00 (founder, 2026-09-20; E4). `created_by_user_id` is null for the
 /// seed row only.
+/// The "Support the Academy" payment (founder decisions M1–M5, 2026-09-27):
+/// an ADMIN-MANAGED, EFFECTIVE-DATED, insert-only setting like the renewal
+/// fee — the row in force is the newest `effective_from <= now`. `enabled`
+/// false hides the card everywhere and refuses new orders (the kill switch);
+/// the amount and label are read from here at the moment an order starts,
+/// never from a form. Seeded enabled at RM 2.00 (Stripe's MYR minimum).
+model SupportPaymentSetting {
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  enabled         Boolean  @default(true)
+  amountMinor     Int      @map("amount_minor")
+  currency        String   @db.Char(3)
+  /// What Stripe's page and the receipt name it.
+  label           String
+  effectiveFrom   DateTime @map("effective_from") @db.Timestamptz(6)
+  createdByUserId String?  @map("created_by_user_id") @db.Uuid
+  note            String?
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([effectiveFrom])
+  @@map("support_payment_settings")
+}
+
 model CertificateFeeSetting {
   id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   amountMinor     Int      @map("amount_minor")

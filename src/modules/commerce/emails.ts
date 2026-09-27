@@ -40,6 +40,23 @@ export function registrationConfirmedMessage(input: {
   };
 }
 
+/** 2026-09-27 — a paid "Support the Academy" order: a thank-you and the receipt. */
+export function supportPaymentReceivedMessage(input: { to: string; name: string; label: string; orderId: string; amountMinor: number; currency: string; receiptUrl: string | null; accountUrl: string }): EmailMessage {
+  return {
+    to: input.to,
+    templateKey: "commerce.support-received",
+    subject: `Thank you — ${input.label}`,
+    text:
+      `Hello ${input.name},\n\n` +
+      `Thank you for supporting the Academy. Your payment has been received.\n\n` +
+      `${input.label}\n` +
+      `Order ${input.orderId.slice(0, 8).toUpperCase()} · Paid ${formatMoney(input.amountMinor, input.currency)}\n\n` +
+      (input.receiptUrl ? `Your Stripe receipt: ${input.receiptUrl}\n\n` : "") +
+      `Your orders and receipts are in your account:\n${input.accountUrl}` +
+      SIGN_OFF,
+  };
+}
+
 export function registrationCancelledMessage(input: {
   to: string;
   name: string;

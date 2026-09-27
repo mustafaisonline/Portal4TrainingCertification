@@ -146,6 +146,7 @@ Check: the response is `{"considered":n,"queued":m,"skipped":k}` and admin → A
 - [ ] Server started with no `[config]` refusal; `/api/health` → 200, `db: up`, `migration` = newest folder in `prisma/migrations`
 - [ ] Security headers present (`curl -sI https://<domain>/` shows `strict-transport-security`, `x-frame-options: DENY`, `x-content-type-options: nosniff`)
 - [ ] Stripe production webhook added and test event → 200
+- [ ] **Live card-payment check (M11 K16):** sign in on production → `/support` → pay RM 2.00 with a real card → the order shows *Paid* under Orders & receipts and Admin → Orders (kind "Support payment"), the thank-you email is recorded. Then Admin → Orders → Support payment: leave it enabled, or switch it off (2026-09-27, ADR-048)
 - [ ] Scheduler configured; first manual run → 200 with counts
 - [ ] Uptime checks on `/api/health` and `/verify` (MONITORING_AND_INCIDENTS §1)
 - [ ] Backup schedule live and **one restore rehearsal passed against production** (BACKUP_AND_RESTORE §3)

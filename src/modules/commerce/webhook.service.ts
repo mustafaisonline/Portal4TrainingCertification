@@ -6,7 +6,7 @@ import { sendEmail, type EmailMessage } from "@/modules/notifications/email";
 import { writeAudit } from "@/modules/platform/audit/repository";
 import { formatDateRange } from "@/shared/util/dates";
 import { appBaseUrl } from "./checkout.service";
-import { registrationConfirmedMessage } from "./emails";
+import { registrationConfirmedMessage, supportPaymentReceivedMessage } from "./emails";
 import { recomputePaymentStatus } from "./payments";
 import { mapRefundStatus, stripeGateway, type PaymentGateway, type Stripe } from "./stripe";
 
@@ -255,6 +255,32 @@ async function sessionPaid(tx: Tx, event: Stripe.Event, session: Stripe.Checkout
     });
     return { status: "processed", note: renewal.note, emails: renewal.email ? [renewal.email] : [] };
   }
+
+  // 2026-09-27: a "Support the Academy" payment produces nothing but the
+  // paid order, its payment row and a thank-you — by design (M1–M5).
+  if (order.kind === "support") {
+    const label = (await tx.auditLog.findFirst({ where: { entityType: "order", entityId: order.id, action: "order.created" }, select: { after: true } }))?.after as { label?: string } | null;
+    return {
+      status: "processed",
+      note: "support payment recorded; nothing is granted",
+      emails: [
+        supportPaymentReceivedMessage({
+          to: order.user.email,
+          name: order.user.name,
+          label: label?.label ?? "Support the Academy",
+          orderId: order.id,
+          amountMinor,
+          currency,
+          receiptUrl: payment.receiptUrl,
+          accountUrl: `${appBaseUrl()}/account/orders`,
+        }),
+      ],
+    };
+  }
+
+  // A registration order always carries its offering (the column is null
+  // only for kind = support); a row that does not is corrupt, never guessed.
+  if (!order.offeringId || !order.offering) throw new Error(`registration order ${order.id} has no offering`);
 
   const registration = await tx.registration.upsert({
     where: { orderId: order.id },

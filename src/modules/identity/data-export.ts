@@ -190,7 +190,7 @@ export async function buildDataExport(userId: string, db: Db = getPrisma(), now 
         timezone: r.offering.timezone,
       })),
     ),
-    orders: asRecords(orders.map(({ programme, ...o }) => ({ ...o, programmeTitle: programme.title }))),
+    orders: asRecords(orders.map(({ programme, ...o }) => ({ ...o, programmeTitle: programme?.title ?? "Support the Academy" }))),
     payments: asRecords(payments),
     refunds: asRecords(refunds),
     reviews: asRecords(reviews.map(({ programme, ...r }) => ({ ...r, programmeTitle: programme.title }))),

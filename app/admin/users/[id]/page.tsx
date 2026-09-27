@@ -304,7 +304,7 @@ export default async function AdminUserDetailPage({ params }: { params: Promise<
                 <tr key={o.id} className="border-b border-[var(--color-line)] last:border-b-0" data-testid="admin-user-order-row">
                   <td className={`${td} whitespace-nowrap text-[var(--color-ink-quiet)]`}>{formatTimestamp(o.createdAt)}</td>
                   <td className={td}>
-                    {o.kind === "registration" ? "Registration" : "Certificate renewal"}
+                    {o.kind === "registration" ? "Registration" : o.kind === "support" ? "Support payment" : "Certificate renewal"}
                     {o.certificateCode ? <span className="text-mono text-[var(--color-ink-quiet)]"> {o.certificateCode}</span> : null}
                   </td>
                   <td className={td}>{o.programmeTitle}</td>

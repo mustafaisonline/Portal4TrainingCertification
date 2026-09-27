@@ -24,7 +24,10 @@ export type CommerceErrorCode =
   | "transfer_used"
   | "transfer_same_offering"
   | "transfer_wrong_programme"
-  | "refund_failed";
+  | "refund_failed"
+  // 2026-09-27 — the "Support the Academy" payment
+  | "support_unavailable"
+  | "support_order_pending";
 
 export class CommerceError extends Error {
   readonly code: CommerceErrorCode;

@@ -78,7 +78,7 @@ export default async function AdminOrderDetailPage({ params }: { params: Promise
             <Row label="Programme">
               {order.programmeTitle}
               <p className="text-[var(--color-ink-quiet)]">
-                {order.formatName} · {formatDateRange(order.startsOn, order.endsOn)}
+                {order.formatName}{order.startsOn && order.endsOn ? ` · ${formatDateRange(order.startsOn, order.endsOn)}` : ""}
               </p>
             </Row>
             <Row label="Placed">{formatTimestamp(order.createdAt)}</Row>

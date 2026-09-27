@@ -104,35 +104,37 @@ test("the header avatar menu opens and lists the account screens and Sign out", 
   await expect(page.getByTestId("account-menu")).toHaveCount(0);
 });
 
-test("dashboard greets the person by name and shows the flagship from the database", async ({ page }) => {
-  const { findFlagshipProgramme } = await import("../../src/modules/catalogue/programmes/repository");
-  const flagship = await findFlagshipProgramme();
-  expect(flagship, "seeded flagship").not.toBeNull();
+test("dashboard greets the person by name; shows what is open to register for, honest empty states, roles in words; the Trainings screen lists every published training (M12)", async ({ page }) => {
+  const { listPublishedProgrammes } = await import("../../src/modules/catalogue/programmes/repository");
+  const published = await listPublishedProgrammes();
+  expect(published.length, "seeded published trainings").toBeGreaterThan(0);
 
   const email = newEmail("e2e-acct-dash");
   await registerViaUi(page, email, "Dana Dashboard");
   await signInViaUi(page, email);
 
   await expect(page.getByTestId("welcome")).toHaveText("Welcome, Dana Dashboard");
-  await expect(page.getByTestId("flagship-title")).toHaveText(flagship!.title);
-  // 2026-09-26: "View the training" deep-links the flagship's /programs page.
-  await expect(page.getByRole("link", { name: "View the training" })).toHaveAttribute("href", `/programs/${flagship!.slug}`);
-  await expect(page.getByRole("link", { name: "Register interest" })).toHaveAttribute(
-    "href",
-    `/contact-us?kind=programme_interest&programme=${flagship!.slug}`,
-  );
+  // Either open dates to register for, or the honest "no open dates" card — never a fixed promo.
+  await expect(page.getByTestId("dash-open-dates").or(page.getByTestId("dash-browse"))).toBeVisible();
+  await expect(page.getByRole("link", { name: "Full schedule" })).toHaveAttribute("href", "/schedule");
   // Honest empty states — nothing is registered, ordered or issued yet.
-  await expect(page.getByText("You are not registered for a programme yet.")).toBeVisible();
+  await expect(page.getByTestId("dash-no-registrations")).toHaveText("You are not registered for a training yet.");
   await expect(page.getByText("No orders yet.")).toBeVisible();
-  await expect(page.getByText("Issued when you complete the programme.")).toBeVisible();
+  await expect(page.getByText("Issued when you complete a training.")).toBeVisible();
+  await expect(page.getByTestId("account-roles")).toHaveText("Participant");
+  await expect(page.getByTestId("dash-admin-link")).toHaveCount(0);
   await expectNoAxeViolations(page);
 
   await page.goto("/account/programme");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText(flagship!.title);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Trainings");
   // The sidebar item is "Trainings" (founder, 2026-09-26) and is current here.
   await expect(page.getByRole("navigation", { name: "Account" }).getByRole("link", { name: "Trainings", exact: true })).toHaveAttribute("aria-current", "page");
-  const body = await page.locator("body").innerText();
-  for (const f of flagship!.deliveryFormats) expect(body, `format ${f.code}`).toContain(f.name);
+  const cards = page.getByTestId("account-training");
+  await expect(cards).toHaveCount(published.length);
+  for (const t of published) {
+    await expect(page.locator(`[data-testid="account-training"][data-slug="${t.slug}"]`)).toContainText(t.title);
+    await expect(page.locator(`[data-testid="account-training"][data-slug="${t.slug}"]`).getByRole("link", { name: "View the training" })).toHaveAttribute("href", `/programs/${t.slug}`);
+  }
   await expectNoAxeViolations(page);
 });
 

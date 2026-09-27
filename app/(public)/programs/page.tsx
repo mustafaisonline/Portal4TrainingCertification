@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { listPublishedProgrammesWithPrices } from "@/modules/catalogue/programmes/repository";
+import { formatMoney } from "@/modules/catalogue/programmes/types";
+import { enabledSupportSetting } from "@/modules/commerce/support.repository";
 import { CourseCard } from "@/shared/marketing/CourseCard";
 import { Button } from "@/shared/ui/Button";
 
@@ -24,7 +26,7 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function TrainingsPage() {
-  const programmes = await listPublishedProgrammesWithPrices();
+  const [programmes, support] = await Promise.all([listPublishedProgrammesWithPrices(), enabledSupportSetting()]);
 
   return (
     <>
@@ -67,6 +69,22 @@ export default async function TrainingsPage() {
           </ol>
         )}
       </section>
+
+      {/* ===== Support the Academy (2026-09-27, M5) — shown only while the setting is enabled ===== */}
+      {support ? (
+        <section className="border-t border-[var(--color-line)] bg-[var(--color-ground)]" data-testid="programs-support">
+          <div className="mx-auto flex max-w-[1280px] flex-wrap items-center justify-between gap-6 px-6 py-10">
+            <div>
+              <p className="text-label mb-1 text-[var(--color-primary)]">Support</p>
+              <h2 className="text-h1 mb-1">{support.label}</h2>
+              <p className="text-body-sm text-[var(--color-ink-quiet)]">Like what we do? A one-off {formatMoney(support.amountMinor, support.currency)} by card helps keep the free material free. Nothing is unlocked.</p>
+            </div>
+            <Button variant="secondary" href="/support">
+              Support the Academy
+            </Button>
+          </div>
+        </section>
+      ) : null}
 
       {/* ===== Closing CTA row ===== */}
       <section className="border-t border-[var(--color-line)] bg-[var(--color-ground-raised)]">

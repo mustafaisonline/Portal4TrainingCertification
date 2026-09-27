@@ -44,7 +44,7 @@ export type RegistrationView = {
   refunds: RefundView[];
 };
 
-export type OrderKind = "registration" | "certificate_renewal";
+export type OrderKind = "registration" | "certificate_renewal" | "support";
 
 export type OrderView = {
   id: string;
@@ -59,13 +59,18 @@ export type OrderView = {
   amountMinor: number;
   currency: string;
   region: PriceRegion;
+  /** For a `support` order: the payment's label ("Support the Academy"). */
   programmeTitle: string;
   formatName: string;
-  startsOn: Date;
-  endsOn: Date;
+  /** Null for a `support` order — it has no date (2026-09-27). */
+  startsOn: Date | null;
+  endsOn: Date | null;
   receiptUrl: string | null;
   registrationId: string | null;
 };
+
+/** What a support order is called in every order list. */
+export const SUPPORT_ORDER_TITLE = "Support the Academy";
 
 const registrationInclude = {
   order: { include: { payment: { include: { refunds: { orderBy: { createdAt: "asc" as const } } } } } },
@@ -151,10 +156,10 @@ export async function listOrdersForUser(userId: string): Promise<OrderView[]> {
     amountMinor: Number(o.amountMinor),
     currency: o.currency,
     region: o.region,
-    programmeTitle: o.offering.programme.title,
-    formatName: o.offering.deliveryFormat?.name ?? MODALITY_LABEL[o.offering.modality],
-    startsOn: o.offering.startsOn,
-    endsOn: o.offering.endsOn,
+    programmeTitle: o.offering ? o.offering.programme.title : SUPPORT_ORDER_TITLE,
+    formatName: o.offering ? (o.offering.deliveryFormat?.name ?? MODALITY_LABEL[o.offering.modality]) : "One-off payment",
+    startsOn: o.offering?.startsOn ?? null,
+    endsOn: o.offering?.endsOn ?? null,
     receiptUrl: o.payment?.receiptUrl ?? null,
     registrationId: o.registration?.id ?? null,
   }));

@@ -64,7 +64,7 @@ function OrderBanner({ order, now }: { order: OrderView | null; now: Date }) {
             Payment received? We are confirming with Stripe — this page refreshes.
           </p>
           <p className="text-body-sm text-[var(--color-ink-quiet)]">
-            {order.programmeTitle} · {order.formatName} · {formatDateRange(order.startsOn, order.endsOn)} · {formatMoney(order.amountMinor, order.currency)}
+            {order.programmeTitle} · {order.formatName}{order.startsOn && order.endsOn ? ` · ${formatDateRange(order.startsOn, order.endsOn)}` : ""} · {formatMoney(order.amountMinor, order.currency)}
           </p>
           <p className="text-body-sm mt-2 text-[var(--color-ink-faint)]">
             Your place is confirmed only when Stripe reports the payment as complete. If you closed the Stripe page without paying, the hold
@@ -82,7 +82,7 @@ function OrderBanner({ order, now }: { order: OrderView | null; now: Date }) {
           You are registered
         </h2>
         <p className="text-body-sm text-[var(--color-ink-quiet)]">
-          {order.programmeTitle} · {order.formatName} · {formatDateRange(order.startsOn, order.endsOn)}. A confirmation email has been queued;
+          {order.programmeTitle} · {order.formatName}{order.startsOn && order.endsOn ? ` · ${formatDateRange(order.startsOn, order.endsOn)}` : ""}. A confirmation email has been queued;
           joining details follow before the first session.
         </p>
         <div className="mt-4 flex flex-wrap gap-3">

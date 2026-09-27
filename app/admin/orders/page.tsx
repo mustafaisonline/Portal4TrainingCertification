@@ -78,6 +78,12 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
           Every order the portal created, paid or not, with its payment, refunds and registration. This screen is read-only: refunds on behalf of a participant are made from the
           Stripe dashboard for now and appear here once the webhook records them.
         </p>
+        <p className="text-body-sm mt-2">
+          <Link href="/admin/orders/support" className="text-[var(--color-primary)] underline underline-offset-4" data-testid="admin-support-setting-link">
+            Support payment setting
+          </Link>{" "}
+          <span className="text-[var(--color-ink-faint)]">— the small &ldquo;Support the Academy&rdquo; card payment: on/off, amount, label.</span>
+        </p>
       </header>
 
       <Card variant="panel" className="p-5">
@@ -194,7 +200,7 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
                   <td className="px-4 py-3 text-[var(--color-ink-quiet)]">
                     <p className="text-[var(--color-ink)]">{o.programmeTitle}</p>
                     <p className="whitespace-nowrap">
-                      {o.formatName} · {formatDateRange(o.startsOn, o.endsOn)}
+                      {o.formatName}{o.startsOn && o.endsOn ? ` · ${formatDateRange(o.startsOn, o.endsOn)}` : ""}
                     </p>
                   </td>
                   <td className="px-4 py-3 whitespace-nowrap text-[var(--color-ink-quiet)]">

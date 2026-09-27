@@ -58,7 +58,9 @@ export type AuditAction =
   | "programme.formats_updated"
   | "programme.fee_updated"
   | "programme.fee_removed"
-  | "programme.status_changed";
+  | "programme.status_changed"
+  // 2026-09-27 — the "Support the Academy" payment's admin setting
+  | "support_payment.changed";
 
 export type AuditEntry = {
   /** Our `users.id`; null when the system acted on its own. */

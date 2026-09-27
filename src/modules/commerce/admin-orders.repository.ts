@@ -4,7 +4,7 @@ import { isUuid, MODALITY_LABEL } from "@/modules/catalogue/offerings/repository
 import type { PriceRegion } from "@/modules/catalogue/programmes/types";
 import { addDays, isIsoDate, zonedLocalToInstant } from "@/modules/certificates/dates";
 import { listAuditForEntity, type AuditRecord } from "@/modules/platform/audit/repository";
-import type { OrderKind, OrderStatus, RefundStatus, RegistrationStatus } from "./registrations.service";
+import { SUPPORT_ORDER_TITLE, type OrderKind, type OrderStatus, type RefundStatus, type RegistrationStatus } from "./registrations.service";
 
 /*
  * Orders & payments for administrators (Milestone 8 plan §2 item 2) —
@@ -25,8 +25,8 @@ export const ORDER_STATUS_LABEL: Record<OrderStatus, string> = {
   refunded: "Refunded",
   partially_refunded: "Partially refunded",
 };
-export const ORDER_KINDS = ["registration", "certificate_renewal"] as const satisfies readonly OrderKind[];
-export const ORDER_KIND_LABEL: Record<OrderKind, string> = { registration: "Registration", certificate_renewal: "Certificate renewal" };
+export const ORDER_KINDS = ["registration", "certificate_renewal", "support"] as const satisfies readonly OrderKind[];
+export const ORDER_KIND_LABEL: Record<OrderKind, string> = { registration: "Registration", certificate_renewal: "Certificate renewal", support: "Support payment" };
 export const REFUND_REASON_LABEL: Record<"participant_cancellation" | "academy_cancellation" | "manual", string> = {
   participant_cancellation: "Participant cancellation",
   academy_cancellation: "Academy cancellation",
@@ -69,8 +69,9 @@ export type AdminOrderListItem = {
   userName: string;
   programmeTitle: string;
   formatName: string;
-  startsOn: Date;
-  endsOn: Date;
+  /** Null for a `support` order (2026-09-27). */
+  startsOn: Date | null;
+  endsOn: Date | null;
   registrationId: string | null;
   registrationStatus: RegistrationStatus | null;
   certificateCode: string | null;
@@ -143,10 +144,10 @@ export async function listOrdersForAdmin(filters: AdminOrderFilters = {}, db: Db
       userId: o.userId,
       userEmail: o.user.email,
       userName: o.user.name,
-      programmeTitle: o.offering.programme.title,
-      formatName: o.offering.deliveryFormat?.name ?? MODALITY_LABEL[o.offering.modality],
-      startsOn: o.offering.startsOn,
-      endsOn: o.offering.endsOn,
+      programmeTitle: o.offering ? o.offering.programme.title : SUPPORT_ORDER_TITLE,
+      formatName: o.offering ? (o.offering.deliveryFormat?.name ?? MODALITY_LABEL[o.offering.modality]) : "One-off payment",
+      startsOn: o.offering?.startsOn ?? null,
+      endsOn: o.offering?.endsOn ?? null,
       registrationId: o.registration?.id ?? null,
       registrationStatus: o.registration?.status ?? null,
       certificateCode: o.certificate?.certificateId ?? null,
@@ -247,10 +248,10 @@ export async function getOrderForAdmin(id: string, db: Db = getPrisma()): Promis
     userId: o.userId,
     userEmail: o.user.email,
     userName: o.user.name,
-    programmeTitle: o.offering.programme.title,
-    formatName: o.offering.deliveryFormat?.name ?? MODALITY_LABEL[o.offering.modality],
-    startsOn: o.offering.startsOn,
-    endsOn: o.offering.endsOn,
+    programmeTitle: o.offering ? o.offering.programme.title : SUPPORT_ORDER_TITLE,
+    formatName: o.offering ? (o.offering.deliveryFormat?.name ?? MODALITY_LABEL[o.offering.modality]) : "One-off payment",
+    startsOn: o.offering?.startsOn ?? null,
+    endsOn: o.offering?.endsOn ?? null,
     registrationId: o.registration?.id ?? null,
     registrationStatus: o.registration?.status ?? null,
     certificateCode: o.certificate?.certificateId ?? null,

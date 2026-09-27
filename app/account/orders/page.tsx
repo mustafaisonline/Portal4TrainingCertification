@@ -66,7 +66,9 @@ export default async function OrdersPage() {
                       <p className="text-body-sm text-[var(--color-ink)]">
                         {o.kind === "certificate_renewal"
                           ? `Certificate renewal${o.certificateCode ? ` · ${o.certificateCode}` : ""}`
-                          : `${o.formatName} · ${formatDateRange(o.startsOn, o.endsOn)}`}
+                          : o.kind === "support" || !o.startsOn || !o.endsOn
+                            ? "One-off payment — thank you for supporting the Academy"
+                            : `${o.formatName} · ${formatDateRange(o.startsOn, o.endsOn)}`}
                       </p>
                       <p className="text-body-sm text-[var(--color-ink-quiet)]">
                         Placed {formatTimestamp(o.createdAt)}

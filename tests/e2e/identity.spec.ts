@@ -83,7 +83,7 @@ test("register → verify → signed-in account page shows OUR identity and role
   await page.goto(firstLink(mail.textBody));
   await expect(page).toHaveURL(/\/account$/);
   await expect(page.getByTestId("account-verified")).toHaveText("Verified");
-  await expect(page.getByTestId("account-roles")).toContainText("participant");
+  await expect(page.getByTestId("account-roles")).toContainText("Participant"); // roles in words since the M12 dashboard rework
   await expect(page.getByTestId("header-account")).toBeVisible();
   await expectNoAxeViolations(page);
 });

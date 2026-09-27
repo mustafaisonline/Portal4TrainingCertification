@@ -2,85 +2,44 @@
 
 /*
  * PORTED 2026-09-21 from project-artifacts/mockup/components/signature/DiagnosticStartCard.tsx
- * (ADR-045). Changes on port: `QUESTION_COUNT_TIERS` comes from
- * `@/shared/signature/diagnostic`; the available tier is matched against an
- * optional `questionCount` prop (the real seeded count, from the repository)
- * rather than a literal — omitted, it falls back to the smallest tier, which
- * is what the mockup hard-coded. Copy and markup unchanged.
+ * (ADR-045). Reduced 2026-09-27 to the ten-question diagnostic only — see
+ * the component note below.
  */
 
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
-import { QUESTION_COUNT_TIERS } from "./diagnostic";
 
 /**
- * The "before you start" card — question-count tier selector, the Start
- * button, and the Certificate-of-Attempt disclaimer. Lives in exactly one
- * place so both entry points — the homepage embed and the standalone
- * /diagnostic page's idle stage — can never drift apart.
+ * The "before you start" card — the Start button and the plain terms. Lives
+ * in exactly one place so both entry points — the homepage band and the
+ * standalone /free-learning/diagnostic page's idle stage — can never drift.
  *
- * Only the smallest tier is backed by the seeded question set. What clicking
- * an unavailable tier does depends on where this renders:
- * - Homepage: `onUnavailableTier` navigates to the full /diagnostic page.
- * - /diagnostic itself: `onUnavailableTier` is omitted, so those tiers stay
- *   genuinely disabled — there is nowhere further to send them from here.
+ * Founder, 2026-09-27: the diagnostic is ten questions, full stop — the
+ * 50 / 100 / 200 "(soon)" tiers and the Certificate-of-Attempt sentence are
+ * gone. "This test is just for anyone to test their basic concepts." The
+ * longer free checks are the Knowledge Check (50 / 100 / 200, account holders).
+ * `onUnavailableTier` and `questionCount` stay in the signature for the
+ * callers; nothing reads them now.
  */
 export function DiagnosticStartCard({
   onStart,
-  onUnavailableTier,
-  questionCount,
 }: {
   onStart: () => void;
   onUnavailableTier?: () => void;
   /** Number of questions actually available (repository count). */
   questionCount?: number;
 }) {
-  const availableCount = questionCount ?? QUESTION_COUNT_TIERS[0].count;
   return (
     <Card variant="feature">
-      <p className="text-label mb-3">Number of questions</p>
-      <div className="mb-6 flex flex-wrap gap-2.5">
-        {QUESTION_COUNT_TIERS.map(({ count, tier }) => {
-          const isAvailable = count === availableCount;
-          const clickable = isAvailable || Boolean(onUnavailableTier);
-          const toneClasses = isAvailable
-            ? "border-[var(--color-primary)] text-[var(--color-primary)]"
-            : clickable
-              ? "border-[var(--color-line)] text-[var(--color-ink-faint)] hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
-              : "cursor-not-allowed border-[var(--color-line)] text-[var(--color-ink-faint)] opacity-60";
-          return (
-            <button
-              key={count}
-              type="button"
-              disabled={!clickable}
-              onClick={isAvailable ? onStart : onUnavailableTier}
-              aria-disabled={!clickable}
-              title={
-                isAvailable
-                  ? "Start the free 10-question diagnostic"
-                  : onUnavailableTier
-                    ? "Not available inline — continue on the full diagnostic page"
-                    : "Coming soon — not yet available"
-              }
-              className={`text-label inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 transition-colors ${toneClasses}`}
-            >
-              {count} · {tier}
-              {!isAvailable && (
-                <span className="text-[0.65rem] normal-case tracking-normal">
-                  (soon)
-                </span>
-              )}
-            </button>
-          );
-        })}
-      </div>
+      <p className="text-label mb-3">Ten questions · about ten minutes</p>
+      <p className="text-body-sm mb-6 max-w-[52ch] text-[var(--color-ink-quiet)]" data-testid="diagnostic-basics">
+        A quick check of basic data and AI concepts — not a score, not a credential. For a longer free test with a
+        verifiable result, take the Knowledge Check once you have an account.
+      </p>
       <Button onClick={onStart}>Start free diagnostic (10 min)</Button>
       <p className="mt-4 text-body-sm text-[var(--color-ink-faint)]">
-        The diagnostic itself is always free — no account needed. A
-        Certificate of Attempt for a strong result is a separate, optional
-        step: it needs a free account and a one-time USD 10 fee. See
-        &ldquo;Certificate of attempt&rdquo; on your result page for
-        details.
+        Always free, no account needed — and your answers stay in your browser: we do not save your diagnostic
+        results.
       </p>
     </Card>
   );

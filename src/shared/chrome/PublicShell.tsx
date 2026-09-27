@@ -29,6 +29,15 @@ import { footerExplore, footerLegal, isActive, primaryNav, siteSearch, verifyLin
  * footer.
  */
 
+function IconSearch() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="11" cy="11" r="7" />
+      <path d="m20 20-3.5-3.5" />
+    </svg>
+  );
+}
+
 function IconMenu() {
   return (
     <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
@@ -63,7 +72,7 @@ export function PublicShell({
     <div className="flex min-h-dvh flex-col">
       <header className="night sticky top-0 z-10 border-b border-[var(--color-line)] bg-[var(--color-ground)]/95 backdrop-blur">
         <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
-          <Link href="/" className="flex min-w-0 items-center gap-3">
+          <Link href="/" className="flex shrink-0 items-center gap-3">
             <LogoMark />
             <span className="leading-tight">
               <span className="wordmark block sm:whitespace-nowrap">Data &amp; AI Academy</span>
@@ -98,7 +107,17 @@ export function PublicShell({
             })}
           </nav>
           {/* M14 P17: the search bar replaces the "Search Candidate" item. */}
-          <form role="search" action={siteSearch.action} method="get" className="hidden min-w-0 items-center lg:flex" data-testid="site-search">
+          {/* 1024–1279 px: the four items fit only without the input, so the search
+              is a magnifier that opens /search (its own box); the input returns at 1280 px. */}
+          <Link
+            href="/search"
+            aria-label={siteSearch.label}
+            className="hidden h-10 w-10 shrink-0 place-items-center rounded-[var(--radius-plate)] border border-[var(--color-line-strong)] text-[var(--color-ink)] lg:grid xl:hidden"
+            data-testid="site-search-link"
+          >
+            <IconSearch />
+          </Link>
+          <form role="search" action={siteSearch.action} method="get" className="hidden min-w-0 items-center xl:flex" data-testid="site-search">
             <label htmlFor="site-search-q" className="sr-only">
               {siteSearch.label}
             </label>
@@ -109,7 +128,7 @@ export function PublicShell({
               placeholder={siteSearch.placeholder}
               autoComplete="off"
               maxLength={200}
-              className="text-body-sm w-44 xl:w-56 rounded-[var(--radius-plate)] border border-[var(--color-line-strong)] bg-[var(--color-ground)] px-3 py-1.5 text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] xl:w-64"
+              className="text-body-sm w-56 rounded-[var(--radius-plate)] border border-[var(--color-line-strong)] bg-[var(--color-ground)] px-3 py-1.5 text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] xl:w-64"
             />
           </form>
           <div className="flex shrink-0 items-center gap-3">

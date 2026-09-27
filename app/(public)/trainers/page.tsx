@@ -4,7 +4,6 @@ import { listPublishedExperts } from "@/modules/catalogue/experts/repository";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { Chip } from "@/shared/ui/Chip";
-import { TakeAwayBooks } from "@/shared/marketing/TakeAwayBooks";
 
 /*
  * PORTED 2026-09-21 from project-artifacts/mockup/app/trainers/page.tsx (ADR-045)
@@ -33,19 +32,20 @@ import { TakeAwayBooks } from "@/shared/marketing/TakeAwayBooks";
  *  2. "No placeholder profiles, ghost cards or 'coming soon' profiles —
  *     ever" (DR-02 §7; P01_DESIGN_DECISIONS). No trainer may be invented.
  *
- * Resolved by making the grid genuinely scalable and giving the one unfilled
- * position the SAME visual language as a reserved image slot — ember tint,
- * dashed border, explicitly a slot rather than a person. It names nobody,
- * shows no silhouette, and says in plain words that it is empty and why.
- * Everything else on the page earns its space from real material.
+ * Resolved by making the grid genuinely scalable. The dashed "reserved
+ * position" slot that once stood beside the one trainer was removed on the
+ * founder's instruction (2026-09-27: "remove the empty training card; when a
+ * new trainer comes, I will add later") — the grid simply grows with the
+ * published experts. Everything on the page earns its space from real material.
  *
  * TRAINER CARD — 2026-09-06, founder direction, from a supplied reference
  * image: three icon-prefixed rows (briefcase/pin/globe, original inline SVG
  * glyphs — `experienceLine` and `location` are split on " · " for this),
  * an "Expertise areas" label above the chips, and a "View full profile"
  * button with an arrow icon. "Selected delivery" (career achievements) and
- * "Published work" (books) are deliberately not rendered here; the data is
- * untouched on the expert record.
+ * "Published work" (books) are not rendered here (founder, 2026-09-27: the
+ * books stay on Free Training & Certification only); the data is untouched
+ * on the expert record.
  */
 
 /** Capitalises a lowercase data fragment for display — `location`'s second
@@ -235,14 +235,6 @@ export default async function TrainersPage() {
                 {lead.summary}
               </p>
 
-              {/* Take away — M14 Phase 1 (P6: on the trainer profile too). */}
-              {lead.profile.books && lead.profile.books.length > 0 ? (
-                <div className="mb-6" id="take-away" data-testid="trainer-take-away">
-                  <p className="text-label mb-3">Take away — published work</p>
-                  <TakeAwayBooks books={lead.profile.books} author={lead.name} compact />
-                </div>
-              ) : null}
-
               <div className="mb-6">
                 <p className="text-label mb-3">Expertise areas</p>
                 <div className="flex flex-wrap gap-2">
@@ -348,37 +340,7 @@ export default async function TrainersPage() {
             );
           })}
 
-          {/* ── Reserved position ─────────────────────────────────────
-              NOT a ghost profile. It names nobody, shows no silhouette and
-              carries no invented credentials — it is the trainer equivalent
-              of an empty ImageFrame, in the same ember language, saying in
-              plain words that the position is open and that it will only
-              ever be filled by a real person. Remove this block to return
-              to a strict "only what exists" index. */}
-          <div
-            role="note"
-            aria-label="Open trainer position — no trainer appointed yet"
-            className="flex flex-col items-center justify-center rounded-[var(--radius-panel)] border-2 border-dashed border-[var(--color-accent-line)] bg-[var(--color-accent-soft)] p-8 text-center"
-          >
-            <span
-              className="text-label mb-3"
-              style={{ color: "var(--color-accent-ink)" }}
-            >
-              Position open — nobody appointed
-            </span>
-            <p className="text-h2 mb-3 max-w-[30ch]">
-              The next trainer is not on this page yet
-            </p>
-            <p className="text-body-sm mb-6 max-w-[46ch] text-[var(--color-ink-quiet)]">
-              We are deliberately slow here. A trainer appears only once they
-              have genuinely been appointed and can meet the standard below —
-              there are no placeholder profiles on this page, and there never
-              will be.
-            </p>
-            <Button variant="secondary" href="/contact-us">
-              Enquire about teaching with us
-            </Button>
-          </div>
+          {/* Founder, 2026-09-27: no reserved-position card — a new trainer is added when appointed. */}
         </div>
       </section>
 

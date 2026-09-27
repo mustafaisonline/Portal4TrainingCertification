@@ -12,66 +12,18 @@ import { Card } from "@/shared/ui/Card";
 /*
  * PORTED 2026-09-21 from project-artifacts/mockup/app/diagnostic/result/page.tsx (ADR-045)
  * Changed: canned result fixtures NOT ported; page shows an answer summary.
- * Kept from the mockup: the page frame, the certificate-style panel (double
- * border, seal, ring gauge) and its caveat box, and the CTA row. Replaced:
+ * Kept from the mockup: the page frame and the CTA row. The certificate-style
+ * panel (seal, ring gauge, "Request certificate — USD 10") was removed on the
+ * founder's instruction, 2026-09-27: the free diagnostic is a check of basic
+ * concepts, nothing more — the outcome is stated plainly. Replaced:
  * the SkillMeter profile, target-role comparison, named gaps, recommended
  * path, "what you already have" and peer benchmark — all read from invented
  * fixtures — become (1) answered / "not sure" counts per capability area
  * from the visitor's own answers and (2) a plain statement that the scored
  * profile and recommended path arrive when the assessment engine is live.
- * The gauge shows completion (answered ÷ total), labelled "Completed" —
- * never a score. The tier name is replaced by the real question count. The
- * "Request certificate" button stays disabled and is labelled not available
- * yet. CTAs point at existing routes; "Save results" / "Email me the report"
+ * Never a score. CTAs point at existing routes; "Save results" / "Email me the report"
  * (`href="#"`) are dropped. No name, ID, date or score is shown.
  */
-
-/** Seal/medal icon for the certificate panel — original geometric inline SVG. */
-function SealIcon() {
-  return (
-    <svg viewBox="0 0 40 40" className="h-9 w-9" aria-hidden="true">
-      <circle cx="20" cy="16" r="11" fill="none" stroke="currentColor" strokeWidth="2" />
-      <path
-        d="M14 25l-3 10 6.5-3.5L20 35l2.5-3.5L29 35l-3-10"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path d="M15 16l3.5 3.5L26 12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-/** Circular reading — same ring-arc technique as DiagnosticIntro's
- *  illustration. Driven ONLY by the completion percentage (answered ÷ total);
- *  it is not a score. */
-function CompletionGauge({ percent }: { percent: number }) {
-  const r = 42;
-  const circumference = 2 * Math.PI * r;
-  return (
-    <div className="flex flex-col items-center gap-2">
-      <div className="relative grid h-[110px] w-[110px] shrink-0 place-items-center">
-        <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full -rotate-90" aria-hidden="true">
-          <circle cx="50" cy="50" r={r} fill="none" stroke="var(--color-line)" strokeWidth="9" />
-          <circle
-            cx="50"
-            cy="50"
-            r={r}
-            fill="none"
-            stroke="var(--color-accent)"
-            strokeWidth="9"
-            strokeLinecap="round"
-            strokeDasharray={`${circumference * (percent / 100)} ${circumference}`}
-          />
-        </svg>
-        <p className="text-h1">{percent}%</p>
-      </div>
-      <p className="text-label text-[var(--color-ink-quiet)]">Completed</p>
-    </div>
-  );
-}
 
 type AreaSummary = { code: string; name: string; total: number; answered: number; unsure: number };
 
@@ -131,7 +83,6 @@ export function DiagnosticResultView({
     );
   }
 
-  const percent = Math.round((answered / total) * 100);
   const areas = summariseByArea(completed);
 
   return (
@@ -171,49 +122,18 @@ export function DiagnosticResultView({
         </Card>
       </section>
 
-      {/* 3. Certificate of attempt — the ornamental panel (seal + ring gauge),
-          the gauge driven by completion only. */}
-      <section className="mb-16">
+      {/* 3. Outcome — plain. Founder, 2026-09-27: no "Certificate of attempt";
+          the free diagnostic is a check of basic concepts, nothing more. */}
+      <section className="mb-16" data-testid="diagnostic-outcome">
         <p className="text-label mb-3 text-[var(--color-primary)]">Diagnostic outcome</p>
-        <h2 className="text-h1 mb-2">Certificate of attempt</h2>
-        <p className="text-body-sm mb-8 max-w-[560px] text-[var(--color-ink-quiet)]">
-          You answered {answered} of {total} questions on this self-assessment. Your scored profile and recommended
-          path arrive when the assessment engine is live.
+        <h2 className="text-h1 mb-2">
+          You answered {answered} of {total} questions
+        </h2>
+        <p className="text-body-sm max-w-[560px] text-[var(--color-ink-quiet)]">
+          This free diagnostic is a quick check of basic data and AI concepts — not a score, not a certificate and not
+          the Academy&rsquo;s credential. Nothing is saved. For a longer free test with a verifiable result, take the
+          Knowledge Check once you have an account.
         </p>
-
-        <div className="mx-auto max-w-[720px] rounded-[26px] border-2 border-[var(--color-accent-line)]/40 bg-[var(--color-ground-raised)] p-2.5 shadow-[0_20px_50px_rgba(16,24,40,0.08)]">
-          <div className="rounded-[20px] border border-dashed border-[var(--color-accent-line)]/50 px-8 py-12 text-center sm:px-14">
-            <div className="mx-auto mb-6 grid h-[72px] w-[72px] place-items-center rounded-full bg-[var(--color-accent-soft)] text-[var(--color-accent-ink)]">
-              <SealIcon />
-            </div>
-            <p className="text-label mb-3 tracking-[0.18em] text-[var(--color-accent-ink)]">Certificate of Attempt</p>
-            <h3 className="text-display mb-1">{total}-question diagnostic</h3>
-            <p className="text-mono text-body-sm mb-9 text-[var(--color-ink-faint)]">
-              Data &amp; AI Academy · Free Skill Diagnostic
-            </p>
-
-            <div className="mx-auto mb-9 flex w-fit items-center gap-3">
-              <CompletionGauge percent={percent} />
-            </div>
-
-            <p className="mx-auto max-w-[460px] text-body-sm text-[var(--color-ink-quiet)]">
-              A record that you completed this diagnostic, answering {answered} of {total} questions. This is not the
-              Academy&rsquo;s earned credential — that is judged applied work against a published rubric. A
-              certificate of attempt only confirms you took this self-assessment.
-            </p>
-          </div>
-        </div>
-
-        {/* The administrative/caveat block — deliberately plain. */}
-        <div className="mx-auto mt-6 max-w-[720px] rounded-[var(--radius-panel)] border border-[var(--color-line)] bg-[var(--color-ground-raised)] p-6">
-          <p className="text-body-sm mb-5 text-[var(--color-ink-quiet)]">
-            Requesting a certificate needs a free account and a one-time USD 10 fee.
-          </p>
-          <Button disabled>Request certificate — USD 10</Button>
-          <p className="mt-3 text-body-sm text-[var(--color-ink-faint)]">
-            Not available yet — certificate requests and payment aren&rsquo;t connected.
-          </p>
-        </div>
       </section>
 
       <div className="flex flex-wrap items-center gap-4 border-t border-[var(--color-line)] pt-10">

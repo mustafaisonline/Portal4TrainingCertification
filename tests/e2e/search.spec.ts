@@ -105,6 +105,8 @@ test("Trainings & HRD Corp is one page; Free Training & Certification lists its 
   await page.goto("/");
   await expect(page.getByTestId("diagnostic-not-saved")).toContainText("we do not save your diagnostic results");
 
+  // Founder, 2026-09-27: the books stay on Free Training & Certification; the trainer card no longer lists them, and no empty "position open" card sits beside the trainer.
   await page.goto("/trainers");
-  await expect(page.getByTestId("trainer-take-away").getByTestId("take-away-book")).toHaveCount(5);
+  await expect(page.getByTestId("trainer-take-away")).toHaveCount(0);
+  await expect(page.getByRole("note", { name: /open trainer position/i })).toHaveCount(0);
 });

@@ -4,13 +4,13 @@
 # Post-deployment validation of one environment, from outside and via SSH:
 # traceability markers, /api/health (200, db up, newest migration), public
 # pages, security headers, the Stripe webhook refuses an unsigned POST,
-# container state, resources. PASS/FAIL with a rollback recommendation.
-# (eCard 06-post-deployment-validation, adapted to a container + Caddy host)
+# PM2 process state, resources. PASS/FAIL with a rollback recommendation.
+# (eCard 06-post-deployment-validation, adapted to a PM2 + Caddy host)
 # =============================================================================
 SCRIPT_NAME="06-validate"
 # shellcheck disable=SC1091
 . "$(dirname "$0")/lib/common.sh"
-print_help() { printf 'Usage: %s --env production|staging [--tag vX] [--dry-run]\n' "$SCRIPT_NAME" >&2; }
+print_help() { printf 'Usage: %s --env production [--tag vX] [--dry-run]\n' "$SCRIPT_NAME" >&2; }
 parse_common_args "$@"
 resolve_env "$ENV_ARG"
 
@@ -27,7 +27,7 @@ if [ "$DRY_RUN" -eq 1 ] && [ "$REMOTE_AVAILABLE" -ne 1 ]; then
            "GET $TARGET_URL/ → 200 · GET $TARGET_URL/verify → 200" \
            "headers: strict-transport-security · x-frame-options: DENY · x-content-type-options: nosniff" \
            "POST $TARGET_URL/api/stripe/webhook (unsigned) → 400" \
-           "docker compose ps: app running, healthy" \
+           "pm2 describe $PM2_APP_NAME: online" \
            "disk and memory snapshot"; do log_dry "$c"; done
   finish
 fi
@@ -49,7 +49,7 @@ fi
 step "Health endpoint"
 body="$(http_body "$TARGET_URL/api/health")"; code="$(http_code "$TARGET_URL/api/health")"
 printf 'health: %s %s\n' "$code" "$body" >>"$LOG_FILE"
-if [ "$code" = "200" ]; then log_ok "/api/health → 200"; else soft_fail "/api/health → $code" "Application or database is down." "ssh in: docker compose -p p4tc-$TARGET_ENV logs app; consider rollback."; fi
+if [ "$code" = "200" ]; then log_ok "/api/health → 200"; else soft_fail "/api/health → $code" "Application or database is down." "ssh in: pm2 logs $PM2_APP_NAME --lines 60 --nostream; consider rollback."; fi
 printf '%s' "$body" | grep -q '"db":"up"' && log_ok "db: up" || soft_fail "db not up in health body" "DATABASE_URL, the managed cluster or the firewall." "Check the cluster's trusted sources and the env file (names only)."
 mig="$(printf '%s' "$body" | sed -n 's/.*"migration":"\([^"]*\)".*/\1/p')"
 if [ -n "$NEWEST_MIG" ] && [ "$mig" = "$NEWEST_MIG" ]; then log_ok "newest migration applied: $mig"; else soft_fail "migration on server '$mig' ≠ newest in repo '$NEWEST_MIG'" "Migrate step did not run or the repo is ahead." "Promote the tag that carries the migration."; fi
@@ -77,23 +77,23 @@ case "$wc" in
   *)   soft_fail "webhook (unsigned) → $wc" "Expected 400 from signature verification." "Check STRIPE_WEBHOOK_SECRET is set (names only) and the route is reachable." ;;
 esac
 
-step "Container state"
-ps_out="$(ssh_capture "docker ps --filter 'name=p4tc-$TARGET_ENV' --format '{{.Names}} {{.Status}} {{.Image}}'")"
+step "PM2 process state"
+ps_out="$(ssh_capture "pm2 jlist 2>/dev/null | grep -o '\"name\":\"$PM2_APP_NAME\"[^}]*\"status\":\"[a-z]*\"' | head -1")"
 printf '%s\n' "$ps_out" >>"$LOG_FILE"
-if printf '%s' "$ps_out" | grep -q 'Up'; then log_ok "container: $ps_out"; else soft_fail "no running p4tc-$TARGET_ENV container" "The promote did not switch or the container exited." "docker compose -p p4tc-$TARGET_ENV logs app"; fi
-printf '%s' "$ps_out" | grep -q 'unhealthy' && soft_fail "container reports unhealthy" "HEALTHCHECK failing." "docker inspect --format '{{json .State.Health}}'"
-printf '%s' "$ps_out" | grep -q ":$D_TAG" || log_warn "running image tag does not match marker $D_TAG"
+if printf '%s' "$ps_out" | grep -q '"status":"online"'; then log_ok "pm2: $PM2_APP_NAME online"; else soft_fail "$PM2_APP_NAME not online" "The promote did not switch or the process exited." "pm2 logs $PM2_APP_NAME --lines 60 --nostream"; fi
+current_release="$(ssh_capture "readlink '$REMOTE_RELEASES_ROOT/current' 2>/dev/null | xargs -r basename")"
+[ "$current_release" = "$D_TAG" ] || log_warn "current release ($current_release) does not match marker $D_TAG"
 
 step "Resources"
-res="$(ssh_capture "df -Ph / | awk 'NR==2{print \"disk \" \$5 \" used, \" \$4 \" free\"}'; free -m 2>/dev/null | awk 'NR==2{print \"mem \" \$3 \"/\" \$2 \" MB\"}'; docker system df --format '{{.Type}} {{.Size}} ({{.Reclaimable}} reclaimable)' 2>/dev/null")"
+res="$(ssh_capture "df -Ph / | awk 'NR==2{print \"disk \" \$5 \" used, \" \$4 \" free\"}'; free -m 2>/dev/null | awk 'NR==2{print \"mem \" \$3 \"/\" \$2 \" MB\"}'; du -sh '$REMOTE_RELEASES_ROOT' 2>/dev/null | awk '{print \"releases \" \$1}'")"
 printf '%s\n' "$res" | while IFS= read -r l; do [ -n "$l" ] && log_info "$l"; done
 disk_pct="$(ssh_capture "df -P / | awk 'NR==2{print \$5}' | tr -d '%'")"
-[ -n "$disk_pct" ] && [ "$disk_pct" -ge 85 ] && log_warn "root disk ${disk_pct}% used — docker image prune / backup retention"
+[ -n "$disk_pct" ] && [ "$disk_pct" -ge 85 ] && log_warn "root disk ${disk_pct}% used — check RELEASES_KEEP / backup retention"
 
 step "Recent application log (diagnostics)"
-ssh_capture "docker logs --tail 40 p4tc-$TARGET_ENV-app-1 2>&1 | grep -v 'GET /api/health'" >>"$LOG_FILE" 2>&1 || true
+ssh_capture "pm2 logs $PM2_APP_NAME --lines 40 --nostream 2>&1 | grep -v 'GET /api/health'" >>"$LOG_FILE" 2>&1 || true
 log_info "last 40 app log lines appended to $LOG_FILE"
-ssh_capture "docker logs --tail 200 p4tc-$TARGET_ENV-app-1 2>&1 | grep -c '\[config\] refusing' " | grep -qv '^0$' && soft_fail "'[config] refusing to start' seen in the app log" "A required variable is missing or malformed." "Fix $REMOTE_ETC/$TARGET_ENV.env (names in .env.example); restart."
+ssh_capture "pm2 logs $PM2_APP_NAME --lines 200 --nostream 2>&1 | grep -c '\[config\] refusing' " | grep -qv '^0$' && soft_fail "'[config] refusing to start' seen in the app log" "A required variable is missing or malformed." "Fix $REMOTE_ETC/$TARGET_ENV.env (names in .env.example); restart."
 
 step "Verdict"
 if [ "$FAILED_STEPS" -gt 0 ]; then log_error "$FAILED_STEPS check(s) failed — if $TARGET_ENV is degraded: deploy/07-rollback.sh --env $TARGET_ENV${D_PREV:+ --tag $D_PREV}"; else log_ok "post-deployment validation PASSED for $TARGET_ENV ($D_TAG)"; fi

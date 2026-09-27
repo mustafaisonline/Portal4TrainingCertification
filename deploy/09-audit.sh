@@ -7,7 +7,7 @@
 SCRIPT_NAME="09-audit"
 # shellcheck disable=SC1091
 . "$(dirname "$0")/lib/common.sh"
-print_help() { printf 'Usage: %s --env production|staging [--tag vX] [--dry-run]\n' "$SCRIPT_NAME" >&2; }
+print_help() { printf 'Usage: %s --env production [--tag vX] [--dry-run]\n' "$SCRIPT_NAME" >&2; }
 parse_common_args "$@"
 resolve_env "${ENV_ARG:-production}"
 GO=1
@@ -17,10 +17,10 @@ banner "Deployment audit — $TARGET_ENV${TAG_ARG:+ · $TAG_ARG}"
 log_info "Read-only. No deployment, no production change."
 
 step "A. Laptop"
-for c in git ssh scp rsync curl openssl; do command -v "$c" >/dev/null 2>&1 && log_ok "$c" || nogo "missing $c" "Required by the framework." "Install it."; done
-gh_ready && log_ok "gh authenticated" || nogo "gh not authenticated" "The audit must confirm CI built the tag (K6)." "gh auth login"
+for c in git ssh scp rsync curl openssl gh tar; do command -v "$c" >/dev/null 2>&1 && log_ok "$c" || nogo "missing $c" "Required by the framework." "Install it."; done
+gh_ready && log_ok "gh authenticated" || nogo "gh not authenticated" "The audit must confirm CI built and PROVED the tag, and the deploy fetches the release artifact through gh (K6)." "gh auth login"
 [ -s "$GOVERNANCE_HMAC_KEY_FILE" ] && log_ok "HMAC key present" || nogo "HMAC key absent ($GOVERNANCE_HMAC_KEY_FILE)" "Deploys are signed." "Copy /etc/p4tc/governance-hmac.key from the server once (chmod 600)."
-config_has_placeholders && nogo "config.env has placeholders" "SERVER_HOST / DOMAIN / REGISTRY unset." "Fill deploy/config.env or config.local.env." || log_ok "config complete"
+config_has_placeholders && nogo "config.env has placeholders" "SERVER_HOST / DOMAIN unset." "Fill deploy/config.env or config.local.env." || log_ok "config complete"
 
 step "B. Source"
 capture_release_metadata
@@ -32,8 +32,8 @@ if [ -n "$TAG_ARG" ]; then
   if gh_ready; then
     concl="$(release_workflow_conclusion "$TAG_ARG")"
     case "$concl" in
-      success) log_ok "release workflow for $TAG_ARG: success (images pushed)" ;;
-      in_progress) nogo "release workflow for $TAG_ARG still running" "Images not yet pushed." "Wait, then re-audit." ;;
+      success) log_ok "release workflow for $TAG_ARG: success (release artifact uploaded)" ;;
+      in_progress) nogo "release workflow for $TAG_ARG still running" "Release artifact not yet uploaded." "Wait, then re-audit." ;;
       none) nogo "no release workflow run for $TAG_ARG" "The tag was not pushed or does not match v*." "git push origin $TAG_ARG" ;;
       *) nogo "release workflow for $TAG_ARG: $concl" "The gate failed in CI." "Open the run; fix; re-tag." ;;
     esac
@@ -51,16 +51,16 @@ if config_has_placeholders; then
   nogo "server checks skipped (placeholders)" "No server configured." "Phase B."
 elif check_ssh; [ "$REMOTE_AVAILABLE" -ne 1 ]; then
   nogo "server unreachable (dry-run: listed only)" "No server answered at $SERVER_USER@$SERVER_HOST." "Phase B: provision, bootstrap, then re-audit."
-  log_dry "would check: wrapper, docker, caddy, env file presence/ownership/variable names, registry login, newest backup age, free space, timer, deployed tag, DNS → server IP"
+  log_dry "would check: wrapper, node/pm2, caddy, env file presence/ownership/variable names, current release, newest backup age, free space, timer, deployed tag, DNS → server IP"
 else
   st="$(ssh_capture "
     printf 'wrapper=%s\n' \"\$(test -x '$DEPLOY_WRAPPER' && echo yes || echo no)\"
-    printf 'docker=%s\n' \"\$(docker info >/dev/null 2>&1 && echo yes || echo no)\"
+    printf 'pm2=%s\n' \"\$(command -v pm2 >/dev/null && pm2 jlist >/dev/null 2>&1 && echo yes || echo no)\"
     printf 'caddy=%s\n' \"\$(systemctl is-active caddy 2>/dev/null)\"
     printf 'env=%s\n' \"\$(test -r '$REMOTE_ETC/$TARGET_ENV.env' && echo yes || echo no)\"
     printf 'envw=%s\n' \"\$(test -w '$REMOTE_ETC/$TARGET_ENV.env' && echo yes || echo no)\"
     printf 'envnames=%s\n' \"\$(grep -E '^[A-Z_]+=' '$REMOTE_ETC/$TARGET_ENV.env' 2>/dev/null | cut -d= -f1 | tr '\n' ' ')\"
-    printf 'registry=%s\n' \"\$(test -s /root/.docker/config.json -o -s \$HOME/.docker/config.json && echo yes || echo unknown)\"
+    printf 'current_release=%s\n' \"\$(readlink '$REMOTE_RELEASES_ROOT/current' 2>/dev/null | xargs -r basename)\"
     printf 'backup=%s\n' \"\$(ls -t '$REMOTE_BACKUP_ROOT'/p4tc-$TARGET_ENV-*.dump 2>/dev/null | head -1)\"
     printf 'backup_age_h=%s\n' \"\$(f=\$(ls -t '$REMOTE_BACKUP_ROOT'/p4tc-$TARGET_ENV-*.dump 2>/dev/null | head -1); [ -n \"\$f\" ] && echo \$(( (\$(date +%s) - \$(stat -c %Y \"\$f\")) / 3600 )) || echo none)\"
     printf 'free_mb=%s\n' \"\$(df -Pm '$REMOTE_OPT' | awk 'NR==2{print \$4}')\"
@@ -71,7 +71,7 @@ else
   printf '%s\n' "$st" >>"$LOG_FILE"
   g() { printf '%s\n' "$st" | sed -n "s/^$1=//p"; }
   [ "$(g wrapper)" = "yes" ] && log_ok "$DEPLOY_WRAPPER present" || nogo "wrapper missing" "Server not bootstrapped." "Run 10-server-bootstrap-serverscript.sh as root."
-  [ "$(g docker)" = "yes" ] && log_ok "docker daemon reachable by $SERVER_USER" || nogo "docker not usable by $SERVER_USER" "Promote needs it." "Bootstrap adds deploy to the docker group."
+  [ "$(g pm2)" = "yes" ] && log_ok "pm2 reachable by $SERVER_USER" || nogo "pm2 not usable by $SERVER_USER" "Promote needs it." "Bootstrap installs pm2 globally and runs pm2 startup for deploy."
   [ "$(g caddy)" = "active" ] && log_ok "caddy active" || nogo "caddy not active" "No TLS/routing." "systemctl status caddy"
   [ "$(g env)" = "yes" ] && log_ok "$TARGET_ENV.env readable" || nogo "$REMOTE_ETC/$TARGET_ENV.env missing" "The app refuses to start without it." "Type it on the server (names in .env.example)."
   [ "$(g envw)" = "no" ] && log_ok "$TARGET_ENV.env root-owned" || nogo "$TARGET_ENV.env writable by $SERVER_USER" "Governance." "chown root:deploy; chmod 640"
@@ -82,14 +82,14 @@ else
   [ -z "$missing" ] && log_ok "every production-required variable NAME present in $TARGET_ENV.env" || nogo "variables absent from $TARGET_ENV.env:$missing" "instrumentation.ts refuses to start in production." "Add them (values typed on the server)."
   printf ' %s ' "$(g envnames)" | grep -q " APP_ENV " && nogo "APP_ENV set in $TARGET_ENV.env" "Downgrades fail-fast validation." "Remove it."
   printf ' %s ' "$(g envnames)" | grep -q " DATABASE_URL_TEST " && nogo "DATABASE_URL_TEST set in $TARGET_ENV.env" "Never on a deployed environment." "Remove it."
-  [ "$(g registry)" = "yes" ] && log_ok "registry login present on server" || log_warn "no docker registry credentials found on server (pull will fail unless the registry is public)"
+  [ -n "$(g current_release)" ] && log_info "current release on disk: $(g current_release)" || log_warn "no release deployed yet (first deploy, or bootstrap incomplete)"
   if [ -n "$(g backup)" ]; then
     age="$(g backup_age_h)"
     if [ "$age" != "none" ] && [ "$age" -le "$BACKUP_MAX_AGE_HOURS" ]; then log_ok "newest backup $(basename "$(g backup)") is ${age}h old"; else log_warn "newest backup is ${age}h old (> ${BACKUP_MAX_AGE_HOURS}h) — promote takes a fresh one anyway"; fi
   else
     log_warn "no backup package for $TARGET_ENV yet (first deploy, or bootstrap incomplete)"
   fi
-  fm="$(g free_mb)"; [ -n "$fm" ] && { [ "$fm" -ge 1500 ] && log_ok "free space ${fm} MB" || nogo "free space ${fm} MB < 1500" "Pull + backup need headroom." "docker image prune; prune backups."; }
+  fm="$(g free_mb)"; [ -n "$fm" ] && { [ "$fm" -ge 1500 ] && log_ok "free space ${fm} MB" || nogo "free space ${fm} MB < 1500" "Unpack + npm ci + backup need headroom." "Lower RELEASES_KEEP; prune backups."; }
   [ "$(g timer)" = "enabled" ] && log_ok "reminders timer enabled" || log_warn "p4tc-reminders.timer not enabled (K12)"
   log_info "currently deployed on $TARGET_ENV: $(g tag)"
   host="$(printf '%s' "$TARGET_URL" | sed -E 's#https?://##')"
@@ -98,7 +98,7 @@ else
 fi
 
 step "D. Framework"
-for f in start.sh 00-discovery.sh 04-release-gate.sh 05-deploy.sh 06-validate.sh 07-rollback.sh lib/common.sh lib/governance.sh lib/server-promote.sh 01-backup-serverscript.sh 03-migration-sandbox-serverscript.sh 10-server-bootstrap-serverscript.sh compose.production.yaml; do
+for f in start.sh 00-discovery.sh 04-release-gate.sh 05-deploy.sh 06-validate.sh 07-rollback.sh lib/common.sh lib/governance.sh lib/server-promote.sh 01-backup-serverscript.sh 03-migration-sandbox-serverscript.sh 10-server-bootstrap-serverscript.sh ecosystem.production.config.js run.sh.template; do
   [ -f "$DEPLOY_DIR/$f" ] && log_ok "deploy/$f" || nogo "deploy/$f missing" "Framework incomplete." "Restore from git."
 done
 grep -q '^deploy/reports/' "$PROJECT_ROOT/.gitignore" && grep -q '^deploy/.governance-hmac.key' "$PROJECT_ROOT/.gitignore" && log_ok ".gitignore protects reports, logs, key and local config" || nogo ".gitignore missing deploy entries" "Reports or the key could be committed." "Add deploy/logs/, deploy/reports/, deploy/.governance-hmac.key, deploy/config.local.env."

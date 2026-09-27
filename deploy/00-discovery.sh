@@ -24,11 +24,11 @@ if gh_ready; then log_ok "gh CLI authenticated (release-workflow status checks a
 step "Configuration (deploy/config.env + config.local.env)"
 log_info "FRAMEWORK:   $FRAMEWORK_VERSION"
 log_info "SERVER:      $SERVER_USER@$SERVER_HOST"
-log_info "DOMAIN:      $DOMAIN  → $PRODUCTION_URL · $STAGING_URL"
-log_info "REGISTRY:    $REGISTRY/$IMAGE_NAME[:tag] and -migrate"
+log_info "DOMAIN:      $DOMAIN  → $PRODUCTION_URL"
+log_info "RELEASE:     GitHub Actions artifact of $RELEASE_WORKFLOW (no registry — K6 supersession)"
 log_info "GIT SOURCE:  $DEPLOY_GIT_REMOTE/$DEPLOY_GIT_REMOTE_BRANCH"
 if config_has_placeholders; then
-  soft_fail "config.env still has <placeholders> (SERVER_HOST, DOMAIN or REGISTRY)" "Phase B values (K5, K13) are not filled in." "Fill deploy/config.env (names only) or deploy/config.local.env, then re-run."
+  soft_fail "config.env still has <placeholders> (SERVER_HOST or DOMAIN)" "Phase B values (K5, K13) are not filled in." "Fill deploy/config.env (names only) or deploy/config.local.env, then re-run."
 else
   log_ok "no placeholders in configuration"
 fi
@@ -42,8 +42,7 @@ step "Repository"
 capture_release_metadata
 log_info "branch $DEPLOY_BRANCH · commit $DEPLOY_COMMIT_SHORT · dirty files: $DEPLOY_DIRTY_COUNT"
 git_working_tree_clean && log_ok "working tree clean" || log_warn "working tree has $DEPLOY_DIRTY_COUNT uncommitted change(s) — a deploy will refuse"
-[ -f "$PROJECT_ROOT/Dockerfile" ] && log_ok "Dockerfile present" || soft_fail "Dockerfile missing" "The release workflow builds it." "Restore it."
-[ -f "$PROJECT_ROOT/.github/workflows/$RELEASE_WORKFLOW" ] && log_ok "release workflow present" || soft_fail "release workflow missing" "Images are built only by CI (K6)." "Restore .github/workflows/$RELEASE_WORKFLOW."
+[ -f "$PROJECT_ROOT/.github/workflows/$RELEASE_WORKFLOW" ] && log_ok "release workflow present" || soft_fail "release workflow missing" "The release is built and PROVEN only by CI (K6)." "Restore .github/workflows/$RELEASE_WORKFLOW."
 NEWEST_MIG="$(ls -1 "$PROJECT_ROOT/prisma/migrations" 2>/dev/null | grep -E '^[0-9]{14}_' | sort | tail -1)"
 log_info "newest migration in repo: ${NEWEST_MIG:-none}"
 
@@ -58,13 +57,13 @@ else
   check_ssh
   step "Server bootstrap state"
   if [ "$REMOTE_AVAILABLE" -ne 1 ]; then
-    log_dry "would read: wrapper, docker, compose, caddy, pg_dump, bundle/backup dir permissions, env file ownership, reminders timer, deployed tags, free disk"
+    log_dry "would read: wrapper, node/pm2, caddy, pg_dump, bundle/backup/releases dir permissions, env file ownership, reminders timer, deployed tag, free disk"
     finish
   fi
   remote_state="$(ssh_capture "
     printf 'wrapper=%s\n' \"\$(test -x '$DEPLOY_WRAPPER' && echo yes || echo no)\"
-    printf 'docker=%s\n' \"\$(command -v docker >/dev/null && docker --version 2>/dev/null | cut -d, -f1 || echo no)\"
-    printf 'compose=%s\n' \"\$(docker compose version 2>/dev/null | head -1 || echo no)\"
+    printf 'node=%s\n' \"\$(command -v node >/dev/null && node --version 2>/dev/null || echo no)\"
+    printf 'pm2=%s\n' \"\$(command -v pm2 >/dev/null && pm2 --version 2>/dev/null || echo no)\"
     printf 'caddy=%s\n' \"\$(systemctl is-active caddy 2>/dev/null || echo no)\"
     printf 'pg_dump=%s\n' \"\$(command -v pg_dump >/dev/null && pg_dump --version | awk '{print \$3}' || echo no)\"
     printf 'staging_writable=%s\n' \"\$(test -w '$REMOTE_STAGING_INCOMING' && echo yes || echo no)\"
@@ -73,13 +72,12 @@ else
     printf 'etc_writable=%s\n' \"\$(test -w '$REMOTE_ETC/production.env' && echo yes || echo no)\"
     printf 'timer=%s\n' \"\$(systemctl is-enabled p4tc-reminders.timer 2>/dev/null || echo no)\"
     printf 'deployed_production=%s\n' \"\$(cat '$REMOTE_MARKERS_ROOT/production/.deployed-tag' 2>/dev/null || echo none)\"
-    printf 'deployed_staging=%s\n' \"\$(cat '$REMOTE_MARKERS_ROOT/staging/.deployed-tag' 2>/dev/null || echo none)\"
     printf 'disk_free_mb=%s\n' \"\$(df -Pm '$REMOTE_OPT' 2>/dev/null | awk 'NR==2{print \$4}')\"
   ")"
   printf '%s\n' "$remote_state" >>"$LOG_FILE"
   get() { printf '%s\n' "$remote_state" | sed -n "s/^$1=//p"; }
   [ "$(get wrapper)" = "yes" ] && log_ok "$DEPLOY_WRAPPER installed" || soft_fail "$DEPLOY_WRAPPER missing" "Server not bootstrapped." "As root on the server: $REMOTE_DEPLOY_DIR/10-server-bootstrap-serverscript.sh"
-  [ "$(get docker)" != "no" ] && log_ok "docker: $(get docker) · compose: $(get compose)" || soft_fail "Docker not installed on server" "The app runs as a container." "Run the server bootstrap."
+  [ "$(get node)" != "no" ] && log_ok "node $(get node) · pm2 $(get pm2)" || soft_fail "Node/pm2 not installed on server" "The app runs under PM2." "Run the server bootstrap."
   [ "$(get caddy)" = "active" ] && log_ok "caddy active" || soft_fail "caddy not active" "TLS and routing depend on it." "Run the server bootstrap; check /etc/caddy/Caddyfile."
   [ "$(get pg_dump)" != "no" ] && log_ok "pg_dump $(get pg_dump) on server" || soft_fail "pg_dump missing on server" "Backups and the sandbox need PostgreSQL 16 client tools." "Run the server bootstrap."
   [ "$(get staging_writable)" = "yes" ] && log_ok "bundle directory writable by $SERVER_USER" || soft_fail "$REMOTE_STAGING_INCOMING not writable" "Bundles cannot be uploaded." "Run the server bootstrap."
@@ -87,7 +85,7 @@ else
   [ "$(get etc_readable)" = "yes" ] && log_ok "production env file readable by $SERVER_USER (group)" || log_warn "$REMOTE_ETC/production.env absent or unreadable — the founder types it on the server before the first deploy"
   [ "$(get etc_writable)" = "no" ] && log_ok "production env file NOT writable by $SERVER_USER (root-owned — correct)" || soft_fail "production env file writable by $SERVER_USER" "Governance requires root ownership." "chown root:deploy; chmod 640"
   [ "$(get timer)" = "enabled" ] && log_ok "reminders timer enabled" || log_warn "p4tc-reminders.timer not enabled (K12)"
-  log_info "deployed: production=$(get deployed_production) · staging=$(get deployed_staging) · free $(get disk_free_mb) MB on $REMOTE_OPT"
+  log_info "deployed: production=$(get deployed_production) · free $(get disk_free_mb) MB on $REMOTE_OPT"
 fi
 
 finish

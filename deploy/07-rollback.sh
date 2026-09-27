@@ -15,7 +15,7 @@ SCRIPT_NAME="07-rollback"
 . "$(dirname "$0")/lib/common.sh"
 # shellcheck disable=SC1091
 . "$(dirname "$0")/lib/governance.sh"
-print_help() { printf 'Usage: %s --env production|staging [--tag vX] [--restore-db <dump-file-name>] [--dry-run] [--yes]\n' "$SCRIPT_NAME" >&2; }
+print_help() { printf 'Usage: %s --env production [--tag vX] [--restore-db <dump-file-name>] [--dry-run] [--yes]\n' "$SCRIPT_NAME" >&2; }
 reject_prohibited_flags "$@"
 RESTORE_DB=""; prev=""
 for a in "$@"; do

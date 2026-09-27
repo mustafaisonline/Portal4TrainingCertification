@@ -31,6 +31,12 @@
 # Run:    docker run --rm -p 3000:3000 --env-file <production env file> p4tc-portal
 #         (APP_BASE_URL etc. are read at runtime; instrumentation.ts refuses to
 #         start in production when a required variable is absent.)
+#
+# NOT the production deploy path since 2026-09-27 (ADR-046 K2/K6/K9
+# supersession — ARCHITECTURE_DECISION_REGISTER.md): the governed framework
+# in deploy/ now builds in GitHub Actions and ships the built output via
+# rsync + PM2, no Docker or registry involved. This file is kept for anyone
+# who wants to run the app in a container locally; nothing in it changed.
 
 # ── 1. deps: every dependency, for the build ──────────────────────────────────
 FROM node:24-alpine AS deps

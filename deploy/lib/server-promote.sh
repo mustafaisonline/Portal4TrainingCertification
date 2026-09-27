@@ -4,19 +4,27 @@
 # /usr/local/bin/p4tc-deploy, the sudo entry point installed by script 10)
 #
 #   promote  --env E --tag T --governance-dir D
-#     validate signed token + manifest → lock → backup gate (01) → pull
-#     images → migration sandbox (03) → prisma migrate deploy → switch the
-#     compose project to the new tag → wait for /api/health → on failure,
-#     switch back to the previous tag automatically → markers
+#     validate signed token + manifest → lock → backup gate (01) → unpack the
+#     release (rsync from the uploaded bundle into /opt/p4tc/releases/T,
+#     root-owned) → npm ci → migration sandbox (03) → prisma migrate deploy
+#     → switch the `current` symlink to T → pm2 reload → wait /api/health →
+#     on failure, switch back to the previous tag automatically → markers →
+#     prune old releases beyond RELEASES_KEEP
 #   rollback --env E --tag T --governance-dir D [--restore-db FILE]
 #     validate rollback token → lock → [safety snapshot → stop app →
-#     pg_restore] → switch to tag T (no migrate) → health → markers
+#     pg_restore] → switch to a release T already on disk (no migrate,
+#     no reinstall) → health → markers
 #
 # Trust model (same as eCard's server-apply-release.sh): this file is synced
 # from the laptop by 05 and executed by root. The wrapper guarantees that
 # only the `deploy` user via sudo, with a token signed by the shared HMAC
 # key and not yet expired, reaches this point. Secrets are read from the
 # root-owned env file and never printed.
+#
+# 2026-09-27: rewritten from Docker/compose to rsync + PM2 (ADR-046 K2/K6/K9
+# supersession — see ARCHITECTURE_DECISION_REGISTER.md). Releases are kept as
+# directories under $RELEASES_ROOT, not image tags, so `current` is a symlink
+# and a rollback to a release still on disk needs no rebuild or reinstall.
 # =============================================================================
 set -euo pipefail
 
@@ -24,10 +32,10 @@ ETC="${P4TC_ETC:-/etc/p4tc}"
 OPT="${P4TC_OPT:-/opt/p4tc}"
 DEPLOY_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 HMAC_KEY="$ETC/governance-hmac.key"
-COMPOSE_FILE="$DEPLOY_DIR/compose.production.yaml"
+RELEASES_ROOT="${P4TC_RELEASES_ROOT:-$OPT/releases}"
 LOCK="/run/lock/p4tc-deploy.lock"
 LOG="$OPT/logs/promote.log"
-mkdir -p "$OPT/logs" "$OPT/markers"
+mkdir -p "$OPT/logs" "$RELEASES_ROOT"
 # shellcheck disable=SC1091
 . "$DEPLOY_DIR/config.env"
 [ -f "$DEPLOY_DIR/config.local.env" ] && . "$DEPLOY_DIR/config.local.env"
@@ -49,21 +57,18 @@ while [ $# -gt 0 ]; do
     *) fail "unknown argument: $1" ;;
   esac
 done
-case "$ENV" in production|staging) : ;; *) fail "--env must be production or staging" ;; esac
+case "$ENV" in production) : ;; *) fail "--env must be production (staging dropped 2026-09-27)" ;; esac
 [ -n "$TAG" ] && [ -n "$GOV_DIR" ] || fail "--tag and --governance-dir are required"
 case "$TAG" in *[!A-Za-z0-9._-]*|"") fail "tag has illegal characters" ;; esac
 case "$GOV_DIR" in "$REMOTE_STAGING_INCOMING"/*) : ;; *) fail "governance dir must be under $REMOTE_STAGING_INCOMING" ;; esac
 
 ENV_FILE="$ETC/$ENV.env"
-RELEASE_FILE="$ETC/$ENV.release"
 MARKERS="$OPT/markers/$ENV"
-PROJECT="p4tc-$ENV"
-case "$ENV" in production) PORT="$PRODUCTION_PORT" ;; staging) PORT="$STAGING_PORT" ;; esac
-IMAGE="$REGISTRY/$IMAGE_NAME:$TAG"
-MIGRATE_IMAGE="$REGISTRY/$IMAGE_NAME-migrate:$TAG"
+RELEASE_DIR="$RELEASES_ROOT/$TAG"
+CURRENT_LINK="$RELEASES_ROOT/current"
+PORT="$PRODUCTION_PORT"
 [ -r "$ENV_FILE" ] || fail "$ENV_FILE missing" "The application cannot start without it." "Create it as root (names in .env.example), chown root:deploy, chmod 640."
 [ -s "$HMAC_KEY" ] || fail "$HMAC_KEY missing" "" "Run 10-server-bootstrap-serverscript.sh."
-[ -f "$COMPOSE_FILE" ] || fail "$COMPOSE_FILE missing" "" "05-deploy syncs deploy/ before promoting."
 
 # --- JSON field reader (flat tokens only) -------------------------------------
 jf() { sed -n "s/.*\"$2\": *\"\{0,1\}\([^\",}]*\)\"\{0,1\}.*/\1/p" "$1" | head -1; }
@@ -93,25 +98,14 @@ validate_token() {  # validate_token FILE KIND
 
 acquire_lock() { exec 9>"$LOCK"; flock -n 9 || fail "another p4tc-deploy is running" "lock $LOCK held" "wait for it"; }
 
-current_tag() { [ -f "$RELEASE_FILE" ] && sed -n 's/^TAG=//p' "$RELEASE_FILE" || printf ''; }
+current_tag() { [ -L "$CURRENT_LINK" ] && basename "$(readlink "$CURRENT_LINK")" || printf ''; }
 
-write_release_file() {  # write_release_file TAG PREVIOUS
-  umask 022
-  cat >"$RELEASE_FILE.tmp" <<EOF
-# written by p4tc-deploy $(date -u '+%Y-%m-%dT%H:%M:%SZ') — do not edit
-TAG=$1
-PREVIOUS_TAG=$2
-REGISTRY=$REGISTRY
-IMAGE_NAME=$IMAGE_NAME
-P4TC_ENV=$ENV
-P4TC_ENV_FILE=$ENV_FILE
-P4TC_PORT=$PORT
-COMPOSE_PROJECT_NAME=$PROJECT
-EOF
-  mv "$RELEASE_FILE.tmp" "$RELEASE_FILE"
-}
-
-compose() { docker compose -p "$PROJECT" --env-file "$RELEASE_FILE" -f "$COMPOSE_FILE" "$@"; }
+# Root (via the wrapper) drops privilege to deploy for every pm2 call, so the
+# app process itself is always owned by deploy, never root — a plain `sudo
+# -u deploy` needs no sudoers grant (root may always sudo to any user);
+# `-H` points pm2 at deploy's own $PM2_HOME (/home/deploy/.pm2), same daemon
+# 00-discovery/06-validate/09-audit already talk to when connected as deploy.
+pm2() { sudo -u deploy -H /usr/bin/pm2 "$@"; }
 
 wait_healthy() {
   local waited=0 body
@@ -123,7 +117,7 @@ wait_healthy() {
     sleep 3; waited=$((waited + 3))
   done
   log "NOT healthy after ${HEALTH_WAIT_TIMEOUT_SEC}s; last body: ${body:-<none>}"
-  docker logs --tail 60 "$PROJECT-app-1" 2>&1 | grep -v 'GET /api/health' | tail -30 | tee -a "$LOG" >&2 || true
+  pm2 logs "$PM2_APP_NAME" --lines 60 --nostream 2>&1 | grep -v 'GET /api/health' | tail -30 | tee -a "$LOG" >&2 || true
   return 1
 }
 
@@ -137,9 +131,43 @@ write_markers() {  # write_markers TAG PREVIOUS COMMIT KIND
   chmod 644 "$MARKERS"/.deployed-* "$MARKERS/history.log"
 }
 
-switch_to() {  # switch_to TAG PREVIOUS
-  write_release_file "$1" "$2"
-  compose up -d --remove-orphans --no-build app >>"$LOG" 2>&1
+# switch_to TAG — flip the `current` symlink and (re)start PM2 against it.
+# Idempotent: pm2 startOrReload starts the app if it isn't running yet (first
+# deploy) or reloads it in place if it already is.
+switch_to() {
+  [ -d "$RELEASES_ROOT/$1" ] || fail "release $1 not on disk" "Rollback beyond the kept releases needs a redeploy of that tag." "deploy/start.sh --env production --tag $1 (re-fetches the tag's build artifact)."
+  ln -sfn "$RELEASES_ROOT/$1" "$CURRENT_LINK"
+  pm2 startOrReload "$DEPLOY_DIR/ecosystem.production.config.js" >>"$LOG" 2>&1
+}
+
+# unpack_release TAG — root-owned rsync of the uploaded release bundle into
+# releases/TAG, then npm ci as root (eCard's "install as root, chown after").
+# .next/cache is the one subtree the running (deploy-owned) process needs to
+# write to at runtime (next/image's on-disk optimisation cache) — everything
+# else in the release is read-only to the deploy group, same separation
+# eCard's server-apply-release.sh uses for its live tree.
+unpack_release() {
+  local tag="$1" commit="$2"
+  mkdir -p "$RELEASE_DIR"
+  rsync -a --delete "$GOV_DIR/release/" "$RELEASE_DIR/" >>"$LOG" 2>&1 || fail "release unpack failed" "rsync from the uploaded bundle." "Re-run the laptop deploy."
+  ( cd "$RELEASE_DIR" && npm ci >>"$LOG" 2>&1 ) || fail "npm ci failed in $RELEASE_DIR" "package-lock.json mismatch or a registry problem." "See $LOG."
+  sed -e "s#{{ENV_FILE}}#$ENV_FILE#g" -e "s#{{PORT}}#$PORT#g" "$DEPLOY_DIR/run.sh.template" >"$RELEASE_DIR/run.sh"
+  chmod 750 "$RELEASE_DIR/run.sh"
+  printf '%s\n' "$commit" >"$RELEASE_DIR/.release-commit"
+  mkdir -p "$RELEASE_DIR/.next/cache"
+  chown -R root:deploy "$RELEASE_DIR"
+  chmod -R u=rwX,g=rX,o= "$RELEASE_DIR"
+  chown -R deploy:deploy "$RELEASE_DIR/.next/cache"
+  chmod -R u=rwX,g=rwX,o= "$RELEASE_DIR/.next/cache"
+  log "release $tag unpacked and installed: $(du -sh "$RELEASE_DIR" 2>/dev/null | cut -f1)"
+}
+
+prune_old_releases() {
+  ls -1dt "$RELEASES_ROOT"/*/ 2>/dev/null | while IFS= read -r d; do basename "${d%/}"; done \
+    | grep -v '^current$' | tail -n +$((RELEASES_KEEP + 1)) | while IFS= read -r old; do
+      [ "$old" = "$(current_tag)" ] && continue
+      rm -rf "${RELEASES_ROOT:?}/$old" && log "pruned release $old"
+    done
 }
 
 # =============================================================================
@@ -154,39 +182,40 @@ promote)
   [ "$(jf "$MANIFEST" commit)" = "$TOKEN_COMMIT" ] || fail "manifest commit ≠ token commit"
   acquire_lock
   PREVIOUS="$(current_tag)"
-  log "PROMOTE $ENV: ${PREVIOUS:-<none>} → $TAG ($IMAGE)"
+  log "PROMOTE $ENV: ${PREVIOUS:-<none>} → $TAG"
 
   log "gate: backup"
   "$DEPLOY_DIR/01-backup-serverscript.sh" --env "$ENV" --tag "${PREVIOUS:-none}" >>"$LOG" 2>&1 || fail "backup failed — promotion refused" "see $OPT/logs/01-backup.log" "fix the backup before deploying"
 
-  log "pull: $IMAGE and $MIGRATE_IMAGE"
-  docker pull -q "$IMAGE" >>"$LOG" 2>&1 || fail "cannot pull $IMAGE" "not built, or the server is not logged in to $REGISTRY" "check release.yml for the tag; docker login on the server (bootstrap)"
-  docker pull -q "$MIGRATE_IMAGE" >>"$LOG" 2>&1 || fail "cannot pull $MIGRATE_IMAGE" "" ""
+  log "unpack + install: $TAG"
+  [ -d "$GOV_DIR/release" ] || fail "no release payload in $GOV_DIR" "05-deploy.sh uploads the built release alongside the governance bundle." "Re-run the laptop deploy."
+  unpack_release "$TAG" "$TOKEN_COMMIT"
 
   log "gate: migration sandbox"
   "$DEPLOY_DIR/03-migration-sandbox-serverscript.sh" --env "$ENV" --tag "$TAG" >>"$LOG" 2>&1 || fail "migration sandbox failed — promotion refused" "the pending migrations did not apply cleanly to a copy of the $ENV database, or contain unapproved destructive DDL" "see $OPT/logs/03-migration-sandbox.log"
 
   log "migrate: prisma migrate deploy against $ENV (ADR-029: forward-only, before the code switch)"
-  docker run --rm --env-file "$ENV_FILE" "$MIGRATE_IMAGE" npx prisma migrate deploy >>"$LOG" 2>&1 || fail "prisma migrate deploy failed" "the database may be partially migrated — the sandbox passed, so this is likely connectivity" "inspect $LOG; re-run promote (migrate deploy is idempotent)"
+  ( set -a; . "$ENV_FILE"; set +a; cd "$RELEASE_DIR" && node_modules/.bin/prisma migrate deploy ) >>"$LOG" 2>&1 \
+    || fail "prisma migrate deploy failed" "the database may be partially migrated — the sandbox passed, so this is likely connectivity" "inspect $LOG; re-run promote (migrate deploy is idempotent)"
 
-  log "switch: $PROJECT → $TAG"
-  switch_to "$TAG" "$PREVIOUS"
+  log "switch: $ENV → $TAG"
+  switch_to "$TAG"
   if wait_healthy; then
     write_markers "$TAG" "$PREVIOUS" "$TOKEN_COMMIT" promote
     sed -i 's/"result": "pending"/"result": "success (server)"/' "$MANIFEST" 2>/dev/null || true
-    docker image prune -f >>"$LOG" 2>&1 || true
+    prune_old_releases
     rm -rf "$GOV_DIR"
     log "OK: $ENV is on $TAG"
     exit 0
   fi
   if [ -n "$PREVIOUS" ]; then
     log "AUTO-ROLLBACK: switching $ENV back to $PREVIOUS (migrations from $TAG remain applied — forward-compatible by ADR-029)"
-    switch_to "$PREVIOUS" "$PREVIOUS"
+    switch_to "$PREVIOUS"
     wait_healthy && log "auto-rollback healthy on $PREVIOUS" || log "auto-rollback NOT healthy — manual intervention required"
     write_markers "$PREVIOUS" "$PREVIOUS" "$(cat "$MARKERS/.deployed-commit" 2>/dev/null || echo unknown)" "auto-rollback-from-$TAG"
   fi
   sed -i 's/"result": "pending"/"result": "failed (health)"/' "$MANIFEST" 2>/dev/null || true
-  fail "$TAG did not become healthy on $ENV" "see the container log above" "fix, re-tag, redeploy; or 07-rollback.sh --restore-db if the migration must be undone"
+  fail "$TAG did not become healthy on $ENV" "see the pm2 log above" "fix, re-tag, redeploy; or 07-rollback.sh --restore-db if the migration must be undone"
   ;;
 # -----------------------------------------------------------------------------
 rollback)
@@ -195,24 +224,24 @@ rollback)
   acquire_lock
   PREVIOUS="$(current_tag)"
   log "ROLLBACK $ENV: ${PREVIOUS:-<none>} → $TAG${RESTORE_DB:+ with DB restore from $RESTORE_DB}"
-  docker pull -q "$IMAGE" >>"$LOG" 2>&1 || fail "cannot pull $IMAGE" "the rollback target must exist in the registry" ""
+  [ -d "$RELEASES_ROOT/$TAG" ] || fail "release $TAG not on disk in $RELEASES_ROOT" "Only the last $RELEASES_KEEP releases are kept for instant rollback." "deploy/start.sh --env production --tag $TAG to redeploy it first."
   if [ -n "$RESTORE_DB" ]; then
     DUMP="$REMOTE_BACKUP_ROOT/$RESTORE_DB"
     [ -f "$DUMP" ] || fail "dump not found: $DUMP"
     ( cd "$REMOTE_BACKUP_ROOT" && sha256sum -c "$RESTORE_DB.sha256" >>"$LOG" 2>&1 ) || fail "checksum mismatch for $RESTORE_DB" "the package is corrupt" "choose another backup"
     log "safety snapshot before restore"
     "$DEPLOY_DIR/01-backup-serverscript.sh" --env "$ENV" --tag "${PREVIOUS:-none}" --label pre-restore >>"$LOG" 2>&1 || fail "safety snapshot failed — restore refused"
-    log "stopping $PROJECT app"
-    compose stop app >>"$LOG" 2>&1 || true
+    log "stopping $PM2_APP_NAME"
+    pm2 stop "$PM2_APP_NAME" >>"$LOG" 2>&1 || true
     DB_URL="$(set -a; . "$ENV_FILE"; set +a; printf '%s' "${DATABASE_URL:-}")"
     [ -n "$DB_URL" ] || fail "DATABASE_URL absent from $ENV_FILE"
     log "pg_restore --clean --if-exists into the $ENV database"
     pg_restore --clean --if-exists --no-owner --no-privileges --dbname="$DB_URL" "$DUMP" >>"$LOG" 2>&1 || fail "pg_restore reported errors" "the database may be inconsistent" "inspect $LOG; the pre-restore snapshot is in $REMOTE_BACKUP_ROOT"
     unset DB_URL
   fi
-  switch_to "$TAG" "$PREVIOUS"
-  wait_healthy || fail "$TAG not healthy after rollback" "" "docker compose -p $PROJECT logs app"
-  write_markers "$TAG" "$PREVIOUS" "$(docker inspect --format '{{index .Config.Labels "org.opencontainers.image.revision"}}' "$IMAGE" 2>/dev/null || echo unknown)" "rollback${RESTORE_DB:+-with-db-restore}"
+  switch_to "$TAG"
+  wait_healthy || fail "$TAG not healthy after rollback" "" "pm2 logs $PM2_APP_NAME --lines 100 --nostream"
+  write_markers "$TAG" "$PREVIOUS" "$(cat "$RELEASES_ROOT/$TAG/.release-commit" 2>/dev/null || echo unknown)" "rollback${RESTORE_DB:+-with-db-restore}"
   rm -rf "$GOV_DIR"
   log "OK: $ENV rolled back to $TAG"
   ;;

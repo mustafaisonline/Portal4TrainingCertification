@@ -29,7 +29,7 @@ ENV=""; TAG="unknown"; LABEL=""; DRY=0
 while [ $# -gt 0 ]; do case "$1" in
   --env) ENV="$2"; shift 2 ;; --tag) TAG="$2"; shift 2 ;; --label) LABEL="-$2"; shift 2 ;; --dry-run) DRY=1; shift ;;
   *) fail "unknown argument $1" ;; esac; done
-case "$ENV" in production|staging) : ;; *) fail "--env production|staging required" ;; esac
+case "$ENV" in production) : ;; *) fail "--env production required (staging dropped 2026-09-27)" ;; esac
 ENV_FILE="$ETC/$ENV.env"; [ -r "$ENV_FILE" ] || fail "$ENV_FILE not readable"
 command -v pg_dump >/dev/null || fail "pg_dump missing (bootstrap installs postgresql-client-16)"
 

@@ -8,19 +8,27 @@
 # script, adapted to Prisma):
 #   1. restore the newest dump of <env> into $SANDBOX_DB_NAME on the same
 #      cluster (pg_restore --clean, so the sandbox is rebuilt every time)
-#   2. `prisma migrate status` in the -migrate image → list of pending names
+#   2. `prisma migrate status` from the release's own node_modules → list of
+#      pending names
 #   3. scan each pending migration.sql for destructive DDL; refuse unless
 #      the name is on DESTRUCTIVE_MIGRATIONS_APPROVED in config.env
 #      (an approved RED-gate destructive migration is recorded there, in git)
 #   4. `prisma migrate deploy` against the sandbox → must succeed
 #   5. `prisma migrate status` again → must report up to date
 # Production data stays on the server; the sandbox lives on the cluster.
+#
+# 2026-09-27: rewritten from `docker run ... $MIGRATE_IMAGE` to calling the
+# release directory's own installed prisma CLI directly — this script now
+# always runs AFTER server-promote.sh's unpack_release(), so releases/$TAG
+# already has node_modules and the migration SQL on disk (ADR-046 K2/K6/K9
+# supersession).
 # =============================================================================
 set -euo pipefail
 DEPLOY_DIR="$(cd "$(dirname "$0")" && pwd)"
 # shellcheck disable=SC1091
 . "$DEPLOY_DIR/config.env"; [ -f "$DEPLOY_DIR/config.local.env" ] && . "$DEPLOY_DIR/config.local.env"
 ETC="${P4TC_ETC:-/etc/p4tc}"; OPT="${P4TC_OPT:-/opt/p4tc}"
+RELEASES_ROOT="${P4TC_RELEASES_ROOT:-$OPT/releases}"
 LOG="$OPT/logs/03-migration-sandbox.log"; mkdir -p "$OPT/logs"
 log() { printf '[%s] %s\n' "$(date -u '+%Y-%m-%d %H:%M:%SZ')" "$*" | tee -a "$LOG" >&2; }
 fail() { log "ERROR: $*"; exit 1; }
@@ -28,10 +36,11 @@ fail() { log "ERROR: $*"; exit 1; }
 ENV=""; TAG=""; DRY=0
 while [ $# -gt 0 ]; do case "$1" in
   --env) ENV="$2"; shift 2 ;; --tag) TAG="$2"; shift 2 ;; --dry-run) DRY=1; shift ;; *) fail "unknown argument $1" ;; esac; done
-case "$ENV" in production|staging) : ;; *) fail "--env production|staging required" ;; esac
+case "$ENV" in production) : ;; *) fail "--env production required (staging dropped 2026-09-27)" ;; esac
 [ -n "$TAG" ] || fail "--tag required"
 ENV_FILE="$ETC/$ENV.env"; [ -r "$ENV_FILE" ] || fail "$ENV_FILE not readable"
-MIGRATE_IMAGE="$REGISTRY/$IMAGE_NAME-migrate:$TAG"
+RELEASE_DIR="$RELEASES_ROOT/$TAG"
+[ -d "$RELEASE_DIR/node_modules/.bin" ] || fail "$RELEASE_DIR not unpacked/installed yet" "server-promote.sh runs unpack_release() before this script." ""
 
 DB_URL="$(set -a; . "$ENV_FILE"; set +a; printf '%s' "${DATABASE_URL:-}")"
 [ -n "$DB_URL" ] || fail "DATABASE_URL absent"
@@ -54,7 +63,7 @@ pg_restore --clean --if-exists --no-owner --no-privileges --dbname="$SANDBOX_URL
 psql "$SANDBOX_URL" -At -c 'SELECT count(*) FROM _prisma_migrations' >/dev/null 2>&1 || fail "restored sandbox has no _prisma_migrations table — dump is not a portal database"
 log "restored; applied migrations in sandbox: $(psql "$SANDBOX_URL" -At -c 'SELECT count(*) FROM _prisma_migrations WHERE finished_at IS NOT NULL')"
 
-run_prisma() { docker run --rm -e DATABASE_URL="$SANDBOX_URL" "$MIGRATE_IMAGE" npx prisma "$@"; }
+run_prisma() { ( cd "$RELEASE_DIR" && DATABASE_URL="$SANDBOX_URL" node_modules/.bin/prisma "$@" ); }
 
 # 2. pending migrations
 STATUS="$(run_prisma migrate status 2>&1 || true)"
@@ -68,8 +77,8 @@ log "pending: $(printf '%s' "$PENDING" | tr '\n' ' ')"
 
 # 3. destructive DDL scan against the approved list
 for m in $PENDING; do
-  sql="$(docker run --rm --entrypoint cat "$MIGRATE_IMAGE" "prisma/migrations/$m/migration.sql" 2>/dev/null || true)"
-  [ -n "$sql" ] || fail "cannot read prisma/migrations/$m/migration.sql from the image"
+  sql="$(cat "$RELEASE_DIR/prisma/migrations/$m/migration.sql" 2>/dev/null || true)"
+  [ -n "$sql" ] || fail "cannot read prisma/migrations/$m/migration.sql from $RELEASE_DIR"
   if printf '%s' "$sql" | grep -Eiq '^\s*(DROP\s+(TABLE|COLUMN|INDEX|SCHEMA)|ALTER\s+TABLE\s+.*\s+DROP\s+(COLUMN|CONSTRAINT)|TRUNCATE)'; then
     case " ${DESTRUCTIVE_MIGRATIONS_APPROVED:-} " in
       *" $m "*) log "destructive DDL in $m — APPROVED by config.env (DESTRUCTIVE_MIGRATIONS_APPROVED)" ;;

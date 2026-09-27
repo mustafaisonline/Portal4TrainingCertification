@@ -180,7 +180,7 @@ require_dir()  { [ -d "$1" ] || die "Missing directory: $1" "${2:-A framework st
 # config_has_placeholders — true when any config value still reads <…>.
 config_has_placeholders() {
   local v
-  for v in SERVER_HOST DOMAIN REGISTRY; do
+  for v in SERVER_HOST DOMAIN; do
     case "$(eval "printf '%s' \"\${$v}\"")" in *"<"*">"*) return 0 ;; esac
   done
   return 1
@@ -281,10 +281,9 @@ release_workflow_conclusion() {
 # --- Environment selection -------------------------------------------------------
 # resolve_env NAME — sets TARGET_ENV, TARGET_URL, TARGET_PORT.
 resolve_env() {
-  case "${1:-}" in
+  case "${1:-production}" in
     production) TARGET_ENV=production; TARGET_URL="$PRODUCTION_URL"; TARGET_PORT="$PRODUCTION_PORT" ;;
-    staging)    TARGET_ENV=staging;    TARGET_URL="$STAGING_URL";    TARGET_PORT="$STAGING_PORT" ;;
-    *) die "Unknown environment '${1:-}'" "Every server-facing script needs --env production|staging." "Pass --env staging (deploy there first) or --env production." ;;
+    *) die "Unknown environment '${1:-}'" "Only production is provisioned (staging DROPPED 2026-09-27 — ADR-029's supersession note)." "Pass --env production, or omit --env entirely." ;;
   esac
   export TARGET_ENV TARGET_URL TARGET_PORT
 }
@@ -311,7 +310,7 @@ parse_common_args() {
     esac
   done
 }
-print_help() { printf 'Usage: %s [--env production|staging] [--tag vX] [--dry-run] [--yes]\n' "$SCRIPT_NAME" >&2; }
+print_help() { printf 'Usage: %s [--env production] [--tag vX] [--dry-run] [--yes]\n' "$SCRIPT_NAME" >&2; }
 
 # --- Reports ------------------------------------------------------------------
 # write_report VERDICT — Markdown report for this run; never contains a value

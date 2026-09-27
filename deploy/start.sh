@@ -3,15 +3,21 @@
 # deploy/start.sh   (run on: LAPTOP) — the single entry point.
 #
 #   deploy/start.sh --audit --env production [--tag vX]     read-only GO/NO-GO
-#   deploy/start.sh --dry-run --env staging --tag vX         whole pipeline, no changes
-#   deploy/start.sh --env staging --tag vX                   governed deploy (prompts)
+#   deploy/start.sh --dry-run --env production --tag vX      whole pipeline, no changes
+#   deploy/start.sh --env production --tag vX                governed deploy (prompts)
 #   deploy/start.sh --env production --tag vX --auto-approve no prompts
+#
+# Only production is provisioned (staging DROPPED 2026-09-27 — founder's
+# explicit instruction; see ARCHITECTURE_DECISION_REGISTER.md ADR-029's
+# supersession note). --env is accepted for symmetry with the rest of the
+# framework but only ever takes "production".
 #
 # Pipeline (K9 full governance, K11 blocking gate):
 #   00 discovery → git source gate (clean tree, tag at HEAD, on origin/main)
-#   → 04 release gate on HEAD → CI built the tag (release.yml success)
-#   → issue signed token + manifest → 05 deploy (server: backup → sandbox →
-#   migrate → switch → health, auto-rollback) → 06 validate → summary.
+#   → 04 release gate on HEAD → CI built AND PROVED the tag (release.yml
+#   success) → issue signed token + manifest → 05 deploy (fetch the release
+#   artifact, server: backup → unpack + npm ci → sandbox → migrate → switch
+#   `current` → pm2 reload → health, auto-rollback) → 06 validate → summary.
 # There are no bypass flags. --no-gate is accepted ONLY with --dry-run, for
 # rehearsing the framework itself (V2) without a ten-minute test run.
 # =============================================================================
@@ -23,13 +29,13 @@ SCRIPT_NAME="start"
 
 print_help() {
   cat >&2 <<EOF
-Usage: deploy/start.sh [--audit] [--dry-run] [--auto-approve] --env production|staging [--tag vX] [--no-gate (dry-run only)]
+Usage: deploy/start.sh [--audit] [--dry-run] [--auto-approve] --env production [--tag vX] [--no-gate (dry-run only)]
 
   --audit          run 09-audit.sh only (read-only GO/NO-GO) and exit
   --dry-run        run every step in dry-run mode: nothing is changed anywhere
   --auto-approve   no confirmation prompts (live deploy)
-  --env            target environment (staging first, always)
-  --tag            the git tag (v*) the release workflow has built
+  --env            production (the only environment provisioned)
+  --tag            the git tag (v*) the release workflow has built and PROVED
   --no-gate        skip 04 — accepted only together with --dry-run
 
 Reports: deploy/reports/*.md   Logs: deploy/logs/*.log
@@ -112,11 +118,11 @@ fi
 step "GATE: release workflow built $TAG_ARG"
 if gh_ready; then
   concl="$(release_workflow_conclusion "$TAG_ARG")"
-  if [ "$concl" = "success" ]; then log_ok "release.yml: success for $TAG_ARG"; record "ci-image-gate" "PASS" "-"
-  elif [ "$DRY_RUN" -eq 1 ]; then log_warn "(dry-run) release.yml for $TAG_ARG: $concl"; record "ci-image-gate" "WARN ($concl)" "-"
-  else record "ci-image-gate" "FAIL ($concl)" "-"; fail_out "ABORTED: no successful release build for $TAG_ARG ($concl)"; fi
-elif [ "$DRY_RUN" -eq 1 ]; then log_warn "(dry-run) gh not authenticated — cannot confirm the image exists"; record "ci-image-gate" "WARN (gh)" "-"
-else record "ci-image-gate" "FAIL (gh)" "-"; fail_out "ABORTED: gh CLI must be authenticated to confirm the release build (gh auth login)"; fi
+  if [ "$concl" = "success" ]; then log_ok "release.yml: success for $TAG_ARG (release artifact uploaded)"; record "ci-release-gate" "PASS" "-"
+  elif [ "$DRY_RUN" -eq 1 ]; then log_warn "(dry-run) release.yml for $TAG_ARG: $concl"; record "ci-release-gate" "WARN ($concl)" "-"
+  else record "ci-release-gate" "FAIL ($concl)" "-"; fail_out "ABORTED: no successful release build for $TAG_ARG ($concl)"; fi
+elif [ "$DRY_RUN" -eq 1 ]; then log_warn "(dry-run) gh not authenticated — cannot confirm the release artifact exists"; record "ci-release-gate" "WARN (gh)" "-"
+else record "ci-release-gate" "FAIL (gh)" "-"; fail_out "ABORTED: gh CLI must be authenticated to confirm the release build (gh auth login)"; fi
 
 # ── Credentials + 05 ──────────────────────────────────────────────────────────
 step "Issuing governed deployment credentials"

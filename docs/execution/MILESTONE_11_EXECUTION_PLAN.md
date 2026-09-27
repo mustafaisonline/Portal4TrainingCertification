@@ -79,7 +79,7 @@ Three phases, deliberately separable so the founder can stop after any of them.
 
    | File | Run on | Purpose (ported control in *italics*) |
    |---|---|---|
-   | `deploy/config.env` | — | Server host/user, paths, image name and registry, staging/production URLs, timeouts, `BACKUP_KEEP` (*config.env*) |
+   | `deploy/config.env` | — | Server host/user, paths, ~~image name and registry~~ **release workflow name, `RELEASES_KEEP` (K2/K6/K9 reversed 2026-09-27 — no registry)**, production URL, timeouts, `BACKUP_KEEP` (*config.env*) |
    | `deploy/lib/common.sh` | both | Logging, `die`/`soft_fail`, `run_blocking`/`run_advisory` with timeouts, deployment lock, SSH helpers, per-step Markdown reports (*common.sh*) |
    | `deploy/lib/governance.sh` | both | Clean-git gate, pushed-commit gate, deployment manifest, HMAC-signed token with TTL (*governance.sh*) |
    | `deploy/start.sh` | laptop | Single entry point: `--audit`, `--dry-run`, `--auto-approve` (*start.sh*) |
@@ -87,14 +87,14 @@ Three phases, deliberately separable so the founder can stop after any of them.
    | `deploy/01-backup-serverscript.sh` | server | `pg_dump` of the managed DB + Caddy config + env-file *names* (not values) + deployed-tag markers → verified package; retention (*01*) |
    | `deploy/03-migration-sandbox-serverscript.sh` | server | Restore the latest dump into `p4tc_migration` on the same cluster, `prisma migrate deploy` there, scan the pending migrations for destructive DDL, report (*03*) |
    | `deploy/04-release-gate.sh` | laptop | `RELEASE_GATE.md` as code: tsc, Vitest, build (blocking); Playwright (blocking by default, K11); `npm audit --omit=dev` (advisory) (*04*) |
-   | `deploy/05-deploy.sh` | laptop → server | Verify the tag's image exists in the registry and CI is green for that commit → SSH → `p4tc-deploy promote <tag>` (wrapper: backup gate, migrate, pull, restart, health) (*05*) |
+   | `deploy/05-deploy.sh` | laptop → server | ~~Verify the tag's image exists in the registry and CI is green for that commit~~ **Fetch the tag's proven release artifact via `gh run download` (K6 reversed 2026-09-27 — no registry)** → SSH → `p4tc-deploy promote <tag>` (wrapper: backup gate, unpack + npm ci, migrate, symlink switch, pm2 reload, health) (*05*) |
    | `deploy/06-validate.sh` | laptop | Traceability markers, `/api/health` (200, `db: up`, newest migration), `/`, `/verify`, security headers, webhook endpoint answers 400 to an unsigned POST, PASS/FAIL (*06*) |
    | `deploy/07-rollback.sh` + `-serverscript.sh` | both | Promote the previous image tag; optional DB restore from a chosen package after a safety snapshot; needs a token (*07*) |
    | `deploy/09-audit.sh` | laptop | Read-only GO/NO-GO (*09*) |
-   | `deploy/10-server-bootstrap-serverscript.sh` | server (root, once) | Docker Engine, Caddy, `deploy` user, `/etc/p4tc/` (HMAC key, env file `600`), root-owned `/usr/local/bin/p4tc-deploy` + least-privilege sudoers, `ufw` (22/80/443), unattended security upgrades, systemd timer for the reminders job (*10 + 11*) |
-   | `deploy/compose.production.yaml` · `deploy/Caddyfile.example` · `deploy/systemd/` | server | App container (~~+ staging container, K7~~ **staging DROPPED 2026-09-27** — production only) behind Caddy with automatic TLS; reminders timer |
+   | `deploy/10-server-bootstrap-serverscript.sh` | server (root, once) | ~~Docker Engine~~ **Node.js + PM2 (K2/K9 reversed 2026-09-27 — no Docker)**, Caddy, `deploy` user, `/etc/p4tc/` (HMAC key, env file `600`), root-owned `/usr/local/bin/p4tc-deploy` + least-privilege sudoers, `ufw` (22/80/443), unattended security upgrades, systemd timer for the reminders job (*10 + 11*) |
+   | ~~`deploy/compose.production.yaml`~~ **`deploy/ecosystem.production.config.js` + `deploy/run.sh.template`** · `deploy/Caddyfile.example` · `deploy/systemd/` | server | App ~~container (+ staging container, K7)~~ **process under PM2 (staging DROPPED 2026-09-27** — production only**)** behind Caddy with automatic TLS; reminders timer |
    | `deploy/README.md` | — | The runbook for this framework (the eCard `ReadMe.rtf` equivalent), and `DEPLOYMENT_RUNBOOK.md` gains **"Option C — DigitalOcean Droplet (chosen)"** |
-3. **Image build in CI** (K6): `.github/workflows/release.yml` — on a `release/*` tag, run the same verify job as `ci.yml`, then build the `Dockerfile` and push `<registry>/p4tc-portal:<tag>` (+ `:<commit>`). The founder's Mac needs no container runtime; an image exists **only** for a commit that passed the gate — the release gate becomes structural, not procedural.
+3. ~~**Image build in CI** (K6): `.github/workflows/release.yml` — on a `release/*` tag, run the same verify job as `ci.yml`, then build the `Dockerfile` and push `<registry>/p4tc-portal:<tag>` (+ `:<commit>`). The founder's Mac needs no container runtime; an image exists **only** for a commit that passed the gate — the release gate becomes structural, not procedural.~~ **REVERSED 2026-09-27 (K6): `.github/workflows/release.yml` still runs the same verify job, builds and PROVES the app the same way, but packages the built output as a GitHub Actions artifact instead of a Docker image — no registry, no `docker push`. The founder's Mac needs no container runtime either way; the release gate is still structural, not procedural — only the packaging changed.**
 4. **Dry-run everything locally**: every script supports `--dry-run` (as eCard's do) and the whole pipeline is exercised in dry-run against a throwaway config before any server exists.
 
 ### Phase B — provisioning (each step is a RED action taken only on the founder's explicit go, after Phase A and K5/K13–K15)
@@ -119,7 +119,7 @@ Three phases, deliberately separable so the founder can stop after any of them.
 | nginx + certbot | **Caddy** (automatic TLS, ~10-line config) — nginx accepted as an alternative (K8) | Fewer moving parts to keep correct; nothing the portal needs is nginx-specific |
 | No staging; `--dry-run` instead | ~~A **staging** container + database on the same Droplet (K7)~~ **Reversed 2026-09-27**: no staging, on the founder's explicit instruction, after this consequence was explained in full (see ADR-029's supersession note) | ADR-029 requires staging: payments, emails and issuance must be exercised without touching real credentials or sending real email — this risk is now accepted by the founder rather than mitigated |
 | Migration ceiling by number (`GOVERNED_MIGRATION_MAX`) | Prisma's own ledger (`prisma migrate status`) + the ported sandbox validation | Prisma already refuses to run out-of-order or edited migrations |
-| Root wrapper `ecard-deploy` promotes rsync'd trees | Root wrapper `p4tc-deploy promote <tag>` runs backup gate → `prisma migrate deploy` → `docker compose pull/up` → health check; the `deploy` user has no other sudo | Same control, smaller surface: the wrapper's inputs are a tag and a token |
+| Root wrapper `ecard-deploy` promotes rsync'd trees | Root wrapper `p4tc-deploy promote <tag>` runs backup gate → unpack + `npm ci` → `prisma migrate deploy` → symlink switch → `pm2 reload` → health check; the `deploy` user has no other sudo | Same control, smaller surface: the wrapper's inputs are a tag and a token. **2026-09-27: this row is now eCard's own mechanism, not an adaptation of it (K2/K6/K9 reversed)** |
 | Production data never leaves the server | Same rule, kept: sandbox validation runs on the server against a fresh dump; dumps stay on the Droplet or the managed backup service; no production dump is ever downloaded to a laptop | Personal data (names, emails, encrypted ID numbers) is in every dump |
 
 ---
@@ -130,9 +130,9 @@ Three phases, deliberately separable so the founder can stop after any of them.
 |---|---|---|
 | D1 | `deploy/` is a new top-level folder, scripts in Bash (as eCard), no new npm dependency | Same tooling the founder already operates; `shellcheck` is an optional local check, not a required tool (AP-12) |
 | D2 | Deploys are **operator-initiated from the laptop** via `deploy/start.sh`; CI verifies and builds but never deploys | eCard's model; keeps a human on every production change |
-| D3 | The Droplet env file is `/etc/p4tc/portal.env`, `root:deploy 0640`, read by `docker compose --env-file`; values are typed in over SSH by the founder, never transmitted through the framework | ADR-030; MONITORING §4.6 rotation is "edit the file, restart" |
+| D3 | The Droplet env file is `/etc/p4tc/production.env`, `root:deploy 0640`, ~~read by `docker compose --env-file`~~ **sourced into the process by `run.sh` before `next start` (K2/K9 reversed 2026-09-27 — no Docker; PM2 has no `env_file:` equivalent)**; values are typed in over SSH by the founder, never transmitted through the framework | ADR-030; MONITORING §4.6 rotation is "edit the file, restart" |
 | D4 | ~~Staging shares the Droplet and the managed cluster (separate database), under `staging.<domain>`, with test-mode Stripe~~ **DROPPED 2026-09-27** — no staging environment is provisioned (see K7, ADR-029 supersession) | Cheapest faithful staging; can move to its own Droplet later |
-| D5 | Image registry: **DigitalOcean Container Registry** (starter tier) unless the founder prefers GHCR | Same account, same region, private by default |
+| D5 | ~~Image registry: **DigitalOcean Container Registry** (starter tier) unless the founder prefers GHCR~~ **DROPPED 2026-09-27 (K6 reversed) — no image, no registry; the release ships as a GitHub Actions artifact instead** | Same account, same region, private by default |
 
 ---
 
@@ -141,14 +141,14 @@ Three phases, deliberately separable so the founder can stop after any of them.
 | # | Decision | Recommendation |
 |---|---|---|
 | **K1** | Accept **restricted keys** (`rk_`) in `src/config/env.ts` (code change to payment configuration) — or keep `sk_` only and create a standard secret key instead? | **Accept `rk_`** — Stripe recommends it; create the live key with exactly the §1.2 permissions |
-| **K2** | Hosting model on DigitalOcean: **(a)** Droplet + Docker image (the existing `Dockerfile`) behind Caddy · (b) Droplet + PM2 + nginx (eCard parity) · (c) DO App Platform (PaaS, no server) | **(a)** — §3 |
+| **K2** | Hosting model on DigitalOcean: **(a)** Droplet + Docker image (the existing `Dockerfile`) behind Caddy · (b) Droplet + PM2 + nginx (eCard parity) · (c) DO App Platform (PaaS, no server) | ~~**(a)**~~ **REVERSED 2026-09-27 → (b)-shaped: Droplet + PM2 behind Caddy** (nginx stays Caddy, K8 unaffected) — founder's explicit instruction, after the build-location question this raises (resolved by keeping the build in CI, see K6) was explained in full. See ADR-046's 2026-09-27 supersession note |
 | **K3** | Database: **Managed PostgreSQL** (Basic 1 GiB / 1 vCPU, **$15.15/mo**, backups + PITR, VPC) · or PostgreSQL on the Droplet ($0, eCard style) | **Managed** |
 | **K4** | Droplet size: Basic **2 GiB / 2 vCPU $18/mo** (recommended headroom) · 2 GiB / 1 vCPU $12 · 4 GiB / 2 vCPU $24 (if staging shares it and traffic grows) | ~~**$18**~~ **RE-DECIDED 2026-09-27 → $12/mo, 2 GiB / 1 vCPU** — the "if staging shares it" branch no longer applies (staging dropped, see K7); headroom is needed only for the brief old+new container overlap during deploy cutover, not a second permanent process; can resize up later if traffic grows |
 | **K5** | Region **SGP1 (Singapore)** — and J1: is Malaysian data residency required by law, contract or preference? ADR-032's sequencing rule blocks *provisioning production data infrastructure* (Phase B step 5) until this is answered; Phase A is unaffected | SGP1 if nothing binds |
-| **K6** | Image built and pushed by **CI on a `release/*` tag** (no container runtime on the Mac) · or install Colima locally and build from the laptop | **CI** |
+| **K6** | Image built and pushed by **CI on a `release/*` tag** (no container runtime on the Mac) · or install Colima locally and build from the laptop | ~~**CI**~~ **REVERSED 2026-09-27 → still built and PROVEN only by CI, but packaged as a GitHub Actions artifact, not a Docker image — no registry, no push.** See ADR-046's supersession note |
 | **K7** | Staging on the same Droplet (D4) · separate Droplet · no staging (dry-run only, like eCard — conflicts with ADR-029) | ~~**Same Droplet**~~ **REVERSED 2026-09-27 → no staging**, founder's explicit instruction, given twice after the consequence (ADR-029: payments/email/issuance cannot be safely exercised against production) was explained in full. See ADR-029's supersession note |
 | **K8** | Reverse proxy: **Caddy** · nginx | **Caddy** |
-| **K9** | Governance depth: port the full HMAC token + root wrapper + lock + manifest set · or the lighter "SSH + compose" without a token | **Full port** — it is proven, and the cost is one bootstrap script |
+| **K9** | Governance depth: port the full HMAC token + root wrapper + lock + manifest set · or the lighter "SSH + compose" without a token | **Full port** — it is proven, and the cost is one bootstrap script. **Unchanged by the 2026-09-27 K2/K6 reversal: every control here (token, wrapper, lock, manifest, backup gate, sandbox, auto-rollback, audit) survives the Docker→PM2 mechanism change intact — none of it was Docker-specific** |
 | **K10** | Backups: managed PITR primary + `scripts/backup.sh` **weekly** off-host copy to the founder's machine · or nightly to **DO Spaces** ($5/mo, a new service) | **PITR + weekly off-host** |
 | **K11** | Release gate (J6): adopt `RELEASE_GATE.md` as written, with Playwright **blocking** in `deploy/04` · or advisory locally when CI is green for the commit | **Adopt; blocking** |
 | **K12** | Reminders scheduler: systemd timer on the Droplet (`POST /api/jobs/certificate-reminders`, 01:00 UTC) | **Yes** |
@@ -157,7 +157,7 @@ Three phases, deliberately separable so the founder can stop after any of them.
 | **K15** | Stripe live webhook events: the nine in `DEPLOYMENT_RUNBOOK.md` §6 as-is | **As-is** |
 | **K16** | Go-live payment check: one **real** registration by the founder, refunded at once (100 % tier, net of Stripe's fee — a few ringgit are not returned) · or trust the staging test-mode run | Real, once — it is the only proof live mode works end to end |
 
-**Monthly cost of the recommended set:** Droplet $18 + Managed PostgreSQL $15.15 + registry starter tier (free–$5) ≈ **$33–38/mo** plus the domain. Prices from digitalocean.com/pricing on 2026-09-26 (per-second billing from 2026-01-01). No other new external service.
+**Monthly cost of the recommended set (as priced 2026-09-26):** Droplet $18 + Managed PostgreSQL $15.15 + registry starter tier (free–$5) ≈ **$33–38/mo** plus the domain. Prices from digitalocean.com/pricing on 2026-09-26 (per-second billing from 2026-01-01). No other new external service. **Re-priced 2026-09-27:** Droplet re-decided to $12/mo (K4, no staging) + Managed PostgreSQL $15.15, **no registry line item** (K6 reversed) ≈ **$27–28/mo** plus the domain.
 
 ---
 
@@ -166,8 +166,8 @@ Three phases, deliberately separable so the founder can stop after any of them.
 | # | Criterion |
 |---|---|
 | V1 | `src/config/env.ts` accepts `rk_live_`/`rk_test_`, still rejects anything else, still warns on a test key in production — Vitest cases for each; full suite green |
-| V2 | Every `deploy/*.sh` runs end to end in `--dry-run` against a throwaway `config.env` with no server, producing its Markdown report; `start.sh --audit` returns NO-GO with the reasons listed |
-| V3 | `release.yml` on a `release/*` tag: verify job green → image pushed → `docker run --env-file … p4tc-portal:<tag>` answers `/api/health` 200 in a CI step (the image is built and **run** in CI, so the "written, never built" Dockerfile is finally proven) |
+| V2 | Every `deploy/*.sh` runs end to end in `--dry-run` against a throwaway `config.env` with no server, producing its Markdown report; `start.sh --audit` returns NO-GO with the reasons listed. **Re-verified 2026-09-27 against the rewritten (PM2, no Docker) scripts — same criterion, new mechanism** |
+| V3 | ~~`release.yml` on a `release/*` tag: verify job green → image pushed → `docker run --env-file … p4tc-portal:<tag>` answers `/api/health` 200 in a CI step (the image is built and **run** in CI, so the "written, never built" Dockerfile is finally proven)~~ **REWORDED 2026-09-27 (K6 reversed):** `release.yml` on a `v*` tag: verify job green → `next build` → `next start` answers `/api/health` 200 directly on the runner (no Docker) → release packaged and uploaded as a GitHub Actions artifact |
 | V4 | Staging (Phase B): one registration paid on Stripe's hosted page in test mode → `checkout.session.completed` processed once → order paid, registration confirmed; one cancellation → refund at Stripe; `06-validate.sh` PASS |
 | V5 | Rollback rehearsal on staging: promote tag N, then `07-rollback.sh` to N-1 → health 200, traceability markers show N-1 |
 | V6 | Migration sandbox on staging: a real pending migration validates in `p4tc_migration` before it is applied to staging |
@@ -182,6 +182,8 @@ Three phases, deliberately separable so the founder can stop after any of them.
 Answer §5 by number. Phase A starts on K1–K12; Phase B needs K5 (with J1), K13 and the DigitalOcean account; Phase C is Milestone 10's cutover. Each phase ends with a completion report in the standard format, and `PROJECT_STATUS.md` is updated at each verified state.
 
 ## 8. Phase A — completion note (2026-09-26)
+
+**⚠ This section describes the Docker/registry-based Phase A as originally built and verified on 2026-09-26 — a historical record, kept for traceability, not the current pipeline.** K2/K6/K9 were reversed 2026-09-27 (rsync + PM2, no Docker, no registry — see `ARCHITECTURE_DECISION_REGISTER.md` ADR-046's supersession note); the rewritten framework was itself rehearsed the same day (`docs/execution/PROJECT_STATUS.md`'s dated log entry has the current verification account). Below, unmarked text is what was true on 2026-09-26.
 
 | Item | Delivered | Verified |
 |---|---|---|

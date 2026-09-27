@@ -1,0 +1,125 @@
+{
+  "topic": "data-anomalies",
+  "questions": [
+    {
+      "stem": "What are Data Anomalies?",
+      "options": [
+        "Any kind of unusual behaviour which can degrade the quality of data",
+        "Statistical outliers in a numeric column",
+        "Errors in a BI dashboard layout",
+        "Unused indexes in a database",
+        "Delays in a data pipeline"
+      ],
+      "correct": 0,
+      "explanation": "Data Anomalies are about any kind of unusual behaviour which can degrade the quality of data, including being unable to insert, update or delete required data."
+    },
+    {
+      "stem": "Which of the following is NOT one of the four types of Data Anomalies listed?",
+      "options": [
+        "Insertion",
+        "Update",
+        "Delete",
+        "Redundancy",
+        "Encryption"
+      ],
+      "correct": 4,
+      "explanation": "The four types listed are Insertion, Update, Delete and Redundancy anomalies."
+    },
+    {
+      "stem": "What is a Redundancy anomaly?",
+      "options": [
+        "Being unable to enter quality data into a database",
+        "Being able to update irrelevant data",
+        "Having duplicate records in a table",
+        "Deleting a whole department by deleting an employee",
+        "Losing a backup copy"
+      ],
+      "correct": 2,
+      "explanation": "Redundancy is when there are duplicate records in a table."
+    },
+    {
+      "stem": "Which two practices play a vital role in making sure data anomalies do not occur?",
+      "options": [
+        "Data visualisation and heat maps",
+        "Data Normalisation and database constraints",
+        "Data surfing and ad hoc reporting",
+        "Machine learning and deep learning",
+        "Hub-and-spoke and point-to-point integration"
+      ],
+      "correct": 1,
+      "explanation": "Data Normalisation and database constraints play a vibrant role in making sure data anomalies do not occur."
+    },
+    {
+      "stem": "In the de-normalised employee table example, a rule says department name cannot be NULL. What anomaly arises when a new employee has not yet been assigned a department?",
+      "options": [
+        "A redundancy anomaly, because the employee is duplicated",
+        "A delete anomaly, because the department is removed",
+        "An update anomaly, because the salary changes",
+        "An insertion anomaly, because the employee record cannot be inserted and a report of all employees will be wrong",
+        "No anomaly, because the rule is correct"
+      ],
+      "correct": 3,
+      "explanation": "The new employee's record cannot be inserted until a department is assigned, so a management report of all employees will be wrong, which is a data anomaly."
+    },
+    {
+      "stem": "In the de-normalised employee table example, what happens when the only employee in the HR department is deleted?",
+      "options": [
+        "The HR department details are deleted as well, so analysis shows no HR department exists",
+        "The salary column becomes NULL",
+        "A duplicate HR department record is created",
+        "The employee is moved to the IT department",
+        "The table is automatically normalised"
+      ],
+      "correct": 0,
+      "explanation": "Deleting that employee record from the de-normalised table means deleting the HR department details as well, so at that point in time there would appear to be no HR department, which is a data anomaly."
+    },
+    {
+      "stem": "In the employee table example, Adam has two departments, IT and Procurement. What update anomaly can occur when renaming IT to Tech Org?",
+      "options": [
+        "Adam's salary is doubled",
+        "Adam's record is deleted",
+        "The update also changes Procurement to Tech Org, creating a data quality issue",
+        "The update is rejected by the database",
+        "A third department is added for Adam"
+      ],
+      "correct": 2,
+      "explanation": "If one is unaware of Adam's multiple departments, an update command to change IT to Tech Org will also update Procurement to Tech Org, which is a data anomaly."
+    },
+    {
+      "stem": "Besides eliminating duplication of records, what other benefit is gained by normalising the employee table into separate department and salary tables?",
+      "options": [
+        "Faster network speed",
+        "Saving a lot of storage",
+        "Better dashboard colours",
+        "Automatic data encryption",
+        "Removal of all database constraints"
+      ],
+      "correct": 1,
+      "explanation": "Splitting the employee table into department and salary tables eliminates duplication and redundancy, saves a lot of storage, and addresses the insert, update and delete anomalies."
+    },
+    {
+      "stem": "Which statement about data quality is made in the discussion of Data Anomalies?",
+      "options": [
+        "Data quality is only about dirty data",
+        "Data quality applies only to reports",
+        "Data quality is unaffected by database design",
+        "Data quality is measured only by row counts",
+        "Data quality is not only about dirty data but also about being unable to insert, update and delete required data"
+      ],
+      "correct": 4,
+      "explanation": "Data quality is not only about dirty data but also about not being able to insert, update and delete required data."
+    },
+    {
+      "stem": "How is an Update anomaly defined?",
+      "options": [
+        "Being unable to enter quality data into a database",
+        "Having duplicate records in a table",
+        "Being able to delete irrelevant data",
+        "Being unable to update relevant data, or being able to update irrelevant data",
+        "Being unable to create a new table"
+      ],
+      "correct": 3,
+      "explanation": "An Update anomaly is when one is unable to update relevant data or is able to update irrelevant data."
+    }
+  ]
+}

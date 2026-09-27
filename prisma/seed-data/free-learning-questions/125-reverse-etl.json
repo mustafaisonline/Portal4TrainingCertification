@@ -1,0 +1,125 @@
+{
+  "topic": "reverse-etl",
+  "questions": [
+    {
+      "stem": "When is the Business Analytics cycle from OLTP to OLAP considered complete?",
+      "options": [
+        "When data reaches the Data Warehouse",
+        "When the Machine Learning model is trained",
+        "When top management sees the dashboard",
+        "Once Reverse ETL has been performed",
+        "When the campaign message is sent to customers' mobiles"
+      ],
+      "correct": 3,
+      "explanation": "Most people think the cycle ends when management decides on campaigns, but it completes only once Reverse ETL is performed."
+    },
+    {
+      "stem": "In the social media example, what constitutes Reverse ETL?",
+      "options": [
+        "Writing back to social media in the format it accepts",
+        "Pulling all kinds of data from social media",
+        "Storing social media posts in a Data Lake",
+        "Running sentiment analysis on posts",
+        "Deleting old social media data"
+      ],
+      "correct": 0,
+      "explanation": "Organisations pull all kinds of data from social media and never write back; writing back in the accepted format is Reverse ETL."
+    },
+    {
+      "stem": "What does Business Analytics support?",
+      "options": [
+        "Network Security Systems",
+        "Payroll Systems",
+        "Decision Support Systems (DSS)",
+        "Version Control Systems",
+        "Ticketing Systems"
+      ],
+      "correct": 2,
+      "explanation": "Business Analytics supports Decision Support Systems, with technologies running from OLTP source systems to OLAP stores."
+    },
+    {
+      "stem": "In the sales campaign example of Reverse ETL, what can the customer representative see when opening the source system?",
+      "options": [
+        "The Machine Learning model's accuracy score",
+        "The Data Lake storage cost",
+        "The list of every campaign ever run",
+        "The customer's credit card number",
+        "That a campaign was sent to the buyer's mobile but the buyer never reacted to it"
+      ],
+      "correct": 4,
+      "explanation": "Because the campaign output was written back to the source system, the representative can see the campaign was sent and unused, and can offer another discount."
+    },
+    {
+      "stem": "Where must the output of a campaign be sent for the analytics cycle to end?",
+      "options": [
+        "To the Data Warehouse only",
+        "To the source systems",
+        "To an external archive",
+        "To the marketing team's spreadsheet",
+        "To the Machine Learning model"
+      ],
+      "correct": 1,
+      "explanation": "The cycle ends by sending the output of the campaigns back to the source systems."
+    },
+    {
+      "stem": "What must Reverse ETL follow before writing back into a source system?",
+      "options": [
+        "The Data Warehouse star schema",
+        "The BI tool's report layout",
+        "The source system's own OLTP data model",
+        "The Data Lake folder structure",
+        "The social media API only"
+      ],
+      "correct": 2,
+      "explanation": "Each source system has its own OLTP data model, and Reverse ETL must follow that same data model before writing back."
+    },
+    {
+      "stem": "Which of the following statements about Reverse ETL is NOT correct?",
+      "options": [
+        "Reverse ETL is simply copying and pasting the analytics output into the source system",
+        "Reverse ETL completes the Business Analytics cycle",
+        "Reverse ETL can mean writing back to social media in the format it accepts",
+        "Reverse ETL lets source-system users see the outcome of campaigns",
+        "Reverse ETL must respect the source system's OLTP data model"
+      ],
+      "correct": 0,
+      "explanation": "Reverse ETL is not just copy-pasting analytics output; each source system has its own OLTP data model that must be followed."
+    },
+    {
+      "stem": "Once data has moved into stores such as a Data Lake or Data Warehouse, how are analytics performed for prediction or forecasting?",
+      "options": [
+        "By manual spreadsheet review",
+        "By re-running the OLTP transactions",
+        "By archiving the data",
+        "By reverse engineering the source schema",
+        "Using Data Science practices such as Machine Learning and Deep Learning"
+      ],
+      "correct": 4,
+      "explanation": "Analytics are performed using Data Science practice, running Machine Learning, Deep Learning and other means to analyse data for prediction or forecasting."
+    },
+    {
+      "stem": "What common misconception about the Business Analytics cycle does the concept of Reverse ETL correct?",
+      "options": [
+        "That data must be masked before analytics",
+        "That the cycle is complete once management decides to initiate campaigns based on the analytics",
+        "That Data Lakes replace Data Warehouses",
+        "That OLTP systems cannot feed OLAP systems",
+        "That Machine Learning is optional"
+      ],
+      "correct": 1,
+      "explanation": "Most people think the cycle is complete when management decides on campaigns, but it is not complete until the results are written back through Reverse ETL."
+    },
+    {
+      "stem": "Which of the following are named as OLAP-side datastores in the Business Analytics cycle?",
+      "options": [
+        "Web servers and load balancers",
+        "Firewalls and proxies",
+        "Email servers and file shares",
+        "Data Warehouses, Data Marts, Data Lakes, Data Lake Houses and Data Vaults",
+        "Spreadsheets and word processors"
+      ],
+      "correct": 3,
+      "explanation": "The OLAP side includes Data Warehouses, Data Marts, Data Lakes, Data Lake Houses, Data Vaults, Business Vaults, Enterprise Data Hubs and Enterprise Data Fabric."
+    }
+  ]
+}

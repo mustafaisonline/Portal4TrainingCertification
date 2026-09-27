@@ -1,0 +1,125 @@
+{
+  "topic": "orm-modelling",
+  "questions": [
+    {
+      "stem": "What does ORM stand for in the context of Information Modelling?",
+      "options": [
+        "Object-Relational Mapping",
+        "Operational Rule Model",
+        "Ordered Relationship Method",
+        "Object-Role Modelling",
+        "Organisational Resource Model"
+      ],
+      "correct": 3,
+      "explanation": "ORM is Object-Role Modelling, a fact-oriented conceptual modelling method representing information as objects playing roles in facts."
+    },
+    {
+      "stem": "What does ORM treat as the core building blocks of information?",
+      "options": [
+        "Tables",
+        "Attributes",
+        "Facts",
+        "Indexes",
+        "Swimlanes"
+      ],
+      "correct": 2,
+      "explanation": "Unlike approaches that focus on attributes or tables, ORM treats facts as the core building blocks of information."
+    },
+    {
+      "stem": "How would ORM represent the information that an employee has a department?",
+      "options": [
+        "As a department attribute on the employee table",
+        "As a foreign key column",
+        "As a swimlane in a process diagram",
+        "As the fact 'Employee works for Department', with both as objects playing roles",
+        "As a bounded context"
+      ],
+      "correct": 3,
+      "explanation": "ORM models every piece of information as a fact type, so instead of a department attribute it states 'Employee works for Department'."
+    },
+    {
+      "stem": "In the school example of ORM, how is a student's class expressed?",
+      "options": [
+        "As a class attribute in a student table",
+        "As a class ID stored with the student",
+        "As a gateway in a workflow",
+        "As a column in a report",
+        "As the fact 'Student is enrolled in Class'"
+      ],
+      "correct": 4,
+      "explanation": "ORM expresses the fact 'Student is enrolled in Class' rather than embedding meaning inside an attribute."
+    },
+    {
+      "stem": "Which of the following is an example of an explicit rule that ORM can define in the loan example?",
+      "options": [
+        "A loan must have exactly one approval decision",
+        "Loans are stored in a data warehouse",
+        "The loan officer works in the second swimlane",
+        "Loan amount is stored as a decimal",
+        "Loans are backed up nightly"
+      ],
+      "correct": 0,
+      "explanation": "ORM allows rules such as a loan having exactly one approval decision and each repayment belonging to exactly one loan to be part of the model itself."
+    },
+    {
+      "stem": "Where do ORM's business rules live?",
+      "options": [
+        "Hidden in application logic",
+        "In the physical database only",
+        "In the model itself",
+        "In the reporting tool",
+        "In the workflow engine"
+      ],
+      "correct": 2,
+      "explanation": "In ORM the rules are part of the model itself, not hidden in application logic."
+    },
+    {
+      "stem": "Which of the following is NOT named as a constraint ORM can express directly in the model?",
+      "options": [
+        "Uniqueness",
+        "Mandatory participation",
+        "Allowed combinations of facts",
+        "Cardinality rules",
+        "Encryption requirements"
+      ],
+      "correct": 4,
+      "explanation": "ORM captures uniqueness, mandatory participation, allowed combinations and cardinality rules; encryption is not mentioned."
+    },
+    {
+      "stem": "Into which representations can ORM models be transformed?",
+      "options": [
+        "Entity-relationship diagrams, relational database schemas or XML schemas",
+        "Only BPMN diagrams",
+        "Only spreadsheets",
+        "Only natural-language documents",
+        "Only graph databases"
+      ],
+      "correct": 0,
+      "explanation": "ORM models are technology-independent yet can be transformed into ER diagrams, relational schemas or XML schemas."
+    },
+    {
+      "stem": "What drawback does ORM's expressive power introduce?",
+      "options": [
+        "Models lose all business meaning",
+        "As models grow, ORM diagrams can become difficult for non-technical stakeholders to read and maintain",
+        "Rules can no longer be expressed",
+        "Models cannot be transformed into schemas",
+        "Facts must be stored as attributes"
+      ],
+      "correct": 1,
+      "explanation": "The formality and visual density of large ORM diagrams make them hard for non-technical stakeholders to read and maintain."
+    },
+    {
+      "stem": "How does ORM relate to NIAM?",
+      "options": [
+        "ORM predates NIAM",
+        "ORM builds on NIAM's ideas but adds much stronger structure and formality",
+        "ORM is a simplified version of NIAM",
+        "ORM and NIAM are unrelated",
+        "ORM removes the fact-based approach of NIAM"
+      ],
+      "correct": 1,
+      "explanation": "ORM builds on the ideas introduced by NIAM, adding role-based representation and explicit constraints."
+    }
+  ]
+}

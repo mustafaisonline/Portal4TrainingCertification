@@ -1,0 +1,125 @@
+{
+  "topic": "textual-orcontextual-etl",
+  "questions": [
+    {
+      "stem": "What does textual ETL do with raw text?",
+      "options": [
+        "It reads text, disambiguates it and places the words found, together with their context, into a structured database",
+        "It compresses documents to save storage space",
+        "It translates text into other languages",
+        "It converts structured tables into free-form prose",
+        "It deletes documents that contain no numbers"
+      ],
+      "correct": 0,
+      "explanation": "Textual ETL reads and disambiguates text, capturing each selected word and its context as the data is placed into a structured format."
+    },
+    {
+      "stem": "How does textual ETL know which words to pluck out of text?",
+      "options": [
+        "It selects the most frequently occurring words",
+        "By fiat of one or more taxonomies that flag which words are important and provide their context",
+        "A systems programmer hard-codes each word",
+        "It chooses words at random",
+        "It extracts only words that appear in capital letters"
+      ],
+      "correct": 1,
+      "explanation": "Taxonomies alert textual ETL as to which words are important enough to be placed in a database and also provide the context for the selected word."
+    },
+    {
+      "stem": "What is inline contextualisation in textual ETL?",
+      "options": [
+        "Translating each word into a numeric code",
+        "Attaching document metadata to every row",
+        "Selecting a word and its context by its position in the raw text and its proximity to other words and phrases",
+        "Sorting words alphabetically before loading",
+        "Summarising a document into a single sentence"
+      ],
+      "correct": 2,
+      "explanation": "Inline contextualisation handles words that taxonomies cannot, using the word's position in the raw text and its proximity to other words and phrases."
+    },
+    {
+      "stem": "What is the key difference between structured data and textual data illustrated by the $5000 bank deposit and the phrase 'I like biscuits'?",
+      "options": [
+        "Structured data is larger than textual data",
+        "Textual data is always older than structured data",
+        "Structured data is stored in files while text is stored in databases",
+        "Structured data is precise whereas textual data is probabilistic",
+        "Textual data cannot be stored in a database"
+      ],
+      "correct": 3,
+      "explanation": "A $5000 deposit is an exact amount, but 'I like biscuits' can be interpreted in several ways, showing that structured data is precise while textual data is probabilistic."
+    },
+    {
+      "stem": "What is needed before analytics can be run across both structured data and textual data together?",
+      "options": [
+        "A second data warehouse",
+        "A licence for each document",
+        "A dedicated systems programmer",
+        "Deleting the structured data first",
+        "Some common connector between the two types of data"
+      ],
+      "correct": 4,
+      "explanation": "Analytics on structured data alone or textual data alone is possible, but analytics against both requires some common connector of data."
+    },
+    {
+      "stem": "What is the document card catalogue used for in a corporation?",
+      "options": [
+        "Quickly and efficiently finding corporate documents, including documents that relate to each other",
+        "Recording employee attendance",
+        "Storing customer credit card details",
+        "Listing which books employees have borrowed",
+        "Logging server performance"
+      ],
+      "correct": 0,
+      "explanation": "Like a library's card catalogue, the document card catalogue helps a corporation find its documents and discover which documents relate to each other."
+    },
+    {
+      "stem": "Roughly what proportion of the data in a corporation is estimated to be text?",
+      "options": [
+        "5% to 10%",
+        "85% to 95%",
+        "25% to 35%",
+        "50% exactly",
+        "Less than 1%"
+      ],
+      "correct": 1,
+      "explanation": "It is estimated that 85% to 95% of the data in the corporation is comprised of text, and nearly all of it is untouched by today's analysts."
+    },
+    {
+      "stem": "In the real-estate example of textual ETL, how are the words 'owner' in one document and 'trustee' in another treated?",
+      "options": [
+        "They are stored in separate databases",
+        "The word 'trustee' is discarded as a duplicate",
+        "They are recorded as the same data because their logical meaning is the same, even though the text differs",
+        "They are flagged as a conflict for a consultant to resolve",
+        "Only the more frequent word is kept"
+      ],
+      "correct": 2,
+      "explanation": "Textual ETL groups data by its logical meaning, not its physical manifestation, so 'owner' and 'trustee' are recorded as the same data."
+    },
+    {
+      "stem": "What distinguishes the word column of a textual ETL database from the name column of a standard database?",
+      "options": [
+        "The word column is always empty",
+        "The word column holds only numbers",
+        "The word column can hold only a single word per document",
+        "The word column is heterogeneous, holding any kind of word found in the document, whereas the name column is homogeneous",
+        "The word column is defined by metadata before any document is read"
+      ],
+      "correct": 3,
+      "explanation": "In a standard database every element of the name column is a name, but the word column of a textual ETL database is heterogeneous and free to hold any kind of word."
+    },
+    {
+      "stem": "In a textual ETL database, what does the classification (or context) column contain?",
+      "options": [
+        "The file size of the source document",
+        "The date on which the document was loaded",
+        "The name of the analyst who ran the process",
+        "The number of times a word appears",
+        "The classification that gives meaning to the word in the same row, such as 'flu' being a disease or 'Eliquis' a medication"
+      ],
+      "correct": 4,
+      "explanation": "The classification column gives meaning or context to the word in the same row, so the metadata of the word is contained in the database structure itself."
+    }
+  ]
+}

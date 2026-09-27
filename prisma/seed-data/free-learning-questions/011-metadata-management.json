@@ -1,0 +1,125 @@
+{
+  "topic": "metadata-management",
+  "questions": [
+    {
+      "stem": "When should a Metadata Strategy take place relative to project or product strategies?",
+      "options": [
+        "Only after the first dashboards have gone live",
+        "Alongside them, and the earlier the better",
+        "After the Data Lake has been fully populated",
+        "Once Data Lineage problems have appeared",
+        "At the end of the project, as a documentation exercise"
+      ],
+      "correct": 1,
+      "explanation": "Metadata Strategy should run along with project or product strategies, meaning the earlier the better."
+    },
+    {
+      "stem": "By roughly how much can Metadata and Master Data reduce an organisation's BI footprint?",
+      "options": [
+        "About 10%",
+        "About 25%",
+        "About 50%",
+        "They cannot reduce it at all",
+        "About 80%"
+      ],
+      "correct": 4,
+      "explanation": "Well-described Metadata means a new BI report is only generated when an earlier one does not serve the purpose, which can cut the BI footprint by 80%."
+    },
+    {
+      "stem": "Which everyday example illustrates Metadata as the index of a book?",
+      "options": [
+        "The index indicates which page contains which topic",
+        "The index lists every word in the book alphabetically",
+        "The index is the longest chapter of the book",
+        "The index holds the raw text of each chapter",
+        "The index is the ISBN printed on the cover"
+      ],
+      "correct": 0,
+      "explanation": "The index of a book is Metadata because it indicates which page contains which topic; the acknowledgment page is another example."
+    },
+    {
+      "stem": "Which type of metadata covers business definitions, descriptions, data models, data quality rules and data standards?",
+      "options": [
+        "Operational Metadata",
+        "Technical Metadata",
+        "Business Metadata",
+        "Execution Metadata",
+        "Spatial Metadata"
+      ],
+      "correct": 2,
+      "explanation": "Business Metadata covers the solution implementation from a business view, such as definitions, descriptions, data model, data quality rules and data standards."
+    },
+    {
+      "stem": "Which of the following is an example of Operational Metadata?",
+      "options": [
+        "A data quality rule",
+        "A column's business description",
+        "An index definition",
+        "A job's execution date, duration and error alerts",
+        "An access permission on a table"
+      ],
+      "correct": 3,
+      "explanation": "Operational Metadata is about the execution result of an implemented solution, for example execution date, error alerts and job duration."
+    },
+    {
+      "stem": "Which of the following is NOT listed among the types of metadata?",
+      "options": [
+        "Business Metadata",
+        "Technical Metadata",
+        "Operational Metadata",
+        "Financial Metadata",
+        "Metadata about database, table and column names"
+      ],
+      "correct": 3,
+      "explanation": "The three types are Business, Technical and Operational Metadata; database, table and column names belong to Technical Metadata."
+    },
+    {
+      "stem": "What happens to data if Metadata is not in place and Data Lineage therefore cannot be figured out?",
+      "options": [
+        "The data becomes a Data Swamp",
+        "The data becomes Master Data",
+        "The data is automatically archived",
+        "The data becomes Active Metadata",
+        "The data is compressed to save space"
+      ],
+      "correct": 0,
+      "explanation": "Without Metadata you cannot figure out Data Lineage, and without Data Lineage your Data becomes a Data Swamp."
+    },
+    {
+      "stem": "In a metadata architecture, what is the Metadata Portal?",
+      "options": [
+        "The centralised store that holds metadata from all source systems",
+        "The layer exposed for users to search metadata",
+        "The high-level model of connections between systems",
+        "The individual repository hosting metadata at the source side",
+        "The ETL job that loads metadata overnight"
+      ],
+      "correct": 1,
+      "explanation": "The Metadata Portal is the layer exposed for users to search metadata, whereas the Enterprise Metadata Repository is the centralised store."
+    },
+    {
+      "stem": "In a Distributed Metadata Architecture, which capability is NOT available?",
+      "options": [
+        "Connecting the portal to source metadata repositories",
+        "Hosting metadata at the source side",
+        "Cross-system metadata search",
+        "Searching metadata through a portal",
+        "Having many source metadata repositories"
+      ],
+      "correct": 2,
+      "explanation": "In a Distributed Metadata Architecture there is no enterprise metadata repository, so the portal connects directly to source repositories and cross-system search is not available."
+    },
+    {
+      "stem": "Which metadata architecture is described as the most complex, with metadata pulled from source systems and pushed back to them after updates?",
+      "options": [
+        "Centralised Metadata Architecture",
+        "Distributed Metadata Architecture",
+        "Hybrid Metadata Architecture",
+        "Source Metadata Architecture",
+        "Bi-Directional Metadata Architecture"
+      ],
+      "correct": 4,
+      "explanation": "Bi-Directional Metadata Architecture is the most complex: changes flow both ways so both repositories stay up to date all the time."
+    }
+  ]
+}

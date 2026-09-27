@@ -1,0 +1,125 @@
+{
+  "topic": "text-and-embeddedvectorization",
+  "questions": [
+    {
+      "stem": "What is the primary aim of general vectorisation?",
+      "options": [
+        "To convert text into images",
+        "To encrypt data elements before storage",
+        "To convert a single action on a single data element (SISD) into a single action on multiple data elements",
+        "To translate documents between languages",
+        "To compress data so it takes less disk space"
+      ],
+      "correct": 2,
+      "explanation": "General vectorisation aims to turn a single action on a single data element (SISD) into a single action on multiple data elements, allowing parallel processing."
+    },
+    {
+      "stem": "In machine learning, what does text vectorisation specifically deal with?",
+      "options": [
+        "Converting textual or character data into numerical representations",
+        "Converting numbers back into readable sentences",
+        "Removing all punctuation from a document",
+        "Translating text from one language to another",
+        "Storing documents in a relational database"
+      ],
+      "correct": 0,
+      "explanation": "Text vectorisation in machine learning deals with converting textual or character data into numerical representations."
+    },
+    {
+      "stem": "What happens in the embedding process after text has been converted into numbers?",
+      "options": [
+        "The numbers are printed as a report",
+        "The numbers are deleted to save space",
+        "The numbers are converted back into the original text",
+        "Machine learning and deep learning techniques learn from the numerical representations to produce faster and more effective results",
+        "The numbers are sorted alphabetically"
+      ],
+      "correct": 3,
+      "explanation": "Once text is converted into numbers, the embedding process uses machine learning and deep learning techniques to learn from those numerical representations."
+    },
+    {
+      "stem": "Which text vectorisation method represents only whether a term appears in a document, without considering its frequency?",
+      "options": [
+        "Bag of Words Term Frequency",
+        "Normalised Term Frequency",
+        "Binary Term Frequency",
+        "Inverse Document Frequency",
+        "Word embedding"
+      ],
+      "correct": 2,
+      "explanation": "Binary Term Frequency represents whether a term appears or not in a document, without considering its frequency."
+    },
+    {
+      "stem": "What does Bag of Words (BoW) Term Frequency represent?",
+      "options": [
+        "The order in which words appear in a sentence",
+        "The frequency of each term in a document, disregarding the order of words",
+        "The grammatical role of each word",
+        "The length of each document in characters",
+        "Whether a document is in English"
+      ],
+      "correct": 1,
+      "explanation": "Bag of Words Term Frequency represents the frequency of each term in a document while disregarding the order of words."
+    },
+    {
+      "stem": "What adjustment does Normalised Term Frequency make?",
+      "options": [
+        "It removes all rare words from the document",
+        "It converts all words to upper case",
+        "It sorts terms by alphabetical order",
+        "It translates terms into a common language",
+        "It adjusts term frequency based on document length to give a more balanced representation"
+      ],
+      "correct": 4,
+      "explanation": "Normalised Term Frequency adjusts the term frequency based on document length, aiming to provide a more balanced representation."
+    },
+    {
+      "stem": "What overarching goal do general vectorisation and text vectorisation share?",
+      "options": [
+        "Accelerating tasks",
+        "Reducing storage costs",
+        "Improving data privacy",
+        "Replacing databases",
+        "Generating images from text"
+      ],
+      "correct": 0,
+      "explanation": "Both approaches share the overarching goal of accelerating tasks, though they operate in different ways."
+    },
+    {
+      "stem": "How does general vectorisation improve efficiency?",
+      "options": [
+        "By converting words to numbers for model training",
+        "By removing duplicate records from a table",
+        "By transforming data so that multiple data elements can be processed in parallel",
+        "By caching query results in memory",
+        "By compressing text into a smaller alphabet"
+      ],
+      "correct": 2,
+      "explanation": "General vectorisation transforms data in a way that allows parallel processing, improving efficiency in handling multiple data elements simultaneously."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a common text vectorisation method?",
+      "options": [
+        "Binary Term Frequency",
+        "Bag of Words Term Frequency",
+        "Normalised Term Frequency",
+        "Slowly Changing Dimension Frequency",
+        "All of these are listed methods"
+      ],
+      "correct": 3,
+      "explanation": "The listed methods are Binary Term Frequency, Bag of Words Term Frequency and Normalised Term Frequency; Slowly Changing Dimension Frequency is not a text vectorisation method."
+    },
+    {
+      "stem": "What is the subsequent embedding step used for once text has been vectorised?",
+      "options": [
+        "Formatting the text for printing",
+        "Training machine learning models and enhancing natural language processing tasks",
+        "Backing up the original documents",
+        "Checking the spelling of the original text",
+        "Converting the numbers into a PDF"
+      ],
+      "correct": 1,
+      "explanation": "The embedding process leverages the numerical representations for training machine learning models, enhancing the efficiency of natural language processing tasks."
+    }
+  ]
+}

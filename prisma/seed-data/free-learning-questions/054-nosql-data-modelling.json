@@ -1,0 +1,125 @@
+{
+  "topic": "nosql-data-modelling",
+  "questions": [
+    {
+      "stem": "What primarily drives NoSQL data modelling, in contrast to relational modelling?",
+      "options": [
+        "Application access patterns and workload requirements",
+        "Normalisation theory and functional dependencies",
+        "Class hierarchies and inheritance",
+        "Physical pointer navigation",
+        "Domain and key constraints"
+      ],
+      "correct": 0,
+      "explanation": "Relational modelling is driven by normalisation theory; NoSQL modelling is driven primarily by application access patterns and workload requirements."
+    },
+    {
+      "stem": "Which four database families does NoSQL data modelling cover?",
+      "options": [
+        "Hierarchical, network, relational and object-oriented",
+        "Document stores, key–value stores, wide-column databases and graph databases",
+        "Star, snowflake, data vault and anchor",
+        "OLTP, OLAP, HTAP and streaming",
+        "JSON, XML, CSV and Parquet"
+      ],
+      "correct": 1,
+      "explanation": "NoSQL modelling designs data structures for non-relational databases such as document stores, key–value stores, wide-column databases and graph databases."
+    },
+    {
+      "stem": "Why are NoSQL models often intentionally denormalised or embedded?",
+      "options": [
+        "To satisfy Boyce–Codd Normal Form",
+        "To enforce global consistency rules",
+        "To minimise joins and reduce cross-node communication in distributed environments",
+        "To make schemas rigid and predictable",
+        "To support relational algebra"
+      ],
+      "correct": 2,
+      "explanation": "Instead of decomposing data into normalised tables, NoSQL models embed or denormalise to minimise joins and reduce cross-node communication."
+    },
+    {
+      "stem": "Which questions guide NoSQL design decisions?",
+      "options": [
+        "Which attributes depend on part of the composite key?",
+        "Is every determinant a superkey?",
+        "Which entities share a transitive dependency?",
+        "What are the most frequent queries, and how can this data be retrieved in a single read?",
+        "Which constraints can be expressed as domains or keys?"
+      ],
+      "correct": 3,
+      "explanation": "NoSQL modelling is query-driven rather than theory-driven, guided by the most frequent queries and how to retrieve data in a single read."
+    },
+    {
+      "stem": "In a document database such as MongoDB, how might the loan approval domain be modelled?",
+      "options": [
+        "With LoanID as a key and a JSON blob as the value",
+        "With data partitioned by CustomerID across columns",
+        "With Customer, Loan and Transaction as nodes connected by edges",
+        "With separate normalised Customer, Loan and Repayment tables",
+        "With a Customer document embedding Loan Applications and their Repayments in one JSON structure"
+      ],
+      "correct": 4,
+      "explanation": "In a document database a Customer document might embed Loan Applications and their associated Repayments, allowing a full customer profile to be retrieved in a single read."
+    },
+    {
+      "stem": "In a key–value database such as Redis or DynamoDB, what would the loan example use as key and value?",
+      "options": [
+        "LoanID as the key and a JSON blob of all loan details as the value",
+        "CustomerID as the partition and loans as columns",
+        "A node for each loan and an edge for each repayment",
+        "A composite key of LoanID and RepayDate",
+        "A surrogate key and a normalised row"
+      ],
+      "correct": 0,
+      "explanation": "In a key–value store the key might be LoanID and the value a JSON blob containing all loan details, optimised for rapid lookup by key."
+    },
+    {
+      "stem": "Which NoSQL family is described as partitioning data by CustomerID to support high write throughput and distributed scalability?",
+      "options": [
+        "Document databases such as MongoDB",
+        "Wide-column databases such as Cassandra or Bigtable",
+        "Graph databases such as Neo4j",
+        "Key–value databases such as Redis",
+        "Object databases such as ObjectStore"
+      ],
+      "correct": 1,
+      "explanation": "In a wide-column database data might be partitioned by CustomerID with columns storing multiple loans, supporting high write throughput and distributed scale."
+    },
+    {
+      "stem": "Why does strict normalisation become a problem in massively distributed systems?",
+      "options": [
+        "Because normalised tables cannot store JSON",
+        "Because normalisation forbids replication",
+        "Because joins and cross-node coordination can introduce performance bottlenecks",
+        "Because normalised schemas cannot be indexed",
+        "Because normalisation requires a single server"
+      ],
+      "correct": 2,
+      "explanation": "At massive scale, joins and cross-node coordination required by strict normalisation create bottlenecks, which NoSQL addresses through denormalisation, locality of access and horizontal scalability."
+    },
+    {
+      "stem": "Which of the following is NOT a claim made about the relationship between NoSQL and relational systems?",
+      "options": [
+        "NoSQL complements relational modelling rather than replacing it",
+        "Relational systems remain the best choice for strong consistency and complex transactions",
+        "Relational and NoSQL systems coexist in modern enterprises",
+        "NoSQL makes relational theory obsolete",
+        "There is no one-size-fits-all model"
+      ],
+      "correct": 3,
+      "explanation": "NoSQL does not replace relational modelling; it complements it, and relational theory remains foundational in the broader data ecosystem."
+    },
+    {
+      "stem": "In the example of a single organisation using several database types, which workload is matched with a graph database?",
+      "options": [
+        "Financial transactions",
+        "Customer profiles",
+        "Caching",
+        "Regulatory reporting",
+        "Fraud detection"
+      ],
+      "correct": 4,
+      "explanation": "A single organisation may use relational databases for financial transactions, document databases for customer profiles, graph databases for fraud detection and key–value stores for caching."
+    }
+  ]
+}

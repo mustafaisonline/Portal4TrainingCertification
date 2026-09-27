@@ -1,0 +1,125 @@
+{
+  "topic": "data-filtering",
+  "questions": [
+    {
+      "stem": "What is Data Filtering?",
+      "options": [
+        "Removing duplicate columns from a table",
+        "Reducing the number of rows while pulling data from a table",
+        "Converting unstructured data into structured data",
+        "Encrypting rows before they leave the database",
+        "Summarising detailed rows into totals"
+      ],
+      "correct": 1,
+      "explanation": "Data Filtering is about reducing the number of rows returned when pulling data from a table, typically with a WHERE clause."
+    },
+    {
+      "stem": "Why is a filter mandatory on every query run in the cloud?",
+      "options": [
+        "Because cloud databases cannot return more than a fixed number of rows",
+        "Because cloud resources are limited and cannot be increased",
+        "Because each query is attached to a dollar value, so filtering keeps resource utilisation to a minimum",
+        "Because unfiltered queries are blocked by network security",
+        "Because cloud tables have no primary keys"
+      ],
+      "correct": 2,
+      "explanation": "In the cloud, compute and RAM are a click away and each query costs money, so filtering is the factor that keeps resource utilisation and cost at a minimum."
+    },
+    {
+      "stem": "In an on-premises system, what can happen when someone runs a query without a filter?",
+      "options": [
+        "The query is automatically given more RAM",
+        "The query holds onto all the available resources and locks the rest of the queries",
+        "The query is billed at a higher rate",
+        "The query is redirected to the development environment",
+        "The query returns only the latest month"
+      ],
+      "correct": 1,
+      "explanation": "On-premises resources are static, so an unfiltered query can consume everything available and block other queries, delaying datasets for management."
+    },
+    {
+      "stem": "Why is increasing compute resources on-premises slow?",
+      "options": [
+        "Because a complete buying cycle through procurement is needed, which takes months",
+        "Because the operating system must be reinstalled",
+        "Because vendors only ship hardware once a year",
+        "Because the data must be filtered first",
+        "Because cloud approval is required"
+      ],
+      "correct": 0,
+      "explanation": "Unlike the cloud, on-premises capacity increases require a full procurement buying cycle that can take months."
+    },
+    {
+      "stem": "In which environment do developers have the liberty to run any kind of query, on-premises?",
+      "options": [
+        "Production",
+        "UAT",
+        "Development, because the data size is limited and static",
+        "The semantic layer",
+        "The staging zone"
+      ],
+      "correct": 2,
+      "explanation": "On-premises developers may use any kind of query in the development environment because its data is limited and static."
+    },
+    {
+      "stem": "Which default filters are commonly applied to KPIs on dashboards and reports?",
+      "options": [
+        "Show all history for all locations",
+        "Show only data that failed validation",
+        "Show only rows with null values",
+        "Show only the latest month, a specific location or a particular type of data element",
+        "Show only data from development"
+      ],
+      "correct": 3,
+      "explanation": "Most dashboard KPIs start from a few filters, such as the latest month by default, a specific location or a particular data element type."
+    },
+    {
+      "stem": "What is the process of filtering and cleaning data before running models called?",
+      "options": [
+        "Data Curation",
+        "Data Syndication",
+        "Data Profiling",
+        "Data Wrangling",
+        "Data Aggregation"
+      ],
+      "correct": 3,
+      "explanation": "Data scientists normally filter and clean data before running their models; this process is called Data Wrangling and is done by data scientists and data engineers."
+    },
+    {
+      "stem": "Who normally filters and cleans data for Data Citizens, and why?",
+      "options": [
+        "Data Citizens themselves, because they write SQL",
+        "Top management, because they own the data",
+        "Auditors, for compliance",
+        "External syndication companies",
+        "Data Engineers, because Data Citizens use low-code and no-code drag-and-drop tools"
+      ],
+      "correct": 4,
+      "explanation": "Data Citizens work with low- and no-code tools on their own departmental data, so Data Engineers filter and clean the data for them as the first step of preparation."
+    },
+    {
+      "stem": "Which datasets made filtering a basic requirement for storing and processing semi- and unstructured data?",
+      "options": [
+        "Social media, CCTV and audio datasets",
+        "Payroll and HR data",
+        "Reference tables and lookups",
+        "Data dictionary entries",
+        "Development test fixtures"
+      ],
+      "correct": 0,
+      "explanation": "Since social media, CCTV and audio datasets became vital to decision making, their terabyte and petabyte sizes made filtering essential."
+    },
+    {
+      "stem": "Which chain of consequences follows from an unfiltered query on limited on-premises resources?",
+      "options": [
+        "Data drift and model retraining",
+        "Higher cloud bills and automatic scaling",
+        "More accurate reports but slower dashboards",
+        "Duplicate rows and broken foreign keys",
+        "Delayed datasets, delayed decisions, lost business opportunities and losses"
+      ],
+      "correct": 4,
+      "explanation": "Locked resources delay datasets for top management, which delays decision making, which loses business opportunities and causes losses."
+    }
+  ]
+}

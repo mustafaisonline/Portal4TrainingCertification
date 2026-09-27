@@ -1,0 +1,125 @@
+{
+  "topic": "sla",
+  "questions": [
+    {
+      "stem": "What does SLA stand for?",
+      "options": [
+        "System Level Access",
+        "Service Level Agreement",
+        "Standard Licensing Arrangement",
+        "Secure Link Authentication",
+        "Service Load Allocation"
+      ],
+      "correct": 1,
+      "explanation": "SLA stands for Service Level Agreement."
+    },
+    {
+      "stem": "What is a Service Level Agreement?",
+      "options": [
+        "An internal memo describing IT department goals",
+        "A software licence for database products",
+        "A contractual agreement between a service provider and a customer outlining the expected level of service, including quality, availability and responsibilities",
+        "A technical specification for network hardware",
+        "A marketing brochure listing service features"
+      ],
+      "correct": 2,
+      "explanation": "An SLA is a contractual commitment between a service provider and a customer that outlines the level of service expected, including quality, availability and responsibilities."
+    },
+    {
+      "stem": "A guarantee of 99.9% uptime for a cloud-based data storage service is an example of which SLA aspect?",
+      "options": [
+        "Response time",
+        "Compliance",
+        "Scalability",
+        "Availability",
+        "Quality of service"
+      ],
+      "correct": 3,
+      "explanation": "Availability defines the agreed level of uptime for a data service; 99.9% uptime is the given example."
+    },
+    {
+      "stem": "A commitment that support tickets will be addressed within 24 hours relates to which SLA aspect?",
+      "options": [
+        "Availability",
+        "Data backup and recovery",
+        "Termination and penalties",
+        "Quality of service",
+        "Response time"
+      ],
+      "correct": 4,
+      "explanation": "Response time outlines the time frame within which the provider commits to respond to queries, issues or requests."
+    },
+    {
+      "stem": "Which SLA aspect addresses encryption, access controls and adherence to data protection laws?",
+      "options": [
+        "Data security and privacy",
+        "Scalability",
+        "Availability",
+        "Response time",
+        "Quality of service"
+      ],
+      "correct": 0,
+      "explanation": "Data security and privacy covers the security measures protecting data and adherence to privacy regulations, such as encryption and access controls."
+    },
+    {
+      "stem": "What does the scalability aspect of an SLA define?",
+      "options": [
+        "The penalties for missing service targets",
+        "How the service will scale to accommodate increased data volumes or user demands",
+        "The daily backup schedule",
+        "The expected accuracy of the data",
+        "The conditions for ending the agreement"
+      ],
+      "correct": 1,
+      "explanation": "Scalability defines how the service will scale to accommodate increased data volumes or user demands, such as procedures for scaling resources under higher loads."
+    },
+    {
+      "stem": "A provision for daily backups and restoring data within 48 hours after a failure is an example of which SLA aspect?",
+      "options": [
+        "Compliance",
+        "Availability",
+        "Data backup and recovery",
+        "Scalability",
+        "Response time"
+      ],
+      "correct": 2,
+      "explanation": "Data backup and recovery outlines procedures for regular backups and the expected timeframe for recovery in case of a failure."
+    },
+    {
+      "stem": "Which regulation is given as an example of what a healthcare data management SLA might require compliance with?",
+      "options": [
+        "GDPR",
+        "SOX",
+        "PCI DSS",
+        "HIPAA",
+        "ISO 9001"
+      ],
+      "correct": 3,
+      "explanation": "The compliance example is a healthcare data management system whose SLA specifies compliance with healthcare privacy regulations such as HIPAA."
+    },
+    {
+      "stem": "What does the termination and penalties aspect of an SLA cover?",
+      "options": [
+        "The uptime percentage of the service",
+        "The encryption standards applied to data",
+        "The accuracy and reliability of data",
+        "The procedures for scaling resources",
+        "The conditions under which either party can end the agreement, and possible penalties for non-compliance"
+      ],
+      "correct": 4,
+      "explanation": "Termination and penalties outlines when either party can terminate the agreement and may include penalties for non-compliance, such as consistently missing service levels."
+    },
+    {
+      "stem": "Why are Service Level Agreements described as crucial?",
+      "options": [
+        "They establish clear expectations and accountability between providers and customers, helping ensure data services meet defined standards",
+        "They eliminate the need for data backups",
+        "They guarantee that no system failure will ever occur",
+        "They replace the need for security controls",
+        "They set the price of cloud storage across the industry"
+      ],
+      "correct": 0,
+      "explanation": "SLAs establish clear expectations and accountability between service providers and customers so that data services meet defined standards."
+    }
+  ]
+}

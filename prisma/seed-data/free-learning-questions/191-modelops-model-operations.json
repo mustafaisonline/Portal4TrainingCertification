@@ -1,0 +1,125 @@
+{
+  "topic": "modelops-model-operations",
+  "questions": [
+    {
+      "stem": "How is ModelOps positioned relative to MLOps?",
+      "options": [
+        "As an unrelated discipline that replaces MLOps entirely",
+        "As the next stage of MLOps, focused on automating, retraining and maturing models on their own",
+        "As a subset of MLOps concerned only with model monitoring",
+        "As a manual review process that precedes MLOps",
+        "As a synonym for DevOps applied to databases"
+      ],
+      "correct": 1,
+      "explanation": "There is a very thin line between the two, but ModelOps is described as the next stage of MLOps, where the focus shifts towards models automating, retraining and maturing on their own."
+    },
+    {
+      "stem": "Which set of concerns is the MAIN focus of MLOps, as contrasted with ModelOps?",
+      "options": [
+        "AI transparency and business KPIs",
+        "Decision models and governance",
+        "Sharing AI performance with stakeholders",
+        "Model management, model monitoring and CI/CD",
+        "Life cycle management of decision models"
+      ],
+      "correct": 3,
+      "explanation": "MLOps mainly focuses on model management, model monitoring and CI/CD, whereas ModelOps focuses on addressing and sharing AI performance with stakeholders."
+    },
+    {
+      "stem": "ModelOps aims to share AI performance with stakeholders without needing the involvement of which team members?",
+      "options": [
+        "Data Science and Machine Learning team members",
+        "Business users",
+        "Executive stakeholders",
+        "IT infrastructure administrators",
+        "External auditors"
+      ],
+      "correct": 0,
+      "explanation": "ModelOps mainly focuses on addressing and sharing AI performance to the stakeholders without the need of Data Science and Machine Learning team members."
+    },
+    {
+      "stem": "MLOps focuses on operationalising ML models. What does ModelOps focus on operationalising instead?",
+      "options": [
+        "Data pipelines and ETL jobs",
+        "Network and server infrastructure",
+        "Decision models and AI",
+        "Business intelligence dashboards",
+        "Relational database schemas"
+      ],
+      "correct": 2,
+      "explanation": "One of the listed differences: MLOps focuses on ML models operationalisation, whereas ModelOps focuses on decision models and AI operationalisation."
+    },
+    {
+      "stem": "Whereas MLOps focuses on a continuous cycle of development, implementation and monitoring of models, ModelOps focuses on which of the following?",
+      "options": [
+        "Feature engineering and data cleansing",
+        "Hyperparameter tuning of individual models",
+        "Writing model code for AI-enabled applications",
+        "Provisioning cloud compute for training",
+        "Life cycle management and governance of models"
+      ],
+      "correct": 4,
+      "explanation": "MLOps focuses on the continuous development, implementation and monitoring cycle, whereas ModelOps focuses on life cycle management and governance of models."
+    },
+    {
+      "stem": "In ModelOps, AI transparency and the usage of KPIs are aimed at which audience?",
+      "options": [
+        "Data engineers",
+        "Business users",
+        "Machine learning researchers",
+        "Database administrators",
+        "Software testers"
+      ],
+      "correct": 1,
+      "explanation": "MLOps focuses on creating models for AI-enabled applications, whereas ModelOps focuses on AI transparency and the usage of KPIs by business users."
+    },
+    {
+      "stem": "Which of the following is NOT listed as something models do on their own under ModelOps?",
+      "options": [
+        "Run on their own",
+        "Retrain on their own",
+        "Deploy on their own",
+        "Write their own source code on their own",
+        "Extract business KPIs on their own"
+      ],
+      "correct": 3,
+      "explanation": "In a nutshell, ModelOps supports AI capabilities where models run, retrain, deploy and extract business KPIs on their own. Writing their own source code is not among the listed capabilities."
+    },
+    {
+      "stem": "As ModelOps matures, what happens to the involvement of Data Science in running models?",
+      "options": [
+        "It increases because more models need supervision",
+        "It stays exactly the same",
+        "It becomes less and less as models run on their own",
+        "It shifts entirely to external consultants",
+        "It is replaced by database administration"
+      ],
+      "correct": 2,
+      "explanation": "ModelOps supports AI capabilities where the involvement of Data Science becomes less and less, as models run, retrain and deploy on their own."
+    },
+    {
+      "stem": "Which of the following is the focus of MLOps rather than ModelOps?",
+      "options": [
+        "Governance of decision models",
+        "AI transparency for business users",
+        "Creating models for AI-enabled applications",
+        "Sharing AI performance with stakeholders",
+        "Models retraining themselves"
+      ],
+      "correct": 2,
+      "explanation": "Creating models for AI-enabled applications is an MLOps focus; the other options describe ModelOps concerns."
+    },
+    {
+      "stem": "Which statement best summarises the relationship between ModelOps and MLOps?",
+      "options": [
+        "They are entirely separate fields with no overlap",
+        "MLOps is a later evolution of ModelOps",
+        "ModelOps only covers CI/CD pipelines for models",
+        "ModelOps applies only to deep learning models",
+        "There is a very thin line between them, with ModelOps building on MLOps towards self-managing models"
+      ],
+      "correct": 4,
+      "explanation": "The two are separated by a very thin line: ModelOps is the next stage of MLOps, moving towards models that automate, retrain and mature on their own."
+    }
+  ]
+}

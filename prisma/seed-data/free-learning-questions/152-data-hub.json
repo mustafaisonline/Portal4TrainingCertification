@@ -1,0 +1,125 @@
+{
+  "topic": "data-hub",
+  "questions": [
+    {
+      "stem": "What role does a data hub play in enterprise data architecture?",
+      "options": [
+        "A new type of storage system replacing the data lake",
+        "A new analytical framework for machine learning",
+        "The central integration and distribution point connecting analytical platforms with operational systems",
+        "A department-level data mart",
+        "A tool for scraping external websites"
+      ],
+      "correct": 2,
+      "explanation": "A data hub is not another storage system or analytical framework; it is the central integration and distribution point that connects analytical platforms with operational systems."
+    },
+    {
+      "stem": "Which category of enterprise system includes ERP, CRM and core banking applications?",
+      "options": [
+        "Data warehouses",
+        "Data lakes",
+        "Operational systems (OLTP)",
+        "Semantic layers",
+        "Data hubs"
+      ],
+      "correct": 2,
+      "explanation": "Operational systems (OLTP) are the core enterprise applications such as ERP, CRM and core banking systems."
+    },
+    {
+      "stem": "What practical problem does the division of enterprise systems into OLTP, data warehouse and data lake create?",
+      "options": [
+        "Data cannot be encrypted across systems",
+        "Insights such as KPIs, predictions and classifications are hard to share back with the applications that drive day-to-day business",
+        "Warehouses cannot store history",
+        "OLTP systems become too slow",
+        "Data lakes cannot store unstructured data"
+      ],
+      "correct": 1,
+      "explanation": "The division makes it hard to share BI and analytics results, KPIs, predictions, classifications and insights, back with the very applications that run the business."
+    },
+    {
+      "stem": "In the core banking example, which of the following is NOT one of the three separate pipelines connecting to the core banking system?",
+      "options": [
+        "Integration with the mobile or online banking application",
+        "Integration with the data warehouse for reporting and data mining",
+        "Integration with the data lake for advanced analytics and data science",
+        "Integration with a social media scraping tool",
+        "Integration with the data lake for machine learning models"
+      ],
+      "correct": 3,
+      "explanation": "The three pipelines are to the mobile or online banking application, the data warehouse and the data lake; social media scraping is not one of them."
+    },
+    {
+      "stem": "How does a data hub change the way applications connect to data sources?",
+      "options": [
+        "Every application builds its own pipeline to every source",
+        "Applications connect once to the hub, which in turn connects to all underlying datastores",
+        "Applications connect directly to the data lake only",
+        "Applications export data to spreadsheets",
+        "Applications must be rewritten in a common language"
+      ],
+      "correct": 1,
+      "explanation": "Instead of every application building its own pipeline to every source, applications connect once to the hub, and the hub connects to OLTP, data warehouse and data lake."
+    },
+    {
+      "stem": "In what forms can a data hub publish insights from BI, machine learning and data mining for enterprise applications?",
+      "options": [
+        "Printed reports",
+        "APIs, data services or event streams",
+        "Tape backups",
+        "Star schemas",
+        "Encrypted archives"
+      ],
+      "correct": 1,
+      "explanation": "The hub design allows insights to be published as APIs, data services or event streams consumable by enterprise applications."
+    },
+    {
+      "stem": "How does a data hub go beyond the serving or semantic layer of a data warehouse or lakehouse?",
+      "options": [
+        "It stores more history",
+        "It exposes curated data only to BI tools",
+        "It operationalises the same data, making it available to applications such as mobile banking, customer service platforms or ERP systems",
+        "It replaces dimensional modelling",
+        "It removes the need for a data lake"
+      ],
+      "correct": 2,
+      "explanation": "Serving layers expose curated data for BI tools; the hub operationalises the same data for applications such as mobile banking, customer service platforms, ERP or social media integration."
+    },
+    {
+      "stem": "What governance benefit comes from centralising access through a data hub?",
+      "options": [
+        "Data products are distributed consistently with proper lineage, access controls and usage policies",
+        "Governance can be skipped because the hub is trusted",
+        "Every application manages its own security",
+        "History is preserved automatically",
+        "Data is stored in a single country"
+      ],
+      "correct": 0,
+      "explanation": "By centralising access, the hub ensures data products are distributed consistently with proper lineage, access controls and usage policies, preventing ad hoc pipelines."
+    },
+    {
+      "stem": "What problems arise from the proliferation of ad hoc pipelines that a data hub is meant to prevent?",
+      "options": [
+        "Faster delivery and lower cost",
+        "Duplication, inconsistencies and security risks",
+        "Loss of unstructured data",
+        "Excessive normalisation",
+        "Slower OLTP transactions"
+      ],
+      "correct": 1,
+      "explanation": "Ad hoc pipelines often result in duplication, inconsistencies and security risks, which the hub's centralised, governed integration prevents."
+    },
+    {
+      "stem": "What kind of exchange does a data hub create between analytical and transactional worlds?",
+      "options": [
+        "A one-way flow from operational systems into the warehouse",
+        "A two-way exchange, letting insights from warehouses and lakes flow back into operational systems",
+        "A batch-only overnight transfer",
+        "A read-only mirror of the data lake",
+        "No exchange; it isolates the two worlds"
+      ],
+      "correct": 1,
+      "explanation": "The hub enables insights from data warehouses and data lakes to flow back into operational systems, creating a two-way exchange between the analytical and transactional worlds."
+    }
+  ]
+}

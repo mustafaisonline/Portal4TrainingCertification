@@ -1,0 +1,125 @@
+{
+  "topic": "dataops-data-operations",
+  "questions": [
+    {
+      "stem": "How does DataOps relate to DevOps and DevSecOps?",
+      "options": [
+        "It replaces them for data projects",
+        "It is unrelated and follows Waterfall principles",
+        "It removes CI/CD from the process",
+        "It follows the same principles but adds elements related to the data domain",
+        "It applies only to machine learning models"
+      ],
+      "correct": 3,
+      "explanation": "DataOps follows the same principles as DevOps and DevSecOps, with a few additional elements specific to the data domain."
+    },
+    {
+      "stem": "What does DataOps make sure of with respect to data?",
+      "options": [
+        "That data is stored only in a data warehouse",
+        "That data is properly integrated with source and target, flows through automated best-practice pipelines, is highly secured and is of high quality",
+        "That data is deleted after each sprint",
+        "That data is used only by data scientists",
+        "That data is held in a single file format"
+      ],
+      "correct": 1,
+      "explanation": "DataOps focuses on the data-related aspects of operations: integration with source and target, automated pipelines, security and quality."
+    },
+    {
+      "stem": "DevOps does not care whether a project is a data project or a mobile application project. What does DataOps focus on instead?",
+      "options": [
+        "Where the data is coming from and going to, why it is coming, how it will be used, how much it cost and how much it will monetise",
+        "Which programming language the application uses",
+        "How many servers the application needs",
+        "Which team owns the mobile application",
+        "How quickly the user interface loads"
+      ],
+      "correct": 0,
+      "explanation": "DataOps is concerned with the data itself: its origin and destination, its purpose and usage, its cost and its monetisation."
+    },
+    {
+      "stem": "Which step appears at the start of the DataOps process flow but not in the DevOps flow of Development, Build, Testing, Deployment and Run?",
+      "options": [
+        "Regular Build",
+        "Regular Testing",
+        "Regular Deployment",
+        "Regular Development",
+        "Regular Integration"
+      ],
+      "correct": 4,
+      "explanation": "The DataOps process flow begins with Regular Integration before Development, Build, Testing, Deployment, Delivery/Run and Monitoring and Feedback."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a key element of DataOps?",
+      "options": [
+        "ETL or ELT",
+        "Agile and CI/CD",
+        "Model Registration",
+        "Environment Management",
+        "Automated Testing"
+      ],
+      "correct": 2,
+      "explanation": "The key elements are ETL/ELT, Agile and CI/CD, Component Design, Environment Management, Governance Security and Change Control, Automated Testing, and Collaboration and Self-Service."
+    },
+    {
+      "stem": "What is described as the practice for implementing DataOps?",
+      "options": [
+        "Implement DataOps under the umbrella of DevOps, including CI/CD",
+        "Implement DataOps as a standalone process outside DevOps",
+        "Implement DataOps only after MLOps is in place",
+        "Implement DataOps without automated testing",
+        "Implement DataOps only for structured data"
+      ],
+      "correct": 0,
+      "explanation": "The stated practice is to implement DataOps under the umbrella of DevOps, including CI/CD."
+    },
+    {
+      "stem": "Which key element of DataOps is specifically concerned with moving and transforming data between systems?",
+      "options": [
+        "Component Design",
+        "Environment Management",
+        "Collaboration and Self-Service",
+        "Governance, Security and Change Control",
+        "ETL or ELT"
+      ],
+      "correct": 4,
+      "explanation": "ETL or ELT is the DataOps element that covers extracting, transforming and loading data between source and target."
+    },
+    {
+      "stem": "What is the final step in the DataOps process flow?",
+      "options": [
+        "Regular Deployment",
+        "Regular Delivery/Run",
+        "Regular Monitoring and Feedback",
+        "Regular Testing",
+        "Regular Integration"
+      ],
+      "correct": 2,
+      "explanation": "The DataOps flow ends with Regular Monitoring and Feedback, a step added beyond the DevOps flow."
+    },
+    {
+      "stem": "Which of the following is one of the questions DataOps asks about data?",
+      "options": [
+        "Which mobile platform the application targets",
+        "How much the data cost and how much it will monetise",
+        "Which cloud vendor has the cheapest compute",
+        "How many developers are on the team",
+        "Which version control system is used"
+      ],
+      "correct": 1,
+      "explanation": "DataOps asks where data comes from and goes, why, how it will be used, and how much it cost and how much it will monetise."
+    },
+    {
+      "stem": "Which two qualities does DataOps ensure the data has as it flows through pipelines?",
+      "options": [
+        "Low cost and small size",
+        "Compression and encryption",
+        "Speed and simplicity",
+        "High security and high quality",
+        "Uniqueness and anonymity"
+      ],
+      "correct": 3,
+      "explanation": "DataOps makes sure the data flowing in is highly secured and of high quality."
+    }
+  ]
+}

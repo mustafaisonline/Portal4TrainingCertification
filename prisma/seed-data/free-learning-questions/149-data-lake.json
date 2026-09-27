@@ -1,0 +1,125 @@
+{
+  "topic": "data-lake",
+  "questions": [
+    {
+      "stem": "What is a data lake?",
+      "options": [
+        "A centralised repository that stores structured, semi-structured and unstructured data in its raw form",
+        "A normalised relational database for transactions",
+        "A department-level analytical mart",
+        "A virtual layer over source systems",
+        "A pre-aggregated multidimensional cube"
+      ],
+      "correct": 0,
+      "explanation": "A data lake is a centralised repository that stores structured, semi-structured and unstructured data in its raw form."
+    },
+    {
+      "stem": "What challenge led to the emergence of the data lake?",
+      "options": [
+        "Data warehouses were too expensive to license",
+        "Warehouses handled structured data well but were not designed to ingest, store or process semi-structured and unstructured data at scale",
+        "OLTP systems could not process transactions fast enough",
+        "Regulators demanded raw data retention",
+        "Relational databases stopped supporting SQL"
+      ],
+      "correct": 1,
+      "explanation": "The digital economy produced clickstreams, social posts, sensor readings, videos, documents and logs, which made up most enterprise data, yet traditional warehouses could not handle them at scale."
+    },
+    {
+      "stem": "What does the schema-on-read philosophy of a data lake mean?",
+      "options": [
+        "Data must be modelled and cleansed before it is loaded",
+        "Data is ingested quickly without upfront modelling, and structure is applied later when it is analysed",
+        "Only data with a predefined schema can be read",
+        "Schemas are read from the source system's catalogue",
+        "Data is encrypted before reading"
+      ],
+      "correct": 1,
+      "explanation": "Unlike a warehouse, which requires modelling before loading, a data lake ingests data without upfront modelling and applies structure later at analysis time."
+    },
+    {
+      "stem": "On which storage technologies does a data lake architecture typically rest?",
+      "options": [
+        "Tape libraries and optical discs",
+        "HDFS in its early days and, more recently, cloud object storage such as Amazon S3, Azure Data Lake Storage or Google Cloud Storage",
+        "Relational databases such as Oracle and SQL Server",
+        "In-memory caches such as Redis",
+        "Spreadsheets shared on a network drive"
+      ],
+      "correct": 1,
+      "explanation": "Data lakes were built on HDFS early on and now on cloud object storage platforms such as Amazon S3, Azure Data Lake Storage and Google Cloud Storage."
+    },
+    {
+      "stem": "Why did data lake storage make it feasible to retain information that was once discarded?",
+      "options": [
+        "Because it compresses data to zero",
+        "Because it holds massive volumes of diverse data at low cost, even data that does not fit a relational schema",
+        "Because it deletes duplicates automatically",
+        "Because regulators pay for the storage",
+        "Because it only stores summaries"
+      ],
+      "correct": 1,
+      "explanation": "These systems hold massive volumes of diverse data at low cost, so information that did not fit neatly into a relational schema no longer had to be discarded."
+    },
+    {
+      "stem": "In the healthcare example, which data type is described as semi-structured?",
+      "options": [
+        "Patient records",
+        "Billing data",
+        "XML-based lab results",
+        "X-ray and MRI images",
+        "Physician notes"
+      ],
+      "correct": 2,
+      "explanation": "Hospitals generate structured data (patient records, billing), semi-structured data (XML-based lab results) and unstructured data (X-rays, MRI images, physician notes)."
+    },
+    {
+      "stem": "In the healthcare data lake example, which technique is applied to doctors' notes?",
+      "options": [
+        "Computer vision",
+        "Statistical analysis",
+        "Natural language processing",
+        "Schema-on-write modelling",
+        "Referential integrity checks"
+      ],
+      "correct": 2,
+      "explanation": "Analysts apply natural language processing to doctors' notes, computer vision to radiology images and statistical analysis to lab data, all within the same environment."
+    },
+    {
+      "stem": "What is a data swamp?",
+      "options": [
+        "A data lake stored on-premises rather than in the cloud",
+        "A data lake that has degraded into a repository where data is plentiful but poorly catalogued, inconsistent and hard to use",
+        "A data lake that contains only structured data",
+        "A backup copy of a data lake",
+        "A data lake with too little data"
+      ],
+      "correct": 1,
+      "explanation": "Without careful management a data lake can degrade into a data swamp, where data is plentiful but poorly catalogued, inconsistent and hard to use."
+    },
+    {
+      "stem": "Which of the following is NOT one of the practices modern data lake implementations emphasise to preserve usability?",
+      "options": [
+        "Metadata management",
+        "Data catalogues",
+        "Access controls",
+        "Lifecycle governance",
+        "Mandatory upfront 3NF modelling"
+      ],
+      "correct": 4,
+      "explanation": "Modern lakes emphasise metadata management, data catalogues, access controls and lifecycle governance; mandatory upfront modelling contradicts the schema-on-read approach."
+    },
+    {
+      "stem": "How does a data lake relate to a data warehouse?",
+      "options": [
+        "It replaces the warehouse entirely",
+        "It complements the warehouse by addressing new forms of information and supporting advanced analytics, machine learning and real-time decision-making",
+        "It is a smaller subset of the warehouse",
+        "It is the same thing under a new name",
+        "It is a warehouse without any governance"
+      ],
+      "correct": 1,
+      "explanation": "The data lake complements the data warehouse by handling new data forms and supporting advanced analytics, machine learning and real-time decisions."
+    }
+  ]
+}

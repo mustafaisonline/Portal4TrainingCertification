@@ -1,0 +1,125 @@
+{
+  "topic": "data-aggregation",
+  "questions": [
+    {
+      "stem": "What is Data Aggregation?",
+      "options": [
+        "Reducing the number of rows returned by a query",
+        "Converting details into a summarised format",
+        "Matching records across different systems",
+        "Converting data into a single standard format",
+        "Validating data against its source"
+      ],
+      "correct": 1,
+      "explanation": "Data Aggregation is about converting details into a summarised format, such as answering 'twelve' rather than naming every month."
+    },
+    {
+      "stem": "Which everyday example illustrates Data Aggregation in *I Am Datapedia!*?",
+      "options": [
+        "Asking for a Wi-Fi password",
+        "Keeping a passwords inventory",
+        "Answering 'there are 12 months' instead of naming every month of the year",
+        "Checking the country a product was made in",
+        "Moving a desktop to another office"
+      ],
+      "correct": 2,
+      "explanation": "When asked how many months are in a year, you answer 'twelve' rather than listing them all, which is aggregation."
+    },
+    {
+      "stem": "In the installations example, what would you send your manager instead of the detailed list?",
+      "options": [
+        "A list of every device serial number",
+        "A summarised report showing 6 iOS and 3 Android installations",
+        "A synthetic dataset",
+        "The raw log file",
+        "A geocoded map of every installation"
+      ],
+      "correct": 1,
+      "explanation": "Rather than the detailed list, you send the summarised report: in total 6 iOS and 3 Android installations."
+    },
+    {
+      "stem": "Which aggregation functions are listed as ISO standard?",
+      "options": [
+        "COUNT, SUM, AVG, MIN, MAX",
+        "STDEV, VAR, VARP, CHECKSUM_AGG, GROUPING",
+        "DISTINCT, GROUP BY, ORDER BY, WHERE, JOIN",
+        "STRING_AGG, COUNT_BIG, GROUPING_ID, STDEVP, APPROX_COUNT_DISTINCT",
+        "ROUND, FLOOR, CEIL, ABS, MOD"
+      ],
+      "correct": 0,
+      "explanation": "COUNT, SUM, AVG, MIN and MAX are the aggregation functions listed as per ISO standards."
+    },
+    {
+      "stem": "Which of the following is listed among the other, non-ISO aggregation functions?",
+      "options": [
+        "SUM",
+        "AVG",
+        "MIN",
+        "STRING_AGG",
+        "COUNT"
+      ],
+      "correct": 3,
+      "explanation": "STRING_AGG appears in the list of other aggregation functions, alongside APPROX_COUNT_DISTINCT, CHECKSUM_AGG, COUNT_BIG, GROUPING, STDEV and VAR."
+    },
+    {
+      "stem": "Which of the following is NOT named as an aggregation function?",
+      "options": [
+        "APPROX_COUNT_DISTINCT",
+        "CHECKSUM_AGG",
+        "COUNT_BIG",
+        "GROUPING_ID",
+        "SUBSTRING"
+      ],
+      "correct": 4,
+      "explanation": "APPROX_COUNT_DISTINCT, CHECKSUM_AGG, COUNT_BIG and GROUPING_ID are all listed aggregation functions; SUBSTRING is not."
+    },
+    {
+      "stem": "Where are aggregation functions normally used, according to *I Am Datapedia!*?",
+      "options": [
+        "In databases or data stores, to summarise stored data",
+        "In network routers",
+        "In word processors",
+        "In CCTV cameras",
+        "In email clients"
+      ],
+      "correct": 0,
+      "explanation": "Because data is normally stored in databases or data stores, aggregation functions are used there to summarise the data."
+    },
+    {
+      "stem": "How widely is Data Aggregation used, according to the author?",
+      "options": [
+        "Only by data scientists",
+        "Only in cloud systems",
+        "Everywhere in daily life, whether in the office or at home",
+        "Only in financial reporting",
+        "Rarely, since Big Data"
+      ],
+      "correct": 2,
+      "explanation": "Data Aggregation is described as the most used term in daily life, used everywhere whether in the office or at home."
+    },
+    {
+      "stem": "Which pair of functions both belong to the list of other aggregation functions concerned with variance and standard deviation?",
+      "options": [
+        "MIN and MAX",
+        "AVG and COUNT_BIG",
+        "COUNT and SUM",
+        "STDEV and VAR",
+        "GROUPING and STRING_AGG"
+      ],
+      "correct": 3,
+      "explanation": "STDEV, STDEVP, VAR and VARP appear among the other aggregation functions."
+    },
+    {
+      "stem": "Which function computes the average and is listed as an ISO standard aggregation function?",
+      "options": [
+        "GROUPING",
+        "MEAN",
+        "MEDIAN",
+        "STDEV",
+        "AVG"
+      ],
+      "correct": 4,
+      "explanation": "AVG is the ISO standard aggregation function listed for averages."
+    }
+  ]
+}

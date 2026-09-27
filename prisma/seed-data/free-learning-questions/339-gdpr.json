@@ -1,0 +1,125 @@
+{
+  "topic": "gdpr",
+  "questions": [
+    {
+      "stem": "What does GDPR stand for?",
+      "options": [
+        "Global Data Privacy Rules",
+        "General Data Protection Regulation",
+        "General Digital Privacy Requirement",
+        "Governed Data Processing Regulation",
+        "Global Data Protection Register"
+      ],
+      "correct": 1,
+      "explanation": "GDPR is the General Data Protection Regulation, a European Union law focused on data protection and privacy."
+    },
+    {
+      "stem": "Which GDPR principle requires collecting only the data that is absolutely necessary?",
+      "options": [
+        "Transparency",
+        "Accountability",
+        "Data minimisation",
+        "Storage limitation",
+        "Accuracy"
+      ],
+      "correct": 2,
+      "explanation": "Data minimisation insists on collecting only the data that is absolutely necessary."
+    },
+    {
+      "stem": "What does the GDPR principle of purpose limitation mean?",
+      "options": [
+        "Data must be deleted after one year",
+        "Only one department may process personal data",
+        "Data must be stored within the EU",
+        "Data can only be used for specific, clearly stated reasons",
+        "Data must be encrypted at rest"
+      ],
+      "correct": 3,
+      "explanation": "Purpose limitation means personal data can only be used for specific, clearly stated reasons."
+    },
+    {
+      "stem": "Which GDPR principle mandates that data should not be kept longer than necessary?",
+      "options": [
+        "Integrity and confidentiality",
+        "Purpose limitation",
+        "Transparency",
+        "Accountability",
+        "Storage limitation"
+      ],
+      "correct": 4,
+      "explanation": "Storage limitation mandates that data should not be kept longer than necessary."
+    },
+    {
+      "stem": "Under GDPR, which principle places responsibility on organisations to ensure all the other principles are adhered to?",
+      "options": [
+        "Accountability",
+        "Accuracy",
+        "Data minimisation",
+        "Transparency",
+        "Storage limitation"
+      ],
+      "correct": 0,
+      "explanation": "Accountability places the responsibility on organisations to ensure all the principles are adhered to and personal data is managed compliantly and ethically."
+    },
+    {
+      "stem": "Which of the following is one of the individual rights that GDPR introduced?",
+      "options": [
+        "The right to free cloud storage",
+        "The right to be forgotten",
+        "The right to sell personal data",
+        "The right to unlimited data retention",
+        "The right to bypass consent"
+      ],
+      "correct": 1,
+      "explanation": "GDPR empowered individuals with rights to access, rectify and erase their data, data portability and the right to be forgotten."
+    },
+    {
+      "stem": "What does the privacy-by-design approach spurred by GDPR involve?",
+      "options": [
+        "Publishing all data processing code as open source",
+        "Outsourcing data protection to third parties",
+        "Embedding data protection measures into product design and service delivery, including data minimisation and appointing Data Protection Officers",
+        "Storing all personal data on paper",
+        "Restricting products to EU customers only"
+      ],
+      "correct": 2,
+      "explanation": "Privacy by design embeds data protection into product design and service delivery, with strategies like data minimisation and appointing Data Protection Officers."
+    },
+    {
+      "stem": "Which company was fined 746 million euros under GDPR in 2021?",
+      "options": [
+        "Instagram",
+        "Google",
+        "Facebook",
+        "Amazon",
+        "Microsoft"
+      ],
+      "correct": 3,
+      "explanation": "Amazon was fined 746 million euros in 2021; Instagram was fined 405 million euros in 2022."
+    },
+    {
+      "stem": "Why has GDPR had a global influence beyond the European Union?",
+      "options": [
+        "Because the United Nations adopted it as a treaty",
+        "Because it replaced all national privacy laws worldwide",
+        "Because it is enforced by the World Trade Organisation",
+        "Because it only applies to companies headquartered in the EU",
+        "Because it applies to all organisations dealing with the data of EU citizens, forcing companies worldwide to adjust their practices"
+      ],
+      "correct": 4,
+      "explanation": "GDPR applies to all organisations handling EU citizens' data, so companies worldwide had to comply, and it catalysed similar regulations elsewhere."
+    },
+    {
+      "stem": "Which of the following is NOT listed among the main GDPR violations leading to fines?",
+      "options": [
+        "Using open-source software without a licence review",
+        "Lack of transparency about data practices",
+        "Failures in child data protection",
+        "Data breaches",
+        "Failing to obtain valid consent"
+      ],
+      "correct": 0,
+      "explanation": "The main violations cited are transparency, child data protection, cross-border issues, data breaches, data minimisation and consent; software licensing is not among them."
+    }
+  ]
+}

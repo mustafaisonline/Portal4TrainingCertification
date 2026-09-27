@@ -1,0 +1,125 @@
+{
+  "topic": "hub-and-spoke-andpoint-to-point",
+  "questions": [
+    {
+      "stem": "How does the Point-to-Point (PP) integration model connect applications?",
+      "options": [
+        "Every application connects with every other application directly",
+        "Every application connects only to one central hub",
+        "Applications connect through a message queue only",
+        "Applications never connect; data is moved manually",
+        "Only two applications may exist in the model"
+      ],
+      "correct": 0,
+      "explanation": "The Point-to-Point model connects all applications with each other, so with five applications there will be many connections."
+    },
+    {
+      "stem": "In the Hub-and-Spoke model, how do applications connect?",
+      "options": [
+        "Each application connects with every other application",
+        "All applications connect only with one centralised hub",
+        "Applications connect in a ring, each to its neighbour",
+        "Applications connect to several regional hubs at once",
+        "Applications share a single database table"
+      ],
+      "correct": 1,
+      "explanation": "The Hub-and-Spoke model creates a new centralised connection point called the Hub, and all applications connect ONLY with that one Hub."
+    },
+    {
+      "stem": "Which of the following are given as examples of the Hub-and-Spoke model?",
+      "options": [
+        "Spreadsheets, email and file shares",
+        "Web servers, load balancers and caches",
+        "Dimensional Data Warehouse, Data Hub and Data Fabric",
+        "Mobile apps and browser extensions",
+        "Firewalls and VPNs"
+      ],
+      "correct": 2,
+      "explanation": "Examples of the Hub-and-Spoke model are the dimensional Data Warehouse, Data Hub and Data Fabric, which serve as a single point of truth for all enterprise users."
+    },
+    {
+      "stem": "Why is security considered better in the Hub-and-Spoke model than in Point-to-Point?",
+      "options": [
+        "Because the hub encrypts every message automatically",
+        "Because Point-to-Point has no authentication at all",
+        "Because the hub is hosted off-site",
+        "Because all users connect to one centralised hub, so the risk of a security breach is lower",
+        "Because Hub-and-Spoke uses fewer applications"
+      ],
+      "correct": 3,
+      "explanation": "As all users connect to one centralised Hub, the risk of a security breach is less in the Hub-and-Spoke model than in Point-to-Point."
+    },
+    {
+      "stem": "How does the Hub-and-Spoke model handle user access compared with Point-to-Point?",
+      "options": [
+        "It removes the need for user access management",
+        "It requires each application to manage its own access matrix",
+        "It grants all users the same permissions",
+        "It delegates access to the source systems",
+        "It manages the user access matrix at a centralised place"
+      ],
+      "correct": 4,
+      "explanation": "The Hub-and-Spoke model can manage the user access matrix at a centralised place, unlike the Point-to-Point model."
+    },
+    {
+      "stem": "Why is the Hub-and-Spoke model described as more flexible than Point-to-Point?",
+      "options": [
+        "The hub makes it easy to incorporate new requirements without implementing them in source systems",
+        "Each application can be replaced without any change to the hub",
+        "It has no fixed data model",
+        "It works without any initial investment",
+        "It supports only one application at a time"
+      ],
+      "correct": 0,
+      "explanation": "In the Hub-and-Spoke model, the Hub makes it easy to incorporate new requirements that do not need to be implemented in source systems."
+    },
+    {
+      "stem": "What is said about the cost of the Hub-and-Spoke model?",
+      "options": [
+        "It is always cheaper from day one with no initial investment",
+        "It requires initial investment, but afterwards new requirements are much cheaper because changes go into the hub",
+        "It is more expensive than Point-to-Point in every case",
+        "Cost is identical to Point-to-Point",
+        "Cost depends only on the number of users"
+      ],
+      "correct": 1,
+      "explanation": "Hub implementation requires initial investment, but once implemented, new requirements have a much cheaper impact because all changes go into the Hub rather than into each application."
+    },
+    {
+      "stem": "Which of the following is NOT listed as an advantage of Hub-and-Spoke over Point-to-Point?",
+      "options": [
+        "Better user access management",
+        "Lower security breach risk",
+        "Greater flexibility for new requirements",
+        "Zero implementation effort",
+        "Cheaper handling of new requirements after initial investment"
+      ],
+      "correct": 3,
+      "explanation": "Hub-and-Spoke is better in access management, security, flexibility and cost, but it does require an initial investment to implement the Hub."
+    },
+    {
+      "stem": "In the Point-to-Point model, where must a new requirement be implemented?",
+      "options": [
+        "Only in the central hub",
+        "Only in the data warehouse",
+        "In each application",
+        "In the semantic layer",
+        "Nowhere; requirements are handled automatically"
+      ],
+      "correct": 2,
+      "explanation": "In the Point-to-Point model changes must be made in each application, whereas in Hub-and-Spoke all changes go into the Hub."
+    },
+    {
+      "stem": "Hub-and-Spoke examples such as the Data Warehouse, Data Hub and Data Fabric serve what role for enterprise users?",
+      "options": [
+        "A backup archive",
+        "A development sandbox",
+        "A message broker",
+        "A firewall",
+        "A single point of truth"
+      ],
+      "correct": 4,
+      "explanation": "The dimensional Data Warehouse, Data Hub and Data Fabric serve as a single point of truth for all enterprise users."
+    }
+  ]
+}

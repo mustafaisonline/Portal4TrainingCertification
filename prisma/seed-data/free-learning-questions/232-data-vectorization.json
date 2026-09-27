@@ -1,0 +1,125 @@
+{
+  "topic": "data-vectorization",
+  "questions": [
+    {
+      "stem": "What is Data Vectorisation about?",
+      "options": [
+        "Compressing data so it occupies less disk space",
+        "Enabling parallel processing to fetch data",
+        "Converting text into numeric vectors for search",
+        "Encrypting data before it leaves a node",
+        "Sorting data before it is queried"
+      ],
+      "correct": 1,
+      "explanation": "Data Vectorisation is about enabling parallel processing to fetch data, which is how MPP works at the back end."
+    },
+    {
+      "stem": "In which processing mode does a computer or server traditionally work?",
+      "options": [
+        "MIMD",
+        "SIMD",
+        "MISD",
+        "SISD",
+        "MPP"
+      ],
+      "correct": 3,
+      "explanation": "Traditionally a machine works in SISD mode, Single Instruction Stream and Single Data Stream, fetching required data one item at a time."
+    },
+    {
+      "stem": "When Data Vectorisation switches a system into MPP mode, which instruction model does it adopt?",
+      "options": [
+        "MISD",
+        "SIMD",
+        "SISD",
+        "MIMD",
+        "OLTP"
+      ],
+      "correct": 1,
+      "explanation": "Data Vectorisation moves the system to SIMD, Single Instruction and Multiple Data, so one query pulls data from multiple nodes in parallel."
+    },
+    {
+      "stem": "In Data Vectorisation, what happens when one query is executed and the data resides in multiple data nodes?",
+      "options": [
+        "Data from all nodes is pulled in parallel",
+        "Each node is queried one after another",
+        "Only the first node is read",
+        "The query is rejected until the data is consolidated",
+        "The data is first copied to a single node"
+      ],
+      "correct": 0,
+      "explanation": "Under SIMD or MPP mode, a single query pulls data from all nodes in parallel, making computation much faster than sequential SISD."
+    },
+    {
+      "stem": "Since which developments has Data Vectorisation become a key component of data solutions?",
+      "options": [
+        "Floppy drives, cables and desktops",
+        "Mainframes and punched cards",
+        "Hadoop, NoSQL databases and Cloud",
+        "Oracle Forms and SSRS",
+        "OLAP cubes and MDX"
+      ],
+      "correct": 2,
+      "explanation": "Data Vectorisation became prominent with Big Data: since Hadoop, NoSQL databases and Cloud surfaced, most databases are vectorisation or MPP enabled."
+    },
+    {
+      "stem": "Which kinds of datasets created the need for Data Vectorisation in the Big Data era?",
+      "options": [
+        "Small reference tables",
+        "Development test data",
+        "Spreadsheets and CSV exports",
+        "Canned reports",
+        "Social media, CCTV and audio datasets"
+      ],
+      "correct": 4,
+      "explanation": "Organisations began storing and utilising social media, CCTV and audio datasets, which are far too large to process sequentially."
+    },
+    {
+      "stem": "Why was non-vectorised processing unsuitable for huge datasets?",
+      "options": [
+        "Because it cannot handle structured data",
+        "Because it requires a cloud subscription",
+        "Because it is incompatible with SQL",
+        "Because processing gigabytes and terabytes sequentially would take days",
+        "Because it produces less accurate results"
+      ],
+      "correct": 3,
+      "explanation": "Processing gigabytes and terabytes in sequential SISD mode would take days, so massively parallel SIMD processing was chosen instead."
+    },
+    {
+      "stem": "How much faster does Data Vectorisation make computation compared with SISD, according to *I Am Datapedia!*?",
+      "options": [
+        "About twice as fast",
+        "About ten times faster",
+        "Hundreds of times faster",
+        "Exactly as fast but cheaper",
+        "Slightly slower but more reliable"
+      ],
+      "correct": 2,
+      "explanation": "Massively parallel processing makes computation hundreds of times faster than SISD or non-vectorised processing."
+    },
+    {
+      "stem": "Which two of the four instruction models does the Data Vectorisation discussion focus on?",
+      "options": [
+        "SISD and SIMD",
+        "MISD and MIMD",
+        "SIMD and MIMD",
+        "SISD and MISD",
+        "SIMD and MISD"
+      ],
+      "correct": 0,
+      "explanation": "The vectorisation discussion refers only to SISD, the traditional sequential mode, and SIMD, the parallel mode adopted under MPP."
+    },
+    {
+      "stem": "Which statement about Data Vectorisation is NOT correct?",
+      "options": [
+        "It was in use before Big Data but was not famous",
+        "It explains how MPP works at the back end",
+        "Most databases are now vectorisation or MPP enabled",
+        "It became common since the inception of Big Data or Hadoop",
+        "It can only be used with structured relational data"
+      ],
+      "correct": 4,
+      "explanation": "Data Vectorisation is precisely what makes processing of huge social media, CCTV and audio datasets feasible; it is not limited to structured relational data."
+    }
+  ]
+}

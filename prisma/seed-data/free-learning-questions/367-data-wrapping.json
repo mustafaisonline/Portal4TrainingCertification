@@ -1,0 +1,125 @@
+{
+  "topic": "data-wrapping",
+  "questions": [
+    {
+      "stem": "What is Data Wrapping?",
+      "options": [
+        "The practice of augmenting raw data with additional layers of value, such as tools, metadata and context, to make it easier to use, understand and act upon",
+        "Compressing data files to reduce storage costs",
+        "Encrypting data before it is sent over a network",
+        "Archiving old data in a separate warehouse",
+        "Converting data from one file format to another"
+      ],
+      "correct": 0,
+      "explanation": "Data Wrapping augments raw data with tools, metadata and context, transforming it from a passive resource into an actionable asset."
+    },
+    {
+      "stem": "In Data Wrapping, what does metadata include?",
+      "options": [
+        "Only the file size of each dataset",
+        "Descriptions of data sources, timestamps, definitions, units of measurement and relationships between datasets",
+        "The visualisations built on the data",
+        "The passwords used to access the data",
+        "The names of the executives who use the data"
+      ],
+      "correct": 1,
+      "explanation": "Metadata is the 'data about data', including descriptions of sources, timestamps, definitions, units of measurement and relationships between datasets."
+    },
+    {
+      "stem": "Why is visualisation an important element of Data Wrapping?",
+      "options": [
+        "Because it removes the need for metadata",
+        "Because it reduces data storage costs",
+        "Because humans process visual information much faster than raw data, aiding comprehension and decision-making",
+        "Because regulators require charts",
+        "Because it replaces documentation"
+      ],
+      "correct": 2,
+      "explanation": "Humans process visual information much faster than raw data, so dashboards, charts and graphs are critical for comprehension and decision-making."
+    },
+    {
+      "stem": "Which Data Wrapping element is implemented through APIs, web portals or dedicated applications integrated with workflows?",
+      "options": [
+        "Metadata and Context",
+        "Data Quality Assurance",
+        "Governance and Compliance",
+        "Ease of Access",
+        "Documentation and Guides"
+      ],
+      "correct": 3,
+      "explanation": "Ease of Access ensures data is readily available when and how users need it, implemented through APIs, web portals or dedicated applications."
+    },
+    {
+      "stem": "In the Data Wrapping example, how does cleansing an e-commerce dataset of duplicate customer records help?",
+      "options": [
+        "It makes the dashboards load faster",
+        "It reduces the need for governance",
+        "It eliminates the need for an API",
+        "It allows the data to be shared publicly",
+        "It ensures accurate customer lifetime value calculations"
+      ],
+      "correct": 4,
+      "explanation": "Data Quality Assurance, including deduplication, builds trust; removing duplicate customer records ensures accurate customer lifetime value calculations."
+    },
+    {
+      "stem": "Which formats are listed under the Documentation and Guides element of Data Wrapping?",
+      "options": [
+        "Data dictionaries, user manuals, FAQs and quick start guides",
+        "Heatmaps, trend lines and charts",
+        "Audit trails, encryption and role-based access",
+        "APIs, web portals and applications",
+        "Timestamps, units and definitions"
+      ],
+      "correct": 0,
+      "explanation": "Documentation and Guides take the form of data dictionaries, user manuals, FAQs and quick start guides, reducing the learning curve for users."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a key feature of the Governance and Compliance element of Data Wrapping?",
+      "options": [
+        "Role-based access",
+        "Trend lines",
+        "Audit trails",
+        "Encryption",
+        "Adherence to standards like GDPR or HIPAA"
+      ],
+      "correct": 1,
+      "explanation": "Governance and Compliance features are role-based access, audit trails, encryption and adherence to standards such as GDPR or HIPAA; trend lines belong to visualisation."
+    },
+    {
+      "stem": "In the classroom scenario for Data Wrapping, what do teachers receive once raw student performance data is wrapped?",
+      "options": [
+        "A printed list of raw scores",
+        "Access to the school's database server",
+        "A dashboard showing individual and class-wide performance trends, with insights suggesting targeted interventions",
+        "An encrypted archive of past results",
+        "A financial report on school spending"
+      ],
+      "correct": 2,
+      "explanation": "By wrapping the data, teachers receive a dashboard of individual and class-wide trends and insights suggesting targeted interventions for struggling students."
+    },
+    {
+      "stem": "In the retail business use case for Data Wrapping, what do predictive tools provide to C-Level leaders?",
+      "options": [
+        "A list of employee salaries",
+        "Automatic price changes without human review",
+        "Raw daily sales figures only",
+        "Highlights of potential demand surges, enabling inventory optimisation",
+        "A replacement for the sales team"
+      ],
+      "correct": 3,
+      "explanation": "In the retail use case, predictive tools highlight potential demand surges, enabling inventory optimisation alongside live dashboards and visual cues."
+    },
+    {
+      "stem": "Which broader concepts is Data Wrapping said to align with?",
+      "options": [
+        "Waterfall and Agile",
+        "OLTP and OLAP",
+        "Star and snowflake schemas",
+        "Batch and stream processing",
+        "Data As A Product (DAaP), Data As A Service (DAaS) and Data Stewardship"
+      ],
+      "correct": 4,
+      "explanation": "Data Wrapping aligns with Data As A Product, Data As A Service and Data Stewardship, all focused on value-driven, outcome-oriented data solutions."
+    }
+  ]
+}

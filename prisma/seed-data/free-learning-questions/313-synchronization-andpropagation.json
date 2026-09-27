@@ -1,0 +1,125 @@
+{
+  "topic": "synchronization-andpropagation",
+  "questions": [
+    {
+      "stem": "What is synchronisation about in the world of data?",
+      "options": [
+        "Deleting data that is no longer needed",
+        "Keeping data the same and up to date in many different spots or systems",
+        "Converting analogue records into digital form",
+        "Encrypting data before it is shared",
+        "Compressing data to save storage"
+      ],
+      "correct": 1,
+      "explanation": "Synchronisation is about keeping data the same and up to date in many different spots or systems, so everyone gets the latest and correct information."
+    },
+    {
+      "stem": "What is propagation about in the world of data?",
+      "options": [
+        "Making sure updates in one part of a system travel to other connected parts",
+        "Storing data in a single central location only",
+        "Removing duplicate rows from a table",
+        "Sorting records alphabetically",
+        "Restricting access to sensitive fields"
+      ],
+      "correct": 0,
+      "explanation": "Propagation is like the spreading of news for changes in data: making sure updates in one part of a system travel to the other connected parts."
+    },
+    {
+      "stem": "Which example illustrates synchronisation?",
+      "options": [
+        "A bank archiving statements older than seven years",
+        "A school printing report cards once a term",
+        "New items added to an online store's inventory on a computer appearing on the website and in the physical store's system",
+        "A company deleting the accounts of former employees",
+        "A utility generating bills at the end of a billing cycle"
+      ],
+      "correct": 2,
+      "explanation": "The synchronisation example is an online store where new inventory items added on a computer also appear on the website and in the store's system."
+    },
+    {
+      "stem": "Which example illustrates propagation?",
+      "options": [
+        "Scanning a paper document into a PDF",
+        "Applying the same filter to a set of photos",
+        "Converting country names into ISO codes",
+        "A deposit at an ATM reaching the online bank account and the bank's main database",
+        "Archiving inactive customer records"
+      ],
+      "correct": 3,
+      "explanation": "The propagation example is depositing money at an ATM, where the change reaches all the places that need to know, such as the online bank app and the bank's main computer."
+    },
+    {
+      "stem": "What is the goal of synchronisation when something changes in one place?",
+      "options": [
+        "That the change is recorded only in an audit log",
+        "That the change is reversed automatically",
+        "That the change is hidden from other systems",
+        "That the change is queued for review",
+        "That the change quickly shows up everywhere else, so everyone using the data gets the latest and correct information"
+      ],
+      "correct": 4,
+      "explanation": "The goal of synchronisation is that if something changes in one place, those changes quickly show up everywhere else, so everyone gets the latest and correct info."
+    },
+    {
+      "stem": "To what is propagation compared?",
+      "options": [
+        "The spreading of news",
+        "Filling a bucket with water",
+        "Doing homework at the end of the day",
+        "A library card catalogue",
+        "A game with friends from different countries"
+      ],
+      "correct": 0,
+      "explanation": "Propagation is compared to the spreading of news, but for changes in data."
+    },
+    {
+      "stem": "How do synchronisation and propagation work together?",
+      "options": [
+        "Synchronisation deletes old data while propagation archives it",
+        "Synchronisation keeps everything in harmony by ensuring changes are seen everywhere, and propagation makes sure changes travel to all the places that need to know",
+        "Synchronisation encrypts data while propagation decrypts it",
+        "Synchronisation applies only to banks and propagation only to shops",
+        "They are unrelated and never used together"
+      ],
+      "correct": 1,
+      "explanation": "Synchronisation and propagation are described as teamwork for data: synchronisation keeps changes in harmony everywhere and propagation makes sure changes travel to all the places that need to know."
+    },
+    {
+      "stem": "Why are synchronisation and propagation compared to superheroes?",
+      "options": [
+        "Because they run faster than any database",
+        "Because they require no computing resources",
+        "Because they keep information accurate and consistent even when it is spread across different places",
+        "Because they can recover deleted data",
+        "Because they eliminate the need for backups"
+      ],
+      "correct": 2,
+      "explanation": "Synchronisation and propagation are like superheroes that make sure information stays accurate and consistent even when it is spread out in different places."
+    },
+    {
+      "stem": "Which of the following is NOT an outcome attributed to synchronisation and propagation?",
+      "options": [
+        "Preventing mistakes in data",
+        "Ensuring everyone has the newest information",
+        "Ensuring everyone has the most trustworthy information",
+        "Reducing the physical size of the database",
+        "Keeping data consistent across systems"
+      ],
+      "correct": 3,
+      "explanation": "Synchronisation and propagation prevent mistakes in data and make sure everyone has the newest and most trustworthy information; reducing database size is not mentioned."
+    },
+    {
+      "stem": "In the online store example, which systems must reflect newly added inventory items for synchronisation to be achieved?",
+      "options": [
+        "Only the owner's computer",
+        "Only the supplier's warehouse",
+        "Only the bank's main database",
+        "Only a printed catalogue",
+        "The website and the physical store's system, as well as the computer where the items were added"
+      ],
+      "correct": 4,
+      "explanation": "Synchronisation makes sure new items added on the owner's computer also appear on the website and in the store's computer, so customers and the store both know what is available."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "aiops-artificial-intelligence-operations",
+  "questions": [
+    {
+      "stem": "Which organisation initiated the term AIOps, and in which year?",
+      "options": [
+        "Forrester, in 2012",
+        "Gartner, in 2016",
+        "IBM, in 2010",
+        "Google, in 2018",
+        "Microsoft, in 2014"
+      ],
+      "correct": 1,
+      "explanation": "AIOps was initiated by Gartner in 2016."
+    },
+    {
+      "stem": "AIOps is described as supporting which group of operational disciplines together?",
+      "options": [
+        "Finance, HR and Marketing",
+        "Sales, Support and Procurement",
+        "DevOps, DataOps, MLOps, DLOps and ITOps",
+        "Only ITOps and DevOps",
+        "Data Warehousing and Data Mining"
+      ],
+      "correct": 2,
+      "explanation": "AIOps supports DevOps, DataOps, MLOps, DLOps and ITOps together, assisting them to work seamlessly."
+    },
+    {
+      "stem": "After which era did AIOps come to the surface, when every kind of operational task had tripled?",
+      "options": [
+        "The Big Data era",
+        "The mainframe era",
+        "The client-server era",
+        "The dot-com era",
+        "The desktop publishing era"
+      ],
+      "correct": 0,
+      "explanation": "AIOps came to the surface after the inception of the Big Data era, when huge data started to flow in and operational tasks of every kind had tripled."
+    },
+    {
+      "stem": "What key difference separates AIOps from DevOps, MLOps and ITOps?",
+      "options": [
+        "AIOps applies only to on-premises infrastructure",
+        "AIOps requires more human interaction than the others",
+        "AIOps is limited to data warehousing",
+        "AIOps makes sure everything runs on its own, whereas the others still require human interaction",
+        "AIOps was introduced before the others"
+      ],
+      "correct": 3,
+      "explanation": "Unlike DevOps, MLOps and ITOps, where human interactions are still required, AIOps makes sure everything runs on its own."
+    },
+    {
+      "stem": "AIOps uses algorithms to achieve which of the following outcomes?",
+      "options": [
+        "Designing dimensional data models",
+        "Writing business glossary definitions",
+        "Approving budget requests",
+        "Generating marketing content",
+        "Preventing outages, maintaining uptime and assuring continuous services"
+      ],
+      "correct": 4,
+      "explanation": "AIOps uses algorithms to make things happen like preventing outages, maintaining uptime and assuring continuous services."
+    },
+    {
+      "stem": "What is the FIRST stage in the end-to-end AIOps operational cycle?",
+      "options": [
+        "Predict issues",
+        "Collect data",
+        "Detect issues",
+        "Self-learn",
+        "Remove duplications"
+      ],
+      "correct": 1,
+      "explanation": "AIOps first collects data, then removes duplications, relates data with events, enriches the process, minimises, detects, observes and predicts issues, and self-learns before restarting the cycle."
+    },
+    {
+      "stem": "In the AIOps cycle, what does the system do in the final stage before restarting all the stages again?",
+      "options": [
+        "Self-learn",
+        "Collect data",
+        "Enrich the process",
+        "Remove duplications",
+        "Relate data with events"
+      ],
+      "correct": 0,
+      "explanation": "The last stage of the AIOps cycle is to self-learn and then restart all the stages again."
+    },
+    {
+      "stem": "Which of the following is NOT one of the stages of the AIOps operational cycle?",
+      "options": [
+        "Remove duplications",
+        "Relate data with events in the cycle of operations",
+        "Manually escalate issues to a human operator",
+        "Predict issues",
+        "Observe issues"
+      ],
+      "correct": 2,
+      "explanation": "AIOps handles end-to-end operations on its own; manual escalation to a human operator is not one of its stages."
+    },
+    {
+      "stem": "AIOps came into the picture partly because organisations were progressing in data while ignoring what requirement of automation?",
+      "options": [
+        "Faster hardware",
+        "Larger storage capacity",
+        "Open-source tooling",
+        "Processes and governance",
+        "More data scientists"
+      ],
+      "correct": 3,
+      "explanation": "Everyone wanted to progress in data, ignoring the fact that automation requires processes and governance; that is why AIOps came into the picture, where everything is handled by the system itself."
+    },
+    {
+      "stem": "In the AIOps cycle, which stage sits immediately after issues are detected and observed?",
+      "options": [
+        "Collect data",
+        "Remove duplications",
+        "Enrich the process",
+        "Minimise issues",
+        "Predict issues"
+      ],
+      "correct": 4,
+      "explanation": "The AIOps stages run: collect data, remove duplications, relate data with events, enrich the process, minimise issues, detect issues, observe issues, predict issues, then self-learn and restart."
+    }
+  ]
+}

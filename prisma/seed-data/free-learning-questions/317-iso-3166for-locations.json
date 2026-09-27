@@ -1,0 +1,125 @@
+{
+  "topic": "iso-3166for-locations",
+  "questions": [
+    {
+      "stem": "What does ISO 3166 define?",
+      "options": [
+        "Guidelines for metadata registries",
+        "Codes for the names of countries, territories and special areas of geographical interest",
+        "Capital requirements for banks",
+        "A framework for asset management",
+        "Rules for digitising paper documents"
+      ],
+      "correct": 1,
+      "explanation": "ISO 3166 is an international standard that defines codes for the names of countries, territories and special areas of geographical interest."
+    },
+    {
+      "stem": "What type of data is ISO 3166 described as?",
+      "options": [
+        "Transactional data",
+        "Master data",
+        "Reference data",
+        "Metadata",
+        "Streaming data"
+      ],
+      "correct": 2,
+      "explanation": "ISO 3166 is described as one type of Reference Data."
+    },
+    {
+      "stem": "What are the three types of ISO 3166-1 codes?",
+      "options": [
+        "Alpha-2, Alpha-3 and Numeric",
+        "Short, Medium and Long",
+        "Binary, Octal and Hexadecimal",
+        "Primary, Secondary and Tertiary",
+        "Local, Regional and Global"
+      ],
+      "correct": 0,
+      "explanation": "ISO 3166-1 provides Alpha-2 two-letter codes, Alpha-3 three-letter codes and three-digit Numeric codes for each country or territory."
+    },
+    {
+      "stem": "What is the ISO 3166-1 Alpha-3 code for Canada?",
+      "options": [
+        "CA",
+        "124",
+        "CDN",
+        "CAN",
+        "CND"
+      ],
+      "correct": 3,
+      "explanation": "Canada's codes are Alpha-2 CA, Alpha-3 CAN and Numeric 124."
+    },
+    {
+      "stem": "What is the ISO 3166-1 Numeric code for the United States?",
+      "options": [
+        "US",
+        "USA",
+        "001",
+        "124",
+        "840"
+      ],
+      "correct": 4,
+      "explanation": "The United States has Alpha-2 code US, Alpha-3 code USA and Numeric code 840."
+    },
+    {
+      "stem": "Who maintains ISO 3166 and why is it periodically updated?",
+      "options": [
+        "The International Organization for Standardization, to reflect changes in country names and geopolitical developments",
+        "The Basel Committee, to reflect changes in banking regulation",
+        "The Bank for International Settlements, to track currencies",
+        "Each national government, to record its own borders",
+        "OpenAI, to train language models"
+      ],
+      "correct": 0,
+      "explanation": "The standard is maintained by the International Organization for Standardization (ISO) and is periodically updated to reflect changes in country names and geopolitical developments."
+    },
+    {
+      "stem": "How are ISO 3166 codes used in database integration?",
+      "options": [
+        "To encrypt customer records",
+        "To uniquely identify countries and ensure consistency in data representation",
+        "To calculate shipping costs",
+        "To replace primary keys in every table",
+        "To store the full text of treaties"
+      ],
+      "correct": 1,
+      "explanation": "ISO 3166 codes are commonly used in databases and information systems to uniquely identify countries, ensuring consistency in data representation."
+    },
+    {
+      "stem": "Why does using ISO 3166 codes instead of full country names improve efficiency?",
+      "options": [
+        "Because codes are easier to translate",
+        "Because codes are more secure",
+        "Because codes make data entry and processing more efficient",
+        "Because codes cannot be misspelt",
+        "Because codes are required by every database"
+      ],
+      "correct": 2,
+      "explanation": "The use of codes instead of full country names makes data entry and processing more efficient."
+    },
+    {
+      "stem": "Which of the following is NOT listed as an application of ISO 3166 codes?",
+      "options": [
+        "Database integration",
+        "International transactions",
+        "Data exchange between systems and organisations",
+        "Calculating bank capital adequacy",
+        "Specifying the countries involved in trade and finance"
+      ],
+      "correct": 3,
+      "explanation": "ISO 3166 codes are used for database integration, international transactions and data exchange; bank capital adequacy is a Basel matter."
+    },
+    {
+      "stem": "In the game analogy for ISO 3166, what role do the agreed codes play?",
+      "options": [
+        "They decide who wins the game",
+        "They keep score for each player",
+        "They translate the rules into every language",
+        "They record each player's address",
+        "They make sure everyone knows which country is being referred to, no matter where they are from"
+      ],
+      "correct": 4,
+      "explanation": "ISO 3166 is like a set of agreed rules for using simple codes so that everyone knows which country is being referred to, no matter where they are from."
+    }
+  ]
+}

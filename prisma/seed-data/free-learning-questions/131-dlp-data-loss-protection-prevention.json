@@ -1,0 +1,125 @@
+{
+  "topic": "dlp-data-loss-protection-prevention",
+  "questions": [
+    {
+      "stem": "What does the abbreviation DLP stand for?",
+      "options": [
+        "Data Loss Protection or Prevention",
+        "Data Lineage Platform",
+        "Data Lifecycle Policy",
+        "Distributed Ledger Protocol",
+        "Data Licensing and Permissions"
+      ],
+      "correct": 0,
+      "explanation": "DLP stands for Data Loss Protection/Prevention, part of an organisation's security strategy."
+    },
+    {
+      "stem": "Which department normally handles and maintains DLP in an organisation?",
+      "options": [
+        "The Marketing department",
+        "The Risk department",
+        "The Human Resources department",
+        "The Sales department",
+        "The Finance department"
+      ],
+      "correct": 1,
+      "explanation": "DLP is normally handled and maintained by the Risk department, where standards and policies are followed to protect data from intruders."
+    },
+    {
+      "stem": "According to the DLP discussion, where do all standards and policies start from?",
+      "options": [
+        "Cloud providers",
+        "Social media platforms",
+        "Regulatory bodies",
+        "Internal audit teams",
+        "Software vendors"
+      ],
+      "correct": 2,
+      "explanation": "The starting point of all standards and policies is the regulatory bodies."
+    },
+    {
+      "stem": "At what moment does DLP come into action?",
+      "options": [
+        "When a database is first created",
+        "When an employee joins the organisation",
+        "When data is archived to long-term storage",
+        "The moment data is exposed to outsiders via the Internet",
+        "When the annual audit begins"
+      ],
+      "correct": 3,
+      "explanation": "The moment you expose your data to outsiders via the Internet, DLP comes into action."
+    },
+    {
+      "stem": "What is the stated purpose of DLP?",
+      "options": [
+        "To increase the speed of data transfers",
+        "To improve the quality and consistency of data",
+        "To catalogue every dataset in the organisation",
+        "To reduce the cost of data storage",
+        "To protect or prevent data from getting into the wrong hands"
+      ],
+      "correct": 4,
+      "explanation": "DLP is to protect or prevent data from getting into the wrong hands."
+    },
+    {
+      "stem": "How has an organisation's choice about connecting to the external world changed in the DLP context?",
+      "options": [
+        "In the previous era organisations could choose whether to connect; now there is no choice, they must connect to social media, the cloud and so on",
+        "In the previous era connection was mandatory; now organisations may stay fully isolated",
+        "Nothing has changed: connection has always been optional",
+        "Organisations may now connect only through their Risk department",
+        "Connection is now permitted only after regulatory approval"
+      ],
+      "correct": 0,
+      "explanation": "In the previous era organisations had the choice to connect to the external world or not; now there is no choice, since they must connect to social media to pull data, connect to the cloud and so on."
+    },
+    {
+      "stem": "Of what is DLP described as being a part?",
+      "options": [
+        "The data quality programme",
+        "The organisational-level security strategy",
+        "The master data management initiative",
+        "The business intelligence roadmap",
+        "The data enrichment process"
+      ],
+      "correct": 1,
+      "explanation": "DLP is part of the organisational-level security strategy."
+    },
+    {
+      "stem": "Which of the following is NOT stated about DLP?",
+      "options": [
+        "It is maintained by the Risk department",
+        "It follows standards and policies to protect data from intruders",
+        "It is triggered only when data stays entirely inside the organisation",
+        "Its purpose is to keep data out of the wrong hands",
+        "It becomes relevant once data is exposed via the Internet"
+      ],
+      "correct": 2,
+      "explanation": "DLP comes into action the moment data is exposed to outsiders via the Internet, not when it stays entirely inside the organisation. The other statements are all made about DLP."
+    },
+    {
+      "stem": "From whom must an organisation take care of its own data, according to the DLP discussion?",
+      "options": [
+        "Business users and analysts",
+        "Regulatory bodies",
+        "Internal auditors",
+        "Intruders and hackers",
+        "Cloud providers"
+      ],
+      "correct": 3,
+      "explanation": "One must take care of one's own data from intruders and hackers."
+    },
+    {
+      "stem": "Which examples are given of external connections an organisation must now make, bringing DLP into play?",
+      "options": [
+        "Connecting to a printer and a local file server",
+        "Connecting to an internal data warehouse and a reporting tool",
+        "Connecting to a regulator's portal and an audit system",
+        "Connecting to a payroll system and an HR database",
+        "Connecting to social media to pull data and connecting to the cloud"
+      ],
+      "correct": 4,
+      "explanation": "Organisations must now connect to social media to pull data and must connect to the cloud, among other external connections."
+    }
+  ]
+}

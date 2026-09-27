@@ -1,0 +1,125 @@
+{
+  "topic": "object-oriented-data-modelling",
+  "questions": [
+    {
+      "stem": "How does Object-Oriented Data Modelling represent data?",
+      "options": [
+        "As objects that combine attributes (data) and methods (behaviour)",
+        "As rows and columns governed by functional dependencies",
+        "As owner–member sets linked by pointers",
+        "As immutable events in an append-only log",
+        "As key–value pairs optimised for lookup"
+      ],
+      "correct": 0,
+      "explanation": "Object-oriented modelling treats real-world entities as self-contained units that include both state and behaviour, mirroring object-oriented programming."
+    },
+    {
+      "stem": "What was the original goal of object-oriented data modelling?",
+      "options": [
+        "To maximise analytical query performance",
+        "To align persistent storage directly with object-oriented application design, removing the need to transform objects into relational tables",
+        "To enforce Third Normal Form in application code",
+        "To support horizontal scale-out across distributed nodes",
+        "To provide a semantic layer for reasoning"
+      ],
+      "correct": 1,
+      "explanation": "The goal was to align storage with object-oriented application design so objects would not need to be transformed into relational tables."
+    },
+    {
+      "stem": "In an object-oriented model, which method might a LoanApplication class define?",
+      "options": [
+        "calculateRisk()",
+        "normalise()",
+        "partitionByCustomer()",
+        "approve()",
+        "traverseSet()"
+      ],
+      "correct": 3,
+      "explanation": "A LoanApplication object may include attributes such as LoanID, Amount, InterestRate and Status together with methods like approve() or reject(); calculateRisk() belongs to Customer."
+    },
+    {
+      "stem": "How are relationships between entities expressed in object-oriented data modelling?",
+      "options": [
+        "Through foreign keys",
+        "Through owner–member sets",
+        "Through object references",
+        "Through shared partition keys",
+        "Through fact-table joins"
+      ],
+      "correct": 2,
+      "explanation": "Relationships are expressed through object references rather than foreign keys, and inheritance lets specialised types extend base classes."
+    },
+    {
+      "stem": "Which products are named as Object-Oriented Database Management Systems from the late 1980s and 1990s?",
+      "options": [
+        "Hibernate, Entity Framework and Spring",
+        "MongoDB, Couchbase and Redis",
+        "IMS, IDMS and DB2",
+        "Neo4j, Cassandra and Bigtable",
+        "ObjectStore, GemStone and Versant"
+      ],
+      "correct": 4,
+      "explanation": "OODBMS products such as ObjectStore, GemStone and Versant gained attention in the late 1980s and 1990s, with standards like ODMG-93 attempting to formalise the practice."
+    },
+    {
+      "stem": "What largely overtook pure object databases by the early 2000s?",
+      "options": [
+        "Relational databases combined with Object-Relational Mapping frameworks such as Hibernate and Entity Framework",
+        "Hierarchical mainframe databases",
+        "Graph databases",
+        "Wide-column stores",
+        "Event-streaming platforms"
+      ],
+      "correct": 0,
+      "explanation": "ORM frameworks let developers keep object-oriented programming practices while storing data in relational systems, displacing pure object databases."
+    },
+    {
+      "stem": "In the loan approval scenario, when do the limitations of an object database become evident?",
+      "options": [
+        "When storing a single LoanApplication object",
+        "When the organisation needs large-scale reporting, regulatory analytics or cross-portfolio aggregation",
+        "When adding a new attribute to the Customer class",
+        "When invoking the approve() method",
+        "When defining inheritance between loan types"
+      ],
+      "correct": 1,
+      "explanation": "Analytical workloads demand declarative querying, flexible joins and optimised aggregations, which are strengths of relational systems rather than object databases."
+    },
+    {
+      "stem": "Why do normalisation forms not directly apply to object-oriented data modelling?",
+      "options": [
+        "Because object databases store only unstructured data",
+        "Because objects are always stored in 6NF",
+        "Because objects are not structured as relational tables governed by functional dependencies; design is driven by class hierarchies and behaviour encapsulation",
+        "Because object databases forbid primary keys",
+        "Because object databases only support analytical workloads"
+      ],
+      "correct": 2,
+      "explanation": "Normal forms are relational constructs; object-oriented design is driven by class hierarchies and encapsulation rather than relational integrity rules."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a challenge of object-oriented data modelling?",
+      "options": [
+        "Query capabilities that are more procedural and less flexible than SQL",
+        "Difficulty supporting analytical use cases efficiently",
+        "Limited interoperability across systems compared with relational standards",
+        "Inability to express inheritance between classes",
+        "Being largely obsolete as a standalone database paradigm"
+      ],
+      "correct": 3,
+      "explanation": "Support for inheritance, encapsulation and polymorphism is an advantage of object-oriented modelling; its challenges are procedural querying, weak analytics and limited interoperability."
+    },
+    {
+      "stem": "Where does the influence of object-oriented data modelling persist today?",
+      "options": [
+        "In hierarchical directory services",
+        "In CODASYL network databases",
+        "In Domain–Key Normal Form",
+        "In star schema fact tables",
+        "In document databases with nested JSON structures and in API payloads that mirror object models"
+      ],
+      "correct": 4,
+      "explanation": "Modern document databases with nested JSON reflect object-style thinking and API payloads often mirror object models, so the paradigm served as a bridge between programming and persistence."
+    }
+  ]
+}

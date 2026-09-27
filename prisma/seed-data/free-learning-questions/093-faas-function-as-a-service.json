@@ -1,0 +1,125 @@
+{
+  "topic": "faas-function-as-a-service",
+  "questions": [
+    {
+      "stem": "What is FaaS (Function as a Service) about?",
+      "options": [
+        "Renting whole virtual machines",
+        "Deploying ONLY functions in the Cloud and paying for the resources needed to run them",
+        "Subscribing to a pre-built solution",
+        "Deploying entire containers",
+        "Buying data feeds on demand"
+      ],
+      "correct": 1,
+      "explanation": "FaaS is about deploying only functions in the Cloud and paying only for the resources required to run those functions."
+    },
+    {
+      "stem": "How is FaaS positioned relative to CaaS in the cloud rental hierarchy?",
+      "options": [
+        "One level higher than CaaS",
+        "At the same level as CaaS",
+        "One level lower than CaaS",
+        "Two levels above IaaS",
+        "Unrelated to CaaS"
+      ],
+      "correct": 2,
+      "explanation": "FaaS is described as one level lower than CaaS for renting resources on the Cloud."
+    },
+    {
+      "stem": "Which long-standing challenge does breaking a code set into functions help mitigate?",
+      "options": [
+        "Choosing a database vendor",
+        "Having to redeploy the whole code set whenever a requirement changes",
+        "Training data scientists",
+        "Encrypting data at rest",
+        "Managing physical servers"
+      ],
+      "correct": 1,
+      "explanation": "Whenever a requirement changes the whole code set traditionally had to be redeployed because of dependencies; smaller functions let only the changed code be redeployed."
+    },
+    {
+      "stem": "Under FaaS, who manages the infrastructure beneath the deployed functions?",
+      "options": [
+        "The customer's operations team",
+        "A third-party auditor",
+        "The function's author",
+        "The Cloud provider",
+        "The end users"
+      ],
+      "correct": 3,
+      "explanation": "Customers deploy only their functions and the infrastructure underneath is managed by the Cloud providers."
+    },
+    {
+      "stem": "In which kind of workload is it acknowledged that breaking code into functions might be difficult?",
+      "options": [
+        "Web front-ends",
+        "User authentication",
+        "Data Pipelines",
+        "Mobile apps",
+        "Static websites"
+      ],
+      "correct": 2,
+      "explanation": "The topic agrees that in Data Pipelines it might be difficult, but says the option is still worth using wherever possible."
+    },
+    {
+      "stem": "Which example module is described as being built from multiple functions?",
+      "options": [
+        "A payroll calculator",
+        "A reporting dashboard",
+        "A weather forecast service",
+        "A user authentication module",
+        "A backup scheduler"
+      ],
+      "correct": 3,
+      "explanation": "Referring to the CaaS example, a user authentication module built from multiple functions can have individual functions deployed at any time."
+    },
+    {
+      "stem": "How does FaaS help multiple Agile teams working in silos?",
+      "options": [
+        "By letting teams develop and deploy their functions at any time using CI/CD in production",
+        "By forcing a single monthly release",
+        "By merging all teams into one",
+        "By eliminating the need for testing",
+        "By removing CI/CD"
+      ],
+      "correct": 0,
+      "explanation": "Different teams are able to develop and deploy their own functions at any time using CI/CD in production."
+    },
+    {
+      "stem": "What benefit does deploying smaller pieces of code bring, according to the FaaS description?",
+      "options": [
+        "Lower storage costs",
+        "Stronger encryption",
+        "Elimination of dependencies altogether",
+        "Faster database queries",
+        "Increased flexibility to deploy only what changed, every time the code changes"
+      ],
+      "correct": 4,
+      "explanation": "Being able to deploy functions at any time breaks down deployment activities and increases the flexibility to deploy a smaller piece of code whenever it changes."
+    },
+    {
+      "stem": "Which statement about FaaS is FALSE?",
+      "options": [
+        "Most Cloud providers offer FaaS",
+        "The customer pays for the resources required to run the functions",
+        "It supports Agile teams deploying independently",
+        "It is one level lower than CaaS",
+        "The customer must manage the underlying infrastructure"
+      ],
+      "correct": 4,
+      "explanation": "FaaS saves the customer from managing infrastructure in the Cloud; the provider manages it underneath the functions."
+    },
+    {
+      "stem": "What do IaaS and CaaS rent, in contrast to FaaS?",
+      "options": [
+        "Infrastructure and container-level resources",
+        "Business solutions",
+        "Data feeds",
+        "Machine learning models",
+        "Office productivity software"
+      ],
+      "correct": 0,
+      "explanation": "IaaS and CaaS rent infrastructure and container-level resources on the Cloud; FaaS moves to deploying functions only."
+    }
+  ]
+}

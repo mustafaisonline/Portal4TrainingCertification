@@ -1,0 +1,125 @@
+{
+  "topic": "metagraph",
+  "questions": [
+    {
+      "stem": "What is a MetaGraph?",
+      "options": [
+        "A 'graph of metadata' that defines the structure, schema and semantics of a knowledge graph within a graph database",
+        "A chart that plots the size of a database over time",
+        "A relational table that stores graph images",
+        "A machine learning model trained on graphs",
+        "A backup copy of a knowledge graph"
+      ],
+      "correct": 0,
+      "explanation": "A MetaGraph is the 'graph about the graph', providing information about the structure, schema and semantics of a knowledge graph."
+    },
+    {
+      "stem": "Which of the following is NOT one of the things a MetaGraph specifies as a conceptual framework?",
+      "options": [
+        "Entity types, such as Person, Company or Product",
+        "The actual data instance of every customer record",
+        "Relationship types, such as Works For or Buys",
+        "Attributes of nodes and edges, such as Name or Date",
+        "Constraints, such as cardinality and mandatory fields"
+      ],
+      "correct": 1,
+      "explanation": "A MetaGraph specifies entity types, relationship types, attributes and constraints; the actual data instances belong to the knowledge graph itself."
+    },
+    {
+      "stem": "How does a MetaGraph relate to a knowledge graph?",
+      "options": [
+        "The MetaGraph replaces the knowledge graph",
+        "The knowledge graph is a smaller copy of the MetaGraph",
+        "The MetaGraph serves as the blueprint that defines the structure, schema and semantics of the knowledge graph's relationships",
+        "The two are unrelated technologies",
+        "The knowledge graph stores the metadata and the MetaGraph stores the data"
+      ],
+      "correct": 2,
+      "explanation": "While knowledge graphs represent relationships between entities, a MetaGraph is the blueprint defining the structure, schema and semantics of those relationships."
+    },
+    {
+      "stem": "Which reason for a MetaGraph's importance refers to ensuring the knowledge graph adheres to a well-defined schema and preventing inconsistent or ambiguous relationships?",
+      "options": [
+        "Data discovery",
+        "Performance optimisation",
+        "Interoperability",
+        "Semantic integrity",
+        "Scalability"
+      ],
+      "correct": 3,
+      "explanation": "Semantic integrity is the MetaGraph's role in ensuring that the knowledge graph adheres to a well-defined schema, preventing inconsistent or ambiguous relationships."
+    },
+    {
+      "stem": "How does a MetaGraph support interoperability?",
+      "options": [
+        "By converting all graphs into relational tables",
+        "By deleting duplicate nodes automatically",
+        "By encrypting edges between systems",
+        "By requiring every graph to use the same vendor",
+        "By acting as a universal schema to integrate multiple knowledge graphs, enabling seamless data exchange"
+      ],
+      "correct": 4,
+      "explanation": "A MetaGraph can act as a universal schema that integrates multiple knowledge graphs, enabling seamless data exchange."
+    },
+    {
+      "stem": "Which MetaGraph component covers inheritance hierarchies, cardinality rules and restrictions such as 'a Company can have multiple Employees but not vice versa'?",
+      "options": [
+        "Graph Schema Rules",
+        "Node Classes",
+        "Edge Classes",
+        "Attribute Metadata",
+        "Entity Instances"
+      ],
+      "correct": 0,
+      "explanation": "Graph Schema Rules include inheritance hierarchies, cardinality rules and restrictions on how entities may relate."
+    },
+    {
+      "stem": "In a MetaGraph, what do Edge Classes define?",
+      "options": [
+        "The data types and value ranges of properties",
+        "Types of relationships, such as FriendOf, EmployeeOf or PartOf",
+        "The types of entities and their attributes",
+        "The physical storage location of the graph",
+        "The colour used to draw each node"
+      ],
+      "correct": 1,
+      "explanation": "Edge Classes define types of relationships such as FriendOf, EmployeeOf or PartOf, whereas Node Classes represent types of entities."
+    },
+    {
+      "stem": "Which benefit of a MetaGraph relates to better management of data lineage, compliance and security through clear metadata definitions?",
+      "options": [
+        "Enhanced query capabilities",
+        "Scalability",
+        "Data governance",
+        "Performance overhead",
+        "Automated MetaGraph generation"
+      ],
+      "correct": 2,
+      "explanation": "With clear metadata definitions, a MetaGraph supports data governance by helping organisations manage data lineage, compliance and security."
+    },
+    {
+      "stem": "Which of the following is listed as a challenge in implementing a MetaGraph?",
+      "options": [
+        "Too few use cases for graph databases",
+        "Inability to represent constraints",
+        "Lack of support for entity types",
+        "The absence of a universal standard for MetaGraphs, which can create interoperability issues",
+        "Graph databases cannot store metadata"
+      ],
+      "correct": 3,
+      "explanation": "The challenges named are complexity, performance overhead and standardisation: there is no universal MetaGraph standard, which can create interoperability issues."
+    },
+    {
+      "stem": "In the MetaGraph description, what is the MetaGraph said to enable in terms of representing reality?",
+      "options": [
+        "A replacement for all relational databases",
+        "The elimination of ontologies and taxonomies",
+        "A guarantee of zero data errors",
+        "A ban on unstructured data",
+        "A complete digital twin of simple to complex reality"
+      ],
+      "correct": 4,
+      "explanation": "MetaGraph is described as an enabler for a complete digital twin of simple to complex reality, providing rich context to data across functions and systems."
+    }
+  ]
+}

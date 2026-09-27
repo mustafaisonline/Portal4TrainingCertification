@@ -1,0 +1,125 @@
+{
+  "topic": "meta-metadata",
+  "questions": [
+    {
+      "stem": "What is Meta Metadata?",
+      "options": [
+        "A backup copy of the metadata repository",
+        "The raw data before any metadata is attached",
+        "A list of all tables in a database",
+        "Giving more information about Metadata",
+        "Metadata that has been deleted"
+      ],
+      "correct": 3,
+      "explanation": "Giving more information about Metadata is called Meta Metadata."
+    },
+    {
+      "stem": "What is the simple definition of Metadata that Meta Metadata builds on?",
+      "options": [
+        "Data About Data",
+        "Data About Business",
+        "Data About Systems",
+        "Data About Users",
+        "Data About Time"
+      ],
+      "correct": 0,
+      "explanation": "Metadata is Data About Data, and Meta Metadata goes one level further."
+    },
+    {
+      "stem": "A column named Date of Birth (DOB) is given as an example of which kind of metadata?",
+      "options": [
+        "Business metadata",
+        "Operational metadata",
+        "Foundational metadata",
+        "Active metadata",
+        "Technical metadata"
+      ],
+      "correct": 4,
+      "explanation": "A Date of Birth column is technical metadata; tagging whose DOB it is makes it Meta Metadata."
+    },
+    {
+      "stem": "How does the Date of Birth example become Meta Metadata?",
+      "options": [
+        "By storing the date in a different format",
+        "By encrypting the column",
+        "By moving the column to a different table",
+        "By tagging whether the DOB is for parents, children, employees or an insurance policy maker",
+        "By renaming the column to Birthday"
+      ],
+      "correct": 3,
+      "explanation": "Tagging that the DOB belongs to parents, children, employees or an insurance policy maker makes the DOB attribute more relevant, which is Meta Metadata."
+    },
+    {
+      "stem": "In the Weight column example, what cannot be told from the numeric value alone?",
+      "options": [
+        "Whether the value is a number",
+        "Whether the weight is for a person or an object, and which object",
+        "Whether the column exists",
+        "Whether the table has a primary key",
+        "Whether the value is stored as text"
+      ],
+      "correct": 1,
+      "explanation": "Looking at the value alone you cannot tell whether the weight belongs to a person or an object, or which object such as furniture."
+    },
+    {
+      "stem": "How is Meta Metadata described in terms of its arrival in the Data World?",
+      "options": [
+        "As a well-established standard",
+        "As a retired concept",
+        "As something that has just surfaced and is a game changer",
+        "As a replacement for technical metadata",
+        "As a term used only in academia"
+      ],
+      "correct": 2,
+      "explanation": "Meta Metadata is described as something that has just surfaced in the Data World and is again a game changer."
+    },
+    {
+      "stem": "Which of these is NOT one of the groups suggested for tagging a Date of Birth column?",
+      "options": [
+        "Parents",
+        "Children",
+        "Employees",
+        "Insurance policy maker",
+        "Suppliers"
+      ],
+      "correct": 4,
+      "explanation": "The examples given are parents, children, employees and insurance policy maker; suppliers are not mentioned."
+    },
+    {
+      "stem": "What effect does Meta Metadata have on an attribute such as DOB?",
+      "options": [
+        "It makes the attribute more relevant",
+        "It makes the attribute shorter",
+        "It removes the attribute from the table",
+        "It converts the attribute into a key column",
+        "It hides the attribute from users"
+      ],
+      "correct": 0,
+      "explanation": "Tagging the DOB attribute with whose date it is makes the attribute more relevant."
+    },
+    {
+      "stem": "Which object type is offered as a possible subject of a Weight value when illustrating Meta Metadata?",
+      "options": [
+        "Vehicles",
+        "Furniture",
+        "Buildings",
+        "Animals",
+        "Parcels"
+      ],
+      "correct": 1,
+      "explanation": "The Weight example asks whether the value is for a person or an object, and further which object, for example furniture."
+    },
+    {
+      "stem": "Which statement best describes the relationship between Metadata and Meta Metadata?",
+      "options": [
+        "Meta Metadata replaces Metadata entirely",
+        "Meta Metadata is the raw data that Metadata describes",
+        "Metadata describes data, and Meta Metadata gives more information about that Metadata",
+        "Metadata and Meta Metadata are the same thing",
+        "Meta Metadata is only used for operational logs"
+      ],
+      "correct": 2,
+      "explanation": "Metadata is data about data, and Meta Metadata is the next level: giving more information about the Metadata itself."
+    }
+  ]
+}

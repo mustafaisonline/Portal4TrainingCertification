@@ -1,0 +1,125 @@
+{
+  "topic": "zero-trust-architecture",
+  "questions": [
+    {
+      "stem": "What is the core idea of Zero Trust Architecture (ZTA)?",
+      "options": [
+        "Trust everyone inside the corporate network",
+        "No entity, human or machine, is trusted by default",
+        "Trust all devices that have antivirus installed",
+        "Trust only cloud providers",
+        "Trust users after a single login for life"
+      ],
+      "correct": 1,
+      "explanation": "Zero Trust ensures that no entity, whether human or machine, is trusted by default, minimising the risk of unauthorised access."
+    },
+    {
+      "stem": "Why is traditional perimeter-based security described as no longer sufficient?",
+      "options": [
+        "Because firewalls have been banned",
+        "Because security threats are more sophisticated and pervasive than ever",
+        "Because all data is now public",
+        "Because passwords are no longer used",
+        "Because networks are now entirely wireless"
+      ],
+      "correct": 1,
+      "explanation": "In today's rapidly evolving digital landscape, threats are more sophisticated and pervasive, so perimeter security cannot protect data on its own."
+    },
+    {
+      "stem": "In Zero Trust Architecture, what is the starting baseline for access?",
+      "options": [
+        "Everyone has read access",
+        "Administrators have full access",
+        "No one has access",
+        "Internal staff have full access",
+        "Devices on the intranet have access"
+      ],
+      "correct": 2,
+      "explanation": "The architecture starts with a zero-trust baseline where no one has access, then gradually opens doors through verified credentials and monitoring."
+    },
+    {
+      "stem": "Through which mechanisms are 'doors' slowly and carefully opened in a Zero Trust design?",
+      "options": [
+        "Authentication, Authorisation and Entitlement",
+        "Compression, Replication and Backup",
+        "Indexing, Partitioning and Caching",
+        "Batch, Stream and Serving",
+        "Bronze, Silver and Gold"
+      ],
+      "correct": 0,
+      "explanation": "After the no-access baseline, doors are opened using Authentication, Authorisation and Entitlement approaches."
+    },
+    {
+      "stem": "Which additional protections are applied even after access controls in Zero Trust Architecture?",
+      "options": [
+        "Data or disk encryption, masking and anonymisation",
+        "Star schemas and data marts",
+        "Load balancing and auto-scaling",
+        "Data dictionaries and glossaries",
+        "Feature stores and MLOps"
+      ],
+      "correct": 0,
+      "explanation": "Even after access is granted, encryption, masking, anonymisation and other approaches ensure hackers and malware cannot get into the system."
+    },
+    {
+      "stem": "Which of the following is named as opening doors for hackers and viruses in the current era?",
+      "options": [
+        "Printed documents",
+        "Landline telephones",
+        "Millions of IoT devices and thousands of mobile phones",
+        "Paper filing cabinets",
+        "Typewriters"
+      ],
+      "correct": 2,
+      "explanation": "Hundreds of thousands of mobile phones, millions of IoT devices and on-prem versus cloud architectures all open doors for hackers and viruses."
+    },
+    {
+      "stem": "What is described as THE most valuable asset in every organisation?",
+      "options": [
+        "Office buildings",
+        "Brand logos",
+        "Servers",
+        "Data",
+        "Company vehicles"
+      ],
+      "correct": 3,
+      "explanation": "Data has become the most valuable asset or critical element in every organisation, and compromising it can even lead to jail."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a benefit of implementing Zero Trust Architecture?",
+      "options": [
+        "Significantly reduced risk of data breaches",
+        "Regulatory compliance",
+        "Streamlined security operations",
+        "A future-proofed security strategy",
+        "Elimination of the need for encryption"
+      ],
+      "correct": 4,
+      "explanation": "Zero Trust reduces breach risk, ensures compliance, streamlines operations and future-proofs security; encryption remains one of its layers, not something it removes."
+    },
+    {
+      "stem": "Does 'no one' in Zero Trust refer only to human users?",
+      "options": [
+        "Yes, it applies only to employees",
+        "Yes, it applies only to external contractors",
+        "It applies only to cloud accounts",
+        "No, it applies only to machines",
+        "No, it applies to humans and machines alike"
+      ],
+      "correct": 4,
+      "explanation": "When Zero Trust says no one is trusted, it is not only about humans; it includes devices and machines as well."
+    },
+    {
+      "stem": "How is the Zero Trust approach described in terms of how defences are maintained?",
+      "options": [
+        "Static, set once at installation",
+        "Outsourced entirely to the cloud provider",
+        "Manual, reviewed once a year",
+        "Adaptive, combined with continuous monitoring",
+        "Optional for internal users"
+      ],
+      "correct": 3,
+      "explanation": "Zero Trust is an adaptive approach that uses verified credentials and continuous monitoring so defences stay resilient against emerging threats."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "materialized-view-ortemporary-tables-in-sql",
+  "questions": [
+    {
+      "stem": "What is a temporary table in SQL?",
+      "options": [
+        "A table that stores a refreshed query snapshot until explicitly dropped",
+        "A table created within a database session and available only during the lifetime of that session",
+        "A read-only copy of a production table",
+        "A view that dynamically fetches rows from base tables",
+        "A table stored in external cloud storage"
+      ],
+      "correct": 1,
+      "explanation": "Temporary tables are created within a database session and are only available during the lifetime of that particular session."
+    },
+    {
+      "stem": "What happens to a temporary table when the database session ends?",
+      "options": [
+        "It is refreshed with the latest data",
+        "It is converted into a permanent table",
+        "It is automatically discarded, as if DROP TABLE had been run",
+        "It is archived to external storage",
+        "It becomes a materialised view"
+      ],
+      "correct": 2,
+      "explanation": "After the session ends the temporary table is automatically discarded, the same as running DROP TABLE, so no permanent storage is consumed."
+    },
+    {
+      "stem": "Which two characteristics distinguish temporary tables?",
+      "options": [
+        "Encrypted and compressed",
+        "Partitioned and indexed",
+        "Replicated and versioned",
+        "Session-specific and volatile",
+        "Persistent and scheduled"
+      ],
+      "correct": 3,
+      "explanation": "Temporary tables are session-specific (visible only within the session that created them) and volatile (automatically deleted at the end of the session)."
+    },
+    {
+      "stem": "What kind of data are temporary tables designed to store?",
+      "options": [
+        "Long-term compliance archives",
+        "Top-rated product lists for a website",
+        "Master reference data",
+        "Pre-aggregated reporting figures",
+        "Intermediate results, results of window functions for complex calculations and massive data manipulations"
+      ],
+      "correct": 4,
+      "explanation": "Temporary tables store intermediate results, results of window functions for complex calculations or data processing tasks, and massive data manipulations."
+    },
+    {
+      "stem": "How does a materialised view differ from a temporary table in terms of persistence?",
+      "options": [
+        "A materialised view is stored in the database until explicitly dropped, whereas a temporary table is discarded at session end",
+        "A materialised view disappears at session end, whereas a temporary table persists",
+        "Both are discarded at the end of the session",
+        "Both persist until the database is restarted",
+        "A materialised view exists only in memory"
+      ],
+      "correct": 0,
+      "explanation": "Unlike temporary tables, materialised views are stored in the database until a command is explicitly run to drop them."
+    },
+    {
+      "stem": "How can a materialised view be refreshed?",
+      "options": [
+        "Only automatically on every insert",
+        "On a schedule or on a manual basis",
+        "Only when the session restarts",
+        "Only by dropping and recreating it",
+        "It can never be refreshed"
+      ],
+      "correct": 1,
+      "explanation": "Materialised views can be configured to refresh on a schedule or manually, ensuring data is up to date as needed."
+    },
+    {
+      "stem": "For which type of workload do materialised views significantly improve performance?",
+      "options": [
+        "Write-heavy transactional inserts",
+        "Schema migrations",
+        "Read-heavy operations, by precomputing and storing the query result",
+        "Session-specific personalisation",
+        "Backup and restore jobs"
+      ],
+      "correct": 2,
+      "explanation": "Materialised views improve performance for read-heavy operations by precomputing and storing the query result."
+    },
+    {
+      "stem": "In a data warehousing project, how are materialised views and temporary tables typically divided?",
+      "options": [
+        "Materialised views hold raw source extracts; temporary tables hold final reports",
+        "Both are used only for backups",
+        "Temporary tables replace the ETL process entirely",
+        "Materialised views pre-aggregate data for reporting tools, while temporary tables handle intermediate manipulation during ETL",
+        "Materialised views are used only in web applications"
+      ],
+      "correct": 3,
+      "explanation": "Materialised views pre-aggregate data for fast access by reporting and analytics tools, while temporary tables are used during ETL for intermediate data manipulation."
+    },
+    {
+      "stem": "In a web application, which construct would store frequently accessed data such as top-rated products?",
+      "options": [
+        "A temporary table",
+        "A session variable",
+        "A window function",
+        "A cursor",
+        "A materialised view"
+      ],
+      "correct": 4,
+      "explanation": "In web applications, temporary tables handle session-specific processing such as personalising content, while materialised views store frequently accessed data like top-rated products."
+    },
+    {
+      "stem": "Which statement about temporary tables is NOT correct?",
+      "options": [
+        "They remain in the database until explicitly dropped by a command",
+        "They are visible only within the session that created them",
+        "They help avoid repeated calculations or data retrieval operations",
+        "They are useful for holding data without affecting the main database tables",
+        "They are supported by most modern RDBMS such as PostgreSQL, MySQL, Oracle and SQL Server"
+      ],
+      "correct": 0,
+      "explanation": "Temporary tables are volatile and discarded automatically at session end; it is materialised views that persist until explicitly dropped."
+    }
+  ]
+}

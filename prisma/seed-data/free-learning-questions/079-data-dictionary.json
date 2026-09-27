@@ -1,0 +1,125 @@
+{
+  "topic": "data-dictionary",
+  "questions": [
+    {
+      "stem": "Under which discipline does a Data Dictionary fall?",
+      "options": [
+        "Master Data Management",
+        "Data Quality Management",
+        "Metadata Management",
+        "Application Architecture",
+        "Network Security"
+      ],
+      "correct": 2,
+      "explanation": "The topic states plainly that 'Data Dictionary comes under Metadata Management.'"
+    },
+    {
+      "stem": "Why is a Data Dictionary described as one of the most important items for a system's impact analysis?",
+      "options": [
+        "It gives a clear picture of all the elements in the database",
+        "It stores the business strategy",
+        "It replaces the need for testing",
+        "It automatically fixes broken queries",
+        "It encrypts all sensitive fields"
+      ],
+      "correct": 0,
+      "explanation": "A Data Dictionary gives a clear picture of all the elements in the database, which is exactly what impact analysis needs."
+    },
+    {
+      "stem": "Without a Data Dictionary in place, how much longer are future implementations said to take?",
+      "options": [
+        "About 10% longer",
+        "Twice to three times longer",
+        "Ten times longer",
+        "No longer at all",
+        "Half as long"
+      ],
+      "correct": 1,
+      "explanation": "With semi and unstructured data now on the surface, missing a Data Dictionary means future implementations take 2x–3x more time."
+    },
+    {
+      "stem": "Which of the following is NOT listed as information a Data Dictionary stores?",
+      "options": [
+        "Field name, description, data type and length",
+        "Indexes, primary and foreign keys",
+        "Relationships between tables, schemas and databases",
+        "Number of records in each table",
+        "Marketing campaign results"
+      ],
+      "correct": 4,
+      "explanation": "A Data Dictionary stores object lists, field details, keys and indexes, relationships and record counts; marketing results are business data, not metadata."
+    },
+    {
+      "stem": "What is an Active Data Dictionary?",
+      "options": [
+        "A manually maintained spreadsheet of tables",
+        "A dictionary stored in a separate reporting database",
+        "A dictionary managed within the same database so changes are captured automatically",
+        "A dictionary that is updated once a year",
+        "A dictionary that stores only business terms"
+      ],
+      "correct": 2,
+      "explanation": "An Active Data Dictionary is managed within the same database, so whenever the database changes the dictionary captures it automatically."
+    },
+    {
+      "stem": "What is a Passive Data Dictionary?",
+      "options": [
+        "One that automatically updates when the schema changes",
+        "One embedded in the database engine",
+        "One that only records row counts",
+        "One maintained in a separate database or as a manually maintained file",
+        "One that is read-only for all users"
+      ],
+      "correct": 3,
+      "explanation": "A Passive Data Dictionary is maintained in a separate database or a manually maintained file holding the same kinds of information."
+    },
+    {
+      "stem": "How many types of Data Dictionary are described?",
+      "options": [
+        "One",
+        "Two",
+        "Three",
+        "Four",
+        "Five"
+      ],
+      "correct": 1,
+      "explanation": "There are two types: Active (maintained within the same database) and Passive (maintained separately or manually)."
+    },
+    {
+      "stem": "Who normally interacts with a Data Dictionary?",
+      "options": [
+        "Technical folks",
+        "Marketing managers",
+        "External customers",
+        "Regulators only",
+        "Board members"
+      ],
+      "correct": 0,
+      "explanation": "In contrast to the business-facing Glossary, 'Normally, technical folks interact with Data Dictionaries.'"
+    },
+    {
+      "stem": "Which of these semi and unstructured data sources is named as raising the need for a Data Dictionary?",
+      "options": [
+        "Relational tables only",
+        "Video, audio, logs, emails, PDFs and social media",
+        "Spreadsheets only",
+        "Printed reports",
+        "Data warehouse fact tables"
+      ],
+      "correct": 1,
+      "explanation": "Big Data brought semi and unstructured datasets such as video, audio, logs, emails, PDF and social media onto the surface, making the dictionary essential."
+    },
+    {
+      "stem": "Alongside the Data Glossary, what risk is a Data Dictionary described as the next step towards mitigating?",
+      "options": [
+        "Server downtime",
+        "Role explosion",
+        "Cartesian joins",
+        "A potential Data Swamp",
+        "Vendor lock-in"
+      ],
+      "correct": 3,
+      "explanation": "A Data Dictionary is the next step, after the Glossary, towards mitigating the risk of a potential Data Swamp."
+    }
+  ]
+}

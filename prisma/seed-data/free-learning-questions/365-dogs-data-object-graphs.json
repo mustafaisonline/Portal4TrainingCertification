@@ -1,0 +1,125 @@
+{
+  "topic": "dogs-data-object-graphs",
+  "questions": [
+    {
+      "stem": "What does a Data Object Graph (DOG) represent?",
+      "options": [
+        "Data objects and the relationships between them in the form of a graph",
+        "The physical layout of disks in a data centre",
+        "A timeline of database backups",
+        "A bar chart of sales by region",
+        "A list of user passwords"
+      ],
+      "correct": 0,
+      "explanation": "DOGs represent data objects and the relationships between them as a graph, visualising data as connected objects rather than only tables and rows."
+    },
+    {
+      "stem": "In a Data Object Graph, what does a node represent?",
+      "options": [
+        "A relationship such as 'buys' or 'manages'",
+        "A data object such as Customer, Product, Order or Employee",
+        "A foreign key",
+        "A column in a table",
+        "A server in the network"
+      ],
+      "correct": 1,
+      "explanation": "A node represents a data object such as Customer, Product, Order or Employee; an edge represents the relationship between those objects."
+    },
+    {
+      "stem": "Which of the following is an example of an edge in a Data Object Graph?",
+      "options": [
+        "Customer",
+        "Product",
+        "works in",
+        "Employee",
+        "Order"
+      ],
+      "correct": 2,
+      "explanation": "Edges represent relationships between objects, such as buys, works in, manages or owns; Customer, Product, Employee and Order are nodes."
+    },
+    {
+      "stem": "What is the main focus of the Data Object Graph way of representing data?",
+      "options": [
+        "How much storage each object uses",
+        "How objects are physically stored on disk",
+        "How quickly objects can be deleted",
+        "How objects are connected rather than how they are stored",
+        "How objects are encrypted"
+      ],
+      "correct": 3,
+      "explanation": "The DOG approach focuses on how objects are connected rather than how they are stored."
+    },
+    {
+      "stem": "What limitation of traditional relational tables do Data Object Graphs address?",
+      "options": [
+        "Tables cannot store numbers",
+        "Tables are too small for business data",
+        "Tables cannot be queried",
+        "Tables require no primary keys",
+        "The table structure sometimes hides the complexity of relationships in deeply interconnected data"
+      ],
+      "correct": 4,
+      "explanation": "Relational tables are powerful but sometimes hide the complexity of relationships, which become clearer when visualised as a graph."
+    },
+    {
+      "stem": "Which of the following is NOT listed as an area where Data Object Graphs are especially useful?",
+      "options": [
+        "Payroll calculation",
+        "Fraud detection",
+        "Recommendation systems",
+        "Impact analysis",
+        "Data lineage tracking"
+      ],
+      "correct": 0,
+      "explanation": "DOGs are especially useful in relationship analysis, fraud detection, recommendation systems, impact analysis and data lineage tracking; payroll calculation is not listed."
+    },
+    {
+      "stem": "How do relational modelling and Data Object Graphs differ in handling relationships?",
+      "options": [
+        "Relational models have no relationships at all",
+        "Relational models handle relationships with foreign keys, whereas in a Data Object Graph relationships are first-class citizens",
+        "Data Object Graphs use foreign keys and relational models use edges",
+        "Both store relationships in exactly the same way",
+        "Data Object Graphs cannot represent relationships"
+      ],
+      "correct": 1,
+      "explanation": "In relational modelling relationships are handled using foreign keys; in a Data Object Graph relationships are first-class citizens focused on navigating connections quickly."
+    },
+    {
+      "stem": "In the school example of a Data Object Graph, how would you answer 'Which students are connected to Mr. Ali?'",
+      "options": [
+        "By sorting the students alphabetically",
+        "By counting the number of subjects",
+        "By following the graph connections from Mr. Ali through 'teaches' and 'studies' edges to the students",
+        "By reading the school timetable",
+        "By asking each student individually"
+      ],
+      "correct": 2,
+      "explanation": "Each student and teacher is a node and 'studies' and 'teaches' are edges, so the answer is found by following the graph connections."
+    },
+    {
+      "stem": "Which kind of question do Data Object Graphs help answer?",
+      "options": [
+        "How many rows does a table contain?",
+        "What is the average column width?",
+        "Which disk holds the backup?",
+        "What systems are affected if one data object changes?",
+        "Which SQL dialect is in use?"
+      ],
+      "correct": 3,
+      "explanation": "DOGs help answer questions such as how two customers are connected, which products are bought together and what systems are affected if one data object changes."
+    },
+    {
+      "stem": "Why are Data Object Graphs said to model the real world more naturally?",
+      "options": [
+        "Because they use fewer bytes than tables",
+        "Because they are drawn in colour",
+        "Because they eliminate the need for data",
+        "Because real-world data is always numeric",
+        "Because the real world itself is a network of connected entities"
+      ],
+      "correct": 4,
+      "explanation": "Data Object Graphs model the real world more naturally because the real world itself is a network of connected entities."
+    }
+  ]
+}

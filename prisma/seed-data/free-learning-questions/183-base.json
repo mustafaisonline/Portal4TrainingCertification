@@ -1,0 +1,125 @@
+{
+  "topic": "base",
+  "questions": [
+    {
+      "stem": "What are ACID and BaSE, and how do they relate to each other?",
+      "options": [
+        "Two file formats used in Hadoop",
+        "Two query languages for NoSQL databases",
+        "Two stages of the same transaction",
+        "Two data consistency models that compete on a use-case basis",
+        "Two types of database index"
+      ],
+      "correct": 3,
+      "explanation": "ACID and BaSE are both data consistency models, chosen according to the requirements of the use case."
+    },
+    {
+      "stem": "What does BaSE stand for?",
+      "options": [
+        "Backup, Security and Encryption",
+        "Basically Available, Soft State and Eventually Consistent",
+        "Batch, Stream and Event processing",
+        "Balanced, Sharded and Elastic",
+        "Basic Access, Standard Enforcement"
+      ],
+      "correct": 1,
+      "explanation": "BaSE is about Basically Available, Soft State and Eventually Consistent."
+    },
+    {
+      "stem": "What is the basic difference between what the ACID model and the BaSE model provide?",
+      "options": [
+        "ACID provides speed; BaSE provides security",
+        "ACID provides storage; BaSE provides compute",
+        "ACID provides availability; BaSE provides consistency",
+        "ACID provides encryption; BaSE provides compression",
+        "ACID provides a consistent system; BaSE provides high availability"
+      ],
+      "correct": 4,
+      "explanation": "The ACID model provides a consistent system, whereas the BaSE model provides high availability."
+    },
+    {
+      "stem": "What does \"Basically Available\" mean in the BaSE model?",
+      "options": [
+        "The system is guaranteed to be available in the event of failure",
+        "The system is available only during business hours",
+        "The system is available only for reads",
+        "The system guarantees immediate consistency",
+        "The system is available on a single node only"
+      ],
+      "correct": 0,
+      "explanation": "Basically Available means the system is guaranteed to remain available even when failures occur."
+    },
+    {
+      "stem": "What does \"Soft State\" mean in the BaSE model?",
+      "options": [
+        "Data is stored in memory rather than on disk",
+        "Data is deleted after a fixed time",
+        "Data values may change over time because immediate consistency is not enforced, with responsibility for consistency delegated to developers",
+        "The schema of the data can change without notice",
+        "Only part of the data is written on each operation"
+      ],
+      "correct": 2,
+      "explanation": "Because BaSE lacks immediate consistency, values may change over time; the database no longer enforces consistency and leaves that to developers."
+    },
+    {
+      "stem": "What does \"Eventually Consistent\" imply about reading data before consistency has been achieved?",
+      "options": [
+        "Reads are blocked until the data is consistent",
+        "Reads return an error",
+        "Reads are still possible, although they might not reflect reality",
+        "Reads are served from a backup",
+        "Reads are only allowed on the primary node"
+      ],
+      "correct": 2,
+      "explanation": "BaSE does eventually achieve consistency, but until then reads remain possible even though they may not reflect the true current state."
+    },
+    {
+      "stem": "For which kind of system is the ACID model described as a must?",
+      "options": [
+        "OLTP systems, such as banking, where users cannot afford an inconsistent database",
+        "Marketing and campaigning systems built on semi-structured data",
+        "Social media feeds",
+        "Data lakes on object storage",
+        "Log analytics platforms"
+      ],
+      "correct": 0,
+      "explanation": "ACID is essential for OLTP systems like banking, where a deposit must be recorded before a withdrawal can proceed."
+    },
+    {
+      "stem": "Which category of databases mostly supports the BaSE model?",
+      "options": [
+        "RDBMS databases",
+        "Mainframe databases",
+        "OLTP banking databases",
+        "Spreadsheet-based databases",
+        "NoSQL databases"
+      ],
+      "correct": 4,
+      "explanation": "Most SQL/RDBMS databases support ACID, whereas most NoSQL databases support the BaSE model."
+    },
+    {
+      "stem": "Which use case is given as one that can live without ACID features?",
+      "options": [
+        "Bank withdrawals",
+        "Marketing and campaigning on huge semi-structured or unstructured datasets",
+        "Payroll processing",
+        "Stock trading",
+        "Airline seat reservations"
+      ],
+      "correct": 1,
+      "explanation": "Marketing and campaigning workloads focus on huge datasets from everywhere and can tolerate a loss of consistency, unlike OLTP systems."
+    },
+    {
+      "stem": "Hadoop and Object Storage are not ACID compliant. Which product is named as providing an ACID model on top of Object Storage?",
+      "options": [
+        "Hive",
+        "HDFS",
+        "MapReduce",
+        "Delta Lake from Databricks",
+        "YARN"
+      ],
+      "correct": 3,
+      "explanation": "Databricks, through its Delta Lake product, provides an ACID model on top of Object Storage."
+    }
+  ]
+}

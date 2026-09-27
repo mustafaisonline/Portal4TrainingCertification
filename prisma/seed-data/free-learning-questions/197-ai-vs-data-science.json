@@ -1,0 +1,125 @@
+{
+  "topic": "ai-vs-data-science",
+  "questions": [
+    {
+      "stem": "At a high level, how does I Am Datapedia! distinguish Data Science from Artificial Intelligence?",
+      "options": [
+        "Data Science is when humans build and run models; AI is when matured models are passed to machines to run themselves",
+        "Data Science uses structured data only; AI uses unstructured data only",
+        "Data Science is a branch of AI concerned with storing data",
+        "AI is any statistical model, while Data Science is any visualisation",
+        "There is no difference; the two terms are synonyms"
+      ],
+      "correct": 0,
+      "explanation": "When models are created and run by humans it is called Data Science; when matured models are handed to systems or machines to run, train, fix, analyse and predict by themselves, it becomes AI."
+    },
+    {
+      "stem": "Which kinds of data are used to create Data Science models in the current era?",
+      "options": [
+        "Only structured data held in relational tables",
+        "Only unstructured data such as text and images",
+        "Only semi-structured data such as JSON files",
+        "Structured, semi-structured and unstructured data",
+        "Only data that has already been summarised"
+      ],
+      "correct": 3,
+      "explanation": "Data Science models are created to analyse and predict on huge datasets, whether structured, semi-structured or unstructured."
+    },
+    {
+      "stem": "Which of the following is NOT one of the things a matured model does by itself once it has become AI?",
+      "options": [
+        "Train itself",
+        "Fix itself",
+        "Analyse itself",
+        "Predict itself",
+        "Recruit the data scientists who built it"
+      ],
+      "correct": 4,
+      "explanation": "AI is described as a model that runs itself, trains itself, fixes itself, analyses itself and predicts itself; recruiting people is not part of that description."
+    },
+    {
+      "stem": "A team of analysts builds a model on customer data and runs it themselves to predict which customers will leave. Which term best describes this activity?",
+      "options": [
+        "Artificial Intelligence",
+        "Data Science",
+        "Data Entry",
+        "Machine Autonomy",
+        "Data Liberalisation"
+      ],
+      "correct": 1,
+      "explanation": "When models are created and run by humans to analyse and predict, the activity is Data Science; it only becomes AI once the matured model runs itself on a machine."
+    },
+    {
+      "stem": "At what point does a Data Science model become Artificial Intelligence?",
+      "options": [
+        "As soon as it is written in a programming language",
+        "When it is trained on more than one million rows",
+        "When the matured model is passed to systems or machines that run, train, fix, analyse and predict by themselves",
+        "When a human approves its first prediction",
+        "When it is published in a dashboard for business users"
+      ],
+      "correct": 2,
+      "explanation": "The dividing line is maturity plus autonomy: once the model is handed over to machines to run itself, it becomes AI."
+    },
+    {
+      "stem": "What is the stated aim of comparing AI with Data Science in I Am Datapedia!?",
+      "options": [
+        "To explain the difference between the two at a very high level",
+        "To elaborate in detail what AI is",
+        "To prove that AI will replace Data Science",
+        "To list every algorithm used in AI",
+        "To recommend a programming language for AI"
+      ],
+      "correct": 0,
+      "explanation": "The author states the aim is not to explain AI in detail but to explain the difference between AI and Data Science at a very high level."
+    },
+    {
+      "stem": "According to I Am Datapedia!, being clear about which subject makes understanding AI unproblematic?",
+      "options": [
+        "Database administration",
+        "Data visualisation",
+        "Network security",
+        "Data Science",
+        "Project management"
+      ],
+      "correct": 3,
+      "explanation": "The author says that if you are clear about Data Science, then understanding AI will not be a problem."
+    },
+    {
+      "stem": "What are Data Science models created to do with huge datasets?",
+      "options": [
+        "Archive and compress them",
+        "Analyse and predict",
+        "Encrypt and secure them",
+        "Rename and relocate them",
+        "Print and distribute them"
+      ],
+      "correct": 1,
+      "explanation": "In the current era, Data Science models are created on huge datasets in order to analyse and predict."
+    },
+    {
+      "stem": "How does I Am Datapedia! characterise the debate over AI versus Data Science?",
+      "options": [
+        "A settled matter with a single accepted definition",
+        "A purely academic question with no practical relevance",
+        "A topic only relevant to hardware engineers",
+        "A question that only matters for unstructured data",
+        "A very controversial topic that confuses many people"
+      ],
+      "correct": 4,
+      "explanation": "The author notes that people are confused between AI and Data Science and calls it a very controversial topic."
+    },
+    {
+      "stem": "Which statement about Artificial Intelligence is consistent with the description in I Am Datapedia!?",
+      "options": [
+        "AI is fully explained by the idea of a self-running model",
+        "AI is limited to models that predict customer behaviour",
+        "AI is much more than a self-running model, but the self-running model is the high-level distinction from Data Science",
+        "AI can only be built on structured data",
+        "AI is always created without any human involvement"
+      ],
+      "correct": 2,
+      "explanation": "The author acknowledges that AI is much more than a matured model running itself, but uses that idea to explain the difference from Data Science at a high level."
+    }
+  ]
+}

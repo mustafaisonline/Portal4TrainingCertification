@@ -1,0 +1,125 @@
+{
+  "topic": "data-assets",
+  "questions": [
+    {
+      "stem": "How are Data Assets defined?",
+      "options": [
+        "Any hardware on which data is stored",
+        "Anything that generates data for decision-making which ultimately generates revenue for the organisation",
+        "Datasets that are kept purely for compliance",
+        "Data that is not currently in use",
+        "The licences a company holds for its databases"
+      ],
+      "correct": 1,
+      "explanation": "Data Assets are anything that generates data for decision-making and, through that, generates revenue for the organisation."
+    },
+    {
+      "stem": "Which three artefacts, the \"3 Ds\", have Data Assets as their perfect business case?",
+      "options": [
+        "Data Lake, Delta Lake and Data Vault",
+        "Data Mining, Data Science and Deep Learning",
+        "Data Drift, Data Detritus and Dark Data",
+        "DevOps, DataOps and DLOps",
+        "Data Catalog, Data Dictionary and Data Glossary"
+      ],
+      "correct": 4,
+      "explanation": "Data Assets justify having a Data Catalog, Data Dictionary and Data Glossary, because one must know what the data is about and where it resides."
+    },
+    {
+      "stem": "Why do Data Assets require a Data Catalog, Data Dictionary and Data Glossary?",
+      "options": [
+        "Because one must know what the data is all about and where it is residing",
+        "Because regulators require all three documents",
+        "Because they replace the need for a data warehouse",
+        "Because they encrypt the data",
+        "Because they reduce storage costs automatically"
+      ],
+      "correct": 0,
+      "explanation": "To treat data as an asset, an organisation must know what each dataset is about and where it lives, which is what the three Ds provide."
+    },
+    {
+      "stem": "Which of the following is NOT listed as an example of a Data Asset in a data-driven company?",
+      "options": [
+        "Dashboards",
+        "Mobile applications",
+        "Campaigns",
+        "Server racks",
+        "Output Excel files"
+      ],
+      "correct": 3,
+      "explanation": "The examples given are systems, websites, portals, mobile applications, output Excel files, dashboards, reports and campaigns; server racks are not listed."
+    },
+    {
+      "stem": "Which companies are given as the best examples of businesses that run on their data as an asset?",
+      "options": [
+        "Oracle, Teradata and Microsoft",
+        "Databricks, Snowflake and Cloudera",
+        "Facebook, Google and Twitter",
+        "Banks, insurers and regulators",
+        "Amazon, Alibaba and Netflix"
+      ],
+      "correct": 2,
+      "explanation": "Facebook, Google and Twitter are cited as the best examples of companies using their data as an asset to run their businesses."
+    },
+    {
+      "stem": "Which action is named as a way to maintain Data Assets by cutting the cost of data management?",
+      "options": [
+        "Deleting or purging unnecessary data",
+        "Duplicating data to every department",
+        "Moving all data to the operational database",
+        "Removing the data catalog",
+        "Storing every dataset in a single format"
+      ],
+      "correct": 0,
+      "explanation": "One way to maintain Data Assets is to cut the cost of data management by deleting or purging unnecessary data."
+    },
+    {
+      "stem": "Which of the following is NOT one of the stated ways to maintain Data Assets?",
+      "options": [
+        "Make maximum value by selling data to generate revenue",
+        "Manage the Data Catalog",
+        "Apply protection and security measures",
+        "Keep multiple uncontrolled copies of every dataset",
+        "Cut the cost of data management by purging unnecessary data"
+      ],
+      "correct": 3,
+      "explanation": "The ways listed are cutting cost, generating revenue, managing the Data Catalog, and protection and security; keeping uncontrolled copies is not among them."
+    },
+    {
+      "stem": "In a nutshell, which datasets count as Data Assets?",
+      "options": [
+        "Datasets that are stored on the most expensive hardware",
+        "Datasets which have ROI and are able to generate revenue",
+        "Datasets that have never been accessed",
+        "Datasets held only for audit purposes",
+        "Datasets that are larger than one terabyte"
+      ],
+      "correct": 1,
+      "explanation": "The summary definition is that Data Assets are datasets which have a return on investment and are able to generate revenue."
+    },
+    {
+      "stem": "For which type of company are Data Assets described as the most valuable artefacts?",
+      "options": [
+        "Manufacturing companies",
+        "Companies without a data warehouse",
+        "Government agencies",
+        "Companies that outsource IT",
+        "Data-driven companies"
+      ],
+      "correct": 4,
+      "explanation": "For data-driven companies, Data Assets are the most valuable artefacts, spanning systems, portals, reports, campaigns and more."
+    },
+    {
+      "stem": "What does \"make maximum value out of\" a Data Asset mean in practice?",
+      "options": [
+        "Compress it to save storage",
+        "Restrict access to senior management",
+        "Sell it to generate revenue",
+        "Convert it to a single file format",
+        "Archive it to cold storage"
+      ],
+      "correct": 2,
+      "explanation": "Making maximum value out of Data Assets is described as selling the data to generate revenue."
+    }
+  ]
+}

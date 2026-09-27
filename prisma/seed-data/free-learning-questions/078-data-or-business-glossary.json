@@ -1,0 +1,125 @@
+{
+  "topic": "data-or-business-glossary",
+  "questions": [
+    {
+      "stem": "What risk does a Data Glossary help to mitigate?",
+      "options": [
+        "Creating a potential Data Swamp",
+        "Slow network throughput",
+        "Database index fragmentation",
+        "Password leakage",
+        "Hardware failure"
+      ],
+      "correct": 0,
+      "explanation": "A Data Glossary is described as a vital step towards mitigating the risk of creating a potential Data Swamp."
+    },
+    {
+      "stem": "Under which umbrella discipline do the Data Glossary and Data Dictionary fall?",
+      "options": [
+        "Master Data Management",
+        "Metadata Management",
+        "Data Quality Management",
+        "Security Modelling",
+        "Business Intelligence"
+      ],
+      "correct": 1,
+      "explanation": "Data Glossary versus Data Dictionary falls under the umbrella of Metadata Management."
+    },
+    {
+      "stem": "What does a Data Glossary contain?",
+      "options": [
+        "Field data types and lengths",
+        "Database indexes and primary keys",
+        "Business terms that provide meaning and context",
+        "Row counts for each table",
+        "Server configuration settings"
+      ],
+      "correct": 2,
+      "explanation": "A Data Glossary includes business terms such as region, sales, quantity, brand and year that give meaning and context to data."
+    },
+    {
+      "stem": "How is a Data Dictionary described in contrast to a Data Glossary?",
+      "options": [
+        "As a collection of business terms in non-technical language",
+        "As a list of dashboards owned by each department",
+        "As a set of data science models",
+        "As a repository housing names, definitions and attributes of data elements",
+        "As a backup catalogue of database objects"
+      ],
+      "correct": 3,
+      "explanation": "A Data Dictionary houses the names, definitions and attributes of data elements, whereas a Glossary is a searchable collection of business terms."
+    },
+    {
+      "stem": "Which of the following can a comprehensive Data Glossary refer to?",
+      "options": [
+        "Only physical tables",
+        "Only business reports",
+        "Only spreadsheets",
+        "Only data science models",
+        "Tables, schemas, databases, reports, dashboards and data science models"
+      ],
+      "correct": 4,
+      "explanation": "A comprehensive Data Glossary can refer to tables, schemas and databases; reports and dashboards; and data mining and data science models."
+    },
+    {
+      "stem": "What proportion of redundant objects can consulting a Data Glossary reduce?",
+      "options": [
+        "Up to 10%",
+        "Up to 25%",
+        "Up to 50%",
+        "Up to 80%",
+        "Up to 100%"
+      ],
+      "correct": 3,
+      "explanation": "Checking the glossary before creating a new object prevents reinvention and can reduce up to 80% of redundant objects."
+    },
+    {
+      "stem": "How does a Data Glossary reduce redundancy?",
+      "options": [
+        "By deleting duplicate rows automatically",
+        "By letting users check whether an equivalent object already exists before creating a new one",
+        "By compressing tables",
+        "By merging all dashboards into one",
+        "By enforcing primary keys"
+      ],
+      "correct": 1,
+      "explanation": "Before creating a new object, users consult the glossary to see whether an equivalent dashboard, report, table, schema or model already exists."
+    },
+    {
+      "stem": "Who normally interacts with a Data Glossary?",
+      "options": [
+        "Business users",
+        "Database administrators only",
+        "Network engineers",
+        "Security architects only",
+        "Hardware vendors"
+      ],
+      "correct": 0,
+      "explanation": "The Data Glossary is aimed at business users without deep technical expertise; 'Normally, business folks interact with Data Glossary.'"
+    },
+    {
+      "stem": "In the example glossary terms region, sales, quantity, brand and year, what would an analyst quickly conclude about the table?",
+      "options": [
+        "That it holds employee payroll data",
+        "That it holds server log data",
+        "That it relates to sales data with quantities by brand at a regional level",
+        "That it is a security audit table",
+        "That it stores customer complaints"
+      ],
+      "correct": 2,
+      "explanation": "Those terms tell anyone analysing the table that it relates to sales data, with quantities likely provided brand-wise at a regional level."
+    },
+    {
+      "stem": "What does combining a Data Glossary with a Data Dictionary achieve?",
+      "options": [
+        "It replaces the need for a database",
+        "It eliminates all business terms",
+        "It converts the glossary into a security policy",
+        "It makes the glossary an integral part of metadata management",
+        "It doubles the storage requirement"
+      ],
+      "correct": 3,
+      "explanation": "When combined with a Data Dictionary, the Data Glossary becomes an integral part of metadata management."
+    }
+  ]
+}

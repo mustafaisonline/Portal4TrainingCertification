@@ -1,0 +1,125 @@
+{
+  "topic": "subjective-andobjective-data-modelling",
+  "questions": [
+    {
+      "stem": "What is the answer given to the question 'Do we really need data modelling anymore?'",
+      "options": [
+        "Modelling is obsolete in cloud-native platforms",
+        "Modelling is only needed for OLTP systems",
+        "There is no such thing as data without a model; every stored structure is a data model",
+        "Modelling is only needed when using schema-on-read",
+        "Modelling is optional once a data lake exists"
+      ],
+      "correct": 2,
+      "explanation": "Every system that stores data follows a structure, explicit or implicit, and that structure is a data model; the question is what type of modelling suits the purpose."
+    },
+    {
+      "stem": "Which type of system is Subjective Data Modelling commonly associated with?",
+      "options": [
+        "Data warehouses and OLAP cubes",
+        "Transactional OLTP systems using normalised structures such as 3NF",
+        "Semantic layers for BI",
+        "Machine learning feature stores",
+        "Data lakes with schema-on-read"
+      ],
+      "correct": 1,
+      "explanation": "Subjective Data Modelling is associated with transactional OLTP environments, typically relying on normalised structures such as Third Normal Form."
+    },
+    {
+      "stem": "What question does Objective Data Modelling start from?",
+      "options": [
+        "How does the system store data?",
+        "How can redundancy be eliminated?",
+        "Which foreign keys enforce referential integrity?",
+        "How does the business need to analyse the data?",
+        "Which database vendor should be used?"
+      ],
+      "correct": 3,
+      "explanation": "Objective modelling asks how the business needs to analyse data rather than how the system stores it, shifting the focus to analytical usability."
+    },
+    {
+      "stem": "In the retail analytics example of Objective Data Modelling, which of these is stored in the central fact table?",
+      "options": [
+        "SalesAmount, Quantity and Discount",
+        "Customer names and addresses",
+        "Product descriptions",
+        "Geographic region hierarchies",
+        "Calendar attributes such as month and quarter"
+      ],
+      "correct": 0,
+      "explanation": "The central fact table stores measures such as SalesAmount, Quantity and Discount, with dimensions for Time, Product, Geography and Customer."
+    },
+    {
+      "stem": "Why is denormalisation deliberately introduced in Objective Data Modelling?",
+      "options": [
+        "To enforce referential integrity",
+        "To reduce storage cost",
+        "To simplify reporting and improve query performance",
+        "To speed up transaction inserts",
+        "To satisfy Third Normal Form"
+      ],
+      "correct": 2,
+      "explanation": "In analytical environments denormalisation is introduced deliberately to simplify reporting and improve query performance."
+    },
+    {
+      "stem": "Which phrase summarises what Subjective Data Modelling protects?",
+      "options": [
+        "Business understanding",
+        "Operational truth",
+        "Analytical flexibility",
+        "Aggregation performance",
+        "Strategic decision-making"
+      ],
+      "correct": 1,
+      "explanation": "Subjective Data Modelling protects operational truth, while Objective Data Modelling enables business understanding."
+    },
+    {
+      "stem": "In which direction is Objective Data Modelling typically designed?",
+      "options": [
+        "Bottom-up from the application code",
+        "Sideways from other departments' models",
+        "Randomly, as data arrives",
+        "Top-down, guided by business questions",
+        "From the physical storage layer upwards"
+      ],
+      "correct": 3,
+      "explanation": "Objective modelling is typically designed top-down, guided by the business questions that decision-makers need answered."
+    },
+    {
+      "stem": "What happens to modelling in schema-on-read architectures if it is not done deliberately?",
+      "options": [
+        "It disappears entirely",
+        "It is handled automatically by the storage format",
+        "It emerges accidentally through ad hoc transformations and inconsistent metric definitions",
+        "It is replaced by data governance",
+        "It becomes unnecessary because the data is flexible"
+      ],
+      "correct": 2,
+      "explanation": "In modern architectures modelling does not disappear; it becomes implicit, and if not deliberate it emerges accidentally with conflicting metrics and duplicated KPIs."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a result of intentional modelling?",
+      "options": [
+        "Definitions are clear",
+        "KPIs are aligned",
+        "Governance is manageable",
+        "Trust in data increases",
+        "Reports disagree"
+      ],
+      "correct": 4,
+      "explanation": "Disagreeing reports are a symptom of accidental modelling; intentional modelling brings clear definitions, aligned KPIs, manageable governance and greater trust."
+    },
+    {
+      "stem": "What is described as the real sign of architectural maturity?",
+      "options": [
+        "Whether data is modelled intentionally",
+        "Whether the organisation uses a star schema",
+        "Whether all data is in Third Normal Form",
+        "Whether the platform is cloud-native",
+        "Whether modelling has been eliminated"
+      ],
+      "correct": 0,
+      "explanation": "The real sign of maturity is not whether data is modelled but whether it is modelled intentionally, integrating both subjective and objective perspectives."
+    }
+  ]
+}

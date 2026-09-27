@@ -1,0 +1,125 @@
+{
+  "topic": "daas-data-as-a-service",
+  "questions": [
+    {
+      "stem": "Which Cloud service is Data as a Service (DaaS) described as being very near to?",
+      "options": [
+        "IaaS",
+        "CaaS",
+        "SaaS",
+        "FaaS",
+        "PaaS"
+      ],
+      "correct": 2,
+      "explanation": "DaaS is very near to SaaS, since both involve solution providers hosting their solutions in the Cloud."
+    },
+    {
+      "stem": "How do customers typically obtain data in a DaaS arrangement?",
+      "options": [
+        "By logging in and using the vendor's whole solution",
+        "By connecting to the provider's APIs and pulling data on demand",
+        "By installing the vendor's database on-premises",
+        "By deploying their own functions",
+        "By receiving printed reports"
+      ],
+      "correct": 1,
+      "explanation": "Solution providers enable APIs from which customers connect and pull data on demand."
+    },
+    {
+      "stem": "How are DaaS customers typically billed?",
+      "options": [
+        "A flat annual licence regardless of usage",
+        "Per virtual machine hour",
+        "Based on the data they pulled",
+        "Per function invocation",
+        "Per user seat"
+      ],
+      "correct": 2,
+      "explanation": "Customers who pull data on demand are billed based on the data they pulled."
+    },
+    {
+      "stem": "What is the main difference between SaaS and DaaS?",
+      "options": [
+        "SaaS is on-premises; DaaS is in the Cloud",
+        "In SaaS the customer uses the whole vendor solution; in DaaS the customer subscribes to pull the data only",
+        "SaaS is free; DaaS is paid",
+        "DaaS provides infrastructure; SaaS provides software",
+        "There is no difference"
+      ],
+      "correct": 1,
+      "explanation": "In SaaS the customer logs in and uses the entire vendor solution, whereas in DaaS the customer can connect or subscribe to pull the data ONLY."
+    },
+    {
+      "stem": "In the DaaS example, which sources does the company's cloud solution pull data from?",
+      "options": [
+        "Internal HR and payroll systems",
+        "Bank core systems",
+        "Government census records",
+        "Weather satellites",
+        "Facebook, Amazon and Ali Baba"
+      ],
+      "correct": 4,
+      "explanation": "The example company pulls data from Facebook, Amazon, Ali Baba and similar sources, then uses ML modelling to produce analytics sold as DaaS."
+    },
+    {
+      "stem": "Which of the following is NOT one of the analytics named in the DaaS example?",
+      "options": [
+        "Customers' buying behaviour",
+        "Customers' surfing behaviour",
+        "Customer segmentation",
+        "Product categorisation",
+        "Employee attrition prediction"
+      ],
+      "correct": 4,
+      "explanation": "The example lists buying behaviour, surfing behaviour, segmentation, product categorisation and customer demographics; employee attrition is not among them."
+    },
+    {
+      "stem": "Who are the typical buyers of DaaS analytics in the example?",
+      "options": [
+        "Organisations needing details for marketing or sales planning",
+        "Hardware manufacturers",
+        "Cloud providers",
+        "Individual consumers",
+        "Network engineers"
+      ],
+      "correct": 0,
+      "explanation": "The analysis and analytics are sold as DaaS to organisations that need them for marketing or sales planning."
+    },
+    {
+      "stem": "Which restriction do most DaaS providers place on customers?",
+      "options": [
+        "Customers must host the provider's servers",
+        "Customers must deploy functions to access it",
+        "Customers must share their own data in return",
+        "Customers may only view the data, and cannot change its model",
+        "Customers must use a specific operating system"
+      ],
+      "correct": 3,
+      "explanation": "Most DaaS providers restrict customers to viewing the data; some allow download but none allow changing the data model."
+    },
+    {
+      "stem": "What may some DaaS providers require when a customer ends their subscription?",
+      "options": [
+        "A final payment for all historical data",
+        "That the customer migrates to SaaS",
+        "That the customer returns the API keys by post",
+        "That the customer removes the data from their storage",
+        "Nothing, the data is retained forever"
+      ],
+      "correct": 3,
+      "explanation": "Some providers state that once the subscription ends the customer must remove the data from their own storage."
+    },
+    {
+      "stem": "Which technique does the DaaS example company use to derive its analytics from the pulled data?",
+      "options": [
+        "ML Modelling",
+        "Manual spreadsheet analysis",
+        "Paper surveys",
+        "Random sampling only",
+        "Database indexing"
+      ],
+      "correct": 0,
+      "explanation": "The company uses ML Modelling on data pulled from online platforms to predict behaviour, segment customers and categorise products."
+    }
+  ]
+}

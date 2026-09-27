@@ -1,0 +1,125 @@
+{
+  "topic": "api-service-data-modelling",
+  "questions": [
+    {
+      "stem": "What does API / Service Data Modelling concentrate on?",
+      "options": [
+        "How data is exposed, requested and consumed across interfaces",
+        "How data is physically stored in tables",
+        "How data is partitioned across cluster nodes",
+        "How data is normalised to remove redundancy",
+        "How events are replayed to rebuild state"
+      ],
+      "correct": 0,
+      "explanation": "Rather than focusing on internal storage, API / Service Data Modelling designs the data contracts that define how information is exchanged between services, applications and systems."
+    },
+    {
+      "stem": "In API / Service Data Modelling, what role does a well-designed API model play between systems?",
+      "options": [
+        "A caching layer",
+        "A formal contract between service providers and service consumers",
+        "A replacement for the database schema",
+        "A physical index",
+        "An event log"
+      ],
+      "correct": 1,
+      "explanation": "API models act as formal contracts between providers and consumers, reducing integration complexity, preventing misunderstandings and minimising runtime errors."
+    },
+    {
+      "stem": "Which standards are named for expressing API data models?",
+      "options": [
+        "SQL DDL, ERD and UML",
+        "JSON Schema, XSD and DTD",
+        "OpenAPI (Swagger) for REST, GraphQL schemas and WSDL for SOAP",
+        "OWL, RDF and SPARQL",
+        "Avro, Parquet and ORC"
+      ],
+      "correct": 2,
+      "explanation": "API data models are typically expressed using OpenAPI (Swagger) for REST services, GraphQL schemas for flexible querying or WSDL for SOAP-based services."
+    },
+    {
+      "stem": "In the loan approval API ecosystem, which endpoint do regulatory authorities consume for compliance monitoring?",
+      "options": [
+        "/loanApplications",
+        "/loanApprovals",
+        "/loanOfficers",
+        "/loanReports",
+        "/customers"
+      ],
+      "correct": 3,
+      "explanation": "The mobile app calls /loanApplications, underwriting uses /loanApprovals and regulators consume /loanReports for compliance monitoring."
+    },
+    {
+      "stem": "What happens to the API schema if a bank's internal storage shifts from relational databases to NoSQL or event-driven architectures?",
+      "options": [
+        "It must be rewritten for every consumer",
+        "It becomes a GraphQL schema automatically",
+        "It is replaced by direct database access",
+        "It is versioned as a new major release",
+        "It remains stable, ensuring consistent communication across stakeholders"
+      ],
+      "correct": 4,
+      "explanation": "The API schema decouples internal database structures from external consumers, so backend changes do not break integrations."
+    },
+    {
+      "stem": "What advantage does the GraphQL loan example illustrate?",
+      "options": [
+        "A consumer can request only specific fields such as LoanAmount, Status and the related names, avoiding unnecessary data transfer",
+        "A consumer receives every field of every related entity in one call",
+        "A consumer can update the database schema directly",
+        "A consumer can bypass the API contract",
+        "A consumer can submit XML instead of JSON"
+      ],
+      "correct": 0,
+      "explanation": "In a GraphQL model the consumer requests only the fields it needs, such as LoanAmount, Status and the Customer and Officer names."
+    },
+    {
+      "stem": "Which fields does the REST request to POST /loanApplications contain in the loan approval example?",
+      "options": [
+        "LoanID, Status and InterestRate",
+        "CustomerID, LoanAmount and OfficerID",
+        "LoanID, ApprovalStatus and Term",
+        "OfficerID, Branch and Region",
+        "CustomerID, Name and CreditScore"
+      ],
+      "correct": 1,
+      "explanation": "The example request payload contains CustomerID, LoanAmount and OfficerID; the response returns LoanID, Status and nested Officer and Customer details."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a challenge of API / Service Data Modelling?",
+      "options": [
+        "Over-fetching or under-fetching of data in REST APIs",
+        "Versioning and backward compatibility requiring careful governance",
+        "Inability to represent nested objects",
+        "Exposing too much internal detail",
+        "Providing insufficient context for consumers"
+      ],
+      "correct": 2,
+      "explanation": "API payloads readily carry nested object-like structures; the named challenges are over- and under-fetching, versioning governance and poorly balanced exposure of detail."
+    },
+    {
+      "stem": "Why do normalisation forms not apply to API modelling?",
+      "options": [
+        "Because APIs store data in 6NF by default",
+        "Because APIs use only flat structures",
+        "Because APIs cannot carry keys",
+        "Because the focus is message exchange, where canonical representations matter more than normalised schemas",
+        "Because APIs are always backed by NoSQL"
+      ],
+      "correct": 3,
+      "explanation": "The key concern in API modelling is whether systems agree on the structure and meaning of exchanged data, not relational storage, so canonical representations matter more than normal forms."
+    },
+    {
+      "stem": "How does Object-Oriented Data Modelling differ from API / Service Data Modelling, given that both represent entities as rich nested objects?",
+      "options": [
+        "APIs store methods with the data while OODM does not",
+        "OODM uses JSON while APIs use binary formats",
+        "APIs are older than OODM",
+        "OODM is used only for regulators",
+        "OODM bundled logic with data inside the database, whereas APIs keep only the data representation and leave logic in application code or services"
+      ],
+      "correct": 4,
+      "explanation": "An OODM LoanApplication object maps almost one-to-one to an API response body, but OODM tried to make the database itself object-oriented while APIs separate storage from application logic."
+    }
+  ]
+}

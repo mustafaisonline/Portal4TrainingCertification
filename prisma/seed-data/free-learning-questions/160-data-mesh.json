@@ -1,0 +1,125 @@
+{
+  "topic": "data-mesh",
+  "questions": [
+    {
+      "stem": "What is Data Mesh?",
+      "options": [
+        "A modern approach to data architecture and governance that emphasises decentralisation and domain-driven ownership of data products",
+        "A technique for combining data from several web sources into a single view",
+        "A centralised data warehouse managed by a monolithic data team",
+        "A disorganised datastore lacking master data, metadata and lineage",
+        "A single database that serves both transactional and analytical workloads"
+      ],
+      "correct": 0,
+      "explanation": "Data Mesh is a modern approach to data architecture and governance that emphasises decentralisation and domain-driven ownership of data products. It is often confused with Data Mashup, but the two are totally different."
+    },
+    {
+      "stem": "Which four key principles does Data Mesh revolve around?",
+      "options": [
+        "Accuracy, Completeness, Consistency and Timeliness",
+        "Domain-Oriented Decentralisation, Data as a Product, Self-Service Data Infrastructure and Federated Governance",
+        "Extraction, Transformation, Loading and Visualisation",
+        "Confidentiality, Integrity, Availability and Privacy",
+        "Hubs, Links, Satellites and Reference tables"
+      ],
+      "correct": 1,
+      "explanation": "At its core, Data Mesh revolves around four principles: Domain-Oriented Decentralisation, Data as a Product (DAaP), Self-Service Data Infrastructure and Federated Governance."
+    },
+    {
+      "stem": "In Data Mesh, what does a domain refer to?",
+      "options": [
+        "A physical database server",
+        "A cloud region where data is stored",
+        "A specific business area or operational unit, such as marketing, sales or customer service",
+        "A single table in the data warehouse",
+        "A regulatory jurisdiction"
+      ],
+      "correct": 2,
+      "explanation": "A domain, in the Data Mesh context, refers to a specific business area or operational unit, such as marketing, sales or customer service, and each domain is responsible for its own data products."
+    },
+    {
+      "stem": "Which of the following is NOT a requirement that Data Mesh places on each data product?",
+      "options": [
+        "Be discoverable and self-descriptive",
+        "Have clearly defined APIs for easy access",
+        "Include documentation, versioning and quality metrics",
+        "Be built and maintained by a central data engineering team",
+        "Be interoperable with other data products within and across domains"
+      ],
+      "correct": 3,
+      "explanation": "Data products must be discoverable and self-descriptive, have clear APIs, include documentation, versioning and quality metrics, and be interoperable. Data Mesh moves ownership away from a central team to the domains."
+    },
+    {
+      "stem": "What does Federated Governance provide in a Data Mesh?",
+      "options": [
+        "Complete freedom for each domain with no organisation-wide policies",
+        "A single central team that approves every data product",
+        "Automatic deletion of short-lived datasets",
+        "A rule that each domain must use the same modelling technique",
+        "Consistency, compliance and quality across the ecosystem by setting global policies that domains implement in contextually appropriate ways"
+      ],
+      "correct": 4,
+      "explanation": "Federated governance ensures consistency, compliance and quality across the organisation's data ecosystem, balancing autonomy and alignment by establishing global policies while allowing domains flexibility in how they implement them."
+    },
+    {
+      "stem": "Regardless of the modelling technique used, what is described as the hallmark of a data product in a Data Mesh?",
+      "options": [
+        "Interoperability",
+        "Normalisation to third normal form",
+        "Being stored in a single central warehouse",
+        "Being short-lived and purpose-specific",
+        "Being built with dimensional modelling"
+      ],
+      "correct": 0,
+      "explanation": "Data products in a Data Mesh may use 3NF, dimensional or ensemble modelling, but their hallmark is interoperability: they must seamlessly exchange data within and across domains."
+    },
+    {
+      "stem": "Which types of data asset are given as examples of what is NOT part of a Data Mesh?",
+      "options": [
+        "Dimensional models and Data Vault models",
+        "Short-lived data sets and non-interoperable data assets",
+        "Data products owned by the marketing domain",
+        "Data products with versioning and quality metrics",
+        "Data pipelines and storage solutions"
+      ],
+      "correct": 1,
+      "explanation": "Temporary data sets created for short-term analytical purposes, and data assets that cannot be shared or consumed by other domains or products, do not qualify as data products in a Data Mesh."
+    },
+    {
+      "stem": "How many Data Meshes can an organisation have?",
+      "options": [
+        "One per domain",
+        "One per data product",
+        "Only one per organisation",
+        "One per cloud provider",
+        "As many as there are business units"
+      ],
+      "correct": 2,
+      "explanation": "Data Mesh is a conceptual model, and there can be only one Data Mesh per organisation. This prevents fragmentation and keeps all domains under a shared framework of principles and governance."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a benefit of Data Mesh?",
+      "options": [
+        "Scalability",
+        "Business alignment",
+        "Faster time to insight",
+        "Lower initial costs",
+        "Flexibility in technology choices"
+      ],
+      "correct": 3,
+      "explanation": "The benefits listed are scalability, business alignment, faster time to insight, improved data quality and flexibility in technology choices. Initial costs are actually a challenge, since building self-service infrastructure and training teams needs upfront investment."
+    },
+    {
+      "stem": "Which challenges are listed for implementing Data Mesh?",
+      "options": [
+        "Data duplication, slow queries and vendor lock-in",
+        "Lack of SQL support, HDFS dependency and row storage",
+        "Missing master data, metadata and lineage",
+        "Fan traps, chasm traps and deep join chains",
+        "Cultural shift, skill development, complex governance and initial costs"
+      ],
+      "correct": 4,
+      "explanation": "Implementing Data Mesh involves a cultural shift from centralised to decentralised, skill development within domains, complex federated governance, and initial costs for infrastructure and training."
+    }
+  ]
+}

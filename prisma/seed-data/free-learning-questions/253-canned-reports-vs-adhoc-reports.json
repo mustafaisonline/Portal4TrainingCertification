@@ -1,0 +1,125 @@
+{
+  "topic": "canned-reports-vs-adhoc-reports",
+  "questions": [
+    {
+      "stem": "For whom are Canned Reports built?",
+      "options": [
+        "Tech-savvy users who know how to use BI tools",
+        "Non-tech-savvy stakeholders who want to click once and see the expected output",
+        "Data engineers building pipelines",
+        "Database administrators",
+        "External auditors only"
+      ],
+      "correct": 1,
+      "explanation": "Canned Reports are static, pre-designed reports for non-tech-savvy stakeholders who just want to click once and see the required output."
+    },
+    {
+      "stem": "What characterises an Ad hoc Report?",
+      "options": [
+        "It is static and designed once by developers",
+        "It is generated automatically every night",
+        "Users build their own reports and dashboards by dragging and dropping exposed tables and columns",
+        "It is only available as a PDF",
+        "It cannot be filtered"
+      ],
+      "correct": 2,
+      "explanation": "Ad hoc reporting lets tech-savvy users build their own reports and dashboards by drag and drop, slicing, dicing and drilling."
+    },
+    {
+      "stem": "What two kinds of knowledge do Ad hoc Report users need?",
+      "options": [
+        "Java programming and network security",
+        "Knowledge of the BI tool and business knowledge of the data elements shared in it",
+        "Procurement and licensing",
+        "Machine learning and statistics",
+        "Project management and scope control"
+      ],
+      "correct": 1,
+      "explanation": "Ad hoc reports are for tech-savvy users who know how to use the BI tools and who also have business knowledge of the data elements exposed."
+    },
+    {
+      "stem": "Which capabilities are available to users of Ad hoc Reports?",
+      "options": [
+        "Slice and dice, drill-in and drill-out",
+        "Encrypt and decrypt",
+        "Insert and delete source rows",
+        "Retrain and deploy models",
+        "Geocode and syndicate"
+      ],
+      "correct": 0,
+      "explanation": "With ad hoc reporting users can slice and dice reports and drill in and out."
+    },
+    {
+      "stem": "Which tools are considered Canned Report generators?",
+      "options": [
+        "Tableau and Power BI",
+        "Kafka and Spark",
+        "OBIEE and Cognos",
+        "Oracle Forms and SSRS",
+        "Hadoop and Hive"
+      ],
+      "correct": 3,
+      "explanation": "Oracle Forms and SSRS are given as examples of Canned Report generators."
+    },
+    {
+      "stem": "Which tools are considered Ad hoc Report generators?",
+      "options": [
+        "Oracle Forms and SSRS",
+        "OBIEE and Cognos",
+        "Tableau, Power BI and Qlik",
+        "Excel and CSV",
+        "JDBC and ODBC"
+      ],
+      "correct": 2,
+      "explanation": "Tableau, Power BI and Qlik are considered Ad hoc Report generators."
+    },
+    {
+      "stem": "How are OBIEE and Cognos classified?",
+      "options": [
+        "Pure Canned Report generators",
+        "Pure Ad hoc Report generators",
+        "MPP frameworks",
+        "Consumption layer tools",
+        "Semi-canned and semi-ad hoc report generators"
+      ],
+      "correct": 4,
+      "explanation": "OBIEE and Cognos are considered semi-canned and semi-ad hoc report generators."
+    },
+    {
+      "stem": "Canned Reports follow the same approach as which related concept?",
+      "options": [
+        "Canned Data",
+        "Data Drift",
+        "Scope Creep",
+        "Data Islands",
+        "Geocoding"
+      ],
+      "correct": 0,
+      "explanation": "Just like Canned Data, Canned Reports take the same approach: static, pre-designed output available at one click."
+    },
+    {
+      "stem": "Which of the following is NOT a feature of Ad hoc Reports?",
+      "options": [
+        "Building one's own dashboards",
+        "Slicing and dicing",
+        "Drilling in and out",
+        "Being static and designed once for a single click",
+        "Dragging and dropping tables and columns"
+      ],
+      "correct": 3,
+      "explanation": "Being static and designed for a single click is the hallmark of Canned Reports; ad hoc reports are built interactively by the user."
+    },
+    {
+      "stem": "Which tool would you choose to give a non-technical manager a fixed report that runs at one click?",
+      "options": [
+        "Tableau",
+        "Qlik",
+        "Power BI",
+        "Python",
+        "SSRS"
+      ],
+      "correct": 4,
+      "explanation": "SSRS, along with Oracle Forms, is classed as a Canned Report generator, suited to static one-click reports for non-tech-savvy stakeholders."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "the-operational-reference-model-implementing-dynamic-information-models",
+  "questions": [
+    {
+      "stem": "What is an Operational Reference Model needed for?",
+      "options": [
+        "Scheduling batch jobs",
+        "Succeeding with metadata management by describing the structures and relationships of business metadata",
+        "Encrypting data at rest",
+        "Replacing the physical data model",
+        "Measuring network throughput"
+      ],
+      "correct": 1,
+      "explanation": "To succeed with metadata management you need an Operational Reference Model, which describes the structures and relationships of your business metadata."
+    },
+    {
+      "stem": "When do Operational Reference Models come into play?",
+      "options": [
+        "When a single system needs a physical schema",
+        "When a project needs a communication diagram only",
+        "When organisations require an operational layer bridging multiple systems and functions with a common point of reference or shared language",
+        "When a database needs performance tuning",
+        "When a vendor requires a licence review"
+      ],
+      "correct": 2,
+      "explanation": "Operational Reference Models provide an operational layer that bridges multiple systems and functions and gives the enterprise a shared language."
+    },
+    {
+      "stem": "What distinguishes an Operational Reference Model from an anti-corruption layer or a semantic layer?",
+      "options": [
+        "It is stored only in memory",
+        "It applies to a single system",
+        "It contains no metadata",
+        "It is owned and governed by the organisation's subject matter experts",
+        "It is maintained by the database vendor"
+      ],
+      "correct": 3,
+      "explanation": "The Operational Reference Model is similar in purpose to an anti-corruption layer or semantic layer, but it is owned and governed by subject matter experts."
+    },
+    {
+      "stem": "What is an Operational Reference Model at its core?",
+      "options": [
+        "A collection of SQL views",
+        "A network diagram",
+        "A list of application servers",
+        "A set of business process flowcharts",
+        "A set of metadata structured with the help of taxonomies and ontologies"
+      ],
+      "correct": 4,
+      "explanation": "At its core an Operational Reference Model is a set of metadata structured with the help of taxonomies and ontologies."
+    },
+    {
+      "stem": "Which governance approach does an Operational Reference Model follow?",
+      "options": [
+        "A federated governance approach in which each domain is governed by its subject matter experts",
+        "Centralised governance by the IT department alone",
+        "Governance outsourced to the database vendor",
+        "No governance, since the model is self-maintaining",
+        "Governance solely by the finance department"
+      ],
+      "correct": 0,
+      "explanation": "Each domain is governed by the organisation's subject matter experts under a federated governance approach so IT, Business and Architects work in the same framework."
+    },
+    {
+      "stem": "In Operational Reference Model governance, what is the role of IT?",
+      "options": [
+        "Defining taxonomy levels within each domain",
+        "Providing a platform and/or database, plus a framework and interaction points such as integrations",
+        "Maintaining product-specific metadata",
+        "Defining the ontologies between taxonomies",
+        "Approving marketing campaigns"
+      ],
+      "correct": 1,
+      "explanation": "IT acts as Platform Owner, providing the platform and/or database and the framework and interaction points, such as integrations, for using the metadata."
+    },
+    {
+      "stem": "Which role is responsible in particular for defining the ontologies between different taxonomies?",
+      "options": [
+        "IT (Platform Owner)",
+        "Subject Matter Experts",
+        "Architects (Structure Owner)",
+        "Finance",
+        "External auditors"
+      ],
+      "correct": 2,
+      "explanation": "Architects, as Structure Owners, define the ontologies between taxonomies and ensure definitions are in place and attributes are named coherently."
+    },
+    {
+      "stem": "Which three capabilities must a database have to implement an Operational Reference Model?",
+      "options": [
+        "Full-text search, geospatial indexing and graph traversal",
+        "Sharding, replication and encryption",
+        "Column storage, compression and caching",
+        "Attribute inheritance, taxonomies (classification structures) and ontologies (relations)",
+        "Triggers, stored procedures and views"
+      ],
+      "correct": 3,
+      "explanation": "Implementation requires a database that can manage attribute inheritance, taxonomies (classification structures) and ontologies (relations)."
+    },
+    {
+      "stem": "Why is attribute inheritance necessary in an Operational Reference Model?",
+      "options": [
+        "To speed up query execution",
+        "To reduce storage costs",
+        "To allow vendor-specific extensions",
+        "To encrypt sensitive attributes",
+        "To ensure attributes are defined and used coherently without creating redundancy and ambiguity"
+      ],
+      "correct": 4,
+      "explanation": "Attribute inheritance ensures attributes are defined and used in a coherent manner and do not create redundancy and ambiguity in their usage."
+    },
+    {
+      "stem": "Which of the following is NOT a listed benefit of an Operational Reference Model?",
+      "options": [
+        "Eliminating the need for subject matter experts",
+        "Reducing time spent on new integrations",
+        "Enabling metadata quality through ownership by subject matter experts",
+        "Allowing analysis and simulations across abstraction levels",
+        "Maintaining a vendor-independent data layer that reduces lock-in"
+      ],
+      "correct": 0,
+      "explanation": "An Operational Reference Model relies on subject matter experts for ownership and metadata quality; it does not eliminate them."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "socratic-questions",
+  "questions": [
+    {
+      "stem": "After whom is Socratic questioning named?",
+      "options": [
+        "Plato",
+        "Socrates, the ancient Greek philosopher",
+        "Aristotle",
+        "Pythagoras",
+        "Archimedes"
+      ],
+      "correct": 1,
+      "explanation": "Socratic questioning is a form of inquiry and discussion named after the ancient Greek philosopher Socrates."
+    },
+    {
+      "stem": "What kind of dialogue does Socratic questioning involve?",
+      "options": [
+        "A lecture delivered by an expert",
+        "A written examination with fixed answers",
+        "Cooperative argumentative dialogue to stimulate critical thinking and illuminate ideas",
+        "A debate where one side must win",
+        "A silent reading exercise"
+      ],
+      "correct": 2,
+      "explanation": "Socratic questioning is a method of cooperative argumentative dialogue that stimulates critical thinking and illuminates ideas."
+    },
+    {
+      "stem": "What is the goal of Socratic questioning?",
+      "options": [
+        "To provide definitive answers quickly",
+        "To test memorised facts",
+        "To prove the questioner right",
+        "To facilitate a process of self-discovery and learning rather than provide answers",
+        "To reduce the number of questions asked"
+      ],
+      "correct": 3,
+      "explanation": "The goal is not to provide answers but to facilitate self-discovery and learning, encouraging people to arrive at their own conclusions."
+    },
+    {
+      "stem": "When applying Socratic questioning to data solutions, what is the aim?",
+      "options": [
+        "To select a database vendor",
+        "To replace data analysts with automation",
+        "To shorten project timelines",
+        "To standardise SQL coding style",
+        "To stimulate critical thinking, uncover assumptions and encourage deeper understanding of data challenges or opportunities"
+      ],
+      "correct": 4,
+      "explanation": "Applied to data solutions, Socratic questioning aims to stimulate critical thinking, uncover assumptions and deepen understanding of data-related challenges."
+    },
+    {
+      "stem": "Asking someone to clarify the specific data issue they are trying to address is an example of which category of Socratic question?",
+      "options": [
+        "Clarifying questions",
+        "Probing assumptions",
+        "Exploring evidence and reasons",
+        "Considering alternative perspectives",
+        "Examining implications and consequences"
+      ],
+      "correct": 0,
+      "explanation": "Clarifying questions ensure a clear understanding of the problem or goal in the context of data solutions."
+    },
+    {
+      "stem": "Asking what assumptions are being made about the quality of the data belongs to which category of Socratic question?",
+      "options": [
+        "Clarifying questions",
+        "Probing assumptions",
+        "Examining implications and consequences",
+        "Exploring evidence and reasons",
+        "Considering alternative perspectives"
+      ],
+      "correct": 1,
+      "explanation": "Probing assumptions uncovers preconceived notions that might impact the approach to handling data."
+    },
+    {
+      "stem": "Asking what evidence supports the decision to use a particular data processing method is an example of which category?",
+      "options": [
+        "Probing assumptions",
+        "Clarifying questions",
+        "Exploring evidence and reasons",
+        "Considering alternative perspectives",
+        "Examining implications and consequences"
+      ],
+      "correct": 2,
+      "explanation": "Exploring evidence and reasons seeks to understand the rationale behind chosen data processing techniques or tools."
+    },
+    {
+      "stem": "Asking how a data scientist might approach a problem differently from a business analyst is an example of which category?",
+      "options": [
+        "Clarifying questions",
+        "Probing assumptions",
+        "Exploring evidence and reasons",
+        "Considering alternative perspectives",
+        "Examining implications and consequences"
+      ],
+      "correct": 3,
+      "explanation": "Considering alternative perspectives encourages thinking about different viewpoints and approaches within data solutions."
+    },
+    {
+      "stem": "Asking about the potential consequences of using incomplete or inaccurate data in decision-making falls under which category?",
+      "options": [
+        "Clarifying questions",
+        "Probing assumptions",
+        "Exploring evidence and reasons",
+        "Considering alternative perspectives",
+        "Examining implications and consequences"
+      ],
+      "correct": 4,
+      "explanation": "Examining implications and consequences explores the downstream effects of data-related decisions and their impact on the organisation."
+    },
+    {
+      "stem": "Which of the following is NOT one of the categories of Socratic question applied to data solutions?",
+      "options": [
+        "Ranking database vendors",
+        "Clarifying questions",
+        "Probing assumptions",
+        "Exploring evidence and reasons",
+        "Examining implications and consequences"
+      ],
+      "correct": 0,
+      "explanation": "The categories are clarifying questions, probing assumptions, exploring evidence and reasons, considering alternative perspectives, and examining implications and consequences."
+    }
+  ]
+}

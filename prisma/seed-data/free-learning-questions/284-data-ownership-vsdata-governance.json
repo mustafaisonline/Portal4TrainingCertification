@@ -1,0 +1,125 @@
+{
+  "topic": "data-ownership-vsdata-governance",
+  "questions": [
+    {
+      "stem": "Which statement best describes data ownership?",
+      "options": [
+        "A broad framework ensuring data quality, availability, usability and security across an organisation",
+        "The concept that defines the rights and responsibilities associated with data, specifying who has control over it",
+        "The technical process of backing up databases",
+        "The cross-functional assignment of stewardship roles",
+        "A set of standards for how data is stored in the cloud"
+      ],
+      "correct": 1,
+      "explanation": "Data ownership defines the rights and responsibilities attached to data, including who has authority over its collection, storage, access and usage. It focuses on the 'who' of data control."
+    },
+    {
+      "stem": "Data ownership is described as focusing on which aspect of data control?",
+      "options": [
+        "The 'how' aspect: the processes used to manage data",
+        "The 'when' aspect: retention periods for data",
+        "The 'who' aspect: determining who has the ultimate say over the data",
+        "The 'where' aspect: physical storage location",
+        "The 'why' aspect: business justification for collecting data"
+      ],
+      "correct": 2,
+      "explanation": "Data ownership is more focused on the 'who' aspect of data control, determining who holds decision-making authority over the data."
+    },
+    {
+      "stem": "Which of the following is a responsibility of a data owner?",
+      "options": [
+        "Being accountable for ensuring data is handled in compliance with laws, regulations and internal policies",
+        "Writing the organisation-wide data governance framework",
+        "Assigning stewardship roles across every department",
+        "Defining the enterprise data lifecycle for all datasets",
+        "Compressing data to reduce storage costs"
+      ],
+      "correct": 0,
+      "explanation": "The data owner is accountable for ensuring the data they control is handled in compliance with relevant laws, regulations and internal policies."
+    },
+    {
+      "stem": "Which statement best describes data governance?",
+      "options": [
+        "The right of one individual to decide who may access a dataset",
+        "A method of encrypting data at rest",
+        "A broader framework and set of practices ensuring high data quality, availability, usability and security across the organisation",
+        "The archiving of historical records for legal reasons",
+        "The role of a single business unit that controls a dataset"
+      ],
+      "correct": 2,
+      "explanation": "Data governance is the broader framework of policies, procedures and roles that manage and control data throughout its lifecycle to ensure quality, availability, usability and security."
+    },
+    {
+      "stem": "Which of the following is NOT listed as something data governance encompasses?",
+      "options": [
+        "Data quality",
+        "Data stewardship",
+        "Data management",
+        "Compliance",
+        "Individual authority to override all organisational policies"
+      ],
+      "correct": 4,
+      "explanation": "Data governance encompasses data quality, data stewardship, data management and compliance. Nothing in it grants an individual authority to override organisational policies."
+    },
+    {
+      "stem": "In terms of scope, how do data ownership and data governance differ?",
+      "options": [
+        "Data ownership addresses the organisation-wide framework; data governance addresses individual accountability",
+        "Data ownership focuses on individual accountability and decision-making authority; data governance addresses the broader framework and processes across the organisation",
+        "Both have identical scope and are interchangeable terms",
+        "Data ownership covers only technical systems; data governance covers only legal matters",
+        "Data governance is limited to a single dataset; data ownership spans all datasets"
+      ],
+      "correct": 1,
+      "explanation": "Ownership is scoped to individual accountability and decision authority, while governance addresses the broader, organisation-wide framework and processes for managing data."
+    },
+    {
+      "stem": "How do data ownership and data governance differ in terms of responsibilities?",
+      "options": [
+        "Ownership deals with specific individuals or units responsible for particular datasets; governance takes a cross-functional approach assigning responsibilities to various roles",
+        "Ownership is cross-functional; governance is limited to one person",
+        "Both assign responsibility exclusively to the IT department",
+        "Neither assigns any responsibilities",
+        "Ownership assigns responsibility to external regulators; governance to internal staff"
+      ],
+      "correct": 0,
+      "explanation": "Data ownership assigns specific individuals or units to particular datasets, whereas data governance involves a cross-functional approach with responsibilities spread across various organisational roles."
+    },
+    {
+      "stem": "What is the focus of data governance compared with data ownership?",
+      "options": [
+        "Governance emphasises control and decision rights; ownership emphasises quality",
+        "Governance emphasises storage cost; ownership emphasises speed",
+        "Both emphasise decision rights only",
+        "Governance emphasises overall management, quality and compliance of data; ownership emphasises control and decision rights over data",
+        "Governance emphasises hardware; ownership emphasises software"
+      ],
+      "correct": 3,
+      "explanation": "Data ownership emphasises control and decision rights over data, while data governance emphasises the overall management, quality and compliance of data."
+    },
+    {
+      "stem": "What is the relationship between data ownership and data governance?",
+      "options": [
+        "They are unrelated concepts from different disciplines",
+        "Data governance is a component of data ownership",
+        "Data ownership is a component of data governance, which is the more comprehensive approach",
+        "Data ownership replaces data governance in modern organisations",
+        "They are exact synonyms"
+      ],
+      "correct": 2,
+      "explanation": "Data ownership is a component of data governance; governance extends beyond individual ownership to organisation-wide policies and practices for responsible data management."
+    },
+    {
+      "stem": "The head of a sales department is designated as the person with authority to decide how the customer contact dataset is collected, stored, accessed and used. Which concept does this illustrate?",
+      "options": [
+        "Data governance",
+        "Data ownership",
+        "Data archiving",
+        "Data compression",
+        "Data integration"
+      ],
+      "correct": 1,
+      "explanation": "Assigning decision authority over a specific dataset to an individual or organisational unit is data ownership, which is tied to individuals or units within a company."
+    }
+  ]
+}

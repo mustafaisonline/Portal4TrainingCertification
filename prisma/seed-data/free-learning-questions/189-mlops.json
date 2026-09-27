@@ -1,0 +1,125 @@
+{
+  "topic": "mlops",
+  "questions": [
+    {
+      "stem": "What does MLOps cover?",
+      "options": [
+        "Only the monitoring of models already in production",
+        "The whole journey of a machine learning model, from the availability of raw data until the model is deployed in production",
+        "The provisioning of servers for data scientists",
+        "The security of training data",
+        "The design of dashboards for model results"
+      ],
+      "correct": 1,
+      "explanation": "MLOps, Machine Learning Operations, is the end-to-end journey from raw data being available to the ML model being deployed in PROD."
+    },
+    {
+      "stem": "Roughly what proportion of machine learning models are said never to reach production?",
+      "options": [
+        "10%",
+        "50%",
+        "75%",
+        "90%",
+        "99%"
+      ],
+      "correct": 3,
+      "explanation": "In the machine learning world 90% of models do not go to production; most are created, trained and decommissioned."
+    },
+    {
+      "stem": "What vital role does CI/CD play in MLOps?",
+      "options": [
+        "Moving models between the development and training areas again and again, and to production once the owner confirms",
+        "Replacing the need for model validation",
+        "Generating training data automatically",
+        "Choosing which algorithm to use",
+        "Writing the problem definition"
+      ],
+      "correct": 0,
+      "explanation": "CI/CD repeatedly moves models from development to training, and once confirmed by the owner, moves them to PROD."
+    },
+    {
+      "stem": "From which concept was MLOps extracted?",
+      "options": [
+        "Data Warehousing",
+        "Waterfall",
+        "ITIL",
+        "Data Mining",
+        "DevOps"
+      ],
+      "correct": 4,
+      "explanation": "MLOps was extracted from the concept of DevOps and follows the same pattern with a different agenda."
+    },
+    {
+      "stem": "Which of the following is NOT part of the Model Development phase of MLOps?",
+      "options": [
+        "Problem Definition",
+        "Data Selection",
+        "Smoke Test",
+        "Data Wrangling",
+        "Model Validation"
+      ],
+      "correct": 2,
+      "explanation": "Model Development covers Problem Definition, Data Selection, Data Exploration, Data Wrangling, Model Preparation and Model Validation; Smoke Test belongs to Training and Operationalisation."
+    },
+    {
+      "stem": "Which of the following is NOT listed under the Prediction Serving phase of MLOps?",
+      "options": [
+        "Online Inference",
+        "Batch Inference",
+        "Streaming Inference",
+        "Embedded Inference",
+        "Data Drift"
+      ],
+      "correct": 4,
+      "explanation": "Prediction Serving includes Online, Batch, Streaming and Embedded Inference plus Explain Predictions; Data Drift is part of Continuous Monitoring."
+    },
+    {
+      "stem": "What does the Continuous Monitoring phase of MLOps watch for?",
+      "options": [
+        "Data Drift, Concept Drift and Continuous Drift",
+        "Server uptime and CPU usage",
+        "Code coverage and unit test results",
+        "User login failures",
+        "Storage costs"
+      ],
+      "correct": 0,
+      "explanation": "Continuous Monitoring tracks Data Drift, Concept Drift and Continuous Drift."
+    },
+    {
+      "stem": "Which steps make up the Continuous Training phase of MLOps?",
+      "options": [
+        "Build, Test and Deployment to Production",
+        "Problem Definition and Data Exploration",
+        "Data Ingestion, Data Validation, Data Transformation, Model Training, Model Evaluation, Model Validation and Model Registration",
+        "Smoke Test and Release",
+        "Online and Batch Inference"
+      ],
+      "correct": 2,
+      "explanation": "Continuous Training runs from Data Ingestion through Validation and Transformation to Model Training, Evaluation, Validation and Registration."
+    },
+    {
+      "stem": "From where are the key phases of MLOps said to be taken?",
+      "options": [
+        "The ISO software life cycle standard",
+        "The Scrum guide",
+        "A university textbook on statistics",
+        "Best practice on Databricks, Google and a few other places",
+        "The Hadoop documentation"
+      ],
+      "correct": 3,
+      "explanation": "The key phases are taken from best practice published by Databricks, Google and a few other sources."
+    },
+    {
+      "stem": "MLOps is described as belonging to the same family as which other practices?",
+      "options": [
+        "Waterfall and Spiral",
+        "DevOps, DevSecOps and DataOps",
+        "OLTP and OLAP",
+        "ACID and BaSE",
+        "Partitioning and Sharding"
+      ],
+      "correct": 1,
+      "explanation": "MLOps comes from the same family as DevOps, DevSecOps and DataOps, with its own focus on machine learning models."
+    }
+  ]
+}

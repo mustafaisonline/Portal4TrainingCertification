@@ -1,0 +1,125 @@
+{
+  "topic": "data-interchange",
+  "questions": [
+    {
+      "stem": "What is Data Interchange?",
+      "options": [
+        "The process of archiving old data to tape",
+        "The manual re-typing of data from one system into another",
+        "The compression of data to save storage space",
+        "The electronic exchange of information or data between different computer systems, applications or software",
+        "The physical transport of hard drives between offices"
+      ],
+      "correct": 3,
+      "explanation": "Data Interchange is the electronic exchange of information or data between different computer systems, applications or software, enabling seamless communication and integration."
+    },
+    {
+      "stem": "What kind of data does Data Interchange involve exchanging?",
+      "options": [
+        "Structured data, often in a standardised format both the sending and receiving systems understand",
+        "Only unstructured audio and video files",
+        "Only encrypted binary files",
+        "Only handwritten documents that have been scanned",
+        "Only data stored in spreadsheets"
+      ],
+      "correct": 0,
+      "explanation": "Data Interchange involves the exchange of structured data, often in a standardised format that both the sending and receiving systems can understand."
+    },
+    {
+      "stem": "What does Cross-Platform Communication mean in Data Interchange?",
+      "options": [
+        "Running the same application on several operating systems",
+        "Sharing a single database between two departments",
+        "Facilitating communication between diverse platforms or applications that may have different data structures or run in distinct environments",
+        "Broadcasting messages to all users at once",
+        "Copying files between two folders on one server"
+      ],
+      "correct": 2,
+      "explanation": "Data Interchange facilitates communication between diverse platforms, applications or software that may have different data structures or operate in distinct environments."
+    },
+    {
+      "stem": "Which formats are given as examples of the standards Data Interchange relies on for interoperability?",
+      "options": [
+        "PDF and DOCX",
+        "MP3 and MP4",
+        "ZIP and TAR",
+        "JPEG and PNG",
+        "XML (eXtensible Markup Language) and JSON (JavaScript Object Notation)"
+      ],
+      "correct": 4,
+      "explanation": "Data Interchange often relies on industry standards and common formats such as XML and JSON, or specific data exchange standards in various industries."
+    },
+    {
+      "stem": "How are APIs (Application Programming Interfaces) described in the context of Data Interchange?",
+      "options": [
+        "A physical cable between two servers",
+        "A set of rules and protocols for how software components should interact",
+        "A backup copy of an application's data",
+        "A user interface for entering data manually",
+        "A licence agreement between two companies"
+      ],
+      "correct": 1,
+      "explanation": "APIs define a set of rules and protocols for how software components should interact; when one application communicates with another through an API, it is engaging in data interchange."
+    },
+    {
+      "stem": "In the e-commerce example of Data Interchange, between which systems does the exchange occur when a purchase is made?",
+      "options": [
+        "The customer's bank and the tax authority",
+        "The courier and the manufacturer",
+        "The web browser and the search engine",
+        "The e-commerce website, the payment gateway and the inventory management system",
+        "The marketing platform and the customer's email"
+      ],
+      "correct": 3,
+      "explanation": "In online shopping, data interchange occurs between the e-commerce website, payment gateway and inventory management system so the transaction is recorded accurately across all of them."
+    },
+    {
+      "stem": "What is EDI (Electronic Data Interchange)?",
+      "options": [
+        "A standardised method for exchanging business documents, such as orders and invoices, between different companies' computer systems",
+        "A tool for editing documents collaboratively",
+        "A type of encrypted email",
+        "A database for storing invoices",
+        "A protocol for streaming video"
+      ],
+      "correct": 0,
+      "explanation": "EDI is a standardised method for exchanging business documents such as orders and invoices between companies' computer systems, streamlining and automating the exchange."
+    },
+    {
+      "stem": "Which protocols do Web Services use for Data Interchange?",
+      "options": [
+        "FTP and SMTP",
+        "XML and JSON",
+        "SOAP (Simple Object Access Protocol) and REST (Representational State Transfer)",
+        "EDI and API",
+        "TCP and UDP"
+      ],
+      "correct": 2,
+      "explanation": "Web services use protocols like SOAP or REST for data interchange, which is common in web-based applications communicating over the internet."
+    },
+    {
+      "stem": "Which of these is NOT listed as an example of Data Interchange?",
+      "options": [
+        "APIs",
+        "E-commerce Transactions",
+        "EDI",
+        "Web Services",
+        "Tape Backups"
+      ],
+      "correct": 4,
+      "explanation": "The listed examples are APIs, e-commerce transactions, EDI and web services; tape backups are not an example of data interchange."
+    },
+    {
+      "stem": "For what is Data Interchange described as fundamental?",
+      "options": [
+        "Reducing the cost of data storage",
+        "Creating a connected and interoperable digital ecosystem",
+        "Eliminating the need for databases",
+        "Replacing human decision-making",
+        "Enforcing data retention regulations"
+      ],
+      "correct": 1,
+      "explanation": "Data Interchange is fundamental for creating a connected and interoperable digital ecosystem, promoting efficiency, collaboration and the seamless flow of information."
+    }
+  ]
+}

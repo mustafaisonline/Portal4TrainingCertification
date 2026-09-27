@@ -1,0 +1,125 @@
+{
+  "topic": "data-strategy-vsdata-implementation",
+  "questions": [
+    {
+      "stem": "Which statement best describes a data strategy?",
+      "options": [
+        "The hands-on execution of ETL jobs and database deployments",
+        "The overarching plan and vision an organisation establishes to manage, govern and leverage its data assets",
+        "A short-term schedule for migrating data between servers",
+        "A catalogue of every table and column in the data warehouse",
+        "A set of business intelligence dashboards built for executives"
+      ],
+      "correct": 1,
+      "explanation": "Data strategy is the high-level, long-term approach that aligns data initiatives with business objectives; it sets vision and direction rather than carrying out technical deployment."
+    },
+    {
+      "stem": "Which of the following is a key component of data implementation rather than data strategy?",
+      "options": [
+        "Vision and objectives",
+        "Governance framework",
+        "Technology roadmap",
+        "ETL (Extract, Transform, Load)",
+        "Data quality standards"
+      ],
+      "correct": 3,
+      "explanation": "ETL processes for moving data from source systems to target databases belong to the practical, technical work of data implementation. The other four are components of a data strategy."
+    },
+    {
+      "stem": "In the comparison of data strategy with data implementation, how do their timeframes differ?",
+      "options": [
+        "Both are long-term activities concerned with sustained value",
+        "Data strategy is long-term, while data implementation involves short to medium-term activities",
+        "Data strategy is short-term, while data implementation spans decades",
+        "Neither has a defined timeframe",
+        "Both are limited to a single project cycle"
+      ],
+      "correct": 1,
+      "explanation": "Data strategy generally has a long-term perspective focused on sustained value, whereas data implementation involves short to medium-term activities geared to the immediate deployment of data solutions."
+    },
+    {
+      "stem": "Which key component of a data strategy defines how data is created, stored, used and retired over time?",
+      "options": [
+        "Data lifecycle management",
+        "Data warehousing",
+        "Business intelligence",
+        "Database design and management",
+        "Data integration"
+      ],
+      "correct": 0,
+      "explanation": "Data lifecycle management is the strategy component that defines how data moves from creation through storage and use to retirement."
+    },
+    {
+      "stem": "A team is deploying a data warehouse for centralised storage and building BI dashboards to visualise the results. Which activity does this represent?",
+      "options": [
+        "Defining a technology roadmap",
+        "Setting data quality standards",
+        "Data implementation",
+        "Establishing a governance framework",
+        "Articulating the data vision and objectives"
+      ],
+      "correct": 2,
+      "explanation": "Implementing data warehouses and business intelligence tools is hands-on, tactical work, which is the domain of data implementation rather than strategy."
+    },
+    {
+      "stem": "Which of these is NOT listed as a key component of data implementation?",
+      "options": [
+        "Data security and compliance",
+        "Data integration",
+        "Business intelligence",
+        "Data warehousing",
+        "Vision and objectives"
+      ],
+      "correct": 4,
+      "explanation": "Vision and objectives is a key component of data strategy. Data security and compliance, data integration, BI and data warehousing are all components of data implementation."
+    },
+    {
+      "stem": "How do data strategy and data implementation differ in their level of detail?",
+      "options": [
+        "Both are equally detailed and specific",
+        "Data strategy is detailed and specific, while data implementation is abstract",
+        "Data strategy is abstract and high-level, while data implementation is detailed and specific",
+        "Neither addresses detail; that is left to project management",
+        "Data implementation defines principles, while data strategy designs systems"
+      ],
+      "correct": 2,
+      "explanation": "Data strategy defines principles, standards and overall guidelines at a high level; data implementation involves the actual design, deployment and operation of data systems in detail."
+    },
+    {
+      "stem": "What does the data strategy component 'technology roadmap' outline?",
+      "options": [
+        "The step-by-step configuration of each database server",
+        "The technologies and infrastructure needed to support data initiatives",
+        "The security patches applied to data systems each quarter",
+        "The visualisation templates used in BI reports",
+        "The schedule for retiring individual data records"
+      ],
+      "correct": 1,
+      "explanation": "Within a data strategy, the technology roadmap outlines the technologies and infrastructure required to support the organisation's data initiatives."
+    },
+    {
+      "stem": "Which pairing correctly matches focus to discipline?",
+      "options": [
+        "Data strategy focuses on system deployment; data implementation focuses on business objectives",
+        "Data strategy focuses on business objectives, governance and strategic use of data; data implementation focuses on technical aspects and system deployment",
+        "Both focus exclusively on technical aspects",
+        "Data strategy focuses on ETL; data implementation focuses on vision",
+        "Both focus exclusively on governance policy"
+      ],
+      "correct": 1,
+      "explanation": "Data strategy is concerned with business objectives, governance and using data as a valuable asset; data implementation is concerned with technical aspects, system deployment and hands-on management of data technologies."
+    },
+    {
+      "stem": "A company writes policies and procedures for managing and securing its data and sets guidelines for the accuracy, completeness and reliability of that data. Which two data strategy components are being addressed?",
+      "options": [
+        "Governance framework and data quality standards",
+        "Database design and ETL",
+        "Data warehousing and BI",
+        "Data integration and data security",
+        "Technology roadmap and data lifecycle management"
+      ],
+      "correct": 0,
+      "explanation": "The governance framework establishes policies and procedures for managing and securing data, while data quality standards set guidelines for accuracy, completeness and reliability."
+    }
+  ]
+}

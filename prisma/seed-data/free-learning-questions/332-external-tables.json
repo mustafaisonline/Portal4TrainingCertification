@@ -1,0 +1,125 @@
+{
+  "topic": "external-tables",
+  "questions": [
+    {
+      "stem": "What is an external table?",
+      "options": [
+        "A table replicated to a second database server",
+        "A database feature that defines a table structure within the database while the actual data is stored externally, typically in files",
+        "A temporary table created inside a stored procedure",
+        "A table whose rows are encrypted at rest",
+        "A view that combines two or more tables"
+      ],
+      "correct": 1,
+      "explanation": "External tables let you define a table structure in the database while the actual data lives externally, typically in files."
+    },
+    {
+      "stem": "Which file formats are given as examples of externally stored data that external tables can query?",
+      "options": [
+        "DOCX, PPTX and XLSX",
+        "MP3, MP4 and WAV",
+        "CSV, Parquet and JSON",
+        "EXE, DLL and BIN",
+        "HTML, CSS and JavaScript"
+      ],
+      "correct": 2,
+      "explanation": "Examples of external files are CSV (Comma-Separated Values), Parquet and JSON files."
+    },
+    {
+      "stem": "Which storage systems are named as examples of where external data files may reside?",
+      "options": [
+        "A local USB drive and a DVD",
+        "An email server and a fax machine",
+        "A mainframe tape library",
+        "HDFS, Amazon S3 or Azure Blob Storage",
+        "A relational database's system tablespace"
+      ],
+      "correct": 3,
+      "explanation": "External storage systems mentioned include Hadoop Distributed File System (HDFS) and cloud platforms such as Amazon S3 or Azure Blob Storage."
+    },
+    {
+      "stem": "What two things must be specified to create an external table?",
+      "options": [
+        "A primary key and a foreign key",
+        "A refresh schedule and a retention policy",
+        "An index and a partition key",
+        "A username and a password",
+        "The table structure (columns and data types) and a location pointing to the external storage"
+      ],
+      "correct": 4,
+      "explanation": "To create an external table you specify the table structure in the database and provide a location that points to where the data files are stored."
+    },
+    {
+      "stem": "In the CustomerData example, what does the LOCATION clause indicate?",
+      "options": [
+        "The directory where the external data files are stored",
+        "The database schema that owns the table",
+        "The server region for replication",
+        "The name of the backup folder",
+        "The column used for partitioning"
+      ],
+      "correct": 0,
+      "explanation": "The LOCATION clause, for example LOCATION ('/path/to/external/data/'), indicates the directory where the external data files are stored."
+    },
+    {
+      "stem": "How is an external table queried once it has been created?",
+      "options": [
+        "Only by importing the files into a regular table first",
+        "Using SQL just like any other regular table, with the engine fetching data from the external files",
+        "Only through a file-system command",
+        "By running a REFRESH command before each query",
+        "Only through a view built on top of it"
+      ],
+      "correct": 1,
+      "explanation": "External tables are queried with SQL like regular tables; the database engine intelligently fetches the data from the external files when executing queries."
+    },
+    {
+      "stem": "Why are external tables described as cost-effective?",
+      "options": [
+        "They compress data automatically",
+        "They eliminate the need for a database engine",
+        "They let you use cost-effective external storage for large datasets without duplicating the data inside the database",
+        "They are free of licensing fees",
+        "They reduce the number of columns needed"
+      ],
+      "correct": 2,
+      "explanation": "External tables leverage cost-effective external storage for large datasets without the need to duplicate the data within the database."
+    },
+    {
+      "stem": "What does the HighValueCustomers example create?",
+      "options": [
+        "A new external table in a different location",
+        "A materialised view refreshed daily",
+        "An index on PurchaseAmount",
+        "A view on top of the external table CustomerData that filters customers with PurchaseAmount above 1000",
+        "A backup copy of CustomerData"
+      ],
+      "correct": 3,
+      "explanation": "CREATE VIEW HighValueCustomers AS SELECT * FROM CustomerData WHERE PurchaseAmount > 1000 defines a view over the external table."
+    },
+    {
+      "stem": "What benefit does creating a view over an external table provide?",
+      "options": [
+        "It moves the data into the database permanently",
+        "It encrypts the external files",
+        "It removes the need for a LOCATION clause",
+        "It makes the external files read-only",
+        "It defines a logical layer over the external data and simplifies querying"
+      ],
+      "correct": 4,
+      "explanation": "Views on external tables let you define a logical layer over external data and simplify the querying process, just as with regular tables."
+    },
+    {
+      "stem": "Which of the following is NOT a stated advantage of external tables?",
+      "options": [
+        "Automatic real-time refresh of a stored snapshot",
+        "Cost-effective storage",
+        "Ease of data management for massive datasets",
+        "Integration with external storage systems",
+        "Flexibility in data storage"
+      ],
+      "correct": 0,
+      "explanation": "The stated advantages are cost-effective storage, ease of data management and integration with external storage systems; external tables do not store a snapshot that needs refreshing."
+    }
+  ]
+}

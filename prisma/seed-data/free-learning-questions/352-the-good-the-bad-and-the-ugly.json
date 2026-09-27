@@ -1,0 +1,125 @@
+{
+  "topic": "the-good-the-bad-and-the-ugly",
+  "questions": [
+    {
+      "stem": "In the Good, Bad and Ugly view of data products, what is described as the real challenge, rather than defining what a data product is?",
+      "options": [
+        "Understanding a data product's quality",
+        "Agreeing an industry-wide taxonomy of data products",
+        "Choosing the right storage technology for data products",
+        "Counting how many data products an organisation owns",
+        "Deciding which team should build dashboards"
+      ],
+      "correct": 0,
+      "explanation": "Most practitioners already know what a data product is; the real challenge is understanding its quality, which is what the Good, Bad and Ugly classification addresses."
+    },
+    {
+      "stem": "According to the Good, Bad and Ugly definition, which three traits does an output need to count as a data product?",
+      "options": [
+        "It is stored in the cloud, is real-time and is machine-learning based",
+        "It delivers business value, offsets the cost of inaction (COI) and can be reused by multiple stakeholders",
+        "It has a dashboard, an API and a documented schema",
+        "It is built by IT, approved by legal and certified by governance",
+        "It is large, structured and refreshed daily"
+      ],
+      "correct": 1,
+      "explanation": "A data product is any output that delivers tangible business value, offsets the cost of inaction (COI) and can be reused by multiple stakeholders."
+    },
+    {
+      "stem": "In the juice analogy for data products, why is juice made at home for you NOT considered a product?",
+      "options": [
+        "Because home-made juice has fewer ingredients than bottled juice",
+        "Because it is less nutritious than store-bought juice",
+        "Because it is made only once for you, is not designed for consistent reproduction or sale, and has no brand or owner accountable for its quality",
+        "Because it has not been tested by a laboratory",
+        "Because it is free of charge"
+      ],
+      "correct": 2,
+      "explanation": "Even with the same ingredients, taste and nutrition, home-made juice is a one-off with no reproduction, no sale and no accountable owner, so it is not a product."
+    },
+    {
+      "stem": "In the juice analogy, an unlabelled local juice is still a product. What does the buyer's decision to purchase it depend on?",
+      "options": [
+        "The colour of the bottle and the price alone",
+        "Whether the juice has been advertised on television",
+        "Whether the juice is organic",
+        "Trust in the producer, trust in the seller and the buyer's context",
+        "Whether a data steward has approved it"
+      ],
+      "correct": 3,
+      "explanation": "The unlabelled juice's existence as a product is never in question; whether you buy it depends on trust in the producer, trust in the seller and your context, such as being in a desert."
+    },
+    {
+      "stem": "Which of the following is NOT one of the five dimensions used to judge whether a data product is Good, Bad or Ugly?",
+      "options": [
+        "Ownership",
+        "Standards",
+        "Service Levels",
+        "Governance",
+        "Programming language"
+      ],
+      "correct": 4,
+      "explanation": "The five evaluation dimensions are Ownership, Standards, Service Levels, Quality and Governance; the programming language used is not one of them."
+    },
+    {
+      "stem": "How is an Ugly data product characterised?",
+      "options": [
+        "A siloed, fragile, non-compliant solution that is still valuable but high-risk",
+        "A product that delivers no business value at all",
+        "A trusted, reliable, compliant and scalable product",
+        "A product that follows all standards but is rarely used",
+        "A product that has been formally decommissioned"
+      ],
+      "correct": 0,
+      "explanation": "Ugly products are siloed, fragile and non-compliant; they still deliver value but carry high risk, which is why they need urgent improvement."
+    },
+    {
+      "stem": "In the Good, Bad and Ugly case studies, which example is classified as Ugly?",
+      "options": [
+        "A retailer's governed, versioned sales and inventory datasets feeding APIs and dashboards",
+        "A machine learning model built by a business-unit data scientist from local extracts, outside governance, with no lineage or testing",
+        "A marketing dashboard that relies on manually refreshed spreadsheets",
+        "An executive dashboard certified by the data governance team",
+        "A finance report that meets all of its SLAs"
+      ],
+      "correct": 1,
+      "explanation": "The Shadow IT model generates millions in revenue but exists outside governance with no lineage, testing or integration path, and may die if its creator leaves, which makes it the Ugly example."
+    },
+    {
+      "stem": "The marketing campaign report in the Good, Bad and Ugly case studies drives decisions but relies on manually refreshed spreadsheets and lacks quality checks. How is it classified?",
+      "options": [
+        "Good",
+        "Ugly",
+        "Bad",
+        "Not a data product at all",
+        "Decommissioned"
+      ],
+      "correct": 2,
+      "explanation": "The marketing dashboard delivers value but lacks rigour, creating rework, confusion and occasional errors, which fits the Bad category."
+    },
+    {
+      "stem": "Using the seven-point Data Product Quality Checklist, what does a 'Yes' on three to five of the dimensions typically indicate?",
+      "options": [
+        "A Good product",
+        "A product that should be deleted",
+        "A product that is not yet a data product",
+        "A Bad product",
+        "An Ugly product requiring urgent remediation"
+      ],
+      "correct": 3,
+      "explanation": "A 'Yes' across all seven dimensions signals a Good product, three to five may point to a Bad product, and fewer typically indicates an Ugly product."
+    },
+    {
+      "stem": "What does a data product's classification as Good, Bad or Ugly signal?",
+      "options": [
+        "Whether the product is legally allowed to exist",
+        "How many users the product has",
+        "Whether the product should be rebuilt in a different technology",
+        "The size of the budget the product consumed",
+        "How urgently the product needs improvement, not whether it should exist"
+      ],
+      "correct": 4,
+      "explanation": "The classification is not a verdict on whether a product should exist; it is a signal of how urgently it needs improvement."
+    }
+  ]
+}

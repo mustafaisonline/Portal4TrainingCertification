@@ -1,0 +1,125 @@
+{
+  "topic": "iaas-infrastructure-as-a-service",
+  "questions": [
+    {
+      "stem": "In what form does IaaS provide compute power and storage to customers?",
+      "options": [
+        "Pre-built business solutions",
+        "Virtual Machines",
+        "Individual functions",
+        "Data feeds via APIs",
+        "Pre-installed database platforms"
+      ],
+      "correct": 1,
+      "explanation": "In IaaS, online compute power and storage are provided to customers in the shape of Virtual Machines."
+    },
+    {
+      "stem": "Who is responsible for installing and upgrading software in an IaaS arrangement?",
+      "options": [
+        "The cloud service provider",
+        "A third-party solution owner",
+        "The customer",
+        "The hardware manufacturer",
+        "Nobody, as software is not used in IaaS"
+      ],
+      "correct": 2,
+      "explanation": "Customers must bring their own software, tools and IT solutions and manage the environment themselves, including installing and upgrading software."
+    },
+    {
+      "stem": "How does a cloud service provider charge for IaaS?",
+      "options": [
+        "A flat fee per user",
+        "Based on compute and storage usage",
+        "Per function invocation",
+        "Per data record pulled",
+        "Per report generated"
+      ],
+      "correct": 1,
+      "explanation": "The cloud service provider charges based on compute and storage usage."
+    },
+    {
+      "stem": "In the laptop analogy for IaaS from I Am Datapedia!, what does the service provider supply?",
+      "options": [
+        "Laptops with only the operating system of your choice",
+        "Laptops with all software pre-installed",
+        "Laptops with a pre-built solution ready to use",
+        "Only the data stored on the laptops",
+        "A single function running on the laptop"
+      ],
+      "correct": 0,
+      "explanation": "In IaaS the provider buys the laptops (infrastructure) with ONLY the operating system of your choice and gives you access; everything else is your job."
+    },
+    {
+      "stem": "Which of the following is NOT one of the customer's responsibilities under IaaS?",
+      "options": [
+        "Installing security software",
+        "Enabling encryption",
+        "Configuring Disaster Recovery and High Availability",
+        "Periodically upgrading software",
+        "Buying and hosting the physical servers"
+      ],
+      "correct": 4,
+      "explanation": "Under IaaS the provider supplies the infrastructure; the customer handles security software, encryption, DR/HA, database installation and upgrades."
+    },
+    {
+      "stem": "Which phrase summarises IaaS in a nutshell?",
+      "options": [
+        "Pre-built solutions in the Cloud",
+        "Pulling data on demand through APIs",
+        "Software with infrastructure and storage",
+        "Deploying only functions in the Cloud",
+        "Only having infrastructure with no support to maintain software"
+      ],
+      "correct": 4,
+      "explanation": "'In nutshell, only having Infrastructure with no support to maintain software(s) is IaaS.'"
+    },
+    {
+      "stem": "Under IaaS, who manages High Availability (HA) and Disaster Recovery (DR)?",
+      "options": [
+        "The cloud provider automatically",
+        "The operating system vendor",
+        "A government regulator",
+        "The customer, on their own",
+        "An independent auditor"
+      ],
+      "correct": 3,
+      "explanation": "Customers manage the environment on their own, including HA, DR, compute power and storage standards."
+    },
+    {
+      "stem": "In the IaaS laptop analogy, what does keeping a second laptop and moving data to it periodically illustrate?",
+      "options": [
+        "Auto-scaling",
+        "Function deployment",
+        "A Disaster Recovery and High Availability strategy",
+        "Container orchestration",
+        "Data as a Service"
+      ],
+      "correct": 2,
+      "explanation": "Backing up to an external disk and keeping a second laptop in sync so work can continue if the first crashes represents the DR and HA strategy the customer must configure."
+    },
+    {
+      "stem": "What must customers bring to an IaaS environment?",
+      "options": [
+        "Their own software, tools and IT solutions",
+        "Their own physical servers",
+        "Their own electricity supply",
+        "Their own data centre building",
+        "Nothing, as everything is provided"
+      ],
+      "correct": 0,
+      "explanation": "Customers must bring their own software, tools and IT solutions and then manage the environment themselves."
+    },
+    {
+      "stem": "Which of these is the ONLY thing pre-installed by the provider on an IaaS virtual machine in the analogy?",
+      "options": [
+        "A database",
+        "MS Office software",
+        "Security software",
+        "An operating system of your choice",
+        "An encrypted hard disk"
+      ],
+      "correct": 3,
+      "explanation": "The provider supplies the infrastructure with only the operating system of your choice; databases, Office, security software and encryption are the customer's tasks."
+    }
+  ]
+}

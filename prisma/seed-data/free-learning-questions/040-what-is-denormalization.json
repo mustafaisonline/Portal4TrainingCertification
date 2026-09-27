@@ -1,0 +1,125 @@
+{
+  "topic": "what-is-denormalization",
+  "questions": [
+    {
+      "stem": "What is Denormalisation?",
+      "options": [
+        "The deliberate process of combining tables or reintroducing controlled redundancy to improve query performance and analytical usability",
+        "A careless shortcut that skips data modelling",
+        "The process of removing all redundancy from tables",
+        "The process of converting tables to 6NF",
+        "The process of encrypting reporting data"
+      ],
+      "correct": 0,
+      "explanation": "Denormalisation deliberately combines tables or reintroduces controlled redundancy to favour speed, simplicity and workload efficiency."
+    },
+    {
+      "stem": "What is the core idea behind denormalisation?",
+      "options": [
+        "Data should never be normalised in the first place",
+        "All tables should be split into single-attribute tables",
+        "Once data is properly structured, typically to 3NF or BCNF, certain tables may be merged or attributes duplicated to reduce joins",
+        "Redundancy should be eliminated at all costs",
+        "Every query should use as many joins as possible"
+      ],
+      "correct": 2,
+      "explanation": "After data is normalised to around 3NF or BCNF, denormalisation merges tables or duplicates attributes to reduce joins during querying."
+    },
+    {
+      "stem": "Which of the following is a typical denormalisation technique?",
+      "options": [
+        "Pre-calculating derived values",
+        "Removing foreign keys entirely",
+        "Splitting a table into many smaller tables",
+        "Adding a new column each month",
+        "Deleting descriptive attributes"
+      ],
+      "correct": 0,
+      "explanation": "Denormalisation often involves merging related tables into a wider table, duplicating frequently accessed attributes, or pre-calculating derived values."
+    },
+    {
+      "stem": "In which environments are the benefits of denormalisation especially visible?",
+      "options": [
+        "OLTP systems with frequent updates",
+        "Source systems with heavy write loads",
+        "Message queues",
+        "BI and OLAP environments",
+        "Version control systems"
+      ],
+      "correct": 3,
+      "explanation": "In BI and OLAP environments queries run faster with fewer joins and structures are easier for reporting tools and business users to understand."
+    },
+    {
+      "stem": "Which modelling techniques have denormalisation as their structural foundation?",
+      "options": [
+        "Data Vault and Anchor Modelling",
+        "NIAM, ORM and FCO-IM",
+        "Star schemas, snowflake schemas and Unified Star Schema designs",
+        "BPMN and DDD",
+        "Taxonomies and ontologies"
+      ],
+      "correct": 2,
+      "explanation": "Denormalisation forms the structural foundation for Dimensional Modelling techniques such as star, snowflake and Unified Star Schema designs."
+    },
+    {
+      "stem": "Which of the following is NOT a trade-off of denormalisation?",
+      "options": [
+        "Redundancy is reintroduced",
+        "Updates must be carefully managed to avoid inconsistencies",
+        "Storage requirements increase",
+        "Queries require more joins",
+        "Maintenance challenges in transactional systems"
+      ],
+      "correct": 3,
+      "explanation": "Denormalisation reduces joins; its trade-offs are redundancy, careful update management, more storage and integrity risks in transactional systems."
+    },
+    {
+      "stem": "In the loan example, what fields might a denormalised LoanFact table contain?",
+      "options": [
+        "Only LoanID and CustID",
+        "Only the primary keys of each source table",
+        "Server name and partition key",
+        "Only the ApprovalStatus",
+        "CustomerName, LoanAmount, ProductType, ApprovalStatus, RepaymentDueDate and RepaymentStatus"
+      ],
+      "correct": 4,
+      "explanation": "A denormalised LoanFact table combines Customer, Loan, ApprovalDecision and RepaymentSchedule information into one structure."
+    },
+    {
+      "stem": "What redundancy appears in the denormalised LoanFact example?",
+      "options": [
+        "LoanID appears once per customer",
+        "Each repayment is stored in its own table",
+        "ApprovalStatus is stored in a separate lookup",
+        "There is no redundancy",
+        "CustomerName may appear repeatedly across many rows"
+      ],
+      "correct": 4,
+      "explanation": "CustomerName may now appear repeatedly across many rows, introducing redundancy that must be managed carefully."
+    },
+    {
+      "stem": "How does denormalisation relate to normalisation?",
+      "options": [
+        "It replaces normalisation",
+        "It builds upon normalisation, assuming the logical structure has already been validated",
+        "It must be done before normalisation",
+        "It is unrelated to normalisation",
+        "It reverses 1NF only"
+      ],
+      "correct": 1,
+      "explanation": "Denormalisation does not replace normalisation; it builds on it, assuming the logical structure and business rules are already validated."
+    },
+    {
+      "stem": "In the modelling journey, what roles do normalisation and denormalisation respectively play at the hinge point?",
+      "options": [
+        "Normalisation enhances performance; denormalisation protects integrity",
+        "Normalisation protects integrity; denormalisation enhances usability and performance",
+        "Both protect integrity equally",
+        "Both are concerned only with storage cost",
+        "Normalisation is for OLAP; denormalisation is for OLTP"
+      ],
+      "correct": 1,
+      "explanation": "Normalisation protects integrity while denormalisation enhances usability and performance; specialised techniques extend one or embrace the other."
+    }
+  ]
+}

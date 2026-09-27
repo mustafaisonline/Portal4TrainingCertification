@@ -1,0 +1,125 @@
+{
+  "topic": "iso-55000-55001-550012-550013-for-data-as-asset",
+  "questions": [
+    {
+      "stem": "What do the ISO 55000 series standards provide guidance on?",
+      "options": [
+        "Country codes for international transactions",
+        "Managing assets effectively within an organisation, including treating data as a valuable asset",
+        "Bank capital adequacy requirements",
+        "Metadata registration for data elements",
+        "Network security protocols"
+      ],
+      "correct": 1,
+      "explanation": "ISO 55000, 55001, 55012 and 55013 provide guidance and best practices for managing assets effectively, with data increasingly treated as a valuable asset."
+    },
+    {
+      "stem": "How does ISO 55000 encourage organisations to view data?",
+      "options": [
+        "As a strategic asset that enhances decision quality, mitigates risk and optimises asset performance",
+        "As a disposable by-product of operations",
+        "As something to be deleted after each reporting cycle",
+        "As relevant only to IT departments",
+        "As a liability to be minimised"
+      ],
+      "correct": 0,
+      "explanation": "ISO 55000 encourages organisations to recognise data as a strategic asset, acknowledging its potential to enhance decision quality, mitigate risks and optimise asset performance."
+    },
+    {
+      "stem": "What does ISO 55001 provide?",
+      "options": [
+        "A list of country names and codes",
+        "A set of encryption algorithms",
+        "A comprehensive framework to establish, implement and continually improve asset management systems",
+        "A standard for chatbot infrastructure",
+        "Rules for bank stress testing"
+      ],
+      "correct": 2,
+      "explanation": "ISO 55001, a core component of the series, provides a comprehensive framework for organisations to establish, implement and continually improve their asset management systems."
+    },
+    {
+      "stem": "Across which span of the asset lifecycle does ISO 55001 call for systematic data management?",
+      "options": [
+        "Only during acquisition",
+        "Only during disposal",
+        "Only during annual audits",
+        "From acquisition to disposal",
+        "Only while the asset is under warranty"
+      ],
+      "correct": 3,
+      "explanation": "ISO 55001 emphasises the need for systematic approaches to managing data throughout the entire asset lifecycle, from acquisition to disposal."
+    },
+    {
+      "stem": "What is the focus of the new ISO 55012 guidance?",
+      "options": [
+        "Country codes",
+        "Metadata registries",
+        "Bank capital ratios",
+        "Digitising paper archives",
+        "People involvement and competence, including how people manage data, information and knowledge in asset management"
+      ],
+      "correct": 4,
+      "explanation": "ISO 55012, Guidance on People Involvement and Competence, explores the human dimension of asset management, including how people manage data, information and knowledge."
+    },
+    {
+      "stem": "What is the title of the new ISO 55013 guidance?",
+      "options": [
+        "Guidance on the Management of Data Assets",
+        "Guidance on Country Codes",
+        "Guidance on Metadata Registration",
+        "Guidance on Banking Supervision",
+        "Guidance on Digital Transformation"
+      ],
+      "correct": 0,
+      "explanation": "ISO 55013 is titled Guidance on the Management of Data Assets and examines the pivotal role of data within asset management."
+    },
+    {
+      "stem": "Which of the following is one of the primary clauses of ISO 55013?",
+      "options": [
+        "Calculating Capital Adequacy",
+        "Delivering Value from Asset Data",
+        "Assigning Alpha-2 Codes",
+        "Registering Data Elements",
+        "Scanning Analogue Documents"
+      ],
+      "correct": 1,
+      "explanation": "ISO 55013's clauses include Managing Asset Data, Delivering Value from Asset Data, Identifying Data Assets, Managing Data Assets and Governance."
+    },
+    {
+      "stem": "In the ISO 55000 series, how is efficiency distinguished from effectiveness in data management?",
+      "options": [
+        "Efficiency means storing more data, effectiveness means storing less",
+        "Efficiency applies to hardware, effectiveness applies to software",
+        "Efficiency means handling data right, effectiveness means using the right data",
+        "Efficiency is measured annually, effectiveness monthly",
+        "There is no distinction between them"
+      ],
+      "correct": 2,
+      "explanation": "The standards aim to help organisations manage data in a way that is both efficient (handling data right) and effective (using the right data) to meet their goals."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a reason the ISO 55000 series matters for data?",
+      "options": [
+        "Efficiency, reducing waste and unnecessary costs",
+        "Risk management for reliable and secure data operations",
+        "Consistency through standardised practices and terminology",
+        "Guaranteeing that data never needs to be deleted",
+        "All of these are listed reasons"
+      ],
+      "correct": 3,
+      "explanation": "The reasons listed are efficiency, risk management and consistency; the standards actually emphasise managing data from creation to deletion, not avoiding deletion."
+    },
+    {
+      "stem": "In the video game analogy for the ISO 55000 series, what do the guidelines help creators do?",
+      "options": [
+        "Set the price of the game",
+        "Design the game's characters",
+        "Choose a publisher",
+        "Advertise the game to players",
+        "Take care of the game's data from creation until it is no longer used, including fixing bugs and deciding when to update or replace it"
+      ],
+      "correct": 4,
+      "explanation": "The analogy describes the standards as guidelines that help creators care for the data in a game or app from design to retirement, keep it running smoothly, fix bugs and decide when to update or replace it."
+    }
+  ]
+}

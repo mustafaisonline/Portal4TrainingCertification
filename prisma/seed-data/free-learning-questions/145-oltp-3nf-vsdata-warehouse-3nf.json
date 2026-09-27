@@ -1,0 +1,125 @@
+{
+  "topic": "oltp-3nf-vsdata-warehouse-3nf",
+  "questions": [
+    {
+      "stem": "What common assumption causes confusion between OLTP 3NF and data warehouse 3NF?",
+      "options": [
+        "That 3NF cannot be used in a data warehouse",
+        "That because both systems use Third Normal Form, they must be conceptually the same",
+        "That OLTP systems never use normalisation",
+        "That data warehouses only use star schemas",
+        "That 3NF removes all history"
+      ],
+      "correct": 1,
+      "explanation": "The confusion begins with the assumption that two systems using 3NF must be conceptually the same; in fact their intent, behaviour and data lifecycle are fundamentally different."
+    },
+    {
+      "stem": "What is the primary objective of an OLTP 3NF system?",
+      "options": [
+        "Historical preservation",
+        "Analytical traceability",
+        "Operational efficiency for high-volume, real-time transactions",
+        "Pre-aggregating KPIs",
+        "Long-term trend analysis"
+      ],
+      "correct": 2,
+      "explanation": "In OLTP the objective is operational efficiency, supporting high-volume real-time transactions such as order placement, payments and inventory updates."
+    },
+    {
+      "stem": "In an OLTP 3NF system, what happens when a customer changes their address?",
+      "options": [
+        "A new row is inserted and the old address is kept",
+        "The old address is overwritten",
+        "The record is archived to a data warehouse",
+        "The change is rejected until the end of the day",
+        "Both addresses are stored in the same column"
+      ],
+      "correct": 1,
+      "explanation": "In OLTP 3NF, updates and deletions are normal and expected: if a customer changes their address, the old address is overwritten so the system reflects the latest state."
+    },
+    {
+      "stem": "Which philosophy is dominant in a 3NF data warehouse?",
+      "options": [
+        "Update-in-place",
+        "Delete-and-reload",
+        "Insert-only",
+        "Overwrite-on-change",
+        "Truncate-daily"
+      ],
+      "correct": 2,
+      "explanation": "In a 3NF data warehouse the insert-only philosophy is dominant: instead of updating a row, a new row is inserted to represent the new state and the previous record remains intact."
+    },
+    {
+      "stem": "Which question can a data warehouse answer that an OLTP system typically cannot?",
+      "options": [
+        "What is the customer's current address?",
+        "How many orders are open right now?",
+        "What was the product price at the time of sale last year?",
+        "Which payment was just processed?",
+        "What is today's inventory count?"
+      ],
+      "correct": 2,
+      "explanation": "Because history is preserved, a data warehouse can answer questions such as what the customer's address was last year or what the product price was at the time of sale."
+    },
+    {
+      "stem": "How does Slowly Changing Dimension (SCD) Type 2 differ from Type 1?",
+      "options": [
+        "Type 1 introduces a new version of the record; Type 2 overwrites",
+        "Type 1 allows overwriting; Type 2 introduces a new version of the record while preserving the old one",
+        "Type 1 deletes history; Type 2 deletes the current record",
+        "Type 1 applies only to facts; Type 2 only to dimensions",
+        "There is no difference; the terms are interchangeable"
+      ],
+      "correct": 1,
+      "explanation": "SCD Type 1 allows overwriting, whereas SCD Type 2 introduces a new version of the record while preserving the old one; other types extend the concept further."
+    },
+    {
+      "stem": "Does the Slowly Changing Dimension philosophy apply to 3NF data warehouses, or only to dimensional models?",
+      "options": [
+        "Only to dimensional models",
+        "Only to OLTP systems",
+        "It applies to 3NF warehouses too: changes are captured through controlled inserts rather than destructive updates",
+        "Only to data lakes",
+        "It applies nowhere outside star schemas"
+      ],
+      "correct": 2,
+      "explanation": "Although SCD is usually discussed in dimensional modelling, the underlying philosophy also applies in 3NF data warehouses, where changes are captured through controlled insert mechanisms."
+    },
+    {
+      "stem": "Which of the following is characteristic of data warehouse 3NF rather than OLTP 3NF?",
+      "options": [
+        "Rows are frequently updated",
+        "Data represents only the current truth",
+        "Transaction speed is paramount",
+        "Storage growth is expected and historical versions are preserved",
+        "Storage efficiency is critical"
+      ],
+      "correct": 3,
+      "explanation": "In data warehouse 3NF, rows are primarily inserted, historical versions are preserved, storage growth is expected and analytical consistency is paramount."
+    },
+    {
+      "stem": "What is the risk of designing a data warehouse like an OLTP system?",
+      "options": [
+        "It can destroy historical intelligence",
+        "It can cripple transactional performance",
+        "It makes normalisation impossible",
+        "It doubles storage costs",
+        "It prevents the use of SCD Type 1"
+      ],
+      "correct": 0,
+      "explanation": "Designing a data warehouse like an OLTP system can destroy historical intelligence, while designing an OLTP system like a warehouse can cripple transactional performance."
+    },
+    {
+      "stem": "According to the strategic insight on OLTP 3NF versus data warehouse 3NF, what is the true differentiator between the two?",
+      "options": [
+        "The normalisation form used",
+        "The number of tables",
+        "The intent behind the design",
+        "The database vendor",
+        "The size of the data"
+      ],
+      "correct": 2,
+      "explanation": "3NF is not the differentiator; intent is. The same normalisation form can support two radically different worlds, and the key is knowing which world you are designing for."
+    }
+  ]
+}

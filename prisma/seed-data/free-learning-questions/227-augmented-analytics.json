@@ -1,0 +1,125 @@
+{
+  "topic": "augmented-analytics",
+  "questions": [
+    {
+      "stem": "In the evolution towards Augmented Analytics, who defined data elements in the first approach, the classic semantic layer?",
+      "options": [
+        "Business users",
+        "IT, for business ease",
+        "Machine learning models",
+        "External consultants",
+        "End customers"
+      ],
+      "correct": 1,
+      "explanation": "In the first approach, the Semantic Layer, IT defines data elements for business ease."
+    },
+    {
+      "stem": "In the second approach preceding Augmented Analytics, who defines data elements?",
+      "options": [
+        "IT folks only",
+        "Regulators",
+        "Business folks themselves, based on their own understanding",
+        "Machine learning models",
+        "Database vendors"
+      ],
+      "correct": 2,
+      "explanation": "In the second era, business folks define data elements themselves based on their own understanding."
+    },
+    {
+      "stem": "What is Augmented Analytics based on?",
+      "options": [
+        "Manual definition of data elements by IT",
+        "Static requirements gathered once from the business",
+        "Spreadsheet-based reporting",
+        "Automated Machine Learning that learns data elements as new datasets keep coming in",
+        "Paper-based data dictionaries"
+      ],
+      "correct": 3,
+      "explanation": "Augmented Analytics is based on automated Machine Learning, which learns the data elements while new datasets keep coming in."
+    },
+    {
+      "stem": "What is the major difference between the first two approaches and Augmented Analytics?",
+      "options": [
+        "The first two were derived by humans, with the risk of human error and bias; Augmented Analytics is automated",
+        "The first two used unstructured data; Augmented Analytics uses structured data",
+        "Augmented Analytics requires more manual effort",
+        "The first two were fully automated; Augmented Analytics is manual",
+        "There is no real difference"
+      ],
+      "correct": 0,
+      "explanation": "The first two approaches were derived by humans, either IT or business, so there is always a factor of human error and possible bias based on the knowledge they possess; Augmented Analytics is based on automated Machine Learning."
+    },
+    {
+      "stem": "Why was the first approach, where IT implemented business requirements, described as static?",
+      "options": [
+        "Because it used only static reports",
+        "Because business users could change it at will",
+        "Because it ran on machine learning",
+        "Because it was implemented in a data lake",
+        "Because requirements always came from business and were implemented by IT, so any change had a round-robin effect"
+      ],
+      "correct": 4,
+      "explanation": "The first approach was static: requirements always came from business and were implemented by IT folks, so any change had a round-robin effect."
+    },
+    {
+      "stem": "How is the second approach, where business designs and implements data elements itself, characterised?",
+      "options": [
+        "Static",
+        "Flexible",
+        "Very dynamic",
+        "Fully automated",
+        "Obsolete"
+      ],
+      "correct": 1,
+      "explanation": "The second approach was flexible, as businesses were designing and implementing themselves; the first was static and the third is very dynamic."
+    },
+    {
+      "stem": "How is the third and latest approach, Augmented Analytics, characterised?",
+      "options": [
+        "Static, with a round-robin effect",
+        "Flexible but human-driven",
+        "Very dynamic, with ML models learning, designing, updating, upgrading and implementing the semantic layer automatically",
+        "Manual and IT-controlled",
+        "Limited to structured data"
+      ],
+      "correct": 2,
+      "explanation": "The third approach is very dynamic, where ML models are learning, designing, updating, upgrading and implementing the semantic layer automatically."
+    },
+    {
+      "stem": "In Augmented Analytics, ML models define data elements based on what kind of requirements?",
+      "options": [
+        "Fixed regulatory requirements",
+        "Requirements written by IT",
+        "Requirements signed off by management",
+        "Open-ended requirements",
+        "Requirements limited to one department"
+      ],
+      "correct": 3,
+      "explanation": "The latest approach is going towards Machine Learning models defining data elements based on open-ended requirements."
+    },
+    {
+      "stem": "Which of the following is NOT one of the three approaches to defining data elements described on the way to Augmented Analytics?",
+      "options": [
+        "IT defines data elements for business ease",
+        "Business folks define data elements themselves",
+        "Machine learning models define data elements automatically",
+        "Regulators define data elements for all organisations",
+        "All three of the approaches named are correct"
+      ],
+      "correct": 3,
+      "explanation": "The three approaches are IT-defined, business-defined and ML-defined; regulators defining data elements is not one of them."
+    },
+    {
+      "stem": "Why may human-defined semantic layers, whether by IT or business, be biased?",
+      "options": [
+        "Because humans can be biased based on the knowledge and information they possess about the business domain",
+        "Because humans always favour structured data",
+        "Because BI tools introduce bias",
+        "Because humans cannot read metadata",
+        "Because the business never shares requirements"
+      ],
+      "correct": 0,
+      "explanation": "Humans can be biased based on the knowledge and information they possess about the business domain, which is a factor in the first two approaches but not in automated Augmented Analytics."
+    }
+  ]
+}

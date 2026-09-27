@@ -1,0 +1,125 @@
+{
+  "topic": "data-modelling",
+  "questions": [
+    {
+      "stem": "What is Data Modelling?",
+      "options": [
+        "The practice of backing up databases on a schedule",
+        "The practice of structuring, describing and organising information so it reflects real-world entities, relationships, rules and contexts",
+        "The practice of writing SQL queries for reports",
+        "The practice of tuning database indexes for speed",
+        "The practice of migrating data between cloud providers"
+      ],
+      "correct": 1,
+      "explanation": "Data Modelling structures, describes and organises information to reflect real-world entities, relationships, rules and contexts in support of operations, analytics, governance and AI."
+    },
+    {
+      "stem": "Approximately how many Data Modelling techniques exist, according to *I Am Datapedia!*?",
+      "options": [
+        "Around 37",
+        "Around 5",
+        "Around 12",
+        "Around 100",
+        "Exactly 3"
+      ],
+      "correct": 0,
+      "explanation": "Most people know only a few techniques, but in reality there are around 37 of them."
+    },
+    {
+      "stem": "Storing all of an employee's details (ID, name, mobile, address, salary, department) in one row of a spreadsheet illustrates which kind of data model?",
+      "options": [
+        "A Normalised data model",
+        "A Dimensional data model",
+        "A NoSQL graph model",
+        "A Time-Based model",
+        "A Denormalised data model"
+      ],
+      "correct": 4,
+      "explanation": "Keeping all information for one employee in a single row is the Denormalisation data model."
+    },
+    {
+      "stem": "In the monthly salary example, which option represents data modelling in the Normalisation way?",
+      "options": [
+        "Replacing the first month's salary with the second month's salary",
+        "Adding a new column such as salary_2ndmonth every month",
+        "Deleting the salary column altogether",
+        "Breaking employee details into separate Employee and Salary tables, carrying the employee ID into the Salary table",
+        "Storing salaries in a text file outside the database"
+      ],
+      "correct": 3,
+      "explanation": "Splitting the data into an Employee table and a monthly Salary table, linked by employee ID, is Normalisation."
+    },
+    {
+      "stem": "Why is adding a new salary column for every month not a viable option?",
+      "options": [
+        "Because databases forbid more than one salary column",
+        "Because you would have to add a new column every month",
+        "Because salaries cannot be stored as numbers",
+        "Because it would delete the employee ID",
+        "Because it would violate a dimensional schema"
+      ],
+      "correct": 1,
+      "explanation": "Adding a salary_2ndmonth style column means a new column must be added every month, which is not viable."
+    },
+    {
+      "stem": "What is a Unary Relationship?",
+      "options": [
+        "Two tables joined with each other",
+        "Three tables joined through an intermediate table",
+        "A column that depends on another column within the same table, giving an internal join",
+        "A fact table joined to a dimension table",
+        "A relationship between two databases"
+      ],
+      "correct": 2,
+      "explanation": "A Unary Relationship is where a column depends on another column within the same table, in other words an internal join."
+    },
+    {
+      "stem": "Which relationship type involves three tables joined with the help of an intermediate table?",
+      "options": [
+        "Unary",
+        "Binary",
+        "Ternary",
+        "Relational",
+        "Dimensional"
+      ],
+      "correct": 2,
+      "explanation": "A Ternary Relationship joins three tables with the help of another intermediate table."
+    },
+    {
+      "stem": "Which data modelling scheme uses a fact table joined with dimension tables, as in Star and Snowflake schemas?",
+      "options": [
+        "Dimensional",
+        "Relational",
+        "Object-Oriented (UML)",
+        "Fact-Based",
+        "NoSQL"
+      ],
+      "correct": 0,
+      "explanation": "Star and Snowflake schemas are examples of the Dimensional scheme, where a fact table joins with dimension tables."
+    },
+    {
+      "stem": "Which scheme is described as a graphical language for modelling software itself, consisting of a Class Model with entity types and relationship types?",
+      "options": [
+        "Relational",
+        "Time-Based",
+        "NoSQL",
+        "Object-Oriented (UML)",
+        "Dimensional"
+      ],
+      "correct": 3,
+      "explanation": "Object-Oriented (UML) is a graphical language for modelling software, made up of a Class Model with entity types and relationship types."
+    },
+    {
+      "stem": "Which of the following is NOT one of the NoSQL database kinds named in the Data Modelling schemes?",
+      "options": [
+        "Graph",
+        "Document",
+        "Key-value",
+        "Column-oriented",
+        "Star schema"
+      ],
+      "correct": 4,
+      "explanation": "NoSQL databases are graph, document, key-value and column-oriented; a Star schema belongs to Dimensional modelling."
+    }
+  ]
+}

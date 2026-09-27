@@ -1,0 +1,125 @@
+{
+  "topic": "immutable-data-warehouse",
+  "questions": [
+    {
+      "stem": "What does immutable mean?",
+      "options": [
+        "Not changeable",
+        "Not readable",
+        "Not encrypted",
+        "Not stored",
+        "Not related"
+      ],
+      "correct": 0,
+      "explanation": "Immutable means not changeable; the immutable data warehouse takes its name from immutable data."
+    },
+    {
+      "stem": "Why is data in a database described as mutable?",
+      "options": [
+        "Because it can be read by many users at once",
+        "Because after inserting it, one also has the option to change it using update or delete commands",
+        "Because it is stored on rotating disks",
+        "Because it is normalised to 3NF",
+        "Because it must be encrypted"
+      ],
+      "correct": 1,
+      "explanation": "When inserting new data into a database, one also has the option to change it using update or delete commands, which means the data is mutable."
+    },
+    {
+      "stem": "At the technology level, what must every database or data store allow?",
+      "options": [
+        "Only inserts, never updates",
+        "Updates and deletes, because mutability is a must-have at technology level",
+        "Automatic deletion of records older than one year",
+        "Only read access for business users",
+        "Storage across national borders"
+      ],
+      "correct": 1,
+      "explanation": "The mutable feature is a must-have at technology level: any database must allow update or delete. Whether one should do so can be a business requirement but never a technology limitation."
+    },
+    {
+      "stem": "By default, what kind of datastore is a data warehouse?",
+      "options": [
+        "A mutable datastore",
+        "An immutable datastore",
+        "A virtual datastore",
+        "A federated datastore",
+        "An in-memory datastore"
+      ],
+      "correct": 1,
+      "explanation": "By default, a data warehouse is an immutable datastore."
+    },
+    {
+      "stem": "In the CUSTOMER data set example, which attributes are treated as immutable?",
+      "options": [
+        "Address and contact details",
+        "Jobs and cars",
+        "Name, date of birth, parents and children",
+        "Purchase history and preferences",
+        "Email and telephone number"
+      ],
+      "correct": 2,
+      "explanation": "Customer details like name, date of birth, parents and children are immutable: they cannot and should not be changed or deleted."
+    },
+    {
+      "stem": "In the CUSTOMER data set example, why are address, contact details, jobs and cars considered mutable?",
+      "options": [
+        "Because they are never stored in a warehouse",
+        "Because a customer can change them, such as moving house or changing contact details",
+        "Because they are not part of the metadata",
+        "Because they are stored in fact tables",
+        "Because they are always encrypted"
+      ],
+      "correct": 1,
+      "explanation": "Address, contact details, jobs and cars are mutable information, as a customer can change his or her address or contact details over time."
+    },
+    {
+      "stem": "Where should the immutable or mutable behaviour of each data element be captured, and who should manage it?",
+      "options": [
+        "In the BI tool, managed by business users",
+        "In metadata, managed by the Data Governance team",
+        "In the application code, managed by developers",
+        "In the backup policy, managed by the DBA",
+        "In the ACL, managed by the security team"
+      ],
+      "correct": 1,
+      "explanation": "Both the immutable and the mutable behaviour must be captured in metadata and managed by the Data Governance team."
+    },
+    {
+      "stem": "In a data warehouse or data lake, for which tables is immutable behaviour a given?",
+      "options": [
+        "Dimension tables",
+        "Staging tables",
+        "Fact tables",
+        "Lookup tables",
+        "Audit tables"
+      ],
+      "correct": 2,
+      "explanation": "When we come to the data warehouse and data lake, immutable behaviour is a given for fact tables, while dimensions can be mutable based on the type of dimension."
+    },
+    {
+      "stem": "What does the insurance business example illustrate about historical data in a data warehouse?",
+      "options": [
+        "That all historical data must always be stored",
+        "That what history to keep depends on the nature of the business, so irrelevant elements such as address changes may not be stored",
+        "That insurers must store every address change",
+        "That fact tables should be mutable in insurance",
+        "That insurers do not need a data warehouse"
+      ],
+      "correct": 1,
+      "explanation": "An insurer does not care how many times you changed your address but wants history such as health, family and eating habits, so an insurance warehouse might not even store irrelevant data elements."
+    },
+    {
+      "stem": "What is the architectural purpose of any data warehouse or data mart with respect to history?",
+      "options": [
+        "To overwrite transactions with their latest state",
+        "To keep historical transactional data residing in fact tables",
+        "To delete data older than the retention period",
+        "To store only current dimension values",
+        "To virtualise transactions from source systems"
+      ],
+      "correct": 1,
+      "explanation": "The architecture of any data warehouse or data mart is to keep historical transactional data residing in fact tables, whereas dimension data can be mutable depending on the dimension type."
+    }
+  ]
+}

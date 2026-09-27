@@ -1,0 +1,125 @@
+{
+  "topic": "big-data-vs-data-lake",
+  "questions": [
+    {
+      "stem": "How is Big Data best characterised in relation to a data lake?",
+      "options": [
+        "Big Data is a single storage system; the data lake is its query engine",
+        "Big Data is the broader ecosystem and paradigm; the data lake is a specific repository within it",
+        "Big Data is a subset of the data lake",
+        "They are two names for the same thing",
+        "Big Data is a vendor product; the data lake is open source"
+      ],
+      "correct": 1,
+      "explanation": "Big Data is the movement and ecosystem of technologies and practices, whereas a data lake is a specific architectural component that grew out of that movement."
+    },
+    {
+      "stem": "Which challenges did the Big Data ecosystem arise to address?",
+      "options": [
+        "The three Vs: volume, velocity and variety",
+        "Table locking in OLTP",
+        "Cross-border data storage",
+        "Slow tape archives",
+        "Encryption key management"
+      ],
+      "correct": 0,
+      "explanation": "Big Data arose to address the challenges posed by the three Vs, volume, velocity and variety, of modern data."
+    },
+    {
+      "stem": "Which of the following belongs to the Big Data toolbox rather than being the data lake itself?",
+      "options": [
+        "A raw transaction log archive",
+        "Cloud object storage",
+        "Spark, Kafka and NoSQL databases",
+        "A schema-on-read repository",
+        "Historical feature data sets"
+      ],
+      "correct": 2,
+      "explanation": "Big Data includes distributed storage and processing technologies such as HDFS, MapReduce, Spark and Kafka, plus new database types; the lake is the storage repository."
+    },
+    {
+      "stem": "What does the data lake embody as one of Big Data's core principles?",
+      "options": [
+        "The ability to enforce a predefined model before loading",
+        "The ability to capture everything without forcing predefined models",
+        "The ability to run ACID transactions",
+        "The ability to encrypt everything at rest",
+        "The ability to process only structured data"
+      ],
+      "correct": 1,
+      "explanation": "The data lake is the storage paradigm that embodies Big Data's principle of capturing everything, without forcing predefined models, using schema-on-read."
+    },
+    {
+      "stem": "In terms of purpose, how do Big Data and a data lake differ?",
+      "options": [
+        "Big Data provides cheap storage; the data lake solves scale and speed",
+        "Big Data focuses on solving the challenges of scale, speed and diversity; the data lake provides a place to store all forms of data cheaply and flexibly",
+        "Both focus only on real-time streaming",
+        "Big Data is for governance; the data lake is for analytics",
+        "Big Data is for structured data; the data lake is for unstructured data only"
+      ],
+      "correct": 1,
+      "explanation": "Big Data focuses on solving scale, speed and diversity challenges, while the data lake provides a cheap, flexible place to store all forms of data."
+    },
+    {
+      "stem": "On what is a data lake usually built?",
+      "options": [
+        "A relational database with star schemas",
+        "HDFS or cloud object storage with query engines layered on top",
+        "An in-memory cache",
+        "A message queue",
+        "A tape library"
+      ],
+      "correct": 1,
+      "explanation": "A data lake is usually built on HDFS or cloud object storage, with query engines layered on top."
+    },
+    {
+      "stem": "In the streaming fraud detection example, which component belongs to the data lake rather than the Big Data ecosystem?",
+      "options": [
+        "Kafka for real-time ingestion",
+        "Spark for processing",
+        "NoSQL databases for rapid lookups",
+        "Raw transaction logs, enriched data sets and historical features used to train models",
+        "The banking application itself"
+      ],
+      "correct": 3,
+      "explanation": "The Big Data ecosystem supplies Kafka, Spark and NoSQL; the data lake stores the raw transaction logs, enriched data sets and historical features data scientists use to build and retrain models."
+    },
+    {
+      "stem": "Which misconception does understanding the Big Data versus data lake distinction help avoid?",
+      "options": [
+        "That data lakes require 3NF",
+        "That simply building a data lake equals doing Big Data",
+        "That Big Data cannot use SQL",
+        "That Kafka is a storage system",
+        "That warehouses are obsolete"
+      ],
+      "correct": 1,
+      "explanation": "The lake is one piece of a larger landscape that includes ingestion, processing, governance and analytics, so building a lake alone is not the same as doing Big Data."
+    },
+    {
+      "stem": "How does the evolution of Big Data relate to data lakes?",
+      "options": [
+        "Data lakes were invented first and led to Big Data",
+        "Big Data drove the innovation that made data lakes possible, and lakes became the storage foundation for modern analytics, machine learning and AI",
+        "They evolved independently and only later converged",
+        "Data lakes replaced Big Data once Hadoop declined",
+        "Neither influenced the other"
+      ],
+      "correct": 1,
+      "explanation": "Big Data drove the innovation that made data lakes possible; data lakes then became the practical storage foundation for modern analytics, machine learning and AI."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a type of new database introduced by the Big Data movement?",
+      "options": [
+        "NoSQL",
+        "Graph",
+        "Document",
+        "Columnar",
+        "Hierarchical"
+      ],
+      "correct": 4,
+      "explanation": "The new database types named are NoSQL, graph, document and columnar; hierarchical databases are not among them."
+    }
+  ]
+}

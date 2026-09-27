@@ -1,0 +1,125 @@
+{
+  "topic": "loops",
+  "questions": [
+    {
+      "stem": "In the context of data and databases, what do loops refer to?",
+      "options": [
+        "Circular references between two tables",
+        "Iterative processes where a set of operations is repeated multiple times based on a specific condition",
+        "Network cables connected in a ring",
+        "A type of database index",
+        "The cyclic refresh of a materialised view"
+      ],
+      "correct": 1,
+      "explanation": "Loops are iterative processes in which a set of operations is repeated multiple times based on a specific condition."
+    },
+    {
+      "stem": "Which two types of loops are described?",
+      "options": [
+        "Nested loops and recursive loops",
+        "Inner loops and outer loops",
+        "For loops and while loops",
+        "Do loops and until loops",
+        "Batch loops and stream loops"
+      ],
+      "correct": 2,
+      "explanation": "The two types of loops described are for loops and while loops."
+    },
+    {
+      "stem": "What is a for loop used for?",
+      "options": [
+        "Running until an unknown condition is met",
+        "Locking a table during updates",
+        "Declaring a counter variable in SQL",
+        "Iterating over a sequence such as a list, array or range a predetermined number of times",
+        "Joining two tables together"
+      ],
+      "correct": 3,
+      "explanation": "A for loop iterates over a sequence (such as a list, array or range) for a predetermined number of times."
+    },
+    {
+      "stem": "When is a while loop especially useful in the data world?",
+      "options": [
+        "When iterating over a fixed-length list",
+        "When printing every row of a dataset exactly once",
+        "When the loop must run exactly ten times",
+        "When processing rows in reverse order",
+        "When the number of iterations is not known in advance and the loop continues until a condition is met"
+      ],
+      "correct": 4,
+      "explanation": "While loops are useful when the number of iterations is not known in advance; the loop continues as long as the specified condition is true."
+    },
+    {
+      "stem": "How long does a while loop continue iterating?",
+      "options": [
+        "As long as a specified condition is true",
+        "For exactly the number of items in a sequence",
+        "Until the database connection closes",
+        "Until the user presses a key",
+        "For a fixed number of seconds"
+      ],
+      "correct": 0,
+      "explanation": "A while loop continues iterating as long as a specified condition is true."
+    },
+    {
+      "stem": "Which language is used for the for-loop example that prints each row of a dataset?",
+      "options": [
+        "SQL",
+        "Python",
+        "JavaScript",
+        "VBA",
+        "Java"
+      ],
+      "correct": 1,
+      "explanation": "The for-loop example is in Python: for row in dataset: print(row)."
+    },
+    {
+      "stem": "In the SQL while-loop example, what stops the loop?",
+      "options": [
+        "The dataset running out of rows",
+        "A BREAK statement",
+        "The @counter variable reaching 10, so the condition @counter < 10 becomes false",
+        "A timeout set on the database",
+        "The END keyword being reached once"
+      ],
+      "correct": 2,
+      "explanation": "The example declares @counter as 0 and loops WHILE @counter < 10, incrementing the counter each pass until the condition is false."
+    },
+    {
+      "stem": "Which data-related scenarios are given as places where loop structures can be applied?",
+      "options": [
+        "Only user authentication",
+        "Only network monitoring",
+        "Only schema design",
+        "Data cleaning, transformation or aggregation",
+        "Only report formatting"
+      ],
+      "correct": 3,
+      "explanation": "Loop structures can be applied in data cleaning, transformation or aggregation, such as applying an operation to each row or aggregating until a condition is met."
+    },
+    {
+      "stem": "What is noted about the implementation of loops across languages?",
+      "options": [
+        "Loops work identically in every language",
+        "Loops exist only in Python",
+        "SQL does not support loops",
+        "Loops are always written with the FOR keyword",
+        "The specific implementation may vary depending on the programming or query language used, such as Python or SQL"
+      ],
+      "correct": 4,
+      "explanation": "The specific implementation of loops varies depending on the programming or query language used and the application context."
+    },
+    {
+      "stem": "Which statement about for loops and while loops is NOT correct?",
+      "options": [
+        "A for loop runs a predetermined number of times over a sequence",
+        "A while loop is the better choice when the number of iterations is known in advance",
+        "A while loop continues while its condition remains true",
+        "Both can be used to process records in a dataset",
+        "For loops are commonly used to iterate through rows in a dataset"
+      ],
+      "correct": 1,
+      "explanation": "A while loop is suited to cases where the number of iterations is not known in advance; a for loop is the one used for a predetermined number of iterations."
+    }
+  ]
+}

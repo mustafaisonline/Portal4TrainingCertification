@@ -1,0 +1,125 @@
+{
+  "topic": "conceptual-data-modelling-cdm",
+  "questions": [
+    {
+      "stem": "What does Conceptual Data Modelling (CDM) provide?",
+      "options": [
+        "A high-level, business-oriented view of data identifying core entities and their relationships without technical implementation details",
+        "A platform-specific storage design with indexes",
+        "A list of ETL jobs",
+        "A physical partitioning strategy",
+        "A set of SQL views"
+      ],
+      "correct": 0,
+      "explanation": "CDM describes how the business views its data, not how the database stores it, focusing on entities and relationships."
+    },
+    {
+      "stem": "What is the primary goal of Conceptual Data Modelling?",
+      "options": [
+        "To capture the essence of business information in a way non-technical stakeholders can understand and validate",
+        "To optimise indexing and storage",
+        "To choose a database vendor",
+        "To define data types for every column",
+        "To normalise tables to 3NF"
+      ],
+      "correct": 0,
+      "explanation": "CDM captures business information so leaders, analysts and architects can agree on what exists and how it relates before detailed design."
+    },
+    {
+      "stem": "Which of the following is intentionally omitted at the conceptual modelling level?",
+      "options": [
+        "Entities such as Customer and Loan",
+        "Relationships between entities",
+        "Cardinality rules",
+        "Attributes such as interest rate, date fields and data types",
+        "The name of each entity"
+      ],
+      "correct": 3,
+      "explanation": "Attributes such as interest rate, date fields or data types are intentionally omitted; the focus is on what exists and how it connects."
+    },
+    {
+      "stem": "In the loan domain, what cardinality describes the relationship between Customer and Loan?",
+      "options": [
+        "One-to-one",
+        "One-to-zero-or-one",
+        "Many-to-many",
+        "Zero-to-zero",
+        "One-to-zero-or-many, since each Loan has exactly one Customer but a Customer may have zero, one or many Loans"
+      ],
+      "correct": 4,
+      "explanation": "Each Loan must be linked to exactly one Customer, while a Customer may have zero, one or many Loans: a one-to-zero-or-many relationship."
+    },
+    {
+      "stem": "Why is the relationship between Loan and Approval Decision described as one-to-zero-or-one?",
+      "options": [
+        "Because a loan can have many decisions",
+        "Because decisions belong to customers",
+        "Because decisions are optional forever",
+        "Because a Loan may not yet have a decision while under review, but once processed has exactly one",
+        "Because approval is stored in a separate system"
+      ],
+      "correct": 3,
+      "explanation": "A Loan still under review has no decision yet; once processed it has exactly one, such as approved or rejected."
+    },
+    {
+      "stem": "What cardinality holds between an approved Loan and its Repayment Schedule?",
+      "options": [
+        "One-to-many",
+        "Many-to-many",
+        "One-to-one",
+        "One-to-zero-or-many",
+        "Zero-to-many"
+      ],
+      "correct": 2,
+      "explanation": "Every approved Loan must have exactly one Repayment Schedule and each Repayment Schedule belongs to exactly one Loan: a one-to-one relationship."
+    },
+    {
+      "stem": "In the university example, how is the Student and Course relationship represented at the conceptual level?",
+      "options": [
+        "As a one-to-one relationship",
+        "As a one-to-zero-or-one relationship",
+        "As a unary relationship",
+        "It cannot be represented conceptually",
+        "As a many-to-many relationship, resolved into junction entities later in logical or physical modelling"
+      ],
+      "correct": 4,
+      "explanation": "A Student can enrol in multiple Courses and a Course can have multiple Students; this many-to-many is resolved into associative entities later."
+    },
+    {
+      "stem": "What transition does Conceptual Data Modelling mark?",
+      "options": [
+        "From logical to physical design",
+        "From process thinking to structural thinking",
+        "From analytics to operations",
+        "From cloud to on-premises",
+        "From data to metadata"
+      ],
+      "correct": 1,
+      "explanation": "Where process models describe how work flows, conceptual models describe what exists and how elements relate: the shift from process to structural thinking."
+    },
+    {
+      "stem": "Which statement about Logical Data Modelling (LDM) is correct?",
+      "options": [
+        "It is a single modelling technique",
+        "It is a stage in the modelling journey where different modelling families and design philosophies emerge",
+        "It is platform-specific",
+        "It replaces conceptual modelling",
+        "It only applies to OLAP systems"
+      ],
+      "correct": 1,
+      "explanation": "LDM is not a single technique but a stage where structural rules, normalisation, constraints and integrity are formally defined."
+    },
+    {
+      "stem": "In the overview of logical modelling families, which technique has the stated limitation of being complex for business users despite offering full traceability?",
+      "options": [
+        "Dimensional Modelling",
+        "Normal Forms (1NF-3NF+)",
+        "Data Vault",
+        "NoSQL Modelling",
+        "Temporal Modelling"
+      ],
+      "correct": 2,
+      "explanation": "Data Vault provides historical tracking, auditability and full traceability, but its limitation is that it is complex for business users."
+    }
+  ]
+}

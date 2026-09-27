@@ -1,0 +1,125 @@
+{
+  "topic": "consumption-layer",
+  "questions": [
+    {
+      "stem": "What is the Consumption Layer?",
+      "options": [
+        "The layer consumers use to extract information for reporting",
+        "The layer that consumes or takes in data from source systems",
+        "The layer that stores pre-aggregated OLAP cubes",
+        "The layer that exposes data through APIs",
+        "The layer that archives removed data"
+      ],
+      "correct": 1,
+      "explanation": "Despite its name, the Consumption Layer is the layer that consumes or takes in data from source systems; the layer consumers extract from is the Serving Layer."
+    },
+    {
+      "stem": "Which layer is the Consumption Layer often confused with, because of its name?",
+      "options": [
+        "Semantic Layer",
+        "Speed Layer",
+        "Serving Layer",
+        "Batch Layer",
+        "Landing Zone"
+      ],
+      "correct": 2,
+      "explanation": "People assume the Consumption Layer is where consumers extract data, but that is the Serving Layer."
+    },
+    {
+      "stem": "In Lambda Architecture, which layers are the Consumption Layers?",
+      "options": [
+        "The Serving Layer only",
+        "The Batch and Speed Layers",
+        "The Semantic Layer and OLAP Cubes",
+        "The Data Mart only",
+        "The Landing Zone only"
+      ],
+      "correct": 1,
+      "explanation": "In Lambda Architecture the Serving Layer is last; the Batch and Speed Layers, which process data from source to serving, are the Consumption Layers."
+    },
+    {
+      "stem": "In a Data Warehouse, which zones make up the Consumption Layer?",
+      "options": [
+        "Transformed Zone and Semantic Layer",
+        "OLAP Cubes and Data Marts",
+        "Landing and Staging zones",
+        "Serving and Speed layers",
+        "Source and Target systems"
+      ],
+      "correct": 2,
+      "explanation": "Within a Data Warehouse, the Consumption Layer is the Landing and Staging zone."
+    },
+    {
+      "stem": "What happens in the Landing Zone?",
+      "options": [
+        "The source data model is copied on an as-is basis",
+        "The data model is changed to business requirements",
+        "Technical data quality rules are applied",
+        "Data is exposed to end users",
+        "Data is aggregated into cubes"
+      ],
+      "correct": 0,
+      "explanation": "The Landing Zone is where the source data model is copied as-is, without change."
+    },
+    {
+      "stem": "Which example describes a rule applied in the Staging Zone?",
+      "options": [
+        "Joining customer and sales tables into a star schema",
+        "Calculating quarterly revenue KPIs",
+        "Building a semantic layer",
+        "Converting all date formats to one format and null values to a default",
+        "Deleting data after its retention period"
+      ],
+      "correct": 3,
+      "explanation": "In the Staging Zone the data model stays the same but basic technical rules apply, such as unifying date formats, defaulting nulls and fixing numeric data types."
+    },
+    {
+      "stem": "What kind of data quality rules are applied between the raw and processed layers?",
+      "options": [
+        "Business data quality rules",
+        "Machine learning drift rules",
+        "Regulatory data quality rules",
+        "No data quality rules at all",
+        "Technical data quality rules, not business data quality rules"
+      ],
+      "correct": 4,
+      "explanation": "From raw to processed layer the rules are technical data quality rules, not business ones."
+    },
+    {
+      "stem": "In which zone is the data model changed according to business requirements, as in a Data Warehouse or Data Mart?",
+      "options": [
+        "Transformed Zone",
+        "Staging Zone",
+        "Landing Zone",
+        "Speed Layer",
+        "Serving Zone"
+      ],
+      "correct": 0,
+      "explanation": "The Transformed Zone is where the data model is changed as per business requirement, for example into a Data Warehouse or Data Mart."
+    },
+    {
+      "stem": "Which tool is named as one of the most used consumption tools for real-time processing?",
+      "options": [
+        "Oracle Forms",
+        "Tableau",
+        "SSRS",
+        "Kafka",
+        "Cognos"
+      ],
+      "correct": 3,
+      "explanation": "For real-time processing, Kafka is one of the most used consumption tools."
+    },
+    {
+      "stem": "Why are CDC tools becoming popular in Big Data consumption layers?",
+      "options": [
+        "Because they encrypt data in transit",
+        "Because they generate synthetic data",
+        "Because they produce canned reports",
+        "Because they replace Hadoop",
+        "Because they allow pulling only changed data from the source rather than a whole dump every time"
+      ],
+      "correct": 4,
+      "explanation": "With huge data volumes, CDC tools let organisations pull only the changed data from source instead of a full dump on every load."
+    }
+  ]
+}

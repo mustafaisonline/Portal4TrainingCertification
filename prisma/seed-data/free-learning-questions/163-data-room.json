@@ -1,0 +1,125 @@
+{
+  "topic": "data-room",
+  "questions": [
+    {
+      "stem": "For what purpose are Data Rooms normally used?",
+      "options": [
+        "Due diligence of confidential documents, such as business mergers or acquisitions handled by bidders, advisers, and compliance and audit teams",
+        "Storing semi-structured and unstructured data for analytics",
+        "Running transactional and analytical workloads on one system",
+        "Preserving customer history for seven years after account closure",
+        "Hosting Hadoop clusters with hundreds of data nodes"
+      ],
+      "correct": 0,
+      "explanation": "Data Rooms are normally used for due diligence of confidential documents, such as handling business mergers or acquisitions by bidders and advisers, and by compliance and audit teams."
+    },
+    {
+      "stem": "What is the relationship between a Data Room and a Datastore?",
+      "options": [
+        "A Datastore is a small section within a Data Room",
+        "They are both the same entity",
+        "A Data Room is always physical and a Datastore is always virtual",
+        "A Datastore contains only structured data while a Data Room contains only documents",
+        "They are unrelated concepts from different disciplines"
+      ],
+      "correct": 1,
+      "explanation": "Data Rooms and Datastores are described as being both the same entity."
+    },
+    {
+      "stem": "Which of the following is NOT stated about traditional Physical Data Rooms?",
+      "options": [
+        "They hold physical documents",
+        "They are for restricted people only and are secured by guards",
+        "Any number of parties may use them simultaneously",
+        "A maximum of one or two parties may go in at any given point in time",
+        "Multiple teams had to fly over to be near them, which was very expensive"
+      ],
+      "correct": 2,
+      "explanation": "Physical Data Rooms admit a maximum of one or two parties at any given time, which delays the process when multiple parties need the same room. Simultaneous use by any number of parties is not allowed."
+    },
+    {
+      "stem": "What does VDR stand for in the context of Data Rooms?",
+      "options": [
+        "Verified Document Register",
+        "Vendor Due-diligence Report",
+        "Volume Data Repository",
+        "Virtual Data Room",
+        "Validated Data Record"
+      ],
+      "correct": 3,
+      "explanation": "VDRs, Virtual Data Rooms, came into the picture as a more viable alternative to Physical Data Rooms."
+    },
+    {
+      "stem": "How are Virtual Data Rooms (VDRs) made available?",
+      "options": [
+        "On paper, inside a guarded building",
+        "On removable media couriered to each bidder",
+        "Through public websites with no login",
+        "Only on the seller's local network",
+        "Online, behind firewalls and with proper access control"
+      ],
+      "correct": 4,
+      "explanation": "VDRs are available online, behind firewalls and with proper access control."
+    },
+    {
+      "stem": "How have Virtual Data Rooms changed the bid process?",
+      "options": [
+        "Sellers can invite a bigger audience, and teams in one part of the world can take part in a bid happening in another part of the world",
+        "Bidders must now travel to the seller's country to review documents",
+        "Only one bidder at a time may access the documents",
+        "Documents may now be freely copied and forwarded to advisers",
+        "The bid process has become slower but more secure"
+      ],
+      "correct": 0,
+      "explanation": "VDRs have changed the game: sellers can invite a bigger audience and teams in one part of the world can participate in a bid process happening elsewhere, cutting cost and expediting the process."
+    },
+    {
+      "stem": "Which activities are NOT allowed in a Virtual Data Room, mirroring the rule that nothing may be taken out of a Physical Data Room?",
+      "options": [
+        "Reading and reviewing documents",
+        "Copying, forwarding and printing documents",
+        "Logging in from another country",
+        "Inviting advisers to review documents",
+        "Reviewing documents behind a firewall"
+      ],
+      "correct": 1,
+      "explanation": "Just as individuals in a Physical Data Room may review documents but not take anything out, in a VDR copy, forward and print activities are not allowed."
+    },
+    {
+      "stem": "Why are Virtual Data Rooms still not acceptable in some countries?",
+      "options": [
+        "Because they are too expensive to license",
+        "Because firewalls are prohibited by local law",
+        "Because the data can be so confidential that a cyber-attack and leakage could result in political instability or similar scenarios",
+        "Because bidders in those countries prefer to travel",
+        "Because printing documents is mandatory for audits"
+      ],
+      "correct": 2,
+      "explanation": "In some countries VDRs are still not acceptable because the data is sometimes so confidential that any cyber-attack and leakage could result in political instability or other scenarios."
+    },
+    {
+      "stem": "Which two effects did Virtual Data Rooms have on the due diligence process compared with Physical Data Rooms?",
+      "options": [
+        "Increased cost and slowed the process",
+        "Increased cost but expedited the process",
+        "Cut cost but slowed the process",
+        "Cut cost and expedited the process",
+        "Left cost and speed unchanged"
+      ],
+      "correct": 3,
+      "explanation": "VDRs have cut down the cost and expedited the process."
+    },
+    {
+      "stem": "When the Data Room concept is related to IT projects, what can be called a Data Room?",
+      "options": [
+        "The project's source code repository",
+        "The project's test database",
+        "The project's Hadoop cluster",
+        "The project's email distribution list",
+        "The shared drives used for the project's confidential documents"
+      ],
+      "correct": 4,
+      "explanation": "Although the term is not directly related to the data domain, if it is correlated with an IT project's confidential documents, all the shared drives used for project documents can be called Data Rooms."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "newsql",
+  "questions": [
+    {
+      "stem": "What does the term NewSQL refer to?",
+      "options": [
+        "A single database product sold by one vendor",
+        "A class of modern relational database management systems designed to meet the performance and scalability needs of modern applications",
+        "A new version of the SQL language that replaces SELECT statements",
+        "A category of document-oriented NoSQL databases",
+        "A file format for exchanging data between spreadsheets"
+      ],
+      "correct": 1,
+      "explanation": "NewSQL refers to a class of modern relational database management systems designed for the performance and scalability requirements of modern applications, particularly in distributed and cloud environments."
+    },
+    {
+      "stem": "What potential benefit is suggested if the NewSQL model materialises?",
+      "options": [
+        "Eliminating the need for separate SQL and NoSQL datastores, saving significant effort",
+        "Removing the need for any database administrators",
+        "Making all data publicly available by default",
+        "Replacing cloud computing with on-premises servers",
+        "Eliminating the need for data backups"
+      ],
+      "correct": 0,
+      "explanation": "If NewSQL materialises, it has the potential to streamline operations by eliminating the need for separate SQL and NoSQL datastores."
+    },
+    {
+      "stem": "What do the letters in ACID stand for?",
+      "options": [
+        "Access, Control, Integration, Deployment",
+        "Availability, Capacity, Indexing, Distribution",
+        "Atomicity, Consistency, Isolation, Durability",
+        "Analysis, Compression, Iteration, Design",
+        "Authentication, Confidentiality, Integrity, Detection"
+      ],
+      "correct": 2,
+      "explanation": "ACID stands for Atomicity, Consistency, Isolation and Durability, properties that NewSQL databases maintain to ensure data integrity."
+    },
+    {
+      "stem": "How do NewSQL databases achieve scalability?",
+      "options": [
+        "By buying a single much larger server",
+        "By reducing the amount of data stored",
+        "By dropping SQL support entirely",
+        "By scaling horizontally, adding more nodes to a distributed system",
+        "By limiting the number of concurrent users"
+      ],
+      "correct": 3,
+      "explanation": "NewSQL databases are designed to scale horizontally, handling increasing workloads by adding more nodes to a distributed system."
+    },
+    {
+      "stem": "Why does SQL compatibility matter for NewSQL databases?",
+      "options": [
+        "It prevents the database from running in the cloud",
+        "It forces developers to learn a new query language",
+        "It makes the database slower but more secure",
+        "It removes the need for ACID compliance",
+        "It makes it easier for developers to transition from traditional relational databases"
+      ],
+      "correct": 4,
+      "explanation": "NewSQL databases support traditional SQL queries, making it easier for developers to move from traditional relational databases to these newer systems."
+    },
+    {
+      "stem": "Which of these is given as an example of a NewSQL database?",
+      "options": [
+        "Google Spanner",
+        "Microsoft Excel",
+        "Apache Kafka",
+        "MongoDB Atlas",
+        "Oracle Forms"
+      ],
+      "correct": 0,
+      "explanation": "Google Spanner, a globally distributed and horizontally scalable database system, is one of the NewSQL examples given, alongside CockroachDB and NuoDB."
+    },
+    {
+      "stem": "How is CockroachDB described?",
+      "options": [
+        "A proprietary desktop spreadsheet tool",
+        "An open-source, distributed SQL database designed to be scalable, resilient and strongly consistent",
+        "A streaming platform for video delivery",
+        "A metadata registry standard",
+        "A programming language for data science"
+      ],
+      "correct": 1,
+      "explanation": "CockroachDB is described as an open-source, distributed SQL database designed to be scalable, resilient and strongly consistent."
+    },
+    {
+      "stem": "Which architectural designs may NewSQL databases use to distribute data and workload across nodes?",
+      "options": [
+        "Monolithic and single-server architectures",
+        "Mainframe and terminal architectures",
+        "Distributed and shared-nothing architectures",
+        "Peer-to-peer file-sharing architectures",
+        "Client-only architectures with no server"
+      ],
+      "correct": 2,
+      "explanation": "NewSQL databases may use innovative designs such as distributed and shared-nothing architectures to spread data and workload across multiple nodes."
+    },
+    {
+      "stem": "Which of the following is NOT a key characteristic attributed to NewSQL databases?",
+      "options": [
+        "Horizontal scalability",
+        "High performance for read and write operations",
+        "ACID compliance",
+        "Abandoning structured query language in favour of key-value access only",
+        "SQL compatibility"
+      ],
+      "correct": 3,
+      "explanation": "NewSQL databases keep SQL support and ACID compliance while adding scalability and performance; abandoning SQL is the opposite of their aim."
+    },
+    {
+      "stem": "Is NewSQL tied to a specific product or technology?",
+      "options": [
+        "Yes, it is the trademark of a single company",
+        "Yes, it refers only to Google Spanner",
+        "Yes, it is a specific version of PostgreSQL",
+        "Yes, it is a cloud service sold by one provider",
+        "No, it represents a category of databases that share similar goals and characteristics"
+      ],
+      "correct": 4,
+      "explanation": "The term NewSQL is not associated with a specific technology or product but represents a category of databases sharing similar goals and characteristics."
+    }
+  ]
+}

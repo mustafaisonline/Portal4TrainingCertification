@@ -1,0 +1,125 @@
+{
+  "topic": "supertype-and-subtype",
+  "questions": [
+    {
+      "stem": "In data modelling, what is a supertype?",
+      "options": [
+        "A generalisation representing a higher-level entity that contains attributes common to multiple related entities",
+        "A table that stores only numeric facts",
+        "A specialised entity with attributes unique to itself",
+        "A database index that speeds up queries",
+        "A primary key shared by two tables"
+      ],
+      "correct": 0,
+      "explanation": "A supertype is a generalisation that represents a higher-level entity and contains attributes common to multiple related entities."
+    },
+    {
+      "stem": "In data modelling, what is a subtype?",
+      "options": [
+        "A backup copy of a supertype",
+        "A specialisation of a supertype, representing a more specific entity that inherits attributes and may add its own",
+        "A column that stores dates",
+        "A view that hides sensitive data",
+        "A generalisation of several unrelated entities"
+      ],
+      "correct": 1,
+      "explanation": "A subtype is a specialisation of a supertype, representing a more specific entity with additional attributes; it inherits attributes from the supertype."
+    },
+    {
+      "stem": "In the Vehicle example, which attributes belong to the supertype?",
+      "options": [
+        "Number of Doors and Body Type",
+        "Department and Skills",
+        "Manufacturer, Model and Year",
+        "Name and EmployeeID",
+        "Engine Size and Fuel Type"
+      ],
+      "correct": 2,
+      "explanation": "The supertype Vehicle includes common attributes like Manufacturer, Model and Year, which cars, motorcycles and trucks inherit."
+    },
+    {
+      "stem": "In the Vehicle example, which attributes might the Car subtype add beyond those it inherits?",
+      "options": [
+        "Manufacturer and Model",
+        "Year and Registration Country",
+        "Name and EmployeeID",
+        "Number of Doors and Body Type",
+        "Budget and Expenditure"
+      ],
+      "correct": 3,
+      "explanation": "Car is a subtype that inherits from Vehicle but may have additional attributes specific to cars, such as Number of Doors or Body Type."
+    },
+    {
+      "stem": "What benefit does inheritance provide when subtypes inherit attributes from a supertype?",
+      "options": [
+        "Faster network transfer",
+        "Stronger encryption",
+        "Smaller server hardware",
+        "Automatic data cleansing",
+        "Reusability and reduced redundancy"
+      ],
+      "correct": 4,
+      "explanation": "Subtypes inherit attributes from their supertype, promoting reusability and reducing redundancy."
+    },
+    {
+      "stem": "What does completeness describe in the supertype and subtype relationship?",
+      "options": [
+        "Whether subtypes are total, covering all instances of the supertype, or partial, covering only some",
+        "Whether all columns have been filled in",
+        "Whether the database has been backed up",
+        "Whether every table has a primary key",
+        "Whether the model has been reviewed by an auditor"
+      ],
+      "correct": 0,
+      "explanation": "Completeness means subtypes can be categorised as total, covering all instances of the supertype, or partial, covering only some instances."
+    },
+    {
+      "stem": "In the Employee example, which are the subtypes?",
+      "options": [
+        "Name and EmployeeID",
+        "Manager and Technician",
+        "Department and Skills",
+        "Vehicle and Car",
+        "Admissions and Finance"
+      ],
+      "correct": 1,
+      "explanation": "The supertype Employee has common attributes Name and EmployeeID, and its subtypes include Manager and Technician, each with additional attributes like Department or Skills."
+    },
+    {
+      "stem": "Which pairing correctly matches the modelling terms with their roles?",
+      "options": [
+        "Supertype represents specialisation, subtype represents generalisation",
+        "Both supertype and subtype represent generalisation",
+        "Supertype represents generalisation, subtype represents specialisation",
+        "Both supertype and subtype represent specialisation",
+        "Neither term relates to generalisation or specialisation"
+      ],
+      "correct": 2,
+      "explanation": "Supertypes represent general concepts and subtypes represent more specific variations or specialisations of those concepts."
+    },
+    {
+      "stem": "Which of the following is NOT true of a subtype?",
+      "options": [
+        "It inherits attributes from its supertype",
+        "It may have additional attributes of its own",
+        "It represents a more specific category within the generalisation",
+        "It contains only the attributes shared by all related entities and no others",
+        "It can be total or partial in coverage"
+      ],
+      "correct": 3,
+      "explanation": "Containing only the shared attributes describes the supertype; a subtype inherits those and may add attributes specific to itself."
+    },
+    {
+      "stem": "In summary, why are supertypes and subtypes used in data modelling?",
+      "options": [
+        "To reduce the number of tables to exactly one",
+        "To encrypt sensitive attributes",
+        "To speed up batch processing",
+        "To convert relational data into documents",
+        "To represent general and specific entities, capturing both commonalities and differences among related entities"
+      ],
+      "correct": 4,
+      "explanation": "Supertypes and subtypes represent general and specific entities, organising data in a way that captures both commonalities and differences among related entities."
+    }
+  ]
+}

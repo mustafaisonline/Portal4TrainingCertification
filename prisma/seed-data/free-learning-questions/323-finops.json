@@ -1,0 +1,125 @@
+{
+  "topic": "finops",
+  "questions": [
+    {
+      "stem": "From which phrase is the term FinOps derived?",
+      "options": [
+        "Financial operations",
+        "Finite optimisation",
+        "Final operations",
+        "Financial opportunities",
+        "Fintech operations"
+      ],
+      "correct": 0,
+      "explanation": "FinOps is a term derived from \"financial operations\"."
+    },
+    {
+      "stem": "What is the primary focus of FinOps?",
+      "options": [
+        "Securing cloud networks against intrusion",
+        "Effectively managing the costs associated with cloud usage",
+        "Migrating on-premises servers to the cloud",
+        "Writing financial reporting software",
+        "Auditing corporate tax returns"
+      ],
+      "correct": 1,
+      "explanation": "The primary focus of FinOps is managing cloud costs: understanding, optimising and controlling expenditure so it aligns with business goals."
+    },
+    {
+      "stem": "What does the FinOps principle of shared responsibility mean?",
+      "options": [
+        "Cloud providers share the cost of overspending with customers",
+        "Every team receives the same cloud budget",
+        "Financial considerations are a collective responsibility across organisational functions, not solely the finance department's",
+        "Engineering teams take over all financial reporting",
+        "Costs are split equally between finance and IT"
+      ],
+      "correct": 2,
+      "explanation": "Shared responsibility means financial considerations are not solely the concern of the finance department but a collective responsibility across functions."
+    },
+    {
+      "stem": "Which stakeholders does FinOps bring together to manage cloud costs?",
+      "options": [
+        "Only the finance department",
+        "Only cloud service providers",
+        "Marketing, sales and legal",
+        "Finance, operations and IT/engineering",
+        "External auditors and regulators"
+      ],
+      "correct": 3,
+      "explanation": "FinOps brings together stakeholders from finance, operations and IT/engineering to collectively manage and optimise cloud costs."
+    },
+    {
+      "stem": "Which cloud service providers are named as examples of the infrastructure FinOps addresses?",
+      "options": [
+        "Oracle, SAP and Salesforce",
+        "IBM, HP and Dell",
+        "Cisco, Juniper and Arista",
+        "Snowflake, Databricks and Tableau",
+        "AWS, Azure and Google Cloud"
+      ],
+      "correct": 4,
+      "explanation": "FinOps is tailored to cloud computing infrastructure such as the services provided by AWS, Azure or Google Cloud."
+    },
+    {
+      "stem": "Why is FinOps described as a management practice rather than just a set of guidelines?",
+      "options": [
+        "Because it involves a structured and ongoing approach to managing financial aspects of cloud operations",
+        "Because it is mandated by law in most countries",
+        "Because it is owned exclusively by senior management",
+        "Because it replaces the finance department",
+        "Because it applies only during annual budgeting"
+      ],
+      "correct": 0,
+      "explanation": "Calling FinOps a management practice indicates a structured and ongoing approach to managing the financial aspects of cloud operations."
+    },
+    {
+      "stem": "What is the ultimate goal of FinOps?",
+      "options": [
+        "Eliminating all cloud spending",
+        "Enhancing efficiency and optimising cloud spending while balancing cost, performance and reliability",
+        "Moving all workloads back on-premises",
+        "Maximising the number of cloud services used",
+        "Centralising all purchasing decisions in finance"
+      ],
+      "correct": 1,
+      "explanation": "The ultimate goal of FinOps is to enhance efficiency and optimise cloud spending, balancing cost, performance and reliability."
+    },
+    {
+      "stem": "How is FinOps characterised in terms of duration?",
+      "options": [
+        "A one-time initiative completed at cloud migration",
+        "A quarterly audit exercise",
+        "A continuous improvement process",
+        "An annual budgeting event",
+        "A project with a fixed end date"
+      ],
+      "correct": 2,
+      "explanation": "FinOps is not a one-time initiative but a continuous improvement process in which teams regularly assess, analyse and refine their practices."
+    },
+    {
+      "stem": "What is the purpose of the educational component often included in FinOps?",
+      "options": [
+        "To certify staff as cloud architects",
+        "To train finance staff to write code",
+        "To teach cloud providers about customer needs",
+        "To help teams understand how their decisions impact costs",
+        "To prepare teams for external audits"
+      ],
+      "correct": 3,
+      "explanation": "Teams are educated about cloud financial management practices to enhance their understanding of how their decisions impact costs."
+    },
+    {
+      "stem": "Which of the following is NOT a tenet of FinOps as described?",
+      "options": [
+        "Shared responsibility across functions",
+        "Continuous improvement",
+        "Collaboration across teams",
+        "Cost management aligned with business goals",
+        "Financial decisions made solely by the finance department"
+      ],
+      "correct": 4,
+      "explanation": "FinOps explicitly rejects the idea that cost is solely the finance department's concern; it promotes shared responsibility and collaboration."
+    }
+  ]
+}

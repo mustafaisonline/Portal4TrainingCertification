@@ -1,0 +1,125 @@
+{
+  "topic": "data-sources",
+  "questions": [
+    {
+      "stem": "What is a data source?",
+      "options": [
+        "A tool that visualises analytical results",
+        "Essentially where information comes from, such as a spreadsheet, a company database or social media posts",
+        "A method for compressing large files",
+        "A policy governing who may access data",
+        "A machine learning model that predicts outcomes"
+      ],
+      "correct": 1,
+      "explanation": "A data source is where your information comes from; it can be a list of customer names in a spreadsheet, sales details in a database, or tweets on social media, and can range from simple text files to large databases."
+    },
+    {
+      "stem": "Which of the following are named as examples of relational databases that can act as data sources?",
+      "options": [
+        "MongoDB and Cassandra",
+        "Amazon S3 and Azure Blob Storage",
+        "MySQL, PostgreSQL and Oracle",
+        "Salesforce and SAP",
+        "Microsoft Excel and Google Sheets"
+      ],
+      "correct": 2,
+      "explanation": "MySQL, PostgreSQL and Oracle are cited as relational databases where data is organised in tables. MongoDB and Cassandra are NoSQL examples."
+    },
+    {
+      "stem": "MongoDB and Cassandra are given as examples of which kind of data source?",
+      "options": [
+        "Flat files",
+        "Cloud storage services",
+        "Spreadsheet files",
+        "System logs",
+        "NoSQL databases that may store data in more flexible formats"
+      ],
+      "correct": 4,
+      "explanation": "MongoDB and Cassandra are NoSQL databases, which may store data in more flexible formats than the tables of a relational database."
+    },
+    {
+      "stem": "Which type of data source is represented by systems such as Salesforce, SAP or Oracle ERP?",
+      "options": [
+        "Business or enterprise applications like CRM and ERP systems",
+        "Flat files",
+        "Cloud storage",
+        "Logs",
+        "NoSQL databases"
+      ],
+      "correct": 0,
+      "explanation": "Salesforce, SAP and Oracle ERP are business or enterprise applications (CRM and ERP systems) used to manage customer and operations data, serving as rich sources for analytics and BI."
+    },
+    {
+      "stem": "In which environments are spreadsheet files such as Excel or Google Sheets described as especially common data sources?",
+      "options": [
+        "Large-scale, highly technical enterprise environments only",
+        "Smaller-scale or less technical environments",
+        "Cloud-native environments only",
+        "Real-time streaming environments",
+        "Security monitoring environments"
+      ],
+      "correct": 1,
+      "explanation": "Spreadsheet files store data in tabular form and are common data sources especially in smaller-scale or less technical environments."
+    },
+    {
+      "stem": "Which of the following is an example of a flat file used as a data source?",
+      "options": [
+        "A PostgreSQL table",
+        "A Salesforce CRM record",
+        "An Amazon S3 bucket",
+        "A CSV (Comma Separated Values) file",
+        "A Cassandra collection"
+      ],
+      "correct": 3,
+      "explanation": "Flat files include CSV and text files: simple text files that store data in a structured format and are commonly used for data exchange and storage."
+    },
+    {
+      "stem": "Amazon S3, Google Cloud Storage and Microsoft Azure Blob Storage are examples of which data source category?",
+      "options": [
+        "Relational databases",
+        "Spreadsheet files",
+        "Cloud storage services used to store large amounts of data accessible from anywhere",
+        "Enterprise CRM systems",
+        "Flat files"
+      ],
+      "correct": 2,
+      "explanation": "These are cloud storage platforms used to store large amounts of data in the cloud, accessible from anywhere."
+    },
+    {
+      "stem": "What purpose do logs (system, application and web server logs) serve as a data source?",
+      "options": [
+        "They provide raw data about usage and performance for monitoring, debugging and security analysis",
+        "They store customer contact details for marketing",
+        "They hold financial ledgers for accounting",
+        "They organise data into relational tables for BI",
+        "They provide tabular data for offline spreadsheet analysis"
+      ],
+      "correct": 0,
+      "explanation": "Logs supply raw data about the usage and performance of systems and are used for monitoring, debugging and security analysis."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a category of data source in information systems?",
+      "options": [
+        "Databases",
+        "Cloud storage",
+        "Logs",
+        "Flat files",
+        "Printed paper archives"
+      ],
+      "correct": 4,
+      "explanation": "The listed categories are databases, business/enterprise applications, spreadsheet files, flat files, cloud storage and logs. Printed paper archives are not among them."
+    },
+    {
+      "stem": "How do data integration, data analytics and data science each relate to data sources?",
+      "options": [
+        "All three delete data sources after use",
+        "Integration brings different sources together; analytics helps you understand what the data is telling you; data science uses more complex methods to uncover deeper insights and make predictions",
+        "Integration predicts the future; analytics stores data; data science compresses it",
+        "Only data science uses data sources; the other two do not",
+        "Integration visualises data; analytics governs it; data science archives it"
+      ],
+      "correct": 1,
+      "explanation": "Data integration combines different sources, data analytics interprets what the data says, and data science applies more complex methods to find deeper insights and make predictions from those sources."
+    }
+  ]
+}

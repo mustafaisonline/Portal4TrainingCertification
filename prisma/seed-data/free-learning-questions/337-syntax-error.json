@@ -1,0 +1,125 @@
+{
+  "topic": "syntax-error",
+  "questions": [
+    {
+      "stem": "What is a syntax error?",
+      "options": [
+        "An error in the business logic of an application",
+        "An error that occurs when code does not conform to the syntax rules of the programming language",
+        "A failure of the network connection to the database",
+        "A mismatch between expected and actual query results",
+        "An error caused by insufficient memory"
+      ],
+      "correct": 1,
+      "explanation": "A syntax error occurs when the code you write does not conform to the syntax rules of the programming language."
+    },
+    {
+      "stem": "What is the consequence of a syntax error for program execution?",
+      "options": [
+        "The program runs but produces wrong output",
+        "The program runs more slowly",
+        "The interpreter or compiler cannot translate the code, so the program cannot execute until the error is corrected",
+        "The program executes only the first half of the code",
+        "The database silently ignores the faulty statement"
+      ],
+      "correct": 2,
+      "explanation": "Syntax errors prevent the interpreter or compiler from translating code into machine-readable instructions, so the program cannot run until they are fixed."
+    },
+    {
+      "stem": "In the anecdote from New Zealand, how long did a senior architect spend trying to fix a syntax error?",
+      "options": [
+        "Three hours",
+        "One day",
+        "One week",
+        "Three days",
+        "A month"
+      ],
+      "correct": 3,
+      "explanation": "In the anecdote, a so-called senior architect spent three days trying to fix a syntax error and then reported it to management as a business-logic problem."
+    },
+    {
+      "stem": "What are syntax errors said to reflect?",
+      "options": [
+        "Problems in the business requirements",
+        "Faults in the database engine",
+        "Weaknesses in the project management",
+        "Hardware limitations",
+        "The skill of the developer, not problems in the business logic"
+      ],
+      "correct": 4,
+      "explanation": "Syntax errors are really about how skilled a developer is and not about problems in the business logic."
+    },
+    {
+      "stem": "In SQL, when do syntax errors often occur?",
+      "options": [
+        "When there are issues with the structure of SQL statements, such as missing semicolons, quotes or keywords",
+        "When a query returns too many rows",
+        "When the server is under heavy load",
+        "When two users update the same row",
+        "When a table has no primary key"
+      ],
+      "correct": 0,
+      "explanation": "SQL syntax errors involve missing or incorrect elements such as semicolons, quotes or the proper usage of keywords."
+    },
+    {
+      "stem": "What is wrong with the SQL statement INSERT INTO customers (customer_id, customer_name, city) VALUES (101, 'John Doe, 'New York');?",
+      "options": [
+        "The table name is misspelt",
+        "The closing quote for the customer_name value is missing",
+        "The FROM clause is missing",
+        "Too many columns are listed",
+        "The customer_id should be quoted"
+      ],
+      "correct": 1,
+      "explanation": "The string literal 'John Doe is missing its closing quote, which is a syntax error."
+    },
+    {
+      "stem": "What is wrong with the statement SELECT employee_id, employee_name WHERE department = 'Sales';?",
+      "options": [
+        "The WHERE clause uses the wrong operator",
+        "The column names are too long",
+        "The FROM clause is missing",
+        "The semicolon should be omitted",
+        "The string 'Sales' should be unquoted"
+      ],
+      "correct": 2,
+      "explanation": "The SELECT statement has no FROM clause, so the database cannot tell which table to query."
+    },
+    {
+      "stem": "Which of the following is NOT one of the SQL syntax-error examples given?",
+      "options": [
+        "Missing semicolon",
+        "Missing quotes for a string literal",
+        "Missing FROM clause",
+        "Dividing a number by zero",
+        "Incorrect JOIN syntax"
+      ],
+      "correct": 3,
+      "explanation": "The four examples are a missing semicolon, missing quotes for a string literal, incorrect JOIN syntax and a missing FROM clause; division by zero is not a syntax error."
+    },
+    {
+      "stem": "When do SQL development environments and database systems typically report syntax errors?",
+      "options": [
+        "After the query has returned its results",
+        "Only when the query is run in production",
+        "During the nightly batch process",
+        "When the table is next backed up",
+        "During the parsing phase, making them easier to identify and fix"
+      ],
+      "correct": 4,
+      "explanation": "SQL environments and database systems typically highlight or report syntax errors during the parsing phase."
+    },
+    {
+      "stem": "Which statement about syntax errors is correct?",
+      "options": [
+        "Every developer, regardless of experience, is likely to have encountered a syntax error",
+        "Only junior developers encounter syntax errors",
+        "Syntax errors occur only in SQL",
+        "Syntax errors indicate a fault in the business requirements",
+        "Syntax errors cannot be detected before execution"
+      ],
+      "correct": 0,
+      "explanation": "Syntax errors are common mistakes that every developer, no matter how experienced, has come across; they can occur in all languages."
+    }
+  ]
+}

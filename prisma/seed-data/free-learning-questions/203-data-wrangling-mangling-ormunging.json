@@ -1,0 +1,125 @@
+{
+  "topic": "data-wrangling-mangling-ormunging",
+  "questions": [
+    {
+      "stem": "Which three terms are used interchangeably to describe preparing data for processing?",
+      "options": [
+        "Data Mining, Data Science and Data Analytics",
+        "Data Cleaning, Data Cleansing and Data Scrubbing",
+        "Data Wrangling, Data Mangling and Data Munging",
+        "Data Discovery, Data Structuring and Data Publishing",
+        "Data Blending, Data Mashup and Data Integration"
+      ],
+      "correct": 2,
+      "explanation": "Data Wrangling, Data Mangling and Data Munging are used interchangeably and do the same function."
+    },
+    {
+      "stem": "In simple words, what is Data Wrangling?",
+      "options": [
+        "Preparing data for processing, not processing the data",
+        "Running machine learning models on raw data",
+        "Publishing dashboards for executives",
+        "Encrypting data before it is stored",
+        "Deleting all historical data"
+      ],
+      "correct": 0,
+      "explanation": "Data Wrangling is to prepare data for processing; the author stresses it is preparation, not processing."
+    },
+    {
+      "stem": "When is Data Wrangling performed in relation to Data Mining, Data Science, Business Intelligence and Business Analytics?",
+      "options": [
+        "After all of them have finished",
+        "Only during Business Intelligence",
+        "At the same time as Data Science",
+        "Only when a model fails",
+        "Before any of them"
+      ],
+      "correct": 4,
+      "explanation": "Data Wrangling is something done before Data Mining, Data Science, Business Intelligence or Business Analytics."
+    },
+    {
+      "stem": "Which of the following is NOT given as an example of Data Wrangling?",
+      "options": [
+        "Removing spaces from the left and right of a field using LTRIM or RTRIM",
+        "Training a machine learning model to predict buying behaviour",
+        "Replacing empty date rows with 01/01/9999",
+        "Removing special characters from a field",
+        "Removing a row whose year is missing when the analysis is on date"
+      ],
+      "correct": 1,
+      "explanation": "Trimming spaces, replacing empty dates, removing special characters and dropping rows that cannot support the analysis are wrangling examples; training a model is processing, not preparation."
+    },
+    {
+      "stem": "In a nutshell, what does Data Wrangling transform raw data into?",
+      "options": [
+        "A trained machine learning model",
+        "A visual dashboard",
+        "An encrypted archive",
+        "Quality and useful raw data",
+        "A management summary"
+      ],
+      "correct": 3,
+      "explanation": "In a nutshell, Data Wrangling transforms 'Raw Data' into 'Quality & Useful Raw Data'."
+    },
+    {
+      "stem": "What happens in the Data Discover step of Data Wrangling?",
+      "options": [
+        "Data from multiple sources is collected in one place, analysed and understood before any action is taken",
+        "Data is published for stakeholders",
+        "Third-party data is purchased",
+        "Dirty data is removed by an algorithm",
+        "Data is converted from unstructured to structured format"
+      ],
+      "correct": 0,
+      "explanation": "Data Discover is the first step: collect the data at one place if it comes from multiple sources, then analyse and understand it before acting."
+    },
+    {
+      "stem": "Which Data Wrangling step organises data into a single format, for example converting semi-structured or unstructured data into a structured form?",
+      "options": [
+        "Data Validating",
+        "Data Enriching",
+        "Data Structuring",
+        "Data Publishing",
+        "Data Discover"
+      ],
+      "correct": 2,
+      "explanation": "Data Structuring organises data in a single format, converting semi-structured or unstructured data into a structured format."
+    },
+    {
+      "stem": "Which Data Wrangling step is optional and normally done as part of Data Self-Service?",
+      "options": [
+        "Data Discover",
+        "Data Structuring",
+        "Data Cleaning",
+        "Data Validating",
+        "Data Enriching"
+      ],
+      "correct": 4,
+      "explanation": "Data Enriching is the optional step, normally done as part of Data Self-Service, adding internal or third-party data for additional context."
+    },
+    {
+      "stem": "Which set of rules can Data Validating apply during Data Wrangling?",
+      "options": [
+        "Cost, speed, and storage size",
+        "Quality, consistency, accuracy, security and authenticity",
+        "Colour, font and layout",
+        "Latitude, longitude and postal code",
+        "Marital status, income and family hierarchy"
+      ],
+      "correct": 1,
+      "explanation": "Data Validating, which can be repeated many times, checks rules of quality, consistency, accuracy, security and authenticity."
+    },
+    {
+      "stem": "Besides reducing human effort, what other benefit comes from Data Wrangling policies applied from landing to staging?",
+      "options": [
+        "The database schema no longer needs a primary key",
+        "Models no longer need testing",
+        "Business users no longer need access to data",
+        "CPU and memory processing power is reduced because fewer quality checks are needed during processing",
+        "Data no longer needs to be published"
+      ],
+      "correct": 3,
+      "explanation": "Not only human effort but also CPU and memory load is reduced heavily, because processing no longer has to run checks here and there to make sure data quality is good."
+    }
+  ]
+}

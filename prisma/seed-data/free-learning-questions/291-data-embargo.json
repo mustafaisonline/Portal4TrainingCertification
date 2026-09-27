@@ -1,0 +1,125 @@
+{
+  "topic": "data-embargo",
+  "questions": [
+    {
+      "stem": "In simple terms, what is an embargo?",
+      "options": [
+        "A tool for compressing large files",
+        "A rule or limit that says you cannot do certain things, often in trade or when sharing information",
+        "A method for encrypting data at rest",
+        "A licence that allows unlimited sharing of information",
+        "A schedule for backing up databases"
+      ],
+      "correct": 1,
+      "explanation": "An embargo is like a rule that says you cannot do certain things, and it often happens in trade or when sharing information."
+    },
+    {
+      "stem": "What does a data embargo mean?",
+      "options": [
+        "A rule or limit on how specific information can be used, shared or spread",
+        "A requirement to publish all data openly",
+        "A process for converting analogue records into digital form",
+        "A guarantee that data will be delivered in real time",
+        "A method for deleting duplicate records"
+      ],
+      "correct": 0,
+      "explanation": "A data embargo means there is a rule or limit on how we can use, share, or spread specific information."
+    },
+    {
+      "stem": "A rule that says certain medical details cannot be shared with others because they are private is an example of a data embargo for which reason?",
+      "options": [
+        "Performance reasons",
+        "Storage reasons",
+        "Legal or privacy reasons",
+        "Marketing reasons",
+        "Financial reasons"
+      ],
+      "correct": 2,
+      "explanation": "The example of not being able to share certain medical details because they are private is given as a data embargo for legal and privacy reasons."
+    },
+    {
+      "stem": "Which example illustrates a data embargo for security reasons?",
+      "options": [
+        "A company publishing its annual report",
+        "A library lending books to the public",
+        "A school posting exam timetables online",
+        "A secret code that only a few people should know, with limits on sharing it",
+        "A supermarket printing its weekly offers"
+      ],
+      "correct": 3,
+      "explanation": "The security example is a secret code that only a few people should know; there might be an embargo on sharing that code to keep it secure."
+    },
+    {
+      "stem": "Rules about how companies may use customer information are described as a data embargo for which reason?",
+      "options": [
+        "Aesthetic reasons",
+        "Technical performance reasons",
+        "Cost reasons",
+        "Weather reasons",
+        "Regulatory reasons"
+      ],
+      "correct": 4,
+      "explanation": "Rules about how companies can use customer information are given as an example of a data embargo for regulatory reasons, ensuring everyone follows the same guidelines."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a reason for a data embargo?",
+      "options": [
+        "Legal reasons",
+        "Security reasons",
+        "Privacy reasons",
+        "Regulatory reasons",
+        "Entertainment reasons"
+      ],
+      "correct": 4,
+      "explanation": "The reasons given for a data embargo are legal, security, privacy and regulatory; entertainment is not one of them."
+    },
+    {
+      "stem": "In a data embargo, what is the purpose of privacy-related rules?",
+      "options": [
+        "To make data processing faster",
+        "To protect people's personal information",
+        "To increase the volume of data collected",
+        "To allow anyone to access the information",
+        "To reduce the cost of storage"
+      ],
+      "correct": 1,
+      "explanation": "If it is personal information, there might be rules to protect people's privacy; that is the privacy reason for a data embargo."
+    },
+    {
+      "stem": "How is a data embargo described using an everyday comparison?",
+      "options": [
+        "Like having a set of rules for how you can talk about or share certain details",
+        "Like a bucket that is filled once and then emptied",
+        "Like water flowing continuously in a river",
+        "Like doing homework at the end of the day",
+        "Like a card catalogue in a library"
+      ],
+      "correct": 0,
+      "explanation": "A data embargo is compared to having a set of rules for how you can talk about or share certain details."
+    },
+    {
+      "stem": "In which two areas does an embargo most commonly arise?",
+      "options": [
+        "Farming and fishing",
+        "Sport and entertainment",
+        "Trade and the sharing of information",
+        "Construction and transport",
+        "Cooking and hospitality"
+      ],
+      "correct": 2,
+      "explanation": "An embargo often happens in trade or when sharing information."
+    },
+    {
+      "stem": "Why do the rules behind a data embargo mostly exist?",
+      "options": [
+        "To make data more visually appealing",
+        "To increase advertising revenue",
+        "To speed up database queries",
+        "For legal reasons, to keep things safe, to protect privacy, or because there are rules to follow",
+        "To reduce the number of employees needed"
+      ],
+      "correct": 3,
+      "explanation": "Data embargoes mostly exist for legal reasons, to keep things safe, to protect privacy, or because there are rules to follow."
+    }
+  ]
+}

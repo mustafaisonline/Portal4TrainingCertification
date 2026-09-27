@@ -1,0 +1,125 @@
+{
+  "topic": "data-abstraction-layer",
+  "questions": [
+    {
+      "stem": "What is a Data Abstraction Layer (DAL)?",
+      "options": [
+        "A physical storage device that holds all application data",
+        "A reporting tool that summarises data for managers",
+        "A network layer that routes data between servers",
+        "A layer of code that keeps the tricky details of how data is stored or used separate from the rest of the software",
+        "A backup process that copies data to a second site"
+      ],
+      "correct": 3,
+      "explanation": "A Data Abstraction Layer is a layer of code that keeps the complicated details of how data is stored or used separate from the rest of the software."
+    },
+    {
+      "stem": "In a Data Abstraction Layer, what does Abstraction mean?",
+      "options": [
+        "Removing data that is no longer needed",
+        "Hiding the complicated details of storing data behind a simpler way of working with it",
+        "Compressing data to reduce its size",
+        "Encrypting data so it cannot be read",
+        "Summarising data into charts"
+      ],
+      "correct": 1,
+      "explanation": "Abstraction means hiding all the complicated details of storing data behind a simpler way of working with it, so developers need not worry about the nitty-gritty."
+    },
+    {
+      "stem": "How does a Data Abstraction Layer support Separation of Concerns?",
+      "options": [
+        "By storing each department's data in a separate database",
+        "By assigning a different developer to each table",
+        "By splitting the software into front-end and back-end teams",
+        "By encrypting data separately from the application",
+        "By separating how data is stored from how the software works, making the software easier to understand and look after"
+      ],
+      "correct": 4,
+      "explanation": "The Data Abstraction Layer keeps things organised by separating how data is stored from how the software works, making it easier to understand and maintain."
+    },
+    {
+      "stem": "What does the Consistent Interface of a Data Abstraction Layer provide?",
+      "options": [
+        "A set of clear rules the rest of the software follows to work with the data, so it keeps running smoothly even if storage changes",
+        "A single user screen for viewing all data",
+        "A guarantee that data is never modified",
+        "A common colour scheme across applications",
+        "A fixed hardware configuration for the database"
+      ],
+      "correct": 0,
+      "explanation": "The layer provides a set of clear rules that the rest of the software follows to work with the data, which keeps the software running smoothly even when the way data is stored changes."
+    },
+    {
+      "stem": "How does the Adaptability of a Data Abstraction Layer help when the way data is stored changes?",
+      "options": [
+        "The whole application must be rewritten",
+        "The data must be migrated back to the old format",
+        "Only the Data Abstraction Layer needs to be adjusted and the rest of the software can stay the same",
+        "The change is blocked until every module is updated",
+        "The application switches to read-only mode"
+      ],
+      "correct": 2,
+      "explanation": "The Data Abstraction Layer acts like a shield: if storage changes, only the layer itself needs adjusting while the rest of the software stays the same."
+    },
+    {
+      "stem": "What does a Data Abstraction Layer do in terms of Security and Validation?",
+      "options": [
+        "It issues passwords to users",
+        "It makes sure data is handled in a safe and controlled way",
+        "It scans the network for intruders",
+        "It backs up data every hour",
+        "It anonymises all personal data automatically"
+      ],
+      "correct": 1,
+      "explanation": "The Data Abstraction Layer also looks out for the security of the data, making sure it is handled in a safe and controlled way."
+    },
+    {
+      "stem": "Using what can a Data Abstraction Layer be built in real life?",
+      "options": [
+        "Spreadsheets and macros",
+        "Tape drives and object storage",
+        "Firewalls and routers",
+        "APIs or special frameworks",
+        "Printed documentation"
+      ],
+      "correct": 3,
+      "explanation": "In real life, a Data Abstraction Layer can be made using things like APIs or special frameworks."
+    },
+    {
+      "stem": "How are APIs described in the context of a Data Abstraction Layer?",
+      "options": [
+        "A set of rules for talking to a system",
+        "A place where data is physically stored",
+        "A type of database index",
+        "A tool for drawing diagrams",
+        "A licence for using software"
+      ],
+      "correct": 0,
+      "explanation": "APIs are described as a set of rules for talking to a system."
+    },
+    {
+      "stem": "How do frameworks help developers in the context of a Data Abstraction Layer?",
+      "options": [
+        "They automatically write all the application code",
+        "They replace the need for a database",
+        "They enforce a single programming language",
+        "They provide free cloud storage",
+        "They let developers work with objects in the software without worrying too much about the underlying details"
+      ],
+      "correct": 4,
+      "explanation": "Frameworks help developers work with objects, such as pieces of information, in the software without worrying too much about the underlying details."
+    },
+    {
+      "stem": "Which of these is NOT one of the listed characteristics of a Data Abstraction Layer?",
+      "options": [
+        "Abstraction",
+        "Adaptability",
+        "Compression",
+        "Separation of Concerns",
+        "Consistent Interface"
+      ],
+      "correct": 2,
+      "explanation": "The listed characteristics are Abstraction, Separation of Concerns, Consistent Interface, Adaptability, and Security and Validation; Compression is not among them."
+    }
+  ]
+}

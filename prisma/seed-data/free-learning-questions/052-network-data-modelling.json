@@ -1,0 +1,125 @@
+{
+  "topic": "network-data-modelling",
+  "questions": [
+    {
+      "stem": "How does Network Data Modelling organise data?",
+      "options": [
+        "Using owner–member sets that allow records to participate in multiple parent and child relationships",
+        "Using a strict tree in which each child has exactly one parent",
+        "Using fact tables surrounded by dimension tables",
+        "Using JSON documents with embedded arrays",
+        "Using classes with attributes and methods"
+      ],
+      "correct": 0,
+      "explanation": "The network model uses owner–member sets, forming a flexible graph-like structure where records can have many-to-many connections."
+    },
+    {
+      "stem": "What limitation of hierarchical databases was the network model designed to overcome?",
+      "options": [
+        "The lack of atomic values",
+        "The restriction that each child could have only one parent",
+        "The absence of primary keys",
+        "The inability to store repayment history",
+        "The need for declarative queries"
+      ],
+      "correct": 1,
+      "explanation": "In hierarchical systems each child could have only one parent, making many-to-many relationships hard to represent; the network model removed that restriction."
+    },
+    {
+      "stem": "Through which group and system did the network model gain prominence in the 1960s?",
+      "options": [
+        "ODMG and ObjectStore",
+        "IBM and IMS",
+        "The CODASYL Data Base Task Group and IDMS",
+        "W3C and RDF",
+        "Apache and Cassandra"
+      ],
+      "correct": 2,
+      "explanation": "The network model gained prominence through the CODASYL Data Base Task Group and systems such as IDMS, used widely in banking, insurance and government."
+    },
+    {
+      "stem": "In the network model loan example, which relationship is described as many-to-many?",
+      "options": [
+        "Customer → LoanApplication",
+        "LoanApplication → Branch",
+        "LoanApplication → Repayment",
+        "LoanApplication → LoanOfficer",
+        "Branch → Customer"
+      ],
+      "correct": 3,
+      "explanation": "A LoanApplication can be reviewed by multiple LoanOfficers and each LoanOfficer can handle multiple LoanApplications, a many-to-many link that hierarchical trees could not express."
+    },
+    {
+      "stem": "What kind of querying does the network model require?",
+      "options": [
+        "Declarative SQL queries",
+        "Semantic reasoning over classes and rules",
+        "Full-text search",
+        "Map-reduce aggregation",
+        "Navigational querying in which developers explicitly define how to traverse from record to record"
+      ],
+      "correct": 4,
+      "explanation": "Unlike relational SQL, which declares what result is needed, the network model forces the application to specify how to reach the data through procedural traversal."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a weakness of network data modelling?",
+      "options": [
+        "Inability to represent many-to-many relationships",
+        "Requirement for procedural navigation that makes ad-hoc analysis difficult",
+        "Schema changes rippling into application logic",
+        "Lack of the mathematical foundation provided by relational databases",
+        "Lack of relational abstraction"
+      ],
+      "correct": 0,
+      "explanation": "Support for many-to-many relationships is a strength of the network model, not a weakness; its weaknesses concern procedural navigation, coupling and missing theoretical foundation."
+    },
+    {
+      "stem": "Which modern technology carries on the network model's idea of interconnected records?",
+      "options": [
+        "Star schema data warehouses",
+        "Graph databases",
+        "Key–value caches",
+        "Columnar analytical stores",
+        "Object-relational mapping frameworks"
+      ],
+      "correct": 1,
+      "explanation": "The conceptual idea of interconnected records lives on in modern graph databases, making the network model an early ancestor of graph-based modelling."
+    },
+    {
+      "stem": "What is the core difference between the network model and an ontology?",
+      "options": [
+        "The network model is drawn as a tree while an ontology is drawn as a graph",
+        "The network model is a modern AI technique while an ontology is a 1960s storage technique",
+        "The network model is a storage technique using physical pointers, whereas an ontology is a knowledge representation model focused on meaning and reasoning",
+        "The network model uses SQL while an ontology uses procedural code",
+        "They differ only in the vendors that support them"
+      ],
+      "correct": 2,
+      "explanation": "The network model organises data records through pointers; an ontology, expressed in standards such as OWL or RDF, organises knowledge and supports logical reasoning."
+    },
+    {
+      "stem": "How do queries in ontology-based systems differ from queries in the network model?",
+      "options": [
+        "Ontology queries must specify the traversal path explicitly",
+        "Ontology queries are limited to a single parent–child level",
+        "Ontology queries require physical pointers between records",
+        "Ontology queries are declarative and semantic, using reasoning over classes, properties and rules rather than a traversal path",
+        "Ontology queries can only return counts"
+      ],
+      "correct": 3,
+      "explanation": "In an ontology a user asks a semantic question such as which officers approved loans for high-risk customers, and the system reasons over defined classes and rules rather than navigating links."
+    },
+    {
+      "stem": "Which statement about semantics in the network model is correct?",
+      "options": [
+        "The network model defines relationships such as Loan is_a FinancialAgreement",
+        "The network model can infer new facts from class definitions",
+        "The network model automatically classifies high-risk loans",
+        "The network model encodes inheritance hierarchies",
+        "The network model has no inherent semantic understanding; it stores and traverses links without knowing what a Customer or Loan represents"
+      ],
+      "correct": 4,
+      "explanation": "The network model connects records through pointers but does not know what those records mean; encoding meaning and inference is the role of ontologies."
+    }
+  ]
+}

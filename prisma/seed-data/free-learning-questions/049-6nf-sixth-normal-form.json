@@ -1,0 +1,125 @@
+{
+  "topic": "6nf-sixth-normal-form",
+  "questions": [
+    {
+      "stem": "What guiding idea summarises Sixth Normal Form (6NF)?",
+      "options": [
+        "One attribute, one timeline, one table",
+        "One entity, one table, one key",
+        "Every determinant is a superkey",
+        "Every constraint is a domain or key constraint",
+        "One fact table, many dimension tables"
+      ],
+      "correct": 0,
+      "explanation": "6NF decomposes data so that each relation captures a single fact about a key, typically with explicit time validity: one attribute, one timeline, one table."
+    },
+    {
+      "stem": "What is the condition for a table to be in Sixth Normal Form?",
+      "options": [
+        "It is in BCNF and has no multi-valued dependencies",
+        "It is in 5NF and has been decomposed so that each relation captures a single fact about a key, typically with explicit time validity",
+        "It is in 3NF and all attributes are atomic",
+        "It is in 4NF and every join dependency is implied by keys",
+        "It is in DKNF and all constraints are structural"
+      ],
+      "correct": 1,
+      "explanation": "A table is in 6NF when it is already in Fifth Normal Form and decomposed so each relation captures one fact about a key, usually with time validity."
+    },
+    {
+      "stem": "What temporal problem does Sixth Normal Form solve for a loan whose interest rate and status change independently?",
+      "options": [
+        "The loan can no longer be uniquely identified",
+        "The loan's attributes lose atomicity",
+        "Storing both attributes with effective dates in one table makes updates complex and overlapping intervals hard to manage",
+        "The interest rate becomes a multi-valued attribute",
+        "The status cannot be stored as a domain value"
+      ],
+      "correct": 2,
+      "explanation": "When independently changing attributes share a table with effective dates, updates become complex and overlapping time intervals are difficult to manage, which 6NF resolves by giving each attribute its own timeline."
+    },
+    {
+      "stem": "In the Sixth Normal Form loan example, what columns does the LoanInterestRate table contain?",
+      "options": [
+        "LoanID, InterestRate, ProductType",
+        "LoanID, Amount, Status",
+        "ProductType, InterestRate",
+        "LoanID, InterestRate, EffectiveStart, EffectiveEnd",
+        "LoanID, InterestRate, TransactionTime"
+      ],
+      "correct": 3,
+      "explanation": "The decomposition yields LoanInterestRate (LoanID, InterestRate, EffectiveStart, EffectiveEnd), so the interest rate evolves along its own timeline."
+    },
+    {
+      "stem": "What typically makes up the primary key of a Sixth Normal Form table?",
+      "options": [
+        "A surrogate integer alone",
+        "The attribute value itself",
+        "The business key alone",
+        "A hash of all columns",
+        "The business key combined with a validity period, such as LoanID and EffectiveStart"
+      ],
+      "correct": 4,
+      "explanation": "In 6NF the primary key typically consists of the business key combined with a validity period, such as LoanID and EffectiveStart."
+    },
+    {
+      "stem": "What is the difference between transaction-time and valid-time in bi-temporal modelling?",
+      "options": [
+        "Transaction-time is when the record was stored in the system; valid-time is when the fact is true in the business world",
+        "Transaction-time is the loan origination date; valid-time is the repayment date",
+        "Transaction-time is the effective end date; valid-time is the effective start date",
+        "Transaction-time applies to OLTP; valid-time applies to OLAP",
+        "They are two names for the same timestamp"
+      ],
+      "correct": 0,
+      "explanation": "Transaction-time records when a fact was stored in the system and valid-time records when it is true in the business world; storing both enables bi-temporal modelling for auditability and compliance."
+    },
+    {
+      "stem": "Which modelling techniques are named as embracing Sixth Normal Form style fine-grained decomposition?",
+      "options": [
+        "Star schema, snowflake schema and Unified Star Schema",
+        "Data Vault, Anchor Modelling and Focal Point Modelling",
+        "Hierarchical, network and object-oriented modelling",
+        "Document, key–value and graph databases",
+        "JSON schema, XML schema and API modelling"
+      ],
+      "correct": 1,
+      "explanation": "6NF is especially relevant in temporal modelling and ensemble techniques such as Data Vault, Anchor Modelling and Focal Point Modelling."
+    },
+    {
+      "stem": "Which of the following is NOT a benefit attributed to Sixth Normal Form?",
+      "options": [
+        "Audit-grade temporal lineage",
+        "Clean separation of independently changing attributes",
+        "Fewer tables and simpler queries",
+        "Precise as-of queries and historical reconstruction",
+        "Independent attribute evolution"
+      ],
+      "correct": 2,
+      "explanation": "6NF increases table counts significantly and makes queries more complex; its benefits are auditability, separation of changing attributes and precise historical reconstruction."
+    },
+    {
+      "stem": "For which scenarios is Sixth Normal Form said to be best suited?",
+      "options": [
+        "General OLTP systems with simple CRUD operations",
+        "Static reference data that never changes",
+        "Read-heavy reporting dashboards",
+        "Regulatory, audit, pricing and contract scenarios",
+        "Key–value caching layers"
+      ],
+      "correct": 3,
+      "explanation": "6NF is best for regulatory, audit, pricing and contract scenarios where history and auditability are critical, and is often overkill for general OLTP."
+    },
+    {
+      "stem": "How do many organisations apply Sixth Normal Form in practice?",
+      "options": [
+        "They apply 6NF to every table in the schema",
+        "They avoid 6NF entirely in favour of star schemas",
+        "They apply 6NF only to dimension tables",
+        "They replace 6NF with DKNF",
+        "They normalise to 3NF or BCNF, then selectively apply 6NF-style histories only where needed"
+      ],
+      "correct": 4,
+      "explanation": "Many shops normalise to 3NF/BCNF and then apply 6NF-style history tables surgically, only where independent attribute history is required."
+    }
+  ]
+}

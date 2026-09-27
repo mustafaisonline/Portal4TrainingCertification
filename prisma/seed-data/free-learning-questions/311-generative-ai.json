@@ -1,0 +1,125 @@
+{
+  "topic": "generative-ai",
+  "questions": [
+    {
+      "stem": "At its core, what does Generative AI refer to?",
+      "options": [
+        "The ability of AI systems to generate new, synthetic content across formats such as text, images, audio and video",
+        "A database that stores AI model weights",
+        "A statistical test for classifying spam email",
+        "A network protocol for sharing data between organisations",
+        "A tool that only converts paper documents into digital form"
+      ],
+      "correct": 0,
+      "explanation": "Generative AI refers to the ability of AI systems to generate new, synthetic content across various data formats, including text, images, audio and video."
+    },
+    {
+      "stem": "How far back does the idea of Generative AI date?",
+      "options": [
+        "To 2022, with the release of ChatGPT",
+        "To as early as 1950, when Alan Turing proposed machines that could exhibit intelligent behaviour",
+        "To 2008, after the financial crisis",
+        "To 1988, with the first Basel Accord",
+        "To 2004, with the launch of social media"
+      ],
+      "correct": 1,
+      "explanation": "The idea of Generative AI is not new; it dates back to as early as 1950, when Alan Turing proposed machines that could exhibit intelligent behaviour."
+    },
+    {
+      "stem": "In statistical classification, what do generative models model?",
+      "options": [
+        "The conditional probability only",
+        "The cost of training hardware",
+        "The joint probability of inputs and outputs",
+        "The number of layers in a network",
+        "The order of words in a sentence"
+      ],
+      "correct": 2,
+      "explanation": "Generative models model the joint probability of inputs and outputs, with examples such as Naive Bayes and Gaussian Mixture Models."
+    },
+    {
+      "stem": "Which of these is given as an example of a discriminative model?",
+      "options": [
+        "Naive Bayes",
+        "Gaussian Mixture Model",
+        "Stable Diffusion",
+        "Logistic Regression",
+        "DALL-E"
+      ],
+      "correct": 3,
+      "explanation": "Discriminative models directly model the conditional probability; the examples given are Logistic Regression and SVMs."
+    },
+    {
+      "stem": "As a rule of thumb, how do Synthetic Data and Generative AI differ?",
+      "options": [
+        "Synthetic Data is always unstructured, Generative AI is always structured",
+        "Synthetic Data is a newer idea than Generative AI",
+        "Synthetic Data requires GPUs, Generative AI does not",
+        "There is no difference between them",
+        "Synthetic Data produces structured datasets for model training, whereas Generative AI creates both structured and unstructured outputs"
+      ],
+      "correct": 4,
+      "explanation": "The rule of thumb is that Synthetic Data produces structured datasets for model training, while Generative AI creates both structured and unstructured outputs based on context, intent and learned patterns."
+    },
+    {
+      "stem": "Which tools are named as generating human-like synthetic voices from text?",
+      "options": [
+        "ElevenLabs and Play.ht",
+        "Stable Diffusion and DALL-E",
+        "ChatGPT and Gemini",
+        "LLaMA and Claude",
+        "Naive Bayes and SVM"
+      ],
+      "correct": 0,
+      "explanation": "ElevenLabs and Play.ht are named as tools that generate human-like synthetic voices from text."
+    },
+    {
+      "stem": "Which types of data can Generative AI handle?",
+      "options": [
+        "Structured data only",
+        "Structured, semi-structured and unstructured data",
+        "Unstructured images only",
+        "Numeric tabular data only",
+        "Audio data only"
+      ],
+      "correct": 1,
+      "explanation": "Unlike traditional models limited to structured outputs, Generative AI handles structured data, semi-structured data like JSON or XML, and unstructured data like images, text and audio."
+    },
+    {
+      "stem": "Which of the following is NOT named as a challenge behind Generative AI?",
+      "options": [
+        "Bias",
+        "Hallucination risks",
+        "A shortage of paper records to digitise",
+        "Copyright issues",
+        "Governance frameworks"
+      ],
+      "correct": 2,
+      "explanation": "The challenges named are bias, hallucination risks, copyright issues and governance frameworks; a shortage of paper records is unrelated."
+    },
+    {
+      "stem": "How should Generative AI models be used according to the key takeaway?",
+      "options": [
+        "As the final authority for all business decisions",
+        "As replacements for human staff",
+        "Only for generating images",
+        "As decision-support tools, not decision-makers, never substituting for human judgement",
+        "Only by sales teams"
+      ],
+      "correct": 3,
+      "explanation": "Generative AI models should be used wisely as decision-support tools, not decision-makers; they are powerful assistants but never substitutes for human judgement."
+    },
+    {
+      "stem": "When do machine learning and deep learning models begin to exhibit behaviour described as Artificial Intelligence?",
+      "options": [
+        "When they are first installed on a server",
+        "When they are trained on at least one dataset",
+        "When they are sold by a vendor",
+        "When they produce a single correct prediction",
+        "When they mature to the point of operating autonomously, learning, adapting, rectifying errors and making decisions"
+      ],
+      "correct": 4,
+      "explanation": "When machine learning and deep learning models mature to the point where they can operate autonomously, learning, adapting, rectifying errors and making decisions, they begin to exhibit Artificial Intelligence."
+    }
+  ]
+}

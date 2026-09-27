@@ -1,0 +1,125 @@
+{
+  "topic": "heat-map",
+  "questions": [
+    {
+      "stem": "What is a Heat Map?",
+      "options": [
+        "A table listing temperatures by city",
+        "A graphical representation of objects at any specific location",
+        "A chart of CPU usage over time",
+        "A list of latitude values only",
+        "A database index for geographic data"
+      ],
+      "correct": 1,
+      "explanation": "A Heat Map is a graphical representation of objects at any specific location, making complex data easy to visualise and understand briefly."
+    },
+    {
+      "stem": "During the Covid-19 era, what were Heat Maps used to identify?",
+      "options": [
+        "Highly populated areas",
+        "Hospital staffing levels",
+        "Vaccine storage temperatures",
+        "Internet bandwidth",
+        "Stock market trends"
+      ],
+      "correct": 0,
+      "explanation": "Heat Maps were used to identify highly populated areas during the Covid-19 era."
+    },
+    {
+      "stem": "How does Heat Map software know where a location is?",
+      "options": [
+        "Users type in their postal address on every page",
+        "It guesses from the language of the web page",
+        "It reads the device's serial number",
+        "Latitude and longitude values picked up when a web page or app is opened are sent to databases, from which the software reads them",
+        "It uses the time zone setting of the computer"
+      ],
+      "correct": 3,
+      "explanation": "When a web page or app is opened on a mobile or laptop, the location is picked up as latitude and longitude values, sent to databases and then picked up by the Heat Map software for graphical presentation."
+    },
+    {
+      "stem": "What does Latitude measure?",
+      "options": [
+        "Distance east or west of the prime meridian",
+        "Height above sea level",
+        "Distance north or south of the Equator",
+        "The time difference from Greenwich",
+        "The curvature of the Earth"
+      ],
+      "correct": 2,
+      "explanation": "Latitude is the measurement of distance north or south of the Equator, using imaginary lines parallel to the Equator."
+    },
+    {
+      "stem": "How many imaginary lines are used to measure Latitude?",
+      "options": [
+        "90",
+        "360",
+        "24",
+        "12",
+        "180"
+      ],
+      "correct": 4,
+      "explanation": "Latitude is measured with 180 imaginary lines that form circles around the Earth east to west, parallel to the Equator."
+    },
+    {
+      "stem": "What does Longitude measure?",
+      "options": [
+        "Distance north or south of the Equator",
+        "Distance east or west of the prime meridian",
+        "Depth below sea level",
+        "The distance between two cities",
+        "The speed of a moving object"
+      ],
+      "correct": 1,
+      "explanation": "Longitude is the measurement east or west of the prime meridian."
+    },
+    {
+      "stem": "What are the imaginary vertical lines that measure Longitude and meet at the North and South Poles called?",
+      "options": [
+        "Meridians",
+        "Parallels",
+        "Tropics",
+        "Equators",
+        "Hemispheres"
+      ],
+      "correct": 0,
+      "explanation": "The lines that run around the Earth vertically and meet at the poles are known as meridians; each measures one arc degree of longitude."
+    },
+    {
+      "stem": "How many degrees does the distance around the Earth measure?",
+      "options": [
+        "90 degrees",
+        "180 degrees",
+        "720 degrees",
+        "360 degrees",
+        "100 degrees"
+      ],
+      "correct": 3,
+      "explanation": "The distance around the Earth measures 360 degrees, with each meridian measuring one arc degree of longitude."
+    },
+    {
+      "stem": "With the introduction of Big Data and Data Lakes, which in-demand use case involving location is mentioned?",
+      "options": [
+        "Compressing map images",
+        "Printing paper maps",
+        "Analysing video and audio streams to identify unusual activities with location details",
+        "Storing postal codes in a spreadsheet",
+        "Calculating tax by region"
+      ],
+      "correct": 2,
+      "explanation": "One of the most in-demand use cases is to analyse video and audio streams to identify any unusual activities together with their location details."
+    },
+    {
+      "stem": "In the Uber example, how do drivers use the Heat Map feature?",
+      "options": [
+        "To rate passengers after each trip",
+        "To calculate fuel consumption",
+        "To book their own holidays",
+        "To pay road tolls automatically",
+        "To see where most taxis already are and where there are none, the latter being peak-hour areas where rates become high"
+      ],
+      "correct": 4,
+      "explanation": "The driver side of the Uber app shows a Heat Map of where most taxis already are and where there are none; areas without taxis become peak-hour areas where rates become high."
+    }
+  ]
+}

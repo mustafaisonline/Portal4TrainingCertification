@@ -1,0 +1,125 @@
+{
+  "topic": "data-governance-dg",
+  "questions": [
+    {
+      "stem": "What is described as the core purpose of Data Governance?",
+      "options": [
+        "Slowing down innovation through bureaucracy",
+        "Balancing data as an asset with data as a liability",
+        "Choosing a cloud provider",
+        "Replacing the finance function",
+        "Building dashboards"
+      ],
+      "correct": 1,
+      "explanation": "At its core, Data Governance is about balancing data as an asset with data as a liability, creating clarity, consistency and trust."
+    },
+    {
+      "stem": "Before the era of Big Data, where was Data Governance typically practised?",
+      "options": [
+        "In every organisation",
+        "Only in highly regulated industries",
+        "Only in start-ups",
+        "Only in government",
+        "Nowhere at all"
+      ],
+      "correct": 1,
+      "explanation": "Before Big Data, governance was often ignored outside of highly regulated industries."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a component of a Data Governance framework?",
+      "options": [
+        "Data Strategy",
+        "Policies, Procedures and Standards",
+        "Master Data Management",
+        "Metrics and Reporting",
+        "Hardware Procurement"
+      ],
+      "correct": 4,
+      "explanation": "The framework includes strategy, policies, ownership, stewardship, quality, metadata and lineage, privacy, MDM, roles, lifecycle, technology, training and metrics; hardware procurement is not among them."
+    },
+    {
+      "stem": "In a governance framework, what is Data Stewardship?",
+      "options": [
+        "Defining the vision and goals for data",
+        "Writing the data strategy",
+        "Purchasing catalogue tools",
+        "Turning policies into practice on a day-to-day basis",
+        "Archiving old data"
+      ],
+      "correct": 3,
+      "explanation": "Data Stewardship is turning policies into practice day to day, and is also named as one of the pillars of governance."
+    },
+    {
+      "stem": "Which governance execution model combines central policies with distributed execution across business units?",
+      "options": [
+        "Decentralised – Single Business Unit",
+        "Decentralised – Shared Lists",
+        "Centralised Execution",
+        "Centralised Governance, Decentralised Execution",
+        "Federated Ownership"
+      ],
+      "correct": 3,
+      "explanation": "Centralised Governance, Decentralised Execution is the hybrid model with central policies and distributed execution."
+    },
+    {
+      "stem": "In the 'Decentralised – Shared Lists' model, what do business units align on?",
+      "options": [
+        "A single central master data body",
+        "Nothing, each unit is fully independent",
+        "Shared entities such as customers or vendors, while keeping separate data",
+        "A common cloud provider",
+        "A single dashboard"
+      ],
+      "correct": 2,
+      "explanation": "Business units maintain separate data but align on shared entities like customers or vendors."
+    },
+    {
+      "stem": "Which of the following is NOT one of the four pillars of Data Governance?",
+      "options": [
+        "Stewardship",
+        "Quality",
+        "MDM",
+        "Use Cases",
+        "Encryption"
+      ],
+      "correct": 4,
+      "explanation": "The pillars are Stewardship, Quality, MDM and Use Cases; encryption belongs under privacy and security components rather than the pillars."
+    },
+    {
+      "stem": "What is the first step in the practical implementation of Data Governance?",
+      "options": [
+        "Define roles and responsibilities",
+        "Monitor compliance, quality and usage",
+        "Implement controls and standards",
+        "Identify and classify data domains",
+        "Establish authoritative sources"
+      ],
+      "correct": 0,
+      "explanation": "A practical rollout starts by defining roles and responsibilities, then classifying domains, establishing sources, implementing controls and monitoring."
+    },
+    {
+      "stem": "Who is described as the captain of the Data Governance ship?",
+      "options": [
+        "The Chief Data Officer",
+        "The Chief Financial Officer",
+        "The Chief Executive Officer",
+        "The Database Administrator",
+        "The Head of Marketing"
+      ],
+      "correct": 0,
+      "explanation": "The Chief Data Officer (CDO) is the captain, steering between opportunity and risk."
+    },
+    {
+      "stem": "What is the consequence of having no Data Governance, in one phrase?",
+      "options": [
+        "A data lake",
+        "A data mart",
+        "A data swamp",
+        "A data vault",
+        "A data fabric"
+      ],
+      "correct": 2,
+      "explanation": "'No Data Governance is equal to Data Swamp' — without governance, organisations do not build a lake, they create a swamp."
+    }
+  ]
+}

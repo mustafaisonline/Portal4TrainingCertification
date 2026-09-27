@@ -1,0 +1,125 @@
+{
+  "topic": "granularity",
+  "questions": [
+    {
+      "stem": "What does the granularity of data mean?",
+      "options": [
+        "The physical size of the database files",
+        "The levels of data breakdown",
+        "The number of users with access",
+        "The speed of query execution",
+        "The number of tables in a schema"
+      ],
+      "correct": 1,
+      "explanation": "'The granularity of data means, the levels of data breakdown.'"
+    },
+    {
+      "stem": "What do people generally, but mistakenly, think granularity is?",
+      "options": [
+        "Having a primary key on every table",
+        "Having all relevant details about an entity, without asking what level of detail",
+        "Storing data in the Cloud",
+        "Normalising to Third Normal Form",
+        "Keeping only summary data"
+      ],
+      "correct": 1,
+      "explanation": "People think having all relevant details is granularity, but the real question is what level of detail those attributes are broken down to."
+    },
+    {
+      "stem": "Which of these is an example of breaking Name down to a lower level of granularity?",
+      "options": [
+        "Storing Name with Email and Contact Number",
+        "Storing Name in upper case",
+        "Splitting Name into First Name, Middle Name and Last Name",
+        "Storing Name as a number",
+        "Removing Name from the table"
+      ],
+      "correct": 2,
+      "explanation": "At the lowest level of granularity Name breaks down into First Name, Middle Name and Last Name, just as Address breaks into apartment, street, city and so on."
+    },
+    {
+      "stem": "How low should granularity go in OLTP systems compared with OLAP systems?",
+      "options": [
+        "OLTP as low as possible; OLAP depends on the business use case",
+        "OLAP as low as possible; OLTP depends on the business use case",
+        "Both must always be at the highest summary level",
+        "Both must always be at the lowest level",
+        "Granularity does not apply to OLTP"
+      ],
+      "correct": 0,
+      "explanation": "In OLTP systems granularity must go as low as possible, whereas in OLAP systems it can depend on the business use case."
+    },
+    {
+      "stem": "Why does lower granularity matter for Data Wrangling, Data Mining and Data Science?",
+      "options": [
+        "Because it reduces the number of rows",
+        "Because regulators require it",
+        "Because it eliminates the need for cleaning",
+        "Because these disciplines use raw data, and the lower the granularity the better the model result for decision support",
+        "Because it speeds up backups"
+      ],
+      "correct": 3,
+      "explanation": "These disciplines use raw data for analysis, and the lower the level of granularity, the better the model result for decision support systems."
+    },
+    {
+      "stem": "What should be the first step towards creating a data model, according to the discussion of granularity?",
+      "options": [
+        "Choosing a database vendor",
+        "Designing the dashboards",
+        "Understanding the level of granularity the system or business use case expects",
+        "Writing the ETL jobs",
+        "Assigning data stewards"
+      ],
+      "correct": 2,
+      "explanation": "The first step should be to understand the level of granularity expected, since even a date versus DateTime choice changes the granularity."
+    },
+    {
+      "stem": "How does choosing a Date rather than a DateTime data type affect granularity?",
+      "options": [
+        "It has no effect on granularity",
+        "It removes the need for a time dimension",
+        "It doubles the number of rows",
+        "It changes the level of granularity",
+        "It makes the column a primary key"
+      ],
+      "correct": 3,
+      "explanation": "Date versus DateTime is given as an example of a data type choice that changes the level of granularity."
+    },
+    {
+      "stem": "What happens to the number of rows as the granularity level gets lower?",
+      "options": [
+        "The number of rows decreases",
+        "The number of rows stays the same",
+        "Rows are merged into summaries",
+        "Rows are replaced by columns",
+        "The number of rows increases, allowing more drilling and slicing/dicing"
+      ],
+      "correct": 4,
+      "explanation": "The lower the granularity level, the more rows there will be, and the more drilling and slicing/dicing can be planned."
+    },
+    {
+      "stem": "Which of the following is NOT listed among the activities whose results depend on the level of granularity in the data model?",
+      "options": [
+        "Master Data Management",
+        "Data Lineage",
+        "Data Classification and Clustering",
+        "Business Intelligence Dashboards",
+        "Network firewall configuration"
+      ],
+      "correct": 4,
+      "explanation": "MDM, metadata management, lineage, quality, integrity, cleansing, BI dashboards, modelling, classification and clustering all depend on granularity; firewall configuration does not."
+    },
+    {
+      "stem": "Which related topic are readers told not to miss after Granularity?",
+      "options": [
+        "Cardinality",
+        "Zero Trust",
+        "Lambda Architecture",
+        "Data Catalog",
+        "SaaS"
+      ],
+      "correct": 0,
+      "explanation": "The Granularity topic ends by telling readers not to miss the topic on Cardinality."
+    }
+  ]
+}

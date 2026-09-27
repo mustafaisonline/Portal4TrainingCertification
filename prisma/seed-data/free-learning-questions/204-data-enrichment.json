@@ -1,0 +1,125 @@
+{
+  "topic": "data-enrichment",
+  "questions": [
+    {
+      "stem": "How do Data Enrichment and Data Cleansing differ?",
+      "options": [
+        "Data Enrichment enhances the data, whereas Data Cleansing corrects the data",
+        "Data Enrichment deletes data, whereas Data Cleansing adds data",
+        "Data Enrichment is done by IT only, whereas Data Cleansing is done by customers",
+        "Data Enrichment applies to unstructured data only, whereas Data Cleansing applies to structured data only",
+        "They are the same activity under different names"
+      ],
+      "correct": 0,
+      "explanation": "The two are often confused, but Data Enrichment is about enhancing the data whereas Data Cleansing is about correcting the data."
+    },
+    {
+      "stem": "What is Data Enrichment?",
+      "options": [
+        "Removing duplicate rows from a table",
+        "Splitting a dataset into training and testing subsets",
+        "Converting unstructured data into a structured format",
+        "Adding more data to a first-hand dataset from other internal or third-party sources to add context",
+        "Compressing data to reduce storage cost"
+      ],
+      "correct": 3,
+      "explanation": "Data Enrichment adds data from other internal or third-party sources into your first-hand dataset in order to add additional context."
+    },
+    {
+      "stem": "On what must Data Enrichment depend, according to I Am Datapedia!?",
+      "options": [
+        "The size of the database",
+        "Business goals and business requirements",
+        "The availability of free data",
+        "The number of data scientists",
+        "The preferences of the IT department"
+      ],
+      "correct": 1,
+      "explanation": "Data Enrichment must depend on business goals; like any other implementation it must follow business requirements, since not every available source is worth storing."
+    },
+    {
+      "stem": "A brand wants to open a new branch. Which kind of third-party data is given as an example of what it could buy?",
+      "options": [
+        "Credit rating data",
+        "Employee salary data",
+        "Weather forecast data",
+        "Social media sentiment data",
+        "Geographical data"
+      ],
+      "correct": 4,
+      "explanation": "The example given is that a brand wanting to open a new branch can buy geographical data from third parties."
+    },
+    {
+      "stem": "A bank wants to offer credit card deals. Which third-party data does the Data Enrichment example say it could buy?",
+      "options": [
+        "Geographical boundary data",
+        "Postal code data",
+        "Credit rating data",
+        "Travel trend data",
+        "House value data"
+      ],
+      "correct": 2,
+      "explanation": "The example given is that a bank wanting to offer credit card deals can buy credit rating data from third parties."
+    },
+    {
+      "stem": "Which items belong to Demographic Data Enrichment?",
+      "options": [
+        "Marital status, income level, family hierarchy, cars driven and house value",
+        "Latitude, longitude and postal code",
+        "Buying pattern and travelling trends",
+        "Table names and column types",
+        "Login times and password resets"
+      ],
+      "correct": 0,
+      "explanation": "Demographic Data Enrichment contains information such as marital status, income level, family hierarchy, cars driven and house value."
+    },
+    {
+      "stem": "Which type of Data Enrichment covers buying or spending patterns, interest behaviour and travelling trends?",
+      "options": [
+        "Demographic Data Enrichment",
+        "Geographic Data Enrichment",
+        "Structural Data Enrichment",
+        "Behavioural Data Enrichment",
+        "Financial Data Enrichment"
+      ],
+      "correct": 3,
+      "explanation": "Behavioural Data Enrichment contains information like buying and spending patterns, interest behaviour and travelling trends."
+    },
+    {
+      "stem": "Why is Data Integration or Correlation listed as a top challenge in Data Enrichment?",
+      "options": [
+        "Because third-party data is always free",
+        "Because there must be some linkage between internal and external datasets, or the data will not match and will not be worth storing",
+        "Because external data must be deleted after one year",
+        "Because internal data is never accurate",
+        "Because enrichment requires a new database engine"
+      ],
+      "correct": 1,
+      "explanation": "Since the data comes from third parties, there must be a linkage between internal and external datasets; otherwise they will not match and storing the third-party data is not worthwhile."
+    },
+    {
+      "stem": "Which benefit of Data Enrichment comes from being able to purge huge internal datasets with the help of a small, precise external dataset?",
+      "options": [
+        "Data Accuracy",
+        "Targeted Marketing",
+        "Enhanced Customer Segmentation",
+        "Updated Communication Channel",
+        "Reduced Cost"
+      ],
+      "correct": 4,
+      "explanation": "Under Reduce Cost, a small precise external dataset can replace a lot of the internal data traditionally stored for decision making, allowing huge datasets to be purged."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a benefit of Data Enrichment?",
+      "options": [
+        "Data Accuracy",
+        "Targeted Marketing",
+        "Eliminating the need for Data Cleansing",
+        "Better Customer Experience",
+        "Increased Customer Relationship"
+      ],
+      "correct": 2,
+      "explanation": "The listed benefits include accuracy, cost, customer relationship, segmentation, targeted marketing, updated communication channels and customer experience; enrichment enhances data but does not remove the need to correct it."
+    }
+  ]
+}

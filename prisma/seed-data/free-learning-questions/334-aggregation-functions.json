@@ -1,0 +1,125 @@
+{
+  "topic": "aggregation-functions",
+  "questions": [
+    {
+      "stem": "What do aggregation functions do?",
+      "options": [
+        "Encrypt values in a column",
+        "Perform calculations on a set of values to return a single summarised result",
+        "Split a table into multiple tables",
+        "Rename columns in a result set",
+        "Convert data types between text and numbers"
+      ],
+      "correct": 1,
+      "explanation": "Aggregation functions perform calculations on a set of values to return a single summarised result, typically applied to database columns."
+    },
+    {
+      "stem": "Instead of listing every employee's salary, what might an aggregation function be used to obtain?",
+      "options": [
+        "Each employee's job title",
+        "The list of departments sorted alphabetically",
+        "The total salary expenditure for a department",
+        "The employee with the most recent start date",
+        "The number of columns in the employees table"
+      ],
+      "correct": 2,
+      "explanation": "The example given is using an aggregation function to get the total salary expenditure for a department rather than listing each salary."
+    },
+    {
+      "stem": "Which SQL aggregation function counts the number of rows in a result set?",
+      "options": [
+        "SUM",
+        "AVG",
+        "MAX",
+        "COUNT",
+        "DISTINCT"
+      ],
+      "correct": 3,
+      "explanation": "COUNT counts the number of rows, as in SELECT COUNT(*) AS TotalEmployees FROM employees."
+    },
+    {
+      "stem": "Which SQL function computes the mean of values in a numeric column?",
+      "options": [
+        "SUM",
+        "MIN",
+        "COUNT",
+        "HAVING",
+        "AVG"
+      ],
+      "correct": 4,
+      "explanation": "AVG calculates the average (mean) of values in a numeric column, for example AVG(salary)."
+    },
+    {
+      "stem": "What does the SQL GROUP BY clause do?",
+      "options": [
+        "Groups rows based on the values in one or more columns and applies aggregation functions to each group",
+        "Removes duplicate values from the result set",
+        "Sorts the result set in ascending order",
+        "Filters rows before aggregation",
+        "Joins two tables on a common column"
+      ],
+      "correct": 0,
+      "explanation": "GROUP BY groups rows by specified columns so aggregation functions can be applied to each group, as in AVG(salary) per department."
+    },
+    {
+      "stem": "What is the role of HAVING in a SQL query?",
+      "options": [
+        "It selects the maximum value in a column",
+        "It filters the results of a GROUP BY based on a specified condition",
+        "It counts the rows in each group",
+        "It removes duplicate rows",
+        "It defines which table to query"
+      ],
+      "correct": 1,
+      "explanation": "HAVING filters the results of a GROUP BY, for example HAVING AVG(salary) > 50000."
+    },
+    {
+      "stem": "What does SELECT DISTINCT department FROM employees; return?",
+      "options": [
+        "The number of employees in each department",
+        "The highest-paid department",
+        "The unique department values with duplicates removed",
+        "All departments including duplicates",
+        "The average salary per department"
+      ],
+      "correct": 2,
+      "explanation": "DISTINCT removes duplicate values from the result set, so the query returns each department once."
+    },
+    {
+      "stem": "Which query returns the lowest salary in the employees table?",
+      "options": [
+        "SELECT MAX(salary) AS LowestSalary FROM employees;",
+        "SELECT AVG(salary) AS LowestSalary FROM employees;",
+        "SELECT COUNT(salary) AS LowestSalary FROM employees;",
+        "SELECT MIN(salary) AS LowestSalary FROM employees;",
+        "SELECT SUM(salary) AS LowestSalary FROM employees;"
+      ],
+      "correct": 3,
+      "explanation": "MIN finds the minimum value in a column, so SELECT MIN(salary) returns the lowest salary."
+    },
+    {
+      "stem": "What is described as the ultimate purpose of using aggregation functions?",
+      "options": [
+        "To increase the number of rows in a table",
+        "To enforce referential integrity",
+        "To back up the database",
+        "To speed up inserts",
+        "To extract valuable insights from data by summarising it into a more manageable and interpretable view"
+      ],
+      "correct": 4,
+      "explanation": "The ultimate purpose is to extract valuable insights, answering questions such as the average salary in a department or the number of orders in a month."
+    },
+    {
+      "stem": "Which of the following is NOT one of the common SQL aggregation-related functions and clauses listed?",
+      "options": [
+        "MEDIAN",
+        "SUM",
+        "COUNT",
+        "GROUP BY",
+        "HAVING"
+      ],
+      "correct": 0,
+      "explanation": "The listed items are COUNT, SUM, AVG, MIN, MAX, GROUP BY, HAVING and DISTINCT; MEDIAN is not among them."
+    }
+  ]
+}

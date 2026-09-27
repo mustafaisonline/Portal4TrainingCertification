@@ -1,0 +1,125 @@
+{
+  "topic": "crud-and-crap",
+  "questions": [
+    {
+      "stem": "What does CRUD stand for?",
+      "options": [
+        "Create, Read, Update and Delete",
+        "Copy, Replicate, Upload and Download",
+        "Collect, Refine, Use and Discard",
+        "Create, Replicate, Append and Process",
+        "Compute, Render, Upload and Deploy"
+      ],
+      "correct": 0,
+      "explanation": "CRUD stands for Create, Read, Update and Delete, the basic functions used in any database for structured data."
+    },
+    {
+      "stem": "What does CRAP stand for?",
+      "options": [
+        "Copy, Read, Archive and Purge",
+        "Create, Replicate, Append and Process",
+        "Collect, Refine, Analyse and Publish",
+        "Compress, Retrieve, Access and Print",
+        "Create, Read, Update and Delete"
+      ],
+      "correct": 1,
+      "explanation": "CRAP stands for Create, Replicate, Append and Process, describing how high-velocity non-transactional data is handled."
+    },
+    {
+      "stem": "To which type of data do the CRUD functions apply?",
+      "options": [
+        "Video and CCTV footage",
+        "Social media streams",
+        "Structured data in databases used for the last few decades",
+        "Sensor data from devices",
+        "Geo-spatial data"
+      ],
+      "correct": 2,
+      "explanation": "CRUD describes the create, read, update and delete functions used with structured data in any database over the last few decades."
+    },
+    {
+      "stem": "Which of these sources is given as an example of high-velocity CRAP data?",
+      "options": [
+        "A customer master table",
+        "A payroll ledger",
+        "An accounts payable register",
+        "Web logs, social streams, CCTV, sensor data and mobile data",
+        "A product price list"
+      ],
+      "correct": 3,
+      "explanation": "The new era's data flows in with high velocity from web logs, social streams, CCTV, sensor data, videos, social media, mobile and geo-spatial sources."
+    },
+    {
+      "stem": "Why is CRAP data normally not updated or deleted?",
+      "options": [
+        "Because it is legally protected",
+        "Because it is stored on read-only media",
+        "Because regulators forbid changes",
+        "Because it is too small to matter",
+        "Because of the speed at which it arrives, so it is only created, replicated, appended and processed"
+      ],
+      "correct": 4,
+      "explanation": "The speed this data is coming at means it is normally not possible to update or delete it, so it is created, replicated, appended and processed only."
+    },
+    {
+      "stem": "How was the non-transactional data of the new era originally regarded?",
+      "options": [
+        "As CRAP data, because it had nothing to do with transactional data",
+        "As the most valuable asset from the start",
+        "As master data",
+        "As reference data",
+        "As metadata"
+      ],
+      "correct": 0,
+      "explanation": "All this data had nothing to do with transactional data, so it used to be called CRAP data."
+    },
+    {
+      "stem": "How is CRAP data regarded now?",
+      "options": [
+        "As worthless noise to be discarded",
+        "As one of the most valuable assets of any organisation",
+        "As data that must be deleted within a day",
+        "As data reserved for archival only",
+        "As identical to transactional data"
+      ],
+      "correct": 1,
+      "explanation": "Although once called CRAP data, this data has now become one of the most valuable assets of any organisation."
+    },
+    {
+      "stem": "Which of the following is NOT one of the CRUD operations?",
+      "options": [
+        "Create",
+        "Read",
+        "Replicate",
+        "Update",
+        "Delete"
+      ],
+      "correct": 2,
+      "explanation": "Replicate belongs to CRAP; the CRUD operations are Create, Read, Update and Delete."
+    },
+    {
+      "stem": "Which operation appears in both CRUD and CRAP?",
+      "options": [
+        "Read",
+        "Update",
+        "Delete",
+        "Create",
+        "Append"
+      ],
+      "correct": 3,
+      "explanation": "Create is the C in both CRUD (Create, Read, Update, Delete) and CRAP (Create, Replicate, Append, Process)."
+    },
+    {
+      "stem": "Which operation replaces Update and Delete when handling high-velocity CRAP data?",
+      "options": [
+        "Read",
+        "Archive",
+        "Merge",
+        "Truncate",
+        "Append and Process"
+      ],
+      "correct": 4,
+      "explanation": "Because the data cannot practically be updated or deleted, it is created, replicated, appended and processed only."
+    }
+  ]
+}

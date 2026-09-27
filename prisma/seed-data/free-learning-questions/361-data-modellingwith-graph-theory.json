@@ -1,0 +1,125 @@
+{
+  "topic": "data-modellingwith-graph-theory",
+  "questions": [
+    {
+      "stem": "When is data modelling with graph theory particularly useful?",
+      "options": [
+        "When relationships between data points are as important as the data itself",
+        "When the data consists of a single flat table",
+        "When there are no relationships between records",
+        "When data only needs to be archived",
+        "When the data is purely numeric"
+      ],
+      "correct": 0,
+      "explanation": "Graph modelling is particularly useful when the relationships between data points are as important as the data itself, such as in social networks or knowledge graphs."
+    },
+    {
+      "stem": "In data modelling with graphs, how are data entities and their connections represented?",
+      "options": [
+        "Entities as columns and connections as rows",
+        "Entities as nodes and connections as edges",
+        "Entities as edges and connections as nodes",
+        "Entities as files and connections as folders",
+        "Entities as keys and connections as indexes"
+      ],
+      "correct": 1,
+      "explanation": "Each data entity is represented as a node and each connection between entities is modelled as an edge, such as a 'Friend' relationship between users."
+    },
+    {
+      "stem": "Which graph-based data model uses triples of subject, predicate and object, and is common in the semantic web and knowledge graphs?",
+      "options": [
+        "Property Graph Model",
+        "Hypergraph",
+        "RDF Graph Model",
+        "Relational Model",
+        "Star Schema"
+      ],
+      "correct": 2,
+      "explanation": "The RDF Graph Model uses triples such as Alice, Knows, Bob and is commonly used in the semantic web and knowledge graphs."
+    },
+    {
+      "stem": "What is distinctive about a hypergraph?",
+      "options": [
+        "Its nodes have no properties",
+        "It stores data only as triples",
+        "It cannot represent group memberships",
+        "Its edges can connect more than two nodes",
+        "It is used only by Neo4j"
+      ],
+      "correct": 3,
+      "explanation": "In a hypergraph, edges can connect more than two nodes, for example a single edge connecting all the members of a group."
+    },
+    {
+      "stem": "In the Property Graph Model used by graph databases such as Neo4j, what do nodes and edges carry?",
+      "options": [
+        "Nothing; they are plain identifiers",
+        "Only a numeric weight",
+        "Only a text label",
+        "A single foreign key each",
+        "Properties as key-value pairs, such as Name: Alice, Age: 25 on a node and Since: 2020 on an edge"
+      ],
+      "correct": 4,
+      "explanation": "In the Property Graph Model both nodes and edges have properties expressed as key-value pairs."
+    },
+    {
+      "stem": "Which of the following is NOT one of the steps for modelling data with graph theory?",
+      "options": [
+        "Normalise all data into third normal form",
+        "Identify entities and relationships",
+        "Define node and edge types",
+        "Determine attributes and properties",
+        "Optimise for queries"
+      ],
+      "correct": 0,
+      "explanation": "The steps are to identify entities and relationships, define node and edge types, determine attributes and properties, optimise for queries and choose a graph database; normalising to 3NF is a relational technique."
+    },
+    {
+      "stem": "In the e-commerce graph model example, which of the following is an edge rather than a node?",
+      "options": [
+        "Customer",
+        "Buys",
+        "Product",
+        "Category",
+        "Laptop"
+      ],
+      "correct": 1,
+      "explanation": "Customers, Products and Categories are nodes; 'Buys', 'Reviews' and 'Belongs To' are the edges connecting them."
+    },
+    {
+      "stem": "What does 'Optimise for Queries' recommend when modelling a graph for an e-commerce platform?",
+      "options": [
+        "Removing all edges to simplify the graph",
+        "Storing every product in a single node",
+        "Adding direct edges for frequent queries, such as 'Customers who bought X also bought Y'",
+        "Converting the graph into a spreadsheet",
+        "Using only undirected edges"
+      ],
+      "correct": 2,
+      "explanation": "Designing the graph for efficient common operations can mean adding direct edges for frequent queries such as product recommendations."
+    },
+    {
+      "stem": "Which application of graph data modelling involves analysing transaction networks to detect unusual patterns or cycles?",
+      "options": [
+        "Social networks",
+        "Knowledge graphs",
+        "Supply chain and logistics",
+        "Fraud detection",
+        "Recommendation systems"
+      ],
+      "correct": 3,
+      "explanation": "Fraud detection analyses transaction networks to identify fraudulent activity, such as unusual patterns or cycles in financial transactions."
+    },
+    {
+      "stem": "Which of the following is listed as a challenge of graph-based data modelling?",
+      "options": [
+        "Schema inflexibility",
+        "Slow traversal of connected data",
+        "Inability to represent relationships",
+        "Lack of real-time insights",
+        "The learning curve of graph query languages such as Cypher, Gremlin and SPARQL"
+      ],
+      "correct": 4,
+      "explanation": "The challenges named are complexity, scalability and the learning curve of graph query languages such as Cypher, Gremlin and SPARQL."
+    }
+  ]
+}

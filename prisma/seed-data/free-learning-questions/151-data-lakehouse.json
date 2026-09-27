@@ -1,0 +1,125 @@
+{
+  "topic": "data-lakehouse",
+  "questions": [
+    {
+      "stem": "In simple terms, what is a data lakehouse?",
+      "options": [
+        "A data lake without any governance",
+        "Data warehouse + data lake, combining the strengths of both",
+        "A data warehouse hosted in the cloud",
+        "A NoSQL database for streaming",
+        "A virtual layer over operational systems"
+      ],
+      "correct": 1,
+      "explanation": "The lakehouse is expressed simply as data warehouse plus data lake: the structured, governed nature of the warehouse combined with the flexible, large-scale storage of the lake."
+    },
+    {
+      "stem": "Around when did the data lakehouse concept emerge?",
+      "options": [
+        "Around 1990",
+        "Around 2000",
+        "Around 2010",
+        "Around 2020",
+        "Around 1975"
+      ],
+      "correct": 3,
+      "explanation": "The data lakehouse emerged around 2020 as an architectural response to the limitations of both data warehouses and data lakes."
+    },
+    {
+      "stem": "What long-standing weakness of traditional data lakes does the lakehouse address?",
+      "options": [
+        "They could not store unstructured data",
+        "They lacked strong transactional guarantees, often leading to inconsistent or unreliable data sets",
+        "They were too expensive to scale",
+        "They could only run batch workloads",
+        "They required 3NF modelling"
+      ],
+      "correct": 1,
+      "explanation": "Traditional lakes stored vast raw data but lacked strong transactional guarantees, while warehouses had consistency but struggled with semi-structured and unstructured data at scale."
+    },
+    {
+      "stem": "Which of the following is NOT one of the capabilities a data lakehouse offers?",
+      "options": [
+        "ACID transactions",
+        "Upsert and delete operations",
+        "Schema-on-write support",
+        "Tight coupling of storage and compute",
+        "Batch and streaming compatibility"
+      ],
+      "correct": 3,
+      "explanation": "The lakehouse decouples storage and compute; tight coupling was the limitation of earlier systems. ACID, upserts and deletes, schema-on-write and batch plus streaming are lakehouse capabilities."
+    },
+    {
+      "stem": "What is the significance of open table formats such as Parquet in a data lakehouse?",
+      "options": [
+        "They encrypt the data automatically",
+        "They make data natively accessible to analytical and data science tools",
+        "They restrict access to a single vendor's tools",
+        "They convert data into relational tables",
+        "They remove the need for metadata"
+      ],
+      "correct": 1,
+      "explanation": "Open table formats such as Parquet make lakehouse data natively accessible to analytical and data science tools."
+    },
+    {
+      "stem": "What architectural breakthrough of the lakehouse addresses the scalability bottlenecks of earlier systems?",
+      "options": [
+        "Storing everything in memory",
+        "The decoupling of storage and compute, with compute clusters scaled independently",
+        "Replacing SQL with a new query language",
+        "Moving all data back into OLTP databases",
+        "Eliminating metadata management"
+      ],
+      "correct": 1,
+      "explanation": "Earlier systems tightly coupled storage and compute; the lakehouse uses inexpensive, durable object storage as its foundation and scales compute clusters independently."
+    },
+    {
+      "stem": "Which foundation does a data lakehouse use for storage?",
+      "options": [
+        "Relational databases such as Oracle",
+        "Inexpensive, durable object storage such as Amazon S3, Azure Data Lake Storage or Google Cloud Storage",
+        "Tape archives",
+        "Local disks on each compute node",
+        "In-memory caches"
+      ],
+      "correct": 1,
+      "explanation": "The lakehouse leverages inexpensive, durable object storage such as Amazon S3, Azure Data Lake Storage or Google Cloud Storage as its foundation."
+    },
+    {
+      "stem": "Why is object storage alone not sufficient for a lakehouse, and what fills the gap?",
+      "options": [
+        "It is too slow; the gap is filled by in-memory caching",
+        "It lacks reliability and governance; technologies such as Delta Lake add transactional integrity and metadata management on top",
+        "It cannot hold unstructured data; the gap is filled by HDFS",
+        "It is too expensive; the gap is filled by tape",
+        "It does not support Parquet; the gap is filled by CSV"
+      ],
+      "correct": 1,
+      "explanation": "Object storage alone does not provide reliability and governance; Delta Lake and similar technologies add transactional integrity and metadata management, the tipping point that made the lakehouse practical."
+    },
+    {
+      "stem": "How does schema-on-write support in a lakehouse compare with schema-on-read designs?",
+      "options": [
+        "It allows weaker data contracts",
+        "It allows stronger data contracts",
+        "It removes the need for any schema",
+        "It only applies to unstructured data",
+        "It is identical to schema-on-read"
+      ],
+      "correct": 1,
+      "explanation": "Schema-on-write support allows stronger data contracts than schema-on-read designs."
+    },
+    {
+      "stem": "Why is the lakehouse model gaining momentum even though many organisations still maintain Hadoop-based data lakes?",
+      "options": [
+        "Because it is free of charge",
+        "Because it unifies analytical, machine learning and streaming workloads in a single architecture, reducing overlapping silos and simplifying governance",
+        "Because it eliminates the need for object storage",
+        "Because it only supports structured data",
+        "Because regulators mandate it"
+      ],
+      "correct": 1,
+      "explanation": "The lakehouse unifies analytical, machine learning and streaming workloads within one architecture, reduces overlapping silos and simplifies governance while balancing flexibility with reliability."
+    }
+  ]
+}

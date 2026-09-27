@@ -1,0 +1,125 @@
+{
+  "topic": "data-splitting-fordata-science",
+  "questions": [
+    {
+      "stem": "In Data Splitting for data science, into which two subsets does Approach 1 divide a dataset?",
+      "options": [
+        "Training and Validating",
+        "Validating and Testing",
+        "Training and Testing",
+        "Historical and Current",
+        "Structured and Unstructured"
+      ],
+      "correct": 2,
+      "explanation": "Approach 1, widely used by data modellers and data scientists, splits the dataset into a Training subset and a Testing subset."
+    },
+    {
+      "stem": "Which three subsets are used in Approach 2 of Data Splitting for data science?",
+      "options": [
+        "Training, Validating and Testing",
+        "Raw, Cleansed and Published",
+        "Training, Testing and Production",
+        "Sampling, Modelling and Reporting",
+        "Silver, Gold and Premium"
+      ],
+      "correct": 0,
+      "explanation": "Approach 2 adds a Validation stage, so the dataset is divided into Training, Validating and Testing subsets."
+    },
+    {
+      "stem": "In the bank example used to explain Data Splitting, what is the model's aim for the 100,000 customers?",
+      "options": [
+        "To detect fraudulent transactions",
+        "To predict which customers will close their accounts",
+        "To calculate interest on each account",
+        "To tag each customer as Silver, Gold or Premium based on credit history, buying behaviour and transaction values",
+        "To merge duplicate customer records"
+      ],
+      "correct": 3,
+      "explanation": "The example model tags each of the 100,000 bank customers into one of three categories, Silver, Gold or Premium, using their credit history, buying behaviour and transaction values."
+    },
+    {
+      "stem": "In Approach 1 of Data Splitting, how is the model's output judged?",
+      "options": [
+        "By how quickly it runs on the training subset",
+        "By the accuracy of its results on the second (Testing) subset",
+        "By the number of customers in the dataset",
+        "By whether it terminates after a finite number of steps",
+        "By the opinion of the business sponsor"
+      ],
+      "correct": 1,
+      "explanation": "After training on the first subset, the model is run on the second subset to test it, and its output is judged by the accuracy of results on that subset."
+    },
+    {
+      "stem": "When is the three-subset approach to Data Splitting most widely used?",
+      "options": [
+        "When the dataset is very small",
+        "When the data is unstructured",
+        "When the model is only for internal reporting",
+        "When there is no time to test",
+        "When it is of utmost importance that the model's output accuracy is at the highest possible value"
+      ],
+      "correct": 4,
+      "explanation": "Approach 2 is used where output accuracy must be as high as possible; with the extra Validation stage, expected accuracy is mostly at its best."
+    },
+    {
+      "stem": "Where does the Validation stage sit in the three-subset approach to Data Splitting?",
+      "options": [
+        "After Training and before Testing on the third subset",
+        "Before Training begins",
+        "After Testing has been completed",
+        "At the same time as Testing, on the same subset",
+        "Only after the model has gone into production"
+      ],
+      "correct": 0,
+      "explanation": "The model is trained on the first set, its output is evaluated in a Validation stage, and only then is it run on the third set for Testing."
+    },
+    {
+      "stem": "What determines the percentage of data placed in each subset when splitting a dataset for data science?",
+      "options": [
+        "The number of columns in the table",
+        "The programming language used",
+        "The criticality of the output, such as a marketing model versus a model for cancer patients",
+        "A fixed rule of exactly one third per subset",
+        "The size of the database server"
+      ],
+      "correct": 2,
+      "explanation": "The percentages can vary based on the criticality of the output, for example whether the model is for marketing or for cancer patients."
+    },
+    {
+      "stem": "What is the risk of Random Sampling when splitting a dataset?",
+      "options": [
+        "It always requires the latest data",
+        "It cannot be used with bank data",
+        "It only works within a single country",
+        "Valuable data may be unevenly distributed across the subsets",
+        "It produces more subsets than required"
+      ],
+      "correct": 3,
+      "explanation": "Random Sampling divides data randomly, with the risk that valuable data ends up unevenly distributed across the subsets."
+    },
+    {
+      "stem": "A dataset holds customers from ten countries and the data is divided randomly within each country. Which sampling method is this?",
+      "options": [
+        "Random Sampling",
+        "Graded Random Sampling",
+        "Non-random Sampling",
+        "Sequential Sampling",
+        "Validation Sampling"
+      ],
+      "correct": 1,
+      "explanation": "Graded Random Sampling divides data randomly but with parameters, such as splitting randomly within each country, so any uneven distribution is confined to within a country."
+    },
+    {
+      "stem": "Which situation is given as an example of Non-random Sampling when splitting datasets?",
+      "options": [
+        "The subsets must be of equal size",
+        "The data comes from ten different countries",
+        "The customers are all in one age group",
+        "The model must be tested twice",
+        "The model requires the latest data"
+      ],
+      "correct": 4,
+      "explanation": "Non-random Sampling is used where a specific dataset is required, for example when the model needs the latest data."
+    }
+  ]
+}

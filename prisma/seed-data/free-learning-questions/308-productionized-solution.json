@@ -1,0 +1,125 @@
+{
+  "topic": "productionized-solution",
+  "questions": [
+    {
+      "stem": "In contrast with POC, Prototype and Pilot/MVP, what is prepared and used in the productionised solution stage?",
+      "options": [
+        "A subset of data on limited hardware",
+        "Dummy data on a developer laptop",
+        "Complete infrastructure, software and data",
+        "Only the semantic layer",
+        "A single server with a single licence"
+      ],
+      "correct": 2,
+      "explanation": "In the productionised solution stage a complete infrastructure, software and data are prepared and used."
+    },
+    {
+      "stem": "What does UT stand for and who performs it?",
+      "options": [
+        "Unit Testing, done by the developer during development for every piece of code",
+        "User Testing, done by business users after go-live",
+        "Usability Testing, done by the design team",
+        "Upgrade Testing, done by the vendor",
+        "Uptime Testing, done by operations"
+      ],
+      "correct": 0,
+      "explanation": "UT stands for Unit Testing and is done by the developer during the development phase for every piece of code developed."
+    },
+    {
+      "stem": "What does SIT stand for?",
+      "options": [
+        "Security Integration Testing",
+        "Systems Integration Testing",
+        "Standard Interface Testing",
+        "Software Installation Testing",
+        "Statistical Inference Testing"
+      ],
+      "correct": 1,
+      "explanation": "SIT stands for Systems Integration Testing."
+    },
+    {
+      "stem": "How does a SIT environment compare in size with the actual solution?",
+      "options": [
+        "It must be identical in size to Production",
+        "It must be larger than Production to stress test",
+        "It has no components of the actual solution",
+        "It has all the possible components but is small in size, for example 1 server and 1 licence instead of 10 servers and 100 licences",
+        "It exists only on paper"
+      ],
+      "correct": 3,
+      "explanation": "The SIT environment has all the possible components of the actual solution but is small in size; if Production needs 10 servers and 100 licences, SIT can run with 1 server and 1 licence."
+    },
+    {
+      "stem": "What is verified during SIT?",
+      "options": [
+        "That top management approves the dashboards",
+        "That the sales forecast is accurate",
+        "That the marketing campaign is ready",
+        "That the budget has been signed",
+        "That code runs end to end, user access is set, security protocols are in place and job dependencies are in place"
+      ],
+      "correct": 4,
+      "explanation": "In SIT, we make sure the code can run end to end, user access is properly set, security protocols are in place and job dependencies are in place."
+    },
+    {
+      "stem": "Why is dropping SIT to save cost described as a bad idea?",
+      "options": [
+        "Because SIT is the first step cut to save cost, yet it is NOT a good idea, and newcomers may soon not even know what SIT is",
+        "Because SIT is required by law",
+        "Because SIT replaces UAT entirely",
+        "Because SIT is the only place where developers write code",
+        "Because SIT costs nothing"
+      ],
+      "correct": 0,
+      "explanation": "SIT is disappearing because it is the first step cut to save cost, which is not a good idea; in a decade newcomers might not even know what SIT is."
+    },
+    {
+      "stem": "What should a UAT environment ideally look like, and what data does it use?",
+      "options": [
+        "Like a developer laptop, with dummy data",
+        "Like Production, using anonymised or synthetic data of actual production size",
+        "Like the POC, with no data",
+        "Like a spreadsheet, with sample rows",
+        "Like an archive, with historical data only"
+      ],
+      "correct": 1,
+      "explanation": "The UAT environment should ideally look like Production, using anonymised or synthetic but actual-size data so business users can test before release."
+    },
+    {
+      "stem": "When does UAT come into the picture?",
+      "options": [
+        "Before any code is written",
+        "Before unit testing",
+        "After SIT is successful",
+        "After the solution goes live",
+        "During the POC"
+      ],
+      "correct": 2,
+      "explanation": "UAT comes into the picture after SIT is a success."
+    },
+    {
+      "stem": "What must the Production environment comply with?",
+      "options": [
+        "Only the developers' coding standards",
+        "Only the sales team's timeline",
+        "Only internal style guides",
+        "Internal compliance and audit requirements as well as external regulatory bodies' standards",
+        "Nothing, since Production is the final version"
+      ],
+      "correct": 3,
+      "explanation": "The production environment must comply with internal compliance and audit requirements as well as external regulatory bodies' standards."
+    },
+    {
+      "stem": "Which of the following is NOT part of the productionised solution stage after a successful MVP?",
+      "options": [
+        "Gathering complete business requirements and making a complete design",
+        "Building teams and making a project plan",
+        "Signing an end-to-end SOW",
+        "Conducting UT, SIT and UAT before going live",
+        "Using only a subset of real data and limited features"
+      ],
+      "correct": 4,
+      "explanation": "Using a subset of data and limited features describes the MVP; the productionised stage gathers complete requirements, designs fully, signs the SOW, tests with UT, SIT and UAT, and goes live with complete data."
+    }
+  ]
+}

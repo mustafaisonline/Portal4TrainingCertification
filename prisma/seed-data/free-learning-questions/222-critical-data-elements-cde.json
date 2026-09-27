@@ -1,0 +1,125 @@
+{
+  "topic": "critical-data-elements-cde",
+  "questions": [
+    {
+      "stem": "How are Critical Data Elements (CDE) characterised in terms of their nature?",
+      "options": [
+        "As a process to manipulate data",
+        "As a principle rather than a process, holding significant value for managing and securing data",
+        "As a database index type",
+        "As a reporting format for dashboards",
+        "As a data cleansing algorithm"
+      ],
+      "correct": 1,
+      "explanation": "CDE is a principle rather than a process to manipulate data, but it holds very significant value in terms of managing and securing data."
+    },
+    {
+      "stem": "In Data Strategy, which data elements are categorised as Critical Data Elements?",
+      "options": [
+        "Those with the most columns",
+        "Those stored in the largest tables",
+        "Those that can have a negative impact on the organisation",
+        "Those that are updated most frequently",
+        "Those created by IT"
+      ],
+      "correct": 2,
+      "explanation": "In Data Strategy, Critical Data Elements are those that can have a negative impact on the organisation, such as regulatory, legal, compliance or reputation-related elements."
+    },
+    {
+      "stem": "Which of the following is given as an example of a Critical Data Element in the Banking sector?",
+      "options": [
+        "Branch opening hours",
+        "Marketing campaign names",
+        "Office furniture inventory",
+        "Credit or Debit Card details",
+        "Staff canteen menus"
+      ],
+      "correct": 3,
+      "explanation": "Credit or Debit Card details in the Banking sector are critical; Personal Information of customers is critical in most organisations, and location details are critical in Telecommunication."
+    },
+    {
+      "stem": "Which sector is used to illustrate location details as a Critical Data Element?",
+      "options": [
+        "Telecommunication",
+        "Banking",
+        "Retail",
+        "Healthcare",
+        "Manufacturing"
+      ],
+      "correct": 0,
+      "explanation": "Location details in Telecommunication are given as critical data elements."
+    },
+    {
+      "stem": "Who owns the identification of Critical Data Elements?",
+      "options": [
+        "Technical teams, because they maintain the databases",
+        "External regulators",
+        "The BI tool vendor",
+        "Metadata management software",
+        "The business, because an element may be critical for one department but not for others"
+      ],
+      "correct": 4,
+      "explanation": "Identifying Critical Data Elements is not technical ownership; it is Business ownership, as some elements might be critical for one department but not others."
+    },
+    {
+      "stem": "Why are Master Data and Reference Data given as good examples of Critical Data Elements?",
+      "options": [
+        "Because they are the largest datasets",
+        "Because without a Golden Record there may be duplication, and wrong code management can map wrong products to wrong transactions",
+        "Because they are always regulated by GDPR",
+        "Because they are stored only in data lakes",
+        "Because they change every day"
+      ],
+      "correct": 1,
+      "explanation": "Without a Golden Record there might be duplication of data, and without the right code management in reference data, wrong products can be mapped to wrong transactions."
+    },
+    {
+      "stem": "Which statement best distinguishes a technical Critical Data Element from a business Critical Data Element?",
+      "options": [
+        "Technical CDEs can be fixed by technical people and may not affect the company's image; business CDEs may cost the organisation heavily in penalties",
+        "Technical CDEs always lead to penalties; business CDEs never do",
+        "Business CDEs are fixed by IT; technical CDEs are fixed by the business",
+        "There is no difference between them",
+        "Technical CDEs apply only to unstructured data"
+      ],
+      "correct": 0,
+      "explanation": "Technical data elements can be fixed by technical folks and may or may not impact the company's image, whereas business Critical Data Elements may cost the organisation heavily in the shape of penalties."
+    },
+    {
+      "stem": "A low-quality data element that corrupts many downstream data elements is critical with respect to what?",
+      "options": [
+        "Organisation-level strategy",
+        "Regulatory compliance",
+        "Data Quality, but not at an organisation level",
+        "Public image",
+        "Legal ownership"
+      ],
+      "correct": 2,
+      "explanation": "If one low-quality element corrupts many downstream elements it can be categorised as critical, but this is with respect to Data Quality, not at an organisation level."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a basis for classifying a data element as a Critical Data Element?",
+      "options": [
+        "Regulatory requirements",
+        "Legal or compliance requirements",
+        "Elements that could damage the company's image with the general public",
+        "Elements whose inaccuracy makes stakeholders lose confidence in data",
+        "Elements that occupy the most storage space"
+      ],
+      "correct": 4,
+      "explanation": "Storage size is not a criterion. CDEs can be regulatory, legal or compliance requirements, elements affecting the company's public image, or elements whose inaccuracy erodes stakeholder confidence."
+    },
+    {
+      "stem": "With what are Critical Data Elements most often confused?",
+      "options": [
+        "Primary keys in a database",
+        "Columns in a heat map",
+        "Fields on a dashboard",
+        "Elements or data points identified during a Data Quality exercise",
+        "Reference data codes"
+      ],
+      "correct": 3,
+      "explanation": "Most people mix Critical Data Elements with elements or data points identified during a Data Quality exercise; those are also critical, but CDE in Data Strategy concerns elements that can negatively impact the organisation."
+    }
+  ]
+}

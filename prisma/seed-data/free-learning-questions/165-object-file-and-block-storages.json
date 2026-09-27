@@ -1,0 +1,125 @@
+{
+  "topic": "object-file-and-block-storages",
+  "questions": [
+    {
+      "stem": "Which three types of storage exist at the hardware level?",
+      "options": [
+        "Object Storage, File Storage and Block Storage",
+        "Row Storage, Columnar Storage and In-Memory Storage",
+        "Data Warehouse, Data Lake and Data Lakehouse",
+        "Key-Value, Document and Graph Storage",
+        "Physical, Virtual and Cloud Storage"
+      ],
+      "correct": 0,
+      "explanation": "There are three types of storage at the hardware level: Object Storage, File Storage and Block Storage."
+    },
+    {
+      "stem": "How does Object Storage organise data?",
+      "options": [
+        "In folders and subfolders arranged in a hierarchy",
+        "In a flat open storage area with no folders or subfolders, each object kept with its metadata and a unique identifier",
+        "As fixed-size blocks each with a unique address",
+        "As rows and columns inside tables",
+        "As nodes connected by edges"
+      ],
+      "correct": 1,
+      "explanation": "Object Storage considers all types of data as an object. Data is stored in a flat open storage area with no folder or subfolder concept, along with its metadata and unique identifier, forming a storage pool that keeps all details about the data near to it."
+    },
+    {
+      "stem": "Which everyday analogy is used to describe File Storage?",
+      "options": [
+        "Parcels in a postal sorting office",
+        "Books on a library shelf",
+        "Keeping manual papers in files during school days",
+        "Cards in a card index",
+        "Rooms in a hotel"
+      ],
+      "correct": 2,
+      "explanation": "File Storage is compared with how manual papers were kept in files in school days: data is kept inside folders and subfolders in a hierarchy, and to find data you need to know the folder's location or path."
+    },
+    {
+      "stem": "What do you need to know in order to retrieve specific data from File Storage?",
+      "options": [
+        "The object's unique identifier",
+        "The block's unique address",
+        "The name of the cloud provider",
+        "The location or path of the folder",
+        "The metadata stored beside the object"
+      ],
+      "correct": 3,
+      "explanation": "In File Storage, data sits inside folders and subfolders, so when you need specific data you just need to know the location or path of the folder."
+    },
+    {
+      "stem": "How does Block Storage treat a file?",
+      "options": [
+        "As a single object with attached metadata",
+        "As a document with data type descriptions",
+        "As a row in a table",
+        "As an entry in a folder hierarchy",
+        "As a single block of data, with each block stored as a separate piece of information and given a unique address"
+      ],
+      "correct": 4,
+      "explanation": "Block Storage considers a file as a single block of data, and each block is stored as a separate piece of information with a unique address for reference."
+    },
+    {
+      "stem": "Which systems are named as being stored in blocks at the backend?",
+      "options": [
+        "Traditional databases and Hadoop files",
+        "AWS S3 and Azure ADLS",
+        "Data Lakes and Delta Lakes",
+        "Shared drives and Data Rooms",
+        "Spreadsheets and email archives"
+      ],
+      "correct": 0,
+      "explanation": "Traditional databases are stored in blocks, and at the backend Hadoop files are also stored in blocks."
+    },
+    {
+      "stem": "Which storage type have cloud companies adopted as their de facto storage in the era of big data, data lakes, delta lakes and data lakehouses?",
+      "options": [
+        "Block Storage",
+        "Object Storage",
+        "File Storage",
+        "Tape Storage",
+        "In-Memory Storage"
+      ],
+      "correct": 1,
+      "explanation": "In the era of big data, data lake, delta lake and data lakehouse, cloud companies use Object Storage as their de facto storage, for example S3 on AWS and ADLS on Azure."
+    },
+    {
+      "stem": "Which of the following is NOT a feature of Object Storage?",
+      "options": [
+        "All types of data are treated as objects",
+        "Each object is stored with its metadata",
+        "Objects are arranged in folders and subfolders",
+        "Each object has a unique identifier",
+        "Data lives in a flat open storage area"
+      ],
+      "correct": 2,
+      "explanation": "Object Storage has no folder or subfolder concept; folders and subfolders in a hierarchy are the hallmark of File Storage."
+    },
+    {
+      "stem": "Which are given as examples of Object Storage offered by cloud companies?",
+      "options": [
+        "HDFS and EXT",
+        "MySQL and SQL Server",
+        "Hive and Cosmos DB",
+        "S3 on AWS and ADLS on Azure",
+        "FAT and NTFS"
+      ],
+      "correct": 3,
+      "explanation": "Cloud examples of Object Storage are S3 (AWS) and ADLS (Azure); Teradata and Oracle also call it Object Storage."
+    },
+    {
+      "stem": "What distinguishes File Storage from Object Storage in the way data is organised?",
+      "options": [
+        "File Storage stores metadata beside each item, whereas Object Storage stores none",
+        "File Storage assigns a unique address to each block, whereas Object Storage uses folders",
+        "File Storage is used only in the cloud, whereas Object Storage is used only on-premises",
+        "File Storage treats every file as an object, whereas Object Storage treats every object as a file",
+        "File Storage keeps data in a hierarchy of folders and subfolders, whereas Object Storage uses a flat storage area"
+      ],
+      "correct": 4,
+      "explanation": "File Storage keeps data as one piece of information inside folders and subfolders, in a hierarchy mode, in contrast with Object Storage's flat open storage area with no folder concept."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "data-strategy-vs-data-management",
+  "questions": [
+    {
+      "stem": "Why are Data Strategy and Data Management treated together as one topic in I Am Datapedia!?",
+      "options": [
+        "Because they are the same thing under two names",
+        "Because both are huge areas and the aim is to help readers understand the topics rather than train them",
+        "Because Data Management has replaced Data Strategy",
+        "Because neither is relevant to modern data solutions",
+        "Because they are only used in the banking sector"
+      ],
+      "correct": 1,
+      "explanation": "The author planned two separate topics but combined them because both areas are huge and the book aims to build understanding rather than to train."
+    },
+    {
+      "stem": "What is the relationship between Data Management and Data Strategy?",
+      "options": [
+        "Data Strategy is a small part of Data Management",
+        "They are unrelated disciplines",
+        "Data Management replaces Data Strategy once a solution goes live",
+        "Data Management is one of the key elements of Data Strategy",
+        "Data Strategy is only concerned with hardware while Data Management covers software"
+      ],
+      "correct": 3,
+      "explanation": "Data Management is described as one of the key elements of Data Strategy."
+    },
+    {
+      "stem": "When are the features and capabilities of a Data Strategy defined?",
+      "options": [
+        "Before the execution process starts",
+        "After the solution has been in production for a year",
+        "Only when a data quality problem is found",
+        "During the annual audit",
+        "After data governance has been set up"
+      ],
+      "correct": 0,
+      "explanation": "Data Strategy is about defining all the features and capabilities before the execution process starts."
+    },
+    {
+      "stem": "Which areas does Data Strategy cover?",
+      "options": [
+        "Network topology, hardware and cabling",
+        "Payroll, recruitment and training",
+        "Only data architecture",
+        "Only tools and licences",
+        "Business strategy, organisational roles, data architecture and data management"
+      ],
+      "correct": 4,
+      "explanation": "Data Strategy covers business strategy, organisational roles, data architecture and data management."
+    },
+    {
+      "stem": "What are the goals of a Data Strategy?",
+      "options": [
+        "To reduce headcount and cut IT budgets",
+        "To replace all on-premises systems with cloud services",
+        "To innovate, cater to business requirements and address risk and regulatory challenges",
+        "To archive as much historical data as possible",
+        "To standardise every report format"
+      ],
+      "correct": 2,
+      "explanation": "Data Strategy goals are to innovate, cater to business requirements and address risk and regulatory challenges."
+    },
+    {
+      "stem": "Which of these is NOT listed as something Data Management maintains?",
+      "options": [
+        "Marketing campaign budgets",
+        "Metadata",
+        "Data quality",
+        "Data security",
+        "Data governance"
+      ],
+      "correct": 0,
+      "explanation": "Data Management maintains data architecture, datastores, metadata, data quality, data security, data integration, data transformations and data governance; marketing budgets are not among them."
+    },
+    {
+      "stem": "What does Data Management make sure of once a solution is implemented?",
+      "options": [
+        "That the solution is replaced every three years",
+        "That the solution is sold to other organisations",
+        "That the solution is moved to the cloud",
+        "That the solution is well maintained",
+        "That the solution is never changed"
+      ],
+      "correct": 3,
+      "explanation": "Data Management makes sure that what is implemented as a solution is well maintained."
+    },
+    {
+      "stem": "Which activities describe Data Management within an organisation?",
+      "options": [
+        "Marketing, selling and invoicing data",
+        "Sourcing, processing, storing, organising and maintaining data",
+        "Encrypting, transmitting and deleting data",
+        "Auditing, fining and reporting data breaches",
+        "Designing, building and decommissioning hardware"
+      ],
+      "correct": 1,
+      "explanation": "Data Management is about sourcing, processing, storing, organising and maintaining data within an organisation."
+    },
+    {
+      "stem": "On what are the tools, processes and planning decisions of a Data Strategy based?",
+      "options": [
+        "The preferences of the database vendor",
+        "The size of the IT department",
+        "Industry-wide default templates",
+        "The cost of cloud storage",
+        "Business or organisation requirements"
+      ],
+      "correct": 4,
+      "explanation": "Data Strategy is about tools, processes, implementation planning and maintenance planning based on business or organisation requirements."
+    },
+    {
+      "stem": "A Data Strategy ensures that an implemented data solution covers everything needed to do what with data?",
+      "options": [
+        "Sell, license and export it",
+        "Encrypt, compress and delete it",
+        "Host, manage, protect, maintain and make use of it",
+        "Print, file and archive it",
+        "Sample, model and visualise it"
+      ],
+      "correct": 2,
+      "explanation": "Data Strategy defines the elements needed so a data solution covers hosting, managing, protecting, maintaining and making use of data."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "data-driven-organization",
+  "questions": [
+    {
+      "stem": "How is the term Data Driven Organisation described in I Am Datapedia!?",
+      "options": [
+        "A legal requirement for listed companies",
+        "An outdated concept from the reporting era",
+        "A new buzz word that every organisation wants to tag itself with",
+        "A technical certification for databases",
+        "A software product sold by vendors"
+      ],
+      "correct": 2,
+      "explanation": "Data Driven Organisation is described as a new buzz word in the market that every organisation wants to tag with its name."
+    },
+    {
+      "stem": "Using data for top-level revenue planning and for checking whether a product division meets its planned ROI is described as what?",
+      "options": [
+        "The definition of a Data Driven Organisation",
+        "A form of Data Liberalisation",
+        "An example of Data Democratisation",
+        "A daily chore decision",
+        "Previous-era organisational behaviour that does not make an organisation data driven"
+      ],
+      "correct": 4,
+      "explanation": "Traditional decisions at the top and division level are previous-era behaviour; they do not by themselves make an organisation a Data Driven Organisation."
+    },
+    {
+      "stem": "In the current era, what kinds of decisions must follow data in a Data Driven Organisation?",
+      "options": [
+        "Daily chores, such as hiring and firing, transfers, ordering printer ink and paper, procurement and provisioning of resources",
+        "Only board-level strategic decisions",
+        "Only decisions about marketing campaigns",
+        "Only decisions made by the IT department",
+        "Only decisions about product pricing"
+      ],
+      "correct": 0,
+      "explanation": "Data decisions extend to daily chores: hiring and firing, transfers, ordering printer ink or paper, procurement, and provisioning or de-provisioning hardware, software and infrastructure."
+    },
+    {
+      "stem": "Which of the following is NOT listed among the daily chores that a Data Driven Organisation should decide with data?",
+      "options": [
+        "How employees are hired and fired",
+        "How transfers are done",
+        "How printer ink and paper are ordered",
+        "How the company logo is designed",
+        "How hardware, software and infrastructure are provisioned or de-provisioned"
+      ],
+      "correct": 3,
+      "explanation": "The listed chores are hiring and firing, transfers, ordering ink and paper, procurement, and provisioning of resources; logo design is not mentioned."
+    },
+    {
+      "stem": "In a Data Driven Organisation, what should ideally happen to everything?",
+      "options": [
+        "It should be outsourced",
+        "It should be automated",
+        "It should be approved by a committee",
+        "It should be stored in a spreadsheet",
+        "It should be done manually to preserve jobs"
+      ],
+      "correct": 1,
+      "explanation": "In a Data Driven Organisation, ideally, everything must be automated."
+    },
+    {
+      "stem": "What is the author's stated view on human intervention in a Data Driven Organisation?",
+      "options": [
+        "Human intervention should be eliminated entirely",
+        "Human intervention is only needed for hiring",
+        "Human intervention will never be zero",
+        "Human intervention is a sign of failure",
+        "Human intervention should be limited to IT staff"
+      ],
+      "correct": 2,
+      "explanation": "The author does not deny human intervention and is a big advocate that human intervention will never be zero."
+    },
+    {
+      "stem": "What is described as the right attitude towards work in a Data Driven Organisation?",
+      "options": [
+        "Keep doing the same task manually to ensure quality",
+        "Wait for IT to automate every task",
+        "Avoid automation until the whole organisation agrees",
+        "Delegate every task to a consultant",
+        "Once you do something, make it automated and move to the next task"
+      ],
+      "correct": 4,
+      "explanation": "The right attitude is that once you do something, you automate it and move on, because there is plenty else to do."
+    },
+    {
+      "stem": "What is described as the biggest challenge in achieving Data Driven Organisation status?",
+      "options": [
+        "Cultural change",
+        "Buying enough servers",
+        "Choosing a database vendor",
+        "Writing the data strategy",
+        "Hiring data scientists"
+      ],
+      "correct": 0,
+      "explanation": "The biggest challenge in achieving Data Driven Organisation status is cultural change; people are still not ready for it."
+    },
+    {
+      "stem": "Why are people described as not ready for the automation that a Data Driven Organisation requires?",
+      "options": [
+        "Because automation tools are too expensive",
+        "Because they lack access to data",
+        "Because managers forbid automation",
+        "Because they think their jobs are at stake if they automate what they do",
+        "Because automation only works for IT tasks"
+      ],
+      "correct": 3,
+      "explanation": "People still think their jobs are at stake if they automate what they do, and the author says this must change."
+    },
+    {
+      "stem": "According to I Am Datapedia!, within what maximum period should a person automate what they are doing, and what happens otherwise?",
+      "options": [
+        "Within one month; otherwise the task is cancelled",
+        "Within one year; otherwise the manager finds a new person or upgrades the team's skill set",
+        "Within five years; otherwise the organisation hires consultants",
+        "Within one week; otherwise IT takes over the task",
+        "There is no time limit for automation"
+      ],
+      "correct": 1,
+      "explanation": "One must automate what one is doing within a maximum of one year; if the task is still not automated after a year, the manager should find a new person or upgrade the team's skill set."
+    }
+  ]
+}

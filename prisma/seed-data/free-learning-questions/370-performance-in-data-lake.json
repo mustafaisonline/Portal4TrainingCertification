@@ -1,0 +1,125 @@
+{
+  "topic": "performance-in-data-lake",
+  "questions": [
+    {
+      "stem": "What does performance in a data lake refer to?",
+      "options": [
+        "The efficiency with which data is stored, retrieved and processed",
+        "The number of users who have accounts",
+        "The size of the data lake in terabytes",
+        "The cost of the cloud subscription",
+        "The number of dashboards built on the lake"
+      ],
+      "correct": 0,
+      "explanation": "Performance in a data lake refers to the efficiency with which data is stored, retrieved and processed."
+    },
+    {
+      "stem": "Why are storage formats such as Parquet or ORC recommended for data lake performance?",
+      "options": [
+        "They store data as plain text for easy reading",
+        "They store data in columns, allowing better compression and faster retrieval on large datasets",
+        "They require no metadata",
+        "They are the only formats supported by cloud storage",
+        "They automatically encrypt all data"
+      ],
+      "correct": 1,
+      "explanation": "Parquet and ORC store data in columns, which allows better compression and faster retrieval, especially for large datasets."
+    },
+    {
+      "stem": "How does data partitioning improve data lake performance?",
+      "options": [
+        "By duplicating every dataset across regions",
+        "By converting all data to a single file",
+        "By dividing large datasets into smaller parts, such as by time, region or product category, so only the relevant portion is accessed during queries",
+        "By deleting old data automatically",
+        "By encrypting each dataset separately"
+      ],
+      "correct": 2,
+      "explanation": "Partitioning divides large datasets into manageable parts, for example by time or region, so that queries touch only the relevant portion of the data."
+    },
+    {
+      "stem": "Which frameworks are named as able to accelerate query performance in a data lake through indexing-style capabilities?",
+      "options": [
+        "AWS S3 and Azure Data Lake",
+        "Apache Hive and AWS Glue",
+        "Presto and Athena",
+        "Apache Hudi and Delta Lake",
+        "Flink and Databricks"
+      ],
+      "correct": 3,
+      "explanation": "Although data lakes are often schema-less, frameworks like Apache Hudi or Delta Lake can accelerate query performance and make data access more efficient."
+    },
+    {
+      "stem": "Which tools are listed for metadata management in a data lake?",
+      "options": [
+        "Parquet, ORC and Avro",
+        "Spark, Flink and Presto",
+        "S3, Azure Data Lake and Google Cloud Storage",
+        "Hudi and Delta Lake",
+        "Apache Hive, AWS Glue and Databricks Unity Catalog"
+      ],
+      "correct": 4,
+      "explanation": "Proper metadata management using tools like Apache Hive, AWS Glue or Databricks Unity Catalog can greatly speed up processing and query execution."
+    },
+    {
+      "stem": "How does caching help data lake performance?",
+      "options": [
+        "Frequently accessed data is stored in cache, significantly reducing retrieval times for repeated queries",
+        "It permanently replaces the underlying storage",
+        "It compresses data into columns",
+        "It partitions data by region",
+        "It enforces access policies"
+      ],
+      "correct": 0,
+      "explanation": "A caching layer stores frequently accessed data so that repeated queries are answered much faster and data access is more responsive."
+    },
+    {
+      "stem": "How do query engines such as Apache Spark, Presto or AWS Athena improve performance on large datasets?",
+      "options": [
+        "By storing all data in memory permanently",
+        "By leveraging distributed computing to run queries in parallel",
+        "By removing the need for partitioning",
+        "By converting SQL into spreadsheets",
+        "By limiting each query to one row"
+      ],
+      "correct": 1,
+      "explanation": "These query engines optimise SQL queries and use distributed computing to run them in parallel, improving overall performance."
+    },
+    {
+      "stem": "What is said about the relationship between data governance and security and data lake performance?",
+      "options": [
+        "They are the single biggest driver of query speed",
+        "They always slow the data lake down",
+        "They do not directly impact performance, but clear access policies and encryption can prevent bottlenecks and sustain operational efficiency",
+        "They are irrelevant to a data lake",
+        "They replace the need for metadata management"
+      ],
+      "correct": 2,
+      "explanation": "Governance and security do not directly affect performance, but maintaining clear access policies and encryption can prevent bottlenecks."
+    },
+    {
+      "stem": "To maintain performance as a data lake scales on platforms such as AWS S3 or Google Cloud Storage, what must scale alongside the data?",
+      "options": [
+        "The number of dashboards",
+        "The number of data stewards",
+        "The size of the metadata catalogue only",
+        "Compute resources",
+        "The number of file formats used"
+      ],
+      "correct": 3,
+      "explanation": "Cloud storage lets capacity grow as needed, but to maintain performance compute resources must scale appropriately with the data."
+    },
+    {
+      "stem": "How does maintaining data quality contribute to data lake performance?",
+      "options": [
+        "It increases the amount of data stored",
+        "It removes the need for a processing framework",
+        "It makes caching unnecessary",
+        "It requires more transformations to be run",
+        "Clean, high-quality data reduces the need for time-consuming transformations or error handling, speeding up processing"
+      ],
+      "correct": 4,
+      "explanation": "High-quality, clean data reduces the need for time-consuming transformations or error handling, which speeds up data processing."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "conceptual-and-logical-architecture-modelling",
+  "questions": [
+    {
+      "stem": "What does Conceptual and Logical Architecture Modelling describe?",
+      "options": [
+        "The overall structure of an enterprise's systems and how they interact, without focusing on specific technologies",
+        "The physical configuration of servers and storage",
+        "The source code of each application",
+        "The pricing of software licences",
+        "The physical layout of a data centre"
+      ],
+      "correct": 0,
+      "explanation": "It describes which systems exist, what roles they play and how data and processes flow between them, without technical configuration."
+    },
+    {
+      "stem": "What is the primary goal of Conceptual and Logical Architecture Modelling?",
+      "options": [
+        "To select database vendors",
+        "To write integration code",
+        "To calculate infrastructure costs",
+        "To ensure systems, data and processes are well aligned with business needs",
+        "To define data types for every column"
+      ],
+      "correct": 3,
+      "explanation": "The primary goal is alignment of systems, data and processes with business needs, so solutions are scalable, integrated and governable."
+    },
+    {
+      "stem": "What does the conceptual level of architecture modelling typically show?",
+      "options": [
+        "Detailed data flows between integrations",
+        "Server specifications",
+        "Table and column definitions",
+        "A high-level view of major domains such as applications, data and infrastructure",
+        "Network cabling diagrams"
+      ],
+      "correct": 3,
+      "explanation": "The conceptual level presents a high-level view showing major domains and answers which systems exist and what their responsibilities are."
+    },
+    {
+      "stem": "What does the logical level of architecture modelling add beyond the conceptual level?",
+      "options": [
+        "Specific technology choices and vendors",
+        "Physical server names and IP addresses",
+        "How data flows between systems, how integrations work and how systems are logically grouped",
+        "The cost of each system",
+        "The programming language of each component"
+      ],
+      "correct": 2,
+      "explanation": "The logical level shows data flows, integrations and logical groupings, still without committing to specific technologies."
+    },
+    {
+      "stem": "In the school example, what would a logical architecture model explain?",
+      "options": [
+        "Which database engine the admissions system uses",
+        "How many servers the school owns",
+        "The salaries of school staff",
+        "The brand of the fee-payment software",
+        "How student information moves from admissions to exams and fees, and how updates are reflected across systems"
+      ],
+      "correct": 4,
+      "explanation": "The logical model explains how student information moves between admissions, exams and fees systems, without describing databases, servers or tools."
+    },
+    {
+      "stem": "In the loan approval example, which of the following is NOT one of the systems identified at the conceptual level?",
+      "options": [
+        "Loan Origination System",
+        "Credit Bureau interface",
+        "Risk Engine",
+        "Core Banking",
+        "Payroll System"
+      ],
+      "correct": 4,
+      "explanation": "The conceptual model identifies the Loan Origination System, Credit Bureau interface, Risk Engine, Core Banking and Collections."
+    },
+    {
+      "stem": "In the loan example at the logical level, what does the Collections system do?",
+      "options": [
+        "Evaluates credit and risk scores",
+        "Sends application data to the Credit Bureau",
+        "Monitors repayment schedules and updates records when repayments are delayed",
+        "Approves or rejects loans",
+        "Stores the data warehouse"
+      ],
+      "correct": 2,
+      "explanation": "The Collections system monitors repayment schedules and updates records when repayments are delayed."
+    },
+    {
+      "stem": "Which analytical flow is given as an example in Conceptual and Logical Architecture Modelling?",
+      "options": [
+        "Risk data flowing from the Risk Engine into an analytical environment for portfolio analysis",
+        "Salary data flowing to the payroll system",
+        "Email data flowing to a marketing tool",
+        "Server logs flowing to a backup tape",
+        "Student grades flowing to parents"
+      ],
+      "correct": 0,
+      "explanation": "Risk data may flow from the Risk Engine into an analytical environment, transaction data may feed financial reporting and collections data may support delinquency reports."
+    },
+    {
+      "stem": "Which statement about the nature of Conceptual and Logical Architecture Modelling is correct?",
+      "options": [
+        "It is tied to a specific cloud platform",
+        "It is abstract and platform-independent by design and widely used in enterprise architecture practices",
+        "It describes physical implementations in detail",
+        "It is used only during software testing",
+        "It focuses on code rather than components"
+      ],
+      "correct": 1,
+      "explanation": "It is abstract and platform-independent, supporting planning, governance and long-term alignment in enterprise architecture."
+    },
+    {
+      "stem": "How does Conceptual and Logical Architecture Modelling complement Enterprise Data Modelling?",
+      "options": [
+        "Both standardise what the data means",
+        "Enterprise Data Modelling standardises what data means; architecture modelling standardises where data lives, how it moves and how systems interact",
+        "Architecture modelling replaces Enterprise Data Modelling",
+        "Enterprise Data Modelling defines system integrations; architecture modelling defines entities",
+        "They are unrelated disciplines"
+      ],
+      "correct": 1,
+      "explanation": "While Enterprise Data Modelling standardises what the data means, architecture modelling standardises where the data lives, how it moves and how systems interact."
+    }
+  ]
+}

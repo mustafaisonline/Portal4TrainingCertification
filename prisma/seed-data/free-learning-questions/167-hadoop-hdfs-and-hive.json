@@ -1,0 +1,125 @@
+{
+  "topic": "hadoop-hdfs-and-hive",
+  "questions": [
+    {
+      "stem": "What is the default block size in Hadoop?",
+      "options": [
+        "4 MB",
+        "64 MB",
+        "128 MB",
+        "256 MB",
+        "1 GB"
+      ],
+      "correct": 2,
+      "explanation": "Hadoop's default block size is 128 MB, although it can be changed."
+    },
+    {
+      "stem": "How is HDFS best described in relation to Hadoop?",
+      "options": [
+        "A Hadoop file system, comparable to FAT, NTFS or EXT",
+        "A query language for Hadoop tables",
+        "The Java framework that schedules Hadoop jobs",
+        "A wrapper that manages table structures",
+        "A compression codec for Hadoop blocks"
+      ],
+      "correct": 0,
+      "explanation": "HDFS is the Hadoop file system, playing the same role that FAT, NTFS or EXT play on other systems."
+    },
+    {
+      "stem": "What does Hive actually store when it presents data as tables?",
+      "options": [
+        "A full copy of every HDFS file in its own database",
+        "Only the compressed version of each file",
+        "The data blocks but not the file names",
+        "A cached subset of frequently queried rows",
+        "No data at all; it only manages table structures on top of HDFS files"
+      ],
+      "correct": 4,
+      "explanation": "Hive is only a wrapper: it behaves like tables in a traditional database but stores no data, managing table structures over files held in HDFS."
+    },
+    {
+      "stem": "What are the two ways in which Hive can work with data?",
+      "options": [
+        "Store data in memory or on tape",
+        "Store files in HDFS directly, or create tables which create HDFS files at the back end",
+        "Replicate files across nodes, or keep a single copy",
+        "Query files with SQL, or query them with MapReduce",
+        "Store data in HDFS, or store it in a relational database"
+      ],
+      "correct": 1,
+      "explanation": "Hive either works over files stored directly in HDFS, or tables are created in Hive and the HDFS files are created at the back end."
+    },
+    {
+      "stem": "If two 50 MB files are stored directly in HDFS, how many blocks are created?",
+      "options": [
+        "None until a query is run",
+        "One shared block, because together they are under 128 MB",
+        "Four, because each file is split in half",
+        "Two, because each file stored in HDFS creates its own block",
+        "One block per node in the cluster"
+      ],
+      "correct": 3,
+      "explanation": "Each file stored directly in HDFS creates its own block, so two 50 MB files produce two blocks."
+    },
+    {
+      "stem": "If the same two 50 MB files are loaded through Hive tables instead of directly into HDFS, how are they stored?",
+      "options": [
+        "In two separate blocks, exactly as with direct HDFS storage",
+        "Both in a single block, because Hive manages its own blocks",
+        "In a Hive-owned database outside HDFS",
+        "In one block per column",
+        "They are rejected because they are smaller than 128 MB"
+      ],
+      "correct": 1,
+      "explanation": "Hive manages its own blocks, so two small 50 MB files can be stored together in a single block."
+    },
+    {
+      "stem": "Why do thousands of 1 MB files arriving from social media cause a problem when stored directly in HDFS?",
+      "options": [
+        "Each creates its own small block, and thousands of small blocks hurt MPP performance",
+        "HDFS cannot store files smaller than the block size",
+        "Hive refuses to build tables over files that small",
+        "Small files cannot be replicated",
+        "They exceed the cluster's total block count"
+      ],
+      "correct": 0,
+      "explanation": "Every small file becomes its own small block, and thousands of tiny blocks degrade massive parallel processing performance."
+    },
+    {
+      "stem": "What block size is described as best practice for Hadoop?",
+      "options": [
+        "1 MB",
+        "50 MB",
+        "64 MB",
+        "100 MB",
+        "128 MB"
+      ],
+      "correct": 4,
+      "explanation": "The best practice is to have blocks of 128 MB, avoiding the performance cost of many small blocks."
+    },
+    {
+      "stem": "Which kinds of data can Hadoop's open-source framework store?",
+      "options": [
+        "Structured data only",
+        "Unstructured data only",
+        "Semi-structured and unstructured data, but not structured",
+        "Structured, semi-structured and unstructured data",
+        "Only data that has first been converted to CSV"
+      ],
+      "correct": 3,
+      "explanation": "Hadoop is an open-source framework to store structured, semi-structured and unstructured data."
+    },
+    {
+      "stem": "Which statement about Hive is NOT correct?",
+      "options": [
+        "Hive behaves like tables in a traditional database",
+        "Hive is a wrapper on top of files stored in HDFS",
+        "Hive keeps its own separate copy of the data apart from HDFS",
+        "Hive can create HDFS files at the back end when tables are created",
+        "Hive manages its own blocks"
+      ],
+      "correct": 2,
+      "explanation": "Hive does not store any data of its own; it manages table structures over files that live in HDFS."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "data-warehouse-and-data-marts",
+  "questions": [
+    {
+      "stem": "Why did the idea of a data warehouse emerge?",
+      "options": [
+        "Because OLTP systems could not store structured data",
+        "Because transactional systems were never designed for heavy reporting or analytical workloads",
+        "Because businesses wanted to delete historical records",
+        "Because relational databases were being replaced by NoSQL",
+        "Because cloud storage became free"
+      ],
+      "correct": 1,
+      "explanation": "OLTP systems record day-to-day operations well but were never designed for heavy reporting, so a centralised analytical datastore was introduced to relieve them and provide trusted historical insight."
+    },
+    {
+      "stem": "What is the distinction between a data warehouse and dimensional modelling?",
+      "options": [
+        "They are two names for the same thing",
+        "A data warehouse is a technique; dimensional modelling is a repository",
+        "A data warehouse is the central repository consolidating data from many sources, while dimensional modelling is one possible technique for structuring it",
+        "Dimensional modelling is used only in OLTP, never in a warehouse",
+        "A data warehouse must always use dimensional modelling"
+      ],
+      "correct": 2,
+      "explanation": "The warehouse is the central repository; dimensional modelling is only one of several techniques (with 3NF and ensemble approaches) for structuring that repository."
+    },
+    {
+      "stem": "Which data warehouse modelling approach, popularised by Bill Inmon, emphasises integration and normalisation to minimise redundancy?",
+      "options": [
+        "Star schema",
+        "Third Normal Form (3NF)",
+        "Data Vault",
+        "OLAP cube",
+        "Galaxy schema"
+      ],
+      "correct": 1,
+      "explanation": "The 3NF approach, popularised by Bill Inmon, aims to minimise redundancy and create a subject-oriented, integrated structure, though it can be complex for end-user queries."
+    },
+    {
+      "stem": "In dimensional modelling, what does a fact table keep?",
+      "options": [
+        "The data points by which analysis is sliced, such as time or region",
+        "The transaction's lowest level of data, numeric or non-numeric, such as sales numbers or clicks",
+        "The metadata describing each source system",
+        "Hubs, links and satellites",
+        "Pre-aggregated multidimensional totals"
+      ],
+      "correct": 1,
+      "explanation": "A fact table keeps the transaction's lowest level of data, which can be numeric or non-numeric, such as sales numbers, clicks on a social media portal or searches in Google."
+    },
+    {
+      "stem": "What is a conformed dimension?",
+      "options": [
+        "A dimension that has been normalised into related tables",
+        "A dimension that can connect to multiple facts",
+        "A dimension stored in a data mart only",
+        "A dimension that never changes",
+        "A dimension holding only numeric values"
+      ],
+      "correct": 1,
+      "explanation": "A conformed dimension is a dimension which can connect to multiple fact tables."
+    },
+    {
+      "stem": "Which modelling approach structures data into hubs, links and satellites to support historical tracking and auditability?",
+      "options": [
+        "Snowflake schema",
+        "Anchor modelling",
+        "Data Vault",
+        "Hook model",
+        "Third Normal Form"
+      ],
+      "correct": 2,
+      "explanation": "Data Vault, one of the ensemble modelling approaches, structures data into hubs, links and satellites to support historical tracking and auditability."
+    },
+    {
+      "stem": "What is the main difference between a data warehouse and a data mart?",
+      "options": [
+        "A warehouse uses dimensional modelling while a mart uses 3NF",
+        "A warehouse allows deletions while a mart does not",
+        "A warehouse consolidates data at enterprise level, while a mart is scoped to a department or function such as Finance or Sales",
+        "A warehouse is virtual while a mart is physical",
+        "A warehouse stores raw data while a mart stores only cubes"
+      ],
+      "correct": 2,
+      "explanation": "Both share the same design principles and may use any modelling technique; the difference is scale and focus, with warehouses serving the whole organisation and marts delivering subject-specific solutions."
+    },
+    {
+      "stem": "How did Bill Inmon define a data warehouse in 1990?",
+      "options": [
+        "A copy of transaction data specifically structured for query and analysis",
+        "A subject-oriented, integrated, time-variant and non-volatile collection of data in support of management's decision-making process",
+        "A centralised repository of raw data in any format",
+        "A set of hubs, links and satellites",
+        "A virtual layer over distributed sources"
+      ],
+      "correct": 1,
+      "explanation": "Inmon, regarded as the Father of Data Warehousing, defined it as a subject-oriented, integrated, time-variant and non-volatile collection of data supporting management decision-making."
+    },
+    {
+      "stem": "How do the approaches of Bill Inmon and Ralph Kimball differ in building order?",
+      "options": [
+        "Inmon builds marts first (bottom-up); Kimball builds the enterprise warehouse first (top-down)",
+        "Inmon builds the enterprise warehouse first (top-down); Kimball starts with business-driven data marts (bottom-up)",
+        "Both build marts first but differ on schema type",
+        "Both build the warehouse first but Kimball uses 3NF",
+        "Inmon rejects data marts entirely"
+      ],
+      "correct": 1,
+      "explanation": "Inmon's top-down method builds the enterprise warehouse (typically 3NF) first and then populates dependent marts; Kimball's bottom-up approach starts with data marts that are later integrated."
+    },
+    {
+      "stem": "Why does the author of I Am Datapedia! prefer building the enterprise warehouse before the data marts?",
+      "options": [
+        "Because marts cannot use dimensional modelling",
+        "Because regulators require a warehouse first",
+        "Because if marts are built first, any change at warehouse level forces modifications in marts and upstream pipelines, adding maintenance overhead",
+        "Because warehouses are cheaper to store than marts",
+        "Because Kimball recommended it"
+      ],
+      "correct": 2,
+      "explanation": "Building the warehouse as a foundation and designing marts as tailored subsets gives consistency without redundant effort, avoiding the maintenance overhead of changing marts and pipelines whenever the warehouse changes."
+    }
+  ]
+}

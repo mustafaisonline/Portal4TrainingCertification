@@ -1,0 +1,125 @@
+{
+  "topic": "data-archiving",
+  "questions": [
+    {
+      "stem": "What does data archiving involve?",
+      "options": [
+        "Deleting data that is no longer actively used",
+        "The long-term storage and preservation of data no longer actively used but still valuable for future reference or compliance",
+        "Encrypting all data currently in active use",
+        "Duplicating live data across several high-performance servers",
+        "Converting data into a compressed format for faster processing"
+      ],
+      "correct": 1,
+      "explanation": "Data archiving is the long-term storage and preservation of data that is no longer in active use but may still be needed for historical, legal or regulatory reasons."
+    },
+    {
+      "stem": "Which key element of data archiving concerns retaining certain data types for predefined periods to satisfy industry standards and legal frameworks?",
+      "options": [
+        "Reducing active storage costs",
+        "Preserving research data",
+        "Managing email archives",
+        "Compliance and legal requirements",
+        "Retaining historical data"
+      ],
+      "correct": 3,
+      "explanation": "Compliance and legal requirements is the element of data archiving under which organisations must retain specific data for mandated periods to stay within industry and legal frameworks."
+    },
+    {
+      "stem": "How does data archiving help reduce active storage costs?",
+      "options": [
+        "By permanently deleting all data older than one year",
+        "By moving less frequently accessed or older data from high-performance storage to more cost-effective storage",
+        "By compressing active data so it needs fewer servers",
+        "By storing all data on the fastest available disks",
+        "By duplicating data to reduce retrieval time"
+      ],
+      "correct": 1,
+      "explanation": "Archiving moves older, rarely accessed data off high-performance systems to cheaper storage, reserving valuable storage resources for active, frequently used data."
+    },
+    {
+      "stem": "Why is preserving research data described as essential for scientific and academic institutions?",
+      "options": [
+        "It allows researchers to revisit and validate their work, enabling reproduction of experiments",
+        "It reduces the cost of laboratory equipment",
+        "It removes the need for peer review",
+        "It guarantees that experiments will succeed",
+        "It shortens the time needed to run experiments"
+      ],
+      "correct": 0,
+      "explanation": "Archiving experimental data and findings lets researchers revisit and validate their work, supporting the integrity of science and the reproduction of experiments."
+    },
+    {
+      "stem": "Which of the following is NOT given as an example of data archiving?",
+      "options": [
+        "A school keeping exam results and attendance records for several years",
+        "A library preserving rare or historical books and manuscripts",
+        "A video game keeping older saved games",
+        "A person storing old photos and videos on cloud storage or external drives",
+        "A company deleting all customer emails at the end of each month"
+      ],
+      "correct": 4,
+      "explanation": "School records, library archives, gaming progress and digital photos are all listed examples of archiving. Deleting emails monthly is the opposite of archiving, which retains data."
+    },
+    {
+      "stem": "What benefit does archiving old emails provide to an organisation?",
+      "options": [
+        "It permanently removes all record of past communications",
+        "It frees up space on active email servers while keeping a record accessible for legal, compliance or historical purposes",
+        "It automatically replies to unanswered messages",
+        "It converts emails into spreadsheets",
+        "It prevents staff from ever reading the emails again"
+      ],
+      "correct": 1,
+      "explanation": "Email archiving frees space on active servers for efficient email management, while archived messages remain accessible when needed for legal, compliance or historical reasons."
+    },
+    {
+      "stem": "A social media platform keeps users' old posts and photos even though users rarely look at them, so the users can retrieve them later or the platform can use them for analytics. Which concept does this illustrate?",
+      "options": [
+        "Data compression",
+        "Data governance",
+        "Data archiving",
+        "Data integration",
+        "Data literacy"
+      ],
+      "correct": 2,
+      "explanation": "Retaining posts and photos that are not actively accessed but remain available for retrieval or analytics is an example of data archiving."
+    },
+    {
+      "stem": "Which key element of data archiving involves preserving information such as academic records, research findings or past business transactions because of their historical significance?",
+      "options": [
+        "Retaining historical data",
+        "Reducing active storage costs",
+        "Managing email archives",
+        "Compliance and legal requirements",
+        "Data compression"
+      ],
+      "correct": 0,
+      "explanation": "Retaining historical data is the fundamental element of archiving that preserves information with historical significance or that records past events."
+    },
+    {
+      "stem": "For what reasons does data archiving ensure important information is retained?",
+      "options": [
+        "Marketing, sales and advertising reasons",
+        "Historical, legal or regulatory reasons",
+        "Speed, performance and caching reasons",
+        "Entertainment and social reasons only",
+        "Hardware compatibility reasons"
+      ],
+      "correct": 1,
+      "explanation": "Data archiving helps organisations manage the data lifecycle by retaining important information for historical, legal or regulatory reasons."
+    },
+    {
+      "stem": "A school keeps exam results and attendance records for years after students leave. What purpose does this archived data serve?",
+      "options": [
+        "It improves the speed of the school's current network",
+        "It allows the school to delete current records sooner",
+        "It replaces the need for teachers to mark exams",
+        "It may be needed for future reference or for providing transcripts",
+        "It reduces the school's electricity bill"
+      ],
+      "correct": 3,
+      "explanation": "Archived school records such as exam results and attendance may be needed for future reference or to provide transcripts, which is the example given for archiving."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "data-deduplication",
+  "questions": [
+    {
+      "stem": "What is Data Deduplication about?",
+      "options": [
+        "Compressing data to save disk space",
+        "Removing duplication in the data",
+        "Copying data to a backup site",
+        "Encrypting duplicate records",
+        "Splitting a table into partitions"
+      ],
+      "correct": 1,
+      "explanation": "'Data Deduplication is about removing duplication in the data', and it is mostly involved in the ETL or ELT process."
+    },
+    {
+      "stem": "In which process is Data Deduplication mostly involved?",
+      "options": [
+        "User authentication",
+        "Network routing",
+        "ETL or ELT",
+        "Report formatting",
+        "Server provisioning"
+      ],
+      "correct": 2,
+      "explanation": "Data Deduplication is mostly involved in the ETL or ELT process."
+    },
+    {
+      "stem": "What are the two kinds of data that can be duplicated?",
+      "options": [
+        "Structured and unstructured data",
+        "Raw or Processed Data, and Absence of Golden Record",
+        "Hot and cold data",
+        "OLTP and OLAP data",
+        "Internal and external data"
+      ],
+      "correct": 1,
+      "explanation": "The two kinds are 1) Raw or Processed Data and 2) Absence of Golden Record."
+    },
+    {
+      "stem": "Which is given as an example of duplicate data entered from a badly designed front-end application?",
+      "options": [
+        "A customer wrongly created twice, or a product sold once but entered more than once",
+        "A policy with three different codes across systems",
+        "A missing primary key",
+        "A report run twice",
+        "A backup restored twice"
+      ],
+      "correct": 0,
+      "explanation": "A badly designed system allows a customer to be created twice or a single sale to be entered multiple times through human error."
+    },
+    {
+      "stem": "Which process must remove duplicates created during ETL/ELT transformation into a Data Warehouse or Data Mart?",
+      "options": [
+        "The Security process",
+        "The Licensing process",
+        "The Backup process",
+        "The Network process",
+        "The Data Quality process"
+      ],
+      "correct": 4,
+      "explanation": "Duplicates created either at data entry or during ETL/ELT transformation must be removed as part of the Data Quality process."
+    },
+    {
+      "stem": "What does 'Absence of Golden Record' mean?",
+      "options": [
+        "A table has no primary key",
+        "A backup copy is missing",
+        "There is more than one code for a single entity across systems",
+        "An audit log has been deleted",
+        "A report has no owner"
+      ],
+      "correct": 2,
+      "explanation": "Absence of Golden Records means there is more than one code for a single entity, such as the same policy type coded 001, 002 and 003 in three systems."
+    },
+    {
+      "stem": "In the insurance example from I Am Datapedia!, what happens when the marketing department plans campaigns without a Golden Record?",
+      "options": [
+        "One campaign is sent for the one policy type",
+        "Campaigns are sent only to new customers",
+        "No campaigns can be sent",
+        "Three campaigns are designed for the same single type of policy",
+        "The campaign budget is halved"
+      ],
+      "correct": 3,
+      "explanation": "Because the same policy type carries three codes, marketing ends up designing three campaigns instead of one for the same policy type."
+    },
+    {
+      "stem": "Which application helps create a de-duplicated Golden Record?",
+      "options": [
+        "A Master Data Management (MDM) application",
+        "A firewall",
+        "A load balancer",
+        "A container orchestrator",
+        "A web browser"
+      ],
+      "correct": 0,
+      "explanation": "The Golden Record scenario is handled by a de-duplicated Golden Record with the help of a Master Data Management (MDM) application."
+    },
+    {
+      "stem": "Which of the following is NOT one of the named reasons for duplicated Raw or Processed data?",
+      "options": [
+        "Data entered from front-end applications that allow duplicate entry",
+        "Data transformed during ETL/ELT from source systems to the warehouse",
+        "A system so badly designed that it allows a customer to be created twice",
+        "Human error such as entering a sale twice",
+        "Data stored on encrypted disks"
+      ],
+      "correct": 4,
+      "explanation": "The two main reasons are duplicate entry from badly designed front-ends and duplication introduced during ETL/ELT; disk encryption is unrelated."
+    },
+    {
+      "stem": "Where does data from the three insurance systems flow to in the Golden Record example?",
+      "options": [
+        "Back to the front-end applications",
+        "An external regulator",
+        "A printed archive",
+        "A centralised location such as a Data Warehouse or Data Mart",
+        "A customer's email inbox"
+      ],
+      "correct": 3,
+      "explanation": "Data from the three systems flows into a centralised location, a Data Warehouse or Data Mart, where the three policy codes appear as separate policies."
+    }
+  ]
+}

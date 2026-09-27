@@ -1,0 +1,125 @@
+{
+  "topic": "concept-modelling",
+  "questions": [
+    {
+      "stem": "What is Concept Modelling?",
+      "options": [
+        "The practice of designing physical tables and indexes",
+        "The practice of drawing BPMN swimlanes",
+        "The practice of mapping servers to applications",
+        "The practice of identifying and defining core business concepts so their meanings are clearly understood and consistently used",
+        "The practice of writing data quality rules"
+      ],
+      "correct": 3,
+      "explanation": "Concept Modelling identifies and defines core business concepts and focuses on what things mean in the business rather than how they are stored or implemented."
+    },
+    {
+      "stem": "What is the main goal of Concept Modelling?",
+      "options": [
+        "To normalise data",
+        "To choose a storage platform",
+        "To define data types",
+        "To automate workflows",
+        "To establish a common vocabulary"
+      ],
+      "correct": 4,
+      "explanation": "The main goal is a common vocabulary, removing the confusion that arises when the same word means different things to different teams."
+    },
+    {
+      "stem": "Which of the following is deliberately excluded from Concept Modelling?",
+      "options": [
+        "Business concepts such as Customer or Loan",
+        "Relationships between concepts at a semantic level",
+        "Technical details such as attributes, data types, tables or system logic",
+        "The meaning of key terms",
+        "Agreement on definitions"
+      ],
+      "correct": 2,
+      "explanation": "Concept Modelling does not include attributes, data types, tables or system logic; it stays intentionally simple and focused on meaning."
+    },
+    {
+      "stem": "In the school example of Concept Modelling, which relationship is described?",
+      "options": [
+        "A student has a student ID",
+        "An exam has a score stored in a table",
+        "A student enrols in a course, and a course has exams",
+        "A course is stored in a database",
+        "A teacher is paid a salary"
+      ],
+      "correct": 2,
+      "explanation": "The school example defines that a student enrols in a course and a course has exams, without discussing IDs, scores or databases."
+    },
+    {
+      "stem": "Which statement is an example of a Concept Modelling relationship in the loan business?",
+      "options": [
+        "The loan table has a foreign key to the customer table",
+        "Loan amount is stored as a decimal",
+        "The Risk Engine sends data to Core Banking",
+        "A loan officer is in the second swimlane",
+        "A customer applies for a loan"
+      ],
+      "correct": 4,
+      "explanation": "Concept Modelling connects concepts with simple, meaningful relationships such as a customer applies for a loan, without system-specific detail."
+    },
+    {
+      "stem": "How is a loan approval rate defined in terms of concepts?",
+      "options": [
+        "Using the number of tables in the loan database",
+        "Using the number of swimlanes in the process",
+        "Using the interest rate column",
+        "Using the concepts of approved loans and total applications",
+        "Using the size of the data warehouse"
+      ],
+      "correct": 3,
+      "explanation": "Analytical measures are built on shared concepts: a loan approval rate is defined using approved loans and total applications."
+    },
+    {
+      "stem": "How is a delinquent loan defined at the concept level?",
+      "options": [
+        "A loan with a high interest rate",
+        "A loan with missed repayments",
+        "A loan stored in the collections system",
+        "A loan above a set amount",
+        "A loan without a customer identifier"
+      ],
+      "correct": 1,
+      "explanation": "A delinquent loan is defined as a loan with missed repayments, grounding analytics in shared concepts."
+    },
+    {
+      "stem": "Which later artefacts often build on concept models as their foundation?",
+      "options": [
+        "Ontologies, information models and data models",
+        "Network diagrams and server inventories",
+        "Marketing plans and sales targets",
+        "Backup schedules and recovery plans",
+        "User interface wireframes"
+      ],
+      "correct": 0,
+      "explanation": "Concept models often become the foundation for later artefacts such as ontologies, information models and data models."
+    },
+    {
+      "stem": "Which statement describes the nature of Concept Modelling?",
+      "options": [
+        "High-level and semantic, technology-independent, understandable by both business and technical audiences",
+        "Low-level and physical, tied to a database engine",
+        "Focused on execution by workflow engines",
+        "Concerned with system integrations and data flows",
+        "Designed only for developers"
+      ],
+      "correct": 0,
+      "explanation": "Concept Modelling is high-level and semantic, independent of technology and platforms, and readable by business and technical audiences alike."
+    },
+    {
+      "stem": "In the comparison of Enterprise Data Modelling, Conceptual/Logical Architecture and Concept Modelling, which summary is correct?",
+      "options": [
+        "Enterprise Data Modelling = what the core terms mean; Concept Modelling = what data exists across the organisation",
+        "Enterprise Data Modelling = what data exists across the organisation; Conceptual/Logical Architecture = how systems and data fit together; Concept Modelling = what the core terms actually mean",
+        "All three describe how systems integrate",
+        "Concept Modelling = how systems fit together; Architecture = what terms mean",
+        "Enterprise Data Modelling = how work flows; Concept Modelling = who does what"
+      ],
+      "correct": 1,
+      "explanation": "The comparison shows the progression: Enterprise Data Modelling is what data exists, Conceptual/Logical Architecture is how systems and data fit together, and Concept Modelling is what the core terms mean."
+    }
+  ]
+}

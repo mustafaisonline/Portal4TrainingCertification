@@ -1,0 +1,125 @@
+{
+  "topic": "data-integration-andinteroperability",
+  "questions": [
+    {
+      "stem": "Are Integration and Interoperability interchangeable terms?",
+      "options": [
+        "Yes, they describe exactly the same capability",
+        "Yes, but only in the medical domain",
+        "No, they work together but their nature and purpose are distinct",
+        "No, because interoperability is only about hardware",
+        "No, because integration is a legal term and interoperability is technical"
+      ],
+      "correct": 2,
+      "explanation": "Many people assume the terms are interchangeable, but although they work together, their nature and purpose are quite different."
+    },
+    {
+      "stem": "What does Integration involve?",
+      "options": [
+        "Connecting systems and exchanging data to fulfil a range of objectives",
+        "Understanding data without any need for translation",
+        "Encrypting data before it leaves a system",
+        "Archiving data from retired systems",
+        "Defining medical codes for hospitals"
+      ],
+      "correct": 0,
+      "explanation": "Integration involves connecting systems and exchanging data to fulfil a range of objectives."
+    },
+    {
+      "stem": "When data is shared between integrated systems, what is often required for the receiving party to understand it?",
+      "options": [
+        "A new database licence",
+        "A regulatory approval",
+        "A full backup of the source",
+        "A change of hardware",
+        "Translation of the data"
+      ],
+      "correct": 4,
+      "explanation": "When data is shared between systems it often requires translation to be understood by the receiving party, and such translations conflict with the essence of interoperability."
+    },
+    {
+      "stem": "What is Interoperability?",
+      "options": [
+        "The ability to connect any two systems with a connector",
+        "The ability to understand data without the need for translation",
+        "The ability to store data in multiple formats",
+        "The ability to replicate data across locations",
+        "The ability to compress data for transmission"
+      ],
+      "correct": 1,
+      "explanation": "Interoperability is the ability to understand data without the need for translation."
+    },
+    {
+      "stem": "What signifies the presence of interoperability between two or more systems?",
+      "options": [
+        "The systems share a single database",
+        "The systems are owned by the same company",
+        "The systems use the same programming language",
+        "The systems are linked and exchange data seamlessly without requiring translation for comprehension",
+        "The systems have been integrated using ETL"
+      ],
+      "correct": 3,
+      "explanation": "When linked systems exchange data seamlessly without requiring translation for the receiving parties to understand it, interoperability is present."
+    },
+    {
+      "stem": "What example from the medical domain illustrates interoperability?",
+      "options": [
+        "Various hospitals can readily interpret key terms and codes in shared data, whereas an average individual may struggle",
+        "Hospitals store patient records on the same server",
+        "Doctors translate every record by hand before sharing it",
+        "Patients carry printed copies of their records between hospitals",
+        "Hospitals use a single vendor for all their software"
+      ],
+      "correct": 0,
+      "explanation": "In the medical domain, different hospitals can readily interpret the key terms and codes in shared data, which an average person could not, showing interoperability."
+    },
+    {
+      "stem": "How do the translations needed in system integration relate to interoperability?",
+      "options": [
+        "They are the foundation of interoperability",
+        "They are required before interoperability can exist",
+        "They are a measure of high interoperability",
+        "They conflict with the essence of interoperability",
+        "They have no relationship to interoperability"
+      ],
+      "correct": 3,
+      "explanation": "Even when integration succeeds, the translations it requires conflict with the essence of interoperability, which is understanding without translation."
+    },
+    {
+      "stem": "What does the degree of interoperability attained directly influence?",
+      "options": [
+        "The cost of data storage",
+        "The effectiveness of integration",
+        "The size of the datasets exchanged",
+        "The number of connectors needed",
+        "The choice of database vendor"
+      ],
+      "correct": 1,
+      "explanation": "The degree of interoperability attained directly influences the effectiveness of integration."
+    },
+    {
+      "stem": "What happens to integration outcomes as the level of interoperability rises?",
+      "options": [
+        "They become less predictable",
+        "They become more expensive",
+        "They require more translation",
+        "They are unaffected",
+        "They become more favourable"
+      ],
+      "correct": 4,
+      "explanation": "The higher the level of interoperability, the more favourable the outcomes of integrations will be."
+    },
+    {
+      "stem": "Which statement about integration and interoperability is NOT correct?",
+      "options": [
+        "Integration and interoperability work together",
+        "Integration connects systems and exchanges data",
+        "Interoperability requires every exchanged message to be translated",
+        "Higher interoperability improves integration outcomes",
+        "Interoperability means understanding data without translation"
+      ],
+      "correct": 2,
+      "explanation": "Interoperability is precisely the ability to understand data without translation, so requiring translation of every message is the opposite of interoperability."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "data-parsing-orformatting",
+  "questions": [
+    {
+      "stem": "What is Data Parsing?",
+      "options": [
+        "Encrypting data so it cannot be read",
+        "Changing data values to meet business requirements",
+        "Rearranging or formatting data so that it becomes understandable or usable",
+        "Deleting irrelevant records from a dataset",
+        "Copying data from one server to another"
+      ],
+      "correct": 2,
+      "explanation": "Data Parsing is about rearranging or formatting data in such a way that it is understandable or usable, without changing its meaning."
+    },
+    {
+      "stem": "Which of the following does Data Parsing NOT do to data?",
+      "options": [
+        "Rearrange it",
+        "Format it",
+        "Make it usable in reports and dashboards",
+        "Make it understandable",
+        "Anonymise it or change its meaning"
+      ],
+      "correct": 4,
+      "explanation": "In Data Parsing, data is neither anonymised nor does its meaning change; it changes only for the sake of being understandable."
+    },
+    {
+      "stem": "From which Latin phrase does the term parsing come?",
+      "options": [
+        "Pars orationis, meaning part of speech",
+        "Parare, meaning to prepare",
+        "Partire, meaning to divide",
+        "Parsimonia, meaning thrift",
+        "Persona, meaning mask"
+      ],
+      "correct": 0,
+      "explanation": "Parsing comes from the Latin pars (orationis), meaning part (of speech)."
+    },
+    {
+      "stem": "What does Lexical Analysis create during Data Parsing?",
+      "options": [
+        "Database indexes",
+        "Business rules",
+        "Encrypted hashes",
+        "Tokens such as keywords, identifiers and delimiters",
+        "Reports and dashboards"
+      ],
+      "correct": 3,
+      "explanation": "Lexical Analysis creates tokens (keywords, identifiers and delimiters) in unstructured or unformatted data, so irrelevant text can be ignored."
+    },
+    {
+      "stem": "How does Syntactic Analysis arrange the relevant tokens produced during parsing?",
+      "options": [
+        "By alphabetical order",
+        "Using parentheses, curly braces and semicolons",
+        "By date of creation",
+        "Into Yes or No categories",
+        "By file size"
+      ],
+      "correct": 1,
+      "explanation": "Syntactic Analysis takes the relevant tokens and arranges them in three parses: parentheses, curly braces and semicolons."
+    },
+    {
+      "stem": "What does Semantic Analysis do in Data Parsing?",
+      "options": [
+        "Creates the initial tokens",
+        "Removes all delimiters",
+        "Segregates data based on business requirements, for example Yes or No, Open or Close or WIP",
+        "Encrypts the parsed output",
+        "Converts HTML into images"
+      ],
+      "correct": 2,
+      "explanation": "Semantic Analysis is an additional step based on business requirements that segregates data, such as Yes or No or Open, Close or WIP, making it more relevant."
+    },
+    {
+      "stem": "When is Web Scraping used to extract data from online portals?",
+      "options": [
+        "When the portal does not provide an API",
+        "When the portal provides a well-documented API",
+        "Only for grammar checking",
+        "Only when data is already in JSON",
+        "When the data is fully structured in a database"
+      ],
+      "correct": 0,
+      "explanation": "Portals that provide APIs allow extraction in a readable format; for those that do not, Web Scraping crawls the site using different parsing approaches."
+    },
+    {
+      "stem": "Into which readable format is HTML sometimes parsed?",
+      "options": [
+        "PDF",
+        "MP4",
+        "JPEG",
+        "ZIP",
+        "JSON"
+      ],
+      "correct": 4,
+      "explanation": "Sometimes HTML is parsed into JSON, a readable format."
+    },
+    {
+      "stem": "Which of the following is NOT listed among the parsing techniques?",
+      "options": [
+        "Scripting languages",
+        "Spreadsheet macros",
+        "HTML and XML",
+        "SQL and database languages",
+        "HTTPS and Internet Protocols"
+      ],
+      "correct": 1,
+      "explanation": "The listed techniques are scripting languages, HTML and XML, interactive data language, modelling languages, SQL and database languages, and HTTPS and Internet Protocols."
+    },
+    {
+      "stem": "Which step of Data Parsing is described as an additional step driven by business requirements?",
+      "options": [
+        "Lexical Analysis",
+        "Syntactic Analysis",
+        "Tokenisation",
+        "Semantic Analysis",
+        "Web Scraping"
+      ],
+      "correct": 3,
+      "explanation": "Semantic Analysis is an addition step based on business requirement, following Lexical and Syntactic Analysis."
+    }
+  ]
+}

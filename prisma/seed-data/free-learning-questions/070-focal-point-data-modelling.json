@@ -1,0 +1,125 @@
+{
+  "topic": "focal-point-data-modelling",
+  "questions": [
+    {
+      "stem": "To which modelling family does Focal Point Data Modelling belong?",
+      "options": [
+        "Ensemble Data Modelling, like Data Vault",
+        "Dimensional Modelling, like the star schema",
+        "Pre-relational modelling, like the network model",
+        "NoSQL modelling",
+        "Semantic modelling"
+      ],
+      "correct": 0,
+      "explanation": "Just like Data Vault, Focal Point Data Modelling belongs to the family of Ensemble Data Modelling."
+    },
+    {
+      "stem": "How many stages, called Focal Forms, make up the Focal modelling process?",
+      "options": [
+        "Three",
+        "Five",
+        "Six",
+        "Ten",
+        "Two"
+      ],
+      "correct": 1,
+      "explanation": "The Focal methodology is organised into five distinct stages referred to as Focal Forms, from identifying business concept entities through to atomic context."
+    },
+    {
+      "stem": "What is done in Focal Form One?",
+      "options": [
+        "Group attributes into Descriptor Concepts",
+        "Determine atomic context",
+        "Identify and define the primary business concept entities",
+        "Identify natural business relationships between concepts",
+        "Identify attributes of the core concepts"
+      ],
+      "correct": 2,
+      "explanation": "Focal Form One identifies and defines the primary business concept entities; relationships, attributes, descriptor grouping and atomic context follow in Forms Two to Five."
+    },
+    {
+      "stem": "What makes Focal Form Four unique to the Focal methodology?",
+      "options": [
+        "It defines the business keys of each entity",
+        "It creates the link tables between entities",
+        "It historises every attribute by default",
+        "It categorises attributes into one of ten predefined Descriptor Concepts, each with a specific definition",
+        "It builds the semantic layer"
+      ],
+      "correct": 3,
+      "explanation": "Focal Form Four groups attributes into one of ten predefined Descriptor Concepts, emphasising good definition practice, which is unique to Focal."
+    },
+    {
+      "stem": "In Focal Point modelling, which example is given of a Condition descriptor in a Loan Focal?",
+      "options": [
+        "The customer's name",
+        "The officer's branch",
+        "The loan identifier",
+        "The payment date",
+        "The interest rate, as a financial Condition"
+      ],
+      "correct": 4,
+      "explanation": "A Condition is a qualifying attribute that constrains or specifies requirements; in a Loan Focal the interest rate is a financial Condition, while a Contract's start date and an Order's payment date are temporal Conditions."
+    },
+    {
+      "stem": "What does Focal Form Five, Atomic Context, determine?",
+      "options": [
+        "Which attributes group together at the most granular level to answer a specific atomic question, usually no more than five related attributes",
+        "Which entities are the primary business concepts",
+        "Which ten Descriptor Concepts apply",
+        "Which relationships are historical",
+        "Which fact tables share conformed dimensions"
+      ],
+      "correct": 0,
+      "explanation": "Atomic Context identifies attribute sets of a small number, usually no more than five, of related attributes at the most granular level, which is crucial for physical implementation."
+    },
+    {
+      "stem": "How does the stability of a Focal Point physical model compare with Data Vault?",
+      "options": [
+        "Focal models evolve more frequently than Data Vault models",
+        "Focal physical models typically remain stable with minimal changes, whereas Data Vault physical models tend to evolve more frequently",
+        "Both change at the same rate",
+        "Neither model can change after implementation",
+        "Focal models are regenerated for every load"
+      ],
+      "correct": 1,
+      "explanation": "Once implemented, a Focal Point physical data model typically remains stable with minimal changes, unlike Data Vault where the physical model evolves more often."
+    },
+    {
+      "stem": "How does historisation in Focal Point modelling differ from Anchor modelling?",
+      "options": [
+        "Focal historises every Descriptor by default; Anchor does not",
+        "Focal uses LoadDate only; Anchor uses ValidFrom only",
+        "In Focal, historisation is not enforced on every Descriptor, whereas Anchor enforces it",
+        "Focal has no temporal capability at all",
+        "They are identical"
+      ],
+      "correct": 2,
+      "explanation": "Focal Descriptors can be temporal with ValidFrom/ValidTo, but unlike Anchor, historisation is not enforced on every Descriptor, giving less rigidity and more business-friendly structures."
+    },
+    {
+      "stem": "In the comparison of dimensional, ensemble and temporal modelling, how is temporal modelling characterised?",
+      "options": [
+        "As a competing family alongside Kimball and ensemble",
+        "As a replacement for Data Vault",
+        "As a type of snowflake schema",
+        "As a cross-cutting principle that elevates time to a first-class citizen and must be applied within relational, dimensional or ensemble structures",
+        "As a NoSQL technique"
+      ],
+      "correct": 3,
+      "explanation": "Temporal modelling is not a schema by itself; it is a design principle that makes time explicit across all entities and relationships and is applied within other structures."
+    },
+    {
+      "stem": "Why is temporal handling in dimensional modelling described as \"bolted on\"?",
+      "options": [
+        "Because dimensional models cannot store dates",
+        "Because fact tables never record time",
+        "Because Slowly Changing Dimensions are forbidden",
+        "Because dimensional models store history in satellites",
+        "Because history is handled partially at attribute level through Slowly Changing Dimensions rather than systemically across every entity and relationship"
+      ],
+      "correct": 4,
+      "explanation": "In dimensional models time is present through SCD techniques, but it is partial and attribute-level rather than deeply embedded in the model's structure."
+    }
+  ]
+}

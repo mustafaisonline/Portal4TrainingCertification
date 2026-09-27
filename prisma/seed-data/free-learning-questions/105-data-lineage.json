@@ -1,0 +1,125 @@
+{
+  "topic": "data-lineage",
+  "questions": [
+    {
+      "stem": "What is Data Lineage?",
+      "options": [
+        "The process of encrypting data as it moves between systems",
+        "A method for ranking data sources by cost",
+        "The process of tagging all the touchpoints, such as databases, tables, columns and business rules, that data has travelled through on its way to a BI solution or downstream system",
+        "A backup schedule for the data warehouse",
+        "A list of users permitted to view a report"
+      ],
+      "correct": 2,
+      "explanation": "Data Lineage tags every touchpoint data passes through, including the ETLs, enrichments, transformations, conversions, aggregations and new measures created along the way."
+    },
+    {
+      "stem": "Data Lineage is described as the single most important factor in preventing what?",
+      "options": [
+        "A Data Lake becoming a Data Swamp",
+        "A database exceeding its storage quota",
+        "A report running too slowly",
+        "Duplicate customer records",
+        "Unauthorised access to production systems"
+      ],
+      "correct": 0,
+      "explanation": "Data Lineage is called the most important factor to save a Data Lake from becoming a Data Swamp."
+    },
+    {
+      "stem": "What must already be in place before efficient Data Lineage can be built?",
+      "options": [
+        "A cloud subscription",
+        "A machine learning model",
+        "A real-time streaming platform",
+        "A customer feedback programme",
+        "Metadata"
+      ],
+      "correct": 4,
+      "explanation": "Efficient Data Lineage cannot be built without Metadata in place."
+    },
+    {
+      "stem": "If a figure shown in a BI solution cannot be tracked back to its source, what does that indicate?",
+      "options": [
+        "The BI tool needs a licence upgrade",
+        "There is no Data Lineage, and the organisation is heading towards disaster",
+        "The figure is automatically correct",
+        "The source system has been decommissioned",
+        "The report is being cached"
+      ],
+      "correct": 1,
+      "explanation": "Being unable to trace BI data to its source means Data Lineage is missing, so in future nobody will know where data comes from or where it is used."
+    },
+    {
+      "stem": "Which of the following is NOT something Data Lineage shows about data on its journey?",
+      "options": [
+        "The ETLs the data went through",
+        "The aggregations and conversions applied",
+        "The new measures created along the way",
+        "The hardware specification of the source server",
+        "The data enrichments and transformations performed"
+      ],
+      "correct": 3,
+      "explanation": "Data Lineage records ETLs, enrichments, transformations, conversions, aggregations and new measures; hardware specifications are not part of it."
+    },
+    {
+      "stem": "By roughly how much can a proper Data Lineage process reduce the effort required to resolve errors?",
+      "options": [
+        "10%",
+        "25%",
+        "80%",
+        "50%",
+        "100%"
+      ],
+      "correct": 2,
+      "explanation": "A proper Data Lineage process in place can bring down the effort required to resolve errors by 80%."
+    },
+    {
+      "stem": "In the context of Data Lineage, what does UAM stand for?",
+      "options": [
+        "User Access Metric",
+        "Unified Analytics Model",
+        "Universal Audit Mechanism",
+        "Upstream Aggregation Map",
+        "User Activity Monitor"
+      ],
+      "correct": 0,
+      "explanation": "Data Lineage provides an audit trail of the data lifecycle and helps users understand UAM, the User Access Metric."
+    },
+    {
+      "stem": "How does Data Lineage relate to Data Provenance?",
+      "options": [
+        "They are unrelated disciplines",
+        "Data Provenance is a subset of Data Lineage",
+        "Data Lineage replaces Data Provenance in modern systems",
+        "Data Lineage applies only to unstructured data, Data Provenance only to structured data",
+        "Data Lineage is the low-level detail of Data Provenance"
+      ],
+      "correct": 4,
+      "explanation": "Data Lineage is described as the low-level details of Data Provenance."
+    },
+    {
+      "stem": "Which team does Data Lineage particularly help by tracing data from source to endpoint?",
+      "options": [
+        "The Marketing team",
+        "The BAU Support team",
+        "The Legal team",
+        "The Sales team",
+        "The Facilities team"
+      ],
+      "correct": 1,
+      "explanation": "Data Lineage helps the BAU Support team trace data from its source to the endpoint for research and diagnosis."
+    },
+    {
+      "stem": "What does Data Lineage provide across the enterprise that helps businesses trust their data?",
+      "options": [
+        "A guarantee that data is never wrong",
+        "An automatic correction of bad records",
+        "A ranking of the most popular reports",
+        "An audit trail of the data lifecycle",
+        "A replacement for Master Data Management"
+      ],
+      "correct": 3,
+      "explanation": "Data Lineage provides an audit trail of the data lifecycle throughout the enterprise, helping businesses trust the completeness and accuracy of their data."
+    }
+  ]
+}

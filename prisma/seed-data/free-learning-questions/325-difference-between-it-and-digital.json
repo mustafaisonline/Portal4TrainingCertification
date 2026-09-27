@@ -1,0 +1,125 @@
+{
+  "topic": "difference-between-it-and-digital",
+  "questions": [
+    {
+      "stem": "What does Information Technology (IT) encompass?",
+      "options": [
+        "The transformation of society through emerging technologies",
+        "The use, development and management of computer systems, software, networks and information",
+        "Only the marketing of digital products",
+        "The study of customer behaviour",
+        "The regulation of data privacy"
+      ],
+      "correct": 1,
+      "explanation": "IT encompasses the use, development and management of computer systems, software, networks and information."
+    },
+    {
+      "stem": "What is IT primarily concerned with?",
+      "options": [
+        "The technology used to store, retrieve, transmit and manipulate data",
+        "Creating new business models",
+        "Enhancing customer experiences through social media",
+        "Reforming organisational culture",
+        "Designing product packaging"
+      ],
+      "correct": 0,
+      "explanation": "IT is primarily concerned with the technology used to store, retrieve, transmit and manipulate data."
+    },
+    {
+      "stem": "Which of the following is given as an example of what IT includes?",
+      "options": [
+        "Artificial intelligence strategy",
+        "Internet of things initiatives",
+        "Hardware such as computers, servers and storage",
+        "Customer experience redesign",
+        "Business model transformation"
+      ],
+      "correct": 2,
+      "explanation": "IT includes hardware (computers, servers, storage), software, networking and the management of databases and information systems."
+    },
+    {
+      "stem": "How is the term Digital described relative to IT?",
+      "options": [
+        "A narrower term covering only websites",
+        "A synonym for IT",
+        "An older term that IT has replaced",
+        "A broader term that extends beyond technology to the transformation of processes, businesses and society",
+        "A term that applies only to consumer devices"
+      ],
+      "correct": 3,
+      "explanation": "Digital is a broader term that extends beyond technology and includes the transformation of processes, businesses and society through digital technologies."
+    },
+    {
+      "stem": "Which of the following is named as an area involved in digital transformation beyond IT?",
+      "options": [
+        "Local area networks",
+        "Operating systems",
+        "Server hardware",
+        "Database administration",
+        "Internet of things (IoT)"
+      ],
+      "correct": 4,
+      "explanation": "Digital transformation involves not only IT but also data analytics, artificial intelligence, IoT, cloud computing and other emerging technologies."
+    },
+    {
+      "stem": "What do digital initiatives aim to do?",
+      "options": [
+        "Leverage technology to bring about fundamental changes in how organisations operate, interact with customers and deliver value",
+        "Reduce the number of computers an organisation owns",
+        "Replace all software with hardware",
+        "Restrict technology to the IT department",
+        "Standardise operating systems across the business"
+      ],
+      "correct": 0,
+      "explanation": "Digital initiatives aim to leverage technology to fundamentally change how organisations operate, interact with customers and deliver value."
+    },
+    {
+      "stem": "What is the summarised relationship between IT and Digital?",
+      "options": [
+        "Digital is a subset of IT",
+        "IT is a subset of the broader digital landscape",
+        "IT and Digital are unrelated fields",
+        "Digital is a department within IT",
+        "IT is a newer term than Digital"
+      ],
+      "correct": 1,
+      "explanation": "IT is a subset of the broader digital landscape and a foundational component of the digital ecosystem."
+    },
+    {
+      "stem": "Which of the following is an example of networking within IT?",
+      "options": [
+        "Applications and operating systems",
+        "Data analytics dashboards",
+        "Local area networks and wide area networks",
+        "Cloud computing strategy",
+        "Customer interaction design"
+      ],
+      "correct": 2,
+      "explanation": "Networking within IT includes local area networks and wide area networks."
+    },
+    {
+      "stem": "What does the digital approach integrate into various aspects of life and business?",
+      "options": [
+        "Only database management systems",
+        "Only hardware upgrades",
+        "Paper-based processes",
+        "Digital technologies, to improve efficiency, create new opportunities and enhance experiences",
+        "Physical retail outlets"
+      ],
+      "correct": 3,
+      "explanation": "Digital is concerned with integrating digital technologies into life and business to improve efficiency, create new opportunities and enhance experiences."
+    },
+    {
+      "stem": "Which of the following is NOT listed as part of IT?",
+      "options": [
+        "Hardware such as servers and storage",
+        "Software such as applications and operating systems",
+        "Networking such as LANs and WANs",
+        "Management of databases and information systems",
+        "Transformation of how organisations deliver value to customers"
+      ],
+      "correct": 4,
+      "explanation": "Transforming how organisations deliver value is the domain of Digital; IT covers hardware, software, networking and information systems management."
+    }
+  ]
+}

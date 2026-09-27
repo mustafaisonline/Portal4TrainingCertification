@@ -1,0 +1,125 @@
+{
+  "topic": "what-is-normalization",
+  "questions": [
+    {
+      "stem": "What is Normalisation?",
+      "options": [
+        "The systematic process of organising data into well-structured tables by decomposing it step by step into progressively refined forms",
+        "The process of merging tables to speed up reporting",
+        "The process of converting data into text format",
+        "The process of indexing a database",
+        "The process of encrypting sensitive columns"
+      ],
+      "correct": 0,
+      "explanation": "Normalisation decomposes data step by step to eliminate redundancy, prevent anomalies and ensure each fact is stored in exactly one place."
+    },
+    {
+      "stem": "What is the core principle that normalisation follows?",
+      "options": [
+        "Each attribute should depend only on the key, the whole key and nothing but the key",
+        "Each table should have as many columns as possible",
+        "Each fact should be stored in several places for safety",
+        "Each attribute should depend on another non-key attribute",
+        "Each table should contain repeating groups"
+      ],
+      "correct": 0,
+      "explanation": "Every piece of information in a table must be directly related to the primary identifier: the key, the whole key and nothing but the key."
+    },
+    {
+      "stem": "Which normal form is commonly sufficient for most transactional systems?",
+      "options": [
+        "First Normal Form",
+        "Second Normal Form",
+        "Third Normal Form",
+        "Fifth Normal Form",
+        "Sixth Normal Form"
+      ],
+      "correct": 2,
+      "explanation": "Third Normal Form is commonly sufficient for most transactional systems; higher forms address rarer dependency issues."
+    },
+    {
+      "stem": "How does BCNF relate to 3NF?",
+      "options": [
+        "BCNF is weaker than 3NF",
+        "BCNF replaces the need for 1NF",
+        "BCNF addresses join dependencies",
+        "BCNF strengthens 3NF by addressing edge cases involving overlapping candidate keys",
+        "BCNF is the same as 6NF"
+      ],
+      "correct": 3,
+      "explanation": "Boyce-Codd Normal Form strengthens 3NF by addressing certain edge cases involving overlapping candidate keys."
+    },
+    {
+      "stem": "Which normal form decomposes data so that each table represents a single fact, often useful in temporal modelling?",
+      "options": [
+        "2NF",
+        "3NF",
+        "4NF",
+        "5NF",
+        "6NF"
+      ],
+      "correct": 4,
+      "explanation": "Sixth Normal Form decomposes data to a level where each table represents a single fact, which is useful in temporal modelling."
+    },
+    {
+      "stem": "What is Domain-Key Normal Form (DKNF)?",
+      "options": [
+        "The first practical normal form",
+        "A denormalised reporting form",
+        "A form that allows repeating groups",
+        "A theoretical ideal in which all constraints can be expressed solely through domain definitions and key relationships",
+        "A NoSQL schema pattern"
+      ],
+      "correct": 3,
+      "explanation": "DKNF is a theoretical ideal where all constraints are expressed solely through domain definitions and key relationships."
+    },
+    {
+      "stem": "Which of the following is NOT a stated benefit of normalisation?",
+      "options": [
+        "Consistency through reduced duplication",
+        "Safer updates because changes occur in one place",
+        "Fewer joins for analytical reporting",
+        "Clearer, easier-to-enforce integrity rules",
+        "Insertions and deletions that do not create orphaned data"
+      ],
+      "correct": 2,
+      "explanation": "Normalisation actually increases the joins needed for complete views; that trade-off is what motivates denormalisation in analytical environments."
+    },
+    {
+      "stem": "What trade-off does normalisation introduce?",
+      "options": [
+        "Data becomes less consistent",
+        "Storage use increases through duplication",
+        "Updates must be made in many places",
+        "Integrity rules become harder to enforce",
+        "Queries may require multiple joins to reconstruct complete business views, which can hurt performance in read-heavy environments"
+      ],
+      "correct": 4,
+      "explanation": "As data is decomposed into smaller tables, queries need multiple joins, which can impact performance and complicate reporting in analytical environments."
+    },
+    {
+      "stem": "In the loan scenario, what risk arises when customer details are stored directly in every loan record?",
+      "options": [
+        "Loans cannot be approved",
+        "If the customer's address changes, every related loan row must be updated",
+        "The loan amount cannot be stored",
+        "The database cannot be indexed",
+        "Customers cannot take more than one loan"
+      ],
+      "correct": 1,
+      "explanation": "Duplicated customer details increase storage and create risk: an address change must be applied to every related loan row."
+    },
+    {
+      "stem": "How does normalisation resolve the duplicated customer details in the loan example?",
+      "options": [
+        "By deleting customer details from all loans",
+        "By creating a separate Customer table linked to Loan through a foreign key such as CustID",
+        "By storing customer details in a text file",
+        "By merging Loan and Customer into one wider table",
+        "By adding a new column for each address change"
+      ],
+      "correct": 1,
+      "explanation": "A separate Customer table is linked to Loan via a foreign key like CustID, so customer information is stored once and updates occur in one place."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "data-supply-chain",
+  "questions": [
+    {
+      "stem": "How is Data Supply Chain classified?",
+      "options": [
+        "As a data capability",
+        "As a process rather than a data capability",
+        "As a database technology",
+        "As a type of data model",
+        "As a reporting tool"
+      ],
+      "correct": 1,
+      "explanation": "Data Supply Chain is not a data capability but a process, working in the same manner as a generic supply chain."
+    },
+    {
+      "stem": "What are the three stages of the Data Supply Chain, in order?",
+      "options": [
+        "Consumption, Transformation and Integration, Source Data",
+        "Source Data, Consumption, Transformation and Integration",
+        "Landing, Staging, Transformed",
+        "Source Data, Transformation and Integration, Consumption",
+        "Generation, Processing, Removal"
+      ],
+      "correct": 3,
+      "explanation": "The Data Supply Chain runs from the Source Data Stage through the Transformation and Integration Stage to the Consumption Stage."
+    },
+    {
+      "stem": "What happens in the Source Data Stage of the Data Supply Chain?",
+      "options": [
+        "Raw data is planned and identified, for example in OLTP systems",
+        "Data is converted according to business requirements",
+        "Data is stored in a semantic layer for business use",
+        "Data is removed from the system",
+        "Data is sold as a service"
+      ],
+      "correct": 0,
+      "explanation": "The Source Data Stage is the first stage, where raw data is planned and identified, typically in OLTP systems."
+    },
+    {
+      "stem": "In which stage of the Data Supply Chain is data converted based on business requirements, in the shape of Data Lake systems or Data Warehouses?",
+      "options": [
+        "Source Data Stage",
+        "Consumption Stage",
+        "Transformation and Integration Stage",
+        "Removal Stage",
+        "Generation Stage"
+      ],
+      "correct": 2,
+      "explanation": "The Transformation and Integration Stage is where data is converted to business requirements in Data Lake systems or Data Warehouses."
+    },
+    {
+      "stem": "Which systems are named as examples of where data is stored for business use in the Consumption Stage?",
+      "options": [
+        "OLTP systems and CRM",
+        "Data Lakes, Data Warehouses (OLAP systems) or a Semantic Layer",
+        "Floppy drives and hard disks",
+        "Kafka and CDC tools",
+        "Spreadsheets and SMS"
+      ],
+      "correct": 1,
+      "explanation": "The Consumption Stage stores data for business use in Data Lake systems, Data Warehouses or OLAP systems, or a Semantic Layer."
+    },
+    {
+      "stem": "Why is visibility of the Data Supply Chain critical for Data Monetisation?",
+      "options": [
+        "Because it reduces storage costs",
+        "Because it eliminates data silos",
+        "Because it replaces the need for a data catalogue",
+        "Because regulators require a supply chain diagram",
+        "Because without it an organisation cannot plan ROI or time to market"
+      ],
+      "correct": 4,
+      "explanation": "In the absence of visibility on the Data Supply Chain, an organisation cannot plan ROI or TTM, both of which are critical for Data Monetisation."
+    },
+    {
+      "stem": "The Data Supply Chain is described as a critical operational process for managing what?",
+      "options": [
+        "Data Assets and Data Liabilities",
+        "Network security and encryption",
+        "Project scope and budget",
+        "Development environments",
+        "Machine learning drift"
+      ],
+      "correct": 0,
+      "explanation": "Data Supply Chain is a very critical operational process to manage Data Assets and Liabilities."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a benefit of a Data Supply Chain?",
+      "options": [
+        "Decreases data latency",
+        "Easy to host upcoming data sources",
+        "Enhances data quality",
+        "Eliminates the need for data governance",
+        "Finds new monetisation opportunities"
+      ],
+      "correct": 3,
+      "explanation": "Lower latency, easier onboarding of sources, better quality and new monetisation opportunities are listed benefits; eliminating governance is not."
+    },
+    {
+      "stem": "Which benefit of the Data Supply Chain relates directly to profit?",
+      "options": [
+        "It shortens procurement cycles for hardware",
+        "It reduces the number of database licences",
+        "It rises company profit by providing data for better decision making",
+        "It removes the need for a semantic layer",
+        "It lowers the cost of floppy drives"
+      ],
+      "correct": 2,
+      "explanation": "Among the benefits is that the Data Supply Chain raises company profit by providing data for better decision making."
+    },
+    {
+      "stem": "Which pair of benefits both appear in the Data Supply Chain benefits list?",
+      "options": [
+        "Reduce scope creep and manage constraints",
+        "Encrypt data and mask identities",
+        "Generate golden records and geocode addresses",
+        "Retrain models and detect drift",
+        "Improve customer affiliation and match customer KPIs"
+      ],
+      "correct": 4,
+      "explanation": "Improving customer affiliation and matching customer KPIs are both listed benefits, alongside piping data faster and estimating Data Assets."
+    }
+  ]
+}

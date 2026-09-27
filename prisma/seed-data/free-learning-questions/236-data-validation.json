@@ -1,0 +1,125 @@
+{
+  "topic": "data-validation",
+  "questions": [
+    {
+      "stem": "What is Data Validation?",
+      "options": [
+        "Summarising data for management reports",
+        "Verifying the correctness and quality of data against its source",
+        "Generating fake data for testing",
+        "Reducing the number of rows pulled from a table",
+        "Assigning monetary value to data assets"
+      ],
+      "correct": 1,
+      "explanation": "Data Validation verifies the correctness and quality of data against the source; in other words, it reconciles imported and processed data with the source data."
+    },
+    {
+      "stem": "By when must Data Validation be completed at the latest?",
+      "options": [
+        "Before data is pulled from the source",
+        "Before the database is backed up",
+        "Before data is passed to end users",
+        "Before the annual audit",
+        "Before data is archived"
+      ],
+      "correct": 2,
+      "explanation": "Validation can be done before pulling data and after processing it, but it must be done before data is passed to end users."
+    },
+    {
+      "stem": "When data changes its shape during transformation from source to target, what is Data Validation conducted against?",
+      "options": [
+        "The original source data only",
+        "The business rules implemented during transformation",
+        "The target table's index definitions",
+        "A synthetic copy of the data",
+        "The user's dashboard filters"
+      ],
+      "correct": 1,
+      "explanation": "Where transformation changes the shape of the data, validation is performed against the business rules applied during that transformation."
+    },
+    {
+      "stem": "What does Constraints Validation check?",
+      "options": [
+        "The structure of tables and columns",
+        "The syntax quality of code",
+        "The allowable date range",
+        "Primary keys, foreign keys, unique, not null, value checks and query performance constraints",
+        "Whether column data types match their contents"
+      ],
+      "correct": 3,
+      "explanation": "Constraints Validation checks the accuracy of all types of constraints, including primary and foreign keys, unique, not null, value checks and query performance constraints."
+    },
+    {
+      "stem": "Which type of Data Validation checks the structure of tables and columns?",
+      "options": [
+        "Structured Validation",
+        "Constraints Validation",
+        "Code Validation",
+        "Data Range Validation",
+        "Data Type Validation"
+      ],
+      "correct": 0,
+      "explanation": "Structured Validation is the check on the structures of tables and columns."
+    },
+    {
+      "stem": "Which example illustrates Data Range Validation?",
+      "options": [
+        "Ensuring a Date column only accepts date-formatted values",
+        "Checking that foreign keys resolve to a parent row",
+        "Ensuring that only the latest data is processed when only latest data is allowed",
+        "Checking that code follows optimised patterns",
+        "Confirming a table has the expected columns"
+      ],
+      "correct": 2,
+      "explanation": "Data Range Validation checks the allowable range for processing, for instance that only the latest data is processed when that is the rule."
+    },
+    {
+      "stem": "What does Code Validation assess?",
+      "options": [
+        "The primary key of every table",
+        "The data types of columns",
+        "The number of rows in each table",
+        "Whether values fall within a date range",
+        "The quality of the syntax and whether code is written in an optimised way"
+      ],
+      "correct": 4,
+      "explanation": "Code Validation checks the quality of the syntax, recognising that there are ways to write quality, optimised code."
+    },
+    {
+      "stem": "If a column's data type is Date, which validation ensures only date-formatted values are processed?",
+      "options": [
+        "Constraints Validation",
+        "Structured Validation",
+        "Code Validation",
+        "Data Range Validation",
+        "Data Type Validation"
+      ],
+      "correct": 4,
+      "explanation": "Data Type Validation checks the type of data to be processed, so a Date column should only receive values in date format."
+    },
+    {
+      "stem": "Which of the following is NOT one of the listed types of Data Validation?",
+      "options": [
+        "Encryption Validation",
+        "Structured Validation",
+        "Constraints Validation",
+        "Code Validation",
+        "Data Type Validation"
+      ],
+      "correct": 0,
+      "explanation": "The five listed types are Constraints, Structured, Data Range, Code and Data Type Validation; Encryption Validation is not among them."
+    },
+    {
+      "stem": "Data Validation can be described as reconciliation between which two things?",
+      "options": [
+        "Development and production environments",
+        "The data catalogue and the data inventory",
+        "Two different dashboards",
+        "Imported and processed data, and its source data",
+        "Structured and unstructured datasets"
+      ],
+      "correct": 3,
+      "explanation": "Validation is the reconciliation of imported and processed data with the source data from which it came."
+    }
+  ]
+}

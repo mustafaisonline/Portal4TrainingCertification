@@ -1,0 +1,125 @@
+{
+  "topic": "data-compliance",
+  "questions": [
+    {
+      "stem": "What is Data Compliance?",
+      "options": [
+        "Following certain regulations and standards of Data Security, Data Privacy and Data Integrity set by regulatory bodies to protect sensitive data and make it available in certain ways",
+        "Ensuring data is accurate, complete, consistent, valid, unique and timely",
+        "Integrating data from multiple systems into one unified form",
+        "Preserving processed data unchanged for future reference",
+        "Preventing data from getting into the wrong hands via the Internet"
+      ],
+      "correct": 0,
+      "explanation": "Data Compliance is following certain regulations and standards of Data Security, Data Privacy and Data Integrity set by regulatory bodies around the world, to protect sensitive data and make data available in certain ways."
+    },
+    {
+      "stem": "What is the one common goal shared by Data Compliance, Data Quality and Data Integrity?",
+      "options": [
+        "Data Monetisation",
+        "Data Protection",
+        "Data Visualisation",
+        "Data Replication",
+        "Data Enrichment"
+      ],
+      "correct": 1,
+      "explanation": "Data Compliance is often confused with Data Quality and Data Integrity because all these terms share some common features for one goal: Data Protection."
+    },
+    {
+      "stem": "Why will having only Data Compliance measures not protect data 100 per cent?",
+      "options": [
+        "Because regulatory bodies change their frameworks every year",
+        "Because compliance frameworks apply only to the banking sector",
+        "Because regulatory bodies set only certain Data Security, Privacy and Integrity standards, and many other standards under those disciplines still need to be in place",
+        "Because compliance is a legal matter that has nothing to do with data",
+        "Because compliance only covers data stored in the cloud"
+      ],
+      "correct": 2,
+      "explanation": "Regulatory bodies set certain, not all, Data Security, Data Privacy and Data Integrity standards. Many other standards covered under those disciplines are still required for any organisation."
+    },
+    {
+      "stem": "Which of the following is NOT listed among the most famous regulatory frameworks for Data Compliance?",
+      "options": [
+        "GDPR",
+        "HIPAA",
+        "PCI DSS",
+        "ISO 9001",
+        "SOX"
+      ],
+      "correct": 3,
+      "explanation": "The frameworks named are GDPR, HIPAA, PCI DSS, SOX, CCPA and CMMC. ISO 9001 is not among them."
+    },
+    {
+      "stem": "Which framework abbreviation completes the list of famous Data Compliance frameworks alongside GDPR, HIPAA, PCI DSS, SOX and CCPA?",
+      "options": [
+        "COBIT",
+        "ITIL",
+        "TOGAF",
+        "DAMA",
+        "CMMC"
+      ],
+      "correct": 4,
+      "explanation": "The most famous regulatory frameworks mentioned are GDPR, HIPAA, PCI DSS, SOX, CCPA and CMMC."
+    },
+    {
+      "stem": "What is the role of a SPOC in ensuring Data Compliance?",
+      "options": [
+        "A single point of contact or department that hosts and maintains data security and compliance standards",
+        "A software product that automatically scans data for compliance violations",
+        "A regulatory body that issues fines for non-compliance",
+        "A storage location where compliance evidence is archived",
+        "An external auditor appointed by the government"
+      ],
+      "correct": 0,
+      "explanation": "One way to ensure Data Compliance is to assign a SPOC (single point of contact) or a department to host and maintain data security and compliance standards."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a way to ensure Data Compliance?",
+      "options": [
+        "Conduct regular periodic revisions to set the latest measures for data protection",
+        "Store all sensitive data outside the country where it was generated",
+        "Maintain all the data protection measures and all the audit procedures",
+        "Assign a SPOC or a department to host and maintain the standards",
+        "Always use commonly used frameworks"
+      ],
+      "correct": 1,
+      "explanation": "The listed measures are periodic revisions, maintaining protection measures and audit procedures, assigning a SPOC or department, and using commonly used frameworks. Moving data abroad is not one of them and would raise data sovereignty concerns."
+    },
+    {
+      "stem": "Whose law must an organisation follow when handling data for compliance purposes?",
+      "options": [
+        "The law of the country where the organisation's headquarters is registered",
+        "The law of the country where the cloud provider is based",
+        "The law of the country where the data is generated",
+        "The law of whichever country has the strictest framework",
+        "The law of the country where the SPOC is located"
+      ],
+      "correct": 2,
+      "explanation": "One needs to follow the law of the country where the data is generated, because regulatory policies, procedures, workflows and operational requirements differ between countries."
+    },
+    {
+      "stem": "What concern is raised by accessing data across borders?",
+      "options": [
+        "Data Latency",
+        "Data Redundancy",
+        "Data Gravity",
+        "Data Sovereignty",
+        "Data Lineage"
+      ],
+      "correct": 3,
+      "explanation": "Accessing data cross-border raises Data Sovereignty concerns."
+    },
+    {
+      "stem": "With which two disciplines is Data Compliance most often confused?",
+      "options": [
+        "Data Modelling and Data Architecture",
+        "Data Mining and Data Science",
+        "Data Storage and Data Backup",
+        "Data Visualisation and Data Reporting",
+        "Data Quality and Data Integrity"
+      ],
+      "correct": 4,
+      "explanation": "Data Compliance is mostly confused with Data Quality and Data Integrity, which is somewhat understandable because all three share common features for the one goal of Data Protection."
+    }
+  ]
+}

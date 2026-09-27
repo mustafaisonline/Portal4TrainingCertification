@@ -1,0 +1,125 @@
+{
+  "topic": "4nf-fourth-normal-form",
+  "questions": [
+    {
+      "stem": "What kind of dependency does Fourth Normal Form (4NF) address?",
+      "options": [
+        "Multi-valued dependencies",
+        "Partial dependencies",
+        "Transitive dependencies",
+        "Join dependencies",
+        "Domain constraints"
+      ],
+      "correct": 0,
+      "explanation": "4NF addresses multi-valued dependencies, where one key determines multiple independent sets of values that are unrelated to each other."
+    },
+    {
+      "stem": "Which conditions must a table meet to be in Fourth Normal Form?",
+      "options": [
+        "It is in 1NF and has no repeating groups",
+        "It is in BCNF and does not contain two or more independent multi-valued facts about the same key",
+        "It is in 3NF and every determinant is a superkey",
+        "It is in 5NF and every fact has explicit time validity",
+        "It is in 2NF and has a single-column primary key"
+      ],
+      "correct": 1,
+      "explanation": "A table is in 4NF if it is already in Boyce–Codd Normal Form and does not store two or more independent multi-valued facts about the same key."
+    },
+    {
+      "stem": "What is a multi-valued dependency?",
+      "options": [
+        "A non-key attribute that depends on another non-key attribute",
+        "A column that stores several values separated by commas",
+        "One key determining multiple independent sets of values that are unrelated to each other",
+        "A composite key with more than two columns",
+        "A foreign key that points to two different tables"
+      ],
+      "correct": 2,
+      "explanation": "A multi-valued dependency occurs when one key determines multiple independent sets of values that are unrelated to each other."
+    },
+    {
+      "stem": "What is the \"Cartesian explosion\" described in relation to Fourth Normal Form?",
+      "options": [
+        "The growth of a table when repeating groups are split into rows",
+        "The duplication of loan amounts across repayment rows",
+        "The rapid increase in table count after 6NF decomposition",
+        "The creation of false combinations when independent lists are stored in the same table",
+        "The failure of a join to reconstruct the original table"
+      ],
+      "correct": 3,
+      "explanation": "Storing independent lists together makes the relational table combine values across columns even though they are logically independent, producing artificial combinations."
+    },
+    {
+      "stem": "In the loan example, a loan has two collateral types and two guarantors stored in one table. How many rows does the table produce?",
+      "options": [
+        "One",
+        "Two",
+        "Three",
+        "Eight",
+        "Four"
+      ],
+      "correct": 4,
+      "explanation": "The table produces all possible combinations of collateral and guarantors, so two collateral types and two guarantors yield four rows, even if no such paired relationships exist."
+    },
+    {
+      "stem": "How is the loan collateral and guarantor problem resolved under Fourth Normal Form?",
+      "options": [
+        "By creating LoanCollateral (LoanID, CollateralType) and LoanGuarantor (LoanID, GuarantorID) as separate tables",
+        "By storing collateral types and guarantors as comma-separated lists",
+        "By adding a surrogate key to the combined table",
+        "By moving both lists into the Customer table",
+        "By making CollateralType part of the primary key of the Loan table"
+      ],
+      "correct": 0,
+      "explanation": "Each independent multi-valued fact is separated into its own table keyed by the same primary key, so the false combinations disappear."
+    },
+    {
+      "stem": "How does Fourth Normal Form differ in focus from the earlier normal forms?",
+      "options": [
+        "It focuses on atomic values rather than keys",
+        "It focuses on how independent lists behave when stored together rather than on how attributes depend on keys",
+        "It focuses on time validity of each attribute",
+        "It focuses on domain and key constraints only",
+        "It focuses on analytical query performance"
+      ],
+      "correct": 1,
+      "explanation": "Earlier forms focused on functional dependencies between attributes and keys; 4NF extends the discipline to how independent lists behave when stored together."
+    },
+    {
+      "stem": "In which kinds of domains is a failure to recognise multi-valued dependencies most likely to cause subtle data distortions?",
+      "options": [
+        "Domains with a single flat table",
+        "Domains with only one-to-one relationships",
+        "Domains involving multiple independent classifications, tags, roles or attributes",
+        "Domains with no composite keys",
+        "Domains that use only surrogate keys"
+      ],
+      "correct": 2,
+      "explanation": "In complex schemas involving multiple independent classifications, tags, roles or attributes, unrecognised multi-valued dependencies can lead to subtle data distortions."
+    },
+    {
+      "stem": "Which of the following is NOT stated as something Fourth Normal Form provides?",
+      "options": [
+        "Protection against structural inflation",
+        "Protection against logical inaccuracies caused by storing independent facts together",
+        "Assurance that each table represents one coherent type of relationship",
+        "Elimination of redundancy that appears only when projections are re-joined",
+        "Avoidance of unintended combinations"
+      ],
+      "correct": 3,
+      "explanation": "Redundancy that appears only when a table is decomposed into projections and re-joined is the concern of Fifth Normal Form, not 4NF."
+    },
+    {
+      "stem": "Why do many real-world systems implicitly satisfy Fourth Normal Form?",
+      "options": [
+        "Because databases enforce 4NF automatically",
+        "Because most systems never use composite keys",
+        "Because multi-valued attributes are forbidden in 1NF",
+        "Because 4NF is only relevant to data warehouses",
+        "Because designers instinctively separate independent relationships"
+      ],
+      "correct": 4,
+      "explanation": "Many systems satisfy 4NF in practice because designers instinctively separate independent relationships into their own tables."
+    }
+  ]
+}

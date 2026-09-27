@@ -1,0 +1,125 @@
+{
+  "topic": "data-spread",
+  "questions": [
+    {
+      "stem": "What is the mean of the set 10, 10, 20, 40 and 70?",
+      "options": [
+        "20",
+        "25",
+        "28",
+        "30",
+        "35"
+      ],
+      "correct": 3,
+      "explanation": "The mean adds all the numbers and divides by the count: (10 + 10 + 20 + 40 + 70) / 5 = 30."
+    },
+    {
+      "stem": "What is the median of the set 10, 10, 20, 40 and 70?",
+      "options": [
+        "10",
+        "20",
+        "30",
+        "40",
+        "70"
+      ],
+      "correct": 1,
+      "explanation": "Ordered from lowest to highest, the exact middle value of the five numbers is 20."
+    },
+    {
+      "stem": "What does Data Spread describe?",
+      "options": [
+        "How variable or spread out the data values are, also called a measure of dispersion from the mean or median",
+        "The difference between the largest and smallest table in a database",
+        "The number of columns in a dataset",
+        "The rate at which data grows each year",
+        "The distance between data centres"
+      ],
+      "correct": 0,
+      "explanation": "Spread is a measure of dispersion: how variable the data values are relative to the mean or median."
+    },
+    {
+      "stem": "In the customer-age example with ages from 10 to 60, what are the mean and median?",
+      "options": [
+        "Mean 30 and median 32",
+        "Mean 20 and median 30",
+        "Mean 35 and median 35",
+        "Mean 40 and median 30",
+        "Mean 32 and median 30"
+      ],
+      "correct": 4,
+      "explanation": "In that dataset the mean is 32 and the median is 30."
+    },
+    {
+      "stem": "In the customer-age example, how is Data Spread expressed in the case of the mean?",
+      "options": [
+        "10 to 60",
+        "30 to 20 and 30 to 60",
+        "32 to 20 and 32 to 60",
+        "20 to 60",
+        "32 to 10 and 32 to 40"
+      ],
+      "correct": 2,
+      "explanation": "With a mean of 32, the spread is given as 32 to 20 and 32 to 60."
+    },
+    {
+      "stem": "In the customer-age example, how many customers are aged 20?",
+      "options": [
+        "8",
+        "12",
+        "15",
+        "7",
+        "3"
+      ],
+      "correct": 2,
+      "explanation": "The breakdown lists 8 customers aged 10, 15 aged 20, 12 aged 30, 7 aged 40 and 3 aged 60."
+    },
+    {
+      "stem": "How does customer age spread affect content on social media?",
+      "options": [
+        "The more the age is spread, the more types of content must be made",
+        "A wider age spread means less content is needed",
+        "Age spread only affects advertising prices",
+        "Content is unaffected by age spread",
+        "A wider spread means content must be shorter"
+      ],
+      "correct": 0,
+      "explanation": "Content depends on the customer age spread: the wider the spread, the more types of content are required."
+    },
+    {
+      "stem": "How does a larger Data Spread affect a marketing department's campaigns?",
+      "options": [
+        "It reduces the number of campaigns that can run",
+        "It makes campaigns impossible to measure",
+        "It has no effect on campaigns",
+        "It restricts campaigns to a single channel",
+        "The greater the spread, the greater the range of campaigns that can be launched and the more customers engaged"
+      ],
+      "correct": 4,
+      "explanation": "Marketing analysis depends on spread: more spread means a wider range of campaigns and more customer engagement."
+    },
+    {
+      "stem": "Which rule about age groups is given in the social media example of Data Spread?",
+      "options": [
+        "All content must be suitable for every age",
+        "Customers over 60 should receive no content",
+        "Content should target only the median age",
+        "Kids under age 16 should not view content created for older age groups",
+        "Content should be made only for the largest age group"
+      ],
+      "correct": 3,
+      "explanation": "The example notes that children under 16 should not see content created for older age groups."
+    },
+    {
+      "stem": "How is the median of a dataset found?",
+      "options": [
+        "By adding all values and dividing by the count",
+        "By ordering the set from lowest to highest and taking the exact middle value",
+        "By taking the most frequent value",
+        "By subtracting the smallest value from the largest",
+        "By averaging the smallest and largest values"
+      ],
+      "correct": 1,
+      "explanation": "The median is the middle number once the set is ordered from lowest to highest."
+    }
+  ]
+}

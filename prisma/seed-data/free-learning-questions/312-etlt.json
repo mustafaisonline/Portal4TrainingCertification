@@ -1,0 +1,125 @@
+{
+  "topic": "etlt",
+  "questions": [
+    {
+      "stem": "What does ETLT stand for?",
+      "options": [
+        "Extract, Test, Load and Transfer",
+        "Extract, Transform, Load and Transform",
+        "Encode, Transmit, Log and Track",
+        "Extract, Transfer, Link and Tag",
+        "Evaluate, Train, Learn and Test"
+      ],
+      "correct": 1,
+      "explanation": "ETLT stands for Extract, Transform, Load and Transform in the context of data integration and processing."
+    },
+    {
+      "stem": "What does the Extract step of ETLT involve?",
+      "options": [
+        "Extracting data from various sources such as databases, applications, logs or other systems",
+        "Cleaning and normalising data",
+        "Loading data into a target warehouse",
+        "Building a semantic layer",
+        "Generating reports for management"
+      ],
+      "correct": 0,
+      "explanation": "Extract involves extracting data from various sources, which could be databases, applications, logs or other systems."
+    },
+    {
+      "stem": "What is the purpose of the first Transform in ETLT?",
+      "options": [
+        "Loading data into the target",
+        "Archiving old data",
+        "Cleaning, structuring and enriching the extracted data so it is suitable for analysis",
+        "Deleting duplicate sources",
+        "Encrypting the target database"
+      ],
+      "correct": 2,
+      "explanation": "The first Transform refers to cleaning, structuring and enriching the extracted data so that it is suitable for analysis, including cleansing, normalisation and aggregation."
+    },
+    {
+      "stem": "What does the Load step of ETLT involve?",
+      "options": [
+        "Reading logs from the source",
+        "Cleaning the extracted records",
+        "Enriching data with external sources",
+        "Loading the transformed data into a target database or data warehouse for reporting and analysis",
+        "Removing the semantic layer"
+      ],
+      "correct": 3,
+      "explanation": "Load involves loading the transformed data into a target database or data warehouse where it can be used for reporting, analysis or other purposes."
+    },
+    {
+      "stem": "Where does the second Transform of ETLT take place?",
+      "options": [
+        "Before extraction begins",
+        "Inside the source systems",
+        "During the network transfer",
+        "In the landing zone before staging",
+        "After the data has been loaded into the target system"
+      ],
+      "correct": 4,
+      "explanation": "The second Transform represents further processing or transformation that occurs after the data has been loaded into the target system."
+    },
+    {
+      "stem": "What additional purpose does the extra stage in ETLT serve within the ETL world?",
+      "options": [
+        "Supporting semantic layers",
+        "Replacing the extract step",
+        "Removing the need for a data warehouse",
+        "Encrypting source systems",
+        "Eliminating data cleansing"
+      ],
+      "correct": 0,
+      "explanation": "ETLT just includes another stage in the ETL world to support semantic layers."
+    },
+    {
+      "stem": "What idea does ETLT emphasise about data integration and transformation?",
+      "options": [
+        "That it should be done once and never repeated",
+        "That it is an ongoing, iterative process rather than a one-time event",
+        "That it must always happen before loading",
+        "That it only applies to batch systems",
+        "That it should be handled by business users"
+      ],
+      "correct": 1,
+      "explanation": "The idea behind ETLT is to emphasise that data integration and transformation are not a one-time event but an ongoing, iterative process."
+    },
+    {
+      "stem": "In which kind of architecture is the ETLT approach described as especially relevant?",
+      "options": [
+        "Paper-based archives",
+        "Single-user desktop tools",
+        "Modern data architectures where real-time or near-real-time processing is increasingly important",
+        "Mainframe batch systems from the 1980s",
+        "Standalone spreadsheets"
+      ],
+      "correct": 2,
+      "explanation": "ETLT is especially relevant in modern data architectures where real-time or near-real-time data processing is becoming increasingly important."
+    },
+    {
+      "stem": "Which of the following is NOT one of the operations listed under the first Transform of ETLT?",
+      "options": [
+        "Data cleansing",
+        "Normalisation",
+        "Aggregation",
+        "Extraction from source logs",
+        "Enrichment"
+      ],
+      "correct": 3,
+      "explanation": "The first Transform may include cleansing, normalisation, aggregation and enrichment; extracting from logs belongs to the Extract step."
+    },
+    {
+      "stem": "How is ETLT described relative to the usual ETL process?",
+      "options": [
+        "As a competing process that replaces ETL entirely",
+        "As a synonym for ELT",
+        "As a process with no loading step",
+        "As an older technique that predates ETL",
+        "As a helpful addition to ETL that makes data even more useful and organised"
+      ],
+      "correct": 4,
+      "explanation": "ETLT is like a helpful addition to the usual ETL process that makes data even more useful and organised."
+    }
+  ]
+}

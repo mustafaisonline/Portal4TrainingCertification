@@ -1,0 +1,125 @@
+{
+  "topic": "data-sprawl",
+  "questions": [
+    {
+      "stem": "What does the term Data Sprawl refer to?",
+      "options": [
+        "The physical distance between an organisation's data centres",
+        "The staggering amount and variety of data produced by businesses every day",
+        "The growth of a single database table beyond its partition limit",
+        "The spread of customer ages in a marketing dataset",
+        "Unauthorised copying of data outside the company network"
+      ],
+      "correct": 1,
+      "explanation": "Data Sprawl is the staggering amount and variety of data that businesses produce daily, scattered across many formats and systems."
+    },
+    {
+      "stem": "What is the main cause of Data Sprawl in a company?",
+      "options": [
+        "Employees deleting old files too slowly",
+        "A shortage of database administrators",
+        "Storing all data in a single data warehouse",
+        "The variety of enterprise software, mobile apps, storage systems and data formats each company relies on",
+        "Over-use of standardised formats"
+      ],
+      "correct": 3,
+      "explanation": "Sprawl arises largely because each company depends on many different applications, storage systems and data formats."
+    },
+    {
+      "stem": "Which of the following is NOT listed as one of the formats in which sprawling data appears?",
+      "options": [
+        "Parquet",
+        "Video",
+        "Email",
+        "PDF",
+        "XML"
+      ],
+      "correct": 0,
+      "explanation": "The formats named are Video, Audio, Email, PDF, JSON, XML and Text; Parquet is not among them."
+    },
+    {
+      "stem": "In the analogy of doing your taxes with papers hidden in drawers, closets and couch cushions, what does the mixture of forms written in Greek, English and Spanish represent?",
+      "options": [
+        "The need for multilingual support staff",
+        "Data that has been encrypted",
+        "Records lost through poor backups",
+        "Duplicate data held by different departments",
+        "Data scattered across different formats and copies that must be reconciled before it is useful"
+      ],
+      "correct": 4,
+      "explanation": "The scattered, duplicated papers in different languages illustrate data spread across many formats and copies, which is the state Data Sprawl creates."
+    },
+    {
+      "stem": "Why does Data Sprawl make extracting information challenging or time-consuming?",
+      "options": [
+        "Because sprawling data is always encrypted",
+        "Because no database can hold more than one format",
+        "Because information cannot easily be extracted unless all the formats are converted into a standardised format",
+        "Because decision-makers refuse to use unstructured data",
+        "Because sprawling data is stored on tape"
+      ],
+      "correct": 2,
+      "explanation": "With data scattered in different formats, extraction stays hard until everything is converted into one standardised format."
+    },
+    {
+      "stem": "Which phrase captures the essence of addressing Data Sprawl?",
+      "options": [
+        "Converting multi-format datasets into one unified format",
+        "Deleting all data older than one year",
+        "Storing every format in its native system",
+        "Replacing the data warehouse with a data lake",
+        "Restricting data creation to a single application"
+      ],
+      "correct": 0,
+      "explanation": "The key statement is that Data Sprawl is about converting multi-format datasets into one unified format."
+    },
+    {
+      "stem": "To mitigate the challenge of Data Sprawl for decision support, what must be done with semi-structured and unstructured datasets?",
+      "options": [
+        "Archive them to cold storage",
+        "Keep them in their original formats for auditors",
+        "Encrypt them before analysis",
+        "Convert them into structured data",
+        "Discard them, since decisions only need structured data"
+      ],
+      "correct": 3,
+      "explanation": "The mitigation is to convert all semi-structured and unstructured datasets into structured data for decision support."
+    },
+    {
+      "stem": "Which system currently acts as the serving layer for decision-makers?",
+      "options": [
+        "The email server",
+        "The Data Warehouse",
+        "The mobile application back end",
+        "The document management system",
+        "The operational database"
+      ],
+      "correct": 1,
+      "explanation": "The Data Warehouse is currently the serving layer that decision-makers rely on."
+    },
+    {
+      "stem": "Who is said to be affected by the problem of Data Sprawl?",
+      "options": [
+        "Only social media companies",
+        "Only organisations without a data warehouse",
+        "Only companies that store video and audio",
+        "Only government tax agencies",
+        "Companies across the world"
+      ],
+      "correct": 4,
+      "explanation": "Data Sprawl is described as a problem that is starting to plague companies across the world."
+    },
+    {
+      "stem": "Which statement about Data Sprawl is NOT correct?",
+      "options": [
+        "It involves data in many formats such as JSON, XML, Text and Audio",
+        "It is driven by the variety of software and storage systems a company uses",
+        "It is resolved simply by buying more storage capacity",
+        "It makes information extraction time-consuming until formats are standardised",
+        "It is compared to tax papers scattered around a house"
+      ],
+      "correct": 2,
+      "explanation": "Sprawl is a problem of variety and format, not capacity; the remedy is converting datasets into a unified, structured format rather than adding storage."
+    }
+  ]
+}

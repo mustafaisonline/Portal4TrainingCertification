@@ -1,0 +1,125 @@
+{
+  "topic": "static-data-masking-sdm",
+  "questions": [
+    {
+      "stem": "By what other name is Static Data Masking (SDM) known?",
+      "options": [
+        "Data Tokenisation",
+        "Data Redaction",
+        "Data Masking",
+        "Data Generalisation",
+        "Data Encryption"
+      ],
+      "correct": 2,
+      "explanation": "Static Data Masking is also known simply as Data Masking, and belongs to the same family as Perturbation, Swapping, Shuffling, Scrambling and Obfuscation."
+    },
+    {
+      "stem": "What does Data Masking do?",
+      "options": [
+        "Converts actual data into dummy data to hide its originality",
+        "Compresses data to reduce storage",
+        "Summarises data into ranges",
+        "Splits an entity into several entities",
+        "Deletes sensitive records"
+      ],
+      "correct": 0,
+      "explanation": "Data Masking converts actual data into dummy data, for example turning credit card number 3345-0987-2234-2342 into 1234-5678-9101-1123."
+    },
+    {
+      "stem": "What are the two approaches to Data Masking?",
+      "options": [
+        "Batch and streaming",
+        "Reversible and irreversible",
+        "Structured and unstructured",
+        "Internal and external",
+        "Manual and automated"
+      ],
+      "correct": 4,
+      "explanation": "There are two Data Masking approaches: manual and automated."
+    },
+    {
+      "stem": "Which of the following is an example of the manual approach to Data Masking?",
+      "options": [
+        "A tool masking a credit card number consistently across ten tables",
+        "Changing a password to ***** or a date to 01/01/9999 using manual queries",
+        "A script that masks data and reverts it at the destination",
+        "Masking data on the fly for every SQL query",
+        "Replacing values with tokens stored in a vault"
+      ],
+      "correct": 1,
+      "explanation": "In the manual approach, a password is changed to ***** or a date converted to 01/01/9999 using manual queries."
+    },
+    {
+      "stem": "What is true of data masked using the manual approach?",
+      "options": [
+        "It can be reverted with the original script",
+        "It is masked only in transit",
+        "It is masked consistently across the whole data model",
+        "Reverting to the original data is not possible, so it is used for development teams where reverting is not required",
+        "It requires specialised tools"
+      ],
+      "correct": 3,
+      "explanation": "With manual masking, reverting to the original data is not possible; the approach is used to pass masked data to development teams."
+    },
+    {
+      "stem": "Why must organisations now opt for the automated approach to Data Masking?",
+      "options": [
+        "Because manual queries are no longer supported by databases",
+        "Because semi-structured and unstructured data from social media, CCTV, sensors and audio has made manual masking impracticable",
+        "Because regulators forbid manual masking",
+        "Because automated masking is always reversible",
+        "Because structured data no longer exists"
+      ],
+      "correct": 1,
+      "explanation": "Manual masking was practicable in the era of only structured data, but with huge semi-structured and unstructured data one must opt for the automated approach."
+    },
+    {
+      "stem": "What advantage does script-based automated masking provide when sending a dataset to another organisation?",
+      "options": [
+        "The data is compressed before transfer",
+        "The data is deleted after transfer",
+        "The data is converted into a new format",
+        "The data is masked in transit only",
+        "The data can be reverted to its original condition once it reaches the destination"
+      ],
+      "correct": 4,
+      "explanation": "Data masked using scripts can be reverted to its original condition once the purpose is served, for example after transfer via an external drive or public hosting."
+    },
+    {
+      "stem": "What do tools that mask data across the whole data model ensure?",
+      "options": [
+        "That the same value, such as a credit card number present in ten tables, is converted to the same masked value in every table",
+        "That only one table is ever masked",
+        "That masking is done by hand",
+        "That the data cannot be shared",
+        "That masked data is stored in a separate cloud"
+      ],
+      "correct": 0,
+      "explanation": "Whole-model masking tools convert a value identically wherever it appears, maintaining the essence and relationships of the data after masking."
+    },
+    {
+      "stem": "What risk does an organisation face if it lacks proper Data Masking tools and techniques?",
+      "options": [
+        "Slower report generation",
+        "Higher storage costs",
+        "Penalties from regulatory bodies",
+        "Loss of database indexes",
+        "Duplicate customer records"
+      ],
+      "correct": 2,
+      "explanation": "Regulatory bodies do not allow certain data to be disclosed, so without proper masking there is a chance of penalties."
+    },
+    {
+      "stem": "Which of the following statements about Static Data Masking is NOT correct?",
+      "options": [
+        "It is one of the most wanted techniques for Data Privacy",
+        "It converts actual data into dummy data",
+        "It can be done manually or automatically",
+        "It is unrelated to Data Perturbation, Swapping and Scrambling",
+        "It helps when sharing data with development teams or external parties"
+      ],
+      "correct": 3,
+      "explanation": "Data Masking is from the same family as Data Perturbation, Swapping, Shuffling, Scrambling and Obfuscation."
+    }
+  ]
+}

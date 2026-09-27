@@ -1,0 +1,125 @@
+{
+  "topic": "can-data-be-therewithout-metadata",
+  "questions": [
+    {
+      "stem": "Can there be Data without Metadata, according to *I Am Datapedia!*?",
+      "options": [
+        "Yes, as long as the data is unstructured",
+        "Yes, raw data never carries metadata",
+        "No, it is not possible",
+        "Only in a Data Lake",
+        "Only for reference data"
+      ],
+      "correct": 2,
+      "explanation": "The stated answer is No; Data without Metadata is not possible."
+    },
+    {
+      "stem": "In the simplified Data vs Metadata illustration, what were Column Names labelled as?",
+      "options": [
+        "Data",
+        "Master Data",
+        "Reference Data",
+        "Key Columns",
+        "Metadata"
+      ],
+      "correct": 4,
+      "explanation": "To simplify comprehension, Column Names were labelled as Metadata and the actual content as Data."
+    },
+    {
+      "stem": "Column Names shown in a table illustrate which of the three traditional types of Metadata?",
+      "options": [
+        "Business Metadata",
+        "Operational Metadata",
+        "Foundational Metadata",
+        "Active Metadata",
+        "Technical Metadata"
+      ],
+      "correct": 4,
+      "explanation": "Column Names are Technical Metadata, one of the three traditional types alongside Business and Operational."
+    },
+    {
+      "stem": "What is Foundational Metadata?",
+      "options": [
+        "Metadata that is ingrained within the content of the table",
+        "Metadata stored only in the data dictionary",
+        "Metadata about ETL job execution",
+        "Metadata created by the database vendor",
+        "The first metadata standard ever published"
+      ],
+      "correct": 0,
+      "explanation": "Foundational Metadata is introduced as metadata that is ingrained within the content of the table itself."
+    },
+    {
+      "stem": "Into which two types can Foundational Metadata be categorised?",
+      "options": [
+        "Business and Technical",
+        "Structured and Unstructured",
+        "Key Columns and Non-Key Columns",
+        "Primary and Secondary",
+        "Active and Passive"
+      ],
+      "correct": 2,
+      "explanation": "Foundational Metadata is categorised into Key Columns and Non-Key Columns."
+    },
+    {
+      "stem": "What do Key Columns consist of?",
+      "options": [
+        "Data representing the attributes of the Entity Type",
+        "Data representing the execution time of a job",
+        "Data copied from other tables",
+        "Descriptions written by the data steward",
+        "Data that duplicates the Non-Key Columns"
+      ],
+      "correct": 0,
+      "explanation": "Key Columns hold data that represents, relates to and defines the characteristics of the specific Entity Type."
+    },
+    {
+      "stem": "What do Non-Key Columns consist of?",
+      "options": [
+        "Data that defines the Entity Type",
+        "Data representing the attributes of the Key Columns within the same row",
+        "Only null values",
+        "Column names and data types",
+        "Data from a different entity"
+      ],
+      "correct": 1,
+      "explanation": "Non-Key Columns provide additional details about the attributes found in the Key Columns of the corresponding row."
+    },
+    {
+      "stem": "Which saying is credited to Daniel Lundin when asking whether data can exist without metadata?",
+      "options": [
+        "Data is the new oil",
+        "Garbage in, garbage out",
+        "Every table needs a primary key",
+        "One person's Metadata is another person's Data",
+        "Metadata is data about data"
+      ],
+      "correct": 3,
+      "explanation": "Daniel Lundin's statement that one person's Metadata is another person's Data underscores the need to grasp the fundamentals of Data."
+    },
+    {
+      "stem": "Which of the following is NOT one of the three traditional types of Metadata?",
+      "options": [
+        "Business",
+        "Technical",
+        "Operational",
+        "Foundational",
+        "All of these are traditional types"
+      ],
+      "correct": 3,
+      "explanation": "Traditionally there are three types: Business, Technical and Operational; Foundational Metadata is newly introduced."
+    },
+    {
+      "stem": "What role do Non-Key Columns play in relation to Key Columns?",
+      "options": [
+        "They replace the Key Columns",
+        "They complement and extend the Key Columns, giving a more comprehensive view of the record",
+        "They define the Entity Type",
+        "They are stored in a separate table",
+        "They are always technical metadata"
+      ],
+      "correct": 1,
+      "explanation": "Non-Key Columns complement and extend the information in the Key Columns, enriching the understanding of the specific record or entity."
+    }
+  ]
+}

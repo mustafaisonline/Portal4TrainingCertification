@@ -1,0 +1,125 @@
+{
+  "topic": "data-ethics",
+  "questions": [
+    {
+      "stem": "Like Critical Data Elements, Data Ethics is described as a principle. At which levels must it be managed and followed?",
+      "options": [
+        "Managed at individual level and followed at organisation level",
+        "Managed at organisation level and followed at individual level",
+        "Managed and followed only by IT",
+        "Managed by regulators and followed by nobody in particular",
+        "Managed and followed only at department level"
+      ],
+      "correct": 1,
+      "explanation": "Just like CDE, Data Ethics is a principle that must be managed at organisation level and followed at individual level."
+    },
+    {
+      "stem": "What can happen to a company's image if Data Ethics is not taken care of properly?",
+      "options": [
+        "Nothing; ethics has no reputational effect",
+        "It improves because of reduced costs",
+        "It can be damaged with the general public",
+        "It is affected only within the IT department",
+        "It attracts more customers"
+      ],
+      "correct": 2,
+      "explanation": "Data Ethics is a term which, if not taken care of properly, can damage a company's image with the general public."
+    },
+    {
+      "stem": "Which regulatory framework is associated with the European Union in the discussion of Data Ethics?",
+      "options": [
+        "GDPR",
+        "PDPR",
+        "PIPEDA",
+        "Fair Processing Principles",
+        "HIPAA"
+      ],
+      "correct": 0,
+      "explanation": "The regulatory bodies listed are GDPR (European Union), PDPR (Malaysia), PIPEDA (Canada) and Fair Processing Principles (USA)."
+    },
+    {
+      "stem": "Which country is associated with PIPEDA among the Data Ethics regulatory bodies listed?",
+      "options": [
+        "Malaysia",
+        "USA",
+        "European Union",
+        "Canada",
+        "Australia"
+      ],
+      "correct": 3,
+      "explanation": "PIPEDA is listed for Canada; PDPR is Malaysia, GDPR is the European Union and Fair Processing Principles is the USA."
+    },
+    {
+      "stem": "Which of the following is listed as the Data Ethics guidance for Malaysia?",
+      "options": [
+        "GDPR",
+        "PIPEDA",
+        "Fair Processing Principles",
+        "CCPA",
+        "PDPR"
+      ],
+      "correct": 4,
+      "explanation": "PDPR is the guidance listed for Malaysia."
+    },
+    {
+      "stem": "What happens if an organisation does not follow all the measures asked for by data regulatory bodies?",
+      "options": [
+        "It receives a warning only",
+        "It can be penalised with heavy amounts as penalties",
+        "It loses its BI tool licence",
+        "It must rebuild its data warehouse",
+        "Nothing, as the guidance is voluntary"
+      ],
+      "correct": 1,
+      "explanation": "If the organisation does not end up following all the measures asked for by regulatory bodies, it can be penalised with heavy penalties."
+    },
+    {
+      "stem": "Which of the following is NOT one of the points organisations should consider when collecting, processing and storing data ethically?",
+      "options": [
+        "Only necessary data should be collected",
+        "Data Quality should be there",
+        "Data Security and Privacy should be in place",
+        "Data should be kept indefinitely in case it is needed later",
+        "There should be someone with full ownership"
+      ],
+      "correct": 3,
+      "explanation": "Organisations should only store and keep data that is required; keeping data indefinitely contradicts that principle."
+    },
+    {
+      "stem": "Which of the following is one of the ethical considerations listed for organisations handling data?",
+      "options": [
+        "Everyone should be aware of the data set",
+        "Data should be collected as widely as possible",
+        "Ownership should be shared so nobody is accountable",
+        "Data quality checks should be avoided to save cost",
+        "Data should be stored without security to ease access"
+      ],
+      "correct": 0,
+      "explanation": "The listed points include: everyone should be aware of the data set, there should be a requirement for the data, only necessary data should be collected, and there should be someone with full ownership."
+    },
+    {
+      "stem": "Why is Data Ethics described as a confusing term in the data domain?",
+      "options": [
+        "Because it applies only to unstructured data",
+        "Because it is defined differently by every BI tool",
+        "Because many people are unsure how to ensure everyone follows ethics in their day-to-day interactions with data",
+        "Because no regulatory body has ever defined it",
+        "Because it is purely a technical matter"
+      ],
+      "correct": 2,
+      "explanation": "Many people are not sure how to assure that everyone follows ethics in their day-to-day activities while interacting with data."
+    },
+    {
+      "stem": "According to the Data Ethics principles, on what basis does each person's level of ethical handling vary?",
+      "options": [
+        "Their seniority in years",
+        "Their programming skills",
+        "The size of the dataset",
+        "The BI tool they use",
+        "Their roles and responsibilities"
+      ],
+      "correct": 4,
+      "explanation": "There are multiple factors involved, and everyone has his or her own level of ethics to handle based on their roles and responsibilities."
+    }
+  ]
+}

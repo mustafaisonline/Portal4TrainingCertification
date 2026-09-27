@@ -1,0 +1,125 @@
+{
+  "topic": "modern-data-stack",
+  "questions": [
+    {
+      "stem": "What is a Traditional Data Stack (TDS)?",
+      "options": [
+        "A set of cloud-native analytics tools",
+        "A collection of spreadsheets used before databases existed",
+        "A stack of backup tapes kept off site",
+        "An on-premises solution that can include any kind of database or a Hadoop environment",
+        "A single relational database with no other components"
+      ],
+      "correct": 3,
+      "explanation": "TDS is the on-premises solution, which can include any kind of database or even a Hadoop environment."
+    },
+    {
+      "stem": "What is a Modern Data Stack (MDS)?",
+      "options": [
+        "The newest version of an on-premises database",
+        "The tools and technologies that run on the Cloud",
+        "A Hadoop cluster installed in a company's own data centre",
+        "A stack of servers bought in the last two years",
+        "A data warehouse with a new user interface"
+      ],
+      "correct": 1,
+      "explanation": "MDS refers to the tools and technologies on the Cloud, in contrast to the on-premises TDS."
+    },
+    {
+      "stem": "The comparison of Modern Data Stack versus Traditional Data Stack is essentially a comparison of what?",
+      "options": [
+        "Cloud versus on-premises infrastructures",
+        "Relational versus NoSQL databases",
+        "Batch versus streaming data",
+        "Structured versus unstructured data",
+        "Open source versus commercial software"
+      ],
+      "correct": 0,
+      "explanation": "MDS versus TDS is more a comparison between Cloud and on-premises infrastructures."
+    },
+    {
+      "stem": "In a Traditional Data Stack, what is involved when new hardware is needed?",
+      "options": [
+        "A few clicks in a web console",
+        "A software licence renewal",
+        "A change to the database schema",
+        "Nothing; hardware scales automatically",
+        "A complete procurement cycle"
+      ],
+      "correct": 4,
+      "explanation": "In TDS or on-premises environments, needing new hardware means going through a complete procurement cycle."
+    },
+    {
+      "stem": "In the Traditional Data Stack CPU example, a business needs 2 CPUs at night and 4 CPUs in the daytime. What does it end up paying for?",
+      "options": [
+        "2 CPUs for 24 hours",
+        "4 CPUs only during the day",
+        "4 CPUs for 24 hours, because the hardware has already been bought",
+        "6 CPUs shared across two servers",
+        "Only the hours the CPUs are actually busy"
+      ],
+      "correct": 2,
+      "explanation": "On premises you have already bought the hardware, so you pay for 4 CPUs around the clock even though only 2 are needed at night."
+    },
+    {
+      "stem": "How far away is any resource when working in a Modern Data Stack on the Cloud?",
+      "options": [
+        "A full procurement cycle away",
+        "A few clicks away",
+        "A hardware delivery away",
+        "A data centre visit away",
+        "A budget approval away"
+      ],
+      "correct": 1,
+      "explanation": "In MDS, when you are on the Cloud, any resource is only a few clicks away."
+    },
+    {
+      "stem": "In the Modern Data Stack CPU example, how does payment work for 2 CPUs at night and 4 in the daytime?",
+      "options": [
+        "You pay for 4 CPUs for 24 hours",
+        "You pay a flat monthly fee regardless of usage",
+        "You pay for 6 CPUs to cover both periods",
+        "You only pay for the CPUs while you are using them",
+        "You pay for the night CPUs but the day CPUs are free"
+      ],
+      "correct": 3,
+      "explanation": "On the Cloud you only pay for the 2 CPUs at night while using them, and the same applies to the daytime CPU requirement."
+    },
+    {
+      "stem": "Which environment is mentioned as something a Traditional Data Stack may include besides databases?",
+      "options": [
+        "A Hadoop environment",
+        "A cloud object store",
+        "A serverless function platform",
+        "A software-as-a-service analytics suite",
+        "A managed data lakehouse"
+      ],
+      "correct": 0,
+      "explanation": "TDS is the on-premises solution, which can include any kind of database or a Hadoop environment as well."
+    },
+    {
+      "stem": "Which statement about the Traditional Data Stack is NOT true?",
+      "options": [
+        "It is an on-premises solution",
+        "It can include any kind of database",
+        "New hardware requires a procurement cycle",
+        "You pay for purchased hardware whether or not it is fully used",
+        "Any resource is a few clicks away"
+      ],
+      "correct": 4,
+      "explanation": "Having resources a few clicks away is a characteristic of the Modern Data Stack on the Cloud, not of the on-premises Traditional Data Stack."
+    },
+    {
+      "stem": "What is suggested as the first step to understanding the Modern Data Stack easily?",
+      "options": [
+        "Learning a cloud vendor's pricing model",
+        "Migrating a database to the cloud",
+        "First understanding the Traditional Data Stack",
+        "Reading the Hype Cycle for Data Management",
+        "Building a Hadoop cluster"
+      ],
+      "correct": 2,
+      "explanation": "To make MDS easy to understand, one must first understand the Traditional Data Stack (TDS)."
+    }
+  ]
+}

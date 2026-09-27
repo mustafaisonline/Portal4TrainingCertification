@@ -1,0 +1,125 @@
+{
+  "topic": "data-annotation",
+  "questions": [
+    {
+      "stem": "How is Data Annotation related to Data Labelling?",
+      "options": [
+        "Data Annotation is a single step within Data Labelling",
+        "Data Annotation is the technique of doing Data Labelling",
+        "Data Annotation replaces Data Labelling in modern practice",
+        "Data Annotation is used for unsupervised learning and Data Labelling for supervised learning",
+        "They are unrelated activities performed by different teams"
+      ],
+      "correct": 1,
+      "explanation": "Data Annotation is the technique of doing Data Labelling; the two work together to prepare datasets for Machine Learning models."
+    },
+    {
+      "stem": "Which of Data Annotation and Data Labelling is the broader activity?",
+      "options": [
+        "Data Labelling, because it contains many annotation steps",
+        "Neither; they are identical in scope",
+        "Data Labelling, because it is done by humans",
+        "Data Annotation, because it is only used for images",
+        "Data Annotation, because it is a complete process with many steps, of which Data Labelling is one"
+      ],
+      "correct": 4,
+      "explanation": "Data Annotation is a complete process with many steps to curate, whereas Data Labelling is one of those steps."
+    },
+    {
+      "stem": "What are Data Labelling tags used for by Machine Learning models?",
+      "options": [
+        "Future pattern recognition",
+        "Encrypting the training data",
+        "Choosing the database engine",
+        "Scheduling batch jobs",
+        "Compressing the dataset"
+      ],
+      "correct": 0,
+      "explanation": "Data Labelling tags are used by ML models for future pattern recognition, while Data Annotation is about recognising the data via a process."
+    },
+    {
+      "stem": "What is the purpose of treating Data Annotation as a process?",
+      "options": [
+        "To increase the number of manual reviewers",
+        "To slow down model training for safety",
+        "So that Data Labelling can be automated for accuracy, eliminating human intervention",
+        "To keep labelled data out of ML models",
+        "To convert unstructured data into relational tables"
+      ],
+      "correct": 2,
+      "explanation": "Data Annotation is about the process so that Data Labelling can be automated for accuracy, eliminating human intervention."
+    },
+    {
+      "stem": "For which kind of Machine Learning does Data Annotation prepare data?",
+      "options": [
+        "Unsupervised learning",
+        "Reinforcement learning",
+        "Federated learning",
+        "Supervised learning",
+        "Transfer learning"
+      ],
+      "correct": 3,
+      "explanation": "Just like Data Labelling, Data Annotation is for supervised machine learning, preparing data as input and storing it for future reference."
+    },
+    {
+      "stem": "Which activity is noted as still being done manually in many organisations?",
+      "options": [
+        "Model deployment",
+        "Data backup",
+        "Data Labelling",
+        "Schema design",
+        "Log rotation"
+      ],
+      "correct": 2,
+      "explanation": "Many organisations are still doing manual Data Labelling, which Data Annotation as a process aims to automate."
+    },
+    {
+      "stem": "What can bad Data Labelling lead to?",
+      "options": [
+        "An adverse impact on the outcome of applications",
+        "Faster model training",
+        "Reduced storage costs",
+        "Automatic correction by the ML model",
+        "No effect, since annotation catches every error"
+      ],
+      "correct": 0,
+      "explanation": "Bad Data Labelling can impact the outcome of applications that rely on the trained models."
+    },
+    {
+      "stem": "Which of the following statements about Data Annotation is NOT correct?",
+      "options": [
+        "It works together with Data Labelling to prepare datasets for ML models",
+        "It is the technique for tagging data so ML models can reuse it",
+        "It is about recognising data via a process",
+        "It stores prepared data for future reference",
+        "It is a single step within the larger process of Data Labelling"
+      ],
+      "correct": 4,
+      "explanation": "It is the other way round: Data Annotation is the complete process and Data Labelling is one of its steps."
+    },
+    {
+      "stem": "What do Data Annotation and Data Labelling together prepare?",
+      "options": [
+        "Network security policies",
+        "Financial statements",
+        "Backup schedules",
+        "Datasets for Machine Learning models in Data Science practice",
+        "Database indexes"
+      ],
+      "correct": 3,
+      "explanation": "Data Annotation and Data Labelling work together to prepare datasets for Machine Learning models in Data Science practice."
+    },
+    {
+      "stem": "Besides preparing data as input for a model, what else does Data Annotation do with the data?",
+      "options": [
+        "Deletes it once the model is trained",
+        "Stores it for future reference",
+        "Encrypts it with the model's key",
+        "Publishes it to external partners",
+        "Converts it into a dashboard"
+      ],
+      "correct": 1,
+      "explanation": "Data Annotation prepares data as input for supervised learning and stores it for future reference."
+    }
+  ]
+}

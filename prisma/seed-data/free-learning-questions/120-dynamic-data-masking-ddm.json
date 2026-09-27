@@ -1,0 +1,125 @@
+{
+  "topic": "dynamic-data-masking-ddm",
+  "questions": [
+    {
+      "stem": "Where does Dynamic Data Masking (DDM) apply its masking?",
+      "options": [
+        "Permanently at rest in the datastore",
+        "In transit, on the fly, so the data in the datastore is unchanged",
+        "In a separate copy of the production database",
+        "Only in backups",
+        "Only in development environments"
+      ],
+      "correct": 1,
+      "explanation": "DDM does not mask permanently; it masks data in transit so the data in the datastore stays unchanged."
+    },
+    {
+      "stem": "What proportion of data is described as structured data, compared with the semi-structured and unstructured data of the new era?",
+      "options": [
+        "50%",
+        "80%",
+        "5%",
+        "20%",
+        "100%"
+      ],
+      "correct": 3,
+      "explanation": "Previously work was on structured data only, which is 20%, whereas the new era adds 80% more data in semi-structured and unstructured form."
+    },
+    {
+      "stem": "Why has Dynamic Data Masking become popular?",
+      "options": [
+        "Because with 80% more semi-structured and unstructured data it became troublesome to anonymise data within a given SLA using static masking",
+        "Because regulators banned Static Data Masking",
+        "Because it requires no computing resources",
+        "Because it permanently deletes sensitive data",
+        "Because structured data no longer needs masking"
+      ],
+      "correct": 0,
+      "explanation": "The growth of semi-structured and unstructured data and maturing data science practices made slow static masking hard to deliver within SLA, so DDM masks production data on the fly."
+    },
+    {
+      "stem": "Which masking approach requires a copy of production data to be made before masking?",
+      "options": [
+        "Dynamic Data Masking",
+        "Both SDM and DDM",
+        "Static Data Masking",
+        "Neither SDM nor DDM",
+        "Only DDM when run in real time"
+      ],
+      "correct": 2,
+      "explanation": "SDM makes a copy of production data somewhere else before masking, whereas DDM uses the same production data because masking is done on the fly."
+    },
+    {
+      "stem": "How do SDM and DDM differ in when the masking is processed?",
+      "options": [
+        "Both are real-time",
+        "Both are batch",
+        "SDM is real-time and DDM is batch",
+        "SDM is done weekly and DDM monthly",
+        "SDM is done in batches which take time, whereas DDM is real-time"
+      ],
+      "correct": 4,
+      "explanation": "SDM is done in batches that take time to process, whereas DDM is real-time."
+    },
+    {
+      "stem": "Why does Dynamic Data Masking carry an additional performance requirement?",
+      "options": [
+        "Because it copies the whole database every night",
+        "Because it runs along with every SQL statement sent to the datastore",
+        "Because it must re-index every table",
+        "Because it stores masked data in a second datastore",
+        "Because it encrypts the data at rest"
+      ],
+      "correct": 1,
+      "explanation": "SDM has no additional performance requirement because it is done once, whereas DDM runs with every SQL sent to the datastore."
+    },
+    {
+      "stem": "How is Static Data Masking run, compared with Dynamic Data Masking?",
+      "options": [
+        "SDM is a permanent layer and DDM a standalone process",
+        "Both are permanent layers",
+        "Both are standalone processes",
+        "SDM is a standalone process, whereas DDM is a permanent layer before exposing data to users",
+        "SDM runs inside the application and DDM inside the database"
+      ],
+      "correct": 3,
+      "explanation": "SDM is done as a standalone process, whereas DDM is a permanent layer sitting before the data is exposed to users."
+    },
+    {
+      "stem": "Which of the following is NOT true of Dynamic Data Masking?",
+      "options": [
+        "It permanently changes the data at rest",
+        "It masks data in transit",
+        "It uses the same production data rather than a copy",
+        "It is real-time",
+        "It behaves like standard Data Masking in what it does to the values"
+      ],
+      "correct": 0,
+      "explanation": "It is SDM that masks data permanently at rest and cannot be reverted; DDM leaves the datastore unchanged."
+    },
+    {
+      "stem": "Which group's maturing practices have increased the demand for production-ready masked data?",
+      "options": [
+        "Network engineers",
+        "Auditors",
+        "Data Scientists developing, training and publishing models",
+        "Marketing teams",
+        "Help desk staff"
+      ],
+      "correct": 2,
+      "explanation": "Data science practices have matured over the last ten years, so more production-ready data is required by Data Scientists to develop, train and publish their models."
+    },
+    {
+      "stem": "Why is Static Data Masking described as a very slow process?",
+      "options": [
+        "Because it runs with every SQL query",
+        "Because it must be approved by regulators each time",
+        "Because it works only on unstructured data",
+        "Because it masks data in transit",
+        "Because one must create a new dataset containing the masked data"
+      ],
+      "correct": 4,
+      "explanation": "With SDM one must create a new dataset with masked data, whereas DDM masks production data on the fly."
+    }
+  ]
+}

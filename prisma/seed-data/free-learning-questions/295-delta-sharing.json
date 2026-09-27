@@ -1,0 +1,125 @@
+{
+  "topic": "delta-sharing",
+  "questions": [
+    {
+      "stem": "What is Delta Sharing?",
+      "options": [
+        "A proprietary format for compressing database backups",
+        "An open protocol for secure data sharing in which recipients use their own compute power",
+        "A nightly batch job that copies data to partner organisations",
+        "A technique for masking personal data before export",
+        "A standard for naming countries in international transactions"
+      ],
+      "correct": 1,
+      "explanation": "Delta Sharing is an open protocol for secure data sharing: you share your data with others, and the others use their own compute power."
+    },
+    {
+      "stem": "In Delta Sharing, where does the shared data remain?",
+      "options": [
+        "In the original datastore, accessed by recipients without data movement",
+        "On the recipient's own servers after a full copy",
+        "On removable media couriered to the recipient",
+        "In a public download site",
+        "In the recipient's email inbox"
+      ],
+      "correct": 0,
+      "explanation": "Delta Sharing allows recipients to view data without data movement; the data remains in the original datastore and is accessed with the proposed access management."
+    },
+    {
+      "stem": "Why has transferring large volumes of data to other organisations become impractical in the current era?",
+      "options": [
+        "Because networks no longer support file transfer",
+        "Because data has become worthless to other organisations",
+        "Because data has grown exponentially and organisations do not want it to leave their datastores due to data sovereignty",
+        "Because regulators now forbid any form of data sharing",
+        "Because databases can no longer export data"
+      ],
+      "correct": 2,
+      "explanation": "Data has grown exponentially, so transfer is not possible or not timely, and because of data sovereignty organisations do not want their data to move out of their datastores."
+    },
+    {
+      "stem": "In the preceding era, why was giving outside parties access to an organisation's own environment kept very limited?",
+      "options": [
+        "Because outside parties did not have internet access",
+        "Because encryption had not yet been invented",
+        "Because sharing data was illegal at the time",
+        "Because access to the environment and databases impacted performance and applications, which was not acceptable",
+        "Because the organisations did not own the data"
+      ],
+      "correct": 3,
+      "explanation": "Accessing the organisation's environment or databases used to impact performance and applications, which was not acceptable, so access was granted only on a very limited basis."
+    },
+    {
+      "stem": "What practice arose in the earlier era because giving outsiders access to live databases hurt performance?",
+      "options": [
+        "Deleting data after each quarter",
+        "Storing data only in memory",
+        "Refusing all data requests",
+        "Publishing data on public websites",
+        "Masking or anonymising data and exporting the actual data to other datastores"
+      ],
+      "correct": 4,
+      "explanation": "Because direct access hurt performance, organisations started masking or anonymising data and exporting actual data to other datastores."
+    },
+    {
+      "stem": "Whose compute power is used when a recipient accesses data through Delta Sharing?",
+      "options": [
+        "The recipient's own compute power",
+        "The data owner's compute power",
+        "A neutral third party's compute power",
+        "A government-run data centre",
+        "No compute power is needed"
+      ],
+      "correct": 0,
+      "explanation": "In Delta Sharing the recipients use their own compute power, so each party can spin up compute based on their own budgeted OPEX."
+    },
+    {
+      "stem": "How is the data presented to recipients under Delta Sharing?",
+      "options": [
+        "As a complete unrestricted copy of every table",
+        "Only their relevant data, in encryption mode, with governance and compliance requirements in place",
+        "As printed reports posted by mail",
+        "As anonymised summary statistics only",
+        "As raw log files with no access controls"
+      ],
+      "correct": 1,
+      "explanation": "Recipients are only able to see their relevant data in encryption mode, with all governance and compliance requirements in place."
+    },
+    {
+      "stem": "Which of the following is NOT a form of data sharing mentioned?",
+      "options": [
+        "Sharing across departments",
+        "Sharing across branches",
+        "Sharing across organisations",
+        "Sharing with the open wide world in a DaaS model",
+        "Sharing by deleting the data from the source"
+      ],
+      "correct": 4,
+      "explanation": "Data sharing is described as sharing across departments, branches, organisations or with the wide world in a DaaS model; deleting data from the source is not a form of sharing."
+    },
+    {
+      "stem": "Under Delta Sharing, how can each party fund its access to relevant data?",
+      "options": [
+        "By paying the data owner a fixed licence fee for compute",
+        "By sharing the data owner's hardware for free",
+        "By spinning up their own compute power based on their own budgeted OPEX",
+        "By buying the data outright",
+        "By using a government subsidy"
+      ],
+      "correct": 2,
+      "explanation": "With Delta Sharing everyone can spin up their own compute power based on their own budgeted OPEX to access the relevant data."
+    },
+    {
+      "stem": "What opportunity gave rise to Delta Sharing?",
+      "options": [
+        "The need to store more data in fewer datastores",
+        "The need to convert SQL databases to NoSQL",
+        "The need to eliminate data governance",
+        "The need to give access to an environment without using the owner's compute power, letting recipients use their own",
+        "The need to print data for archival"
+      ],
+      "correct": 3,
+      "explanation": "The opportunity was how to give access to the environment without using the owner's compute power, letting the recipient use their own; Delta Sharing answers that need."
+    }
+  ]
+}

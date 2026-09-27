@@ -1,0 +1,125 @@
+{
+  "topic": "information-modelling",
+  "questions": [
+    {
+      "stem": "What does Information Modelling represent?",
+      "options": [
+        "Only the physical tables of one database",
+        "Entities, relationships and processes within a system or organisation",
+        "The colour scheme of a reporting dashboard",
+        "The hardware specification of a server",
+        "The list of users with database access"
+      ],
+      "correct": 1,
+      "explanation": "Unlike conceptual, logical and physical models that each focus on one aspect, Information Modelling represents entities, relationships and processes within a system or organisation."
+    },
+    {
+      "stem": "In what order do the models typically appear when a project or solution starts?",
+      "options": [
+        "Conceptual Model, then Logical Model, then Physical Model",
+        "Physical Model, then Logical Model, then Conceptual Model",
+        "Logical Model, then Physical Model, then Conceptual Model",
+        "Information Model, then Physical Model only",
+        "Physical Model only, with no other models"
+      ],
+      "correct": 0,
+      "explanation": "When we start a project or solution, we begin with the Conceptual Model, then the Logical Model, then the Physical Model."
+    },
+    {
+      "stem": "Why do nerd data folks hardly get in touch with Information Modelling?",
+      "options": [
+        "Because it has been made obsolete by NoSQL",
+        "Because it is restricted to finance departments",
+        "Because it sits one level above creating any specific solution",
+        "Because it requires a special licence",
+        "Because it only applies to universities"
+      ],
+      "correct": 2,
+      "explanation": "Information Modelling is one level above creating any special solution, which is why data practitioners rarely encounter it."
+    },
+    {
+      "stem": "In the university example of Information Modelling, which entities does the Admissions conceptual model include?",
+      "options": [
+        "Budget and Expenditure",
+        "Student Information and Grades",
+        "Lecturer and Classroom",
+        "Applicant and Admission Decision",
+        "Library and Book"
+      ],
+      "correct": 3,
+      "explanation": "In the university example, the Admissions department's conceptual model has entities like Applicant and Admission Decision."
+    },
+    {
+      "stem": "In the university example, which department's logical model details tables for Budget and Expenditure?",
+      "options": [
+        "Admissions",
+        "Student Services",
+        "Library",
+        "Human Resources",
+        "Finance"
+      ],
+      "correct": 4,
+      "explanation": "Finance has a logical model detailing tables for Budget and Expenditure."
+    },
+    {
+      "stem": "What does the Information Modelling perspective focus on in the university example?",
+      "options": [
+        "How data flows seamlessly across the departments and how their data relates",
+        "Which relational database vendor each department should buy",
+        "How to reduce the number of students admitted",
+        "The physical layout of the campus network",
+        "The salaries of departmental staff"
+      ],
+      "correct": 0,
+      "explanation": "Information Modelling focuses on how data flows across departments, looking at the relationships between Applicant data in Admissions, Budget data in Finance and Student Information in Student Services."
+    },
+    {
+      "stem": "Which is an example of a Process considered by Information Modelling?",
+      "options": [
+        "Choosing a table's primary key",
+        "How an admitted student's information transitions from Admissions to Student Services",
+        "Defining a column's data type",
+        "Selecting an index for a table",
+        "Naming a database schema"
+      ],
+      "correct": 1,
+      "explanation": "Information Modelling considers end-to-end processes involving data, such as how an admitted student's information moves from Admissions to Student Services."
+    },
+    {
+      "stem": "Which kind of overarching rule does Information Modelling identify?",
+      "options": [
+        "The maximum length of a table name",
+        "The order of columns in a report",
+        "Ensuring data consistency across departments or compliance with privacy regulations",
+        "The font used on invoices",
+        "The number of servers in a cluster"
+      ],
+      "correct": 2,
+      "explanation": "Information Modelling identifies overarching rules, like ensuring data consistency across departments or compliance with privacy regulations."
+    },
+    {
+      "stem": "Which of the following is NOT a focus of Information Modelling as described?",
+      "options": [
+        "Relationships between data in different departments",
+        "End-to-end processes involving data",
+        "Overarching rules such as consistency and compliance",
+        "Choosing the specific relational database technology for one department",
+        "How information is organised, flows and is utilised within an organisation"
+      ],
+      "correct": 3,
+      "explanation": "Choosing specific technology belongs to the Physical Model; Information Modelling looks at relationships, processes, rules and how information flows across the organisation."
+    },
+    {
+      "stem": "In essence, what kind of view does Information Modelling provide?",
+      "options": [
+        "A detailed view of one table's columns",
+        "A view limited to a single application",
+        "A snapshot of server performance",
+        "A list of user login attempts",
+        "A panoramic view of how data traverses a system or entire organisation, linking components, processes and rules"
+      ],
+      "correct": 4,
+      "explanation": "Information Modelling provides a panoramic view of how data traverses a system or an entire organisation, linking components, processes and rules into a cohesive whole."
+    }
+  ]
+}

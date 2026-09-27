@@ -1,0 +1,125 @@
+{
+  "topic": "metadata-modelling",
+  "questions": [
+    {
+      "stem": "What is Metadata Modelling?",
+      "options": [
+        "The discipline of designing structured frameworks that describe data about data",
+        "The practice of encrypting sensitive columns in a warehouse",
+        "The process of converting a logical model into physical tables",
+        "The design of star schemas for reporting",
+        "The tuning of database indexes for performance"
+      ],
+      "correct": 0,
+      "explanation": "Metadata Modelling designs structured frameworks that describe data about data, so that assets can be understood, discovered, traced and governed."
+    },
+    {
+      "stem": "Which question does metadata modelling primarily answer about Loan data?",
+      "options": [
+        "What does a Loan mean to the business?",
+        "Where does the Loan data come from, who owns it and how often is it refreshed?",
+        "How should Loan be related to Customer in an ontology?",
+        "Which star schema best reports Loan performance?",
+        "What interest rate should a Loan carry?"
+      ],
+      "correct": 1,
+      "explanation": "Metadata modelling emphasises management attributes such as source, ownership, refresh frequency and sensitivity rather than semantic meaning, which belongs to ontologies."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a descriptor that metadata modelling focuses on?",
+      "options": [
+        "Refresh frequency",
+        "Sensitivity classification",
+        "Data ownership and stewardship",
+        "Lineage (upstream and downstream data flow)",
+        "Customer purchasing behaviour"
+      ],
+      "correct": 4,
+      "explanation": "The descriptors named are business definitions, ownership, lineage, source systems, refresh frequency, sensitivity, quality rules and storage location; customer behaviour is business data, not metadata."
+    },
+    {
+      "stem": "In the LoanApproval example from I Am Datapedia!, what is the refresh frequency captured in the metadata model?",
+      "options": [
+        "Hourly",
+        "Weekly on Sunday",
+        "Daily at 02:00 AM",
+        "Monthly at month end",
+        "Real time"
+      ],
+      "correct": 2,
+      "explanation": "The LoanApproval metadata model records a refresh frequency of daily at 02:00 AM, alongside its source systems, steward and sensitivity classification."
+    },
+    {
+      "stem": "Which sensitivity classification is given to the LoanApproval table in the banking example?",
+      "options": [
+        "Public",
+        "Internal Use Only",
+        "Restricted – Personal Data",
+        "Confidential – Financial Data",
+        "Top Secret"
+      ],
+      "correct": 3,
+      "explanation": "The example classifies the LoanApproval table as Confidential – Financial Data, with LoanAmount and InterestRate flagged as sensitive."
+    },
+    {
+      "stem": "How does metadata modelling differ from an ontology?",
+      "options": [
+        "Metadata modelling defines physical storage; ontologies define indexes",
+        "Metadata modelling is for unstructured data; ontologies are for structured data",
+        "Metadata modelling replaces ontologies in regulated industries",
+        "Metadata modelling is used only by data scientists; ontologies only by auditors",
+        "Ontologies emphasise semantic meaning between concepts; metadata modelling emphasises management attributes of data assets"
+      ],
+      "correct": 4,
+      "explanation": "Ontologies answer what a concept means and how concepts relate, while metadata modelling captures who owns data, where it comes from and how it is managed."
+    },
+    {
+      "stem": "Why does metadata modelling play a critical role in regulated financial institutions?",
+      "options": [
+        "Regulators often require clear lineage, ownership and traceability that can be explained during audits",
+        "Regulators require every table to be denormalised",
+        "It removes the need for a data steward",
+        "It automatically calculates capital adequacy ratios",
+        "It replaces the need for data quality checks"
+      ],
+      "correct": 0,
+      "explanation": "A well-designed metadata model lets lineage from operational systems to reports be documented and explained during audits, which regulators demand."
+    },
+    {
+      "stem": "Which of these is described as a limitation of metadata modelling?",
+      "options": [
+        "It cannot capture lineage",
+        "It cannot record data ownership",
+        "It does not directly define business meaning and repositories need ongoing maintenance",
+        "It only works for on-premises databases",
+        "It prevents the creation of data catalogues"
+      ],
+      "correct": 2,
+      "explanation": "Metadata modelling leaves business meaning to ontologies and semantic models, and its repositories must be maintained or they lose accuracy and adoption."
+    },
+    {
+      "stem": "What can happen to a metadata system if governance becomes overly bureaucratic?",
+      "options": [
+        "It becomes more accurate",
+        "It automatically synchronises with source systems",
+        "It gains regulatory approval faster",
+        "It may lose usability and adoption",
+        "It converts into an ontology"
+      ],
+      "correct": 3,
+      "explanation": "The topic warns that overly bureaucratic governance can cause the metadata system to lose usability and adoption."
+    },
+    {
+      "stem": "According to I Am Datapedia!, what is a warehouse or lakehouse without metadata models?",
+      "options": [
+        "A data mart",
+        "A black box",
+        "A semantic layer",
+        "A feature store",
+        "An ontology"
+      ],
+      "correct": 1,
+      "explanation": "Metadata models are called the audit trail and governance backbone; without them the warehouse or lakehouse is described as just a black box."
+    }
+  ]
+}

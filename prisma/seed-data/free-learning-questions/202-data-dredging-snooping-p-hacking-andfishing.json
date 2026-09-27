@@ -1,0 +1,125 @@
+{
+  "topic": "data-dredging-snooping-p-hacking-andfishing",
+  "questions": [
+    {
+      "stem": "What behaviour do Data Dredging, Snooping, p-hacking and Fishing all refer to?",
+      "options": [
+        "Data analysis performed only on structured tables",
+        "Data analysis without a proper hypothesis and relationship among datasets",
+        "Data analysis approved by a governance committee",
+        "Data analysis that only counts rows",
+        "Data analysis restricted to known facts"
+      ],
+      "correct": 1,
+      "explanation": "Dredging, Snooping, p-hacking and Fishing all describe analysing data without a proper hypothesis and without an established relationship among the datasets."
+    },
+    {
+      "stem": "How do the findings of Data Mining differ from those of Data Dredging?",
+      "options": [
+        "Data Mining is done by machines; Dredging by humans",
+        "Data Mining uses spreadsheets; Dredging uses databases",
+        "Data Mining only works on small datasets; Dredging on large ones",
+        "Data Mining finds results based on correlation in large datasets; Dredging finds results based on a chance methodology",
+        "There is no difference in how they find results"
+      ],
+      "correct": 3,
+      "explanation": "Data mining finds results based on the correlation of data in large datasets, whereas Dredging, Snooping, p-hacking and Fishing find results based on chance methodology."
+    },
+    {
+      "stem": "What are the two types of fact findings in any analysis that assists a decision support system?",
+      "options": [
+        "Known facts and unknown facts",
+        "Internal facts and external facts",
+        "Numeric facts and textual facts",
+        "Historical facts and future facts",
+        "Approved facts and rejected facts"
+      ],
+      "correct": 0,
+      "explanation": "There are two types of fact findings: known facts and unknown facts."
+    },
+    {
+      "stem": "Which technique is described as extracting Known Facts because it is done only on structured datasets?",
+      "options": [
+        "Data Fishing",
+        "p-hacking",
+        "Data Mining",
+        "Data Snooping",
+        "Data Dredging"
+      ],
+      "correct": 2,
+      "explanation": "Data mining techniques extract known facts, since they are done on structured datasets where the relationships between and within tables are mostly already known."
+    },
+    {
+      "stem": "In the date-of-birth example, the business rule loads Age only for Male or Female customers aged 1 to 99. What might Data Dredging techniques surface when asked for abnormal age behaviour?",
+      "options": [
+        "Only customers aged exactly 99",
+        "Only customers whose gender is Female",
+        "Customers born after the current date",
+        "Customers with duplicate names",
+        "People with no gender defined and an age of more than 500 years"
+      ],
+      "correct": 4,
+      "explanation": "Dredging searches the age KPI everywhere and may end up showing people who have no gender defined in the system and are aged more than 500 years."
+    },
+    {
+      "stem": "Why is finding customers with abnormal ages described as very critical information?",
+      "options": [
+        "Because it affects the marketing budget",
+        "Because it matters for Customer KYC (Know Your Customer)",
+        "Because it changes the database schema",
+        "Because it invalidates the data warehouse",
+        "Because it proves the model has become AI"
+      ],
+      "correct": 1,
+      "explanation": "The abnormal age finding is described as very critical information for Customer KYC, Know Your Customer."
+    },
+    {
+      "stem": "How are Data Dredging, Snooping, p-hacking and Fishing generally characterised?",
+      "options": [
+        "As the gold standard of analytics",
+        "As a replacement for Business Intelligence",
+        "As a form of data backup",
+        "As the Dark Side of Data Mining",
+        "As a method of data encryption"
+      ],
+      "correct": 3,
+      "explanation": "The general concept is that these techniques are the Dark Side of Data Mining, although the author treats them as techniques for finding the known and the unknown."
+    },
+    {
+      "stem": "What is the author's own view of Data Dredging, Snooping, p-hacking and Fishing in I Am Datapedia!?",
+      "options": [
+        "They are techniques for Known and Unknown, and the author is more interested in knowing the Unknown",
+        "They should be banned in every organisation",
+        "They are identical to Data Mining",
+        "They only work on paper records",
+        "They are useful only for marketing campaigns"
+      ],
+      "correct": 0,
+      "explanation": "The author sees them as techniques for Known and Unknown, asks whether knowing the Unknown is bad, and says he is more interested in the Unknown than the Known."
+    },
+    {
+      "stem": "Why have Data Dredging, Snooping, p-hacking and Fishing become more famous in the Big Data era?",
+      "options": [
+        "Because regulators now require them",
+        "Because structured data has disappeared",
+        "Because of the new, huge size of semi-structured and unstructured datasets",
+        "Because they are built into every database",
+        "Because Data Mining is no longer used"
+      ],
+      "correct": 2,
+      "explanation": "These techniques have become more famous in the Big Data era due to the new, huge size of semi-structured and unstructured datasets."
+    },
+    {
+      "stem": "Which statement about the results of Data Dredging, Snooping, p-hacking and Fishing is NOT correct?",
+      "options": [
+        "They require more investigation",
+        "They sometimes bypass Data Mining techniques",
+        "They can come up with immature conclusions",
+        "They may show more detail about something than it contains",
+        "They never require further investigation"
+      ],
+      "correct": 4,
+      "explanation": "The results shared by these techniques require more investigation; they sometimes bypass Data Mining techniques, reach immature conclusions and show more than the data contains."
+    }
+  ]
+}

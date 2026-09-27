@@ -1,0 +1,125 @@
+{
+  "topic": "cdc-vs-cdc-framework",
+  "questions": [
+    {
+      "stem": "What does the abbreviation CDC stand for in data processing?",
+      "options": [
+        "Central Data Catalogue",
+        "Change Data Capture",
+        "Continuous Data Copy",
+        "Controlled Data Consumption",
+        "Common Data Contract"
+      ],
+      "correct": 1,
+      "explanation": "CDC stands for Change Data Capture: the moment data changes in the database, only the changed data is picked up and pushed to the next layer."
+    },
+    {
+      "stem": "What are the three steps of a CDC framework?",
+      "options": [
+        "CDC Extraction, CDC Processing/Consumption and CDC Serving",
+        "CDC Design, CDC Build and CDC Test",
+        "CDC Backup, CDC Restore and CDC Archive",
+        "CDC Landing, CDC Staging and CDC Reporting",
+        "CDC Encryption, CDC Masking and CDC Sharing"
+      ],
+      "correct": 0,
+      "explanation": "A CDC framework consists of CDC Extraction, CDC Processing/Consumption and CDC Serving; extracting changed data is only the first step."
+    },
+    {
+      "stem": "Which three kinds of change does Change Data Capture pick up?",
+      "options": [
+        "Schema changes, index changes and permission changes",
+        "Backups, restores and migrations",
+        "A new row added, an existing row updated, and a previously added row deleted",
+        "Queries, reports and dashboards",
+        "Compression, encryption and archiving"
+      ],
+      "correct": 2,
+      "explanation": "Changed data can be a new row added, an existing row updated, or a previously added row deleted or dropped."
+    },
+    {
+      "stem": "During CDC Extraction, what does the tag D on a row instruct the ETL process to do?",
+      "options": [
+        "Load a brand-new row into the data model",
+        "Duplicate the row into an archive table",
+        "Update the row's enter_date only",
+        "Close the row previously entered in the data model",
+        "Skip the row entirely"
+      ],
+      "correct": 3,
+      "explanation": "D stands for Delete: when an existing row arrives with tag D, the ETL process must close the row entered previously in the data model."
+    },
+    {
+      "stem": "Why is a CDC process mostly not run in real time?",
+      "options": [
+        "Because databases cannot detect changes quickly enough",
+        "Because regulators forbid real-time data movement",
+        "Because dashboards only refresh once a day",
+        "Because BI teams prefer stale data",
+        "Because real-time CDC needs a lot of memory processing, which comes with a heavy TCO, so it depends on ROI"
+      ],
+      "correct": 4,
+      "explanation": "Real-time plus CDC needs a lot of memory processing, which comes with a heavy total cost of ownership, so the decision depends on the ROI of the business case."
+    },
+    {
+      "stem": "In a CDC framework, which mechanism is used during CDC Processing to load changed data into a Bill Inmon or Ralph Kimball model?",
+      "options": [
+        "One of the three Slowly Changing Dimension types, SCD1, SCD2 or SCD3",
+        "A full truncate and reload of every table",
+        "A NoSQL document store",
+        "A spreadsheet macro",
+        "Manual data entry by the BI team"
+      ],
+      "correct": 0,
+      "explanation": "While loading into any data model, one must load using one of the three Slowly Changing Dimension types, SCD1, SCD2 or SCD3."
+    },
+    {
+      "stem": "Which additional columns typically accompany SCD-enabled tables in a CDC framework?",
+      "options": [
+        "user_name, password and email",
+        "enter_date, update_date and end_date, and sometimes a status column with Active or Inactive",
+        "latitude, longitude and altitude",
+        "currency, exchange_rate and tax",
+        "file_name, file_size and checksum"
+      ],
+      "correct": 1,
+      "explanation": "SCD-enabled tables carry additional date columns, enter_date, update_date and end_date, and sometimes a status column with the values Active or Inactive."
+    },
+    {
+      "stem": "In CDC Serving without a status column, how does a BI team identify new records?",
+      "options": [
+        "Pull rows with all three date columns filled",
+        "Pull rows with an empty enter_date",
+        "Pull rows with a filled enter_date and empty update_date and end_date columns",
+        "Pull rows with a filled end_date only",
+        "Pull every row regardless of dates"
+      ],
+      "correct": 2,
+      "explanation": "To view new records, the BI team pulls rows with a filled enter_date and empty update and end columns; updated rows have enter and update filled, deleted rows have all three filled."
+    },
+    {
+      "stem": "Which of the following is NOT true of Change Data Capture as described?",
+      "options": [
+        "Only the changed data is picked up and pushed to the next layer",
+        "Each extracted row carries an I, U or D tag",
+        "Many tools can extract CDC data from a database",
+        "Extracting changed data alone is enough to present data on dashboards",
+        "CDC Extraction is the first step of the CDC framework"
+      ],
+      "correct": 3,
+      "explanation": "Extracting only changed data is not the end; two more steps, processing and serving, must be completed before changed data is considered useful."
+    },
+    {
+      "stem": "What does the tag I signal in CDC Extraction?",
+      "options": [
+        "That the row is invalid and should be rejected",
+        "That the row should be indexed for faster search",
+        "That the row is isolated from other transactions",
+        "That the row is an intermediate result",
+        "That a new row has arrived and the ETL should load a new row in the data model"
+      ],
+      "correct": 4,
+      "explanation": "I stands for Insert: when a new row comes it carries the tag I so that the ETL loads a new row in the data model."
+    }
+  ]
+}

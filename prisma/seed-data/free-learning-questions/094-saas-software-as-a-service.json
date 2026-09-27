@@ -1,0 +1,125 @@
+{
+  "topic": "saas-software-as-a-service",
+  "questions": [
+    {
+      "stem": "What is available to customers in SaaS?",
+      "options": [
+        "Empty pre-installed software",
+        "Bare virtual machines",
+        "Pre-built or out-of-the-box (OOTB) solutions in the Cloud",
+        "Only containers",
+        "Only functions"
+      ],
+      "correct": 2,
+      "explanation": "In SaaS there are pre-built or OOTB solutions available in the Cloud that customers simply log in to and use."
+    },
+    {
+      "stem": "Which phrase summarises SaaS in a nutshell?",
+      "options": [
+        "Only infrastructure with no software support",
+        "Pre-built solutions in the Cloud",
+        "Software with infrastructure and storage",
+        "Deploying only functions",
+        "Renting containers"
+      ],
+      "correct": 1,
+      "explanation": "'In nutshell, pre-build solutions in the Cloud are SaaS.'"
+    },
+    {
+      "stem": "What is the key difference between PaaS and SaaS?",
+      "options": [
+        "PaaS provides infrastructure only; SaaS provides software only",
+        "PaaS provides empty software with no implemented solution; SaaS provides a pre-implemented solution",
+        "PaaS is on-premises; SaaS is in the Cloud",
+        "PaaS is for developers; SaaS is for hardware teams",
+        "There is no difference"
+      ],
+      "correct": 1,
+      "explanation": "PaaS makes empty software available with all management handled by the provider but no implemented solution; SaaS delivers a pre-built solution."
+    },
+    {
+      "stem": "Who typically creates and maintains the solutions offered as SaaS?",
+      "options": [
+        "Always the Cloud provider itself",
+        "Always the customer",
+        "Mostly third parties, using compute and storage from Cloud providers",
+        "Government agencies",
+        "Hardware manufacturers"
+      ],
+      "correct": 2,
+      "explanation": "It is not mandatory that Cloud providers own the solutions; most are created and maintained by third parties who use Cloud compute and storage."
+    },
+    {
+      "stem": "What does a customer need to do to start using a SaaS solution?",
+      "options": [
+        "Install the software on their own servers",
+        "Deploy containers",
+        "Configure Disaster Recovery themselves",
+        "Build their own data model first",
+        "Subscribe to the service and log in to the solution in the Cloud"
+      ],
+      "correct": 4,
+      "explanation": "Customers just need to subscribe to the SaaS service, log in to the solution and start using it."
+    },
+    {
+      "stem": "Which name does the author of I Am Datapedia! argue would be more accurate than 'Software as a Service'?",
+      "options": [
+        "System as a Service",
+        "Storage as a Service",
+        "Service as a Software",
+        "Server as a Service",
+        "Solution as a Service"
+      ],
+      "correct": 4,
+      "explanation": "Because customers use a pre-implemented solution, the author says it should really be called Solution as a Service."
+    },
+    {
+      "stem": "In the PowerPoint example, what distinguishes SaaS from PaaS?",
+      "options": [
+        "In PaaS PowerPoint is empty; in SaaS diagrams are pre-created for immediate use",
+        "In PaaS PowerPoint is absent; in SaaS it is installed",
+        "In PaaS PowerPoint runs on-premises; in SaaS it runs on a laptop",
+        "There is no difference for PowerPoint",
+        "In SaaS PowerPoint is empty; in PaaS diagrams are pre-created"
+      ],
+      "correct": 0,
+      "explanation": "Installing PowerPoint gives an empty application (PaaS); in SaaS the diagrams are already created and ready to use."
+    },
+    {
+      "stem": "In the Oracle data warehouse example, what is already done in SaaS?",
+      "options": [
+        "Only the Oracle software is installed",
+        "The server hardware is purchased",
+        "The operating system is chosen",
+        "The pre-built physical data models, i.e. tables and relationships, are already created",
+        "Nothing, the customer builds everything"
+      ],
+      "correct": 3,
+      "explanation": "In PaaS only Oracle is installed; in SaaS the physical data models with tables and relationships are pre-built for immediate use."
+    },
+    {
+      "stem": "Who takes care of installation, upgrades, compute, storage, HA and DR for a SaaS solution?",
+      "options": [
+        "The customer",
+        "A regulator",
+        "The end users",
+        "The Solution Owner, which may be the Cloud provider or a third party",
+        "The customer's database administrator"
+      ],
+      "correct": 3,
+      "explanation": "The solution is owned and fully managed by the Solution Owner, who can be the Cloud provider or any third party."
+    },
+    {
+      "stem": "Which topics are listed as prerequisites for understanding SaaS?",
+      "options": [
+        "On-Premises vs Cloud, IaaS and PaaS",
+        "Kappa, Lambda and Medallion",
+        "Data Governance, Data Quality and Deduplication",
+        "Granularity, Cardinality and Cartesian Data",
+        "Zero Trust and NEON-inspired architecture"
+      ],
+      "correct": 0,
+      "explanation": "The prerequisite topics named are On-Premises vs Cloud, IaaS and PaaS."
+    }
+  ]
+}

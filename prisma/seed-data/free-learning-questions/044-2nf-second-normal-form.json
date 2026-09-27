@@ -1,0 +1,125 @@
+{
+  "topic": "2nf-second-normal-form",
+  "questions": [
+    {
+      "stem": "What kind of dependency does Second Normal Form (2NF) eliminate?",
+      "options": [
+        "Partial dependencies",
+        "Transitive dependencies",
+        "Multi-valued dependencies",
+        "Join dependencies",
+        "Domain dependencies"
+      ],
+      "correct": 0,
+      "explanation": "2NF builds on 1NF by eliminating partial dependencies, where a non-key attribute depends on only part of a composite primary key."
+    },
+    {
+      "stem": "Which two conditions must a table satisfy to be in Second Normal Form?",
+      "options": [
+        "It has a surrogate key and no foreign keys",
+        "It is already in 1NF and every non-key attribute depends on the entire primary key",
+        "It is in 3NF and every determinant is a superkey",
+        "It has no repeating groups and no transitive dependencies",
+        "It has a single-column key and atomic values"
+      ],
+      "correct": 1,
+      "explanation": "A table is in 2NF if it is already in First Normal Form and every non-key attribute depends on the entire primary key, not just part of it."
+    },
+    {
+      "stem": "When does the Second Normal Form rule become relevant?",
+      "options": [
+        "Only when a table has more than one foreign key",
+        "Only when a table contains repeating groups",
+        "Only when a table has a composite primary key",
+        "Only when a table has a surrogate key",
+        "Only when a table stores historical data"
+      ],
+      "correct": 2,
+      "explanation": "Partial dependencies can only occur when the primary key is made up of more than one column, so 2NF is relevant only for tables with a composite key."
+    },
+    {
+      "stem": "What is a partial dependency?",
+      "options": [
+        "An attribute that depends on another non-key attribute",
+        "An attribute that determines a candidate key",
+        "An attribute that can hold more than one value",
+        "An attribute that depends on only part of a composite key rather than the whole key",
+        "An attribute that is optional and may be null"
+      ],
+      "correct": 3,
+      "explanation": "A partial dependency occurs when an attribute depends on only part of a composite key rather than the whole key, introducing redundancy and update anomalies."
+    },
+    {
+      "stem": "In a repayment table keyed by (LoanID, RepayDate), why does storing LoanAmount violate Second Normal Form?",
+      "options": [
+        "Because LoanAmount is a multi-valued attribute",
+        "Because LoanAmount depends on RepayDate alone",
+        "Because LoanAmount is a transitive attribute of CustomerName",
+        "Because LoanAmount is not atomic",
+        "Because LoanAmount depends only on LoanID, not on the full composite key"
+      ],
+      "correct": 4,
+      "explanation": "LoanAmount is not specific to an individual repayment date; it depends only on LoanID, which is a partial dependency on the composite key."
+    },
+    {
+      "stem": "What practical problem arises when LoanAmount is stored alongside every repayment record?",
+      "options": [
+        "The same loan amount repeats for every repayment row and a correction requires multiple updates",
+        "The repayment rows can no longer be uniquely identified",
+        "The loan amount becomes a multi-valued attribute",
+        "The composite key stops being unique",
+        "The repayment date must be stored as text"
+      ],
+      "correct": 0,
+      "explanation": "Storing LoanAmount with each repayment repeats the value across rows, so if the amount needs correction multiple rows must be updated."
+    },
+    {
+      "stem": "How does Second Normal Form resolve a partial dependency in the loan approval example?",
+      "options": [
+        "By merging the Loan and Repayment tables into one",
+        "By moving attributes that depend only on LoanID into a Loan table and keeping repayment-specific attributes in the Repayment table",
+        "By replacing the composite key with a single surrogate key",
+        "By deleting the LoanAmount attribute entirely",
+        "By converting repayment rows into a repeating group"
+      ],
+      "correct": 1,
+      "explanation": "2NF separates attributes by dependency: loan information lives in the Loan table and repayment-specific information stays in the Repayment table."
+    },
+    {
+      "stem": "Which issue does Second Normal Form NOT address?",
+      "options": [
+        "Attributes depending on only part of a composite key",
+        "Redundancy caused by repeating loan attributes across repayment rows",
+        "A non-key attribute depending on another non-key attribute",
+        "Correct dependency structure against the whole key",
+        "Update anomalies caused by partial dependencies"
+      ],
+      "correct": 2,
+      "explanation": "2NF concerns itself only with partial dependencies; transitive dependencies, where a non-key attribute depends on another non-key attribute, are handled in Third Normal Form."
+    },
+    {
+      "stem": "According to the rule for achieving Second Normal Form, what should be done with an attribute that depends on only part of the key?",
+      "options": [
+        "Mark it as a candidate key",
+        "Store it as a comma-separated list",
+        "Make it part of the composite key",
+        "Move it into a separate table where it fully depends on that table's primary key",
+        "Leave it in place and add an index"
+      ],
+      "correct": 3,
+      "explanation": "The 2NF rule is to examine each non-key attribute of a composite-key table and move any partially dependent attribute into a separate table where it fully depends on that table's key."
+    },
+    {
+      "stem": "What refinement does the move from First to Second Normal Form represent?",
+      "options": [
+        "A move from relational to document storage",
+        "A move from atomic values to summary values",
+        "A move from a single table to a star schema",
+        "A move from transactional to analytical design",
+        "A move from merely ensuring atomic values to ensuring correct dependency structure"
+      ],
+      "correct": 4,
+      "explanation": "The transition to 2NF is a refinement in logical precision: instead of only atomic values, the model now ensures correct dependency structure so each table represents a single concept more cleanly."
+    }
+  ]
+}

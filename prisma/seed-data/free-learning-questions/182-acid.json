@@ -1,0 +1,125 @@
+{
+  "topic": "acid",
+  "questions": [
+    {
+      "stem": "What are the four traits of ACID?",
+      "options": [
+        "Atomicity, Consistency, Isolation and Durability",
+        "Availability, Consistency, Integrity and Durability",
+        "Atomicity, Concurrency, Isolation and Distribution",
+        "Accuracy, Completeness, Integrity and Durability",
+        "Atomicity, Consistency, Indexing and Durability"
+      ],
+      "correct": 0,
+      "explanation": "ACID stands for atomicity, consistency, isolation and durability."
+    },
+    {
+      "stem": "What does Atomicity guarantee?",
+      "options": [
+        "That every query sees the latest committed value",
+        "That two users cannot update the same row at once",
+        "That data is completely written to the destination with no partial data left behind",
+        "That data survives a machine failure",
+        "That every table has a primary key"
+      ],
+      "correct": 2,
+      "explanation": "Atomicity makes sure data is completely written in a destination with no partial data left behind."
+    },
+    {
+      "stem": "What does Consistency guarantee?",
+      "options": [
+        "That writes are never lost after a crash",
+        "That partial writes are rolled back",
+        "That each user has a private copy of the data",
+        "That all data is stored in the same file format",
+        "That once an operation is performed, its results are visible to every subsequent query"
+      ],
+      "correct": 4,
+      "explanation": "Consistency ensures that after an application performs an operation, the results are visible to every next query, even if data is being updated or deleted while a user reads it."
+    },
+    {
+      "stem": "What does Isolation guarantee?",
+      "options": [
+        "That data is encrypted between nodes",
+        "That an incomplete operation by one user does not cause unexpected side effects for other users",
+        "That every operation is written to a transaction log",
+        "That queries run on a dedicated node",
+        "That operations complete in the order submitted"
+      ],
+      "correct": 1,
+      "explanation": "Isolation ensures an incomplete operation by one user has no unexpected side effects on other users."
+    },
+    {
+      "stem": "What does Durability guarantee?",
+      "options": [
+        "That the database can scale to petabytes",
+        "That queries always return within a fixed time",
+        "That data is never duplicated",
+        "That once an operation is completed, it is preserved even if the machine or system fails",
+        "That data can be read by every user simultaneously"
+      ],
+      "correct": 3,
+      "explanation": "Durability means a completed operation is preserved even in the event of a machine or system failure."
+    },
+    {
+      "stem": "The database Transaction Log, which holds every query statement run so that lost data can be reproduced, is given as an example of which ACID trait?",
+      "options": [
+        "Atomicity",
+        "Durability",
+        "Isolation",
+        "Consistency",
+        "Availability"
+      ],
+      "correct": 1,
+      "explanation": "The transaction log illustrates durability: because every statement is recorded, data can be reproduced if it is lost."
+    },
+    {
+      "stem": "What is the relationship between ACID and Insert, Update and Delete operations?",
+      "options": [
+        "ACID replaces the need for Insert, Update and Delete",
+        "Insert, Update and Delete are the four traits of ACID",
+        "ACID applies only to Select queries",
+        "ACID slows down Insert, Update and Delete so they should be avoided",
+        "ACID makes sure that while Insert, Update and Delete queries are happening, nothing impacts operational behaviour"
+      ],
+      "correct": 4,
+      "explanation": "They have different functions but work together: ACID guarantees that Insert, Update and Delete operations do not disturb operational behaviour, and without ACID those functions are not reliable."
+    },
+    {
+      "stem": "How can ACID capability be achieved in Hadoop via Hive?",
+      "options": [
+        "By using ORC or Parquet file formats",
+        "By using CSV or JSON file formats",
+        "By disabling the transaction log",
+        "By storing data on tape",
+        "By using only structured data"
+      ],
+      "correct": 0,
+      "explanation": "One way to get ACID and Insert, Update and Delete in Hadoop is to use ORC or Parquet file formats via Hive."
+    },
+    {
+      "stem": "How does Databricks provide ACID capability through Delta Lake?",
+      "options": [
+        "Using HDFS with any file format",
+        "Using a relational database as a side store",
+        "Using its compute layer over Hadoop",
+        "Using only Object Storage and only the Parquet file format",
+        "Using in-memory tables"
+      ],
+      "correct": 3,
+      "explanation": "Databricks' Delta Lake delivers ACID capabilities using only Object Storage and only the Parquet file format."
+    },
+    {
+      "stem": "In a nutshell, what is said about Insert, Update and Delete functions without ACID?",
+      "options": [
+        "They run faster",
+        "They are only available in NoSQL databases",
+        "They are not reliable",
+        "They require Object Storage",
+        "They cannot be logged"
+      ],
+      "correct": 2,
+      "explanation": "The summary is that Insert, Update and Delete functions are not reliable without ACID capability."
+    }
+  ]
+}

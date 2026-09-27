@@ -1,0 +1,125 @@
+{
+  "topic": "prototype",
+  "questions": [
+    {
+      "stem": "Which stage does a Prototype follow?",
+      "options": [
+        "Production",
+        "POC",
+        "UAT",
+        "SIT",
+        "MVP"
+      ],
+      "correct": 1,
+      "explanation": "A Prototype is the next stage after the POC, once the POC has shown that the idea is feasible."
+    },
+    {
+      "stem": "What comes into the picture at the Prototype stage?",
+      "options": [
+        "Tools and technologies, where ideas start being converted into reality",
+        "Full production infrastructure and licences",
+        "Real business users working with live data",
+        "External regulatory audits",
+        "Complete business requirements and a signed SOW"
+      ],
+      "correct": 0,
+      "explanation": "In prototyping, tools and technologies come into the picture and one starts converting ideas into reality."
+    },
+    {
+      "stem": "What does a Prototype show?",
+      "options": [
+        "Whether the idea is feasible for the first time",
+        "The cost of the production licences",
+        "How the end result and the product will look, the real end solution",
+        "The results of user acceptance testing",
+        "The final regulatory compliance report"
+      ],
+      "correct": 2,
+      "explanation": "A Prototype shows how the end result will look, how the product will look, and the real end solution."
+    },
+    {
+      "stem": "Is a Prototype built expecting business users to jump in and start using it?",
+      "options": [
+        "Yes, business users are the main audience of a Prototype",
+        "Yes, a Prototype is released to all customers",
+        "Yes, but only after UAT",
+        "No, a Prototype is not built considering that business users will start using it",
+        "No, because a Prototype has no user interface"
+      ],
+      "correct": 3,
+      "explanation": "A Prototype is not built considering that business users will jump in and start using it; it is for technical folks to evaluate."
+    },
+    {
+      "stem": "For whom is a Prototype built and run?",
+      "options": [
+        "Business users",
+        "External customers",
+        "Sales teams",
+        "Regulators",
+        "Technical users"
+      ],
+      "correct": 4,
+      "explanation": "A Prototype is built and run for technical users."
+    },
+    {
+      "stem": "What kind of data is normally used in a Prototype?",
+      "options": [
+        "Dummy but relevant data",
+        "Full production data",
+        "No data at all",
+        "Anonymised data of full production size",
+        "Live streaming data from customers"
+      ],
+      "correct": 0,
+      "explanation": "Prototypes are normally for technical folks to evaluate the end results with dummy but relevant data."
+    },
+    {
+      "stem": "What has already been established by the time a Prototype begins?",
+      "options": [
+        "That the production environment is ready",
+        "That the idea is feasible and will benefit the business agenda",
+        "That business users have accepted the solution",
+        "That SIT and UAT have passed",
+        "That the SOW has been signed"
+      ],
+      "correct": 1,
+      "explanation": "In the POC one has tested that the idea is feasible and will benefit the business agenda; the Prototype then converts the idea into reality."
+    },
+    {
+      "stem": "Which of the following is NOT true of a Prototype?",
+      "options": [
+        "It follows the POC stage",
+        "It brings tools and technologies into the picture",
+        "It is released to actual business users to start using",
+        "It shows how the product will look",
+        "It uses dummy but relevant data"
+      ],
+      "correct": 2,
+      "explanation": "A Prototype is not built for business users to start using; it is for technical users to evaluate the end result."
+    },
+    {
+      "stem": "What is the purpose of the technical evaluation performed in a Prototype?",
+      "options": [
+        "To calculate the annual budget",
+        "To sign off the production release",
+        "To train the sales team",
+        "To evaluate the end results using dummy but relevant data",
+        "To measure customer satisfaction"
+      ],
+      "correct": 3,
+      "explanation": "Prototypes let technical folks evaluate the end results with dummy but relevant data."
+    },
+    {
+      "stem": "How do a POC and a Prototype differ in audience?",
+      "options": [
+        "Both are for business users",
+        "Both are for technical users",
+        "A POC is for regulators, a Prototype is for customers",
+        "A POC is for technical users, a Prototype is for business users",
+        "A POC is for business users, a Prototype is for technical users"
+      ],
+      "correct": 4,
+      "explanation": "A POC is built and run for business users, whereas a Prototype is built and run for technical users."
+    }
+  ]
+}

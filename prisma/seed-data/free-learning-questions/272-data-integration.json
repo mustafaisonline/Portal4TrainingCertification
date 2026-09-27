@@ -1,0 +1,125 @@
+{
+  "topic": "data-integration",
+  "questions": [
+    {
+      "stem": "What is Data Integration?",
+      "options": [
+        "The process of encrypting data before it is shared",
+        "The archiving of data that is no longer used",
+        "The removal of duplicate records from a database",
+        "The action of combining data to extract meaningful information and business value",
+        "The splitting of a database into smaller shards"
+      ],
+      "correct": 3,
+      "explanation": "Data Integration is the action of combining data to extract meaningful information and business value, exchanging content among systems to support decision-making."
+    },
+    {
+      "stem": "What is a Data Integration Layer?",
+      "options": [
+        "A layer that integrates multiple source systems with target systems",
+        "A layer that stores archived data for compliance",
+        "A layer that compresses data before transmission",
+        "A layer that hosts the organisation's mobile applications",
+        "A layer that manages user passwords"
+      ],
+      "correct": 0,
+      "explanation": "A Data Integration Layer is the layer that integrates multiple source systems with target systems."
+    },
+    {
+      "stem": "In Data Integration terminology, what is a Connector?",
+      "options": [
+        "The target system that makes decisions with the data",
+        "The schedule that decides when data moves",
+        "The component that connects a source and a target so they can share data",
+        "The database that stores the integrated data",
+        "The person responsible for the integration project"
+      ],
+      "correct": 2,
+      "explanation": "A Connector is the component which connects source and target so they can share data with each other."
+    },
+    {
+      "stem": "In Data Integration terminology, what is a Front-End?",
+      "options": [
+        "The system that shares and sources the data",
+        "The component that transforms data during transit",
+        "The physical network between two systems",
+        "The metadata catalogue of the integration tool",
+        "A target system that uses the data for making decisions, such as an OLAP system or a digital application"
+      ],
+      "correct": 4,
+      "explanation": "A Front-End is a target system which utilises the data for decision-making; it can be OLAP or a digital application, while a Back-End is the source that shares data."
+    },
+    {
+      "stem": "What does Orchestration define in Data Integration?",
+      "options": [
+        "Which users are allowed to view the data",
+        "When data travels from the source, when it is transformed into a shape the target understands, and when it is pushed to the target",
+        "How the data is encrypted at rest",
+        "Where backup copies of the data are kept",
+        "Which vendor supplies the integration tool"
+      ],
+      "correct": 1,
+      "explanation": "Orchestration is the process that defines when data will travel from the source, when it will be transformed for the target, and when it will be pushed to the target system."
+    },
+    {
+      "stem": "In the Data Integration diagram from I Am Datapedia!, which systems serve as back-ends?",
+      "options": [
+        "The Web Application and the Mobile Application",
+        "Connectors C1, C2 and C3",
+        "The Data Integration Layer alone",
+        "The ERP, the Legacy Tool and Back-End B",
+        "Front-End A and the Mobile Application"
+      ],
+      "correct": 3,
+      "explanation": "The ERP, Legacy Tool and Back-End B serve as back-end systems, connected via C1, C2 and C3, while the Web Application, Mobile Application and Front-End A are front-ends."
+    },
+    {
+      "stem": "Which of these is NOT among the essential features to consider when selecting a Data Integration tool?",
+      "options": [
+        "Providing built-in long-term data warehouse storage",
+        "Supporting Throttling",
+        "Supporting Multicast",
+        "Supporting Looping",
+        "Managing Metadata"
+      ],
+      "correct": 0,
+      "explanation": "The listed features include connectors, orchestration, scheduling, wait/sleep controls, throttling, multicast, looping, data transformation and metadata management; providing warehouse storage is not among them."
+    },
+    {
+      "stem": "Which pattern is named as one of the most frequent examples of Data Integration?",
+      "options": [
+        "Data Mirroring",
+        "Master Data Management",
+        "ETL (Extract Transform Load)",
+        "Data Archiving",
+        "Load Balancing"
+      ],
+      "correct": 2,
+      "explanation": "Data Integration can follow multiple patterns, and one of the most frequent examples is ETL, Extract Transform Load."
+    },
+    {
+      "stem": "In the Smart Electronics manufacturing example, what does Data Integration provide?",
+      "options": [
+        "A cheaper supplier of capacitors",
+        "An automated invoicing system for retail customers",
+        "A backup of the supplier's database",
+        "A compressed archive of past shipments",
+        "Real-time updates on the status of the latest capacitor shipment from the Japanese supplier, giving the right information at the right time"
+      ],
+      "correct": 4,
+      "explanation": "Smart Electronics uses Data Integration to access real-time updates on its capacitor shipment, which is the right information at the right time to support operations and predict delays."
+    },
+    {
+      "stem": "What must organisations implement to make sure a Digital Transformation Initiative built on Data Integration is successful?",
+      "options": [
+        "A single vendor for all systems",
+        "Data governance, data quality, data security and other best practices for data integration",
+        "A ban on legacy systems",
+        "Daily full backups of every source",
+        "A move of all data to spreadsheets"
+      ],
+      "correct": 1,
+      "explanation": "Organisations must implement data governance, data quality, data security and other best practices, and adopt integration strategies tailored to their requirements."
+    }
+  ]
+}

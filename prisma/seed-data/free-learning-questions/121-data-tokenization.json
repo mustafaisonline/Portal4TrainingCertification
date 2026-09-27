@@ -1,0 +1,125 @@
+{
+  "topic": "data-tokenization",
+  "questions": [
+    {
+      "stem": "Which short phrase is used to describe Data Tokenisation in relation to Data Masking?",
+      "options": [
+        "Data Masking without a key",
+        "Data Masking for unstructured data",
+        "Data Masking with Mappability",
+        "Data Masking in real time",
+        "Data Masking by summarisation"
+      ],
+      "correct": 2,
+      "explanation": "Data Tokenisation is described as Data Masking with Mappability, because the mapping back to the original data is preserved."
+    },
+    {
+      "stem": "In Data Tokenisation, what replaces the sensitive data in the actual data store?",
+      "options": [
+        "A unique system-generated value called a Token",
+        "A random value with no record kept",
+        "A summarised range",
+        "A hashed password",
+        "A blank field"
+      ],
+      "correct": 0,
+      "explanation": "Data Tokenisation replaces sensitive data with a unique system-generated value called a Token."
+    },
+    {
+      "stem": "Where are the original data, the token and their mapping details kept in Data Tokenisation?",
+      "options": [
+        "In the same table as the token",
+        "In the application log",
+        "In the user's browser",
+        "They are discarded once the token is issued",
+        "In a Token Vault stored externally for safe keeping"
+      ],
+      "correct": 4,
+      "explanation": "During tokenisation the original data plus the token and mapping details are stored in a Token Vault somewhere external."
+    },
+    {
+      "stem": "What is the major difference between Data Tokenisation and Data Masking?",
+      "options": [
+        "Tokenisation works only on numbers, masking on text",
+        "Tokenised data is always reversible, whereas masked data is no longer reversible once changed",
+        "Masking requires a vault, tokenisation does not",
+        "Tokenisation is done manually, masking automatically",
+        "Masking is used for privacy, tokenisation for performance"
+      ],
+      "correct": 1,
+      "explanation": "Because the mapping stays safe in the Token Vault, tokenised data is always reversible, in contrast with masking where randomly changed data cannot be recovered."
+    },
+    {
+      "stem": "Which Data Warehousing concept is offered as a quick analogy for Data Tokenisation?",
+      "options": [
+        "Fact table",
+        "Slowly changing dimension",
+        "Star schema",
+        "Surrogate Key",
+        "Materialised view"
+      ],
+      "correct": 3,
+      "explanation": "A Surrogate Key replaces original business keys with unique auto-generated values while the original data is not touched, much like a token."
+    },
+    {
+      "stem": "How does the location of a Surrogate Key in Data Warehousing differ from the location of the equivalent key in Data Tokenisation?",
+      "options": [
+        "Both reside in the Token Vault",
+        "In Data Warehousing it resides with the actual data, whereas in Data Tokenisation it resides in the Token Vault",
+        "In Data Warehousing it resides in the Token Vault, whereas in Data Tokenisation it resides with the actual data",
+        "Both reside with the actual data",
+        "Neither is stored anywhere"
+      ],
+      "correct": 1,
+      "explanation": "In Data Warehousing the Surrogate Key resides along with the actual data, whereas in Data Tokenisation the equivalent key resides in the Token Vault."
+    },
+    {
+      "stem": "What does Data Masking do to sensitive data?",
+      "options": [
+        "Stores it in an external vault",
+        "Keeps a mapping so it can be restored",
+        "Replaces it with an auto-generated business key",
+        "Changes it to random values so that an individual cannot be identified if the data reaches the wrong hands",
+        "Encrypts it with a recoverable key"
+      ],
+      "correct": 3,
+      "explanation": "Data Masking changes data with random values to hide the original, so nobody can identify the individual the record refers to."
+    },
+    {
+      "stem": "Which of the following statements about Data Tokenisation is NOT correct?",
+      "options": [
+        "The original data is destroyed once the token is issued",
+        "The token replaces the original data in the actual data store",
+        "The mapping between token and original is kept in a Token Vault",
+        "The actual data is always reversible",
+        "It is often mixed up with Data Masking"
+      ],
+      "correct": 0,
+      "explanation": "The original data is not destroyed; it is stored with the token and mapping details in the Token Vault."
+    },
+    {
+      "stem": "Why is masked data no longer reversible?",
+      "options": [
+        "Because the vault is deleted after masking",
+        "Because masking is applied only in transit",
+        "Because masked data is compressed",
+        "Because regulators forbid reversing it",
+        "Because the sensitive data has been randomly changed with no mapping retained"
+      ],
+      "correct": 4,
+      "explanation": "After sensitive data is randomly changed by masking there is no mapping back, so it is no longer reversible."
+    },
+    {
+      "stem": "In Data Tokenisation, what role does the token play in the actual data store?",
+      "options": [
+        "It is stored alongside the original value as a duplicate",
+        "It encrypts the original value in place",
+        "It replaces the original data while the mapping stays safe in the Token Vault",
+        "It flags the record for deletion",
+        "It is only used in reports"
+      ],
+      "correct": 2,
+      "explanation": "The token replaces the original data in the actual data store, and its mapping details remain safe in the Token Vault."
+    }
+  ]
+}

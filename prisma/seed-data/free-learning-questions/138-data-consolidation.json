@@ -1,0 +1,125 @@
+{
+  "topic": "data-consolidation",
+  "questions": [
+    {
+      "stem": "How does data consolidation differ from data virtualization and data federation?",
+      "options": [
+        "It is restricted to relational databases",
+        "It keeps complete historical copies of data from all source systems",
+        "It never uses ETL or ELT",
+        "It creates only virtual views over the sources",
+        "It exposes data through a single query language"
+      ],
+      "correct": 1,
+      "explanation": "Virtualization and federation host no copy of data, whereas data consolidation keeps complete historical copies of all the data coming from all the source systems."
+    },
+    {
+      "stem": "Which of the following is a data consolidation environment?",
+      "options": [
+        "A data virtualization semantic layer",
+        "A federated query wrapper",
+        "A data warehouse",
+        "A VPN",
+        "A web scraping tool"
+      ],
+      "correct": 2,
+      "explanation": "Data warehouses, data marts, data lakes, delta lakes, data vaults and business vaults all fall under the umbrella of data consolidation environments."
+    },
+    {
+      "stem": "Which of the following does NOT fall under the umbrella of data consolidation?",
+      "options": [
+        "Data mart",
+        "Data lake",
+        "Delta lake",
+        "Business vault",
+        "Data federation"
+      ],
+      "correct": 4,
+      "explanation": "Data federation hosts no copy of data, so it is not a consolidation environment; the other four keep physical copies."
+    },
+    {
+      "stem": "What processing sometimes takes place during data consolidation?",
+      "options": [
+        "A complex ETL or ELT to process data into different data models",
+        "Real-time write-back into the source systems",
+        "Encryption of every column",
+        "Deletion of historical records",
+        "Conversion of relational data into web services"
+      ],
+      "correct": 0,
+      "explanation": "In consolidation, sometimes a complex ETL or ELT processes data into different data models, and sometimes a one-to-one data model is maintained."
+    },
+    {
+      "stem": "Data virtualization, data federation and data consolidation are discussed together with respect to what?",
+      "options": [
+        "Encrypting data at rest",
+        "Exposing data to data consumers",
+        "Scraping data from websites",
+        "Choosing a cloud vendor",
+        "Reducing storage costs"
+      ],
+      "correct": 1,
+      "explanation": "All three are discussed together as approaches to exposing data to data consumers."
+    },
+    {
+      "stem": "Besides transforming data into different models, what other data model approach can a consolidation environment maintain?",
+      "options": [
+        "A virtual-only model",
+        "A one-to-one data model with the source",
+        "A model with no keys",
+        "A model that discards history",
+        "A federated relational model"
+      ],
+      "correct": 1,
+      "explanation": "Sometimes a one-to-one data model is maintained in the consolidation environment rather than a transformed one."
+    },
+    {
+      "stem": "Which of these approaches hosts no copy of data in its own environment?",
+      "options": [
+        "Data warehouse",
+        "Data lake",
+        "Data vault",
+        "Data federation",
+        "Data mart"
+      ],
+      "correct": 3,
+      "explanation": "Data federation, like data virtualization, does not host any copy of data; the others are consolidation environments that keep physical copies."
+    },
+    {
+      "stem": "Under which umbrella do data vaults and business vaults fall?",
+      "options": [
+        "Data consolidation",
+        "Data virtualization",
+        "Data federation",
+        "Data sovereignty",
+        "Data encoding"
+      ],
+      "correct": 0,
+      "explanation": "Data vaults and business vaults are named among the data stores that fall under the umbrella of data consolidation environments."
+    },
+    {
+      "stem": "What is the scope of the copies kept in a data consolidation environment?",
+      "options": [
+        "Only the latest snapshot of each source",
+        "Only data from relational sources",
+        "Complete historical copies of all data from all source systems",
+        "Only aggregated summaries",
+        "Only data that has passed quality checks"
+      ],
+      "correct": 2,
+      "explanation": "Data consolidation keeps complete historical copies of all the data coming from all the source systems."
+    },
+    {
+      "stem": "Which statement about data consolidation is correct?",
+      "options": [
+        "It always requires a complex ETL",
+        "It never maintains a one-to-one model",
+        "It is a virtual layer without storage",
+        "It may use a complex ETL or ELT, or maintain a one-to-one data model",
+        "It is limited to data lakes"
+      ],
+      "correct": 3,
+      "explanation": "Consolidation sometimes involves complex ETL or ELT into different data models and sometimes keeps a one-to-one data model."
+    }
+  ]
+}

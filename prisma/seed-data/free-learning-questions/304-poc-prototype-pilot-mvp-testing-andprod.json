@@ -1,0 +1,125 @@
+{
+  "topic": "poc-prototype-pilot-mvp-testing-andprod",
+  "questions": [
+    {
+      "stem": "What is identified as playing a vital role in the failure of many IT projects?",
+      "options": [
+        "The choice of programming language",
+        "The implementation approach, when one approach such as POC is interchanged with another",
+        "The number of developers on the team",
+        "The colour of the user interface",
+        "The location of the data centre"
+      ],
+      "correct": 1,
+      "explanation": "Approaches play a vital role in project failure, particularly when one approach such as POC, Prototype, Pilot or MVP is interchanged with another."
+    },
+    {
+      "stem": "Which sequence of implementation approaches is listed?",
+      "options": [
+        "POC, Prototype, Pilot, MVP, SIT, UAT and Production",
+        "Design, Build, Test and Retire",
+        "Landing, Staging and Transformation",
+        "Conceptual, Logical and Physical",
+        "Extract, Transform and Load"
+      ],
+      "correct": 0,
+      "explanation": "The approaches named are POC, Prototype, Pilot, MVP, SIT, UAT and Production implementations, each with its own implementation strategy."
+    },
+    {
+      "stem": "What common mistake leads to project failure after a successful POC?",
+      "options": [
+        "Repeating the POC with a different team",
+        "Abandoning the project despite success",
+        "Moving the same POC directly into Production",
+        "Writing too much documentation",
+        "Running the POC on production-grade hardware"
+      ],
+      "correct": 2,
+      "explanation": "Most projects fail when they start with a POC and, once it is successful, move the same POC into Production; one must not do that."
+    },
+    {
+      "stem": "Why does a POC that succeeds with limited infrastructure usually fail in Production?",
+      "options": [
+        "Because production users are less skilled",
+        "Because the POC code is always deleted",
+        "Because regulators reject POC-based systems",
+        "Because a small-scale implementation on limited infrastructure and software is bound to fail at production scale",
+        "Because production environments do not support new ideas"
+      ],
+      "correct": 3,
+      "explanation": "A small-level implementation might succeed with limited infrastructure or software, but there is a 99% chance it will fail when moved to Production."
+    },
+    {
+      "stem": "What typically pushes implementers into moving a POC straight to Production?",
+      "options": [
+        "Excess budget",
+        "A shortage of ideas",
+        "Regulatory requirements",
+        "The absence of business users",
+        "Business pressure to achieve tight timelines"
+      ],
+      "correct": 4,
+      "explanation": "Moving a POC to Production normally happens when the business pushes implementers to achieve tight timelines."
+    },
+    {
+      "stem": "What is the stated chance that a POC moved directly into Production will fail?",
+      "options": [
+        "99%",
+        "50%",
+        "10%",
+        "1%",
+        "0%"
+      ],
+      "correct": 0,
+      "explanation": "There is a 99% chance that a POC built on limited infrastructure will fail when it goes into Production."
+    },
+    {
+      "stem": "How should infrastructure and software be planned for any of these implementation approaches?",
+      "options": [
+        "Based on the smallest possible budget",
+        "Based on whether the solution plans to be in Production",
+        "Based on what the sales team recommends",
+        "Based on the previous project's leftovers",
+        "Based on the number of developers available"
+      ],
+      "correct": 1,
+      "explanation": "One must plan infrastructure and software based on whether the solution plans to be in Production."
+    },
+    {
+      "stem": "Does the warning about moving a POC into Production also apply to Prototype, Pilot and MVP environments?",
+      "options": [
+        "No, only POCs are affected",
+        "No, Prototypes are always production-ready",
+        "Yes, the same is true for Prototype, Pilot and MVP environments",
+        "No, MVPs are exempt because they use real data",
+        "No, Pilots are built in Production by default"
+      ],
+      "correct": 2,
+      "explanation": "The same is true for Prototype, Pilot and MVP environments: none should be moved into Production as they are."
+    },
+    {
+      "stem": "Which of the following is NOT one of the implementation approaches named alongside POC?",
+      "options": [
+        "Prototype",
+        "Pilot",
+        "MVP",
+        "SCD",
+        "UAT"
+      ],
+      "correct": 3,
+      "explanation": "The approaches listed are POC, Prototype, Pilot, MVP, SIT, UAT and Production; SCD is a data warehousing concept, not an implementation approach."
+    },
+    {
+      "stem": "What is said to be true of each implementation approach such as POC, Prototype, Pilot and MVP?",
+      "options": [
+        "They all use identical infrastructure",
+        "They can be used interchangeably without consequence",
+        "They are all built by the sales team",
+        "They all require production-grade licences",
+        "Each has its own implementation strategy"
+      ],
+      "correct": 4,
+      "explanation": "All of these approaches have their own implementation strategies, and interchanging one with another has after-effects."
+    }
+  ]
+}

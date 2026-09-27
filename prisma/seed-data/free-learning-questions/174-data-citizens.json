@@ -1,0 +1,125 @@
+{
+  "topic": "data-citizens",
+  "questions": [
+    {
+      "stem": "Why are around 80% of Data Science projects said to be failing?",
+      "options": [
+        "Because of poor hardware",
+        "Because of a lack of structured data",
+        "Because of the absence of Data Citizen roles",
+        "Because Data Scientists lack SQL skills",
+        "Because of insufficient budgets"
+      ],
+      "correct": 2,
+      "explanation": "The claim is that if 80% or so of Data Science projects fail, it is because Data Citizen roles are missing."
+    },
+    {
+      "stem": "Which skill set characterises a Data Analyst?",
+      "options": [
+        "Excel, databases using SQL, reports and dashboards",
+        "Deep learning frameworks and GPU programming",
+        "Infrastructure provisioning and CI/CD",
+        "Network security and encryption",
+        "Drag-and-drop machine learning tools"
+      ],
+      "correct": 0,
+      "explanation": "Data Analysts are functional consultants with skills in Excel, SQL databases, reports and dashboards, used to dig into and present management KPIs."
+    },
+    {
+      "stem": "To whom are a Data Analyst's analysis results passed for productionisation of data pipelines?",
+      "options": [
+        "Data Scientists",
+        "Data Citizens",
+        "Chief Data Officers",
+        "Business managers",
+        "ETL/ELT developers or Data Engineers"
+      ],
+      "correct": 4,
+      "explanation": "Analysts' results are handed to ETL/ELT developers or Data Engineers, who implement the data pipelines for production."
+    },
+    {
+      "stem": "What kind of tools do Data Citizens use to create, test and process machine learning models?",
+      "options": [
+        "Hand-written Java frameworks",
+        "Drag-and-drop, low-code or no-code tools",
+        "Command-line ETL utilities",
+        "Mainframe job schedulers",
+        "Custom-built deep learning libraries"
+      ],
+      "correct": 1,
+      "explanation": "Data Citizens do initial data science analysis with drag-and-drop tools and use low-code or no-code tools to run and test models."
+    },
+    {
+      "stem": "To whom do Data Citizens pass their models so they can be implemented for production?",
+      "options": [
+        "Data Analysts",
+        "ETL developers",
+        "Department heads",
+        "Data Scientists",
+        "Data Engineers"
+      ],
+      "correct": 3,
+      "explanation": "The models prepared by Data Citizens are passed to Data Scientists, who implement the ML models for productionisation."
+    },
+    {
+      "stem": "Data Citizens are described as a bridge between which two roles?",
+      "options": [
+        "Data Engineers and Chief Data Officers",
+        "Data Analysts and Data Scientists",
+        "Business users and IT support",
+        "Data Scientists and DevOps engineers",
+        "Data Analysts and Data Engineers"
+      ],
+      "correct": 1,
+      "explanation": "Data Citizens sit between Data Analysts and Data Scientists, doing initial machine learning work within their domain."
+    },
+    {
+      "stem": "Which existing role is predicted to merge into the Data Citizen role?",
+      "options": [
+        "Data Scientist",
+        "Data Engineer",
+        "Chief Data Officer",
+        "Database Administrator",
+        "Data Analyst"
+      ],
+      "correct": 4,
+      "explanation": "It is suggested that Data Analyst roles will soon merge into Data Citizens."
+    },
+    {
+      "stem": "At what level within an organisation do Data Citizens operate?",
+      "options": [
+        "At the domain or department level",
+        "Only within the central IT function",
+        "At board level",
+        "Only within the Data Science team",
+        "Across the whole enterprise without departmental boundaries"
+      ],
+      "correct": 0,
+      "explanation": "A critical point is that Data Citizens work at the domain or department level, remaining within the boundaries of their department."
+    },
+    {
+      "stem": "What trend in data usage is given as the reason Data Analyst roles will merge into Data Citizens?",
+      "options": [
+        "The decline of dashboards",
+        "The rise of mainframe computing",
+        "The removal of SQL from most databases",
+        "The use of semi-structured and unstructured data has taken over the use of structured data",
+        "The fall in the cost of Data Scientists"
+      ],
+      "correct": 3,
+      "explanation": "Because semi-structured and unstructured data now dominate over structured data, the analyst role is expected to evolve into the Data Citizen role."
+    },
+    {
+      "stem": "Which statement about Data Citizens is NOT correct?",
+      "options": [
+        "They are functional consultants with machine learning skill sets",
+        "They can do the activities a Data Scientist does, within their department",
+        "They are already an established norm in every department",
+        "They predict KPIs for business and management using ML models",
+        "They use low-code or no-code tools to run and test models"
+      ],
+      "correct": 2,
+      "explanation": "The Data Citizen role has not yet been identified as a norm, although it is expected to become a must-have role in every department."
+    }
+  ]
+}

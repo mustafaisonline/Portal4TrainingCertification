@@ -1,0 +1,125 @@
+{
+  "topic": "house-keeping",
+  "questions": [
+    {
+      "stem": "What does housekeeping refer to in the data world?",
+      "options": [
+        "The physical cleaning of server rooms",
+        "The routine maintenance, organisation and management tasks needed to ensure data quality, integrity and efficiency",
+        "The onboarding of new data analysts",
+        "The negotiation of cloud storage contracts",
+        "The design of new database schemas"
+      ],
+      "correct": 1,
+      "explanation": "Housekeeping is the routine maintenance, organisation and management work that keeps databases, data warehouses and other storage systems in good order."
+    },
+    {
+      "stem": "Approximately what proportion of operational costs can effective housekeeping measures save, on an optimistic outlook?",
+      "options": [
+        "About 5%",
+        "About 15%",
+        "About 30%",
+        "About 50%",
+        "About 75%"
+      ],
+      "correct": 2,
+      "explanation": "With an optimistic outlook, effective housekeeping measures have the potential to save approximately 30% of operational costs."
+    },
+    {
+      "stem": "Fixing typos in student names, standardising date formats and filling in missing grades are examples of which housekeeping task?",
+      "options": [
+        "Data archiving",
+        "Data purging",
+        "Indexing",
+        "Data cleaning",
+        "Data encryption"
+      ],
+      "correct": 3,
+      "explanation": "Data cleaning identifies and rectifies errors, inconsistencies or missing values in datasets."
+    },
+    {
+      "stem": "What is the purpose of data archiving as a housekeeping task?",
+      "options": [
+        "Encrypting sensitive data against unauthorised access",
+        "Creating indexes to speed up queries",
+        "Documenting the meaning and format of each column",
+        "Removing data to comply with retention policies",
+        "Moving older or less frequently used data to long-term storage to optimise performance of the primary storage system"
+      ],
+      "correct": 4,
+      "explanation": "Data archiving moves older or less frequently used data to long-term storage so the primary data storage system performs better."
+    },
+    {
+      "stem": "Which housekeeping task accelerates data retrieval and query performance?",
+      "options": [
+        "Indexing",
+        "Data deletion",
+        "Backup and recovery",
+        "Metadata management",
+        "Data masking"
+      ],
+      "correct": 0,
+      "explanation": "Indexing creates indexes on databases to accelerate data retrieval and query performance, like indexing a list of books by title or author."
+    },
+    {
+      "stem": "Creating a spreadsheet that documents the meaning and format of each column in a dataset is an example of which housekeeping task?",
+      "options": [
+        "Data cleaning",
+        "Metadata management",
+        "Performance optimisation",
+        "Data purging",
+        "Backup and recovery"
+      ],
+      "correct": 1,
+      "explanation": "Metadata management organises and documents metadata (data about data) to enhance understanding and usability."
+    },
+    {
+      "stem": "How does data purging differ from general data deletion in the housekeeping examples?",
+      "options": [
+        "Purging only removes duplicate rows",
+        "Purging moves data to long-term storage rather than removing it",
+        "Purging removes data that is no longer needed, especially in compliance with data retention policies",
+        "Purging applies only to encrypted data",
+        "Purging is performed only before a backup"
+      ],
+      "correct": 2,
+      "explanation": "Data purging removes data that is no longer needed or relevant, especially in compliance with data retention policies, such as deleting old survey responses."
+    },
+    {
+      "stem": "What does the backup and recovery housekeeping task involve?",
+      "options": [
+        "Compressing data to save space",
+        "Deleting records of students who have left the school",
+        "Adjusting settings to improve app performance",
+        "Regularly creating copies of data to prevent loss and establishing procedures for recovery after accidental deletion or system failure",
+        "Overlaying a logo on documents"
+      ],
+      "correct": 3,
+      "explanation": "Backup and recovery means regularly copying data to prevent loss and having procedures to recover it after accidental deletion or system failure."
+    },
+    {
+      "stem": "Which housekeeping task is illustrated by adjusting settings in a gaming app to improve its performance on a smartphone?",
+      "options": [
+        "Data encryption",
+        "Data archiving",
+        "Indexing",
+        "Metadata management",
+        "Performance optimisation"
+      ],
+      "correct": 4,
+      "explanation": "Performance optimisation is the fine-tuning of databases and queries to improve overall system performance; the gaming-app example illustrates it."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a data housekeeping task?",
+      "options": [
+        "Recruiting new database administrators",
+        "Data encryption",
+        "Data deletion",
+        "Indexing",
+        "Data archiving"
+      ],
+      "correct": 0,
+      "explanation": "Housekeeping tasks cover cleaning, deletion, backup, archiving, indexing, encryption, metadata management, purging and performance optimisation; recruitment is not among them."
+    }
+  ]
+}

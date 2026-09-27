@@ -1,0 +1,125 @@
+{
+  "topic": "data-algorithms",
+  "questions": [
+    {
+      "stem": "What is an algorithm?",
+      "options": [
+        "A programming language used to store data",
+        "A procedure consisting of multiple steps with a set of instructions for a desired result",
+        "A table that holds the output of a query",
+        "A hardware device that speeds up processing",
+        "A diagram of how data flows between systems"
+      ],
+      "correct": 1,
+      "explanation": "An algorithm is a procedure made up of multiple steps with a set of instructions that lead to a desired result."
+    },
+    {
+      "stem": "What does it mean to say that an algorithm is independent of any language?",
+      "options": [
+        "It can only be written in English",
+        "It must be written in one specific programming language",
+        "It cannot be implemented by a computer at all",
+        "It can be implemented in any programming language",
+        "It works only on data stored in a single language"
+      ],
+      "correct": 3,
+      "explanation": "An algorithm is a language-independent procedure, so it can be implemented in any programming language."
+    },
+    {
+      "stem": "What does the Unambiguous characteristic of an algorithm require?",
+      "options": [
+        "Each step and each input or output should be clear and lead to only one meaning",
+        "The algorithm should have no inputs at all",
+        "The algorithm should produce several different outputs for the same input",
+        "The algorithm should be written without comments",
+        "The algorithm should run in under one second"
+      ],
+      "correct": 0,
+      "explanation": "Unambiguous means the algorithm is clear: every step and every input and output must have only one possible meaning."
+    },
+    {
+      "stem": "How many inputs may a well-formed algorithm have?",
+      "options": [
+        "Exactly one input",
+        "At least two inputs",
+        "Zero or more well-defined inputs",
+        "Exactly as many inputs as outputs",
+        "No inputs, since inputs make it ambiguous"
+      ],
+      "correct": 2,
+      "explanation": "The Input characteristic states an algorithm should have zero or more well-defined inputs."
+    },
+    {
+      "stem": "What does the Output characteristic of an algorithm state?",
+      "options": [
+        "It may have zero outputs",
+        "It should produce an output only when there is an error",
+        "Its output does not need to match what was desired",
+        "It should always produce exactly one output",
+        "It should have one or more well-defined outputs that match the desired output"
+      ],
+      "correct": 4,
+      "explanation": "An algorithm should have one or more well-defined outputs, and those outputs should match the desired output."
+    },
+    {
+      "stem": "Which characteristic of an algorithm is described by Finiteness?",
+      "options": [
+        "It must use a limited amount of memory",
+        "It must terminate after a finite number of steps",
+        "It must be written in fewer than one hundred lines",
+        "It must handle only a finite set of data types",
+        "It must be run a finite number of times per day"
+      ],
+      "correct": 1,
+      "explanation": "Finiteness means the algorithm must come to an end after a finite number of steps rather than running forever."
+    },
+    {
+      "stem": "What does the Feasibility characteristic of an algorithm mean?",
+      "options": [
+        "It should be achievable with the available resources",
+        "It should be free of any inputs",
+        "It should be written by more than one developer",
+        "It should be executed on the cloud",
+        "It should be the fastest possible solution"
+      ],
+      "correct": 0,
+      "explanation": "Feasibility means the algorithm should be feasible, that is, practical to carry out with the resources available."
+    },
+    {
+      "stem": "Which of the following is NOT one of the ways an algorithm behaves from a data point of view?",
+      "options": [
+        "Search an item in a data structure",
+        "Sort items in a certain order",
+        "Insert an item into a data structure",
+        "Compress a data structure to save space",
+        "Delete an existing item from a data structure"
+      ],
+      "correct": 3,
+      "explanation": "From a data point of view the listed behaviours are Search, Sort, Insert, Update and Delete; compression is not among them."
+    },
+    {
+      "stem": "Which data algorithm behaviour arranges items in a certain order?",
+      "options": [
+        "Search",
+        "Insert",
+        "Sort",
+        "Update",
+        "Delete"
+      ],
+      "correct": 2,
+      "explanation": "A Sort algorithm arranges the items of a data structure in a certain order."
+    },
+    {
+      "stem": "Which characteristic says an algorithm should have step-by-step directions that do not depend on any programming code?",
+      "options": [
+        "Unambiguous",
+        "Finiteness",
+        "Feasibility",
+        "Output",
+        "Independent"
+      ],
+      "correct": 4,
+      "explanation": "The Independent characteristic requires step-by-step directions that are independent of any programming code."
+    }
+  ]
+}

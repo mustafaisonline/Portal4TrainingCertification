@@ -1,0 +1,125 @@
+{
+  "topic": "logical-data-warehouse",
+  "questions": [
+    {
+      "stem": "What is a Logical Data Warehouse (LDW)?",
+      "options": [
+        "A new storage technology that replaces physical warehouses",
+        "An architectural approach delivering a unified warehouse view without physically consolidating all data into one repository",
+        "A data warehouse modelled strictly in 3NF",
+        "A cube of pre-aggregated data",
+        "A department-level data mart"
+      ],
+      "correct": 1,
+      "explanation": "An LDW is not a new storage technology but an architectural approach that integrates data virtually and presents distributed sources as a single, consistent analytical environment."
+    },
+    {
+      "stem": "What is the backbone of a Logical Data Warehouse?",
+      "options": [
+        "ETL pipelines",
+        "Tape archives",
+        "Data virtualization",
+        "OLAP cubes",
+        "Data scraping"
+      ],
+      "correct": 2,
+      "explanation": "The backbone of an LDW is data virtualization: queries are federated across multiple systems and results are combined into a unified output."
+    },
+    {
+      "stem": "How does a Logical Data Warehouse relate to modelling techniques such as Inmon's 3NF or Kimball's star and snowflake schemas?",
+      "options": [
+        "It requires 3NF only",
+        "It requires star schemas only",
+        "It is modelling-agnostic; the distinction lies in the physical location of the data, not the modelling technique",
+        "It forbids dimensional modelling",
+        "It replaces modelling with schema-on-read"
+      ],
+      "correct": 2,
+      "explanation": "An LDW can still support 3NF or dimensional approaches; the distinction from a physical warehouse is where the data lives, not how it is modelled."
+    },
+    {
+      "stem": "What does pushdown processing mean in a Logical Data Warehouse?",
+      "options": [
+        "Copying data down into a central repository before querying",
+        "Processing is pushed to the underlying engines so analytical workloads use their compute power",
+        "Moving old data to cheaper storage tiers",
+        "Compressing results before returning them",
+        "Delegating governance to source system owners"
+      ],
+      "correct": 1,
+      "explanation": "Processing can be pushed down to the underlying engines, allowing analytical workloads to leverage the compute power of those systems, particularly distributed engines."
+    },
+    {
+      "stem": "In practical terms, how does a Logical Data Warehouse present itself to users?",
+      "options": [
+        "As a collection of separate source system logins",
+        "As a semantic and integration layer exposing curated views, so users experience a single warehouse",
+        "As a raw data lake",
+        "As a spreadsheet export",
+        "As a set of ETL job schedules"
+      ],
+      "correct": 1,
+      "explanation": "The LDW acts as a semantic and integration layer that abstracts physical storage locations and exposes curated views, so users experience it as one warehouse."
+    },
+    {
+      "stem": "Which of the following is a governance advantage of a well-implemented Logical Data Warehouse?",
+      "options": [
+        "Metadata, lineage, access control and quality enforcement can be centralised through the logical layer",
+        "Governance becomes unnecessary because data is not moved",
+        "Each source system governs itself independently",
+        "Access control is delegated to the BI tool",
+        "History is preserved automatically"
+      ],
+      "correct": 0,
+      "explanation": "Since all access is mediated through the logical layer, metadata management, lineage tracking, access control and quality enforcement can be standardised and consistently applied."
+    },
+    {
+      "stem": "Why is a Logical Data Warehouse less suitable for regulatory reporting, auditing and long-term trend analysis?",
+      "options": [
+        "Because it cannot run SQL",
+        "Because it does not inherently provide historical storage; if sources do not retain history, the LDW cannot reconstruct it",
+        "Because regulators forbid virtualization",
+        "Because it only supports unstructured data",
+        "Because it cannot integrate APIs"
+      ],
+      "correct": 1,
+      "explanation": "An LDW does not inherently store history, so unless there is a separate historical repository it cannot reconstruct what source systems have not retained."
+    },
+    {
+      "stem": "What risk arises when a Logical Data Warehouse pushes analytical queries down into operational (OLTP) systems?",
+      "options": [
+        "Data becomes encrypted",
+        "Performance degradation, as operational workloads compete with analytical queries and service levels may be violated",
+        "Historical data is duplicated",
+        "The semantic layer stops working",
+        "Metadata is lost"
+      ],
+      "correct": 1,
+      "explanation": "What is beneficial in analytical engines becomes a risk in transactional systems: operational workloads may compete with analytical queries, potentially causing service level violations."
+    },
+    {
+      "stem": "Why does federated access in a Logical Data Warehouse raise security concerns?",
+      "options": [
+        "Because all data must be decrypted in transit",
+        "Because it increases the surface area for misconfiguration and may expose sensitive datasets or create unintended access paths",
+        "Because passwords must be shared across systems",
+        "Because it disables access control lists",
+        "Because it stores copies of data in every source"
+      ],
+      "correct": 1,
+      "explanation": "Federated access widens the surface area for potential misconfiguration, so strong security architecture and strict access management controls are essential."
+    },
+    {
+      "stem": "How should a Logical Data Warehouse be positioned relative to a physical data warehouse?",
+      "options": [
+        "As a full replacement for the physical warehouse",
+        "As an architectural complement, often in a hybrid where the physical warehouse holds curated history, a lake holds raw data, and the logical layer unifies access",
+        "As a temporary staging area before loading the physical warehouse",
+        "As a data mart for one department",
+        "As a backup of the physical warehouse"
+      ],
+      "correct": 1,
+      "explanation": "An LDW is not a replacement but a complement; in mature enterprises a hybrid model uses the logical layer as the orchestration and semantic layer across warehouse and lake."
+    }
+  ]
+}

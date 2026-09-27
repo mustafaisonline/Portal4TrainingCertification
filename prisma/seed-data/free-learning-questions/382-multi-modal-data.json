@@ -1,0 +1,125 @@
+{
+  "topic": "multi-modal-data",
+  "questions": [
+    {
+      "stem": "What does multi-modal data refer to?",
+      "options": [
+        "Data that comes in multiple formats or modalities, such as text, images, audio and video, combined and analysed together",
+        "Data stored in more than one relational database table",
+        "Structured numbers duplicated across several servers",
+        "Data that has been translated into multiple languages",
+        "Data collected from more than one country"
+      ],
+      "correct": 0,
+      "explanation": "Multi-modal data refers to data that comes in multiple formats or modalities. A modality is simply a type or form of data; when different types are combined and analysed together, this is called multi-modal data."
+    },
+    {
+      "stem": "In the context of multi-modal data, what does the word 'modality' mean?",
+      "options": [
+        "A storage location for data",
+        "A type or form of data",
+        "A statistical average",
+        "A governance policy",
+        "A machine learning algorithm"
+      ],
+      "correct": 1,
+      "explanation": "A modality simply means a type or form of data, such as text, images, audio, video or sensor readings."
+    },
+    {
+      "stem": "A social media post is used as an example of multi-modal data. Which combination of modalities does it contain?",
+      "options": [
+        "Only written text and a timestamp",
+        "Only images and video",
+        "Written text, an image, location information and user reactions",
+        "Sensor readings and audio",
+        "Transaction history and device fingerprints"
+      ],
+      "correct": 2,
+      "explanation": "A social media post may include written text, an image, location information and user reactions. Each is a different modality, and analysing them together gives richer insights than any one type alone."
+    },
+    {
+      "stem": "In the customer service example of a multi-modal approach, which steps are combined?",
+      "options": [
+        "Reading an email and replying automatically",
+        "Scanning a barcode and updating stock",
+        "Storing a photo and tagging it",
+        "Analysing a voice recording, converting it to text, examining sentiment and combining it with customer transaction history",
+        "Counting calls handled per employee"
+      ],
+      "correct": 3,
+      "explanation": "The customer service system analyses a voice recording, converts it to text, examines sentiment and combines it with customer transaction history, using more than one type of data to understand the situation."
+    },
+    {
+      "stem": "From a data architecture perspective, what effect does multi-modal data have?",
+      "options": [
+        "It removes the need for metadata management",
+        "It allows all data to fit into a single relational table",
+        "It simplifies governance controls",
+        "It eliminates the need for object storage",
+        "It increases complexity because different storage systems may be required and integration needs careful design"
+      ],
+      "correct": 4,
+      "explanation": "Multi-modal data increases architectural complexity. Text might sit in relational databases, images in object storage and streaming audio in specialised systems, so integrating them requires careful design, metadata management and governance controls."
+    },
+    {
+      "stem": "Why does a fraud detection system that analyses only transaction numbers illustrate the value of multi-modal data?",
+      "options": [
+        "Because it may miss patterns that adding customer behaviour, device fingerprints and communication patterns would reveal",
+        "Because transaction numbers cannot be stored in databases",
+        "Because fraud detection requires only images",
+        "Because a single modality always produces more accurate results",
+        "Because transaction numbers are not considered data"
+      ],
+      "correct": 0,
+      "explanation": "A fraud detection system analysing only transaction numbers may miss patterns. Adding customer behaviour, device fingerprints and communication patterns gives deeper understanding; combining modalities often leads to better accuracy and stronger insights."
+    },
+    {
+      "stem": "In the Grade 7 example of multi-modal data, how does the teacher build a complete picture of a student's learning?",
+      "options": [
+        "By looking only at exam scores",
+        "By combining exam scores, class participation, an oral presentation and homework",
+        "By asking the student's parents",
+        "By comparing the student with the class average only",
+        "By reviewing attendance alone"
+      ],
+      "correct": 1,
+      "explanation": "The teacher does not look only at exam scores; she also observes class participation, listens to an oral presentation and checks homework. Each is a different type of data, and together they give a complete picture, just like multi-modal data."
+    },
+    {
+      "stem": "In the example of recognising a friend, which modalities does a person naturally combine?",
+      "options": [
+        "Temperature, weight and height",
+        "Location, time and date",
+        "What they say (audio), how they look (image) and how they write messages (text)",
+        "Their exam scores and homework",
+        "Their transaction history and device fingerprint"
+      ],
+      "correct": 2,
+      "explanation": "You identify a friend not only by what they say (audio) but also by how they look (image) and perhaps how they write messages (text). The brain naturally combines multiple data types, and modern AI systems try to do the same."
+    },
+    {
+      "stem": "In traditional systems, before multi-modal data became common, what form did most data take?",
+      "options": [
+        "Video streams",
+        "Voice recordings",
+        "Sensor readings",
+        "Structured text or numbers stored in tables",
+        "Images in object storage"
+      ],
+      "correct": 3,
+      "explanation": "In traditional systems, most data was structured text or numbers stored in tables. Today organisations also deal with text, images, audio, video, sensor readings and more."
+    },
+    {
+      "stem": "Which of the following is NOT named as a modality that multi-modal data may include?",
+      "options": [
+        "Text",
+        "Images",
+        "Audio",
+        "Video",
+        "Blockchain ledgers"
+      ],
+      "correct": 4,
+      "explanation": "Multi-modal data is described as combining forms such as text, images, audio, video, sensor readings and structured records. Blockchain ledgers are not named as a modality."
+    }
+  ]
+}

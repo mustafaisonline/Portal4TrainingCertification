@@ -1,0 +1,125 @@
+{
+  "topic": "data-streaming",
+  "questions": [
+    {
+      "stem": "What is data streaming?",
+      "options": [
+        "A method of storing data in compressed archives for long-term retention",
+        "A method of processing and transmitting data continuously and in real time rather than in batches",
+        "A method of copying an entire database once a month",
+        "A technique for converting paper documents into digital files",
+        "A way of grouping records so they can be processed at scheduled intervals"
+      ],
+      "correct": 1,
+      "explanation": "Data streaming is a method of processing and transmitting data continuously and in real time rather than in batches."
+    },
+    {
+      "stem": "Which analogy is used to describe data streaming compared with traditional methods?",
+      "options": [
+        "Water moving in a river on a regular basis, compared with water stored once with no more coming in",
+        "A library card catalogue compared with a search engine",
+        "A single lorry compared with a fleet of vans",
+        "A locked safe compared with an open shelf",
+        "A printed newspaper compared with a television"
+      ],
+      "correct": 0,
+      "explanation": "Data streaming is compared to water moving in a river on a regular basis, whereas traditional methods are like a place where water is stored one time with no more coming in."
+    },
+    {
+      "stem": "In the bucket analogy for traditional data handling, what does filling the bucket represent?",
+      "options": [
+        "Streaming data piece by piece as it arrives",
+        "Deleting data once it has been analysed",
+        "Collecting a bunch of data and then analysing it all at once",
+        "Encrypting data before transmission",
+        "Sending data to multiple destinations simultaneously"
+      ],
+      "correct": 2,
+      "explanation": "In traditional methods we collect a bunch of data, like filling a bucket, and then analyse it all at once; streaming instead brings data in piece by piece."
+    },
+    {
+      "stem": "How does data streaming use social media feeds as an example?",
+      "options": [
+        "Posts are stored for a week and then published together",
+        "Users must download an archive to see new comments",
+        "Comments are only visible after a nightly refresh",
+        "New posts, comments and updates are shown in real time as they are posted",
+        "Photos are compressed into batches before display"
+      ],
+      "correct": 3,
+      "explanation": "Social media platforms use data streaming to show new posts, comments and updates in real time, so refreshing a feed instantly shows new photos and comments."
+    },
+    {
+      "stem": "Which example describes data streaming in financial transactions?",
+      "options": [
+        "Account balances are updated only during an overnight batch",
+        "Statements are posted to customers once a month",
+        "Loan applications are reviewed weekly by a committee",
+        "Interest is calculated at the end of each quarter",
+        "A credit card purchase is immediately reflected in the account balance"
+      ],
+      "correct": 4,
+      "explanation": "Banks use data streaming to process and monitor transactions in real time, so a credit card purchase is immediately reflected in the account balance."
+    },
+    {
+      "stem": "How do wearable health monitoring devices illustrate data streaming?",
+      "options": [
+        "A fitness tracker continuously measures heart rate, steps and sleep patterns, updating health stats in real time",
+        "A doctor enters test results into a system at the end of each week",
+        "Patients fill in a paper questionnaire once a year",
+        "A hospital archives old patient records to reduce storage",
+        "A pharmacy prints prescription labels in batches"
+      ],
+      "correct": 0,
+      "explanation": "Wearable devices use data streaming to provide real-time health information, such as a fitness tracker continuously measuring heart rate, steps and sleep patterns."
+    },
+    {
+      "stem": "In traffic monitoring, what do cameras and sensors on roads provide through data streaming?",
+      "options": [
+        "Monthly reports on road maintenance costs",
+        "Real-time information about traffic conditions that helps optimise traffic signals",
+        "A static map of road layouts",
+        "A nightly batch of vehicle registrations",
+        "Annual statistics on fuel consumption"
+      ],
+      "correct": 1,
+      "explanation": "Cameras and sensors on roads continuously provide real-time information about traffic conditions, helping optimise traffic signals."
+    },
+    {
+      "stem": "Why does an online video on YouTube or Netflix start playing almost instantly?",
+      "options": [
+        "Because the whole video was downloaded overnight",
+        "Because the video is stored on the viewer's device in advance",
+        "Because the data is streamed to the device as you watch",
+        "Because videos are compressed into a single batch file",
+        "Because the service processes all requests at scheduled intervals"
+      ],
+      "correct": 2,
+      "explanation": "Services like YouTube or Netflix use data streaming to deliver videos in real time, so the data is streamed to the device as you watch."
+    },
+    {
+      "stem": "Which of the following is NOT given as an example of data streaming?",
+      "options": [
+        "Weather monitoring with continuous temperature, humidity and wind speed data",
+        "Social media feeds showing new posts in real time",
+        "Traffic control systems monitoring traffic flow",
+        "Payroll calculated and distributed at the end of a pay period",
+        "Online video streaming services"
+      ],
+      "correct": 3,
+      "explanation": "Payroll processed at the end of a pay period is a batch scenario; weather monitoring, social media feeds, traffic monitoring and online video are all data streaming examples."
+    },
+    {
+      "stem": "In which situations is data streaming described as particularly useful?",
+      "options": [
+        "Situations where data is rarely updated",
+        "Situations where storage cost is the only concern",
+        "Situations where reports are needed once a year",
+        "Situations where paper records must be preserved",
+        "Situations where real-time insights and quick responses are crucial"
+      ],
+      "correct": 4,
+      "explanation": "Data streaming allows us to deal with data on the fly, making it particularly useful where real-time insights and quick responses are crucial."
+    }
+  ]
+}

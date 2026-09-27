@@ -1,0 +1,125 @@
+{
+  "topic": "data-deactivation",
+  "questions": [
+    {
+      "stem": "In the context of data, what does data deactivation refer to?",
+      "options": [
+        "The intentional process of rendering certain data inactive by restricting access, archiving it or taking it out of active use",
+        "The permanent and irreversible destruction of all copies of a dataset",
+        "The encryption of data so that it can no longer be read by anyone",
+        "The migration of data from one database vendor to another",
+        "The automatic correction of errors found in a dataset"
+      ],
+      "correct": 0,
+      "explanation": "Data deactivation is the intentional process of making data inactive, which involves restricting access, archiving it, or taking it out of active use."
+    },
+    {
+      "stem": "When inactive customer records are archived under data deactivation, what happens to the data?",
+      "options": [
+        "It is permanently deleted from all systems",
+        "It is made inactive but still retained for historical or compliance purposes",
+        "It is sold to third-party marketing companies",
+        "It is merged into the records of active customers",
+        "It is converted into anonymous statistics only"
+      ],
+      "correct": 1,
+      "explanation": "Archiving inactive customer records makes the data inactive, but it is still retained for historical or compliance purposes."
+    },
+    {
+      "stem": "Which of these is an example of user account deactivation?",
+      "options": [
+        "Resetting a customer's password after a forgotten-password request",
+        "Granting a new employee access to the finance system",
+        "Deactivating the account of an employee who has left the company so they can no longer access company data and systems",
+        "Backing up a user's mailbox before a server migration",
+        "Upgrading a user's licence to a premium tier"
+      ],
+      "correct": 2,
+      "explanation": "When an employee leaves, their user account is deactivated, which prevents the former employee from accessing company data and systems."
+    },
+    {
+      "stem": "Why might a web application temporarily deactivate certain features or services?",
+      "options": [
+        "To increase the price of the service",
+        "To force users to create new accounts",
+        "To permanently retire the application",
+        "For maintenance or updates, during which certain data-related functionalities could be temporarily disabled",
+        "To comply with an embargo on international trade"
+      ],
+      "correct": 3,
+      "explanation": "Temporary suspension for maintenance is one interpretation of data deactivation: features or services are deactivated during maintenance or updates."
+    },
+    {
+      "stem": "What do data retention policies specify in relation to data deactivation?",
+      "options": [
+        "Which users are allowed to create new records",
+        "How data should be encrypted during transmission",
+        "The format in which reports must be generated",
+        "Which programming language must be used for archiving",
+        "When certain types of data should be deactivated, archived or permanently deleted"
+      ],
+      "correct": 4,
+      "explanation": "Data retention policies specify when certain types of data should be deactivated, archived, or permanently deleted, ensuring compliance and reducing storage costs."
+    },
+    {
+      "stem": "In an e-commerce system, what is the effect of flagging products or services that are no longer offered as inactive?",
+      "options": [
+        "Customers are prevented from making new purchases of those items",
+        "The items are automatically discounted to clear stock",
+        "Historical orders for those items are deleted",
+        "The items are moved to a competitor's catalogue",
+        "Suppliers are automatically notified to restock"
+      ],
+      "correct": 0,
+      "explanation": "Disabling inactive products or services prevents customers from making new purchases of those items."
+    },
+    {
+      "stem": "How might data deactivation be applied in response to a security incident?",
+      "options": [
+        "By publishing all affected data so it can be reviewed publicly",
+        "By temporarily deactivating certain data access, such as suspending user accounts or restricting access to sensitive information",
+        "By deleting the entire database to remove the threat",
+        "By disabling all encryption to speed up investigation",
+        "By moving the data to an unmonitored server"
+      ],
+      "correct": 1,
+      "explanation": "In the event of a security incident, certain data access might be temporarily deactivated to prevent unauthorised access, which could involve suspending user accounts or restricting access to sensitive information."
+    },
+    {
+      "stem": "Which of the following is NOT one of the reasons given for archiving or disabling data through deactivation?",
+      "options": [
+        "Compliance with data retention policies",
+        "Reducing the storage load",
+        "Retaining data for historical purposes",
+        "Preventing a former employee from accessing systems",
+        "Increasing the number of active user accounts"
+      ],
+      "correct": 4,
+      "explanation": "Deactivation is done for reasons such as compliance with retention policies, reducing storage load, retaining data for history or compliance, and blocking access by former employees; increasing active accounts is not one of them."
+    },
+    {
+      "stem": "Which interpretation of data deactivation refers to pausing certain data processing activities for maintenance, security or other reasons?",
+      "options": [
+        "Permanent deletion",
+        "Data migration",
+        "Temporary suspension",
+        "Data replication",
+        "Schema redesign"
+      ],
+      "correct": 2,
+      "explanation": "Temporary suspension refers to a temporary suspension or deactivation of certain data processing activities for maintenance, security, or other reasons."
+    },
+    {
+      "stem": "In general terms, what does deactivation imply?",
+      "options": [
+        "Copying something to a second location",
+        "Upgrading something to a newer version",
+        "Sharing something with a wider audience",
+        "The action of making something inactive or turning it off",
+        "Measuring how often something is used"
+      ],
+      "correct": 3,
+      "explanation": "In general terms, deactivation implies the action of making something inactive or turning it off; in the data context it means intentionally rendering certain data inactive."
+    }
+  ]
+}

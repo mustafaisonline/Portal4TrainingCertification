@@ -1,0 +1,125 @@
+{
+  "topic": "itops-it-operations",
+  "questions": [
+    {
+      "stem": "Which development made it impossible to manage IT operations manually, giving rise to ITOps?",
+      "options": [
+        "The introduction of the personal computer",
+        "The introduction of the big data era",
+        "The invention of the relational database",
+        "The move from mainframes to client-server",
+        "The adoption of agile project management"
+      ],
+      "correct": 1,
+      "explanation": "With the introduction of the big data era, it became impossible to manually manage IT operations, and ITOps focuses on best-in-practice IT operations."
+    },
+    {
+      "stem": "What is the stated focus of ITOps?",
+      "options": [
+        "Training machine learning models",
+        "Designing business intelligence dashboards",
+        "Best-in-practice IT operations",
+        "Writing application source code",
+        "Negotiating software licences"
+      ],
+      "correct": 2,
+      "explanation": "ITOps focuses on the best in practice IT operations."
+    },
+    {
+      "stem": "Which of the following is one of the main areas of focus for ITOps?",
+      "options": [
+        "Data Warehouse Design",
+        "Model Retraining",
+        "Customer Relationship Management",
+        "IT Service Strategy and Design",
+        "Financial Auditing"
+      ],
+      "correct": 3,
+      "explanation": "The main areas of focus for ITOps are IT Service Improvement, IT Service Strategy and Design, IT Service Transition and IT Service Operations."
+    },
+    {
+      "stem": "Which of the following is NOT one of the four main areas of focus for ITOps?",
+      "options": [
+        "IT Service Improvement",
+        "IT Service Transition",
+        "IT Service Operations",
+        "IT Service Strategy and Design",
+        "IT Service Marketing"
+      ],
+      "correct": 4,
+      "explanation": "IT Service Marketing is not among the four ITOps focus areas: Improvement, Strategy and Design, Transition, and Operations."
+    },
+    {
+      "stem": "Which of the following is listed as a stage in the ITOps lifecycle followed by organisations?",
+      "options": [
+        "Maintain the health of the IT infrastructure",
+        "Build predictive models for sales",
+        "Design relational data models",
+        "Classify unstructured documents",
+        "Define critical data elements"
+      ],
+      "correct": 0,
+      "explanation": "The ITOps lifecycle includes maintaining the health of the IT infrastructure, visibility of the IT infrastructure, automation of IT services and optimisation of IT services."
+    },
+    {
+      "stem": "In the ITOps lifecycle, which stage is concerned with being able to see what is happening across the IT infrastructure?",
+      "options": [
+        "Automation of IT Services",
+        "Visibility of the IT Infrastructure",
+        "Optimisation of IT Services",
+        "IT Service Transition",
+        "Retirement of IT Services"
+      ],
+      "correct": 1,
+      "explanation": "Visibility of the IT Infrastructure is one of the ITOps lifecycle stages, alongside maintaining its health, automating services and optimising services."
+    },
+    {
+      "stem": "Which of the following is NOT one of the ITOps lifecycle stages named in I Am Datapedia!?",
+      "options": [
+        "Maintain the health of the IT infrastructure",
+        "Visibility of the IT infrastructure",
+        "Automation of IT services",
+        "Monetisation of IT services",
+        "Optimisation of IT services"
+      ],
+      "correct": 3,
+      "explanation": "Monetisation is not part of the ITOps lifecycle; the four named stages are health, visibility, automation and optimisation."
+    },
+    {
+      "stem": "ITOps includes an area of focus dealing with moving IT services from design into live use. What is this area called?",
+      "options": [
+        "IT Service Improvement",
+        "IT Service Operations",
+        "IT Service Strategy and Design",
+        "IT Service Retirement",
+        "IT Service Transition"
+      ],
+      "correct": 4,
+      "explanation": "IT Service Transition is one of the four main ITOps focus areas, sitting between Strategy and Design and Operations."
+    },
+    {
+      "stem": "Which ITOps lifecycle stage focuses on reducing manual effort by having IT services run without human intervention?",
+      "options": [
+        "Automation of IT Services",
+        "Visibility of the IT Infrastructure",
+        "Maintain the health of the IT Infrastructure",
+        "IT Service Improvement",
+        "IT Service Design"
+      ],
+      "correct": 0,
+      "explanation": "Automation of IT Services is the lifecycle stage concerned with automating IT services, alongside health, visibility and optimisation."
+    },
+    {
+      "stem": "ITOps has a focus area dedicated to making existing IT services better over time. What is it called?",
+      "options": [
+        "IT Service Operations",
+        "IT Service Transition",
+        "IT Service Improvement",
+        "IT Service Strategy",
+        "IT Service Automation"
+      ],
+      "correct": 2,
+      "explanation": "IT Service Improvement is one of the four main areas of focus for ITOps."
+    }
+  ]
+}

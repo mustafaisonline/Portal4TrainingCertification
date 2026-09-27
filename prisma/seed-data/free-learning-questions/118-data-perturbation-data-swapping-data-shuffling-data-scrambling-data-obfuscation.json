@@ -1,0 +1,125 @@
+{
+  "topic": "data-perturbation-data-swapping-data-shuffling-data-scrambling-data-obfuscation",
+  "questions": [
+    {
+      "stem": "What common goal do Data Perturbation, Data Swapping, Data Shuffling, Data Scrambling and Data Obfuscation share?",
+      "options": [
+        "Reducing the size of a dataset",
+        "Hiding the identity of an entity while keeping the essence of the data",
+        "Converting data into a new file format",
+        "Making data reversible at any time",
+        "Summarising data into ranges"
+      ],
+      "correct": 1,
+      "explanation": "All of these use the same technique to hide the identity of an entity but keep the essence of the data."
+    },
+    {
+      "stem": "What is Data Swapping?",
+      "options": [
+        "Removing identifiable values from a dataset",
+        "Summarising identifiable values into ranges",
+        "Encrypting values with a shared key",
+        "Replacing the values of data at the same level of detail as the original data",
+        "Moving data from one server to another"
+      ],
+      "correct": 3,
+      "explanation": "Data Swapping replaces values at the same level of detail as the original, so the cardinality of the replaced data is maintained."
+    },
+    {
+      "stem": "What property of the data is maintained when values are replaced by Data Swapping?",
+      "options": [
+        "Cardinality",
+        "Encryption",
+        "File size",
+        "Column names",
+        "Row order"
+      ],
+      "correct": 0,
+      "explanation": "In Data Swapping the cardinality of the replaced data is maintained because values are replaced at the same level of detail."
+    },
+    {
+      "stem": "How do Data Anonymisation, Data Generalisation and Data Swapping each treat identifiable data?",
+      "options": [
+        "All three remove it",
+        "All three summarise it",
+        "Anonymisation summarises it, Generalisation removes it, Swapping encrypts it",
+        "Anonymisation replaces it, Generalisation removes it, Swapping summarises it",
+        "Anonymisation removes it, Generalisation summarises it, Swapping replaces it at the same level"
+      ],
+      "correct": 4,
+      "explanation": "In Data Anonymisation identifiable data is removed, in Data Generalisation it is summarised, and in Data Swapping the level of identifiable data is replaced."
+    },
+    {
+      "stem": "Who mainly uses the Data Swapping technique?",
+      "options": [
+        "Marketing teams preparing campaigns",
+        "Auditors reviewing compliance",
+        "Data Scientists and Data Citizens who need data at the lowest level to create and train Machine Learning models",
+        "Network administrators",
+        "Legal teams drafting contracts"
+      ],
+      "correct": 2,
+      "explanation": "Data Swapping is mainly used by Data Scientists or Data Citizens who require data at the lowest level to create and train their ML models."
+    },
+    {
+      "stem": "In the age example of Data Swapping, with which value is the age 26 swapped?",
+      "options": [
+        "28",
+        "59",
+        "42",
+        "57",
+        "20-29"
+      ],
+      "correct": 1,
+      "explanation": "To keep the same level of detail, ages are swapped such as 26 with 59, 28 with 58 and so on."
+    },
+    {
+      "stem": "What is Partial Swapping?",
+      "options": [
+        "Swapping that replaces every value in the column",
+        "Swapping that summarises values into ranges",
+        "Swapping that removes half of the records",
+        "Swapping that is fully reversible",
+        "Swapping that does not replace all the values"
+      ],
+      "correct": 4,
+      "explanation": "Partial Swapping does not replace all the values, whereas Full Swapping replaces all of them."
+    },
+    {
+      "stem": "How reversible are Data Perturbation, Swapping, Shuffling, Scrambling, Obfuscation and Masking?",
+      "options": [
+        "They are a permanent change of data, very hard to revert and in most cases not reversible",
+        "They are always reversible with the original key",
+        "They are reversible only for structured data",
+        "They are reversible within 24 hours",
+        "They never change the stored data"
+      ],
+      "correct": 0,
+      "explanation": "All of these techniques are a permanent change of data and are very hard to revert; in most cases they are not reversible."
+    },
+    {
+      "stem": "Which of the following is NOT named as part of the same family of identity-hiding techniques as Data Swapping?",
+      "options": [
+        "Data Shuffling",
+        "Data Scrambling",
+        "Data Encryption",
+        "Data Obfuscation",
+        "Data Perturbation"
+      ],
+      "correct": 2,
+      "explanation": "The family comprises Perturbation, Swapping, Shuffling, Scrambling, Obfuscation and Masking; encryption is not listed among them."
+    },
+    {
+      "stem": "In Data Swapping, what does NOT happen to the data being protected?",
+      "options": [
+        "Its values are exchanged with other values",
+        "Its level of detail is preserved",
+        "Its cardinality is maintained",
+        "It is removed or summarised into another column",
+        "It becomes usable for training Machine Learning models"
+      ],
+      "correct": 3,
+      "explanation": "With Data Swapping the data is not changed at modelling normalisation level, not removed and not summarised in another column; the values are simply swapped."
+    }
+  ]
+}

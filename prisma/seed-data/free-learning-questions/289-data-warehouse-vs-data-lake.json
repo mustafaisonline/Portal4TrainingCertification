@@ -1,0 +1,125 @@
+{
+  "topic": "data-warehouse-vs-data-lake",
+  "questions": [
+    {
+      "stem": "What is a data warehouse designed to do?",
+      "options": [
+        "Store raw, unprocessed files of any type at any scale",
+        "Store and analyse structured data from various sources, providing a central repository for BI and analytics",
+        "Compress data to reduce cloud storage costs",
+        "Run transactional applications such as order entry",
+        "Replace all other data storage systems in an organisation"
+      ],
+      "correct": 1,
+      "explanation": "A data warehouse is a data platform that stores and analyses structured data from multiple sources, acting as a central repository for business intelligence and analytics applications."
+    },
+    {
+      "stem": "Which words describe the data typically stored in a data warehouse?",
+      "options": [
+        "Raw, unprocessed and unstructured",
+        "Temporary, volatile and uncleansed",
+        "Historical, integrated and cleansed",
+        "Real-time, streaming and unformatted",
+        "Encrypted, compressed and archived"
+      ],
+      "correct": 2,
+      "explanation": "Data in a data warehouse is typically historical, integrated and cleansed, supporting decision-making, reporting and analysis across the organisation."
+    },
+    {
+      "stem": "How is data in a data warehouse organised and optimised?",
+      "options": [
+        "Kept in its natural raw form for flexibility",
+        "Structured into tables and optimised for efficient querying and analysis",
+        "Stored as images and text documents",
+        "Held only in memory for speed",
+        "Scattered across spreadsheets"
+      ],
+      "correct": 1,
+      "explanation": "Warehouse data is structured, organised into tables, and optimised for efficient querying and analysis."
+    },
+    {
+      "stem": "What is a data lake?",
+      "options": [
+        "A centralised repository that stores all structured, semi-structured and unstructured data at any scale",
+        "A repository limited to cleansed, structured tables",
+        "A backup copy of a data warehouse",
+        "A visualisation tool for executive dashboards",
+        "A transactional database for daily operations"
+      ],
+      "correct": 0,
+      "explanation": "A data lake is a centralised repository that lets you store all your structured, semi-structured and unstructured data at any scale."
+    },
+    {
+      "stem": "Why was the term 'data lake' coined?",
+      "options": [
+        "Because the data is stored in cold, offline storage",
+        "Because data is always deleted after a set period",
+        "Because only water-industry companies used it at first",
+        "To represent a system where data flows in from various sources and resides in its most natural state, like water in a lake",
+        "Because the data is organised in layers like sediment"
+      ],
+      "correct": 3,
+      "explanation": "The name reflects the idea of data flowing in from many sources and sitting in its most 'natural' state, just like water in a lake."
+    },
+    {
+      "stem": "What primary characteristic sets data lakes apart from data warehouses?",
+      "options": [
+        "Data lakes only store historical data",
+        "Data lakes require data to be cleansed before storage",
+        "The flexibility and scale they offer, storing data in its original or raw format without first structuring it",
+        "Data lakes are optimised for structured table queries only",
+        "Data lakes cannot store structured data"
+      ],
+      "correct": 2,
+      "explanation": "Data lakes store data in its raw format without needing to structure or process it first, giving them flexibility and scale that distinguish them from warehouses."
+    },
+    {
+      "stem": "Which of the following can a data lake handle, according to its description?",
+      "options": [
+        "Only structured databases",
+        "Only images and text documents",
+        "Only social media posts",
+        "Only cleansed tabular data",
+        "High volumes of diverse data, from structured databases to unstructured social media posts, images or text documents"
+      ],
+      "correct": 4,
+      "explanation": "Data lakes can hold high volumes of diverse data types, ranging from structured databases to unstructured content such as social media posts, images and text documents."
+    },
+    {
+      "stem": "An organisation stores raw sensor readings, customer photos and text documents in one repository without structuring them first, and later processes some of them into structured records. Which system does this describe?",
+      "options": [
+        "A data lake",
+        "A data warehouse",
+        "A spreadsheet",
+        "A CRM system",
+        "A relational table"
+      ],
+      "correct": 0,
+      "explanation": "Storing raw, unprocessed files of diverse types alongside transformed records, without structuring them on entry, is the behaviour of a data lake."
+    },
+    {
+      "stem": "What is the relationship between data lakes and data warehouses in an organisation's architecture?",
+      "options": [
+        "They are mutually exclusive; an organisation must choose one",
+        "A data lake always replaces a data warehouse",
+        "A data warehouse always replaces a data lake",
+        "They are not mutually exclusive and often coexist, each serving different use cases",
+        "They are the same system under two names"
+      ],
+      "correct": 3,
+      "explanation": "Data lakes and data warehouses are not mutually exclusive; they frequently coexist within an organisation's data architecture, each serving different use cases."
+    },
+    {
+      "stem": "Which of the following is NOT a characteristic of a data warehouse?",
+      "options": [
+        "Provides a central repository for BI and analytics applications",
+        "Stores data that is typically historical and cleansed",
+        "Stores data in its raw, natural state without structuring it",
+        "Organises data into tables optimised for querying",
+        "Supports decision-making, reporting and analysis"
+      ],
+      "correct": 2,
+      "explanation": "Keeping data in its raw, natural state is a characteristic of a data lake. A data warehouse stores structured, cleansed, historical data in tables optimised for analysis."
+    }
+  ]
+}

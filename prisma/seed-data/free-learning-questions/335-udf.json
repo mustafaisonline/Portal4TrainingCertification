@@ -1,0 +1,125 @@
+{
+  "topic": "udf",
+  "questions": [
+    {
+      "stem": "What does UDF stand for?",
+      "options": [
+        "Unified Data Format",
+        "User-Defined Function",
+        "Universal Database Framework",
+        "Unstructured Data File",
+        "Utility Deployment Function"
+      ],
+      "correct": 1,
+      "explanation": "UDF stands for User-Defined Function, a feature that lets users define their own functions to perform specific tasks."
+    },
+    {
+      "stem": "What are the stated benefits of using User-Defined Functions?",
+      "options": [
+        "Faster network transfer and smaller files",
+        "Automatic indexing and encryption",
+        "Encapsulating commonly used logic, promoting code reusability and enhancing readability",
+        "Eliminating the need for testing",
+        "Replacing built-in database functions entirely"
+      ],
+      "correct": 2,
+      "explanation": "UDFs are useful for encapsulating commonly used logic, promoting code reusability and enhancing the readability of code."
+    },
+    {
+      "stem": "What does the SQL UDF example ConcatenateStrings('Hello', 'World') return?",
+      "options": [
+        "HelloWorld",
+        "World Hello",
+        "Hello, World",
+        "Hello World",
+        "Hello+World"
+      ],
+      "correct": 3,
+      "explanation": "The SQL UDF returns @str1 + ' ' + @str2, so the result is Hello World with a space between the two strings."
+    },
+    {
+      "stem": "What does the Python UDF calculate_square(5) output?",
+      "options": [
+        "10",
+        "5",
+        "50",
+        "2.5",
+        "25"
+      ],
+      "correct": 4,
+      "explanation": "calculate_square returns number ** 2, so calculate_square(5) outputs 25."
+    },
+    {
+      "stem": "What does the JavaScript UDF isEven(7) return?",
+      "options": [
+        "false",
+        "true",
+        "7",
+        "1",
+        "undefined"
+      ],
+      "correct": 0,
+      "explanation": "isEven returns number % 2 === 0; for 7 the remainder is 1, so it returns false."
+    },
+    {
+      "stem": "Which language is used to create custom functions (UDFs) in Microsoft Excel?",
+      "options": [
+        "Python",
+        "Visual Basic for Applications (VBA)",
+        "SQL",
+        "JavaScript",
+        "Scala"
+      ],
+      "correct": 1,
+      "explanation": "In Microsoft Excel, custom functions are created using Visual Basic for Applications (VBA), such as the Factorial example."
+    },
+    {
+      "stem": "What result does the Excel UDF =Factorial(5) produce?",
+      "options": [
+        "25",
+        "15",
+        "120",
+        "5",
+        "720"
+      ],
+      "correct": 2,
+      "explanation": "The VBA Factorial function multiplies n by Factorial(n - 1) down to 1, so Factorial(5) = 120."
+    },
+    {
+      "stem": "In the PySpark UDF example, what does the uppercase_udf do when applied to the DataFrame?",
+      "options": [
+        "Removes duplicate fruit names",
+        "Counts the number of fruits",
+        "Sorts the fruit column alphabetically",
+        "Adds a new column upper_fruit containing the fruit names converted to uppercase",
+        "Deletes the fruit column"
+      ],
+      "correct": 3,
+      "explanation": "The example applies uppercase_udf to the fruit column with withColumn, adding an upper_fruit column with uppercase text."
+    },
+    {
+      "stem": "In the Spark UDF example, what is passed alongside the Python function when registering the UDF?",
+      "options": [
+        "The DataFrame it will run on",
+        "The Spark application name",
+        "A column name",
+        "A file path",
+        "The return type, StringType()"
+      ],
+      "correct": 4,
+      "explanation": "The UDF is registered with udf(uppercase_text, StringType()), which specifies the function and its return type."
+    },
+    {
+      "stem": "Which of the following is NOT one of the UDF environments given as an example?",
+      "options": [
+        "R",
+        "SQL",
+        "Python",
+        "JavaScript",
+        "Apache Spark"
+      ],
+      "correct": 0,
+      "explanation": "The examples cover SQL, Python, JavaScript, Excel (VBA) and Spark UDFs; R is not among them."
+    }
+  ]
+}

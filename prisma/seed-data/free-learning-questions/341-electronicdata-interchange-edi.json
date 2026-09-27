@@ -1,0 +1,125 @@
+{
+  "topic": "electronicdata-interchange-edi",
+  "questions": [
+    {
+      "stem": "What is the main use case addressed by Electronic Data Interchange (EDI)?",
+      "options": [
+        "Streaming video between data centres",
+        "Automating the exchange of business documents such as purchase orders and invoices between trading partners",
+        "Hosting company websites",
+        "Encrypting email attachments",
+        "Backing up databases to the cloud"
+      ],
+      "correct": 1,
+      "explanation": "EDI automates data exchange between trading partners for business documents such as purchase orders, invoices, payments and shipment information."
+    },
+    {
+      "stem": "Since which decade has EDI been in use?",
+      "options": [
+        "The 1950s",
+        "The 1960s",
+        "The 1970s",
+        "The 1990s",
+        "The 2000s"
+      ],
+      "correct": 2,
+      "explanation": "EDI has been introduced since the seventies."
+    },
+    {
+      "stem": "Which are the two main EDI message standards?",
+      "options": [
+        "HL7 and SWIFT",
+        "ODETTE and IATA PATIS",
+        "AS2 and FTP",
+        "EDIFACT and X12",
+        "JSON and XML"
+      ],
+      "correct": 3,
+      "explanation": "EDIFACT and X12 are the main EDI message standards; ODETTE, HL7, IATA PATIS and SWIFT serve specific industries."
+    },
+    {
+      "stem": "Which EDI standard is used for healthcare data?",
+      "options": [
+        "ODETTE",
+        "SWIFT",
+        "IATA PATIS",
+        "X12",
+        "HL7"
+      ],
+      "correct": 4,
+      "explanation": "HL7 is the EDI standard used for healthcare data; ODETTE is automotive, IATA PATIS is passenger and airport data, SWIFT is finance and banking."
+    },
+    {
+      "stem": "In which region is EDI X12 widely used, with UN/EDIFACT being the standard elsewhere?",
+      "options": [
+        "North America",
+        "Europe",
+        "Asia",
+        "Australia",
+        "South America"
+      ],
+      "correct": 0,
+      "explanation": "EDI X12 is widely used in North America; UN/EDIFACT is used in many other countries, particularly in Europe."
+    },
+    {
+      "stem": "Which X12 transaction number represents a Purchase Order?",
+      "options": [
+        "810",
+        "850",
+        "856",
+        "820",
+        "945"
+      ],
+      "correct": 1,
+      "explanation": "X12 transaction 850 is the Purchase Order; 810 is Invoice, 820 is Payment Order, 856 is Ship Notice/Manifest and 945 is Warehouse Shipping Advice."
+    },
+    {
+      "stem": "Which UN/EDIFACT document type represents an Invoice?",
+      "options": [
+        "ORDERS",
+        "DELFOR",
+        "INVOIC",
+        "RECADV",
+        "DISADV"
+      ],
+      "correct": 2,
+      "explanation": "INVOIC is the UN/EDIFACT document type for an Invoice; ORDERS is Order, DELFOR is Delivery Schedule, DISADV is Dispatch Advice and RECADV is Receiving Advice."
+    },
+    {
+      "stem": "Which communication protocols are named as typical for transmitting EDI transactions?",
+      "options": [
+        "SMTP, IMAP and POP3",
+        "HTTP, WebSocket and gRPC",
+        "Bluetooth and NFC",
+        "AS2, FTP or VANs (Value Added Networks)",
+        "SSH and Telnet"
+      ],
+      "correct": 3,
+      "explanation": "EDI transactions are typically transmitted over secure, standardised protocols such as AS2 (Applicability Statement 2), FTP or VANs."
+    },
+    {
+      "stem": "Why is the question of whether suppliers use EDI considered not a major criterion when assessing EDI adoption?",
+      "options": [
+        "Because suppliers never use EDI",
+        "Because suppliers always pay for the integration",
+        "Because EDI cannot be used with suppliers",
+        "Because supplier data is exchanged only by email",
+        "Because as their customer, suppliers will have to conform to your requirement"
+      ],
+      "correct": 4,
+      "explanation": "Since you are the supplier's customer, they will have to conform to your requirement; it only becomes an opportunity to streamline if many suppliers already use EDI."
+    },
+    {
+      "stem": "What advantage does EDI retain over web services and API-based integrations?",
+      "options": [
+        "Reliability and deliverability, since it is persistent by design",
+        "It is more modern and secure",
+        "It requires no standards",
+        "It supports real-time streaming video",
+        "It is free of communication protocols"
+      ],
+      "correct": 0,
+      "explanation": "Web services and APIs are more modern and secure, but EDI still has advantages in reliability and deliverability because it is persistent by design."
+    }
+  ]
+}

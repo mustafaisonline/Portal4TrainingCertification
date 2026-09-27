@@ -1,0 +1,125 @@
+{
+  "topic": "functional-andnon-functional-testing",
+  "questions": [
+    {
+      "stem": "What does functional testing validate?",
+      "options": [
+        "All the use cases and requirements outlined in the Functional Requirements Document (FRD) or business requirement specifications, ensuring the product operates as intended",
+        "The speed of the system under peak load",
+        "The security of the system against SQL injection",
+        "The ease of use of the interface",
+        "The cost of running the system in production"
+      ],
+      "correct": 0,
+      "explanation": "Functional testing validates the use cases and requirements in the FRD or other business requirement specifications to ensure the product operates as intended."
+    },
+    {
+      "stem": "How is the focus of functional testing distinguished from that of non-functional testing?",
+      "options": [
+        "Functional testing focuses on cost; non-functional testing focuses on features",
+        "Functional testing focuses on what the system does; non-functional testing focuses on how the system performs",
+        "Functional testing is automated; non-functional testing is always manual",
+        "Functional testing is done by users; non-functional testing is done by developers",
+        "Functional testing focuses on security; non-functional testing focuses on correctness"
+      ],
+      "correct": 1,
+      "explanation": "Functional testing is concerned with what the system does, while non-functional testing evaluates how the system performs and behaves."
+    },
+    {
+      "stem": "Why is functional testing described as a black box testing technique?",
+      "options": [
+        "Because the results are hidden from stakeholders",
+        "Because it is run in a darkened room",
+        "Because it does not require knowledge of the internal code or architecture",
+        "Because it only tests error messages",
+        "Because it requires reading the source code line by line"
+      ],
+      "correct": 2,
+      "explanation": "Functional testing is black box because it does not require knowledge of the internal code or architecture; it focuses on user requirements and use cases."
+    },
+    {
+      "stem": "Testing the integration between a payment gateway and an e-commerce platform is an example of which type of functional testing?",
+      "options": [
+        "Unit testing",
+        "System testing",
+        "Acceptance testing",
+        "Integration testing",
+        "Stress testing"
+      ],
+      "correct": 3,
+      "explanation": "Integration testing verifies the interaction between integrated modules or systems, such as a payment gateway and an e-commerce platform."
+    },
+    {
+      "stem": "Which type of functional testing validates the software against user requirements and business goals and often involves stakeholders or end-users?",
+      "options": [
+        "Unit testing",
+        "Integration testing",
+        "System testing",
+        "Load testing",
+        "Acceptance testing"
+      ],
+      "correct": 4,
+      "explanation": "Acceptance testing validates the software against user requirements and business goals, often involving stakeholders or end-users before deployment."
+    },
+    {
+      "stem": "Which type of non-functional testing tests the system under extreme conditions to identify its breaking points?",
+      "options": [
+        "Stress testing",
+        "Load testing",
+        "Usability testing",
+        "Reliability testing",
+        "Security testing"
+      ],
+      "correct": 0,
+      "explanation": "Stress testing pushes the system under extreme conditions, such as overloading a server with requests, to observe when it fails."
+    },
+    {
+      "stem": "Running a banking application continuously for 48 hours to check for failures is an example of which non-functional test?",
+      "options": [
+        "Usability testing",
+        "Reliability testing",
+        "Security testing",
+        "Load testing",
+        "Acceptance testing"
+      ],
+      "correct": 1,
+      "explanation": "Reliability testing assesses the software's consistency over time under specific conditions, such as continuous operation for 48 hours."
+    },
+    {
+      "stem": "Which tools are listed for non-functional testing rather than functional testing?",
+      "options": [
+        "Selenium, QTP and Test Complete",
+        "Word, Excel and PowerPoint",
+        "JMeter, LoadRunner and OWASP ZAP",
+        "Hive, Glue and Unity Catalog",
+        "Spark, Flink and Presto"
+      ],
+      "correct": 2,
+      "explanation": "JMeter, LoadRunner and OWASP ZAP are non-functional testing tools; Selenium, QTP and Test Complete are listed for functional testing."
+    },
+    {
+      "stem": "Which of the following is NOT a step in the process of functional testing?",
+      "options": [
+        "Requirement analysis",
+        "Test case creation",
+        "Defect reporting and tracking",
+        "Define quality attributes such as performance benchmarks",
+        "Re-testing"
+      ],
+      "correct": 3,
+      "explanation": "Defining quality attributes such as performance benchmarks is the first step of the non-functional testing process, not the functional one."
+    },
+    {
+      "stem": "Which of the following is listed as a challenge in functional and non-functional testing?",
+      "options": [
+        "Too many clear requirements",
+        "Excessive testing budgets",
+        "Systems being too simple",
+        "Tools being too easy to use",
+        "Ambiguous requirements that hinder test planning"
+      ],
+      "correct": 4,
+      "explanation": "Challenges include ambiguous requirements, resource limitations, complex systems and the difficulty of simulating real-world scenarios."
+    }
+  ]
+}

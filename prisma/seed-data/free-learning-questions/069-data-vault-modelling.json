@@ -1,0 +1,125 @@
+{
+  "topic": "data-vault-modelling",
+  "questions": [
+    {
+      "stem": "To which modelling family does Data Vault belong?",
+      "options": [
+        "Ensemble Data Modelling",
+        "Dimensional Modelling",
+        "Pre-relational modelling",
+        "Semantic modelling",
+        "NoSQL modelling"
+      ],
+      "correct": 0,
+      "explanation": "Data Vault belongs to the family of Ensemble Data Modelling, alongside Focal Point and Anchor Modelling."
+    },
+    {
+      "stem": "How should terms such as \"Business Vault\" and \"Raw Vault\" be understood?",
+      "options": [
+        "As two competing methodologies",
+        "As extensions within the single core Data Vault model, not distinct systems",
+        "As Kimball's names for data marts",
+        "As Inmon's layers of the EDW",
+        "As deprecated names for star schemas"
+      ],
+      "correct": 1,
+      "explanation": "There is only one Data Vault methodology; Business Vault and Raw Vault are extensions within the same foundational framework, not separate systems."
+    },
+    {
+      "stem": "What do Hub tables store in Data Vault?",
+      "options": [
+        "Descriptive attributes with history",
+        "Relationships between entities",
+        "Business keys that uniquely identify entities, without descriptive information",
+        "Stable domain values such as status codes",
+        "Pre-aggregated measures"
+      ],
+      "correct": 2,
+      "explanation": "Hubs store business keys such as Customer ID or Product ID, organising data by core business concept without storing descriptive information."
+    },
+    {
+      "stem": "What is the role of Link tables in Data Vault?",
+      "options": [
+        "To store measures for reporting",
+        "To hold time-variant descriptive attributes",
+        "To store reference domain values",
+        "To manage relationships between entities by linking hub tables through foreign keys",
+        "To cache the latest state of each hub"
+      ],
+      "correct": 3,
+      "explanation": "Links capture connections between hubs through foreign keys, allowing the model to evolve as relationships change or new relationships are discovered."
+    },
+    {
+      "stem": "What do Satellite tables contain in Data Vault?",
+      "options": [
+        "Only business keys",
+        "Only foreign keys between hubs",
+        "Pre-joined dimensional views",
+        "The Puppini Bridge keys",
+        "Descriptive attributes related to hub entities, separated from the core keys"
+      ],
+      "correct": 4,
+      "explanation": "Satellites hold contextual information such as names or details, separated from hub keys so descriptive data can be updated without affecting relationships or business keys."
+    },
+    {
+      "stem": "Which Data Vault table type stores stable domain values such as loan status codes and is optional but recommended?",
+      "options": [
+        "Reference tables",
+        "Hub tables",
+        "Link tables",
+        "Satellite tables",
+        "Bridge tables"
+      ],
+      "correct": 0,
+      "explanation": "Reference tables store stable domain values such as status codes or product categories, ensuring consistency and reducing redundancy across the warehouse."
+    },
+    {
+      "stem": "In the layered data architecture described with Data Vault, which layer does Data Vault replace?",
+      "options": [
+        "The Landing Zone",
+        "3NF modelling in the Transform Zone's Warehousing Layer",
+        "Dimensional modelling in the Semantic Layer",
+        "The Staging Zone",
+        "The BI reporting layer"
+      ],
+      "correct": 1,
+      "explanation": "Data Vault replaces Inmon's 3NF approach in the Warehousing Layer of the Transform Zone, while dimensional modelling remains in the Semantic Layer."
+    },
+    {
+      "stem": "Which of the following is NOT one of the options named for adding a Semantic Layer on top of Data Vault?",
+      "options": [
+        "A virtual semantic layer with on-the-fly joins across hubs, links and satellites",
+        "Physical tables that pre-aggregate frequently accessed data",
+        "A hierarchical tree of parent–child pointers",
+        "A dimensional model that simplifies reporting for end users",
+        "Leaving the Data Vault structure intact in the Warehousing Layer while serving dimensional views"
+      ],
+      "correct": 2,
+      "explanation": "The semantic layer options are a virtual layer, physical pre-aggregated tables and dimensional models; hierarchical pointer trees are not among them."
+    },
+    {
+      "stem": "Which fields make a Data Vault satellite bi-temporal by default?",
+      "options": [
+        "Hash keys and record source",
+        "Primary key and foreign key",
+        "ValidFrom and hub key",
+        "ValidFrom, ValidTo and LoadDate together",
+        "LoadDate alone"
+      ],
+      "correct": 3,
+      "explanation": "ValidFrom/ValidTo capture business reality and LoadDate captures when the system recorded it; all three fields together make Data Vault a bi-temporal framework by default."
+    },
+    {
+      "stem": "In the Data Vault loan example, what happens when a loan's interest rate changes from 7.5% to 8.0%?",
+      "options": [
+        "The Hub_Loan row is updated with the new rate",
+        "The Link_LoanCustomer row is replaced",
+        "The old rate is deleted from Sat_LoanDetails",
+        "A new hub is created for the new rate",
+        "The old value stays in Sat_LoanDetails with its validity range and a new row is added, preserving full history"
+      ],
+      "correct": 4,
+      "explanation": "The old value remains in the satellite with its validity range and a new row is added, so a regulator can ask which rate was valid as of a given date and get an answer."
+    }
+  ]
+}

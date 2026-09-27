@@ -1,0 +1,125 @@
+{
+  "topic": "bcnf-boyce-codd-normal-form",
+  "questions": [
+    {
+      "stem": "How is Boyce–Codd Normal Form (BCNF) related to Third Normal Form?",
+      "options": [
+        "It is a stricter refinement of 3NF",
+        "It is a looser version of 3NF for analytical systems",
+        "It is an alternative name for 3NF",
+        "It is the form that precedes 3NF",
+        "It replaces 3NF with multi-valued dependency rules"
+      ],
+      "correct": 0,
+      "explanation": "BCNF is a stricter refinement of 3NF that closes edge cases where a non-superkey determinant can still functionally determine other attributes."
+    },
+    {
+      "stem": "What is the formal condition for a table to be in Boyce–Codd Normal Form?",
+      "options": [
+        "Every attribute holds an atomic value",
+        "For every functional dependency X → Y, the determinant X is a superkey of the relation",
+        "No non-key attribute depends on part of a composite key",
+        "Every table has exactly one candidate key",
+        "All multi-valued dependencies have been decomposed"
+      ],
+      "correct": 1,
+      "explanation": "A table is in BCNF if, for every functional dependency X → Y, the determinant X is a superkey, meaning it uniquely identifies rows in the table."
+    },
+    {
+      "stem": "In the loan approval BCNF example with LoanID, ProductType and InterestRate, which functional dependency causes the problem?",
+      "options": [
+        "LoanID → ProductType",
+        "InterestRate → LoanID",
+        "ProductType → InterestRate",
+        "LoanID → InterestRate",
+        "InterestRate → ProductType"
+      ],
+      "correct": 2,
+      "explanation": "The business rule that each ProductType has exactly one InterestRate creates the dependency ProductType → InterestRate, and ProductType is not a superkey of the table."
+    },
+    {
+      "stem": "Why does the table with LoanID as primary key and the dependency ProductType → InterestRate violate Boyce–Codd Normal Form?",
+      "options": [
+        "Because InterestRate is a multi-valued attribute",
+        "Because LoanID is a composite key",
+        "Because ProductType depends on only part of the key",
+        "Because ProductType is not a superkey; multiple loans may share the same product type",
+        "Because InterestRate is stored as text"
+      ],
+      "correct": 3,
+      "explanation": "ProductType does not uniquely identify rows since many loans can share a product type, so a determinant that is not a superkey breaks the BCNF rule."
+    },
+    {
+      "stem": "What anomaly arises when InterestRate is stored in the Loan table alongside ProductType?",
+      "options": [
+        "Loan rows can no longer be uniquely identified",
+        "The interest rate becomes non-atomic",
+        "The product type must be duplicated as a key",
+        "Repayments cannot be linked to loans",
+        "The same interest rate repeats across many loan rows and a rate change requires multiple updates"
+      ],
+      "correct": 4,
+      "explanation": "The same interest rate value repeats for every loan of a product type, so changing the rate means updating multiple rows, which is precisely what BCNF prevents."
+    },
+    {
+      "stem": "How is the LoanID, ProductType, InterestRate table decomposed to satisfy Boyce–Codd Normal Form?",
+      "options": [
+        "ProductType and InterestRate move to a separate table keyed by ProductType, and the Loan table references ProductType through a foreign key",
+        "InterestRate is moved into the Repayment table",
+        "LoanID and ProductType are combined into a composite key",
+        "InterestRate is dropped and recalculated at query time",
+        "The table is left unchanged but an index is added on ProductType"
+      ],
+      "correct": 0,
+      "explanation": "After decomposition every functional dependency has a determinant that is a superkey within its own table, with the Loan table referencing ProductType by foreign key."
+    },
+    {
+      "stem": "What is the key difference between Third Normal Form and Boyce–Codd Normal Form?",
+      "options": [
+        "3NF removes repeating groups whereas BCNF removes partial dependencies",
+        "3NF allows a non-superkey to determine an attribute that is part of a candidate key; BCNF removes that allowance entirely",
+        "3NF applies to transactional systems whereas BCNF applies only to warehouses",
+        "3NF requires atomic values whereas BCNF does not",
+        "3NF handles join dependencies whereas BCNF handles multi-valued dependencies"
+      ],
+      "correct": 1,
+      "explanation": "3NF tolerates a non-superkey determinant as long as the determined attribute is part of a candidate key, while BCNF requires every determinant to be a superkey without exception."
+    },
+    {
+      "stem": "In practice, how do most well-designed 3NF schemas relate to Boyce–Codd Normal Form?",
+      "options": [
+        "They usually violate BCNF and need major redesign",
+        "They must be denormalised before reaching BCNF",
+        "They already satisfy BCNF",
+        "They cannot be evaluated against BCNF",
+        "They satisfy BCNF only if they use surrogate keys"
+      ],
+      "correct": 2,
+      "explanation": "Most well-designed 3NF schemas already satisfy BCNF; the difference matters mainly in complex schemas with multiple candidate keys or overlapping dependencies."
+    },
+    {
+      "stem": "Which of the following is NOT a claim made about Boyce–Codd Normal Form?",
+      "options": [
+        "It is the final stage of normalisation commonly required for transactional systems",
+        "It ensures stronger structural integrity in schemas with overlapping dependencies",
+        "It requires every determinant to be a superkey",
+        "It addresses multi-valued and join dependencies",
+        "It makes the relational structure mathematically disciplined"
+      ],
+      "correct": 3,
+      "explanation": "Multi-valued and join dependencies are addressed by the more specialised normal forms beyond BCNF, not by BCNF itself."
+    },
+    {
+      "stem": "What do the normal forms beyond Boyce–Codd Normal Form address?",
+      "options": [
+        "Atomic values and repeating groups",
+        "Partial dependencies on composite keys",
+        "Transitive dependencies through non-key attributes",
+        "Foreign key naming conventions",
+        "Multi-valued and join dependencies rather than basic redundancy"
+      ],
+      "correct": 4,
+      "explanation": "Beyond BCNF the normal forms become increasingly specialised and theoretical, addressing multi-valued and join dependencies rather than basic redundancy."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "dlm-data-lifecycle-management",
+  "questions": [
+    {
+      "stem": "What does Data Lifecycle Management (DLM) cover?",
+      "options": [
+        "Where data comes from and where it goes",
+        "The process from where data was generated until it is removed from the systems",
+        "The monetary valuation of data assets",
+        "The matching of records across systems",
+        "The parallel processing of queries"
+      ],
+      "correct": 1,
+      "explanation": "DLM is about the whole process from the point where data is generated until it is removed from the systems."
+    },
+    {
+      "stem": "How does Data Lifecycle Management differ from Data Supply Chain?",
+      "options": [
+        "DLM is a technology; Data Supply Chain is a process",
+        "DLM covers generation to removal; Data Supply Chain covers where data comes from and where it goes",
+        "DLM applies only to structured data; Data Supply Chain only to unstructured data",
+        "They are the same thing under two names",
+        "DLM is for OLTP; Data Supply Chain is for OLAP"
+      ],
+      "correct": 1,
+      "explanation": "The two are often confused: DLM spans generation to removal, whereas Data Supply Chain describes where data comes from and where it goes."
+    },
+    {
+      "stem": "What does the Data Generation step of DLM refer to?",
+      "options": [
+        "The channel where data is generated, such as a mobile application, CRM, ERP, CCTV, social media or emails",
+        "The business rules that transform raw data",
+        "How long data is kept",
+        "The criteria for deleting data",
+        "How transformed data is matched with raw data"
+      ],
+      "correct": 0,
+      "explanation": "Data Generation means the channel through which data originates, for example mobile apps, CRM, ERP, HRM, CCTV, social media, audio, emails and documents."
+    },
+    {
+      "stem": "What does the Data Processing step of DLM describe?",
+      "options": [
+        "The business rules by which raw data is transformed into the required format, via ETL, ELT, data mining or machine learning modelling",
+        "The reports and dashboards on which data is shown",
+        "The means by which data is extracted",
+        "The channel in which data originates",
+        "The criteria on which data is removed"
+      ],
+      "correct": 0,
+      "explanation": "Data Processing covers the business rules used to transform raw data, whether via ETL, ELT, data mining or data science machine learning modelling."
+    },
+    {
+      "stem": "Which DLM step covers how transformed data is matched with raw data, shown on reports and dashboards, and what it was used for?",
+      "options": [
+        "Data Generation",
+        "Data Processing",
+        "Data Reconciliation, Presentation and Utilisation",
+        "Data Storage Lifespan and Extraction",
+        "Data Removal"
+      ],
+      "correct": 2,
+      "explanation": "The Reconciliation, Presentation and Utilisation step addresses matching transformed data to raw data, presenting it, and recording the purpose it served."
+    },
+    {
+      "stem": "What does the Data Storage Lifespan and Extraction step of DLM define?",
+      "options": [
+        "The transformation rules for raw data",
+        "The channel that generated the data",
+        "How long the data will be kept and the manual or automated means of extracting it",
+        "How data discrepancies are found",
+        "The frequency of dashboard refreshes"
+      ],
+      "correct": 2,
+      "explanation": "This step specifies for how long data will be kept and what the means of extracting it are, whether manual or via automated tools."
+    },
+    {
+      "stem": "What does the Data Removal step of DLM record?",
+      "options": [
+        "Which reports used the data",
+        "How data was encrypted",
+        "Which department owns the data",
+        "How data has been removed and on which criteria",
+        "Which model was trained on the data"
+      ],
+      "correct": 3,
+      "explanation": "Data Removal means how data has been removed from the systems and based on which criteria."
+    },
+    {
+      "stem": "Which of the following is NOT one of the DLM steps listed in *I Am Datapedia!*?",
+      "options": [
+        "Data Generation",
+        "Data Processing",
+        "Data Removal",
+        "Data Storage Lifespan and Extraction",
+        "Data Valuation"
+      ],
+      "correct": 4,
+      "explanation": "The DLM steps are Generation, Processing, Reconciliation-Presentation-Utilisation, Storage Lifespan and Extraction, and Removal; Data Valuation belongs to Data Due Diligence."
+    },
+    {
+      "stem": "Which of these is given as an example of a data generation channel in DLM?",
+      "options": [
+        "A star schema",
+        "A semantic layer",
+        "An OLAP cube",
+        "A CCTV camera",
+        "A data mart"
+      ],
+      "correct": 3,
+      "explanation": "CCTV is listed among the generation channels, alongside mobile applications, CRM, ERP, HRM, social media, audio, emails, documents, images and scans."
+    },
+    {
+      "stem": "Which transformation approaches are named under the Data Processing step of DLM?",
+      "options": [
+        "Referential, probabilistic and ML association",
+        "JDBC, ODBC, native drivers and APIs",
+        "Landing, staging and transformed zones",
+        "COUNT, SUM, AVG, MIN and MAX",
+        "ETL, ELT, Data Mining or Data Science Machine Learning Modelling"
+      ],
+      "correct": 4,
+      "explanation": "Raw data may be transformed via ETL or ELT, or via Data Mining or Data Science Machine Learning Modelling."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "data-matching-and-linking",
+  "questions": [
+    {
+      "stem": "What is Data Matching and Linking about?",
+      "options": [
+        "Encrypting records before they are shared",
+        "Matching and linking datasets across systems to find out which is the best record to link with",
+        "Summarising records into totals",
+        "Reducing the number of rows returned by a query",
+        "Converting semi-structured formats into one format"
+      ],
+      "correct": 1,
+      "explanation": "Data Matching and Linking matches and links datasets across systems to identify the best possible record, for example when the same kind of data arrives from several sources."
+    },
+    {
+      "stem": "Which Master Data Management outcome is given as a use case for Data Matching and Linking?",
+      "options": [
+        "Generating a Golden Record",
+        "Building a landing zone",
+        "Creating a data island",
+        "Producing a canned report",
+        "Training a machine learning model"
+      ],
+      "correct": 0,
+      "explanation": "Generating the Golden Record for MDM is one of the use cases of Data Matching and Linking."
+    },
+    {
+      "stem": "Is Data Matching and Linking a manual process?",
+      "options": [
+        "Yes, it is done by data analysts reviewing records",
+        "Yes, but only for small datasets",
+        "No, it uses complex software with complex algorithms to find the right data",
+        "No, it is done by the customers themselves",
+        "It depends on the department"
+      ],
+      "correct": 2,
+      "explanation": "Matching and linking is not manual; it relies on complex software using complex algorithms to find the right data."
+    },
+    {
+      "stem": "In the customer onboarding example, why is Data Matching and Linking needed?",
+      "options": [
+        "Because customers forget their passwords",
+        "Because the same customer may register two or three times via Online, Customer Service Centre or Branch channels",
+        "Because branches are in different cities",
+        "Because customer data must be encrypted",
+        "Because the CRM system cannot store addresses"
+      ],
+      "correct": 1,
+      "explanation": "When a customer registers through several channels, matching and linking identifies the customer record with the highest weightage."
+    },
+    {
+      "stem": "Which type of Data Matching and Linking matches exact fields such as National ID, Social Security Number or passport number?",
+      "options": [
+        "Probabilistic",
+        "ML Association",
+        "Referential",
+        "Heuristic",
+        "Fuzzy"
+      ],
+      "correct": 2,
+      "explanation": "Referential matching links records on exact identifier fields such as National ID, Social Security Number or passport number."
+    },
+    {
+      "stem": "Which type of Data Matching and Linking uses multiple fields such as name, date of birth and parents' names?",
+      "options": [
+        "Referential",
+        "Deterministic",
+        "ML Association",
+        "Probabilistic",
+        "Manual"
+      ],
+      "correct": 3,
+      "explanation": "Probabilistic matching combines several fields such as name, date of birth and parents' names to decide whether records match."
+    },
+    {
+      "stem": "What is ML Association in Data Matching and Linking?",
+      "options": [
+        "Matching on an exact national identifier",
+        "Matching on multiple demographic fields",
+        "A report listing duplicate records",
+        "A committee that approves matches",
+        "Machine learning searching for matching data elements to link"
+      ],
+      "correct": 4,
+      "explanation": "ML Association is where machine learning searches for matching data elements to link."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a benefit of Data Matching and Linking?",
+      "options": [
+        "Generate Golden Records for downstream systems",
+        "Rise data accuracy",
+        "Polish customer segmentation",
+        "Reduce cloud compute costs",
+        "Systematise scam stoppage"
+      ],
+      "correct": 3,
+      "explanation": "Golden records, accuracy, segmentation and scam stoppage are listed benefits; reducing cloud compute costs is not."
+    },
+    {
+      "stem": "Which benefit of Data Matching and Linking relates to regulatory obligations?",
+      "options": [
+        "Guarantee healthier compliance",
+        "Improve perceptions",
+        "Have a high quality dataset",
+        "Formulate data for end users",
+        "Polish customer segmentation"
+      ],
+      "correct": 0,
+      "explanation": "Guaranteeing healthier compliance is among the listed benefits of Data Matching and Linking."
+    },
+    {
+      "stem": "What are the three types of Data Matching and Linking?",
+      "options": [
+        "Full, Partial and Hybrid",
+        "Scalar, Hierarchy and Level",
+        "Sudden, Gradual and Incremental",
+        "Landing, Staging and Transformed",
+        "Referential, Probabilistic and ML Association"
+      ],
+      "correct": 4,
+      "explanation": "The three types are Referential, Probabilistic and ML Association."
+    }
+  ]
+}

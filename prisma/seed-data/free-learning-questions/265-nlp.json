@@ -1,0 +1,125 @@
+{
+  "topic": "nlp",
+  "questions": [
+    {
+      "stem": "What is NLP about?",
+      "options": [
+        "Compressing audio files for storage",
+        "Balancing data across cluster nodes",
+        "Using techniques to understand the way humans communicate",
+        "Encrypting voice messages in transit",
+        "Designing database schemas for text"
+      ],
+      "correct": 2,
+      "explanation": "NLP is about using techniques to understand the way humans communicate."
+    },
+    {
+      "stem": "Which medium is said to have surpassed every other medium in generating data?",
+      "options": [
+        "Social media",
+        "Television",
+        "Printed newspapers",
+        "Telephone calls",
+        "Enterprise databases"
+      ],
+      "correct": 0,
+      "explanation": "In this era, social media has surpassed every medium to generate data, including audio and video messages."
+    },
+    {
+      "stem": "At what point does NLP come into action with social media content?",
+      "options": [
+        "When a message is longer than a set number of characters",
+        "When a message is shared more than once",
+        "When a message contains a hashtag",
+        "When a message is stored in a database",
+        "The moment audio and video with voice come into the picture"
+      ],
+      "correct": 4,
+      "explanation": "Social media is not only written messages; the moment audio and video with voice are involved, NLP comes into action."
+    },
+    {
+      "stem": "Using NLP, what does code try to do with audio?",
+      "options": [
+        "Compress it into a smaller file",
+        "Convert audio into text and vice versa",
+        "Detect the speaker's location",
+        "Remove background noise only",
+        "Split it into equal segments"
+      ],
+      "correct": 1,
+      "explanation": "Using NLP, code tries to convert audio into text and text into audio."
+    },
+    {
+      "stem": "In the Chill Coke Zero example, what allows the system to suggest Chill Pepsi Black in voice when the requested drink is out of stock?",
+      "options": [
+        "A pre-recorded message played for every request",
+        "A rule hard-coded by the shop owner",
+        "A stock database that emails the customer",
+        "Machine Learning and AI working with NLP to reply to the customer in voice format",
+        "A human operator listening in the background"
+      ],
+      "correct": 3,
+      "explanation": "NLP recognises the request, and if the item is out of stock Machine Learning and AI generate a voice reply offering an alternative."
+    },
+    {
+      "stem": "What are the steps of NLP?",
+      "options": [
+        "Understand, Analyse, Manipulate general human language or text",
+        "Collect, Store, Archive",
+        "Extract, Transform, Load",
+        "Encrypt, Transmit, Decrypt",
+        "Sample, Train, Deploy"
+      ],
+      "correct": 0,
+      "explanation": "The steps of NLP are to understand, analyse and manipulate general human language or text."
+    },
+    {
+      "stem": "Which of these is NOT listed as an NLP example?",
+      "options": [
+        "Speech Recognition",
+        "Machine Translation",
+        "Natural Language Generation",
+        "Image Compression",
+        "Semantic Search"
+      ],
+      "correct": 3,
+      "explanation": "The NLP examples listed include Text Character Recognition, Speech Recognition, Machine Translation, Natural Language Generation, Sentiment Analysis, Semantic Search, Machine Learning, Natural Language Programming and Affective Computing; Image Compression is not among them."
+    },
+    {
+      "stem": "Which of these is listed as an NLP example?",
+      "options": [
+        "Data Compression",
+        "Sentiment Analysis",
+        "Data Mirroring",
+        "Load Balancing",
+        "Data Imputation"
+      ],
+      "correct": 1,
+      "explanation": "Sentiment Analysis is one of the listed NLP examples."
+    },
+    {
+      "stem": "What does the request I want a Chill Coke Zero illustrate about NLP?",
+      "options": [
+        "That NLP only works with written text",
+        "That NLP cannot handle brand names",
+        "That NLP requires the customer to type the order",
+        "That NLP is limited to translation between languages",
+        "That NLP can recognise a spoken request and assist in performing the action, such as fetching the drink"
+      ],
+      "correct": 4,
+      "explanation": "NLP recognises the spoken request and assists in performing the action of getting a cold Coke drink for the customer."
+    },
+    {
+      "stem": "What is said about the future of human interaction with AI in relation to NLP?",
+      "options": [
+        "Voice will be replaced entirely by typed commands",
+        "NLP will be retired once AI matures",
+        "Most actions will be performed by AI, and whenever voice is involved, NLP is involved",
+        "Only text-based interactions will use NLP",
+        "NLP will be used only for sentiment analysis"
+      ],
+      "correct": 2,
+      "explanation": "The future is described as one where most actions for human interaction are performed by AI, and when voice is involved, NLP is involved."
+    }
+  ]
+}

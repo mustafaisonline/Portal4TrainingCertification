@@ -1,0 +1,125 @@
+{
+  "topic": "data-dividend",
+  "questions": [
+    {
+      "stem": "In the stock market, why does a company pay a dividend to a shareholder?",
+      "options": [
+        "Because the shareholder works for the company",
+        "Because regulators require all companies to pay dividends",
+        "Because the company is keeping the shareholder's money for a period and investing it in its business to generate revenue, a share of which is returned",
+        "Because the share price has fallen",
+        "Because the shareholder has sold the stock"
+      ],
+      "correct": 2,
+      "explanation": "The company holds and invests the user's money for a duration, and a percentage of the resulting revenue is shared back as a dividend."
+    },
+    {
+      "stem": "What do users of mobile applications and social media portals give to those companies in place of money?",
+      "options": [
+        "Their data",
+        "Their subscription fees",
+        "Their advertising budgets",
+        "Their shares",
+        "Their hardware"
+      ],
+      "correct": 0,
+      "explanation": "Users give their data, such as buying and selling behaviour, search trends and social interactions, rather than paying money."
+    },
+    {
+      "stem": "Which of the following is NOT named as an example of the data users hand over to platforms?",
+      "options": [
+        "Buying and selling behaviour",
+        "Search trends",
+        "Family and friends interactions",
+        "Spending patterns",
+        "Bank account balances"
+      ],
+      "correct": 4,
+      "explanation": "The examples named are buying and selling behaviour, search trends and family and friends interactions; bank account balances are not mentioned."
+    },
+    {
+      "stem": "For what purposes do companies such as Facebook, Amazon and Alibaba use the data collected from end-users?",
+      "options": [
+        "Only to improve application security",
+        "Marketing and advertisement, and selling services to production houses, industries and inventory houses",
+        "To pay dividends to shareholders",
+        "To comply with tax regulations",
+        "To train their staff"
+      ],
+      "correct": 1,
+      "explanation": "The collected data is used for marketing and advertisement and for selling services to production houses, industries, inventory houses and others."
+    },
+    {
+      "stem": "What is a Data Dividend?",
+      "options": [
+        "A tax paid by companies on stored data",
+        "The return a company earns from selling its data warehouse",
+        "A discount on cloud storage for large datasets",
+        "Giving dividends to end-users in exchange for hosting their data with companies such as Facebook, Twitter or Amazon",
+        "The interest paid on a data-centre loan"
+      ],
+      "correct": 3,
+      "explanation": "Data Dividend means sharing revenue with the end-users whose data the platforms host and monetise."
+    },
+    {
+      "stem": "In the Data Dividend argument, who is the ENTITY described as the core participant in data generation that currently receives nothing?",
+      "options": [
+        "The advertising agencies",
+        "The end-users",
+        "The production houses",
+        "The company shareholders",
+        "The inventory houses"
+      ],
+      "correct": 1,
+      "explanation": "End-users generate the data on which the companies make fortunes, yet nothing has been shared with them."
+    },
+    {
+      "stem": "Who is said to need an understanding of Data Dividend?",
+      "options": [
+        "Only shareholders",
+        "Only marketing departments",
+        "Only chief data officers",
+        "Only social media companies",
+        "Everyone, whether IT professional or end user"
+      ],
+      "correct": 4,
+      "explanation": "Data Dividend is described as something everyone must know, whether IT professional or end user."
+    },
+    {
+      "stem": "Which company is NOT named among the examples of platforms that monetise user data?",
+      "options": [
+        "Netflix",
+        "Facebook",
+        "Instagram",
+        "Amazon",
+        "Alibaba"
+      ],
+      "correct": 0,
+      "explanation": "The examples named are Facebook, Twitter, Instagram, Amazon and Alibaba; Netflix is not mentioned."
+    },
+    {
+      "stem": "In the stock-market comparison used to explain Data Dividend, how often is a dividend typically paid?",
+      "options": [
+        "Daily",
+        "Weekly",
+        "Only when the stock is sold",
+        "Quarterly or annually",
+        "Once at purchase"
+      ],
+      "correct": 3,
+      "explanation": "The company pays the shareholder a certain amount on a quarterly or annual basis."
+    },
+    {
+      "stem": "What outcome is anticipated for the Data Dividend trend?",
+      "options": [
+        "Platforms will stop collecting user data",
+        "Users will have to start paying money instead of data",
+        "The time is not far when this trend will start benefiting end-users",
+        "Regulators will ban revenue sharing with users",
+        "Dividends will be paid only to corporate customers"
+      ],
+      "correct": 2,
+      "explanation": "The expectation is that platforms will begin sharing revenue with end-users, and that this trend is not far off."
+    }
+  ]
+}

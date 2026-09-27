@@ -1,0 +1,125 @@
+{
+  "topic": "pseudocode",
+  "questions": [
+    {
+      "stem": "What is pseudocode?",
+      "options": [
+        "A compiled programming language",
+        "A high-level description of a program or algorithm using natural language mixed with programming-like constructs",
+        "A database query language",
+        "A type of syntax error",
+        "Machine-readable instructions for a processor"
+      ],
+      "correct": 1,
+      "explanation": "Pseudocode is a high-level description of a computer program or algorithm that mixes natural language with programming-language-like constructs."
+    },
+    {
+      "stem": "Is pseudocode meant to be executed by a computer?",
+      "options": [
+        "Yes, it runs in any interpreter",
+        "Yes, but only after compilation",
+        "No, it serves as a way to plan and express an algorithm's logic before implementing it in a specific language",
+        "Only in Python environments",
+        "Only when written in uppercase"
+      ],
+      "correct": 2,
+      "explanation": "Pseudocode is not meant to be executed; it is used to plan and express the logic of an algorithm before implementation."
+    },
+    {
+      "stem": "Why is pseudocode described as language agnostic?",
+      "options": [
+        "Because it can only be written in English",
+        "Because it compiles to every programming language",
+        "Because it must use SQL keywords",
+        "Because it is not tied to the syntax of any specific programming language",
+        "Because it is translated automatically by IDEs"
+      ],
+      "correct": 3,
+      "explanation": "Pseudocode is not tied to the syntax of any specific programming language, which is beneficial when team members know different languages."
+    },
+    {
+      "stem": "How does pseudocode help reduce implementation errors?",
+      "options": [
+        "It runs automated tests on the algorithm",
+        "It enforces strict type checking",
+        "It prevents syntax errors in the final code",
+        "It checks the code against a style guide",
+        "Visualising the logic in an abstract form helps developers catch errors or inefficiencies early, before coding"
+      ],
+      "correct": 4,
+      "explanation": "Using pseudocode as a planning tool helps identify potential issues early, leading to a more robust final implementation."
+    },
+    {
+      "stem": "Why is pseudocode useful for communication among stakeholders?",
+      "options": [
+        "Its mix of natural language and programming-like constructs makes it understandable to both technical and non-technical people",
+        "It is always shorter than real code",
+        "It can be emailed as an executable",
+        "It hides the algorithm's logic from non-developers",
+        "It is a legally binding specification"
+      ],
+      "correct": 0,
+      "explanation": "Pseudocode is easily understandable to technical and non-technical stakeholders, aiding a shared understanding of the algorithm's design."
+    },
+    {
+      "stem": "What is the peanut butter and jelly sandwich example used to illustrate?",
+      "options": [
+        "How syntax errors occur",
+        "Writing the steps of a process in a simple, step-by-step way without unnecessary detail",
+        "How to write a SQL loop",
+        "The difference between compilers and interpreters",
+        "How to define a user-defined function"
+      ],
+      "correct": 1,
+      "explanation": "The sandwich example shows pseudocode as simple, step-by-step instructions without details such as brands of peanut butter or types of bread."
+    },
+    {
+      "stem": "What does pseudocode allow developers to focus on by abstracting away syntax?",
+      "options": [
+        "Memory management",
+        "Compiler optimisation",
+        "The fundamental logic of the algorithm",
+        "The choice of database",
+        "Variable naming conventions"
+      ],
+      "correct": 2,
+      "explanation": "By abstracting away programming syntax, pseudocode lets developers concentrate on the fundamental logic of an algorithm."
+    },
+    {
+      "stem": "Why is pseudocode valued as an educational tool?",
+      "options": [
+        "It is required by most examination boards",
+        "It teaches the syntax of a particular language",
+        "It generates working programs for students",
+        "Its simplicity and language-agnostic nature make it accessible to learners at various levels of expertise",
+        "It replaces the need to learn programming"
+      ],
+      "correct": 3,
+      "explanation": "Pseudocode's simplicity and language-agnostic nature make it accessible for teaching algorithmic concepts and problem-solving skills."
+    },
+    {
+      "stem": "In the software development process, when is pseudocode typically used as a planning tool?",
+      "options": [
+        "After the software has been released",
+        "During performance tuning",
+        "During code review only",
+        "When writing unit tests",
+        "During the design phase, before actual coding"
+      ],
+      "correct": 4,
+      "explanation": "Developers use pseudocode during the design phase to outline the structure and flow of an algorithm before delving into actual coding."
+    },
+    {
+      "stem": "Which of the following is NOT a stated benefit of pseudocode?",
+      "options": [
+        "Guaranteeing the final program runs without bugs",
+        "Clarity and communication",
+        "Planning and design",
+        "Facilitating step-by-step understanding",
+        "Focus on logic rather than syntax"
+      ],
+      "correct": 0,
+      "explanation": "Pseudocode helps reduce implementation errors by catching issues early, but it does not guarantee a bug-free program."
+    }
+  ]
+}

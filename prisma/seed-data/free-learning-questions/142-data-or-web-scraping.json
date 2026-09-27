@@ -1,0 +1,125 @@
+{
+  "topic": "data-or-web-scraping",
+  "questions": [
+    {
+      "stem": "By what other name is data scraping known?",
+      "options": [
+        "Data masking",
+        "Web scraping",
+        "Data mining",
+        "Data federation",
+        "Screen printing"
+      ],
+      "correct": 1,
+      "explanation": "Data scraping is also known as web scraping, with only a minor difference between the two terms."
+    },
+    {
+      "stem": "What is the minor difference between data scraping and web scraping?",
+      "options": [
+        "Data scraping is legal while web scraping is not",
+        "Data scraping works only on databases, web scraping only on spreadsheets",
+        "Data scraping searches for the data's location and extracts it precisely, whereas web scraping extracts everything from web pages",
+        "Web scraping requires a key, data scraping does not",
+        "Data scraping copies and pastes, web scraping does not"
+      ],
+      "correct": 2,
+      "explanation": "Data scraping means searching the location of the data and extracting it precisely and accurately, whereas web scraping involves extracting exactly everything from web pages."
+    },
+    {
+      "stem": "What is data or web scraping, as a process?",
+      "options": [
+        "Encrypting web traffic between two servers",
+        "Importing information from a website into a spreadsheet or local file on your computer",
+        "Publishing a database as a public web service",
+        "Deleting duplicate pages from a website",
+        "Compressing images on a web page"
+      ],
+      "correct": 1,
+      "explanation": "Data or web scraping is the process of importing information from a website into a spreadsheet or local file saved on your computer."
+    },
+    {
+      "stem": "Which of the following is a popular use of data scraping?",
+      "options": [
+        "Pricing for travel booking and price comparison sites",
+        "Encrypting customer records",
+        "Building a data warehouse schema",
+        "Managing user access control lists",
+        "Decoding analog signals"
+      ],
+      "correct": 0,
+      "explanation": "Popular uses include research for web content or business intelligence, pricing for travel and price comparison sites, finding sales leads and sending product data between vendors."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a popular use of data scraping?",
+      "options": [
+        "Research for web content or business intelligence",
+        "Finding sales leads by crawling public data sources",
+        "Sending product data from an e-commerce site to another online vendor",
+        "Pricing for price comparison sites",
+        "Migrating a database to the cloud"
+      ],
+      "correct": 4,
+      "explanation": "Migrating a database to the cloud is not a scraping use; the other four are named as popular uses of data scraping."
+    },
+    {
+      "stem": "Which public data sources are given as examples for finding sales leads by scraping?",
+      "options": [
+        "Facebook and Instagram",
+        "Yell and Twitter",
+        "Google Shopping and Amazon",
+        "LinkedIn and Wikipedia",
+        "Bing and Yahoo"
+      ],
+      "correct": 1,
+      "explanation": "Finding sales leads or conducting market research is done by crawling public data sources such as Yell and Twitter."
+    },
+    {
+      "stem": "In the e-commerce example, product data is scraped from an online shop and sent to which destination?",
+      "options": [
+        "A data warehouse",
+        "A regulator",
+        "Google Shopping",
+        "A VPN",
+        "A backup server"
+      ],
+      "correct": 2,
+      "explanation": "One popular use is sending product data from an e-commerce site to another online vendor, such as Google Shopping."
+    },
+    {
+      "stem": "What benefit does scraping offer for unstructured, scattered data?",
+      "options": [
+        "It encrypts the data so it cannot be stolen",
+        "It collects it in one place and makes it structured for better use",
+        "It deletes it to reduce storage",
+        "It converts it into analog signals",
+        "It keeps it within national borders"
+      ],
+      "correct": 1,
+      "explanation": "Scraping allows unstructured, scattered data from multiple sources to be collected in one place and made structured for better use."
+    },
+    {
+      "stem": "What is described as the dark side of data scraping?",
+      "options": [
+        "Slowing down the websites being scraped",
+        "Breaking referential integrity",
+        "Its misuse for email harvesting, with addresses sold to spammers or scammers",
+        "Corrupting spreadsheets with bad formatting",
+        "Storing data across borders"
+      ],
+      "correct": 2,
+      "explanation": "The dark side of scraping is email harvesting: scraping websites, social media and directories to uncover people's email addresses, which are then sold to spammers or scammers."
+    },
+    {
+      "stem": "Which department is data scraping normally known by, and with whom is it tagged?",
+      "options": [
+        "The finance department, tagged with auditors",
+        "The security department, tagged with hackers",
+        "The marketing department, tagged with designers",
+        "The HR department, tagged with recruiters",
+        "The data science team, tagged with statisticians"
+      ],
+      "correct": 1,
+      "explanation": "The term is normally known by the security department and is tagged with hackers."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "data-pipelines",
+  "questions": [
+    {
+      "stem": "In simple terms, what is a Data Pipeline?",
+      "options": [
+        "A set of rules for classifying data",
+        "The travelling of data from one point to another",
+        "A database backup mechanism",
+        "A tool for masking sensitive data",
+        "A dashboard for monitoring servers"
+      ],
+      "correct": 1,
+      "explanation": "A Data Pipeline is as simple as data travelling from one point to another, yet without a reliable one no decision can be taken on time."
+    },
+    {
+      "stem": "In the Pull data processing mechanism, which system initiates the movement of data?",
+      "options": [
+        "The source system pushes data to the target",
+        "A third-party broker moves the data",
+        "Data flows continuously with no initiator",
+        "The target system pulls data from the source system",
+        "The BI tool requests data from the warehouse"
+      ],
+      "correct": 3,
+      "explanation": "Pull is when target systems pull data from source systems; Push is when source systems push data to targets."
+    },
+    {
+      "stem": "By what other name is Bulk Loading known?",
+      "options": [
+        "Data Dump",
+        "Data Stream",
+        "Data Delta",
+        "Data Snapshot",
+        "Data Trickle"
+      ],
+      "correct": 0,
+      "explanation": "Bulk Loading, processing the whole set of data every time from the source, is also called a Data Dump."
+    },
+    {
+      "stem": "What does CDC Loading process?",
+      "options": [
+        "The whole dataset every time",
+        "Only the metadata of the source",
+        "Only the data that has changed at the source",
+        "A random sample of the source",
+        "Only deleted records"
+      ],
+      "correct": 2,
+      "explanation": "CDC Loading means processing only the changed data from the source, unlike Bulk Loading which processes everything."
+    },
+    {
+      "stem": "Which of the following is an example of Batch processing in a Data Pipeline?",
+      "options": [
+        "Moving a post the moment it is liked",
+        "Streaming CCTV footage second by second",
+        "Pushing a card transaction instantly",
+        "Sending an OTP on payment",
+        "Starting processing after 24 hours or perhaps 12 hours"
+      ],
+      "correct": 4,
+      "explanation": "Batch processing means processing data after a certain time duration, for example after 24 or 12 hours."
+    },
+    {
+      "stem": "Which example illustrates Real-Time (event-based) processing in a Data Pipeline?",
+      "options": [
+        "A nightly load of the sales table",
+        "A post being LIKED on Facebook or LinkedIn moving immediately to downstream systems",
+        "A weekly data dump to the warehouse",
+        "A monthly financial close",
+        "A quarterly data archive"
+      ],
+      "correct": 1,
+      "explanation": "Real-Time processing means the moment there is a change in the source, that piece of data is processed towards the target, such as a LIKE on Facebook or LinkedIn."
+    },
+    {
+      "stem": "What effect does better hardware have on Batch processing?",
+      "options": [
+        "It removes the need for a data pipeline",
+        "It makes bulk loading impossible",
+        "It converts batch into streaming automatically",
+        "It allows the batch time duration to be made smaller",
+        "It has no effect on batch duration"
+      ],
+      "correct": 3,
+      "explanation": "The better the hardware in place, the smaller the batch processing time duration can be."
+    },
+    {
+      "stem": "Which of the following is NOT one of the named Data Processing Mechanisms?",
+      "options": [
+        "Push",
+        "Pull",
+        "Merge",
+        "Streaming",
+        "None of these; all are named mechanisms"
+      ],
+      "correct": 2,
+      "explanation": "The Data Processing Mechanisms are Push, Pull and Streaming; Merge is not one of them."
+    },
+    {
+      "stem": "What is the likely future for an organisation that builds Data Pipelines without Data Lineage, a Data Catalog and Data Governance standards?",
+      "options": [
+        "A Data Swamp",
+        "A Data Vault",
+        "A Data Mart",
+        "Faster decision making",
+        "Lower hardware costs"
+      ],
+      "correct": 0,
+      "explanation": "When creating Data Pipelines one must ensure Lineage, Catalog and Governance standards and policies are in place, or a Data Swamp is the future."
+    },
+    {
+      "stem": "Why does CDC play a vital role in supporting Real-Time processing from OLTP systems?",
+      "options": [
+        "Because OLTP systems cannot be queried directly",
+        "Because CDC converts data into batches",
+        "Because CDC encrypts data before transfer",
+        "Because CDC replaces the need for a data warehouse",
+        "Because in real time a very small size of data is expected to travel"
+      ],
+      "correct": 4,
+      "explanation": "To support real-time from OLTP, CDC plays a vital role because in real time only a very small amount of data is expected to travel."
+    }
+  ]
+}

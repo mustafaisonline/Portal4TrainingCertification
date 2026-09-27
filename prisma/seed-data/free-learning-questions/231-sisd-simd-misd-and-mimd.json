@@ -1,0 +1,125 @@
+{
+  "topic": "sisd-simd-misd-and-mimd",
+  "questions": [
+    {
+      "stem": "What does the abbreviation SIMD stand for?",
+      "options": [
+        "Single Instruction Stream and Single Data Stream",
+        "Single Instruction Stream and Multiple Data Stream",
+        "Multiple Instruction Stream and Single Data Stream",
+        "Multiple Instruction Stream and Multiple Data Stream",
+        "Sequential Instruction and Multiple Disk"
+      ],
+      "correct": 1,
+      "explanation": "SIMD is Single Instruction Stream and Multiple Data Stream: one instruction is applied to many data elements in parallel."
+    },
+    {
+      "stem": "What does the abbreviation MISD stand for?",
+      "options": [
+        "Multiple Instruction Stream and Multiple Data Stream",
+        "Multiple Index and Single Disk",
+        "Single Instruction Stream and Multiple Data Stream",
+        "Multiple Instruction Stream and Single Data Stream",
+        "Multi-core Instruction Set Design"
+      ],
+      "correct": 3,
+      "explanation": "MISD is Multiple Instruction Stream and Single Data Stream: many instructions are sent to read the same piece of information."
+    },
+    {
+      "stem": "What is a CPU core built of?",
+      "options": [
+        "Billions of microscopic transistors that process instructions",
+        "A single large transistor",
+        "A block of hard-disk storage",
+        "A set of network cables",
+        "Several pages of stored data"
+      ],
+      "correct": 0,
+      "explanation": "A CPU core is built of billions of microscopic transistors that process the instructions passed to it."
+    },
+    {
+      "stem": "What is the minimum number of cores required to handle multiple instructions in parallel?",
+      "options": [
+        "One",
+        "Two",
+        "Four",
+        "Eight",
+        "Sixteen"
+      ],
+      "correct": 1,
+      "explanation": "One instruction is handled by one core, so multitasking or parallel instructions require a minimum of two cores."
+    },
+    {
+      "stem": "In the analogy of finding every letter 'A' written on a page, how does SISD behave?",
+      "options": [
+        "It reads all the letters at once and returns them together",
+        "It sends several instructions in parallel",
+        "It reads and returns each 'A' one by one, sequentially, like a traditional human reader",
+        "It reads 'A' and 'B' at the same time",
+        "It skips letters it has already seen"
+      ],
+      "correct": 2,
+      "explanation": "SISD works like a human reading one letter or word at a time, so each 'A' is read and returned sequentially, which is slow for large data."
+    },
+    {
+      "stem": "Which problem of SISD does SIMD solve?",
+      "options": [
+        "The inability to process instructions from more than one user",
+        "The need to move data on floppy drives",
+        "The lack of security parameters on queries",
+        "The limited size of the hard disk",
+        "The need to read each letter or word one by one"
+      ],
+      "correct": 4,
+      "explanation": "SIMD processes in parallel: given one instruction to find the letter 'A', it reads all the 'A's at once and returns them much more quickly than SISD."
+    },
+    {
+      "stem": "What scenario does MIMD support?",
+      "options": [
+        "One instruction reading one data element at a time",
+        "One instruction reading many data elements in parallel",
+        "Many instructions reading the same data element one by one",
+        "Data being copied from one hard disk to another",
+        "Multiple instructions processed in parallel to read multiple data elements, such as all the 'A's and all the 'B's"
+      ],
+      "correct": 4,
+      "explanation": "MIMD lets several instructions or queries run in parallel to read different sets of information, for example all the 'A's along with all the 'B's."
+    },
+    {
+      "stem": "In MISD, how are hundreds of instructions to read the same letter 'A' processed?",
+      "options": [
+        "One by one, sequentially, which takes a lot of time",
+        "All at once on a single core",
+        "By splitting the page across nodes",
+        "By caching the first result and reusing it",
+        "By rejecting all but the first instruction"
+      ],
+      "correct": 0,
+      "explanation": "With MISD, multiple instructions are sent to read the same piece of information but each instruction is processed sequentially, so many instructions take a long time."
+    },
+    {
+      "stem": "On what do all the multi-instruction or multi-data reads ultimately depend?",
+      "options": [
+        "The version of the query language",
+        "The speed of the network connection",
+        "The size of the page being read",
+        "The number of cores available in the computer, server or node",
+        "The amount of free hard-disk space"
+      ],
+      "correct": 3,
+      "explanation": "All parallel instruction or data processing is bounded by the number of cores available in the machine, server or node."
+    },
+    {
+      "stem": "How many types of instruction for pulling data are there in this classification?",
+      "options": [
+        "Two",
+        "Three",
+        "Four",
+        "Five",
+        "Six"
+      ],
+      "correct": 2,
+      "explanation": "There are four types: SISD, SIMD, MISD and MIMD."
+    }
+  ]
+}

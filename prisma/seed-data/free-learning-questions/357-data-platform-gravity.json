@@ -1,0 +1,125 @@
+{
+  "topic": "data-platform-gravity",
+  "questions": [
+    {
+      "stem": "What is the central idea of Data Platform Gravity?",
+      "options": [
+        "Every aspect of data handling, from ingestion to transformation, analytics and deployment, is achieved within a single, unified platform",
+        "Data should be physically moved to the largest data centre",
+        "Each team should choose its own best-of-breed tool",
+        "All data must be stored on premises",
+        "Data should be replicated to every system that might need it"
+      ],
+      "correct": 0,
+      "explanation": "Data Platform Gravity is a holistic framework in which the whole data lifecycle is handled within one unified platform."
+    },
+    {
+      "stem": "Which paradigm is Data Platform Gravity said to be inspired by?",
+      "options": [
+        "Data Vault",
+        "Data Fabric",
+        "Data Mesh",
+        "Star schema",
+        "Waterfall"
+      ],
+      "correct": 1,
+      "explanation": "Data Platform Gravity is inspired by the Data Fabric paradigm, advocating seamless operations across the entire data lifecycle."
+    },
+    {
+      "stem": "Which inefficiency is named as a consequence of the fragmented, multi-tool approach that Data Platform Gravity seeks to replace?",
+      "options": [
+        "Too much collaboration between teams",
+        "Excessive data governance",
+        "Data duplication, integration challenges and increased costs",
+        "Too few dashboards",
+        "Over-reliance on open standards"
+      ],
+      "correct": 2,
+      "explanation": "The fragmented approach introduces inefficiencies such as data duplication, integration challenges and increased costs."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a core component of a Data Platform Gravity system?",
+      "options": [
+        "Data Ingestion",
+        "Data Transformation (ETL/ELT)",
+        "Business Intelligence (BI)",
+        "Physical hardware manufacturing",
+        "Data Integration and Sharing"
+      ],
+      "correct": 3,
+      "explanation": "The core components are Data Ingestion, Data Transformation, Data Science and Machine Learning, Business Intelligence, and Data Integration and Sharing."
+    },
+    {
+      "stem": "How does building BI dashboards directly within a Data Platform Gravity system benefit reporting?",
+      "options": [
+        "It removes the need for any data transformation",
+        "It allows dashboards to be sold to competitors",
+        "It makes data governance unnecessary",
+        "It eliminates the need for data ingestion",
+        "It eliminates the need to export data to third-party tools, preserving data integrity and enabling near-real-time reporting"
+      ],
+      "correct": 4,
+      "explanation": "Building BI within the platform avoids exporting data to third-party tools, which preserves data integrity and enables near-real-time reporting."
+    },
+    {
+      "stem": "Which benefit of Data Platform Gravity refers to reducing the latency between data ingestion and actionable insights?",
+      "options": [
+        "Faster time-to-insight",
+        "Vendor lock-in",
+        "Skill set alignment",
+        "Cost efficiency",
+        "Improved data governance"
+      ],
+      "correct": 0,
+      "explanation": "Faster time-to-insight comes from integrated workflows that reduce the latency between ingestion and actionable insights."
+    },
+    {
+      "stem": "How does Data Platform Gravity deliver cost efficiency?",
+      "options": [
+        "By eliminating all staff costs",
+        "Fewer tools mean reduced licensing costs, lower infrastructure requirements and simplified support overheads",
+        "By storing data only in cache",
+        "By charging consumers for each query",
+        "By outsourcing all analytics"
+      ],
+      "correct": 1,
+      "explanation": "Consolidating onto fewer tools reduces licensing costs, lowers infrastructure requirements and simplifies support overheads."
+    },
+    {
+      "stem": "What is recommended to mitigate the vendor lock-in risk of Data Platform Gravity?",
+      "options": [
+        "Avoiding any single platform altogether",
+        "Buying the most expensive platform available",
+        "Choosing a platform that adheres to open standards",
+        "Keeping all legacy tools running in parallel indefinitely",
+        "Disabling data sharing with external systems"
+      ],
+      "correct": 2,
+      "explanation": "Because relying on a single platform can limit future flexibility, choosing a platform that adheres to open standards is essential."
+    },
+    {
+      "stem": "Which of the following is listed as a challenge of adopting Data Platform Gravity?",
+      "options": [
+        "Too much cross-team collaboration",
+        "Reduced learning curve for new users",
+        "Faster reporting",
+        "Integration with legacy systems",
+        "Lower licensing costs"
+      ],
+      "correct": 3,
+      "explanation": "Migrating from a fragmented ecosystem to a unified platform requires careful planning to integrate or decommission legacy systems."
+    },
+    {
+      "stem": "Which future capability of Data Platform Gravity refers to automated cleaning, enriching and governing of data using AI-driven insights?",
+      "options": [
+        "Multi-cloud and hybrid support",
+        "Personalised user experiences",
+        "Skill set alignment",
+        "Data integration and sharing",
+        "Autonomous data management"
+      ],
+      "correct": 4,
+      "explanation": "Autonomous data management is the anticipated future capability of automating data cleaning, enrichment and governance with AI-driven insights."
+    }
+  ]
+}

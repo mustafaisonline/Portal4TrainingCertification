@@ -1,0 +1,125 @@
+{
+  "topic": "database-and-oltp",
+  "questions": [
+    {
+      "stem": "What is a database, in the simplest definition?",
+      "options": [
+        "A dimensional model of business facts",
+        "A medium to store structured data",
+        "A tool for scraping websites",
+        "A network of servers rented from a cloud vendor",
+        "A report produced for decision makers"
+      ],
+      "correct": 1,
+      "explanation": "A database is defined as a medium to store structured data; it is a datastore, not a data modelling solution."
+    },
+    {
+      "stem": "Why can a database not be linked to any one data modelling solution?",
+      "options": [
+        "Because databases only support NoSQL models",
+        "Because OLTP, data warehouses, data marts and OLAP all use databases as the medium to store their data sets",
+        "Because databases cannot store relations",
+        "Because data models are stored on tape drives",
+        "Because databases predate data modelling"
+      ],
+      "correct": 1,
+      "explanation": "A database is a datastore: OLTP, data warehouse, data mart and OLAP solutions all use databases as their storage medium, so the database itself is not tied to one modelling approach."
+    },
+    {
+      "stem": "What does OLTP (Online Transaction Processing) do?",
+      "options": [
+        "Stores pre-aggregated cubes for analysis",
+        "Stores business transactions in real time with insert, update and delete capability and the ACID feature",
+        "Archives historical data on tape drives",
+        "Virtualises data from multiple sources",
+        "Extracts data from web pages"
+      ],
+      "correct": 1,
+      "explanation": "OLTP stores business transactions in real time with insert, update and delete capability and the ACID feature; it is the oldest and most used medium in every era."
+    },
+    {
+      "stem": "Under which term do data warehouses and data marts normally fall?",
+      "options": [
+        "OLTP (Online Transactional Processing)",
+        "OLAP (Online Analytical Processing)",
+        "NoSQL",
+        "Big Data",
+        "Data virtualization"
+      ],
+      "correct": 1,
+      "explanation": "Databases are normally called OLTP, whereas data warehouses and data marts fall under the term OLAP."
+    },
+    {
+      "stem": "Which statement about Big Data and Data Lakes in relation to OLTP and OLAP is correct?",
+      "options": [
+        "They are firmly classified as OLTP",
+        "They are firmly classified as OLAP",
+        "The data world has yet to tag them as OLTP or OLAP, but they are certainly not meant for OLTP",
+        "They replace both OLTP and OLAP",
+        "They are classified as RDBMS"
+      ],
+      "correct": 2,
+      "explanation": "Big Data and Data Lakes have not yet been tagged as OLTP or OLAP, but they are certainly not meant for OLTP; meanwhile NoSQL is stepping into the OLTP zone."
+    },
+    {
+      "stem": "Why are databases called RDBMS (relational database management systems)?",
+      "options": [
+        "Because they store data on related servers",
+        "Because data in tables can be joined with each other using relations",
+        "Because they are related to a data warehouse",
+        "Because every table has a relation to a tape backup",
+        "Because they relate to real-time reporting"
+      ],
+      "correct": 1,
+      "explanation": "In databases there are tables, rows and columns, and data in tables can be joined using relations, which is why they are called relational database management systems."
+    },
+    {
+      "stem": "What is the purpose of the normalisation concept in the OLTP world?",
+      "options": [
+        "To speed up reporting queries",
+        "To make sure there is no duplication of data",
+        "To pre-aggregate KPIs",
+        "To encrypt sensitive columns",
+        "To convert NoSQL data into tables"
+      ],
+      "correct": 1,
+      "explanation": "In OLTP, normalisation makes sure there is no duplication of data; most data models are normalised up to 3NF."
+    },
+    {
+      "stem": "In Third Normal Form (3NF), data modellers keep breaking tables until what condition is met?",
+      "options": [
+        "Every table has fewer than ten columns",
+        "All non-key columns are dependent on key columns",
+        "All tables fit on a single tape drive",
+        "Every table has a foreign key to a fact table",
+        "No table contains more than one row per customer"
+      ],
+      "correct": 1,
+      "explanation": "In 3NF, data modellers keep breaking tables down until all the non-key columns are dependent on key columns."
+    },
+    {
+      "stem": "Before the 1990s, why did organisations offload OLTP data to tape drives, and what challenge did this bring?",
+      "options": [
+        "Storage and processing were expensive; it created a challenge in decision-making on historical data",
+        "Tape was faster than disk; it created a challenge of duplicate records",
+        "Regulators required it; it created a challenge of data sovereignty",
+        "Databases could not store text; it created a challenge of encoding",
+        "Networks were unreliable; it created a challenge of table locking"
+      ],
+      "correct": 0,
+      "explanation": "Storage and processing power were a big challenge and expensive, so data was offloaded to tape, which made decision-making on historical data difficult."
+    },
+    {
+      "stem": "Why did the normalised (3NF) extraction copy of OLTP become a bottleneck for decision-support queries?",
+      "options": [
+        "Because it could not store more than a few KPIs",
+        "Because queries had to join tens or hundreds of tables, slowing a single query from minutes to 10–20 hours",
+        "Because table locking prevented any reads",
+        "Because it was stored on tape",
+        "Because it lacked the ACID feature"
+      ],
+      "correct": 1,
+      "explanation": "With tables broken down in 3NF, extraction queries had to search tens or hundreds of tables using joins, slowing a query from minutes to 10–20 hours; Bill Inmon's data warehouse was proposed to mitigate this."
+    }
+  ]
+}

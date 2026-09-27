@@ -1,0 +1,125 @@
+{
+  "topic": "what-is-a-fact-table",
+  "questions": [
+    {
+      "stem": "What does a fact table store in dimensional data modelling?",
+      "options": [
+        "The measurable outcomes of a business process",
+        "Descriptive attributes such as names and categories",
+        "Hierarchies for roll-up and drill-down",
+        "Slowly changing attribute history",
+        "Business keys and their load metadata"
+      ],
+      "correct": 0,
+      "explanation": "A fact table is the central table that stores the measurable, typically numeric, outcomes of a business process for aggregation and reporting."
+    },
+    {
+      "stem": "Which question do facts answer?",
+      "options": [
+        "Who was involved?",
+        "What happened?",
+        "Where did it happen?",
+        "Why did it happen?",
+        "When is it valid?"
+      ],
+      "correct": 1,
+      "explanation": "Facts answer \"What happened?\" by representing transactions, events or measurable states that the organisation wants to analyse."
+    },
+    {
+      "stem": "Which three kinds of content does a fact table typically contain?",
+      "options": [
+        "Text descriptions, hierarchies and validity dates",
+        "Nested objects, arrays and methods",
+        "Numeric measures, foreign keys to dimension tables and minimal descriptive attributes of its own",
+        "Hubs, links and satellites",
+        "Nodes, edges and properties"
+      ],
+      "correct": 2,
+      "explanation": "A fact table typically holds numeric measures, foreign keys to dimensions such as Customer_ID and Time_ID, and very few descriptive attributes of its own."
+    },
+    {
+      "stem": "What is the grain of a fact table?",
+      "options": [
+        "The number of foreign keys it contains",
+        "The total number of rows",
+        "The unit of currency used for measures",
+        "The level of detail that one row represents, such as one row per loan approval event",
+        "The hierarchy used for drill-down"
+      ],
+      "correct": 3,
+      "explanation": "Each row represents one clearly defined business event; this level of detail is the grain, for example one row per loan approval, per repayment or per daily balance snapshot."
+    },
+    {
+      "stem": "What can happen if the grain of a fact table is not clearly defined?",
+      "options": [
+        "The dimensions cannot be joined",
+        "The table cannot store numeric measures",
+        "The table becomes normalised",
+        "The foreign keys become primary keys",
+        "Reports may produce incorrect totals or duplicate counts"
+      ],
+      "correct": 4,
+      "explanation": "Defining the grain precisely is critical because without it reports may produce incorrect totals or duplicate counts."
+    },
+    {
+      "stem": "Which measure is given as an example of an additive fact?",
+      "options": [
+        "LoanAmount",
+        "Interest Rate",
+        "Loan Balance",
+        "Customer Segment",
+        "Approval Date"
+      ],
+      "correct": 0,
+      "explanation": "Additive facts such as LoanAmount can be summed across all dimensions."
+    },
+    {
+      "stem": "Why is Loan Balance described as a semi-additive fact?",
+      "options": [
+        "Because it cannot be summed at all",
+        "Because it can be summed across customers but not across time",
+        "Because it is stored as text",
+        "Because it is a foreign key",
+        "Because it is always an average"
+      ],
+      "correct": 1,
+      "explanation": "Semi-additive facts can be summed across some dimensions but not others; Loan Balance can be summed over customers but not across time."
+    },
+    {
+      "stem": "How should a non-additive fact such as Interest Rate be handled in analysis?",
+      "options": [
+        "Summed across all dimensions",
+        "Summed across time only",
+        "Not summed, though averages or ratios may be calculated",
+        "Moved into a dimension table",
+        "Stored as a foreign key"
+      ],
+      "correct": 2,
+      "explanation": "Non-additive facts cannot be summed meaningfully, but averages or ratios may be calculated from them."
+    },
+    {
+      "stem": "Why can a fact table not stand alone?",
+      "options": [
+        "Because it has no primary key",
+        "Because it cannot be indexed",
+        "Because it is always normalised",
+        "Because without dimensions providing context, numeric measures have little meaning",
+        "Because it cannot be aggregated"
+      ],
+      "correct": 3,
+      "explanation": "Fact tables form the quantitative backbone of BI systems, but without dimensions their numeric measures lack context and meaning."
+    },
+    {
+      "stem": "Which of the following is NOT a listed characteristic of fact tables?",
+      "options": [
+        "They belong to the Dimensional Modelling family including Star, Snowflake and Unified Star Schema",
+        "They are intentionally denormalised for analytical performance",
+        "They contain many foreign keys to dimensions",
+        "They are optimised for OLAP workloads",
+        "They contain many intrinsic descriptive attributes beyond numeric measures"
+      ],
+      "correct": 4,
+      "explanation": "Fact tables usually have relatively few intrinsic attributes beyond numeric measures; descriptive attributes belong in dimensions."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "document-databases",
+  "questions": [
+    {
+      "stem": "How do document databases store data?",
+      "options": [
+        "As JSON-like documents that can contain nested fields, arrays and variable structures",
+        "As rows and columns in normalised tables",
+        "As nodes and edges",
+        "As owner–member sets with pointers",
+        "As columns grouped into families and partitioned by key"
+      ],
+      "correct": 0,
+      "explanation": "Document databases treat each document as a self-contained representation of a business object, with nested fields, arrays and variable structure."
+    },
+    {
+      "stem": "What does a single document typically represent in a document database?",
+      "options": [
+        "One column of a table",
+        "One business object, such as an entire loan application",
+        "One transaction log entry",
+        "One index entry",
+        "One relationship between two entities"
+      ],
+      "correct": 1,
+      "explanation": "Each document typically represents one business object; in a loan approval system a single document may represent an entire loan application with embedded customer, officer and repayment data."
+    },
+    {
+      "stem": "In the MongoDB loan example, how is the repayment history represented inside the loan document?",
+      "options": [
+        "As a foreign key to a Repayment collection",
+        "As a comma-separated string field",
+        "As an array of Repayments, each with its date and amount",
+        "As a nested LoanOfficer object",
+        "As a separate top-level document per instalment"
+      ],
+      "correct": 2,
+      "explanation": "The loan document contains an array of Repayments that stores each instalment with its date and amount alongside the nested Customer and LoanOfficer objects."
+    },
+    {
+      "stem": "Why do document databases align naturally with API payloads?",
+      "options": [
+        "Because they enforce strict schemas",
+        "Because they require joins before serving data",
+        "Because they store data in relational tables",
+        "Because the data is already in JSON format",
+        "Because they use SQL for queries"
+      ],
+      "correct": 3,
+      "explanation": "Since documents are stored as JSON, the structure aligns naturally with API payloads and mobile or web applications can display data without multiple joins."
+    },
+    {
+      "stem": "Why can adding a new field to a document database be done easily?",
+      "options": [
+        "Because every field is stored as a separate table",
+        "Because new fields are ignored until a migration runs",
+        "Because document databases are read-only",
+        "Because documents cannot contain nested fields",
+        "Because the schema is flexible, so new fields need no costly table migrations or rigid schema alterations"
+      ],
+      "correct": 4,
+      "explanation": "Schema flexibility lets new fields be added without table migrations or rigid schema alterations, which makes document databases attractive in fast-moving development."
+    },
+    {
+      "stem": "What consistency challenge arises when a customer's details are embedded in several loan documents?",
+      "options": [
+        "Ensuring that a change such as an updated credit score is applied everywhere becomes more complex than in a relational database",
+        "The customer can no longer be uniquely identified",
+        "The loan documents cannot be retrieved in a single read",
+        "The credit score must be stored as a string",
+        "The documents must be normalised to 3NF first"
+      ],
+      "correct": 0,
+      "explanation": "Because related data may be duplicated across documents, enforcing global consistency rules such as updating a credit score everywhere is harder than in a relational database."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a strength of document databases?",
+      "options": [
+        "Schema flexibility and developer friendliness",
+        "Strong global consistency guarantees comparable to relational systems",
+        "Natural handling of semi-structured and nested data",
+        "Close alignment with modern web and mobile architectures",
+        "Support for agile development cycles"
+      ],
+      "correct": 1,
+      "explanation": "Consistency guarantees in document databases are typically weaker than in traditional relational systems; the strengths are flexibility, nested data handling, API alignment and agility."
+    },
+    {
+      "stem": "In the comparison of relational and document models for loan approval, what is the relational model best for?",
+      "options": [
+        "Agility and speed of development",
+        "Serving data directly to apps and APIs",
+        "Consistency, integration and complex queries",
+        "Eliminating all joins",
+        "Storing nested arrays"
+      ],
+      "correct": 2,
+      "explanation": "The relational model is best for consistency, integration and complex queries, while the document model is best for agility, speed and serving data to applications."
+    },
+    {
+      "stem": "How does the relational loan approval model assemble a full loan record, compared with the document model?",
+      "options": [
+        "Both retrieve the record in a single read",
+        "The relational model embeds all data in one row",
+        "The document model requires joins across collections",
+        "The relational model requires multiple joins across Customer, Officer, Branch and Repayment tables, whereas the document model retrieves everything in a single read",
+        "Neither model can produce a full loan record"
+      ],
+      "correct": 3,
+      "explanation": "In the relational model the loan is stored in a fact table linked to Customer, Officer, Branch and Repayment tables and needs multiple joins; the document model stores it all in one document."
+    },
+    {
+      "stem": "What is the key difference between Object-Oriented Data Modelling and document data modelling?",
+      "options": [
+        "Document databases cannot represent nested objects",
+        "Object-oriented models use flat tables while documents are nested",
+        "Object-oriented modelling is newer than document modelling",
+        "Document databases store methods alongside data",
+        "Object-oriented modelling bundled logic with data inside the database, whereas document databases keep only the data representation and leave logic in application code"
+      ],
+      "correct": 4,
+      "explanation": "Both represent entities as rich nested objects, but OODM tried to make the database itself object-oriented with data and methods together, while document databases separate storage from application logic."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "star-schema",
+  "questions": [
+    {
+      "stem": "What structure defines a star schema?",
+      "options": [
+        "A central fact table connecting directly to multiple surrounding dimension tables",
+        "Dimension tables normalised into related sub-dimensions",
+        "A bridge table unioning keys from many facts",
+        "Hubs, links and satellites",
+        "A single flat table holding all measures and attributes"
+      ],
+      "correct": 0,
+      "explanation": "In a star schema a central fact table connects directly to multiple dimension tables, forming a star-like structure."
+    },
+    {
+      "stem": "What is the primary goal of the star schema?",
+      "options": [
+        "Eliminating all redundancy through normalisation",
+        "Delivering a simple, high-performance, business-friendly structure for analytics",
+        "Capturing bi-temporal history of every attribute",
+        "Supporting high-volume transactional updates",
+        "Enabling procedural navigation between records"
+      ],
+      "correct": 1,
+      "explanation": "The star schema is designed for reporting, dashboards and self-service BI, where clarity and speed are critical."
+    },
+    {
+      "stem": "Which measures might a star schema fact table capture in a loan approval environment?",
+      "options": [
+        "Segment, IncomeBand and AgeGroup",
+        "City and Region",
+        "LoanAmount, InterestRate, ApprovalCount or RepaymentAmount",
+        "Day, Month, Quarter and Year",
+        "Branch and ExperienceYears"
+      ],
+      "correct": 2,
+      "explanation": "The fact table captures measurable events such as LoanAmount, InterestRate, ApprovalCount or RepaymentAmount; the other options are dimension attributes."
+    },
+    {
+      "stem": "Which attributes are listed for Dim_Officer in the star schema example?",
+      "options": [
+        "Segment and IncomeBand",
+        "City and Region",
+        "Day and Month",
+        "Branch and ExperienceYears",
+        "LoanAmount and ApprovalFlag"
+      ],
+      "correct": 3,
+      "explanation": "Dim_Officer holds Branch and ExperienceYears; Dim_Customer holds Segment, IncomeBand and AgeGroup, Dim_Branch holds City and Region, and Dim_Date holds Day, Month, Quarter and Year."
+    },
+    {
+      "stem": "Why does the star schema's shallow join path improve performance?",
+      "options": [
+        "Because every table is stored in memory",
+        "Because the fact table has no foreign keys",
+        "Because dimensions are joined to each other in long chains",
+        "Because queries never need the fact table",
+        "Because each dimension connects directly to the fact table with no deep chains of joins between dimensions"
+      ],
+      "correct": 4,
+      "explanation": "Each dimension connects directly to the fact table with no deep join chains, which simplifies query logic and improves performance, especially in analytical and columnar databases."
+    },
+    {
+      "stem": "Which question is given as an example that executives can answer with the Fact_LoanApproval star schema?",
+      "options": [
+        "How many loans were approved by officers with more than 10 years of experience?",
+        "What did we believe on 1 February was valid on 15 January?",
+        "Which customers share the same contact details?",
+        "Which events must be replayed to rebuild loan L001?",
+        "Which fields should the mobile app request?"
+      ],
+      "correct": 0,
+      "explanation": "Example questions include total loan amount approved per branch and region, loans approved by officers with more than 10 years of experience, and average approval duration by income band."
+    },
+    {
+      "stem": "Why do dashboard refresh times remain fast in a star schema even at high data volumes?",
+      "options": [
+        "Because the data is pre-aggregated into a bridge table",
+        "Because each query typically joins the fact table directly to the relevant dimensions",
+        "Because dimensions are normalised into sub-dimensions",
+        "Because the schema is stored as JSON",
+        "Because the fact table is partitioned by customer"
+      ],
+      "correct": 1,
+      "explanation": "Because each query joins the fact table directly to the relevant dimensions, dashboard refresh times remain fast at high data volumes."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a strength of the star schema?",
+      "options": [
+        "Simplicity",
+        "Strong alignment with BI tools",
+        "Optimisation for transactional updates",
+        "Minimal join complexity",
+        "Easy to understand visually and conceptually"
+      ],
+      "correct": 2,
+      "explanation": "The star schema is not optimised for transactional updates; its strengths are simplicity, performance, BI alignment and minimal join complexity."
+    },
+    {
+      "stem": "What trade-off does the star schema intentionally accept to maintain simplicity?",
+      "options": [
+        "Slower query performance",
+        "Loss of the fact table grain",
+        "Inability to use BI tools",
+        "Redundancy in dimension tables",
+        "Deep join chains between dimensions"
+      ],
+      "correct": 3,
+      "explanation": "The star schema intentionally introduces redundancy in dimension tables to maintain simplicity, focusing on analytical usability rather than relational purity."
+    },
+    {
+      "stem": "How is the star schema regarded within data warehousing practice?",
+      "options": [
+        "As an obsolete pre-relational design",
+        "As a niche pattern used only for fraud detection",
+        "As a normalised design for OLTP systems",
+        "As a cross-cutting principle rather than a schema",
+        "As the default dimensional design pattern for data warehouses and analytical data marts"
+      ],
+      "correct": 4,
+      "explanation": "The star schema is often considered the default dimensional design pattern and is one of the most widely adopted patterns in modern data warehousing."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "data-federation",
+  "questions": [
+    {
+      "stem": "To which kind of data store is data federation restricted?",
+      "options": [
+        "NoSQL databases",
+        "Web services and SaaS applications",
+        "Relational databases",
+        "Data appliances",
+        "Enterprise applications"
+      ],
+      "correct": 2,
+      "explanation": "Data federation works conceptually like data virtualization but is restricted to relational databases, whereas virtualization also reaches appliances, NoSQL, web services, SaaS and enterprise applications."
+    },
+    {
+      "stem": "What does data virtualization create that data federation does not?",
+      "options": [
+        "A unified data model",
+        "A physical copy of the data",
+        "An ETL pipeline",
+        "A backup of the source systems",
+        "An access control list"
+      ],
+      "correct": 0,
+      "explanation": "A major difference is that data federation does not create a unified data model, whereas data virtualization does."
+    },
+    {
+      "stem": "The relationship between data federation and data virtualization is compared to the relationship between which pair?",
+      "options": [
+        "Data warehouse and data mart",
+        "OLTP and OLAP",
+        "Data mining and data science",
+        "Encryption and encoding",
+        "Data lake and data swamp"
+      ],
+      "correct": 2,
+      "explanation": "The relationship between data federation and data virtualization is likened to that between data mining and data science: the same idea, but one is the broader discipline."
+    },
+    {
+      "stem": "Why do data federation and data virtualization require no additional storage?",
+      "options": [
+        "Because they compress the source data heavily",
+        "Because they hold only a virtual copy rather than a separate copy of the data",
+        "Because they delete data after each query",
+        "Because they store data in the cloud rather than on-premises",
+        "Because they only ever read summary tables"
+      ],
+      "correct": 1,
+      "explanation": "As a virtual copy, there is no cost for a separate copy of the data, so no additional storage is required."
+    },
+    {
+      "stem": "Why is data federation described as low risk compared with a data warehouse or data lake?",
+      "options": [
+        "Because it applies stronger encryption",
+        "Because it never allows write access",
+        "Because it is not hosting a data copy, so there is no chance of missing any data",
+        "Because it runs only on relational databases",
+        "Because it caches every query result"
+      ],
+      "correct": 2,
+      "explanation": "Unlike warehouses or lakes where data is physically moved, federation hosts no copy, so there is no chance of missing any data."
+    },
+    {
+      "stem": "Which of the following is a listed drawback shared by data federation and data virtualization?",
+      "options": [
+        "Data must be physically moved through ETL",
+        "Users must learn a different query language for each source",
+        "Historical data is not maintained",
+        "A separate storage copy is required",
+        "Only one data store can be accessed at a time"
+      ],
+      "correct": 2,
+      "explanation": "Because no copy of the data is hosted, history data is also not maintained; the other options contradict the listed benefits."
+    },
+    {
+      "stem": "How do data federation and data virtualization make querying easier for users?",
+      "options": [
+        "By generating dashboards automatically",
+        "By letting users write in one language while a wrapper talks to all connected systems",
+        "By replicating all data into a single relational database",
+        "By limiting queries to a single source at a time",
+        "By pre-computing every possible aggregate"
+      ],
+      "correct": 1,
+      "explanation": "Users do not have to write queries in different languages; they write in one language and the tool creates a wrapper to talk to all the connected systems."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a shared behaviour of data federation and data virtualization?",
+      "options": [
+        "Single access point",
+        "User access management in one place",
+        "No data movement",
+        "Complete historical copies of source data",
+        "Data quality issues identified from a single point"
+      ],
+      "correct": 3,
+      "explanation": "Complete historical copies belong to data consolidation; federation and virtualization host no copy and therefore keep no history."
+    },
+    {
+      "stem": "Why do data federation and data virtualization need dedicated involvement from data stewards and functional consultants?",
+      "options": [
+        "Because functional knowledge of the connected sources is required",
+        "Because they must approve every ETL job",
+        "Because the tools cannot connect without manual scripting",
+        "Because they must maintain the historical archive",
+        "Because relational databases require licences"
+      ],
+      "correct": 0,
+      "explanation": "Functional knowledge is a listed drawback: these approaches seek dedicated involvement by data stewards and functional consultants."
+    },
+    {
+      "stem": "Alongside which data store are data federation and data virtualization best suited?",
+      "options": [
+        "A data swamp",
+        "A message queue",
+        "A spreadsheet",
+        "A data warehouse in place",
+        "A scraping tool"
+      ],
+      "correct": 3,
+      "explanation": "Both are best suited alongside a data warehouse in place, which provides the history they do not keep."
+    }
+  ]
+}

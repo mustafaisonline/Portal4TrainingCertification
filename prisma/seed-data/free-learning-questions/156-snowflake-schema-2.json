@@ -1,0 +1,125 @@
+{
+  "topic": "snowflake-schema-2",
+  "questions": [
+    {
+      "stem": "What does a snowflake schema have in common with a star schema?",
+      "options": [
+        "Both store facts inside the dimension tables",
+        "Both have a fact table in the middle with dimensions around it",
+        "Both avoid any joins in queries",
+        "Both belong to Bill Inmon's approach",
+        "Both are used only in OLTP systems"
+      ],
+      "correct": 1,
+      "explanation": "Like the star schema, the snowflake schema has a fact table in the middle and dimensions around it; the difference lies in how the dimensions are structured."
+    },
+    {
+      "stem": "What distinguishes a snowflake schema from a star schema?",
+      "options": [
+        "The fact table is normalised into several fact tables",
+        "Dimensions can be normalised further into multiple sub-dimensions",
+        "There are no dimensions at all",
+        "The fact table is replaced by a cube",
+        "Dimensions are denormalised into a single wide table"
+      ],
+      "correct": 1,
+      "explanation": "In a snowflake schema the dimensions can be normalised further into multiple sub-dimensions, whereas in a star schema each dimension joins directly to the fact."
+    },
+    {
+      "stem": "How does normalising dimensions into sub-dimensions affect a report query in a snowflake schema?",
+      "options": [
+        "It removes the need for joins",
+        "It requires multiple joins to reach a conclusive result",
+        "It makes the query identical to a star schema query",
+        "It restricts the query to one dimension",
+        "It requires the query to be written in NoSQL"
+      ],
+      "correct": 1,
+      "explanation": "Sub-dimensions change the query, so creating a report involves multiple joins to reach a conclusive result."
+    },
+    {
+      "stem": "In the snowflake schema example, into which sub-dimensions is the Location dimension normalised?",
+      "options": [
+        "Year, Quarter and Month",
+        "Category, Brand and Model",
+        "State, City and Postal Code",
+        "Region, Country and Continent",
+        "Store, Aisle and Shelf"
+      ],
+      "correct": 2,
+      "explanation": "The Location dimension of the Sales fact can be normalised further into State, City and Postal Code."
+    },
+    {
+      "stem": "Whose data warehousing approach does the snowflake schema belong to?",
+      "options": [
+        "Ralph Kimball",
+        "Bill Inmon",
+        "Dan Linstedt",
+        "Edgar Codd",
+        "Lars Rönnbäck"
+      ],
+      "correct": 0,
+      "explanation": "Star and snowflake schemas both refer to Ralph Kimball's dimensional data warehousing approach."
+    },
+    {
+      "stem": "In the snowflake schema example, what is the name of the fact table?",
+      "options": [
+        "Location",
+        "State",
+        "Sales",
+        "City",
+        "Postal Code"
+      ],
+      "correct": 2,
+      "explanation": "The example uses a fact table called Sales with a Location dimension that is normalised into sub-dimensions."
+    },
+    {
+      "stem": "According to Ralph Kimball, what modelling must be used for data warehouses and data marts?",
+      "options": [
+        "Third Normal Form throughout",
+        "Dimensional modelling with star and snowflake schemas",
+        "Hub, link and satellite modelling",
+        "Document modelling",
+        "Graph modelling"
+      ],
+      "correct": 1,
+      "explanation": "As per Ralph Kimball, dimensional modelling consisting of star and snowflake schemas must be used for data warehousing and data marts."
+    },
+    {
+      "stem": "Which statement about joins in a snowflake schema versus a star schema is correct?",
+      "options": [
+        "A star schema needs multiple joins per dimension; a snowflake needs one",
+        "A star schema has one direct join per dimension; a snowflake may need multiple joins through sub-dimensions",
+        "Neither schema requires joins",
+        "Both always require exactly two joins",
+        "Joins are only needed in OLTP systems"
+      ],
+      "correct": 1,
+      "explanation": "In a star schema there is one direct join with any dimension, while in a snowflake schema normalised sub-dimensions mean multiple joins."
+    },
+    {
+      "stem": "What is a sub-dimension in a snowflake schema?",
+      "options": [
+        "A smaller fact table",
+        "A table produced by normalising a dimension further, such as City within Location",
+        "A pre-aggregated cube",
+        "A copy of the fact table for one department",
+        "A dimension with no primary key"
+      ],
+      "correct": 1,
+      "explanation": "Sub-dimensions are the tables produced when a dimension is normalised further, for example Location into State, City and Postal Code."
+    },
+    {
+      "stem": "In which kinds of data store is the snowflake schema applied?",
+      "options": [
+        "Data warehouses and data marts",
+        "OLTP order-entry systems",
+        "Raw data lakes",
+        "Message queues",
+        "Web servers"
+      ],
+      "correct": 0,
+      "explanation": "The snowflake schema is part of dimensional modelling for data warehousing and data marts."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "data-transformation-etl-elt-and-ecl",
+  "questions": [
+    {
+      "stem": "What does ECL stand for in data transformation?",
+      "options": [
+        "Extract, Clean and Load",
+        "Extract, Compress and Load",
+        "Extract, Convert and Load",
+        "Encode, Convert and Link",
+        "Extract, Catalogue and Link"
+      ],
+      "correct": 2,
+      "explanation": "ECL stands for Extract, Convert and Load, and is mainly used in Text Analytics."
+    },
+    {
+      "stem": "In ETL processing, where do the Extract, Transform and Load operations run?",
+      "options": [
+        "All on the target system",
+        "Extract on the source, Transform and Load on the target",
+        "Extract and Transform on the target, Load on the source",
+        "In a separate middleware server",
+        "All on the source system"
+      ],
+      "correct": 4,
+      "explanation": "In ETL the Extract, Transform and Load parts all run on the source system, including the push of data to the target table."
+    },
+    {
+      "stem": "In ELT processing, how many of the six operations run on the target system?",
+      "options": [
+        "Four, including the resource-hungry Transform",
+        "Two",
+        "All six",
+        "None",
+        "Three"
+      ],
+      "correct": 0,
+      "explanation": "In ELT only two of six operations run on the source; four, including the Transform operation, run on the target system."
+    },
+    {
+      "stem": "What is the first step of ELT processing?",
+      "options": [
+        "Running the Transform on the source",
+        "Extracting from the temp table",
+        "Loading data into the final table",
+        "Creating a temp table (DDL) in the target system",
+        "Deleting the source data"
+      ],
+      "correct": 3,
+      "explanation": "ELT is DDL-EL-ETL: first a temp table is created in the target, then data is extracted and loaded one-to-one into it before being transformed and loaded on the target."
+    },
+    {
+      "stem": "Which operation is described as the most resource-hungry in ETL or ELT processing?",
+      "options": [
+        "Extract",
+        "Transform",
+        "Load",
+        "DDL",
+        "Select"
+      ],
+      "correct": 1,
+      "explanation": "The Transform operation is the most resource-hungry, which is why ELT runs it on the target system."
+    },
+    {
+      "stem": "In which field is ECL processing mainly used?",
+      "options": [
+        "Data Warehousing",
+        "Video processing",
+        "Network monitoring",
+        "Text Analytics",
+        "Financial reconciliation"
+      ],
+      "correct": 3,
+      "explanation": "ECL is mainly used in Text Analytics, where tools read text from Word, PDF or text files, catalogue it with tags and load it into target storage."
+    },
+    {
+      "stem": "Which of the following is NOT within the scope of ECL processing?",
+      "options": [
+        "Converting unstructured video, audio, scans or images into structured data",
+        "Reading text from Word documents",
+        "Reading text from PDF files",
+        "Cataloguing text by giving it tags",
+        "Loading tagged text into a target storage"
+      ],
+      "correct": 0,
+      "explanation": "ECL is about converting or tagging data that is already in text format, not about turning video, audio, scans or images into structured data."
+    },
+    {
+      "stem": "Which tool vendors will always suggest having a Landing Area in the target system?",
+      "options": [
+        "ECL tool vendors",
+        "Database vendors",
+        "ETL tool vendors",
+        "ELT tool vendors",
+        "BI tool vendors"
+      ],
+      "correct": 2,
+      "explanation": "ETL tools' sales teams always suggest a Landing Area, whereas ELT tools' sales teams normally do not, because ELT already creates a temp table in the target."
+    },
+    {
+      "stem": "How is Data Transformation described in relation to ETL developers and KPIs?",
+      "options": [
+        "An optional step after reporting",
+        "A security control",
+        "A form of data masking",
+        "A concern only for database administrators",
+        "The bread and butter of ETL developers and the starting point of any KPI"
+      ],
+      "correct": 4,
+      "explanation": "Data Transformation is the bread and butter of ETL developers and data engineers, and the starting point of any KPI."
+    },
+    {
+      "stem": "Which sequence of operations technically describes ELT processing?",
+      "options": [
+        "E-T-L",
+        "DDL-EL-ETL",
+        "ECL-ETL",
+        "T-E-L",
+        "L-E-T"
+      ],
+      "correct": 1,
+      "explanation": "ELT has three more operations than ETL and is technically DDL-EL-ETL: create a temp table, extract and load into it, then extract, transform and load on the target."
+    }
+  ]
+}

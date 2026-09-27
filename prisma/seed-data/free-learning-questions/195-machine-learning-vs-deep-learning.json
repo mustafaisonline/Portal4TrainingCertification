@@ -1,0 +1,125 @@
+{
+  "topic": "machine-learning-vs-deep-learning",
+  "questions": [
+    {
+      "stem": "What kind of raw dataset do Machine Learning (ML) models normally work on?",
+      "options": [
+        "Unstructured data only",
+        "Structured or semi-structured data",
+        "Images and video only",
+        "Audio recordings only",
+        "Free-text documents only"
+      ],
+      "correct": 1,
+      "explanation": "ML is about using raw but structured or semi-structured datasets, then creating feature tables of cleansed data that the models classify."
+    },
+    {
+      "stem": "What kind of raw dataset do Deep Learning (DL) models work on?",
+      "options": [
+        "Structured data in rows and columns",
+        "Semi-structured data only",
+        "Unstructured data, where no one knows what will flow in",
+        "Pre-cleansed feature tables only",
+        "Relational database tables only"
+      ],
+      "correct": 2,
+      "explanation": "Deep Learning models use raw but unstructured datasets where no one will know what will flow in, and dig out the required data to prepare cleansed feature tables."
+    },
+    {
+      "stem": "In Machine Learning, what is a feature table?",
+      "options": [
+        "A list of product features for marketing",
+        "A configuration file that lists model hyperparameters",
+        "A dashboard summarising model accuracy",
+        "A table no different from a traditional table, but containing cleansed data",
+        "A catalogue of image files for training"
+      ],
+      "correct": 3,
+      "explanation": "Feature tables are described as no more than traditional tables but with cleansed data, which ML models then use to classify data and produce expected results."
+    },
+    {
+      "stem": "Which example is used to contrast Machine Learning with Deep Learning?",
+      "options": [
+        "Counting cars, bikes and buses, first from rows and columns and then from pictures",
+        "Predicting stock prices from historical trades",
+        "Translating text between languages",
+        "Detecting fraud in credit card transactions",
+        "Recommending films to viewers"
+      ],
+      "correct": 0,
+      "explanation": "The example is counting cars, bikes or buses: easy for ML when width, length and height are in rows and columns, but pictures require Deep Learning to recognise the objects."
+    },
+    {
+      "stem": "If pictures are given to a Machine Learning model to count cars, bikes and buses, what is the expected outcome?",
+      "options": [
+        "It will count them accurately",
+        "It will count only the cars",
+        "It will convert the pictures to a feature table automatically",
+        "It will produce a heat map instead",
+        "It will not be possible, because ML models normally work on structured or semi-structured data"
+      ],
+      "correct": 4,
+      "explanation": "The answer is No: ML models normally work on structured or semi-structured datasets, so Deep Learning algorithms and models are used to recognise objects in pictures."
+    },
+    {
+      "stem": "Which type of model can recognise objects in pictures and determine whether each is a car, a bike or a bus?",
+      "options": [
+        "Deep Learning models",
+        "Traditional Machine Learning models",
+        "Data Mining models",
+        "Dimensional data models",
+        "Relational data models"
+      ],
+      "correct": 0,
+      "explanation": "To find cars, bikes or buses in pictures, Deep Learning algorithms and models are used, as they can recognise the objects in the pictures."
+    },
+    {
+      "stem": "What do Deep Learning models do with the unstructured dataset before classifying it?",
+      "options": [
+        "Discard it and request structured data instead",
+        "Dig out the required data to prepare a cleansed dataset in the shape of feature tables",
+        "Convert it into a data warehouse",
+        "Send it to a human for manual labelling",
+        "Store it unchanged in a data lake"
+      ],
+      "correct": 1,
+      "explanation": "Deep Learning models dig out required data from the unstructured dataset to prepare a cleansed dataset in the shape of feature tables, which is then classified for expected results."
+    },
+    {
+      "stem": "Which measurements make it relatively easy for an ML model to count cars, bikes and buses in a structured dataset?",
+      "options": [
+        "Colour, brand and price",
+        "Speed, fuel type and age",
+        "Width, length and height",
+        "Owner, registration and location",
+        "Pixel count, resolution and format"
+      ],
+      "correct": 2,
+      "explanation": "With width, length and height available in rows and columns, ML models can easily read the dataset and produce the expected output."
+    },
+    {
+      "stem": "Which of the following is NOT true of Machine Learning models as described in the comparison with Deep Learning?",
+      "options": [
+        "They use structured or semi-structured raw data",
+        "They rely on feature tables of cleansed data",
+        "They classify data to produce expected results",
+        "They normally recognise objects directly from pictures",
+        "They handle data in rows and columns format"
+      ],
+      "correct": 3,
+      "explanation": "ML models normally work on structured or semi-structured data; recognising objects in pictures is the job of Deep Learning models."
+    },
+    {
+      "stem": "After Machine Learning versus Deep Learning, what is named as the next stage of learning to understand?",
+      "options": [
+        "Reinforcement learning and transfer learning",
+        "Data warehousing and data mining",
+        "Data classification and data clustering",
+        "Descriptive and prescriptive analytics",
+        "Supervised and unsupervised learning"
+      ],
+      "correct": 4,
+      "explanation": "The comparison closes by noting that the next stage is supervised and unsupervised learning."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "1nf-first-normal-form",
+  "questions": [
+    {
+      "stem": "What is the first formal rule that First Normal Form (1NF) introduces?",
+      "options": [
+        "Every attribute must contain atomic, indivisible values",
+        "Every non-key attribute must depend on the whole composite key",
+        "Every determinant must be a superkey",
+        "No non-key attribute may depend on another non-key attribute",
+        "Every table must have a surrogate primary key"
+      ],
+      "correct": 0,
+      "explanation": "1NF requires that each cell holds exactly one value, not a list, not a set and not a repeating group."
+    },
+    {
+      "stem": "In First Normal Form, what must each row of a table represent?",
+      "options": [
+        "A summary of several related entities",
+        "A single instance of an entity",
+        "A repeating group of values",
+        "A complete customer history",
+        "One column of the original spreadsheet"
+      ],
+      "correct": 1,
+      "explanation": "Under 1NF each row must represent a single instance of an entity and every record must be uniquely identifiable."
+    },
+    {
+      "stem": "How does applying First Normal Form change the storage of multiple repayment dates such as \"Jan-31, Feb-28\" in the loan approval example?",
+      "options": [
+        "The dates are moved into a separate Customer table",
+        "The dates are concatenated into a single text field",
+        "Each repayment instance becomes a separate row",
+        "The dates are replaced by a count of repayments",
+        "The dates are stored as an array column"
+      ],
+      "correct": 2,
+      "explanation": "1NF separates multi-valued repayment information into individual rows, so each repayment date, amount and status becomes a distinct record."
+    },
+    {
+      "stem": "After applying First Normal Form to a table with repeating groups, in which direction does the table grow?",
+      "options": [
+        "Horizontally, gaining more columns",
+        "It shrinks in both directions",
+        "It stays exactly the same size",
+        "Vertically, gaining more rows",
+        "It is split into a star schema"
+      ],
+      "correct": 3,
+      "explanation": "Because each repeated value becomes its own row, the table grows vertically rather than horizontally and repeating groups are eliminated."
+    },
+    {
+      "stem": "In the loan example under First Normal Form, which composite key might initially identify repayment entries uniquely?",
+      "options": [
+        "CustID combined with CustomerName",
+        "LoanAmount combined with RepaymentAmount",
+        "ProductType combined with InterestRate",
+        "CustomerAddress combined with LoanID",
+        "LoanID combined with RepaymentDate"
+      ],
+      "correct": 4,
+      "explanation": "A composite key such as LoanID combined with RepaymentDate might initially serve to uniquely identify repayment entries, although later stages may refine this."
+    },
+    {
+      "stem": "Which of the following does First Normal Form NOT do?",
+      "options": [
+        "Remove repeating groups",
+        "Eliminate redundancy between related entities",
+        "Require atomic values in every cell",
+        "Require every record to be uniquely identifiable",
+        "Make data structurally compatible with relational systems"
+      ],
+      "correct": 1,
+      "explanation": "1NF only addresses atomicity and repeating groups; customer information may still repeat across loan rows and deeper dependency problems remain."
+    },
+    {
+      "stem": "Which problem can still exist in a table that satisfies First Normal Form?",
+      "options": [
+        "Decision details that depend on other non-key attributes",
+        "Multiple values stored in a single cell",
+        "Rows that cannot be uniquely identified",
+        "Repeating groups inside a row",
+        "Lists stored inside a column"
+      ],
+      "correct": 0,
+      "explanation": "1NF does not address dependency structure, so decision details may still depend on other non-key attributes and customer information may still repeat."
+    },
+    {
+      "stem": "What transition does the move from Unnormalized Form to First Normal Form represent?",
+      "options": [
+        "The shift from relational tables to document storage",
+        "The shift from a transactional to an analytical model",
+        "The shift from loosely structured data to properly formed relational tables",
+        "The shift from a composite key to a surrogate key",
+        "The shift from atomic values to repeating groups"
+      ],
+      "correct": 2,
+      "explanation": "The messy spreadsheet-like format begins to resemble a disciplined database structure once 1NF is applied."
+    },
+    {
+      "stem": "Why must a primary key be defined when a table is brought into First Normal Form?",
+      "options": [
+        "To allow the table to grow horizontally",
+        "To remove transitive dependencies",
+        "To link the table to a fact table",
+        "So that no two rows represent the same entity instance",
+        "So that multi-valued attributes can be stored safely"
+      ],
+      "correct": 3,
+      "explanation": "1NF requires every record to be uniquely identifiable, and a primary key ensures no two rows represent the same entity instance."
+    },
+    {
+      "stem": "What structural problem is addressed in the normal form that follows First Normal Form?",
+      "options": [
+        "Join dependencies",
+        "Multi-valued dependencies",
+        "Non-superkey determinants",
+        "Domain constraints",
+        "Partial dependencies"
+      ],
+      "correct": 4,
+      "explanation": "After 1NF, the next step is Second Normal Form, where partial dependencies are eliminated and deeper structural integrity begins to take shape."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "data-observability",
+  "questions": [
+    {
+      "stem": "What is Data Observability primarily about?",
+      "options": [
+        "Observing every data pipeline, transformation and policy across the organisation and providing analysis for decision making",
+        "Encrypting data in transit between data stores",
+        "Replacing data governance with automated monitoring",
+        "Archiving old data pipelines that are no longer used",
+        "Designing the physical schema of a data warehouse"
+      ],
+      "correct": 0,
+      "explanation": "Data Observability observes pipelines, transformations, DDL, DML, governance standards and security and privacy policies to build a holistic view that supports decision making."
+    },
+    {
+      "stem": "Under which discipline does Data Observability sit?",
+      "options": [
+        "Master Data Management",
+        "Network Security",
+        "Business Intelligence",
+        "Metadata Management",
+        "Data Warehousing"
+      ],
+      "correct": 3,
+      "explanation": "Data Observability comes under Metadata Management, since it works mainly by observing enterprise metadata."
+    },
+    {
+      "stem": "Which of the following is NOT one of the five pillars of Data Observability?",
+      "options": [
+        "Freshness",
+        "Lineage",
+        "Encryption",
+        "Volume",
+        "Distribution"
+      ],
+      "correct": 2,
+      "explanation": "The five pillars are Freshness, Lineage, Schema, Volume and Distribution; encryption is not among them."
+    },
+    {
+      "stem": "What kind of data does Data Observability mainly access in order to do its work?",
+      "options": [
+        "Raw transactional data in production databases",
+        "Enterprise metadata",
+        "Customer survey responses",
+        "Financial ledgers",
+        "Backup tapes and archives"
+      ],
+      "correct": 1,
+      "explanation": "Rather than needing access to every framework, Data Observability mainly accesses enterprise metadata through the Metadata Management tools."
+    },
+    {
+      "stem": "Why can a Data Observability framework realistically be granted access across an enterprise despite security and audit concerns?",
+      "options": [
+        "Because it runs only outside business hours",
+        "Because it is operated by the Audit department itself",
+        "Because it reads data only in test environments",
+        "Because it stores nothing it observes",
+        "Because access is requested only on the tools used for Metadata Management"
+      ],
+      "correct": 4,
+      "explanation": "Security, Risk, Compliance and Audit would not allow one framework access to all frameworks, but access limited to Metadata Management tools is acceptable."
+    },
+    {
+      "stem": "Which departments are named as unlikely to allow one framework access to every framework in the enterprise?",
+      "options": [
+        "Marketing, Sales, Finance and HR",
+        "Data Science, Analytics, BI and Reporting",
+        "Security, Risk, Compliance and Audit",
+        "Procurement, Legal, Facilities and Operations",
+        "Development, Testing, Release and Support"
+      ],
+      "correct": 2,
+      "explanation": "Security, Risk, Compliance and Audit are the departments that would block blanket access, which is why Data Observability targets metadata instead."
+    },
+    {
+      "stem": "When does Data Observability look at sample data rather than metadata?",
+      "options": [
+        "On request, for debugging purposes",
+        "Continuously, for every table in every data store",
+        "Only during the annual audit",
+        "Never; it is forbidden from reading any sample data",
+        "Only when the data is already encrypted"
+      ],
+      "correct": 0,
+      "explanation": "Data Observability normally observes metadata, and looks at sample data only on request when debugging is needed."
+    },
+    {
+      "stem": "Which of the following is NOT listed among the things Data Observability observes?",
+      "options": [
+        "Metadata of all tables in all data stores",
+        "ETL and ELT tools and shell scripts",
+        "Dashboards, reports, code sets and KPIs",
+        "Customer payment card numbers stored in production tables",
+        "All the logs"
+      ],
+      "correct": 3,
+      "explanation": "Data Observability observes metadata, upstream and downstream data stores, dashboards, ETL and ELT tools, scripts and logs; it does not observe sensitive production values such as card numbers."
+    },
+    {
+      "stem": "What makes enterprise-wide Data Observability a challenge in most IT environments?",
+      "options": [
+        "Metadata is too small to be useful",
+        "Frameworks sit in silos across many clusters, network segments, zones and environments behind firewalls with no centralised control",
+        "Most organisations have no data pipelines to observe",
+        "Data Observability tools cannot read logs",
+        "Business users refuse to look at dashboards"
+      ],
+      "correct": 1,
+      "explanation": "Without centralised control, the many silos, clusters, network zones and firewalls make it hard to observe everything from one place."
+    },
+    {
+      "stem": "With what in place is enterprise Data Observability ideally achievable?",
+      "options": [
+        "A single relational database for all systems",
+        "A dedicated Security Operations Centre",
+        "A monthly manual audit of all pipelines",
+        "A cloud-only infrastructure",
+        "A Data and AI Cognitive (DAC) Architecture"
+      ],
+      "correct": 4,
+      "explanation": "Ideally, enterprise Data Observability is possible when a Data and AI Cognitive (DAC) Architecture is in place."
+    }
+  ]
+}

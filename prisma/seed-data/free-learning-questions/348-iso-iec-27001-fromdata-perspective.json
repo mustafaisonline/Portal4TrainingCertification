@@ -1,0 +1,125 @@
+{
+  "topic": "iso-iec-27001-fromdata-perspective",
+  "questions": [
+    {
+      "stem": "What does ISO/IEC 27001 specify?",
+      "options": [
+        "Rules for financial reporting",
+        "The requirements for establishing, implementing, maintaining and continually improving an information security management system (ISMS)",
+        "A programming standard for SQL",
+        "A file format for data exchange",
+        "A licence for cloud software"
+      ],
+      "correct": 1,
+      "explanation": "ISO/IEC 27001 is an international standard specifying the requirements for establishing, implementing, maintaining and continually improving an ISMS."
+    },
+    {
+      "stem": "What does the CIA triad refer to in the context of ISO/IEC 27001?",
+      "options": [
+        "Cost, integration and automation",
+        "Compliance, inspection and auditing",
+        "Confidentiality, integrity and availability of data",
+        "Classification, incident and access",
+        "Continuity, insurance and assurance"
+      ],
+      "correct": 2,
+      "explanation": "From a data perspective, ISO/IEC 27001 is pivotal to ensuring the confidentiality, integrity and availability (CIA) of data."
+    },
+    {
+      "stem": "What is described as the foundational aspect of ISO/IEC 27001?",
+      "options": [
+        "Purchasing encryption hardware",
+        "Appointing a chief executive",
+        "Migrating data to the cloud",
+        "The systematic assessment of information security risks",
+        "Publishing a privacy notice"
+      ],
+      "correct": 3,
+      "explanation": "The foundational aspect is the systematic assessment of information security risks: identifying threats, assessing vulnerabilities and evaluating risk impacts."
+    },
+    {
+      "stem": "What is the purpose of data classification under ISO/IEC 27001?",
+      "options": [
+        "To sort data alphabetically for retrieval",
+        "To decide which database vendor to use",
+        "To assign storage tiers by file size",
+        "To group data by department for billing",
+        "To classify data by sensitivity and importance so that more sensitive data receives higher levels of protection"
+      ],
+      "correct": 4,
+      "explanation": "Data is classified according to its sensitivity and importance, which influences how it is handled, stored and transmitted."
+    },
+    {
+      "stem": "On which principle does ISO/IEC 27001 base the limiting of access to data?",
+      "options": [
+        "The principle of least privilege",
+        "The principle of open access",
+        "The principle of shared passwords",
+        "The principle of seniority",
+        "The principle of first come, first served"
+      ],
+      "correct": 0,
+      "explanation": "ISO/IEC 27001 highlights limiting access to data based on the principle of least privilege, so only authorised individuals can access or modify data."
+    },
+    {
+      "stem": "Which control makes data unreadable to unauthorised parties, both at rest and in transit?",
+      "options": [
+        "Data classification",
+        "Encryption",
+        "Risk assessment",
+        "Business continuity planning",
+        "Incident reporting"
+      ],
+      "correct": 1,
+      "explanation": "Encrypting data at rest and in transit makes it unreadable to unauthorised parties, safeguarding confidentiality and integrity."
+    },
+    {
+      "stem": "What does incident management under ISO/IEC 27001 include?",
+      "options": [
+        "Classifying data by sensitivity",
+        "Negotiating supplier contracts",
+        "Detecting, reporting and investigating information security incidents to mitigate their impact and prevent recurrence",
+        "Scheduling database backups",
+        "Training staff in SQL"
+      ],
+      "correct": 2,
+      "explanation": "Organisations must have procedures for managing security incidents, including detecting, reporting and investigating them to mitigate impact and prevent recurrence."
+    },
+    {
+      "stem": "What does Business Continuity Management ensure under ISO/IEC 27001?",
+      "options": [
+        "That all staff receive annual bonuses",
+        "That the organisation never changes suppliers",
+        "That data is deleted after seven years",
+        "That critical data remains available or can be restored after a disruption such as a cyber-attack or natural disaster",
+        "That marketing campaigns continue during outages"
+      ],
+      "correct": 3,
+      "explanation": "Business Continuity Management keeps a continuity plan including data recovery procedures so critical data remains available or restorable after a disruption."
+    },
+    {
+      "stem": "Which role leads the development and implementation of the ISMS?",
+      "options": [
+        "Database Administrator",
+        "Marketing Manager",
+        "Platform Owner",
+        "Data Scientist",
+        "Information Security Officer"
+      ],
+      "correct": 4,
+      "explanation": "Information Security Officers lead the development and implementation of the ISMS, ensuring controls meet ISO/IEC 27001 requirements."
+    },
+    {
+      "stem": "Which of the following is NOT one of the key data-related components of ISO/IEC 27001 described?",
+      "options": [
+        "Marketing attribution modelling",
+        "Risk assessment",
+        "Data classification",
+        "Access control",
+        "Business Continuity Management"
+      ],
+      "correct": 0,
+      "explanation": "The components are risk assessment, data classification, access control, encryption, incident management and business continuity; marketing attribution is unrelated."
+    }
+  ]
+}

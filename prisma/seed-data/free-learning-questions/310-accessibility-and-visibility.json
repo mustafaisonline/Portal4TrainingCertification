@@ -1,0 +1,125 @@
+{
+  "topic": "accessibility-and-visibility",
+  "questions": [
+    {
+      "stem": "In the world of data solutions, what does Accessibility pertain to?",
+      "options": [
+        "Your ability to connect to and utilise data for decision-making purposes",
+        "A comprehensive understanding of what is happening behind the scenes with your data",
+        "The physical location of the servers",
+        "The cost of storing the data",
+        "The speed of the network connection"
+      ],
+      "correct": 0,
+      "explanation": "Accessibility pertains to your ability to connect to and utilise data for decision-making purposes."
+    },
+    {
+      "stem": "What does Visibility involve?",
+      "options": [
+        "Being granted read privileges on a database",
+        "Having a comprehensive understanding of what is happening behind the scenes with your data",
+        "Seeing the database on a network map",
+        "Having a dashboard with bright colours",
+        "Being able to log into the data warehouse"
+      ],
+      "correct": 1,
+      "explanation": "Visibility involves having a comprehensive understanding of what is happening behind the scenes with your data."
+    },
+    {
+      "stem": "How is Accessibility achieved in practice?",
+      "options": [
+        "By reading the data lineage documentation",
+        "By learning the business rules used for transformations",
+        "When the database administrator or datastore owner grants you privileges to read, write or update your data",
+        "By reviewing the data quality assurance methods",
+        "By knowing the SLAs of the loading process"
+      ],
+      "correct": 2,
+      "explanation": "Accessibility is achieved when your database administrator or datastore owner grants you privileges within the database, allowing you to read, write or update your data."
+    },
+    {
+      "stem": "Which of the following contributes to Visibility rather than Accessibility?",
+      "options": [
+        "Being given a database login",
+        "Being granted write privileges",
+        "Being able to run a query",
+        "Knowing what was sourced, the business rules used for transformations and the lineage information",
+        "Being added to a user group"
+      ],
+      "correct": 3,
+      "explanation": "Visibility encompasses understanding aspects such as what was sourced, the business rules for transformations, metadata, golden record formulas, data quality methods, loading approaches, SLAs and lineage."
+    },
+    {
+      "stem": "Which data loading approaches are mentioned as part of Visibility?",
+      "options": [
+        "Copy, paste and print",
+        "Star and snowflake",
+        "Landing, staging and serving",
+        "Alpha-2, alpha-3 and numeric",
+        "CDC, batch and real-time"
+      ],
+      "correct": 4,
+      "explanation": "Visibility includes knowing the data loading approaches, for example CDC, batch or real-time."
+    },
+    {
+      "stem": "What are the Three Golden Rules of implementing a solution?",
+      "options": [
+        "Visibility, Accessibility and Maintainability",
+        "Speed, Cost and Quality",
+        "Extract, Transform and Load",
+        "Create, Read and Update",
+        "Plan, Build and Test"
+      ],
+      "correct": 0,
+      "explanation": "The Three Golden Rules of implementing a solution are Visibility, Accessibility and Maintainability."
+    },
+    {
+      "stem": "Why is it important to distinguish Accessibility from Visibility?",
+      "options": [
+        "Because they refer to different database vendors",
+        "Because although often used interchangeably in simple terms, in data solutions they mean different things",
+        "Because Accessibility applies only to cloud systems",
+        "Because Visibility is a legal term",
+        "Because Accessibility is measured in gigabytes"
+      ],
+      "correct": 1,
+      "explanation": "Accessibility and Visibility are often used interchangeably in simple terms, but in the world of data solutions it is crucial to distinguish between them."
+    },
+    {
+      "stem": "Which types of metadata are named as part of Visibility?",
+      "options": [
+        "Public, private and hybrid",
+        "Primary, foreign and unique",
+        "Business, technical and operational",
+        "Structured, semi-structured and unstructured",
+        "Hot, warm and cold"
+      ],
+      "correct": 2,
+      "explanation": "Visibility includes knowing about the presence of business, technical or operational metadata."
+    },
+    {
+      "stem": "Which of the following is NOT listed as an element of Visibility?",
+      "options": [
+        "The formula for golden records",
+        "Data quality assurance methods",
+        "SLAs",
+        "The salary of the database administrator",
+        "Lineage information"
+      ],
+      "correct": 3,
+      "explanation": "Golden record formulas, data quality assurance methods, SLAs and lineage information all contribute to Visibility; the administrator's salary does not."
+    },
+    {
+      "stem": "In the example where you ask datastore owners to extract source data and transform it for decision-making, which two concepts come into play?",
+      "options": [
+        "Synchronisation and Propagation",
+        "Standardisation and Transformation",
+        "Digitisation and Digitalisation",
+        "Concurrency and MPP",
+        "Accessibility and Visibility"
+      ],
+      "correct": 4,
+      "explanation": "When you request the datastore owners to extract and transform data for decision-making, the two key concepts that come into play are Accessibility and Visibility."
+    }
+  ]
+}

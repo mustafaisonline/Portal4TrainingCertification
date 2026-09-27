@@ -1,0 +1,125 @@
+{
+  "topic": "mpp-massive-parallel-process",
+  "questions": [
+    {
+      "stem": "What does MPP stand for?",
+      "options": [
+        "Multi-Process Pipeline",
+        "Massive Parallel Processing",
+        "Managed Partition Protocol",
+        "Master Persistence Platform",
+        "Multiple Page Processing"
+      ],
+      "correct": 1,
+      "explanation": "MPP is Massive Parallel Processing, where more than one processor works on a query in parallel."
+    },
+    {
+      "stem": "How is a query executed in non-MPP mode?",
+      "options": [
+        "Its different pieces of code run one by one in sequence",
+        "Its different pieces of code run in parallel on all processors",
+        "It is rejected unless it has a filter",
+        "It is split across multiple locations",
+        "It is cached and never re-run"
+      ],
+      "correct": 0,
+      "explanation": "In non-MPP mode the different pieces of a query's code are executed one after another in sequence."
+    },
+    {
+      "stem": "How much faster does MPP make query execution compared with one-by-one execution, according to *I Am Datapedia!*?",
+      "options": [
+        "Twice as fast",
+        "Ten times faster",
+        "A hundred times faster",
+        "A thousand times faster",
+        "It is no faster, only cheaper"
+      ],
+      "correct": 2,
+      "explanation": "Executing the pieces of a query in parallel on all processors makes execution 100 times faster than sequential execution."
+    },
+    {
+      "stem": "For which operations is MPP mostly used?",
+      "options": [
+        "Reading and writing, mostly inserts, in parallel",
+        "Deleting and archiving data",
+        "Encrypting and decrypting data",
+        "Compressing backups",
+        "Rendering dashboards"
+      ],
+      "correct": 0,
+      "explanation": "MPP is mostly used to read and write, mostly insert, in parallel across more than one processor."
+    },
+    {
+      "stem": "Where may the multiple processors used by MPP be located?",
+      "options": [
+        "Only within a single node",
+        "Only in a single data centre",
+        "In a single node or across multiple nodes, in the same location or multiple locations",
+        "Only in the cloud",
+        "Only on a mainframe"
+      ],
+      "correct": 2,
+      "explanation": "MPP processors may run in a single node or across multiple nodes, in one location or many."
+    },
+    {
+      "stem": "Which older class of computer ran in MPP mode but was too expensive for the mass community?",
+      "options": [
+        "Personal computers",
+        "Laptops",
+        "Tablets",
+        "Mainframe computers",
+        "Mobile phones"
+      ],
+      "correct": 3,
+      "explanation": "Mainframes ran in MPP mode for decades but were too expensive for mass use."
+    },
+    {
+      "stem": "Which organisation is said to have the biggest MPP architecture in place?",
+      "options": [
+        "Facebook",
+        "Amazon",
+        "Microsoft",
+        "Google",
+        "IBM"
+      ],
+      "correct": 3,
+      "explanation": "Google is said to have the biggest MPP architecture; Facebook and others also helped make MPP famous."
+    },
+    {
+      "stem": "Why was Hadoop described as groundbreaking for MPP?",
+      "options": [
+        "Because it was the first cloud service",
+        "Because it produced canned reports",
+        "Because it replaced SQL",
+        "Because it ran only on mainframes",
+        "Because it was installable and usable on commodity hardware, even home laptops"
+      ],
+      "correct": 4,
+      "explanation": "Hadoop made MPP installable and usable on community hardware, so everyone started using it, even on home laptops."
+    },
+    {
+      "stem": "What does elastic cloud computing allow when a user runs a query?",
+      "options": [
+        "The query is queued until the next day",
+        "The query is limited to one processor",
+        "The query is converted to MDX",
+        "The query must be pre-approved by procurement",
+        "Hundreds of nodes and processors can be spun up automatically within milliseconds if required"
+      ],
+      "correct": 4,
+      "explanation": "Cloud elastic computing can automatically spin up hundreds of nodes and processors within milliseconds to serve a query."
+    },
+    {
+      "stem": "How long may a report or dashboard take before it is considered unacceptable in the current era?",
+      "options": [
+        "More than 1 second",
+        "More than 3 to 5 seconds",
+        "More than 30 seconds",
+        "More than 5 minutes",
+        "More than an hour"
+      ],
+      "correct": 1,
+      "explanation": "The key phrase is that any report or dashboard taking more than 3 to 5 seconds is a 'no no' in the current era."
+    }
+  ]
+}

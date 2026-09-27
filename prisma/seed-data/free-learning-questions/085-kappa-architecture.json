@@ -1,0 +1,125 @@
+{
+  "topic": "kappa-architecture",
+  "questions": [
+    {
+      "stem": "With which architecture is Kappa Architecture most often confused?",
+      "options": [
+        "Medallion Architecture",
+        "Lambda Architecture",
+        "Zero Trust Architecture",
+        "Data Vault",
+        "NEON-inspired architecture"
+      ],
+      "correct": 1,
+      "explanation": "Kappa is mostly confused with Lambda Architecture, which is fair because both process streaming as well as batch data."
+    },
+    {
+      "stem": "What kind of processing does Kappa Architecture offer?",
+      "options": [
+        "Batch processing only",
+        "Separate batch and stream engines",
+        "Stream processing only, for both streaming and batch datasets",
+        "In-memory OLAP cubes",
+        "Scheduled nightly loads"
+      ],
+      "correct": 2,
+      "explanation": "Kappa Architecture offers ONLY stream processing, using queuing tools such as Kafka for both streaming and batch datasets."
+    },
+    {
+      "stem": "Which queuing tool is named as the example used by Kappa Architecture?",
+      "options": [
+        "Hadoop",
+        "Kafka",
+        "Redshift",
+        "Oracle",
+        "Databricks"
+      ],
+      "correct": 1,
+      "explanation": "Kappa Architecture processes both real-time streaming and batch data using the same tool, with KAFKA given as the example."
+    },
+    {
+      "stem": "What is described as the biggest differentiator of Kappa Architecture from Lambda?",
+      "options": [
+        "It uses a separate tool for batch processing",
+        "It is only available in the cloud",
+        "It requires an RDBMS for storage",
+        "It stores data in a separate data store that might not suit terabytes or petabytes",
+        "It cannot handle real-time data"
+      ],
+      "correct": 3,
+      "explanation": "Kappa stores data in a separate data store which might not be suitable for TBs or PBs, unlike Lambda which stores in Hadoop or object storage."
+    },
+    {
+      "stem": "Why did Kappa Architecture emerge?",
+      "options": [
+        "Due to high demand for real-time data",
+        "To reduce the cost of Hadoop clusters",
+        "To replace relational databases",
+        "To meet data sovereignty rules",
+        "To support petabyte-scale history"
+      ],
+      "correct": 0,
+      "explanation": "Kappa Architecture emerged due to the high demand for real-time data, though not for all data sizes."
+    },
+    {
+      "stem": "Which organisation should choose Lambda rather than Kappa Architecture?",
+      "options": [
+        "One with small data and no history requirement",
+        "One with terabytes or potentially petabytes of data",
+        "One that only needs a message queue",
+        "One that uses only on-premises servers",
+        "One that has no real-time requirement at all"
+      ],
+      "correct": 1,
+      "explanation": "Organisations with TBs or PBs of data should go for Lambda Architecture and store data in Hadoop or object storage for analysis."
+    },
+    {
+      "stem": "For which situation is Kappa Architecture recommended?",
+      "options": [
+        "Petabyte-scale archives",
+        "Long-term regulatory history retention",
+        "Small or medium-sized data with no historical data maintenance requirement",
+        "Only batch reporting from OLTP",
+        "Cross-region data sovereignty"
+      ],
+      "correct": 2,
+      "explanation": "Kappa suits small or medium data volumes where there is no requirement to maintain historical data."
+    },
+    {
+      "stem": "How do batch-related downstream applications get their data in Kappa Architecture?",
+      "options": [
+        "From a nightly Hadoop export",
+        "From a separate batch engine",
+        "From OLAP cubes",
+        "By connecting directly to Kappa's storage",
+        "From a printed report"
+      ],
+      "correct": 3,
+      "explanation": "Kappa Architecture offers batch-related downstream applications the ability to connect directly to its storage."
+    },
+    {
+      "stem": "Where does Lambda Architecture store data for analysis and analytics, in contrast to Kappa?",
+      "options": [
+        "In Hadoop or Object Storage",
+        "In Kafka topics only",
+        "In a spreadsheet",
+        "In a single OLTP database",
+        "In browser cache"
+      ],
+      "correct": 0,
+      "explanation": "With Lambda, data is stored in Hadoop or object storage for analysis and analytics, which suits very large volumes."
+    },
+    {
+      "stem": "Which statement about Kappa Architecture is FALSE?",
+      "options": [
+        "It processes both streaming and batch data",
+        "It uses a single tool such as Kafka for both",
+        "It provides separate tools and technologies to process batches",
+        "It is not suitable for all data sizes",
+        "It emerged from the demand for real-time data"
+      ],
+      "correct": 2,
+      "explanation": "Kappa does not offer separate tools or technologies to process batches; everything is handled as a stream by the same tool."
+    }
+  ]
+}

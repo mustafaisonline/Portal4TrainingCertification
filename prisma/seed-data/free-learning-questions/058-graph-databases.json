@@ -1,0 +1,125 @@
+{
+  "topic": "graph-databases",
+  "questions": [
+    {
+      "stem": "How do graph databases store data?",
+      "options": [
+        "As nodes representing entities and edges representing relationships between them",
+        "As rows partitioned by a primary key",
+        "As JSON documents with embedded arrays",
+        "As key–value pairs",
+        "As fact tables joined to dimension tables"
+      ],
+      "correct": 0,
+      "explanation": "Graph databases store nodes for entities and edges for relationships, treating relationships as first-class citizens that can be traversed directly."
+    },
+    {
+      "stem": "What is the primary goal of graph databases?",
+      "options": [
+        "Performing bulk aggregations over millions of rows",
+        "Uncovering insights from relationships and networks",
+        "Providing ultra-fast lookup by key",
+        "Validating API payload structure",
+        "Reconstructing state by replaying events"
+      ],
+      "correct": 1,
+      "explanation": "Graph databases aim to uncover insights from relationships and networks, in areas such as fraud detection, influence analysis and recommendation systems."
+    },
+    {
+      "stem": "In the loan approval graph example, which edge connects a Customer to a Loan?",
+      "options": [
+        "approved_by",
+        "issued_at",
+        "applies_for",
+        "subclass_of",
+        "is_a"
+      ],
+      "correct": 2,
+      "explanation": "In the graph model a Customer applies for a Loan, an Officer approves a Loan and a Loan is issued at a Branch."
+    },
+    {
+      "stem": "In the fraud detection scenario using Neo4j, which pattern is described as suspicious?",
+      "options": [
+        "A customer with several repayments on the same loan",
+        "A loan issued at the customer's home branch",
+        "A loan officer working at a single branch",
+        "Multiple customers sharing the same contact details, or one officer repeatedly approving loans for tightly connected individuals",
+        "A guarantor with a high credit score"
+      ],
+      "correct": 3,
+      "explanation": "Suspicious patterns emerge when multiple customers share the same contact details or when the same officer repeatedly approves loans for tightly connected individuals."
+    },
+    {
+      "stem": "Why can graph databases discover connection patterns more easily than relational systems?",
+      "options": [
+        "Because they store all data in one partition",
+        "Because they enforce Third Normal Form",
+        "Because they cache every record in memory",
+        "Because they use a fixed tree structure",
+        "Because relationships are stored explicitly and navigated directly rather than inferred through multiple complex joins"
+      ],
+      "correct": 4,
+      "explanation": "In relational systems such patterns require many complex joins across large tables, whereas in a graph the relationships are navigated directly through pattern matching."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a limitation of graph databases?",
+      "options": [
+        "Inability to perform multi-hop queries",
+        "Being more niche than relational or document stores",
+        "Not being optimised for bulk aggregations such as summing loan amounts across millions of records",
+        "Requiring specialised query languages such as Cypher or Gremlin",
+        "Additional learning overhead"
+      ],
+      "correct": 0,
+      "explanation": "Multi-hop queries are a strength of graph databases; the limitations are niche adoption, weak bulk aggregation and specialised query languages."
+    },
+    {
+      "stem": "Why are graph databases described as a natural host for semantic models?",
+      "options": [
+        "Because they prioritise self-contained records",
+        "Because they treat relationships as first-class elements, aligning with models that focus on meaning and how things relate",
+        "Because they enforce strict domain constraints",
+        "Because they are optimised for tables and joins",
+        "Because they store only hierarchical data"
+      ],
+      "correct": 1,
+      "explanation": "Semantic models focus on what things mean and how they relate; graph databases align naturally because they store and traverse relationships directly."
+    },
+    {
+      "stem": "What distinguishes a metagraph from a simple graph?",
+      "options": [
+        "It stores only taxonomies",
+        "It replaces edges with tables",
+        "It allows relationships about relationships, such as an officer approving a loan under a specific policy rule",
+        "It stores only numeric data",
+        "It forbids class hierarchies"
+      ],
+      "correct": 2,
+      "explanation": "Metagraphs extend graphs by allowing relationships about relationships, for example \"Officer approves Loan under Policy Rule X\", enabling richer modelling of rules and provenance."
+    },
+    {
+      "stem": "What does a knowledge graph combine?",
+      "options": [
+        "Fact tables and dimension tables",
+        "Keys, values and partitions",
+        "Events, timestamps and consumers",
+        "Facts, ontologies and taxonomies into a unified network",
+        "Classes, methods and inheritance"
+      ],
+      "correct": 3,
+      "explanation": "Knowledge graphs combine facts, ontologies and taxonomies into a unified network, enabling queries that move beyond structure into meaning."
+    },
+    {
+      "stem": "What contrasting questions do relational models and semantic models answer?",
+      "options": [
+        "Relational: \"How fast is the query?\"; semantic: \"How much does it cost?\"",
+        "Relational: \"Who owns the data?\"; semantic: \"Where is it stored?\"",
+        "Relational: \"When did it happen?\"; semantic: \"Who caused it?\"",
+        "Relational: \"Which node has the most edges?\"; semantic: \"Which table has the most rows?\"",
+        "Relational: \"How is the data structured?\"; semantic: \"What does this data represent?\""
+      ],
+      "correct": 4,
+      "explanation": "Relational models answer how data is structured, while semantic models answer what the data represents, which is why they are called semantic."
+    }
+  ]
+}

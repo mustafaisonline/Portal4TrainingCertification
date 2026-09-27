@@ -1,0 +1,125 @@
+{
+  "topic": "poc",
+  "questions": [
+    {
+      "stem": "What does POC stand for?",
+      "options": [
+        "Point of Contact",
+        "Proof of Concept",
+        "Plan of Completion",
+        "Process of Change",
+        "Product of Choice"
+      ],
+      "correct": 1,
+      "explanation": "POC stands for Proof of Concept."
+    },
+    {
+      "stem": "What is the goal of a POC?",
+      "options": [
+        "To make sure whether an idea is feasible or not",
+        "To deliver the final production system",
+        "To train end users on the software",
+        "To choose the cheapest hardware",
+        "To complete user acceptance testing"
+      ],
+      "correct": 0,
+      "explanation": "The goal of a POC is to make sure whether the idea is feasible or not."
+    },
+    {
+      "stem": "In a POC, what is most important?",
+      "options": [
+        "The technology used",
+        "The size of the infrastructure",
+        "The output",
+        "The number of developers",
+        "The licensing cost"
+      ],
+      "correct": 2,
+      "explanation": "In a POC the output is most important, not the technology."
+    },
+    {
+      "stem": "What context does a POC normally follow?",
+      "options": [
+        "The security context of the network",
+        "The legal context of the contract",
+        "The maintenance context of the system",
+        "The sales context of the product",
+        "The archival context of the data"
+      ],
+      "correct": 3,
+      "explanation": "A POC normally follows the sales context of the product."
+    },
+    {
+      "stem": "For whom is a POC built and run?",
+      "options": [
+        "Database administrators",
+        "Technical developers",
+        "External auditors",
+        "Regulators",
+        "Business users"
+      ],
+      "correct": 4,
+      "explanation": "A POC is built and run for business users."
+    },
+    {
+      "stem": "What do implementers make sure of during a POC?",
+      "options": [
+        "That the output fulfils customer requirements and convinces the business that this is the solution to go with",
+        "That the production infrastructure is fully sized",
+        "That all unit tests pass",
+        "That the data model is normalised",
+        "That the solution complies with external audit standards"
+      ],
+      "correct": 0,
+      "explanation": "In a POC the implementers make sure the output fulfils customer requirements and convince the business that this is the solution to go with."
+    },
+    {
+      "stem": "Which of the following is NOT a characteristic of a POC?",
+      "options": [
+        "It tests whether an idea is feasible",
+        "It is built for business users",
+        "It prioritises the technology over the output",
+        "It follows the sales context of a product",
+        "It aims to convince the business of the solution"
+      ],
+      "correct": 2,
+      "explanation": "A POC prioritises the output, not the technology; the other statements describe a POC correctly."
+    },
+    {
+      "stem": "Which question does a POC set out to answer?",
+      "options": [
+        "How much will the production licences cost?",
+        "Is the idea feasible?",
+        "Which developers should be hired?",
+        "How will the final user interface look?",
+        "Which SCD type should be used?"
+      ],
+      "correct": 1,
+      "explanation": "A POC exists to make sure whether the idea is feasible or not."
+    },
+    {
+      "stem": "Whom must a POC convince that the proposed approach is the solution to go with?",
+      "options": [
+        "The hardware vendor",
+        "The internal audit team",
+        "The network administrators",
+        "The business",
+        "The external regulator"
+      ],
+      "correct": 3,
+      "explanation": "During a POC the implementers convince the business that this is the solution to go with."
+    },
+    {
+      "stem": "Which statement best summarises a POC?",
+      "options": [
+        "A full-scale production deployment with complete data",
+        "A technical evaluation using dummy data for developers",
+        "A small release of real features to actual users",
+        "A formal test of system integration",
+        "A feasibility check whose output must satisfy customer requirements and win over the business"
+      ],
+      "correct": 4,
+      "explanation": "A POC checks whether the idea is feasible, with the output fulfilling customer requirements and convincing the business; it is built and run for business users."
+    }
+  ]
+}

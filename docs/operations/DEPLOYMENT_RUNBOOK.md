@@ -101,6 +101,8 @@ The whole procedure — provisioning checklist, server bootstrap, env files, eve
 | Roll back | `deploy/07-rollback.sh --env production` (previous tag) · `--restore-db <dump>` for data (safety snapshot first, confirmed) | operator |
 | Scheduler | `p4tc-reminders.timer` (01:00 UTC) installed by the bootstrap — §7's crontab is not needed | bootstrap |
 
+**Free Learning content (Milestone 14, 2026-09-27).** After the first promotion and `db:seed`, load the book and the questions from the same tools image — `deploy/README.md` §3 step 7 gives the two commands (the docx is copied to `/opt/p4tc/book/` once; the question JSON files ship in the image). Nothing in Free Learning is seeded by `db:seed`.
+
 ## 5. Every subsequent deploy
 
 **Under Option C this section is executed by `deploy/start.sh`, which enforces every line of it** (gate, migration-before-code, health, rollback). The steps remain the policy:

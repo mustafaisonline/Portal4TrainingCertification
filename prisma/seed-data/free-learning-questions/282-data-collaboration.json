@@ -1,0 +1,125 @@
+{
+  "topic": "data-collaboration",
+  "questions": [
+    {
+      "stem": "What does data collaboration refer to?",
+      "options": [
+        "Storing all data in a single locked database",
+        "The practice of sharing and working with data across individuals, teams, departments, organisations or systems to achieve common goals",
+        "Compressing data so it takes up less space",
+        "Deleting duplicate records from a dataset",
+        "Encrypting data before it is archived"
+      ],
+      "correct": 1,
+      "explanation": "Data collaboration is the cooperative practice of sharing, handling, analysing and deriving value from data across people, teams, organisations or systems to reach shared goals or generate insights."
+    },
+    {
+      "stem": "Which key aspect of data collaboration involves data scientists, analysts, domain experts and business professionals working together to extract insights?",
+      "options": [
+        "Secure data exchange",
+        "Open data initiatives",
+        "Interdisciplinary cooperation",
+        "Data integration",
+        "Data standards and governance"
+      ],
+      "correct": 2,
+      "explanation": "Interdisciplinary cooperation is the aspect of data collaboration where people with diverse skills and expertise combine their perspectives to extract meaningful insights from data."
+    },
+    {
+      "stem": "Companies along a supply chain share data on inventory levels, demand forecasts and logistics to optimise their operations. Which example of data collaboration is this?",
+      "options": [
+        "Smart city initiative",
+        "Healthcare data sharing",
+        "Industry consortium",
+        "Supply chain collaboration",
+        "Cross-organisation analytics"
+      ],
+      "correct": 3,
+      "explanation": "Supply chain collaboration is the example where companies along a supply chain share inventory, forecast and logistics data to optimise supply chain operations."
+    },
+    {
+      "stem": "Which aspect of data collaboration is concerned with merging datasets, connecting databases or using middleware to create a unified view?",
+      "options": [
+        "Data integration",
+        "Cross-functional projects",
+        "Sharing data",
+        "Open data initiatives",
+        "Secure data exchange"
+      ],
+      "correct": 0,
+      "explanation": "Data integration is the aspect of data collaboration that combines data from various sources, through merging, connecting databases or middleware, to produce a unified view."
+    },
+    {
+      "stem": "Why are data standards and governance practices important in data collaboration?",
+      "options": [
+        "They eliminate the need for data sharing",
+        "They ensure consistency, quality and reliability of shared data, helping maintain trust among collaborators",
+        "They allow data to be shared without any security measures",
+        "They reduce the number of people involved in a project",
+        "They make open data initiatives illegal"
+      ],
+      "correct": 1,
+      "explanation": "Establishing data standards and governance ensures the consistency, quality and reliability of shared data, which in turn maintains trust among collaborators."
+    },
+    {
+      "stem": "Which of the following is NOT listed as an example of data collaboration?",
+      "options": [
+        "Healthcare providers sharing patient data for research",
+        "Local governments working with technology companies on smart city initiatives",
+        "Companies in an industry forming a consortium to share market data",
+        "A single analyst building a private spreadsheet for personal use",
+        "Organisations pooling data resources for cross-organisation analytics"
+      ],
+      "correct": 3,
+      "explanation": "A lone analyst working on a private spreadsheet involves no sharing or cooperation, so it is not data collaboration. The other four are given examples."
+    },
+    {
+      "stem": "In a smart city initiative, who collaborates and for what purpose?",
+      "options": [
+        "Hospitals share patient records to speed up billing",
+        "Local governments and technology companies collect and analyse data to improve urban services, traffic management and public safety",
+        "Retailers share inventory data with their suppliers",
+        "Universities pool exam results for accreditation",
+        "Banks exchange credit histories to reduce fraud"
+      ],
+      "correct": 1,
+      "explanation": "Smart city initiatives involve local governments collaborating with technology companies to gather and analyse data for better urban services, traffic management and public safety."
+    },
+    {
+      "stem": "Marketing, finance and operations teams inside one company join forces on a data-driven project. Which aspect of data collaboration does this illustrate?",
+      "options": [
+        "Open data initiatives",
+        "Secure data exchange",
+        "Cross-functional projects",
+        "External data sharing",
+        "Data standards"
+      ],
+      "correct": 2,
+      "explanation": "Cross-functional projects are collaborative projects that span different functions or departments within an organisation, such as marketing, finance and operations working together."
+    },
+    {
+      "stem": "What is the purpose of secure data exchange within data collaboration?",
+      "options": [
+        "To ensure data sharing complies with privacy regulations and protects sensitive information during collaboration",
+        "To make all shared data publicly available",
+        "To remove the need for governance",
+        "To merge datasets into a single database",
+        "To speed up analysis by removing access controls"
+      ],
+      "correct": 0,
+      "explanation": "Secure data exchange ensures that sharing is done securely and in compliance with privacy regulations, with measures in place to protect sensitive information."
+    },
+    {
+      "stem": "Why is data collaboration described as fundamental in the era of big data?",
+      "options": [
+        "Because big data is always stored in one place",
+        "Because regulations forbid single organisations from analysing data",
+        "Because collaboration eliminates the need for data security",
+        "Because the volume and complexity of data make it beneficial to tap into collective intelligence and resources",
+        "Because collaboration replaces the need for domain experts"
+      ],
+      "correct": 3,
+      "explanation": "The volume and complexity of big data make it beneficial to draw on collective intelligence and pooled resources, though privacy, security and governance still need careful consideration."
+    }
+  ]
+}

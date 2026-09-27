@@ -1,0 +1,125 @@
+{
+  "topic": "data-provenance",
+  "questions": [
+    {
+      "stem": "How do Data Provenance and Data Lineage relate to each other?",
+      "options": [
+        "They are completely unrelated activities",
+        "Logically they do the same thing but at different levels of granularity",
+        "Data Provenance is a technical subset of Data Lineage",
+        "Data Lineage applies to business data and Data Provenance to technical logs",
+        "Data Provenance is the older name for Data Lineage"
+      ],
+      "correct": 1,
+      "explanation": "Both describe the data lifecycle; Data Lineage does it at the level of databases, tables and columns, while Data Provenance works at a higher level."
+    },
+    {
+      "stem": "At what level does Data Provenance describe the data lifecycle?",
+      "options": [
+        "Individual rows and cell values",
+        "Databases, tables and columns",
+        "Network packets and ports",
+        "Inputs, entities, systems and processes",
+        "File paths and directory names"
+      ],
+      "correct": 3,
+      "explanation": "Data Provenance is at a higher level, dealing with inputs, entities, systems and processes rather than technical objects."
+    },
+    {
+      "stem": "Which of the following details belongs to Data Lineage rather than Data Provenance?",
+      "options": [
+        "Which database, table and column the data came from and went into",
+        "Whether real-time or batch processing was used",
+        "Which entity the data relates to",
+        "Whether analytical modelling was performed",
+        "Which source system supplied the data"
+      ],
+      "correct": 0,
+      "explanation": "Data Lineage tracks the data lifecycle in terms of databases, tables, columns and the business or ETL rules applied between them."
+    },
+    {
+      "stem": "Which of the following is an example of a question Data Provenance answers?",
+      "options": [
+        "Which column was renamed during the ETL job",
+        "Which index is defined on the target table",
+        "How many bytes the source file occupied",
+        "Which foreign key links two tables",
+        "Whether the data was processed in real time, in batches or by events"
+      ],
+      "correct": 4,
+      "explanation": "Data Provenance records the process used, such as real-time, batch or event-based processing, along with format, source system and entity."
+    },
+    {
+      "stem": "Who mainly uses Data Provenance?",
+      "options": [
+        "Database administrators",
+        "ETL developers",
+        "Business users and management",
+        "Network engineers",
+        "Security testers"
+      ],
+      "correct": 2,
+      "explanation": "Data Provenance is used by business users or management, whereas Data Lineage is mostly used by IT staff."
+    },
+    {
+      "stem": "Who mainly uses Data Lineage?",
+      "options": [
+        "IT staff",
+        "Board members",
+        "External auditors only",
+        "Customers",
+        "Marketing managers"
+      ],
+      "correct": 0,
+      "explanation": "Data Lineage is mostly used by IT folks because it deals with databases, tables, columns and ETL rules."
+    },
+    {
+      "stem": "Which of the following is NOT listed as something Data Provenance captures during the data lifecycle?",
+      "options": [
+        "Any data cleaning that took place",
+        "Any data quality rules applied",
+        "The index defined on a particular table column",
+        "Any data enrichment that took place",
+        "Master and reference data management activities"
+      ],
+      "correct": 2,
+      "explanation": "Data Provenance records cleaning, quality rules, enrichment, metadata management and master and reference data management; column-level index details are a technical matter outside its scope."
+    },
+    {
+      "stem": "Which processing styles does Data Provenance record as part of describing how data was handled?",
+      "options": [
+        "Compiled, interpreted and scripted",
+        "Encrypted, hashed and tokenised",
+        "Primary, secondary and tertiary",
+        "Local, regional and global",
+        "Real-time, batch and event-based"
+      ],
+      "correct": 4,
+      "explanation": "Data Provenance notes whether the process used was real-time processing, batch processing or event-based processing."
+    },
+    {
+      "stem": "Which of the following is something Data Provenance records about incoming data?",
+      "options": [
+        "The width of each column in characters",
+        "The format it arrives in and the source system it comes from",
+        "The password of the source system",
+        "The SQL used to create the target table",
+        "The number of rows in each partition"
+      ],
+      "correct": 1,
+      "explanation": "Data Provenance records the format the data comes in, the source system, the related entity and the processes applied to it."
+    },
+    {
+      "stem": "What does a Data Lineage record capture when data moves from one table to another?",
+      "options": [
+        "The cost of the storage used",
+        "The name of the business sponsor",
+        "The reason the project was approved",
+        "The business rules incorporated during the transformation between source and target database, table and column",
+        "The regulatory framework governing the data"
+      ],
+      "correct": 3,
+      "explanation": "Data Lineage tracks which database, table and column data came from and went into, with the business rules applied during transformation."
+    }
+  ]
+}

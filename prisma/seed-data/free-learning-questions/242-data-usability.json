@@ -1,0 +1,125 @@
+{
+  "topic": "data-usability",
+  "questions": [
+    {
+      "stem": "What is the difference between a system being useful and being usable?",
+      "options": [
+        "Useful means it is cheap; usable means it is expensive",
+        "Useful means it fulfils the business requirements; usable means how easy and automated it is for operational tasks",
+        "Useful means it is in the cloud; usable means it is on-premises",
+        "Useful means it is documented; usable means it is tested",
+        "There is no difference"
+      ],
+      "correct": 1,
+      "explanation": "Useful means a system fulfils requirements and performs the operational tasks; usable means how easy and automated it is, making the operator's life easy."
+    },
+    {
+      "stem": "In the marketing-campaign example, why is dumping data from five source systems into a Data Lake useful but not usable?",
+      "options": [
+        "Because a Data Lake cannot store structured data",
+        "Because all the data is in one place but not yet in a format the marketing team can easily use for campaigns",
+        "Because the marketing team lacks access rights",
+        "Because the data has not been encrypted",
+        "Because five systems is too many"
+      ],
+      "correct": 1,
+      "explanation": "Having all data centralised is useful, but it is not usable until converted into a format, such as a Data Warehouse, Data Mart or Semantic Layer, that the marketing team can readily use."
+    },
+    {
+      "stem": "Where should data be formatted so that it becomes usable for the relevant team?",
+      "options": [
+        "In the OLTP source systems",
+        "In a floppy-drive archive",
+        "In a Data Warehouse, a Data Mart or a Semantic Layer",
+        "In a development database instance",
+        "In a synthetic dataset"
+      ],
+      "correct": 2,
+      "explanation": "Unless data is formatted in a Data Warehouse, Data Mart or Semantic Layer it may not be usable for the relevant team."
+    },
+    {
+      "stem": "What proportion of data in the Big Data era is said to come from semi- and unstructured sources?",
+      "options": [
+        "Around 10%",
+        "Around 50%",
+        "Around 75%",
+        "90% or more",
+        "Exactly 100%"
+      ],
+      "correct": 3,
+      "explanation": "In the current era 90% or more of data comes from semi- and unstructured sources, all of which is useful but not usable until structured."
+    },
+    {
+      "stem": "Which standard's definition of usability is quoted: 'the extent to which a product can be used by specified users to achieve specified goals with effectiveness, efficiency, and satisfaction in a specified context of use'?",
+      "options": [
+        "ISO 27001",
+        "ISO 8000",
+        "ISO 9241",
+        "ISO 9001",
+        "GDPR"
+      ],
+      "correct": 2,
+      "explanation": "The quoted definition of usability comes from the ISO 9241 standard."
+    },
+    {
+      "stem": "Which of the following is NOT one of the listed dimensions of Data Usability?",
+      "options": [
+        "Data should be relevant for the stakeholders",
+        "Data Quality should be high so stakeholders can trust it",
+        "Enough data points should be available for decision making",
+        "Data should be stored on-premises only",
+        "Data should be available in an easy-to-use format for analysis"
+      ],
+      "correct": 3,
+      "explanation": "Relevance, quality, sufficiency, accessibility and ease-of-use format are the dimensions; on-premises storage is not among them."
+    },
+    {
+      "stem": "In the characteristics of Data Usability, what does 'Effective' mean?",
+      "options": [
+        "Accurate and impactful",
+        "Time bound as required",
+        "Easy to understand",
+        "Protected",
+        "Accessible to all relevant parties"
+      ],
+      "correct": 0,
+      "explanation": "Effective is defined as accurate and impactful; Efficient is the characteristic that means time bound."
+    },
+    {
+      "stem": "Which characteristic of Data Usability means data is easy to download or send to other systems?",
+      "options": [
+        "Reusable",
+        "Learnable",
+        "Appealing",
+        "Memorable",
+        "Utilisable"
+      ],
+      "correct": 4,
+      "explanation": "Utilisable is defined as easy to download or send to other systems."
+    },
+    {
+      "stem": "Which characteristic of Data Usability refers to use on multiple types of devices such as desktops, laptops, mobiles and tablets?",
+      "options": [
+        "Reusable",
+        "Accessible",
+        "Safe",
+        "Efficient",
+        "Understandable"
+      ],
+      "correct": 0,
+      "explanation": "Reusable is the characteristic concerned with use on multiple device types, including desktops, laptops, mobiles and tablets."
+    },
+    {
+      "stem": "What is the ideal action for semi- and unstructured data so that stakeholders can use it?",
+      "options": [
+        "Leave it in its raw form in the Data Lake",
+        "Delete it once it has been viewed",
+        "Export it to spreadsheets",
+        "Encrypt it and restrict access",
+        "Convert it into structured format inside a proper data model"
+      ],
+      "correct": 4,
+      "explanation": "Ideally all semi- and unstructured data should be converted into structured format inside a proper data model for stakeholders, otherwise there is no point holding it."
+    }
+  ]
+}

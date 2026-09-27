@@ -1,0 +1,125 @@
+{
+  "topic": "the-evolution-ofdata-products-and-it-s-ecosystem",
+  "questions": [
+    {
+      "stem": "In the data product ecosystem, where does the journey of every data product start?",
+      "options": [
+        "In the Data Preparation Zone, where raw, fragmented inputs are collected, validated and modelled for reuse",
+        "In the OLAP Zone, where dashboards are built",
+        "In an external Data-As-a-Service marketplace",
+        "In the sandbox of a data scientist",
+        "In the CRM system"
+      ],
+      "correct": 0,
+      "explanation": "Every data product starts in the Data Preparation Zone, which lays the architectural backbone by collecting, validating and modelling raw inputs for reuse."
+    },
+    {
+      "stem": "Which modelling approach in the Data Preparation Zone is described as designed for agility, historisation and traceability in complex data landscapes?",
+      "options": [
+        "3NF Data Warehouse Modelling",
+        "Data Vault Modelling",
+        "Feature Store Design",
+        "Dimensional Data Marts",
+        "Semantic Layers"
+      ],
+      "correct": 1,
+      "explanation": "Data Vault Modelling is the approach designed for agility, historisation and traceability in complex data landscapes."
+    },
+    {
+      "stem": "What are Ensemble Techniques such as Focal Point and Anchor used for in the Data Preparation Zone?",
+      "options": [
+        "Training machine learning models",
+        "Visualising results in dashboards",
+        "Unifying fragmented entities across domains",
+        "Throttling API access",
+        "Exposing data externally as a service"
+      ],
+      "correct": 2,
+      "explanation": "Ensemble techniques such as Focal Point and Anchor are used to unify fragmented entities across domains."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a key component of the OLAP Zone?",
+      "options": [
+        "Data Marts (dimensional models)",
+        "Semantic Layers",
+        "Inference Tables",
+        "Feature Store Design",
+        "Sandboxes"
+      ],
+      "correct": 3,
+      "explanation": "The OLAP Zone comprises Data Marts, Semantic Layers, Inference Tables and Sandboxes; Feature Store Design belongs to the Data Preparation Zone."
+    },
+    {
+      "stem": "What do semantic layers in the OLAP Zone do?",
+      "options": [
+        "Store raw, unvalidated data",
+        "Enforce throttling on external APIs",
+        "Historise every change to a record",
+        "Replace the need for data stewards",
+        "Translate physical schemas into business-friendly views, empowering self-service without SQL knowledge"
+      ],
+      "correct": 4,
+      "explanation": "Semantic layers translate physical schemas into business-friendly views so that users can self-serve without needing SQL."
+    },
+    {
+      "stem": "Which of the following is given as an example of a Data-As-a-Product (DAaP) asset?",
+      "options": [
+        "Curated customer profile datasets used across marketing, support and analytics",
+        "A one-off spreadsheet emailed to a manager",
+        "A sandbox used for a single experiment",
+        "A raw log file from a web server",
+        "An unvalidated CSV extract"
+      ],
+      "correct": 0,
+      "explanation": "DAaP examples include curated customer profile datasets used across marketing, support and analytics, governed KPI APIs and shared ML features."
+    },
+    {
+      "stem": "What is Data-As-a-Service (DaaS)?",
+      "options": [
+        "A modelling technique for data warehouses",
+        "The service delivery model used when DAaP is distributed externally via APIs, flat files or cloud platforms",
+        "An isolated environment for experimentation",
+        "A role responsible for metadata and lineage",
+        "A type of dimensional schema"
+      ],
+      "correct": 1,
+      "explanation": "When DAaP is distributed externally it is often exposed as Data-As-a-Service, delivered via APIs, flat files or cloud platforms."
+    },
+    {
+      "stem": "Which of the following is listed as a key trait of Data-As-a-Service (DaaS)?",
+      "options": [
+        "Unlimited, unthrottled access for everyone",
+        "No documentation required",
+        "SLA-backed reliability and freshness",
+        "Access only through manual spreadsheets",
+        "A single internal consumer"
+      ],
+      "correct": 2,
+      "explanation": "DaaS traits include standardised access, SLA-backed reliability and freshness, security controls and throttling, and clear usage agreements and documentation."
+    },
+    {
+      "stem": "In the data product ecosystem, which responsibility belongs to the data steward rather than the Data Product Owner?",
+      "options": [
+        "Defining the DAaP vision and business case",
+        "Managing backlogs, versions and SLAs",
+        "Leading onboarding and roadmap evolution",
+        "Governing metadata, lineage and compliance",
+        "Aligning with platform engineering and business units"
+      ],
+      "correct": 3,
+      "explanation": "The data steward governs metadata, lineage and compliance, alongside data quality, contract enforcement and versioning support; the other items are DPO responsibilities."
+    },
+    {
+      "stem": "How is the Data Product Owner described within the DAaP ecosystem?",
+      "options": [
+        "A part-time reviewer of dashboards",
+        "The database administrator for the warehouse",
+        "An external auditor of data quality",
+        "The person who writes the ETL code",
+        "The single-threaded leader responsible for the productisation lifecycle"
+      ],
+      "correct": 4,
+      "explanation": "The Data Product Owner is the single-threaded leader responsible for the productisation lifecycle, acting as product manager of data."
+    }
+  ]
+}

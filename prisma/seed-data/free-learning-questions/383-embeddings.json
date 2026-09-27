@@ -1,0 +1,125 @@
+{
+  "topic": "embeddings",
+  "questions": [
+    {
+      "stem": "What are embeddings?",
+      "options": [
+        "Numerical representations of data that capture meaning, context or relationships in a form machines can understand",
+        "Compressed copies of raw text files",
+        "Encrypted versions of images",
+        "Relational tables that store words as symbols",
+        "Random numbers assigned to each record"
+      ],
+      "correct": 0,
+      "explanation": "Embeddings are numerical representations of data that capture meaning, context or relationships in a form machines can understand. They convert words, images or other data into vectors (lists of numbers) that preserve relationships."
+    },
+    {
+      "stem": "In the context of embeddings, what is a vector?",
+      "options": [
+        "A type of database index",
+        "A list of numbers",
+        "A keyword search query",
+        "A compressed image file",
+        "A rule for classifying text"
+      ],
+      "correct": 1,
+      "explanation": "Embeddings convert data into vectors, which are lists of numbers. These numbers are generated so that similar items have embeddings that are mathematically close in vector space."
+    },
+    {
+      "stem": "Which pair of words is given as an example of embeddings that would be close to each other in vector space?",
+      "options": [
+        "Apple and car",
+        "Fish and bird",
+        "King and queen",
+        "Dog and fish",
+        "Cheap and expensive"
+      ],
+      "correct": 2,
+      "explanation": "The words 'king' and 'queen' have embeddings that are close to each other, whereas 'apple' and 'car' are farther apart. The distance between embeddings represents similarity."
+    },
+    {
+      "stem": "In data architecture, where are embeddings often stored so that similarity search can be performed?",
+      "options": [
+        "In spreadsheets",
+        "In relational tables of raw text",
+        "In email archives",
+        "In vector databases",
+        "In object storage as image files"
+      ],
+      "correct": 3,
+      "explanation": "Embeddings are often stored in vector databases, where similarity search is performed using mathematical distance measures."
+    },
+    {
+      "stem": "How does an embedding-based search differ from a traditional keyword search when a user searches for 'cheap running shoes'?",
+      "options": [
+        "It returns only exact matches of the phrase",
+        "It ignores the query and shows popular products",
+        "It translates the query into another language",
+        "It searches only product images",
+        "It understands that 'affordable sneakers' may mean the same thing even though the words differ"
+      ],
+      "correct": 4,
+      "explanation": "A traditional keyword system looks only for exact word matches. An embedding-based system captures semantic similarity, so it understands that 'affordable sneakers' may mean the same as 'cheap running shoes'."
+    },
+    {
+      "stem": "In the Grade 7 animal example of embeddings, why are dog and wolf considered similar?",
+      "options": [
+        "Because their number sets, such as [0.8, 0.6, 0.7] and [0.82, 0.59, 0.72], are close to each other",
+        "Because they have the same name length",
+        "Because they both live in water",
+        "Because their numbers are as different as possible",
+        "Because fish and birds were placed next to them"
+      ],
+      "correct": 0,
+      "explanation": "Each animal is assigned numbers based on features such as size, habitat and behaviour. Dog [0.8, 0.6, 0.7] and wolf [0.82, 0.59, 0.72] have close numbers, so they are similar, while fish [0.1, 0.9, 0.2] is very different."
+    },
+    {
+      "stem": "Conceptually, what does each dimension of an embedding's multi-dimensional space capture?",
+      "options": [
+        "A single letter of the original word",
+        "A certain pattern learned from large amounts of data",
+        "The file size of the original data",
+        "The date the data was created",
+        "The name of the storage system"
+      ],
+      "correct": 1,
+      "explanation": "Conceptually, every word or object is placed in a multi-dimensional space where each dimension captures a certain pattern learned from large amounts of data. Items close together in that space are semantically related."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a use of embeddings?",
+      "options": [
+        "Similarity search",
+        "Clustering",
+        "Encrypting passwords",
+        "Classification",
+        "Retrieval-based generation"
+      ],
+      "correct": 2,
+      "explanation": "Embeddings allow systems to perform similarity search, clustering, classification and retrieval-based generation, and are used in search engines, recommendation systems, chatbots and NLP. Encrypting passwords is not one of their uses."
+    },
+    {
+      "stem": "What does an image embedding capture, compared with an audio embedding?",
+      "options": [
+        "Both capture the file name",
+        "An image embedding captures sound characteristics; an audio embedding captures visual patterns",
+        "Neither captures anything beyond raw pixel or sample values",
+        "An image embedding captures visual patterns; an audio embedding captures sound characteristics",
+        "Only text can have embeddings"
+      ],
+      "correct": 3,
+      "explanation": "The same principle applies to text, images and audio. An image embedding captures visual patterns, and an audio embedding captures sound characteristics."
+    },
+    {
+      "stem": "How do embeddings enable AI systems to combine text and image understanding?",
+      "options": [
+        "By storing both as plain keywords",
+        "By converting images into text descriptions only",
+        "By keeping each modality in a separate system that never interacts",
+        "By ranking images by file size",
+        "By converting different modalities into vectors so systems can compare them mathematically"
+      ],
+      "correct": 4,
+      "explanation": "Embeddings are central to AI systems that combine text and image understanding. By converting different modalities into vectors, systems can compare them mathematically."
+    }
+  ]
+}

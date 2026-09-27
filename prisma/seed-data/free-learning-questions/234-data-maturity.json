@@ -1,0 +1,125 @@
+{
+  "topic": "data-maturity",
+  "questions": [
+    {
+      "stem": "How is maturity defined in the context of Data Maturity?",
+      "options": [
+        "The number of process stages an entity has passed through",
+        "The stability level of an entity, process or product",
+        "The age of the data in a datastore",
+        "The size of the organisation's data warehouse",
+        "The number of users of a system"
+      ],
+      "correct": 1,
+      "explanation": "Maturity refers to the stability level of an entity, process or product; it is about how stable the product is after implementation, not how many stages it has passed through."
+    },
+    {
+      "stem": "Data Maturity is described as the key to becoming what kind of organisation?",
+      "options": [
+        "A cloud-first organisation",
+        "A regulated organisation",
+        "A data-driven organisation",
+        "A product-led organisation",
+        "A remote-working organisation"
+      ],
+      "correct": 2,
+      "explanation": "Data Maturity is the key to becoming a Data Driven Organisation."
+    },
+    {
+      "stem": "Which acquisition does *I Am Datapedia!* cite as a multi-billion-dollar deal based on user numbers and potential growth of a simple mobile application?",
+      "options": [
+        "Instagram",
+        "LinkedIn",
+        "Skype",
+        "WhatsApp",
+        "YouTube"
+      ],
+      "correct": 3,
+      "explanation": "The WhatsApp acquisition is the example of a multi-billion-dollar deal made on the basis of how many users the app had and its potential growth."
+    },
+    {
+      "stem": "What characterises the Discovery stage of Data Maturity?",
+      "options": [
+        "Users use ad hoc reports and dashboards for data discovery, but decisions are still taken from data collected in other ways",
+        "Users start using data in their daily operational activities",
+        "Decision makers use data for their daily decision making",
+        "Users start innovating new things using data",
+        "The organisation has completed all its maturity models"
+      ],
+      "correct": 0,
+      "explanation": "In the first stage, Discovery, users explore data through ad hoc reports and dashboards, but real decisions are still based on data gathered elsewhere."
+    },
+    {
+      "stem": "In which stage of Data Maturity do organisations turn to data for standard processes and save time through automation?",
+      "options": [
+        "Discovery",
+        "Users",
+        "Leaders",
+        "Innovation",
+        "Governance"
+      ],
+      "correct": 1,
+      "explanation": "The second stage, Users, is where people use data in daily operations and organisations automate standard processes with it."
+    },
+    {
+      "stem": "Which stage of Data Maturity is where data starts showing its real value because decision makers use it for daily decisions?",
+      "options": [
+        "Discovery",
+        "Users",
+        "Innovation",
+        "Leaders",
+        "Integration"
+      ],
+      "correct": 3,
+      "explanation": "The third stage, Leaders, is when decision makers begin to base their daily decision making, including million- or billion-dollar decisions, on data."
+    },
+    {
+      "stem": "What happens in the Innovation stage of Data Maturity?",
+      "options": [
+        "Data is collected for the first time",
+        "Reports are automated for operational staff",
+        "Users start innovating new things using data, as a small team did in building WhatsApp",
+        "Data is moved from silos into a warehouse",
+        "Management approves the data budget"
+      ],
+      "correct": 2,
+      "explanation": "The fourth and most exciting stage is Innovation, where users create new things from data; WhatsApp is given as an example of such innovation."
+    },
+    {
+      "stem": "What is the correct order of the four stages of Data Maturity?",
+      "options": [
+        "Users, Discovery, Leaders, Innovation",
+        "Discovery, Leaders, Users, Innovation",
+        "Innovation, Leaders, Users, Discovery",
+        "Discovery, Users, Innovation, Leaders",
+        "Discovery, Users, Leaders, Innovation"
+      ],
+      "correct": 4,
+      "explanation": "The four stages run from Discovery through Users and Leaders to Innovation."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a Data Maturity model?",
+      "options": [
+        "Data Pricing Maturity Level",
+        "Data Governance Maturity Level",
+        "Data Liberation Maturity Level",
+        "Data Ethics Maturity Level",
+        "Big Data Maturity Level"
+      ],
+      "correct": 0,
+      "explanation": "Ethics, Governance, Liberation and Big Data maturity levels are all listed; there is no Data Pricing Maturity Level."
+    },
+    {
+      "stem": "Which analogy explains why a decision, like a person, can be called mature or immature?",
+      "options": [
+        "Whether it was made quickly",
+        "Whether it was documented",
+        "How many people were consulted",
+        "Whether a committee approved it",
+        "Its result: a mature decision is judged by the outcome it produces"
+      ],
+      "correct": 4,
+      "explanation": "Just as a mature person is trusted to take their own decisions, decisions are judged mature or immature by the results that follow from them."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "knowledge-graph-kg",
+  "questions": [
+    {
+      "stem": "How is a Knowledge Graph (KG) compared to a relational database in I Am Datapedia!?",
+      "options": [
+        "Just as a row is the physical content in a relational database, a Knowledge Graph is the physical content in a graph database",
+        "A Knowledge Graph is the index of a relational database",
+        "A Knowledge Graph is the schema of a relational database",
+        "A Knowledge Graph is a backup of a relational database",
+        "A Knowledge Graph is a query language for relational databases"
+      ],
+      "correct": 0,
+      "explanation": "A row is the physical content in a relational database; likewise a Knowledge Graph is the physical content in a graph database."
+    },
+    {
+      "stem": "What is a Knowledge Graph?",
+      "options": [
+        "A hierarchical list of categories",
+        "A structured representation of knowledge where entities (nodes) and their relationships (edges) are stored and queried in a graph format",
+        "A set of rules that constrain a database schema",
+        "A visual chart of company revenue",
+        "A collection of unstructured documents"
+      ],
+      "correct": 1,
+      "explanation": "A Knowledge Graph is a structured representation of knowledge, storing entities as nodes and relationships as edges in a graph format."
+    },
+    {
+      "stem": "A Knowledge Graph is described as the populated version of four things. Which set is correct?",
+      "options": [
+        "Tables, rows, columns and keys",
+        "Files, folders, drives and servers",
+        "Graph Theory (structure), MetaGraph (metadata), Taxonomies (classification) and Ontologies (rules)",
+        "Dashboards, reports, KPIs and OKRs",
+        "ETL, ELT, streaming and batch"
+      ],
+      "correct": 2,
+      "explanation": "Like a relational schema populated with rows, a Knowledge Graph is the populated version of Graph Theory, MetaGraph, Taxonomies and Ontologies."
+    },
+    {
+      "stem": "What does a Knowledge Graph add to the abstract structure that Graph Theory provides?",
+      "options": [
+        "A hierarchical classification",
+        "Reasoning rules",
+        "A relational schema",
+        "Data instances: nodes representing real-world entities and edges representing actual relationships",
+        "A programming language"
+      ],
+      "correct": 3,
+      "explanation": "Graph Theory gives the mathematical structure; the Knowledge Graph adds data instances such as (Person: Alice) -[:Knows]-> (Person: Bob)."
+    },
+    {
+      "stem": "What kind of metadata does a Knowledge Graph embed for each node and edge, according to the MetaGraph comparison?",
+      "options": [
+        "Only the primary key",
+        "The colour and size of the node",
+        "The name of the database administrator",
+        "The SQL used to create it",
+        "Source, provenance, lineage or confidence scores"
+      ],
+      "correct": 4,
+      "explanation": "A Knowledge Graph includes metadata such as source, provenance, lineage or confidence scores, for example a 'Knows' edge with Confidence 0.95."
+    },
+    {
+      "stem": "How does a Knowledge Graph relate to a Taxonomy such as Electronics, Laptops, Gaming Laptops?",
+      "options": [
+        "It instantiates the classification by linking specific data entities to their categories, such as a Dell Gaming Laptop belonging to Gaming Laptops",
+        "It replaces the taxonomy with a flat list",
+        "It stores the taxonomy as a single node",
+        "It ignores the taxonomy entirely",
+        "It defines the rules by which the taxonomy is built"
+      ],
+      "correct": 0,
+      "explanation": "The Taxonomy provides a generic hierarchy; the Knowledge Graph maps actual data to it, for example (Product: Dell Gaming Laptop) -[:Belongs To]-> (Category: Gaming Laptops)."
+    },
+    {
+      "stem": "In the Knowledge Graph comparison, what does an Ontology define?",
+      "options": [
+        "The physical rows of data",
+        "The schema, rules and semantics for entities and relationships, such as 'a Product must Belong To a Category'",
+        "The confidence score of every edge",
+        "The mathematical definition of a vertex",
+        "The storage engine of the graph database"
+      ],
+      "correct": 1,
+      "explanation": "An Ontology defines the schema, rules and semantics; the Knowledge Graph instantiates that schema with actual data that adheres to those rules."
+    },
+    {
+      "stem": "In the relational-to-graph comparison, an Orders table with columns OrderID, CustomerID and OrderDate corresponds to what in a Knowledge Graph?",
+      "options": [
+        "A single node called Orders with no edges",
+        "A taxonomy of order categories",
+        "Nodes for Customers and Orders with a Purchases edge between them, such as (Customer: Alice) -[:Purchases {Date: '2023-12-12'}]-> (Order: #12345)",
+        "A column called Purchases",
+        "An ontology rule that customers must exist"
+      ],
+      "correct": 2,
+      "explanation": "In the Knowledge Graph, Customers and Orders become nodes and Purchases becomes an edge carrying properties such as the date."
+    },
+    {
+      "stem": "Which of the following is NOT one of the concepts that a Knowledge Graph is said to integrate closely with and unify?",
+      "options": [
+        "Graph Theory",
+        "MetaGraph",
+        "Taxonomies",
+        "Star schemas",
+        "Ontologies"
+      ],
+      "correct": 3,
+      "explanation": "A Knowledge Graph integrates closely with Graph Theory, MetaGraph, Taxonomies and Ontologies, acting as a unifying framework; star schemas are not part of that list."
+    },
+    {
+      "stem": "In a relational database, what is the state of the schema (tables, columns, constraints) before rows are added, and what is the equivalent in the graph world?",
+      "options": [
+        "The schema is full of default data; the Knowledge Graph is likewise pre-filled",
+        "The schema does not exist until rows arrive; the Knowledge Graph creates its structure on the fly",
+        "The schema is locked; the Knowledge Graph is read-only",
+        "The schema is deleted; the Knowledge Graph is archived",
+        "The schema is empty until populated with rows; similarly the Knowledge Graph is the populated version of the graph structure, metadata, classification and rules"
+      ],
+      "correct": 4,
+      "explanation": "A relational schema is empty until rows populate it, and in the same way the Knowledge Graph is the populated version of Graph Theory, MetaGraph, Taxonomies and Ontologies."
+    }
+  ]
+}

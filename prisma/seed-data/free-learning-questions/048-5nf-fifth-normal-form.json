@@ -1,0 +1,125 @@
+{
+  "topic": "5nf-fifth-normal-form",
+  "questions": [
+    {
+      "stem": "By what other name is Fifth Normal Form (5NF) known?",
+      "options": [
+        "Projection–Join Normal Form (PJNF)",
+        "Domain–Key Normal Form (DKNF)",
+        "Boyce–Codd Normal Form (BCNF)",
+        "Temporal Normal Form",
+        "Multi-Valued Normal Form"
+      ],
+      "correct": 0,
+      "explanation": "5NF is also known as Projection–Join Normal Form because it concerns redundancy that appears when a table is decomposed into projections and re-joined."
+    },
+    {
+      "stem": "What kind of dependency does Fifth Normal Form address?",
+      "options": [
+        "Functional dependencies",
+        "Join dependencies",
+        "Partial dependencies",
+        "Transitive dependencies",
+        "Multi-valued dependencies"
+      ],
+      "correct": 1,
+      "explanation": "5NF addresses join dependencies: situations where a table can be reconstructed from multiple smaller tables yet still contains hidden redundancy."
+    },
+    {
+      "stem": "What is the formal condition for a table to be in Fifth Normal Form?",
+      "options": [
+        "It is in BCNF and has no multi-valued dependencies",
+        "It is in 3NF and every determinant is a superkey",
+        "It is in 4NF and every join dependency is implied by the candidate keys alone",
+        "It is in 6NF and every attribute has a validity period",
+        "It is in 1NF and every cell is atomic"
+      ],
+      "correct": 2,
+      "explanation": "A table is in 5NF if it is already in Fourth Normal Form and every join dependency in the table is implied by the candidate keys alone."
+    },
+    {
+      "stem": "In the Fifth Normal Form loan example, into which three binary tables can LoanGuarantorCollateral (LoanID, GuarantorID, CollateralType) be decomposed?",
+      "options": [
+        "Loan, Guarantor and Collateral",
+        "LoanAmount, LoanInterestRate and LoanStatus",
+        "Customer, Loan and Repayment",
+        "LoanGuarantor, LoanCollateral and GuarantorCollateral",
+        "LoanID, GuarantorID and CollateralType"
+      ],
+      "correct": 3,
+      "explanation": "When the three relationships are independent, the ternary table can be derived from LoanGuarantor (LoanID, GuarantorID), LoanCollateral (LoanID, CollateralType) and GuarantorCollateral (GuarantorID, CollateralType)."
+    },
+    {
+      "stem": "When should a table be decomposed into its projections under Fifth Normal Form?",
+      "options": [
+        "Whenever the table has more than three columns",
+        "Whenever the table has a composite key",
+        "Whenever the table stores time-varying attributes",
+        "Whenever the table contains a foreign key",
+        "When its information equals the natural join of its projections and that dependency is not enforced by keys alone"
+      ],
+      "correct": 4,
+      "explanation": "If a table's information equals the natural join of two or more of its projections, and that dependency is not enforced by keys alone, the table should be decomposed into those projections."
+    },
+    {
+      "stem": "Which two conditions must a Fifth Normal Form decomposition satisfy?",
+      "options": [
+        "The joined smaller tables recreate the original facts exactly, and no smaller table contains redundant data internally",
+        "Every table has a surrogate key, and every attribute has an effective date",
+        "The smaller tables share no columns, and each has a single-column key",
+        "The decomposition reduces row count, and every table has fewer than three columns",
+        "Every constraint is a domain or key constraint, and no joins are required"
+      ],
+      "correct": 0,
+      "explanation": "The decomposition must recreate the original facts exactly when the smaller tables are joined, and no smaller table may contain redundant data internally."
+    },
+    {
+      "stem": "What is the key difference between Fourth Normal Form and Fifth Normal Form?",
+      "options": [
+        "4NF applies to warehouses whereas 5NF applies to transactional systems",
+        "4NF handles independent multi-valued facts about the same key, whereas 5NF handles redundancy that emerges through join patterns involving three or more attributes",
+        "4NF removes transitive dependencies whereas 5NF removes partial dependencies",
+        "4NF requires time validity whereas 5NF does not",
+        "4NF is theoretical whereas 5NF is used in every schema"
+      ],
+      "correct": 1,
+      "explanation": "The difference lies in the complexity of dependency: 4NF deals with independent multi-valued facts, while 5NF deals with redundancy that only appears through complex join patterns involving three or more attributes."
+    },
+    {
+      "stem": "In which kinds of domains does Fifth Normal Form become relevant?",
+      "options": [
+        "Simple one-to-many hierarchies",
+        "Read-only reporting tables",
+        "Highly structured domains with complex many-to-many-to-many relationships where associations are fully independent",
+        "Document databases with embedded arrays",
+        "Every everyday transactional system"
+      ],
+      "correct": 2,
+      "explanation": "5NF is rarely required in everyday transactional systems, but it becomes relevant in highly structured domains involving complex many-to-many-to-many relationships, especially where associations are fully independent."
+    },
+    {
+      "stem": "What should be done if business rules constrain which loan guarantor and collateral combinations are allowed?",
+      "options": [
+        "Decompose to the pure cross-product anyway",
+        "Store the combinations as a comma-separated list",
+        "Drop the constraint and rely on application logic",
+        "Model the constraint with an explicit association table rather than pretending the relationships are independent",
+        "Move the constraint into a domain definition"
+      ],
+      "correct": 3,
+      "explanation": "If business rules block some combinations the relationship is not fully independent, so an extra association table is needed instead of decomposing to a pure cross-product."
+    },
+    {
+      "stem": "Conceptually, what kind of relationships does a table in Fifth Normal Form contain?",
+      "options": [
+        "Only one-to-one relationships",
+        "Only relationships with explicit time validity",
+        "Only relationships enforced by domain constraints",
+        "Only denormalised relationships for query speed",
+        "Only irreducible relationships that cannot be further decomposed without losing information"
+      ],
+      "correct": 4,
+      "explanation": "5NF ensures that a table contains only irreducible relationships, meaning relationships that cannot be decomposed further without losing information."
+    }
+  ]
+}

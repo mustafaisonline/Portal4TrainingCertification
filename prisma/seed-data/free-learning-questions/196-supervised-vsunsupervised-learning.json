@@ -1,0 +1,125 @@
+{
+  "topic": "supervised-vsunsupervised-learning",
+  "questions": [
+    {
+      "stem": "What is the fundamental difference in the data used by Supervised Learning and Unsupervised Learning?",
+      "options": [
+        "Supervised Learning uses numeric data; Unsupervised Learning uses text data",
+        "Supervised Learning uses labelled data; Unsupervised Learning uses unlabelled data",
+        "Supervised Learning uses unlabelled data; Unsupervised Learning uses labelled data",
+        "Both use labelled data",
+        "Both use unlabelled data"
+      ],
+      "correct": 1,
+      "explanation": "Supervised Learning uses labelled data, whereas Unsupervised Learning uses unlabelled data."
+    },
+    {
+      "stem": "In Machine Learning, Supervised and Unsupervised Learning are both used for what purpose before complex algorithms come into action?",
+      "options": [
+        "Database normalisation",
+        "Storage compression",
+        "Pattern identification",
+        "User access management",
+        "Report formatting"
+      ],
+      "correct": 2,
+      "explanation": "Both terms are used for pattern identification before complex algorithms come into action."
+    },
+    {
+      "stem": "Which example illustrates Supervised Learning based on the uniqueness of the data?",
+      "options": [
+        "All animals tagged separately",
+        "Animals grouped into those with 2 legs and those with 4 legs",
+        "Animals sorted by the colour of their fur",
+        "Animals clustered by habitat",
+        "Animals grouped by weight"
+      ],
+      "correct": 0,
+      "explanation": "Supervised Learning is done based on the uniqueness of the data, where for example all animals are tagged separately."
+    },
+    {
+      "stem": "Which example illustrates Unsupervised Learning based on characteristics?",
+      "options": [
+        "Every animal tagged with its species name",
+        "Every animal given a unique ID",
+        "Every animal labelled by a trainer",
+        "Animals clustered into those with 2 legs and those with 4 legs",
+        "Animals listed alphabetically"
+      ],
+      "correct": 3,
+      "explanation": "Unsupervised Learning is done based on characteristics, creating clusters such as animals with 2 legs and animals with 4 legs."
+    },
+    {
+      "stem": "Which two algorithms are named as the most popular Supervised Learning algorithms in data mining?",
+      "options": [
+        "K-means clustering and hierarchical clustering",
+        "Apriori and PageRank",
+        "Naive Bayes and linear regression",
+        "Random forest and gradient boosting",
+        "K-Nearest Neighbour and decision tree"
+      ],
+      "correct": 4,
+      "explanation": "The most popular Supervised Learning algorithms in data mining are the K-Nearest Neighbour and decision tree algorithms."
+    },
+    {
+      "stem": "Which two algorithms are named as the common Unsupervised Learning algorithms in data mining?",
+      "options": [
+        "Decision tree and K-Nearest Neighbour",
+        "K-means clustering and hierarchical clustering",
+        "Logistic regression and support vector machine",
+        "Decision tree and hierarchical clustering",
+        "K-Nearest Neighbour and K-means clustering"
+      ],
+      "correct": 1,
+      "explanation": "The two common Unsupervised Learning algorithms in data mining are K-means clustering and hierarchical clustering."
+    },
+    {
+      "stem": "Which statement about the output of Supervised and Unsupervised Learning is correct?",
+      "options": [
+        "Both outputs are known in advance",
+        "Both outputs are unknown in advance",
+        "Supervised Learning output is known; Unsupervised Learning output is unknown",
+        "Supervised Learning output is unknown; Unsupervised Learning output is known",
+        "Output is irrelevant to the distinction"
+      ],
+      "correct": 2,
+      "explanation": "Supervised Learning output is known, whereas Unsupervised Learning output is unknown."
+    },
+    {
+      "stem": "For which learning method is training data provided?",
+      "options": [
+        "Supervised Learning",
+        "Unsupervised Learning",
+        "Both Supervised and Unsupervised Learning",
+        "Neither Supervised nor Unsupervised Learning",
+        "Only hierarchical clustering"
+      ],
+      "correct": 0,
+      "explanation": "Training data is provided for Supervised Learning; no training data is provided for Unsupervised Learning."
+    },
+    {
+      "stem": "Which of the following is NOT a characteristic of Unsupervised Learning?",
+      "options": [
+        "It uses unlabelled data",
+        "Its output is unknown",
+        "It creates clusters based on characteristics",
+        "It has no training data provided",
+        "It relies on decision tree algorithms"
+      ],
+      "correct": 4,
+      "explanation": "Decision tree is a Supervised Learning algorithm; Unsupervised Learning uses unlabelled data, unknown output, clusters by characteristics and has no training data."
+    },
+    {
+      "stem": "Supervised and Unsupervised Learning are said to have been discussed before under which other topic?",
+      "options": [
+        "Data Warehousing and Data Lakes",
+        "Data Visualisation and Heat Maps",
+        "Data Ethics and Critical Data Elements",
+        "Data Classification, Categorisation and Data Clustering",
+        "Semantic Layer and Augmented Analytics"
+      ],
+      "correct": 3,
+      "explanation": "The concept was discussed under Data Classification, Categorisation and Data Clustering, and is revisited because it is very important to understanding Machine Learning."
+    }
+  ]
+}

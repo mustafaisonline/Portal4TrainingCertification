@@ -1,0 +1,125 @@
+{
+  "topic": "standardization-vstransformation",
+  "questions": [
+    {
+      "stem": "In a Data Warehouse, what is normally kept in the Landing Zone?",
+      "options": [
+        "A true copy of the source systems' data",
+        "The final dimensional model for reporting",
+        "Only aggregated summary tables",
+        "The semantic layer for business users",
+        "Anonymised test data"
+      ],
+      "correct": 0,
+      "explanation": "When data is pulled from an OLTP system it is first stored in a Landing Zone, which normally is the true copy of the source systems."
+    },
+    {
+      "stem": "What do the tables in the Landing and Staging zones preserve from the source systems?",
+      "options": [
+        "The condition of the data but not the data model",
+        "The true data model but not the condition of the data",
+        "Neither the data model nor the condition of the data",
+        "Only the table names",
+        "Only the row counts"
+      ],
+      "correct": 1,
+      "explanation": "Tables in the Landing and Staging zones both keep the true data model from the source systems but not the condition of the data."
+    },
+    {
+      "stem": "Which of these is an example of data standardisation?",
+      "options": [
+        "Converting an OLTP data model into a dimensional model",
+        "Building a cube for a decision support system",
+        "Converting date formats such as DD/MM/YY and MM/DD/YY from different sources into one format like DD/MM/YYYY",
+        "Creating a semantic layer for business users",
+        "Loading facts and dimensions into a star schema"
+      ],
+      "correct": 2,
+      "explanation": "Standardisation of dates, converting different date formats from different source systems into one format, is one of the listed data standardisation scenarios."
+    },
+    {
+      "stem": "What is data transformation about in the data world?",
+      "options": [
+        "Fixing spelling mistakes in a column",
+        "Splitting a full name into first, middle and last name",
+        "Converting empty fields to NA",
+        "Converting one data model to another, such as a source OLTP model into a Data Warehousing model, semantic layer or cube",
+        "Changing a string column to a numeric type"
+      ],
+      "correct": 3,
+      "explanation": "Data transformation is about converting one data model to another data model, for example converting a source OLTP model to a target Data Warehousing model, semantic layer or cube format."
+    },
+    {
+      "stem": "Which value is suggested for empty date rows during data standardisation?",
+      "options": [
+        "00/00/0000",
+        "Today's date",
+        "The word NULL",
+        "The date the row was loaded",
+        "01/01/9999"
+      ],
+      "correct": 4,
+      "explanation": "One standardisation scenario is to convert empty date rows into a value such as 01/01/9999."
+    },
+    {
+      "stem": "Why does data standardisation suggest converting a string field that only contains numbers into a numeric type?",
+      "options": [
+        "Because running queries on digits or numbers is much faster",
+        "Because strings cannot be stored in a warehouse",
+        "Because regulators require numeric columns",
+        "Because it reduces the need for backups",
+        "Because numbers are easier to encrypt"
+      ],
+      "correct": 0,
+      "explanation": "If the data type is string or varchar but the data is only numbers, converting it to a numeric type is recommended because queries on numbers are way faster."
+    },
+    {
+      "stem": "Between which zones does data transformation consume huge compute power?",
+      "options": [
+        "From Source to Landing",
+        "From Staging to Transformed Zone",
+        "From Landing to Staging",
+        "From Transformed Zone back to Landing",
+        "From Backup to Archive"
+      ],
+      "correct": 1,
+      "explanation": "Data transformation takes huge compute power when transforming data from the Staging zone to the Transformed zone, whereas standardisation from Landing to Staging takes less."
+    },
+    {
+      "stem": "By how much can compute power for data transformation be reduced if data standardisation is done first?",
+      "options": [
+        "By 1% to 5%",
+        "By 10% to 15%",
+        "By 30% to 50%",
+        "By 90% to 100%",
+        "It cannot be reduced at all"
+      ],
+      "correct": 2,
+      "explanation": "If data standardisation is done before data transformation, it can reduce the compute power needed for transformation by 30% to 50%."
+    },
+    {
+      "stem": "Which of the following is NOT a data standardisation scenario?",
+      "options": [
+        "Converting special characters to NA",
+        "Fixing upper and lower cases so Aus, Aust and australia all become Australia",
+        "Splitting a full name into First, Middle and Last Name",
+        "Converting a source OLTP model into a dimensional model for serving",
+        "Making a code field CHAR when it contains only characters"
+      ],
+      "correct": 3,
+      "explanation": "Converting one data model into another is data transformation; the other options are all listed data standardisation scenarios."
+    },
+    {
+      "stem": "Why does serving always supersede processing as the reason for data transformation?",
+      "options": [
+        "Because processing is free of cost",
+        "Because regulators mandate serving first",
+        "Because processing cannot be measured",
+        "Because standardisation already handles all processing",
+        "Because serving is for end users, and the faster the results, the happier the customer"
+      ],
+      "correct": 4,
+      "explanation": "Data model transformations are done for better processing and better serving, but serving always supersedes because it serves the end users; the faster the results, the happier the customer."
+    }
+  ]
+}

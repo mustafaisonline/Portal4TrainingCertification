@@ -1,0 +1,125 @@
+{
+  "topic": "data-encryption-anddecryption",
+  "questions": [
+    {
+      "stem": "What is the scrambled, unreadable format produced by encryption called?",
+      "options": [
+        "Plaintext",
+        "CipherText",
+        "Hash",
+        "Checksum",
+        "Token"
+      ],
+      "correct": 1,
+      "explanation": "Encryption converts normal text into a scrambled format to make it unreadable, which is called CipherText."
+    },
+    {
+      "stem": "Which of these is an example of data-at-rest?",
+      "options": [
+        "Data moving from a laptop to a thumb drive",
+        "Data shown to a user in a BI dashboard",
+        "Data sitting in a database, data warehouse or data lake",
+        "Data travelling through the Internet",
+        "Data displayed on a web portal such as LinkedIn"
+      ],
+      "correct": 2,
+      "explanation": "Data-at-rest is data sitting in your database, data warehouse, data lake or in-memory solutions such as Delta Lake, Databricks or Snowflake."
+    },
+    {
+      "stem": "What is data-in-transit?",
+      "options": [
+        "Data stored in an in-memory platform",
+        "Data moving between devices, within private networks, through the Internet or to a thumb drive",
+        "Data exposed to end users in a BI tool",
+        "Data that has been decrypted for analysis",
+        "Data archived on tape"
+      ],
+      "correct": 1,
+      "explanation": "Data-in-transit is data moving between devices, such as within private networks, through the Internet, or from laptop to thumb drive, and it must all be encrypted."
+    },
+    {
+      "stem": "Which of these is an example of data-in-use?",
+      "options": [
+        "Data in a Snowflake warehouse",
+        "Data travelling over a private network",
+        "Data exposed to end users in a BI tool or on a website such as Facebook",
+        "Data on a backup drive",
+        "Data waiting in a message queue"
+      ],
+      "correct": 2,
+      "explanation": "Data-in-use is data exposed to end users, which can be in a BI tool or on a website or web portal such as Facebook or LinkedIn."
+    },
+    {
+      "stem": "What characterises symmetric (secret key) encryption?",
+      "options": [
+        "It uses two linked keys, one public and one private",
+        "It uses one key to both encode and decode the information",
+        "It requires no key at all",
+        "It is used only for data-in-transit",
+        "It is best suited to very large data sets"
+      ],
+      "correct": 1,
+      "explanation": "Symmetric key encryption uses one key to both encode and decode the information, and is best used for one-to-one sharing and smaller data sets."
+    },
+    {
+      "stem": "In asymmetric (public-key) cryptography, which key is kept private?",
+      "options": [
+        "The encryption key",
+        "The decryption key",
+        "Both keys",
+        "Neither key",
+        "The session key"
+      ],
+      "correct": 1,
+      "explanation": "In asymmetric cryptography the encryption key is public and can be used by anyone to encrypt, while the opposite key is kept private and used to decrypt."
+    },
+    {
+      "stem": "Which of the following is NOT listed among the data encryption standards?",
+      "options": [
+        "Triple DES (3DES)",
+        "Blowfish",
+        "Elliptic Curve Cryptography (ECC)",
+        "Base64",
+        "Advanced Encryption Standard (AES)"
+      ],
+      "correct": 3,
+      "explanation": "The listed standards include DES, 3DES, RSA, Blowfish, Twofish, SSL, ECC, AES and end-to-end encryption; Base64 is not among them."
+    },
+    {
+      "stem": "What does decryption do?",
+      "options": [
+        "Generates a new key for each message",
+        "Compresses the CipherText for storage",
+        "Brings the data back to its original format using the key generated at encryption",
+        "Classifies data into risk groups",
+        "Masks sensitive columns before display"
+      ],
+      "correct": 2,
+      "explanation": "Decryption is the opposite of encryption and returns data to its original format; the key generated during encryption is also used for decryption."
+    },
+    {
+      "stem": "What does encryption key lifecycle management refer to?",
+      "options": [
+        "Rotating passwords for end users every ninety days",
+        "Centrally managing keys from the time they are created until they are deactivated and terminated",
+        "Distributing public keys through a website",
+        "Storing keys inside the encrypted database itself",
+        "Choosing between symmetric and asymmetric algorithms"
+      ],
+      "correct": 1,
+      "explanation": "Key management means centrally managing encryption keys across their whole lifecycle, from creation until deactivation and termination."
+    },
+    {
+      "stem": "Why is SSL decryption technology recommended as part of implementing encryption?",
+      "options": [
+        "Because it replaces the need for key management",
+        "Because it makes symmetric keys unnecessary",
+        "Because encryption alone is not enough and SSL technology gives insight into sensitive data at points of egress and ingress",
+        "Because it speeds up database queries",
+        "Because regulators forbid other standards"
+      ],
+      "correct": 2,
+      "explanation": "Encryption alone is not enough; SSL decryption technology affords insight into sensitive data at points of egress and ingress, where it is vulnerable."
+    }
+  ]
+}

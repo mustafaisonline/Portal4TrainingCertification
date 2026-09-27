@@ -1,0 +1,125 @@
+{
+  "topic": "semantic-layer",
+  "questions": [
+    {
+      "stem": "From which language does the word \"semantic\" originate, and what does the root word mean?",
+      "options": [
+        "Latin, meaning given",
+        "Ancient Greek, meaning significant",
+        "French, meaning meaning",
+        "German, meaning sign",
+        "Arabic, meaning truth"
+      ],
+      "correct": 1,
+      "explanation": "Semantic comes from the ancient Greek sēmantikós, meaning significant; semantics is the study of reference, meaning or truth."
+    },
+    {
+      "stem": "For what sole purpose is a semantic layer built in the data world?",
+      "options": [
+        "Compressing data storage",
+        "Encrypting data in transit",
+        "Supporting business users",
+        "Scheduling batch jobs",
+        "Replacing the data warehouse"
+      ],
+      "correct": 2,
+      "explanation": "In the data world, the semantic layer is built for the sole purpose of supporting business users, converting complex data models into a simple and user-friendly interface."
+    },
+    {
+      "stem": "Where does a semantic layer sit in relation to the physical data structures?",
+      "options": [
+        "Inside each source system",
+        "Below the database storage engine",
+        "Within the network layer",
+        "As a representation layer on top of databases, schemas, tables and columns",
+        "In the operating system"
+      ],
+      "correct": 3,
+      "explanation": "A semantic layer is the representation layer on top of databases, schemas, tables and columns, so business users without technical know-how can drag and drop required details on dashboards."
+    },
+    {
+      "stem": "What must be done first before exposing databases, schemas, tables and columns in BI tools for drag and drop?",
+      "options": [
+        "Assign business names to all of them",
+        "Convert them to unstructured data",
+        "Delete unused columns",
+        "Encrypt all columns",
+        "Move them to a data lake"
+      ],
+      "correct": 0,
+      "explanation": "For drag and drop, one must first assign business names to all databases, schemas, tables and columns before exposing them in BI tools."
+    },
+    {
+      "stem": "A column named Date could actually contain Date_Of_Birth, Transaction Date or Financial_Year_End_Date. What does this example illustrate?",
+      "options": [
+        "The need for database normalisation",
+        "A redundancy anomaly",
+        "A point-to-point integration problem",
+        "The need for a heat map",
+        "Why converting column, table, schema and database names to business understanding is the semantic process"
+      ],
+      "correct": 4,
+      "explanation": "Converting data models and column, table, schema and database names as per business understanding is the semantic process; a column named Date alone is ambiguous."
+    },
+    {
+      "stem": "How does the semantic layer help when a person's date of birth has different value to life insurance versus medical insurance?",
+      "options": [
+        "It stores two copies of the column",
+        "It clarifies the meaning so both parties have a common understanding of its value",
+        "It hides the column from one of the parties",
+        "It converts the date to a different format for each",
+        "It removes the column altogether"
+      ],
+      "correct": 1,
+      "explanation": "The same column can have different meanings for different parties; the semantic layer bridges this gap by providing a common understanding of the data."
+    },
+    {
+      "stem": "Why did creating semantic layers become difficult after the rise of big data?",
+      "options": [
+        "Because BI tools stopped supporting semantic layers",
+        "Because IT stopped maintaining them",
+        "Because big data includes semi-structured and unstructured data, unlike structured sources where we already knew what was coming",
+        "Because business users no longer needed dashboards",
+        "Because the Greek root word changed meaning"
+      ],
+      "correct": 2,
+      "explanation": "In the past semantic layers on structured data were easy because we knew what was coming from source systems; with semi- and unstructured big data, exposing data to business users without a semantic layer became difficult."
+    },
+    {
+      "stem": "What is a Universal Semantic Layer (USL)?",
+      "options": [
+        "A separate semantic layer created for each business unit",
+        "A semantic layer that only IT can view",
+        "A layer that replaces BI tools entirely",
+        "A generic layer supporting all business units and departments so everyone can refer to one USL",
+        "A semantic layer limited to structured data"
+      ],
+      "correct": 3,
+      "explanation": "USL provides a generic layer to support all business units and departments, replacing the earlier practice of separate semantic layers per business unit or department."
+    },
+    {
+      "stem": "What does a Universal Semantic Layer require in order to be built properly?",
+      "options": [
+        "Proper Metadata Management including a Data Dictionary and Data Glossary",
+        "A point-to-point integration between all applications",
+        "Removal of all BI tools",
+        "De-normalised source tables",
+        "A separate data warehouse per department"
+      ],
+      "correct": 0,
+      "explanation": "Building a USL is not easy and requires proper Metadata Management, including a Data Dictionary and Data Glossary."
+    },
+    {
+      "stem": "Who creates and maintains the Semantic Layer?",
+      "options": [
+        "Business users",
+        "External regulators",
+        "Machine learning models",
+        "End customers",
+        "IT folks"
+      ],
+      "correct": 4,
+      "explanation": "The Semantic Layer is created and maintained by IT folks."
+    }
+  ]
+}

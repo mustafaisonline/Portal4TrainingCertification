@@ -1,0 +1,125 @@
+{
+  "topic": "unified-star-schema-uss",
+  "questions": [
+    {
+      "stem": "What central structure does the Unified Star Schema (USS) introduce?",
+      "options": [
+        "The Puppini Bridge",
+        "The Hub table",
+        "The Anchor table",
+        "The Descriptor table",
+        "The Satellite table"
+      ],
+      "correct": 0,
+      "explanation": "USS enhances traditional star schemas by introducing a central structure known as the Puppini Bridge, which aligns facts and dimensions into a single analytical framework."
+    },
+    {
+      "stem": "What is the primary goal of the Unified Star Schema?",
+      "options": [
+        "Normalising dimensions to 3NF",
+        "Providing a unified query entry point that eliminates ambiguity when working with multiple fact tables",
+        "Storing every attribute on its own timeline",
+        "Replacing dimensions with knots",
+        "Reducing the fact table to a single row per customer"
+      ],
+      "correct": 1,
+      "explanation": "USS gives analysts a single entry point so that drill-across analysis is simpler and results are consistent without deep SQL expertise."
+    },
+    {
+      "stem": "What is a fan trap?",
+      "options": [
+        "A missing foreign key in a dimension",
+        "A relationship between facts and dimensions that is ambiguous or missing",
+        "A join that multiplies rows incorrectly",
+        "A bridge with too many sparse keys",
+        "A dimension that changes too slowly"
+      ],
+      "correct": 2,
+      "explanation": "Fan traps occur when joins multiply rows incorrectly; chasm traps occur when relationships between facts and dimensions are ambiguous or missing."
+    },
+    {
+      "stem": "What does the Puppini Bridge essentially consist of?",
+      "options": [
+        "A pre-aggregated summary of all measures",
+        "A normalised copy of every dimension",
+        "A list of slowly changing attribute versions",
+        "A union of keys from all relevant facts and dimensions",
+        "A hierarchy of parent–child pointers"
+      ],
+      "correct": 3,
+      "explanation": "The bridge acts as a \"superstar\" table that is essentially a union of keys from all relevant facts and dimensions."
+    },
+    {
+      "stem": "How do analysts query a Unified Star Schema?",
+      "options": [
+        "They start from each fact table and inner-join to the bridge",
+        "They start from the largest dimension",
+        "They query the fact tables directly and union the results",
+        "They traverse edges from a customer node",
+        "They begin at the bridge and left-join to any required fact or dimension"
+      ],
+      "correct": 4,
+      "explanation": "Instead of starting from individual fact tables, analysts begin at the bridge and left-join to required facts or dimensions, preventing incorrect aggregations and row multiplication."
+    },
+    {
+      "stem": "Which combined report is given as an example that a Puppini Bridge makes safe in a loan approval environment?",
+      "options": [
+        "Approval-to-Repayment Conversion by Customer Segment",
+        "Which customers share the same contact details",
+        "What rate was valid as of 20 January 2024",
+        "Which loan documents embed officer O11",
+        "Which events rebuild loan L001"
+      ],
+      "correct": 0,
+      "explanation": "With the bridge in place analysts can safely produce cross-fact reports such as Approval-to-Repayment Conversion by Customer Segment or Default Rates by Officer Branch and Product Type."
+    },
+    {
+      "stem": "Why does the Unified Star Schema support self-service BI well?",
+      "options": [
+        "Because it removes all dimensions",
+        "Because queries always originate from a unified structure, so business users can explore multiple processes without deep warehouse knowledge",
+        "Because it stores data as JSON",
+        "Because it requires no joins at all",
+        "Because it pre-computes every possible report"
+      ],
+      "correct": 1,
+      "explanation": "Because queries always start from the bridge, business users can explore data across multiple processes without knowing warehouse internals, and new facts can be added without breaking reports."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a trade-off of the Unified Star Schema?",
+      "options": [
+        "The bridge can become wide and sparse with many unpopulated keys",
+        "Careful storage and indexing strategies are required",
+        "New fact tables cannot be added without breaking existing reports",
+        "Strong governance over conformed dimensions and keys is essential",
+        "Some measures may need restructuring, which can feel counterintuitive to fact-centric modellers"
+      ],
+      "correct": 2,
+      "explanation": "The ability to add new fact tables later without breaking existing reports is a strength of USS, not a trade-off."
+    },
+    {
+      "stem": "To which modelling family does the Unified Star Schema belong?",
+      "options": [
+        "The ensemble family",
+        "The pre-relational family",
+        "The NoSQL family",
+        "Primarily the Dimensional Modelling domain, as a dimensional–semantic hybrid",
+        "The temporal family"
+      ],
+      "correct": 3,
+      "explanation": "USS belongs primarily to Dimensional Modelling but can be considered a dimensional–semantic hybrid focused on analytical clarity rather than normalisation theory."
+    },
+    {
+      "stem": "Why does the query logic built on the Bridge_Puppini remain valid when new facts such as Repayments or Collections are added later?",
+      "options": [
+        "Because the facts are merged into one table",
+        "Because the dimensions are re-normalised",
+        "Because every fact is stored in the bridge as a measure",
+        "Because the bridge is rebuilt from scratch each time",
+        "Because the bridge is the single entry point for all queries"
+      ],
+      "correct": 4,
+      "explanation": "Because the bridge is the single entry point, existing logic that pulls customer, officer, date and status details stays valid even when new fact tables are added."
+    }
+  ]
+}

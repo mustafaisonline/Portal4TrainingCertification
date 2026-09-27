@@ -1,0 +1,125 @@
+{
+  "topic": "data-replication",
+  "questions": [
+    {
+      "stem": "What is Data Replication?",
+      "options": [
+        "The process of deleting duplicate records from a dataset",
+        "The process of compressing a dataset for long-term archiving",
+        "The process of creating and maintaining multiple copies of the same dataset in different locations or systems",
+        "The process of translating data between formats",
+        "The process of encrypting a dataset before sharing it"
+      ],
+      "correct": 2,
+      "explanation": "Data Replication is the process of creating and maintaining multiple copies of the same dataset in different locations or systems."
+    },
+    {
+      "stem": "What are the goals of Data Replication?",
+      "options": [
+        "To reduce storage costs and remove old data",
+        "To anonymise data and satisfy regulators",
+        "To standardise data formats across vendors",
+        "To limit access to a single authoritative copy",
+        "To ensure data availability, improve fault tolerance and enhance performance"
+      ],
+      "correct": 4,
+      "explanation": "The goal of replication is to ensure data availability, improve fault tolerance and enhance performance by distributing data across storage locations."
+    },
+    {
+      "stem": "How can replicated copies of data be kept consistent?",
+      "options": [
+        "By synchronising them in real time or at scheduled intervals",
+        "By never allowing any copy to change",
+        "By deleting all but one copy each night",
+        "By storing every copy on the same server",
+        "By converting them to read-only PDF files"
+      ],
+      "correct": 0,
+      "explanation": "Replicated data can be synchronised in real time or at scheduled intervals to keep the copies consistent."
+    },
+    {
+      "stem": "In the group project example of Data Replication, what is the first step?",
+      "options": [
+        "Everyone edits a single shared document on one computer",
+        "You create the document with the project details on your computer as the initial copy",
+        "The group agrees a synchronisation schedule",
+        "Each member deletes their old copies",
+        "The document is uploaded to a backup tape"
+      ],
+      "correct": 1,
+      "explanation": "The first step is creating the initial copy: a document with the project details on your own computer, which is then replicated to each group member."
+    },
+    {
+      "stem": "In the group project example, what does Synchronisation involve?",
+      "options": [
+        "Choosing one member's copy and discarding all others",
+        "Locking the document so no one can edit it",
+        "Printing every copy for comparison",
+        "Everyone sharing their updates so each person gets the latest version and all copies are consistent",
+        "Merging the document with unrelated files"
+      ],
+      "correct": 3,
+      "explanation": "Periodically, or when major changes occur, everyone shares their updates and each person gets the latest version, ensuring all copies reflect the most recent changes."
+    },
+    {
+      "stem": "How does the group project example illustrate Data Availability?",
+      "options": [
+        "Each group member has their own copy, so the document is available even if one person's computer is unavailable",
+        "The document is available only when the group leader is online",
+        "Availability depends on a single shared server",
+        "The document becomes available only after the project ends",
+        "Availability is guaranteed by printing the document"
+      ],
+      "correct": 0,
+      "explanation": "Because each member has their own copy, the document stays available even if one person's computer is unavailable."
+    },
+    {
+      "stem": "How does Data Replication provide Fault Tolerance?",
+      "options": [
+        "By validating every record before it is saved",
+        "By preventing any user from making changes",
+        "By storing data in a compressed format",
+        "If one copy is accidentally deleted or corrupted, other copies still exist, reducing the risk of data loss",
+        "By running all queries on a single node"
+      ],
+      "correct": 3,
+      "explanation": "If one copy is accidentally deleted or becomes corrupted, the other copies remain, which reduces the risk of data loss."
+    },
+    {
+      "stem": "How does Data Replication improve performance?",
+      "options": [
+        "By reducing the size of each copy",
+        "Multiple copies can be accessed simultaneously, reducing the load on a single source",
+        "By forcing all requests through one server",
+        "By caching data only in memory",
+        "By archiving rarely used data"
+      ],
+      "correct": 1,
+      "explanation": "Multiple copies can be accessed at the same time, improving performance and reducing the load on a single source."
+    },
+    {
+      "stem": "What real-world analogy is used to explain Data Replication?",
+      "options": [
+        "Keeping a diary in a locked drawer",
+        "Paying for a subscription every month",
+        "Building a fence around a garden",
+        "Storing valuables in a single bank vault",
+        "Giving copies of a house key to different family members so each can enter, even if one loses their key"
+      ],
+      "correct": 4,
+      "explanation": "Data replication is compared to giving copies of your house key to family members: each can access the house independently, and if one loses a key the others still have theirs."
+    },
+    {
+      "stem": "Where is Data Replication described as a common practice in the digital world?",
+      "options": [
+        "In printed archives and libraries",
+        "In social media marketing",
+        "In databases, storage systems and distributed computing environments",
+        "In payroll processing only",
+        "In network cabling design"
+      ],
+      "correct": 2,
+      "explanation": "Data replication is a common practice in databases, storage systems and distributed computing environments to enhance availability, resilience and performance."
+    }
+  ]
+}

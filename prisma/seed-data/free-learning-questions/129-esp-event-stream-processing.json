@@ -1,0 +1,125 @@
+{
+  "topic": "esp-event-stream-processing",
+  "questions": [
+    {
+      "stem": "What does ESP stand for in data processing?",
+      "options": [
+        "Event-Stream Processing",
+        "Enterprise Storage Platform",
+        "Extract, Store and Publish",
+        "External Service Provider",
+        "Encrypted Stream Protocol"
+      ],
+      "correct": 0,
+      "explanation": "ESP is Event-Stream Processing, a term used alongside CDC and Real-Time processing."
+    },
+    {
+      "stem": "How is Event-Stream Processing related to Real-Time processing?",
+      "options": [
+        "ESP is the batch alternative to Real-Time",
+        "ESP replaces Real-Time in modern systems",
+        "ESP only applies to CCTV streams",
+        "ESP is exactly what Real-Time is all about",
+        "ESP is a slower form of CDC"
+      ],
+      "correct": 3,
+      "explanation": "ESP is exactly what Real-Time is all about: the moment an activity happens in the source, the latest action is pushed to the next stage."
+    },
+    {
+      "stem": "In what situation is Event-Stream Processing heavily used?",
+      "options": [
+        "When data is loaded once a month",
+        "When a reaction is planned in Real-Time",
+        "When data must be archived for compliance",
+        "When a data model needs normalising",
+        "When historical trends are analysed years later"
+      ],
+      "correct": 1,
+      "explanation": "Event-Stream Processing is heavily used if a reaction is planned in Real-Time."
+    },
+    {
+      "stem": "Which of the following can be the next stage that receives an event in Event-Stream Processing?",
+      "options": [
+        "A printed report",
+        "A tape backup",
+        "A monthly spreadsheet",
+        "An email archive",
+        "A Data Lake, a Data Warehouse, or an intermediate in-memory solution preparing a response for the customer's mobile"
+      ],
+      "correct": 4,
+      "explanation": "The next stage can be a Data Lake or Data Warehouse, or an intermediate in-memory solution that prepares a response to send directly back to the customer's mobile."
+    },
+    {
+      "stem": "In the shopping mall example of Event-Stream Processing, what arrives on the customer's mobile along with the OTP code when they pay by card?",
+      "options": [
+        "A request to confirm their address",
+        "A copy of the receipt",
+        "A message telling them about a sale or promotion in the mall to look at before paying",
+        "A password reset link",
+        "A survey about the shop"
+      ],
+      "correct": 2,
+      "explanation": "The moment the card is used, along with the OTP another message tells the customer there is a sale or promotion in the mall, which is Real-Time Event-Stream Processing."
+    },
+    {
+      "stem": "In the ATM example of Event-Stream Processing, what does the application discover?",
+      "options": [
+        "That the account balance is too low",
+        "That the same card was used in another ATM 1000 km away in the last 10 minutes",
+        "That the PIN was entered incorrectly",
+        "That the card has expired",
+        "That the ATM is out of cash"
+      ],
+      "correct": 1,
+      "explanation": "With Event-Stream Processing the application finds the same card was used 1000 km away within 10 minutes, which no one could travel."
+    },
+    {
+      "stem": "In the ATM example of Event-Stream Processing, what action does the application take once it detects the impossible travel?",
+      "options": [
+        "It sends a promotional message",
+        "It dispenses the cash anyway",
+        "It emails the bank manager the next day",
+        "It asks the customer to re-enter the PIN",
+        "It immediately locks the door of the room where the ATM is stationed"
+      ],
+      "correct": 4,
+      "explanation": "Knowing no one can travel 1000 km in 10 minutes, the application immediately locks the door where the ATM is stationed."
+    },
+    {
+      "stem": "Which source systems are named as places where an activity can trigger Event-Stream Processing?",
+      "options": [
+        "An online portal, social media or a mobile",
+        "A tape library or an archive",
+        "A printed ledger",
+        "A monthly report",
+        "A data dictionary"
+      ],
+      "correct": 0,
+      "explanation": "The source system or application can be an online portal, social media, a mobile and so on; the moment any activity takes place, the latest action is pushed to the next stage."
+    },
+    {
+      "stem": "Which of the following statements about Event-Stream Processing is NOT correct?",
+      "options": [
+        "It is used together with CDC and Real-Time processing",
+        "It pushes the latest action the moment an activity happens",
+        "It processes events in overnight batches",
+        "It can feed a Data Lake or Data Warehouse",
+        "It can trigger an immediate response to a customer"
+      ],
+      "correct": 2,
+      "explanation": "Event-Stream Processing is about pushing each action the moment it happens, not about overnight batches."
+    },
+    {
+      "stem": "What is the purpose of an intermediate in-memory solution in Event-Stream Processing?",
+      "options": [
+        "To archive events for seven years",
+        "To normalise the data model",
+        "To compress the events before storage",
+        "To prepare a response to send directly back to the customer's mobile",
+        "To mask personal data"
+      ],
+      "correct": 3,
+      "explanation": "The next stage can be an intermediate in-memory solution used to prepare a response that is sent directly back to the customer's mobile."
+    }
+  ]
+}

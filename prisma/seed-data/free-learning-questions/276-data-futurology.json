@@ -1,0 +1,125 @@
+{
+  "topic": "data-futurology",
+  "questions": [
+    {
+      "stem": "How are the terms Foresight and Futurology related?",
+      "options": [
+        "Foresight is a subset of Futurology",
+        "Futurology is the opposite of Foresight",
+        "They are used interchangeably",
+        "Foresight applies to data and Futurology to technology",
+        "Foresight is a past-looking discipline"
+      ],
+      "correct": 2,
+      "explanation": "Foresight and Futurology are used interchangeably."
+    },
+    {
+      "stem": "What is Futurology?",
+      "options": [
+        "The study or forecasting of possible futures by examining current trends and predicting future developments",
+        "The archiving of historical records for future reference",
+        "The analysis of past failures to assign blame",
+        "The scheduling of future backups",
+        "The design of databases for future growth"
+      ],
+      "correct": 0,
+      "explanation": "Futurology is the study or forecasting of possible futures, examining current trends and making predictions about future developments."
+    },
+    {
+      "stem": "In the definition of Data Futurology, how is Data defined?",
+      "options": [
+        "Only numbers stored in a database",
+        "Any file larger than one gigabyte",
+        "Predictions about the future",
+        "Software used to process records",
+        "Information, facts or statistics collected for analysis, reference or computation"
+      ],
+      "correct": 4,
+      "explanation": "Data refers to information, facts or statistics collected for analysis, reference or computation."
+    },
+    {
+      "stem": "On what does Data Futurology specifically focus?",
+      "options": [
+        "The history of database technology",
+        "The future of data: how it is collected, processed and analysed, and its impact on society and technology",
+        "The pricing of cloud storage",
+        "The migration of legacy data",
+        "The retirement of old datasets"
+      ],
+      "correct": 1,
+      "explanation": "Data Futurology focuses on the future of data across its lifecycle, from collection to analysis, and on its potential impact on society and technology."
+    },
+    {
+      "stem": "What does the Data Collection aspect of Data Futurology examine?",
+      "options": [
+        "How to delete data securely",
+        "How to price data for sale",
+        "How data is stored in warehouses",
+        "How data is gathered, whether through traditional methods or emerging technologies",
+        "How to assign data ownership"
+      ],
+      "correct": 3,
+      "explanation": "The Data Collection aspect examines how data is gathered, whether through traditional methods or emerging technologies."
+    },
+    {
+      "stem": "Which considerations are included in the Impact on Society or Technology aspect of Data Futurology?",
+      "options": [
+        "Privacy, security and ethical considerations, as well as technological advancement and innovation",
+        "Only the cost of hardware",
+        "Only the speed of network connections",
+        "Employee salaries and staffing levels",
+        "Office locations and floor plans"
+      ],
+      "correct": 0,
+      "explanation": "This aspect assesses how changes in data practices might affect privacy, security and ethics, as well as technological advancement and innovation."
+    },
+    {
+      "stem": "Which of these is NOT one of the listed key aspects of Data Futurology?",
+      "options": [
+        "Data Collection",
+        "Data Processing",
+        "Data Pricing",
+        "Data Analysis",
+        "Impact on Society or Technology"
+      ],
+      "correct": 2,
+      "explanation": "The key aspects are Data Collection, Data Processing, Data Analysis and Impact on Society or Technology; Data Pricing is not among them."
+    },
+    {
+      "stem": "What does the Data Analysis aspect of Data Futurology consider?",
+      "options": [
+        "The physical location of data centres",
+        "The legal ownership of datasets",
+        "The cost of data storage",
+        "The history of statistical methods",
+        "Evolving techniques and tools for deriving insights and patterns from data"
+      ],
+      "correct": 4,
+      "explanation": "The Data Analysis aspect considers evolving techniques and tools for deriving insights and patterns from data."
+    },
+    {
+      "stem": "Why is Data Futurology described as essential?",
+      "options": [
+        "Because it is required by data protection law",
+        "Because it reduces storage costs",
+        "Because it replaces the need for data governance",
+        "Because it helps organisations and individuals stay ahead in a rapidly evolving data-driven landscape",
+        "Because it guarantees accurate predictions"
+      ],
+      "correct": 3,
+      "explanation": "The field is essential for organisations and individuals looking to stay ahead in a rapidly evolving data-driven landscape."
+    },
+    {
+      "stem": "In summary, what does Data Futurology involve?",
+      "options": [
+        "A backward-looking audit of past data decisions",
+        "A forward-looking perspective on how data will be handled and utilised, and the consequences or opportunities that may arise",
+        "A fixed set of rules for storing data",
+        "A method for compressing large datasets",
+        "A certification for data engineers"
+      ],
+      "correct": 1,
+      "explanation": "Data Futurology is a forward-looking perspective on data, aiming to understand how it will be handled and used in the future and the potential consequences or opportunities."
+    }
+  ]
+}

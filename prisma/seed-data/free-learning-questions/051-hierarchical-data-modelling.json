@@ -1,0 +1,125 @@
+{
+  "topic": "hierarchical-data-modelling",
+  "questions": [
+    {
+      "stem": "How does Hierarchical Data Modelling structure data?",
+      "options": [
+        "In a strict tree where each child record has exactly one parent",
+        "In owner–member sets allowing many parents per record",
+        "In nodes and edges with typed relationships",
+        "In JSON documents with nested arrays",
+        "In fact and dimension tables"
+      ],
+      "correct": 0,
+      "explanation": "Hierarchical modelling uses a strict tree-like format in which each child has exactly one parent, forming a single-rooted hierarchy of one-to-many relationships."
+    },
+    {
+      "stem": "Which mainframe system is given as the classic example of hierarchical data modelling in the 1960s and 1970s?",
+      "options": [
+        "CODASYL IDMS",
+        "IBM's Information Management System (IMS)",
+        "ObjectStore",
+        "Neo4j",
+        "Cassandra"
+      ],
+      "correct": 1,
+      "explanation": "The hierarchical model dominated the 1960s and 1970s in mainframe environments such as IBM's Information Management System (IMS)."
+    },
+    {
+      "stem": "In the hierarchical loan example Bank → Branch → Loan Officer → Customer → Loan → Repayment, what is true of a Repayment record?",
+      "options": [
+        "It can belong to several loans at once",
+        "It is stored independently of any loan",
+        "It cannot exist without a Loan",
+        "It is the root of the hierarchy",
+        "It links directly to a Branch"
+      ],
+      "correct": 2,
+      "explanation": "Each child depends entirely on its parent in a hierarchy: a Repayment cannot exist without a Loan, and a Loan cannot exist without a Customer."
+    },
+    {
+      "stem": "Why is retrieving all repayments for a specific loan straightforward in a hierarchical model?",
+      "options": [
+        "Because the database performs a declarative join",
+        "Because repayments are stored in a separate fact table",
+        "Because the query engine infers the relationship semantically",
+        "Because the system simply navigates down the predefined tree path",
+        "Because repayments are indexed by customer"
+      ],
+      "correct": 3,
+      "explanation": "Traversal along hierarchical branches is fast because relationships are physically structured according to the access pattern, so the system navigates down the tree."
+    },
+    {
+      "stem": "Which query illustrates the kind of question a strict hierarchical model struggles to answer?",
+      "options": [
+        "Which repayments belong to loan L001?",
+        "Which customers belong to this loan officer?",
+        "Which loans belong to this customer?",
+        "Which branches belong to this bank?",
+        "Which loan officers approved loans across multiple branches?"
+      ],
+      "correct": 4,
+      "explanation": "In a strict tree a Loan Officer belongs to only one Branch, so cross-branch, many-to-many questions are difficult or impossible to represent naturally."
+    },
+    {
+      "stem": "Why does normalisation theory not apply to hierarchical data modelling?",
+      "options": [
+        "Because the model predates the relational model and is based on physical navigation paths rather than dependency theory",
+        "Because hierarchical databases are always already in 3NF",
+        "Because hierarchical models have no keys",
+        "Because hierarchical databases store only unstructured text",
+        "Because normalisation applies only to NoSQL systems"
+      ],
+      "correct": 0,
+      "explanation": "The hierarchical model predates the relational model; its structure is determined by hierarchical rules and navigation paths, so concepts such as 3NF or BCNF are irrelevant."
+    },
+    {
+      "stem": "Where does hierarchical data modelling still exist today?",
+      "options": [
+        "In most new cloud-native enterprise systems",
+        "In legacy mainframes and directory services such as LDAP and Active Directory",
+        "In data warehouses built as star schemas",
+        "In graph databases for fraud detection",
+        "In event-streaming platforms"
+      ],
+      "correct": 1,
+      "explanation": "Hierarchical modelling is largely obsolete for new enterprise systems but survives in legacy mainframes and directory services such as LDAP and Active Directory."
+    },
+    {
+      "stem": "What is the key difference between Hierarchical Data Modelling and a taxonomy?",
+      "options": [
+        "A taxonomy has no parent–child relationships",
+        "A hierarchical model is drawn as a graph while a taxonomy is drawn as a tree",
+        "A hierarchical model is a database storage model governing physical access, whereas a taxonomy is a conceptual classification of meaning",
+        "A taxonomy is used only in mainframes",
+        "They are the same thing under different names"
+      ],
+      "correct": 2,
+      "explanation": "In hierarchical databases the tree is the physical access path to data; in taxonomies the tree is a conceptual structure used to classify knowledge and add meaning."
+    },
+    {
+      "stem": "Which example illustrates a taxonomy rather than a hierarchical database structure?",
+      "options": [
+        "Bank → Branch → Loan → Repayment",
+        "Customer → Loan → Officer traversal",
+        "Owner–member sets in IDMS",
+        "Loan → Personal Loan → Student Loan",
+        "LoanID → CustID → CustomerName"
+      ],
+      "correct": 3,
+      "explanation": "Loan → Personal Loan → Student Loan classifies types of loan for semantic clarity; it does not dictate how data is physically stored."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a strength of hierarchical data modelling?",
+      "options": [
+        "High efficiency for predictable one-to-many queries",
+        "Simple, understandable structures when relationships are strictly nested",
+        "Strong performance in tightly controlled operational systems with fixed access patterns",
+        "Deterministic navigation from parent to child",
+        "Effective support for dynamic, ad-hoc analytical queries"
+      ],
+      "correct": 4,
+      "explanation": "Hierarchical modelling lacks flexibility, struggles with many-to-many relationships and does not support dynamic or ad-hoc analytical queries effectively."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "lambda-architecture",
+  "questions": [
+    {
+      "stem": "What are the two primary data processing layers in Lambda Architecture?",
+      "options": [
+        "Bronze and Silver",
+        "Batch Processing and Real-Time Processing",
+        "Storage and Compute",
+        "OLTP and OLAP",
+        "Ingestion and Archival"
+      ],
+      "correct": 1,
+      "explanation": "Lambda Architecture divides processing into a Batch Processing Layer and a Real-Time (event-based) Processing Layer."
+    },
+    {
+      "stem": "In which formal system is Lambda Architecture said to be grounded?",
+      "options": [
+        "Relational algebra",
+        "Set theory",
+        "Lambda calculus",
+        "Boolean logic",
+        "Graph theory"
+      ],
+      "correct": 2,
+      "explanation": "Lambda Architecture is grounded in lambda calculus, a formal system in mathematical logic based on function abstraction, application and variable substitution."
+    },
+    {
+      "stem": "How does the Batch Processing Layer decide when to process data?",
+      "options": [
+        "The instant each record is generated",
+        "Only when a user requests a report",
+        "Whenever a real-time event triggers it",
+        "At scheduled intervals, from once a day to every few minutes, or when volume and resources allow",
+        "Continuously, with no schedule"
+      ],
+      "correct": 3,
+      "explanation": "Batch processing is not triggered as data is generated; it runs on a set schedule or when data volume and system resources allow."
+    },
+    {
+      "stem": "By what other name is the Real-Time Processing Layer known?",
+      "options": [
+        "Event-based processing",
+        "Scheduled processing",
+        "Daily batch",
+        "Serving layer",
+        "Cold-path processing"
+      ],
+      "correct": 0,
+      "explanation": "The Real-Time Processing Layer, also called event-based processing, handles data the moment it is generated."
+    },
+    {
+      "stem": "Historically, why was the 'daily batch' run after business hours?",
+      "options": [
+        "Because regulators required it",
+        "To avoid system load during operational hours",
+        "Because real-time tools did not exist at all",
+        "Because storage was only available at night",
+        "To allow staff to review the data manually"
+      ],
+      "correct": 1,
+      "explanation": "Data transfer happened once every 24 hours after business hours to avoid system load during operational hours, so reporting was based on the previous day's data."
+    },
+    {
+      "stem": "Which developments are named as making Lambda Architecture more feasible in the Big Data era?",
+      "options": [
+        "Mainframes and tape storage",
+        "Proprietary licensing and closed platforms",
+        "Open-source tools like Hadoop, object storage systems and NoSQL databases",
+        "Paper-based audit trails",
+        "Single-server relational databases"
+      ],
+      "correct": 2,
+      "explanation": "Open-source tools like Hadoop, object storage and NoSQL databases drastically reduced the cost and complexity of managing vast data volumes."
+    },
+    {
+      "stem": "What is data sovereignty in the context of adopting cloud-based Lambda Architecture?",
+      "options": [
+        "A cloud provider's ownership of customer data",
+        "The right of a user to delete their own records",
+        "A pricing model based on data volume",
+        "The encryption standard for data in transit",
+        "Regulatory requirements that data remain within a particular country or region"
+      ],
+      "correct": 4,
+      "explanation": "Many industries operate under regulations mandating that data stay within a country or region, so cloud providers must establish data centres in those regions."
+    },
+    {
+      "stem": "In a typical AWS Lambda Architecture pipeline, which service handles real-time ingestion?",
+      "options": [
+        "Amazon Kinesis",
+        "Amazon Redshift",
+        "Amazon EMR",
+        "Amazon S3",
+        "AWS Glue"
+      ],
+      "correct": 0,
+      "explanation": "On AWS, data ingestion for real-time processing goes through Amazon Kinesis, with EMR or Glue for batch and S3 or Redshift for storage."
+    },
+    {
+      "stem": "Which Google Cloud services are named for real-time streaming and batch processing respectively?",
+      "options": [
+        "Cloud Storage and Cloud SQL",
+        "Pub/Sub and Cloud Functions",
+        "BigQuery and Dataflow",
+        "Dataflow and BigQuery",
+        "Cloud Run and Bigtable"
+      ],
+      "correct": 3,
+      "explanation": "Google Cloud Dataflow handles real-time streaming, integrating with Pub/Sub, while BigQuery is designed for large-scale batch processing and storage."
+    },
+    {
+      "stem": "Which of the following is NOT named as an Azure tool supporting Lambda Architecture?",
+      "options": [
+        "Azure Stream Analytics",
+        "Azure Data Lake",
+        "Azure Synapse Analytics",
+        "Azure Data Factory",
+        "Azure Kinesis"
+      ],
+      "correct": 4,
+      "explanation": "Azure's named tools are Stream Analytics, Data Lake, Synapse Analytics, Data Factory, Azure SQL Database, Cosmos DB and Azure Functions; Kinesis is an AWS service."
+    }
+  ]
+}

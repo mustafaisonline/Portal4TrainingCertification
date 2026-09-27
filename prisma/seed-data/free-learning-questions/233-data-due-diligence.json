@@ -1,0 +1,125 @@
+{
+  "topic": "data-due-diligence",
+  "questions": [
+    {
+      "stem": "What is due diligence, in general terms?",
+      "options": [
+        "A contract signed after a merger completes",
+        "An enquiry, inspection or assessment carried out to check the evidence or specifics of a matter under attention",
+        "A report produced by the finance team each quarter",
+        "A technique for anonymising data before sharing",
+        "The process of migrating data to the cloud"
+      ],
+      "correct": 1,
+      "explanation": "Due diligence is the investigation or exercise of care a reasonable business or person takes to check the facts before entering into an agreement or act."
+    },
+    {
+      "stem": "Which everyday example illustrates due diligence when buying something?",
+      "options": [
+        "Paying by credit card rather than cash",
+        "Asking a friend for the Wi-Fi password",
+        "Checking which country it was made in, whether it is new or used, which company produced it and its quality",
+        "Returning the item after purchase",
+        "Comparing delivery times"
+      ],
+      "correct": 2,
+      "explanation": "Checks such as country of origin, condition, manufacturer and quality before buying are all part of a due diligence process."
+    },
+    {
+      "stem": "In which long-established business process is due diligence described as a must?",
+      "options": [
+        "Data profiling",
+        "Payroll processing",
+        "Software testing",
+        "Data warehousing",
+        "Mergers and acquisitions"
+      ],
+      "correct": 4,
+      "explanation": "The merger and acquisition process is a very old process in which due diligence is a must before buying or merging with a company."
+    },
+    {
+      "stem": "What is Data Due Diligence?",
+      "options": [
+        "Validating imported data against its source",
+        "A check conducted by the acquiring or both parties in a merger or acquisition to make sure the deal is profitable in terms of data",
+        "Running distinct counts on every column of a dataset",
+        "Encrypting confidential data before a company is sold",
+        "Cataloguing all tables and columns in a database"
+      ],
+      "correct": 1,
+      "explanation": "Because data has become one of the most valuable assets, the parties to a merger or acquisition conduct Data Due Diligence to ensure the deal is in profit in terms of data."
+    },
+    {
+      "stem": "When buying a data-oriented company such as Uber, Amazon or Facebook, what will the buyer chiefly evaluate?",
+      "options": [
+        "The company's physical assets",
+        "The company's office locations",
+        "The company's data assets",
+        "The number of employees",
+        "The company's vehicle fleet"
+      ],
+      "correct": 2,
+      "explanation": "For a data-oriented company the buyer evaluates data assets rather than physical assets."
+    },
+    {
+      "stem": "For which roles is a Data Due Diligence report described as key for decision making?",
+      "options": [
+        "CDO, CFO and CEO",
+        "Data engineers and testers",
+        "Customers and suppliers",
+        "Project managers and scrum masters",
+        "Regulators and auditors only"
+      ],
+      "correct": 0,
+      "explanation": "A report based on Data Due Diligence is a key input for the CDO, CFO and CEO in decision making."
+    },
+    {
+      "stem": "Which of the following is NOT listed among the Data Due Diligence processes?",
+      "options": [
+        "Data Valuation",
+        "Data Synergies",
+        "Data Liabilities",
+        "Data Vectorisation",
+        "Data Ownerships"
+      ],
+      "correct": 3,
+      "explanation": "Valuation, synergies, liabilities and ownerships are all on the list; Data Vectorisation is a processing technique, not a due diligence process."
+    },
+    {
+      "stem": "Which of these appears in the list of Data Due Diligence processes?",
+      "options": [
+        "Data Lineage Availability",
+        "Data Syndication",
+        "Data Aggregation",
+        "Data Filtering",
+        "Data Curation"
+      ],
+      "correct": 0,
+      "explanation": "Data Lineage Availability is among the processes, alongside Data Health or Quality, Data Governance Practices and Data Security and Privacy Practices."
+    },
+    {
+      "stem": "Why has Data Due Diligence become relevant to mergers and acquisitions in the recent era?",
+      "options": [
+        "Because regulators now require it for every purchase",
+        "Because physical assets no longer have value",
+        "Because cloud storage has become cheap",
+        "Because data has become one of the most valuable assets of an organisation",
+        "Because auditing software has improved"
+      ],
+      "correct": 3,
+      "explanation": "As data has become one of an organisation's most valuable assets, deals must be evaluated in terms of data as well as other assets."
+    },
+    {
+      "stem": "Which pair of items both appear among the Data Due Diligence processes?",
+      "options": [
+        "Data Filtering and Data Sharing",
+        "Canned Data and Canned Reports",
+        "Scope Creep and Data Drift",
+        "Data Islands and Data Silos",
+        "Data Risk and Data Challenges"
+      ],
+      "correct": 4,
+      "explanation": "Data Risk and Data Challenges are both listed, together with Data Opportunities, Data Assets and Analytical Capabilities."
+    }
+  ]
+}

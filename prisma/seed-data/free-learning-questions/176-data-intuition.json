@@ -1,0 +1,125 @@
+{
+  "topic": "data-intuition",
+  "questions": [
+    {
+      "stem": "How is intuition defined in the context of Data Intuition?",
+      "options": [
+        "The ability to memorise large datasets",
+        "The ability to understand something without any need for conscious reasoning",
+        "The ability to write complex SQL queries",
+        "The ability to follow a defined analytical process",
+        "The ability to predict outcomes using statistical models"
+      ],
+      "correct": 1,
+      "explanation": "Intuition is the ability to understand or acquire knowledge without conscious reasoning."
+    },
+    {
+      "stem": "Who is said to need Data Intuition as one of their most important capabilities?",
+      "options": [
+        "Only Data Scientists",
+        "Only management",
+        "Only Data Engineers",
+        "Data Analysts, Data Citizens, Data Scientists and management",
+        "Only database administrators"
+      ],
+      "correct": 3,
+      "explanation": "Data Intuition is described as one of the most important capabilities for data analysts, data citizens, data scientists and management alike."
+    },
+    {
+      "stem": "What rule is given about taking a decision when data and intuition disagree?",
+      "options": [
+        "One should not take a decision if one's intuition is not aligned with the data",
+        "The data should always override intuition",
+        "Intuition should always override the data",
+        "The decision should be delayed until new data arrives",
+        "The decision should be escalated to management"
+      ],
+      "correct": 0,
+      "explanation": "Decisions can be data-based, but one should not take a decision when one's intuition is not aligned with the result."
+    },
+    {
+      "stem": "In the example where 200k drinking bottles per month are expected from an area but 500k are suddenly sold, what should Data Intuition prompt?",
+      "options": [
+        "Immediate celebration of the higher sales",
+        "Doubling the production forecast",
+        "Ignoring the figure as a rounding error",
+        "Paying the sales bonus straight away",
+        "Asking why until all the evidence for the sales is in hand"
+      ],
+      "correct": 4,
+      "explanation": "The unexpected result should shake one's intuition and lead to asking why repeatedly until the evidence is established."
+    },
+    {
+      "stem": "What possible explanation is offered for the surprising jump from 200k to 500k bottles sold?",
+      "options": [
+        "A new competitor left the market",
+        "A data warehouse migration doubled the counts",
+        "A fake result reported just to show higher sales and earn a bonus",
+        "A change in the bottle size",
+        "A seasonal heatwave"
+      ],
+      "correct": 2,
+      "explanation": "The result could be fake, reported to show higher sales in order to get a bonus, which is why it must be questioned."
+    },
+    {
+      "stem": "How is Data Intuition developed?",
+      "options": [
+        "By completing a certification course",
+        "By learning more programming languages",
+        "By buying better analytical tools",
+        "Through experience: loving data, understanding its functional aspects and slicing and dicing it",
+        "By delegating analysis to Data Scientists"
+      ],
+      "correct": 3,
+      "explanation": "Data Intuition matures with experience; the more one loves data, understands its functional aspects and slices and dices it, the more intuition grows."
+    },
+    {
+      "stem": "What do team members with a high data-intuitive capability produce?",
+      "options": [
+        "Accurate and reliable data",
+        "Faster ETL pipelines",
+        "More dashboards",
+        "Lower storage costs",
+        "Larger datasets"
+      ],
+      "correct": 0,
+      "explanation": "Team members with strong data intuition produce accurate and reliable data during transformation and preparation."
+    },
+    {
+      "stem": "Which activity are Data Analysts, Data Citizens and Data Scientists all regularly involved in, where data intuition matters?",
+      "options": [
+        "Provisioning cloud infrastructure",
+        "Negotiating vendor contracts",
+        "Writing security policies",
+        "Managing sales bonuses",
+        "Data transformation and data wrangling for data preparation"
+      ],
+      "correct": 4,
+      "explanation": "All these roles regularly transform data and perform data wrangling for preparation, where intuition helps ensure reliable results."
+    },
+    {
+      "stem": "Which of the following is NOT a stated way of maturing Data Intuition?",
+      "options": [
+        "Slicing and dicing the data",
+        "Memorising statistical formulae",
+        "Understanding the functional aspects of the data",
+        "Gaining experience",
+        "Loving data"
+      ],
+      "correct": 1,
+      "explanation": "Intuition comes with experience, love of data, functional understanding and slicing and dicing; memorising formulae is not mentioned."
+    },
+    {
+      "stem": "Intuition is said to include direct access to what kind of knowledge?",
+      "options": [
+        "Documented knowledge",
+        "Regulatory knowledge",
+        "Unconscious knowledge",
+        "Statistical knowledge",
+        "Historical knowledge"
+      ],
+      "correct": 2,
+      "explanation": "Intuition includes direct access to unconscious knowledge and understanding things instinctively."
+    }
+  ]
+}

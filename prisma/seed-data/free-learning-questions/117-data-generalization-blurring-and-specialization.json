@@ -1,0 +1,125 @@
+{
+  "topic": "data-generalization-blurring-and-specialization",
+  "questions": [
+    {
+      "stem": "Which analogy describes Data Generalisation versus Data Specialisation?",
+      "options": [
+        "Encrypt versus decrypt",
+        "Backup versus restore",
+        "Read versus write",
+        "Zoom-out versus zoom-in, or less precise versus precise",
+        "Batch versus real-time"
+      ],
+      "correct": 3,
+      "explanation": "Data Generalisation or Blurring and Specialisation are like zoom-out versus zoom-in, or precise versus less precise."
+    },
+    {
+      "stem": "What does Data Generalisation do to data?",
+      "options": [
+        "Summarises it in such a way that its usefulness remains intact",
+        "Deletes all personal information permanently",
+        "Splits each entity into several smaller entities",
+        "Encrypts it with a private key",
+        "Duplicates it across several servers"
+      ],
+      "correct": 0,
+      "explanation": "Data Generalisation summarises data so that the usefulness of the data remains intact while the original values are not exposed."
+    },
+    {
+      "stem": "What does Data Specialisation do?",
+      "options": [
+        "Summarises several entities into one",
+        "Replaces values with dummy values",
+        "Divides an entity into multiple entities to further make sense of the data",
+        "Removes identifying columns",
+        "Converts data into age ranges"
+      ],
+      "correct": 2,
+      "explanation": "Data Specialisation is the opposite of Data Generalisation: it divides an entity into multiple entities."
+    },
+    {
+      "stem": "Which of the following is the example of Data Generalisation given in I Am Datapedia!?",
+      "options": [
+        "Splitting an account table into current and savings account tables",
+        "Creating a summarised Person entity that hosts both Students and Patients details",
+        "Swapping ages between records",
+        "Masking a credit card number",
+        "Replacing a password with asterisks"
+      ],
+      "correct": 1,
+      "explanation": "Students and Patients both have Name and Mobile number, so a summarised Person entity can hold both, with nobody able to identify any individual student or patient."
+    },
+    {
+      "stem": "Which of the following is the example of Data Specialisation given in I Am Datapedia!?",
+      "options": [
+        "Combining Students and Patients into a Person entity",
+        "Grouping ages into ranges such as 20-29",
+        "Hiding an email address",
+        "Merging two customer tables into one",
+        "Dividing an account table into separate current account and savings account tables"
+      ],
+      "correct": 4,
+      "explanation": "An account table holding both current and savings details can be divided into a current account table and a savings account table, a concept close to Normalisation."
+    },
+    {
+      "stem": "When individual ages are replaced by ranges such as 20-29 (2) and 30-39 (3), what is achieved?",
+      "options": [
+        "The data becomes reversible to its original values",
+        "The data loses all analytical value",
+        "The essence of the data is maintained but the original data is not exposed",
+        "Each person can still be identified by exact age",
+        "The data is encrypted"
+      ],
+      "correct": 2,
+      "explanation": "Data Generalisation distorts actual data to a level where it does not lose its originality; the essence is kept but the original values are hidden."
+    },
+    {
+      "stem": "What is the limitation of Declarative Generalisation?",
+      "options": [
+        "It can only be done on a small dataset, because the data is distorted manually",
+        "It cannot be applied to personal data",
+        "It requires a machine learning model",
+        "It is not accepted by regulatory bodies",
+        "It always removes the identifying columns"
+      ],
+      "correct": 0,
+      "explanation": "In Declarative Generalisation data is manually distorted, so it is limited to small datasets."
+    },
+    {
+      "stem": "How does Automated Generalisation work?",
+      "options": [
+        "Data is distorted by hand using manual queries",
+        "Data is deleted once it reaches an age threshold",
+        "Data is copied to a secure server",
+        "Data is split into multiple tables",
+        "Algorithms distort the data until it meets accepted standards"
+      ],
+      "correct": 4,
+      "explanation": "In Automated Generalisation, algorithms are used to distort the data to the level of accepted standards."
+    },
+    {
+      "stem": "What is a Quasi Identifier in Data Generalisation?",
+      "options": [
+        "A single column such as ID that uniquely identifies an entity",
+        "A combination of multiple columns that together can identify an entity",
+        "A column that has been masked",
+        "A randomly generated token",
+        "A column defined by a regulatory body"
+      ],
+      "correct": 1,
+      "explanation": "With a Quasi Identifier, multiple columns are combined to identify an entity, allowing generalisation to be achieved to an acceptable level."
+    },
+    {
+      "stem": "Why might masking a single Direct Identifier such as Name fail to fully achieve Data Generalisation?",
+      "options": [
+        "Because names cannot be masked",
+        "Because Direct Identifiers are never used for identification",
+        "Because masking always removes the whole record",
+        "Because a single identifier is not guaranteed to be unique, for example there can be several people named Hube in the same city or postcode",
+        "Because regulators forbid masking names"
+      ],
+      "correct": 3,
+      "explanation": "A single identifier such as ID, Name or Email is not guaranteed to be unique, so masking it alone might not fulfil the requirement of generalisation."
+    }
+  ]
+}

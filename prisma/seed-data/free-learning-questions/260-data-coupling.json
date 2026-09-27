@@ -1,0 +1,125 @@
+{
+  "topic": "data-coupling",
+  "questions": [
+    {
+      "stem": "How is Coupling described in relation to software and systems?",
+      "options": [
+        "A way of compressing data before it moves between systems",
+        "A technique for merging two databases into one",
+        "A parameter dependency approach used across software or across systems",
+        "A method of encrypting data in transit",
+        "A schema design pattern for a single application"
+      ],
+      "correct": 2,
+      "explanation": "Coupling is a parameter dependency approach used when more than one software or system is involved in delivering a result."
+    },
+    {
+      "stem": "What is Data Coupling about?",
+      "options": [
+        "Using data elements to kick off the next step in a different system",
+        "Storing the same data in two systems for redundancy",
+        "Joining two tables on a shared key",
+        "Copying a whole database to a backup location",
+        "Converting data from one format to another"
+      ],
+      "correct": 0,
+      "explanation": "Data Coupling is when data elements are used to kick off the next step in a different system, creating a cross-system data dependency."
+    },
+    {
+      "stem": "Which example is used to illustrate Data Coupling in a data pipeline?",
+      "options": [
+        "A retailer reconciling daily sales totals at midnight",
+        "A bank archiving transactions older than seven years",
+        "A weather service publishing hourly forecasts",
+        "A social media feed being scanned for product mentions",
+        "A hospital management system in which a baby's data is pulled the moment the baby is registered"
+      ],
+      "correct": 4,
+      "explanation": "The example given is pulling data from a hospital management system as soon as a newborn baby is registered in that system."
+    },
+    {
+      "stem": "What is the disadvantage of the Data Coupling approach?",
+      "options": [
+        "It requires all systems to share the same database",
+        "If something goes wrong in the first system, the dependent systems cannot move",
+        "It doubles the storage needed for every dataset",
+        "It only works with structured data",
+        "It prevents systems from being updated independently"
+      ],
+      "correct": 1,
+      "explanation": "Because dependent systems wait on data from the first system, a failure in the first system stops the dependent systems from proceeding."
+    },
+    {
+      "stem": "In the old file-loading example of Data Coupling, what was the core challenge when pulling files from another system?",
+      "options": [
+        "Files were too large to fit on a single server",
+        "The file format changed with every load",
+        "The receiving system had no permission to read the files",
+        "Knowing when the file had been completely copied so that pulling could safely start",
+        "The source system deleted files as soon as they were written"
+      ],
+      "correct": 3,
+      "explanation": "The pulling job had to wait until the whole file movement was complete, and the challenge was how to know when the copy had finished."
+    },
+    {
+      "stem": "Which workaround for the file-copy challenge in Data Coupling involves renaming?",
+      "options": [
+        "Copy the file under a different name, then rename it once the copy is complete so the pulling job can recognise it",
+        "Rename the source system so the pulling job cannot connect too early",
+        "Rename the pulling job after each successful run",
+        "Rename the target folder after the file has been read",
+        "Rename the file to include a timestamp before copying begins"
+      ],
+      "correct": 0,
+      "explanation": "One workaround was to copy the file under a different name and, once fully copied, rename it so the pulling job could pick up the required file."
+    },
+    {
+      "stem": "Which workaround for the file-copy challenge in Data Coupling relies on a temp file?",
+      "options": [
+        "Write the data into a temp file and delete it once the pulling job has finished",
+        "Split the data file into several temp files that are pulled one by one",
+        "Create a temp file after the data file is completely copied, so the pulling job starts when it sees the temp file",
+        "Keep a temp file open for the whole duration of the copy",
+        "Store the file's checksum in a temp file before copying starts"
+      ],
+      "correct": 2,
+      "explanation": "A temp file was created after the data file was completely copied; when the pulling job saw the temp file, it knew it could start pulling the data files."
+    },
+    {
+      "stem": "How do modern export, copy or move commands signal that a file copy is still in progress?",
+      "options": [
+        "They lock the destination folder until the copy finishes",
+        "They send an email notification on completion",
+        "They write a log entry that the pulling job must read",
+        "They keep the file hidden until it has been verified",
+        "They add tmp to the file name while in progress and remove it once the copy is done"
+      ],
+      "correct": 4,
+      "explanation": "Modern commands include tmp in the file's naming convention while the copy is in progress and remove it when complete, so the pulling job can recognise the finished data file."
+    },
+    {
+      "stem": "Which of these is NOT among the listed types of coupling?",
+      "options": [
+        "Stamp Coupling",
+        "Temporal Coupling",
+        "Control Coupling",
+        "External Coupling",
+        "Content Coupling"
+      ],
+      "correct": 1,
+      "explanation": "The listed types are No Direct Coupling, Data Coupling, Stamp Coupling, Control Coupling, External Coupling, Comment Coupling and Content Coupling; Temporal Coupling is not among them."
+    },
+    {
+      "stem": "Which of these is one of the listed types of coupling?",
+      "options": [
+        "Schema Coupling",
+        "Network Coupling",
+        "Index Coupling",
+        "No Direct Coupling",
+        "Transaction Coupling"
+      ],
+      "correct": 3,
+      "explanation": "No Direct Coupling is one of the listed types, alongside Data, Stamp, Control, External, Comment and Content Coupling."
+    }
+  ]
+}

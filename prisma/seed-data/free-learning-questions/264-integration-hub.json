@@ -1,0 +1,125 @@
+{
+  "topic": "integration-hub",
+  "questions": [
+    {
+      "stem": "With what is an Integration Hub normally, and incorrectly, confused?",
+      "options": [
+        "Messaging tools such as Slack and MS Teams",
+        "Data stores such as a Data Warehouse, Data Lake or Data Lakehouse",
+        "Network firewalls",
+        "Backup and mirroring systems",
+        "Source code repositories"
+      ],
+      "correct": 1,
+      "explanation": "An Integration Hub is normally confused with data stores like Data Warehouse, Data Lake and Data Lakehouse, which is not correct."
+    },
+    {
+      "stem": "What is an Integration Hub?",
+      "options": [
+        "A central store that keeps a copy of all enterprise data",
+        "A tool for compressing data before transfer",
+        "A network device that routes traffic between offices",
+        "A single central place from which instructions are sent to internal and external systems to perform actions",
+        "A dashboard for monitoring query performance"
+      ],
+      "correct": 3,
+      "explanation": "An Integration Hub is a single central place from where you can send instructions to internal and external systems to perform some actions."
+    },
+    {
+      "stem": "What does an Integration Hub consist of?",
+      "options": [
+        "Spokes, each of which consists of a number of steps for actions",
+        "Tables, each of which holds a set of records",
+        "Nodes, each of which stores a share of the data",
+        "Layers, each of which abstracts a data source",
+        "Mirrors, each of which replicates a database"
+      ],
+      "correct": 0,
+      "explanation": "An Integration Hub consists of Spokes, and each Spoke consists of a number of steps for actions."
+    },
+    {
+      "stem": "Which of these is NOT among the generic steps an Integration Hub Spoke can perform?",
+      "options": [
+        "Run commands on external servers",
+        "Send messages such as Rest or SOAP",
+        "Allow parsers",
+        "Send SQL commands to databases",
+        "Store the enterprise's historical data for analytics"
+      ],
+      "correct": 4,
+      "explanation": "Generic steps include creating actions for external systems, running commands on external servers, sending Rest or SOAP messages, allowing parsers and sending SQL commands; storing historical data is a data store's job, not a Spoke's."
+    },
+    {
+      "stem": "In the SharePoint example for Integration Hub, what is the benefit when 100 users all want to delete a file?",
+      "options": [
+        "Each user is given a personal copy of SharePoint",
+        "The file is deleted once and the other 99 requests are ignored",
+        "All 100 users can reuse the same Spoke created to delete files in SharePoint instead of repeating every step",
+        "SharePoint automatically grants all users administrator rights",
+        "The deletions are queued and processed overnight"
+      ],
+      "correct": 2,
+      "explanation": "Without a hub each user must go through the same steps; with an Integration Hub all 100 users can reuse the single Spoke built for deleting files in SharePoint."
+    },
+    {
+      "stem": "What does a Spoke for an external system such as SharePoint contain?",
+      "options": [
+        "Connections, credentials and the actions to be performed",
+        "A full backup of the external system's data",
+        "The source code of the external system",
+        "A mirror of the external system's database",
+        "The external system's licence agreement"
+      ],
+      "correct": 0,
+      "explanation": "A Spoke consists of the connections, credentials and actions to be performed on the external system, such as SharePoint."
+    },
+    {
+      "stem": "Why do most applications, portals and systems now allow the use of Spokes?",
+      "options": [
+        "Because Spokes make their data larger and richer",
+        "Because Spokes replace the need for user accounts",
+        "Because Spokes remove all security checks",
+        "Because Spokes speed up database queries",
+        "Because Spokes assist them in limiting the actions performed in their system"
+      ],
+      "correct": 4,
+      "explanation": "Applications allow Spokes because a Spoke helps them limit the actions that can be performed in their system."
+    },
+    {
+      "stem": "Which reason is given for why Integration Hubs are needed?",
+      "options": [
+        "Third-party systems now demand fully custom connectivity from every client",
+        "Third-party systems no longer allow custom connectivity, so pre-built Spokes are the way forward",
+        "Data warehouses can no longer store external data",
+        "Custom connectors are cheaper than pre-built Spokes",
+        "Regulators require every integration to be hand-coded"
+      ],
+      "correct": 1,
+      "explanation": "Third-party systems no longer allow custom connectivity, which makes pre-built Spokes the way forward."
+    },
+    {
+      "stem": "Which of these is NOT listed among the generic Spokes for an Integration Hub?",
+      "options": [
+        "MS Teams",
+        "Slack",
+        "Jira",
+        "Salesforce",
+        "Dropbox"
+      ],
+      "correct": 3,
+      "explanation": "The listed generic Spokes include CISCO WebEx, MS Teams, Slack, Zoom, GitHub, Jira, Twitter, Dropbox, Google, SharePoint and Amazon/AWS; Salesforce is not among them."
+    },
+    {
+      "stem": "What benefits do pre-built Spokes in an Integration Hub provide?",
+      "options": [
+        "Unlimited data extracts from any system",
+        "Automatic data quality correction",
+        "No duplicate connections for the same data, no unknown data extracts, and data allowed only within a defined scope",
+        "Faster hardware performance for external servers",
+        "Elimination of credentials for external systems"
+      ],
+      "correct": 2,
+      "explanation": "Pre-built Spokes avoid duplicated connections for the same set of data, prevent unknown data extracts and allow data only within a defined scope, as well as offering reusability and a single interface."
+    }
+  ]
+}

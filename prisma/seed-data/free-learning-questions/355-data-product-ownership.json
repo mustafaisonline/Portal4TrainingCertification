@@ -1,0 +1,125 @@
+{
+  "topic": "data-product-ownership",
+  "questions": [
+    {
+      "stem": "What does Data Product Ownership refer to?",
+      "options": [
+        "The responsibility of managing and overseeing a data product from creation through to ongoing improvements",
+        "The legal ownership of the servers on which data is stored",
+        "The copyright held over a published dataset",
+        "The task of writing SQL queries for a dashboard",
+        "The right to sell data to third parties"
+      ],
+      "correct": 0,
+      "explanation": "Data Product Ownership is the responsibility of managing and overseeing a data product from its creation through to its ongoing improvement."
+    },
+    {
+      "stem": "When defining vision and goals for a sales dashboard, what would a Data Product Owner decide?",
+      "options": [
+        "Which programming language the engineers must use",
+        "What metrics and insights will help users make informed sales decisions",
+        "How much the sales team is paid",
+        "Which cloud provider to buy servers from",
+        "When the sales team should take their breaks"
+      ],
+      "correct": 1,
+      "explanation": "For a sales dashboard, the DPO defines which metrics and insights will help users make informed sales decisions."
+    },
+    {
+      "stem": "How does a Data Product Owner decide which features or improvements to develop first?",
+      "options": [
+        "By building every feature at the same time",
+        "By choosing the features that are cheapest regardless of value",
+        "By prioritising based on their value to users and the organisation, balancing short-term needs with long-term goals",
+        "By following the order in which requests were received",
+        "By letting the engineers pick their favourite features"
+      ],
+      "correct": 2,
+      "explanation": "The DPO prioritises features by their value to users and the organisation, balancing short-term needs with long-term goals in a roadmap."
+    },
+    {
+      "stem": "What does 'Understand User Needs' involve for a Data Product Owner?",
+      "options": [
+        "Guessing what users want without asking them",
+        "Reading only the technical documentation",
+        "Restricting the product to expert users",
+        "Gathering feedback, studying user behaviour and ensuring the product addresses actual problems",
+        "Hiring more data engineers"
+      ],
+      "correct": 3,
+      "explanation": "The DPO connects with end users, gathers feedback and studies user behaviour so the product addresses actual problems or enhances the user experience."
+    },
+    {
+      "stem": "With whom does a Data Product Owner collaborate to ensure data quality and compliance?",
+      "options": [
+        "External auditors only",
+        "The marketing department",
+        "Customers and suppliers",
+        "The board of directors",
+        "Data engineers and analysts"
+      ],
+      "correct": 4,
+      "explanation": "The DPO collaborates with data engineers and analysts to ensure the data product meets high standards and complies with privacy regulations."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a key responsibility of Data Product Ownership?",
+      "options": [
+        "Negotiating the company's office lease",
+        "Defining vision and goals",
+        "Prioritising features and improvements",
+        "Ensuring data quality and compliance",
+        "Monitoring product performance"
+      ],
+      "correct": 0,
+      "explanation": "The listed responsibilities cover vision, prioritisation, user needs, quality and compliance, cross-functional collaboration and performance monitoring; office leases are not among them."
+    },
+    {
+      "stem": "What does a Data Product Owner monitor after a data product is launched?",
+      "options": [
+        "The salaries of the development team",
+        "Key performance indicators (KPIs) to assess how well the product meets its goals and user needs",
+        "The weather forecast for the region",
+        "Only the number of servers in use",
+        "The stock price of competitors"
+      ],
+      "correct": 1,
+      "explanation": "After launch, the DPO monitors KPIs to assess how well the product meets its goals, informing decisions to update features, fix issues or adjust direction."
+    },
+    {
+      "stem": "Which cross-functional team members does a Data Product Owner work with to bring a data product to life?",
+      "options": [
+        "Only data scientists",
+        "Only business leaders",
+        "Data scientists, engineers, designers and business leaders",
+        "Only external consultants",
+        "Only the finance department"
+      ],
+      "correct": 2,
+      "explanation": "The DPO works closely with data scientists, engineers, designers and business leaders so the technical foundation is solid and the product serves business purposes."
+    },
+    {
+      "stem": "Why does Data Product Ownership matter?",
+      "options": [
+        "It removes the need for data engineers",
+        "It guarantees that a data product never needs to change",
+        "It allows data products to be sold to competitors",
+        "It bridges the gap between technical data capabilities and business needs",
+        "It replaces data governance entirely"
+      ],
+      "correct": 3,
+      "explanation": "Data product ownership is crucial because it bridges the gap between technical data capabilities and business needs, keeping products maintained and refined."
+    },
+    {
+      "stem": "What is the bottom line on Data Product Ownership?",
+      "options": [
+        "It is a temporary role that ends once the product is launched",
+        "It concerns only the initial design of a data product",
+        "It applies only to dashboards, not to datasets or models",
+        "It is mainly about cost control",
+        "It is about taking end-to-end responsibility for a data product, from its initial idea to its continuous improvement"
+      ],
+      "correct": 4,
+      "explanation": "Data product ownership means end-to-end responsibility for a data product, from the initial idea through continuous improvement."
+    }
+  ]
+}

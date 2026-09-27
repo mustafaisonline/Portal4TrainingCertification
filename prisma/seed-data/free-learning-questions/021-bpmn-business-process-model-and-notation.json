@@ -1,0 +1,125 @@
+{
+  "topic": "bpmn-business-process-model-and-notation",
+  "questions": [
+    {
+      "stem": "What does BPMN stand for?",
+      "options": [
+        "Business Process Model and Notation",
+        "Business Process Mapping Network",
+        "Basic Process Management Notation",
+        "Business Performance Monitoring Node",
+        "Bounded Process Modelling Norm"
+      ],
+      "correct": 0,
+      "explanation": "BPMN stands for Business Process Model and Notation, a standardised visual language for representing business processes."
+    },
+    {
+      "stem": "How does BPMN relate to Process Modelling?",
+      "options": [
+        "BPMN replaces Process Modelling entirely",
+        "BPMN is a database design method used after Process Modelling",
+        "They are unrelated techniques",
+        "Process Modelling explains the steps of a workflow; BPMN defines how those steps are drawn so everyone reads them the same way",
+        "Process Modelling is a subset of BPMN symbols"
+      ],
+      "correct": 3,
+      "explanation": "BPMN builds on Process Modelling by giving a defined set of symbols and rules for drawing the steps consistently."
+    },
+    {
+      "stem": "What is the primary goal of BPMN?",
+      "options": [
+        "To reduce database storage",
+        "To calculate credit scores",
+        "To create a common language understood by both business stakeholders and technical teams",
+        "To replace workflow engines",
+        "To define bounded contexts"
+      ],
+      "correct": 2,
+      "explanation": "BPMN's primary goal is a common language that business users and technical teams can both read, reducing miscommunication between business and IT."
+    },
+    {
+      "stem": "In BPMN, what do gateways represent?",
+      "options": [
+        "Work being performed",
+        "The start or end of a process",
+        "Who is responsible for a task",
+        "Decisions such as approvals or rejections",
+        "External systems"
+      ],
+      "correct": 3,
+      "explanation": "Gateways represent decisions such as approvals or rejections; tasks represent work and events show starts and ends."
+    },
+    {
+      "stem": "In BPMN, what are swimlanes used to show?",
+      "options": [
+        "Who is responsible for each task, such as a person, role or department",
+        "The time each task takes",
+        "The data stored by each task",
+        "The order in which events fire",
+        "The cost of each activity"
+      ],
+      "correct": 0,
+      "explanation": "Swimlanes show who is responsible for each task, for example a person, role or department."
+    },
+    {
+      "stem": "In the homework example drawn in BPMN, what happens when the homework is incomplete?",
+      "options": [
+        "It is marked and recorded",
+        "The process ends immediately",
+        "The teacher escalates it to the principal",
+        "It is stored in a database",
+        "It is returned to the student"
+      ],
+      "correct": 4,
+      "explanation": "If the homework is complete it is marked and recorded; if incomplete it is returned to the student."
+    },
+    {
+      "stem": "In the BPMN loan approval example, which of the following is NOT one of the swimlane roles listed?",
+      "options": [
+        "Customer",
+        "Loan officer",
+        "Risk manager",
+        "Collections team",
+        "Marketing department"
+      ],
+      "correct": 4,
+      "explanation": "The swimlanes cover the customer, loan officer, credit team, risk manager, finance department and collections team; marketing is not listed."
+    },
+    {
+      "stem": "What are BPMN diagrams often connected to in order to track how processes perform in real time?",
+      "options": [
+        "Data warehouses",
+        "Spreadsheets",
+        "Workflow engines",
+        "Email servers",
+        "Version control systems"
+      ],
+      "correct": 2,
+      "explanation": "BPMN diagrams are often connected to workflow engines that monitor waiting applications, task durations and how often work is sent back."
+    },
+    {
+      "stem": "Who defines BPMN to ensure consistency across organisations and industries?",
+      "options": [
+        "Each organisation defines its own version",
+        "An international body",
+        "The database vendor",
+        "The finance department",
+        "The workflow tool supplier"
+      ],
+      "correct": 1,
+      "explanation": "BPMN is defined by an international body, which is why its diagrams look familiar and consistent across organisations and industries."
+    },
+    {
+      "stem": "Why is BPMN especially valuable in environments with strict compliance needs?",
+      "options": [
+        "Because it stores audit logs in the database",
+        "Because it is business-friendly yet precise enough to be executed by automation platforms, so processes can be documented, followed and audited",
+        "Because it encrypts the process diagrams",
+        "Because it removes the need for human approval",
+        "Because it defines data quality rules"
+      ],
+      "correct": 1,
+      "explanation": "BPMN is designed to be business-friendly but precise enough for execution, making it valuable where processes must be documented, followed consistently and audited."
+    }
+  ]
+}

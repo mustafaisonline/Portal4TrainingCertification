@@ -1,0 +1,125 @@
+{
+  "topic": "hype-cycle-fordata-management",
+  "questions": [
+    {
+      "stem": "How is the difference between the Hype Cycle for Data Management and Data Management itself explained?",
+      "options": [
+        "One is about hardware and the other about software",
+        "One is about the past and the other about the present",
+        "One is about a solution and the other about the enterprise",
+        "One is about cost and the other about quality",
+        "There is no difference; the terms are interchangeable"
+      ],
+      "correct": 2,
+      "explanation": "The Hype Cycle for Data Management is often confused with Data Management, which is not correct, as one is about a solution and the other is about the enterprise."
+    },
+    {
+      "stem": "What is the Hype Cycle for Data Management about?",
+      "options": [
+        "Knowing the pattern of technologies: how past tools performed and which new technologies are in trend",
+        "Measuring the quality of data held in enterprise systems",
+        "Scheduling backups for critical databases",
+        "Defining the roles and responsibilities of data owners",
+        "Balancing data evenly across cluster nodes"
+      ],
+      "correct": 0,
+      "explanation": "The Hype Cycle for Data Management is about knowing the pattern of technologies, including how past tools and technologies performed and which new ones are in trend."
+    },
+    {
+      "stem": "How does the Hype Cycle for Data Management assist an organisation?",
+      "options": [
+        "By automating data cleansing",
+        "By generating financial statements",
+        "By replacing the need for a data strategy",
+        "By enforcing data security policies",
+        "By helping it plan its technology roadmap"
+      ],
+      "correct": 4,
+      "explanation": "The Hype Cycle for Data Management assists organisations in planning their technology roadmap."
+    },
+    {
+      "stem": "Which decisions does the Hype Cycle for Data Management help an organisation take?",
+      "options": [
+        "Which employees to promote",
+        "Which tools and technologies to adopt and which not to adopt",
+        "Which customers to retain",
+        "Which data to archive and which to delete",
+        "Which regulations apply to its data"
+      ],
+      "correct": 1,
+      "explanation": "The Hype Cycle helps organisations decide which tools and technologies to adopt and which not to adopt."
+    },
+    {
+      "stem": "Which companies are named as examples of what can happen to organisations reluctant to adopt new technologies?",
+      "options": [
+        "Amazon and Google",
+        "Microsoft and Apple",
+        "Toyota and Ford",
+        "Kodak and Nokia",
+        "Slack and Zoom"
+      ],
+      "correct": 3,
+      "explanation": "Organisations reluctant to adopt new technologies are warned that they can end up like Kodak and Nokia."
+    },
+    {
+      "stem": "With whom are Hype Cycle statistics for Data Management typically shared?",
+      "options": [
+        "CTOs, CDOs, CFOs and CEOs",
+        "Junior developers and testers",
+        "External customers",
+        "Regulators only",
+        "Database administrators only"
+      ],
+      "correct": 0,
+      "explanation": "Many companies prepare these statistics and share them with executives such as CTOs, CDOs, CFOs and CEOs."
+    },
+    {
+      "stem": "Which of these is NOT described as a purpose of the Hype Cycle for Data Management?",
+      "options": [
+        "Planning the technology roadmap",
+        "Deciding which technologies to adopt",
+        "Measuring the data quality of an existing database",
+        "Knowing which new technologies are in trend",
+        "Learning how past tools and technologies performed"
+      ],
+      "correct": 2,
+      "explanation": "The Hype Cycle is about technology patterns, trends and adoption decisions; measuring the data quality of a database is not one of its purposes."
+    },
+    {
+      "stem": "Who prepares the statistics that make up a Hype Cycle for Data Management?",
+      "options": [
+        "Each organisation's own database team",
+        "Government regulators",
+        "The vendors of the technologies being rated",
+        "Individual end users",
+        "Many companies that prepare such statistics and share them with executives"
+      ],
+      "correct": 4,
+      "explanation": "There are many companies that prepare these kinds of statistics and share them with CTOs, CDOs, CFOs, CEOs and others."
+    },
+    {
+      "stem": "What outcome is warned of for organisations that are reluctant to adopt new technologies?",
+      "options": [
+        "They save money and outperform competitors",
+        "They can end up like Kodak and Nokia",
+        "They are fined by regulators",
+        "They lose their data to corruption",
+        "They must move to the cloud immediately"
+      ],
+      "correct": 1,
+      "explanation": "The warning is that organisations reluctant to adopt new technologies can end up like Kodak and Nokia."
+    },
+    {
+      "stem": "Which statement about the Hype Cycle for Data Management is correct?",
+      "options": [
+        "It is another name for Data Management",
+        "It is a tool for backing up enterprise data",
+        "It is only relevant to Data Science teams",
+        "It is distinct from Data Management, although the two are often confused",
+        "It describes how to build a Data Warehouse"
+      ],
+      "correct": 3,
+      "explanation": "The Hype Cycle for Data Management is often confused with Data Management, but the two are different: one concerns solutions and the other the enterprise."
+    }
+  ]
+}

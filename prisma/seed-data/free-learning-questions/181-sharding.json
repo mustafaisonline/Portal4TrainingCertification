@@ -1,0 +1,125 @@
+{
+  "topic": "sharding",
+  "questions": [
+    {
+      "stem": "What is the key architectural difference between Sharding and Partitioning?",
+      "options": [
+        "Sharding divides columns whereas partitioning divides rows",
+        "Sharding stores each shard on one dedicated node, giving a shared-nothing architecture, whereas partitions may share a node",
+        "Sharding keeps all data on a single node whereas partitioning spreads it",
+        "Sharding does not divide tables into smaller datasets",
+        "Sharding only works on NoSQL databases"
+      ],
+      "correct": 1,
+      "explanation": "Both divide tables into smaller datasets, but sharding places each shard on its own dedicated node, which is why it is called shared-nothing architecture."
+    },
+    {
+      "stem": "How does key-based sharding decide which shard should hold newly written data?",
+      "options": [
+        "By assigning shards in round-robin order",
+        "By consulting a manually maintained lookup table",
+        "By sorting the data into ranges of a given value",
+        "By plugging a value taken from the new data into a hash function",
+        "By writing to the shard with the most free space"
+      ],
+      "correct": 3,
+      "explanation": "Key-based, also called hash-based, sharding takes a value from the new data and runs it through a hash function to determine the destination shard."
+    },
+    {
+      "stem": "Which sharding architecture divides data according to ranges of a given value?",
+      "options": [
+        "Range-based sharding",
+        "Key-based sharding",
+        "Directory-based sharding",
+        "Hash-based sharding",
+        "Vertical sharding"
+      ],
+      "correct": 0,
+      "explanation": "Range-based sharding shards data based on ranges of a given value."
+    },
+    {
+      "stem": "What must be created and maintained for directory-based sharding?",
+      "options": [
+        "A hash function for the shard key",
+        "A range table for each column",
+        "A replica of every shard on every node",
+        "A single master node that holds all writes",
+        "A lookup table that uses a shard key to track which shard holds which data"
+      ],
+      "correct": 4,
+      "explanation": "Directory-based sharding relies on a lookup table keyed by the shard key that records where each piece of data lives."
+    },
+    {
+      "stem": "What is described as the main appeal of sharding a database?",
+      "options": [
+        "It reduces storage costs by compressing data",
+        "It removes the need for indexes",
+        "It facilitates horizontal scaling, also known as scaling out",
+        "It makes the database easier to return to an unsharded state",
+        "It guarantees strict consistency across nodes"
+      ],
+      "correct": 2,
+      "explanation": "The main appeal of sharding is that it helps facilitate horizontal scaling, or scaling out."
+    },
+    {
+      "stem": "What is horizontal scaling?",
+      "options": [
+        "Adding more machines to an existing stack to spread out the load and allow more traffic and faster processing",
+        "Upgrading a single server with more memory and CPU",
+        "Splitting a table's columns into separate tables",
+        "Moving a database to faster storage",
+        "Reducing the number of nodes to cut cost"
+      ],
+      "correct": 0,
+      "explanation": "Horizontal scaling means adding more machines to the existing stack to spread the load, allowing more traffic and faster processing."
+    },
+    {
+      "stem": "How does sharding help make an application more reliable?",
+      "options": [
+        "Every shard holds a full copy of the data",
+        "Shards are automatically rebalanced after every write",
+        "Sharded databases never need backups",
+        "An outage is likely to affect only a single shard, so the overall impact is less than if the whole database crashed",
+        "Sharding prevents data corruption entirely"
+      ],
+      "correct": 3,
+      "explanation": "With a sharded database an outage typically affects just one shard, mitigating the impact compared with an entire database going down."
+    },
+    {
+      "stem": "Which statement is NOT a drawback of sharding?",
+      "options": [
+        "If done incorrectly, it can lead to lost data or corrupted tables",
+        "It is natively supported by every database engine",
+        "A sharded database can become unbalanced",
+        "It is very difficult to return to an unsharded architecture",
+        "Backups made before sharding will not include data written since"
+      ],
+      "correct": 1,
+      "explanation": "One real drawback is that sharding is NOT natively supported by every database engine; the other four statements are genuine drawbacks."
+    },
+    {
+      "stem": "What is the problem with database backups made before the database was sharded?",
+      "options": [
+        "They cannot be restored at all",
+        "They become corrupted by the sharding process",
+        "They double in size",
+        "They are automatically deleted",
+        "They will not include data written since the sharding took place"
+      ],
+      "correct": 4,
+      "explanation": "Any backups taken before sharding will not contain the data written after the database was split."
+    },
+    {
+      "stem": "In the yearly Salary example, why is a query for years 2 and 3 faster on a sharded database than on a standard partitioned one?",
+      "options": [
+        "The sharded database keeps both years in memory",
+        "The sharded database has fewer rows",
+        "Each node holding a shard processes its own dataset individually, rather than several partitions sharing one node",
+        "The sharded query skips the index",
+        "Shards are always smaller than partitions"
+      ],
+      "correct": 2,
+      "explanation": "With one shard per node, each node processes its dataset independently, whereas in shared architecture several partitions may sit on a single node."
+    }
+  ]
+}

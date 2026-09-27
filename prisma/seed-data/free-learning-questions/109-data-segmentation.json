@@ -1,0 +1,125 @@
+{
+  "topic": "data-segmentation",
+  "questions": [
+    {
+      "stem": "What is Data Segmentation?",
+      "options": [
+        "Encrypting a dataset in fixed-size blocks",
+        "Deleting sections of a dataset that are no longer needed",
+        "Copying a dataset to several servers for redundancy",
+        "Dividing a dataset into multiple sections based on some requirements",
+        "Sorting a dataset alphabetically"
+      ],
+      "correct": 3,
+      "explanation": "Data Segmentation is about dividing a dataset into multiple sections based on requirements, with segments defined by parameters such as accessibility, actionability and profitability."
+    },
+    {
+      "stem": "Which parameters are named as examples for defining segments in a business?",
+      "options": [
+        "Accessibility, actionability and profitability",
+        "Colour, size and weight",
+        "Latitude, longitude and altitude",
+        "Speed, memory and storage",
+        "Age, gender and nationality"
+      ],
+      "correct": 0,
+      "explanation": "In a business, segments are defined by parameters such as accessible, actionable and profitable."
+    },
+    {
+      "stem": "In the shopping mall example of Data Segmentation, what represents the segment?",
+      "options": [
+        "Expensive food",
+        "Cheap food",
+        "The Food Court",
+        "A single restaurant",
+        "The car park"
+      ],
+      "correct": 2,
+      "explanation": "The Food Court is the segment; within it are multiple categories of food, each with classifications such as expensive or cheap."
+    },
+    {
+      "stem": "In the shopping mall example of Data Segmentation, what does the split between expensive and cheap food represent?",
+      "options": [
+        "A segment",
+        "A category",
+        "A dataset",
+        "A data element",
+        "A classification"
+      ],
+      "correct": 4,
+      "explanation": "The Food Court is the segment, the types of food are categories, and expensive versus cheap is a classification within those categories."
+    },
+    {
+      "stem": "Which of the following is NOT one of the recommended steps to improve Data Segmentation?",
+      "options": [
+        "Enrich your data to increase data quality",
+        "Reduce the number of data elements integrated",
+        "Plan and replan your segmentation criteria",
+        "Improve real-time segmentation",
+        "Design segments based on customer prioritisation and feedback"
+      ],
+      "correct": 1,
+      "explanation": "The advice is to integrate with as many data elements as possible, not to reduce them."
+    },
+    {
+      "stem": "Which step improves Data Segmentation by raising data quality?",
+      "options": [
+        "Archiving old segments",
+        "Enriching the data",
+        "Removing customer feedback",
+        "Freezing the segmentation criteria",
+        "Limiting segmentation to batch processing"
+      ],
+      "correct": 1,
+      "explanation": "Enriching your data increases data quality, which is the first listed step for improving Data Segmentation."
+    },
+    {
+      "stem": "Which of the following is a business benefit of having Data Segmentation?",
+      "options": [
+        "Eliminating the need for a marketing strategy",
+        "Reducing the number of products sold",
+        "Removing the need for customer feedback",
+        "Creating deals based on customer buying behaviour",
+        "Guaranteeing that all customers are profitable"
+      ],
+      "correct": 3,
+      "explanation": "With Data Segmentation a business can create deals based on buying behaviour, improve product arrangement, plan marketing strategy and analyse customer feedback."
+    },
+    {
+      "stem": "What should be done with Data Segmentation criteria over time?",
+      "options": [
+        "Plan them and replan them",
+        "Fix them once and never change them",
+        "Delete them after each campaign",
+        "Keep them secret from the business",
+        "Replace them with random sampling"
+      ],
+      "correct": 0,
+      "explanation": "One of the steps to improve Data Segmentation is to plan and replan the segmentation criteria."
+    },
+    {
+      "stem": "Which of the following is NOT listed as something a business can do with Data Segmentation?",
+      "options": [
+        "Improve product arrangement",
+        "Plan a marketing strategy",
+        "Analyse customer feedback",
+        "Create deals based on customer buying behaviour",
+        "Negotiate supplier contracts"
+      ],
+      "correct": 4,
+      "explanation": "The listed business uses are deals based on buying behaviour, product arrangement, marketing strategy and customer feedback analysis; supplier contracts are not mentioned."
+    },
+    {
+      "stem": "On what should segments be designed, according to the steps for improving Data Segmentation?",
+      "options": [
+        "Server capacity",
+        "The preferences of the IT department",
+        "Customer prioritisation and feedback",
+        "Random allocation",
+        "The alphabetical order of customer names"
+      ],
+      "correct": 2,
+      "explanation": "Segments should be designed based on customer prioritisation and feedback."
+    }
+  ]
+}

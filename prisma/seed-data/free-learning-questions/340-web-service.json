@@ -1,0 +1,125 @@
+{
+  "topic": "web-service",
+  "questions": [
+    {
+      "stem": "What is a web service?",
+      "options": [
+        "A hosting plan for static websites",
+        "A service offered by an application to enable communication and data exchange at an application level",
+        "A browser plug-in for viewing XML",
+        "A physical server located in a data centre",
+        "A database backup schedule"
+      ],
+      "correct": 1,
+      "explanation": "A web service is a service offered by an application to enable communication and data exchange at an application level."
+    },
+    {
+      "stem": "Which two types of web services are mainly used when integrating applications?",
+      "options": [
+        "HTTP and FTP",
+        "JSON and XML",
+        "REST and SOAP",
+        "WADL and WSDL",
+        "GET and POST"
+      ],
+      "correct": 2,
+      "explanation": "The two main types of web services used for application integration are REST and SOAP."
+    },
+    {
+      "stem": "What does REST stand for?",
+      "options": [
+        "Remote Execution of Service Transactions",
+        "Resource Exchange and Synchronisation Technology",
+        "Reliable Encoded Service Transfer",
+        "Representational State Transfer",
+        "Request-Enabled Stateless Transport"
+      ],
+      "correct": 3,
+      "explanation": "REST stands for Representational State Transfer, a software architecture style for designing and communicating web applications."
+    },
+    {
+      "stem": "Why are sessions not required by REST web services?",
+      "options": [
+        "Because REST only supports the GET method",
+        "Because REST uses XML exclusively",
+        "Because REST runs only on private networks",
+        "Because REST caches every response",
+        "Because REST employs a stateless protocol in a client-server architecture"
+      ],
+      "correct": 4,
+      "explanation": "REST web services employ a stateless protocol in a client-server architecture, so sessions are not required."
+    },
+    {
+      "stem": "Which HTTP method is described as safe because it is read-only and cannot change the target resource?",
+      "options": [
+        "GET",
+        "PUT",
+        "POST",
+        "DELETE",
+        "PATCH"
+      ],
+      "correct": 0,
+      "explanation": "GET retrieves a representation of the target resource; it is safe because it is read-only, and it is also cacheable."
+    },
+    {
+      "stem": "Which data format is the most used with REST web services?",
+      "options": [
+        "CSV",
+        "JSON",
+        "XML",
+        "YAML",
+        "Parquet"
+      ],
+      "correct": 1,
+      "explanation": "REST web services can use multiple data formats such as JSON or XML, but JSON is the most used."
+    },
+    {
+      "stem": "Which data format does SOAP use for its messages?",
+      "options": [
+        "JSON only",
+        "Plain text",
+        "XML only, in predefined schemas",
+        "Binary streams",
+        "Either JSON or XML"
+      ],
+      "correct": 2,
+      "explanation": "SOAP uses only XML formats in predefined schemas; SOAP messages are XML documents encapsulated in an envelope."
+    },
+    {
+      "stem": "In a SOAP message, which part is optional and may carry authentication credentials?",
+      "options": [
+        "The envelope",
+        "The body",
+        "The fault element",
+        "The header",
+        "The encoding style"
+      ],
+      "correct": 3,
+      "explanation": "The header is an optional part of a SOAP message; it can carry information such as authentication credentials and definitions of complex types."
+    },
+    {
+      "stem": "What is WSDL sometimes referred to as?",
+      "options": [
+        "The web service cache",
+        "The REST resource locator",
+        "The SOAP envelope",
+        "The JSON schema",
+        "The web service signature"
+      ],
+      "correct": 4,
+      "explanation": "WSDL provides a complete description of a web service's operations and parameters and is sometimes referred to as the web service signature."
+    },
+    {
+      "stem": "Which description language is described as the REST-side counterpart of WSDL for SOAP?",
+      "options": [
+        "WADL (Web Application Description Language)",
+        "XSD",
+        "OpenAPI",
+        "UDDI",
+        "RAML"
+      ],
+      "correct": 0,
+      "explanation": "WSDL for SOAP is described as somehow equivalent to WADL for REST web services; both are XML-based."
+    }
+  ]
+}

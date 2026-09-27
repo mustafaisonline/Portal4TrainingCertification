@@ -1,0 +1,125 @@
+{
+  "topic": "physical-data-modelling-pdm",
+  "questions": [
+    {
+      "stem": "What does Physical Data Modelling define?",
+      "options": [
+        "The concrete implementation of data structures within a specific database platform",
+        "The high-level business view of entities",
+        "The natural-language facts of a business",
+        "The workflow of a loan process",
+        "The enterprise-wide meaning of data"
+      ],
+      "correct": 0,
+      "explanation": "Physical Data Modelling translates the logical blueprint into executable database objects: tables, columns, datatypes, indexes, partitions and constraints."
+    },
+    {
+      "stem": "How does the physical model differ in nature from conceptual and logical models?",
+      "options": [
+        "It is more abstract",
+        "It is platform-agnostic",
+        "It is deeply technology-specific",
+        "It omits constraints",
+        "It focuses on business vocabulary"
+      ],
+      "correct": 2,
+      "explanation": "Unlike conceptual and logical models, which remain platform-agnostic, the physical model is deeply technology-specific."
+    },
+    {
+      "stem": "In the physical loan model, which column type is suggested for financial amounts?",
+      "options": [
+        "BIGSERIAL",
+        "TIMESTAMPTZ",
+        "NUMERIC",
+        "ENUM",
+        "CHAR(3)"
+      ],
+      "correct": 2,
+      "explanation": "NUMERIC is used for financial amounts, BIGSERIAL for identifiers, DATE or TIMESTAMPTZ for temporal values and ENUM for status values."
+    },
+    {
+      "stem": "Why are decision status and repayment status defined as enumerated types in the physical model?",
+      "options": [
+        "To make queries slower but safer",
+        "To allow any free text value",
+        "To reduce the number of tables",
+        "To prevent invalid values from entering the system",
+        "To enable partition pruning"
+      ],
+      "correct": 3,
+      "explanation": "Defining statuses as ENUM types tightly controls allowed values and prevents invalid values from entering the system."
+    },
+    {
+      "stem": "How is the one-to-one relationship between a loan and its approval decision enforced at the physical layer?",
+      "options": [
+        "With a partition",
+        "With a trigger",
+        "With a partial index",
+        "With a unique constraint on the decision reference",
+        "With a CHECK constraint on amount"
+      ],
+      "correct": 3,
+      "explanation": "Unique constraints enforce one-to-one relationships physically, ensuring a loan references at most one approval decision."
+    },
+    {
+      "stem": "Which partitioning strategy is given as an example for the loan and repayment tables?",
+      "options": [
+        "Hash partitioning by customer name",
+        "List partitioning by currency",
+        "Partitioning by loan officer",
+        "No partitioning is recommended",
+        "Range partitioning loans by origination date and repayments by due date"
+      ],
+      "correct": 4,
+      "explanation": "Range partitioning loans by origination date and repayments by due date lets large tables scale with fast queries through partition pruning."
+    },
+    {
+      "stem": "What is the purpose of a partial index in the physical model example?",
+      "options": [
+        "To index every column in the table",
+        "To accelerate high-frequency queries such as retrieving open repayments without inflating the index footprint",
+        "To enforce referential integrity",
+        "To replace the primary key",
+        "To store audit history"
+      ],
+      "correct": 1,
+      "explanation": "Partial indexes speed up frequent queries like open repayments without unnecessarily inflating the index footprint."
+    },
+    {
+      "stem": "Which of the following is NOT named as an operational consideration in Physical Data Modelling?",
+      "options": [
+        "DEFERRABLE foreign keys",
+        "Update timestamp triggers",
+        "Change data capture strategies",
+        "Archival strategies",
+        "Ubiquitous language definitions"
+      ],
+      "correct": 4,
+      "explanation": "Operational considerations include deferrable foreign keys, timestamp triggers, change data capture, storage, clustering and archival; ubiquitous language belongs to DDD."
+    },
+    {
+      "stem": "Which three questions do the Conceptual, Logical and Physical layers respectively answer?",
+      "options": [
+        "How is it implemented? What exists? How is it structured?",
+        "What entities exist? How are they structured and related? How are they implemented in a system?",
+        "Who does what? How does work flow? What do terms mean?",
+        "What is communicated? Who is connected? Under what conditions?",
+        "What is the vocabulary? What is the network? What is the context?"
+      ],
+      "correct": 1,
+      "explanation": "The Conceptual Model answers what exists, the Logical Model how it is structured and related, and the Physical Model how it is implemented."
+    },
+    {
+      "stem": "What is described as the essential bridge to understand before moving from core to specialised modelling techniques?",
+      "options": [
+        "The balance between normalisation and denormalisation",
+        "The choice between cloud and on-premises",
+        "The difference between OLTP and OLAP hardware",
+        "The selection of a BI tool",
+        "The choice of programming language"
+      ],
+      "correct": 0,
+      "explanation": "The balance between normalisation and denormalisation is the hinge between relational theory and architectural pragmatism that every specialised technique builds on or reacts to."
+    }
+  ]
+}

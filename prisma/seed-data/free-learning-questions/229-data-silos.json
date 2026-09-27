@@ -1,0 +1,125 @@
+{
+  "topic": "data-silos",
+  "questions": [
+    {
+      "stem": "What is a Data Silo?",
+      "options": [
+        "A datastore that is not accessible from the external world because of technology barriers",
+        "A datastore that is only accessible to its relevant stakeholders",
+        "A datastore that stores data in a unified data model",
+        "A datastore used exclusively for decision support",
+        "A datastore that has been migrated to the cloud"
+      ],
+      "correct": 1,
+      "explanation": "Unlike a Data Island, which is unreachable from outside, a Data Silo is a datastore accessible only to its relevant stakeholders."
+    },
+    {
+      "stem": "How does a Data Island differ from a Data Silo?",
+      "options": [
+        "A Data Island holds confidential data; a Data Silo never does",
+        "A Data Island is on-premises; a Data Silo is in the cloud",
+        "A Data Island is not accessible from the external world; a Data Silo is accessible only to relevant stakeholders",
+        "A Data Island is a process; a Data Silo is a technology",
+        "There is no difference; the two terms are interchangeable"
+      ],
+      "correct": 2,
+      "explanation": "Data Islands cannot be reached from outside, often for technological reasons, whereas Data Silos are reachable but restricted to their relevant stakeholders."
+    },
+    {
+      "stem": "Which of the following is NOT given as a reason why data ends up in a silo?",
+      "options": [
+        "The datastore hosts confidential data such as finance or audit data",
+        "The data is semi-structured or unstructured and not readable",
+        "Data quality is so low that sharing it could lead to wrong decisions",
+        "The data has already been loaded into a data warehouse",
+        "Separate database instances are created for different development teams"
+      ],
+      "correct": 3,
+      "explanation": "Confidentiality, unreadable formats, poor quality, security or privacy concerns and per-team development instances are all cited; loading data into a warehouse is the remedy, not a cause."
+    },
+    {
+      "stem": "Why are separate database instances sometimes created for different development teams?",
+      "options": [
+        "To reduce licensing costs",
+        "So that management can compare the teams' output",
+        "To enforce data privacy regulations",
+        "So that if one team changes data or table structures, other teams are not impacted",
+        "To increase query performance"
+      ],
+      "correct": 3,
+      "explanation": "Per-team development instances isolate each team's data and structural changes so that they do not affect other teams."
+    },
+    {
+      "stem": "Why should Data Silos not exist in a data-driven organisation?",
+      "options": [
+        "Because they make the same kind of data impossible to correlate across systems",
+        "Because they consume too much storage",
+        "Because they are not permitted by database vendors",
+        "Because they are always hosted on legacy hardware",
+        "Because they cannot be encrypted"
+      ],
+      "correct": 0,
+      "explanation": "If data does not reside in one location, it is not possible to correlate the same kind of data across multiple systems, which data scientists and management need."
+    },
+    {
+      "stem": "Which problem did the Data Warehouse come into being to solve?",
+      "options": [
+        "The lack of transaction processing capacity",
+        "Source-system data sitting in silos, making cross-departmental reporting slow and hard to validate",
+        "The absence of network connectivity between cities",
+        "The need to encrypt confidential finance data",
+        "The cost of cloud compute resources"
+      ],
+      "correct": 1,
+      "explanation": "Data Warehousing brings data from all source systems into one place so management need not extract and validate data from each silo separately."
+    },
+    {
+      "stem": "In Data Warehousing, in what form is data from all the source systems brought together?",
+      "options": [
+        "As separate copies, one per department",
+        "As unstructured files in an object store",
+        "In a unified data model, forming a single source of truth for decision support",
+        "In per-team development instances",
+        "As a read-only Data Island"
+      ],
+      "correct": 2,
+      "explanation": "Source data is consolidated into a unified data model so that Decision Support Systems have a single source of truth."
+    },
+    {
+      "stem": "Which examples of siloed source systems does *I Am Datapedia!* say almost all medium to large organisations have?",
+      "options": [
+        "Mainframe, Hadoop and Kafka",
+        "Data Lake, Data Mart and OLAP Cube",
+        "Tableau, Power BI and Qlik",
+        "Landing, Staging and Transformed zones",
+        "CRM, ERP, Procurement and HR systems"
+      ],
+      "correct": 4,
+      "explanation": "The typical organisation has CRM, ERP, Procurement and HR systems, each holding its own data in a silo."
+    },
+    {
+      "stem": "Which two difficulties arise when management wants information from several siloed systems?",
+      "options": [
+        "Extraction is very time-consuming and data quality is hard to validate",
+        "Data encryption and data masking",
+        "Licensing and hardware procurement",
+        "Duplicate primary keys and missing indexes",
+        "Slow network links and limited RAM"
+      ],
+      "correct": 0,
+      "explanation": "With data in silos, extracting it is time-consuming and validating its quality is difficult."
+    },
+    {
+      "stem": "Which concepts describe the current era in which data silos are discouraged?",
+      "options": [
+        "Per-team database instances",
+        "Data islands and floppy-drive transfers",
+        "Departmental ownership and restricted sharing",
+        "Manual reconciliation and canned reports",
+        "Data democratisation and data liberalisation as a norm"
+      ],
+      "correct": 4,
+      "explanation": "The data-driven organisation not only centralises data but also makes data democratisation and liberalisation the norm."
+    }
+  ]
+}

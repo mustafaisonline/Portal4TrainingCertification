@@ -1,0 +1,125 @@
+{
+  "topic": "data-integrity",
+  "questions": [
+    {
+      "stem": "How is the relationship between Data Quality and Data Integrity described?",
+      "options": [
+        "Data Quality is one component that supplements Data Integrity alongside other components",
+        "Data Quality and Data Integrity are two competing terms for the same idea",
+        "Data Integrity is one small component of Data Quality",
+        "Data Quality replaces Data Integrity in modern organisations",
+        "Data Quality and Data Integrity are unrelated disciplines"
+      ],
+      "correct": 0,
+      "explanation": "The two are not different competing terms; Data Quality supplements Data Integrity, being one of its multiple components."
+    },
+    {
+      "stem": "From which point of view did the term Data Integrity originally come?",
+      "options": [
+        "A marketing point of view",
+        "A security point of view",
+        "A storage-cost point of view",
+        "A visualisation point of view",
+        "A performance point of view"
+      ],
+      "correct": 1,
+      "explanation": "The term Data Integrity came from a security point of view, though it also arose from sharing data more effectively and easily, so it is more than just security."
+    },
+    {
+      "stem": "Which four components of Data Integrity are listed?",
+      "options": [
+        "Encryption, Masking, Auditing and Backup",
+        "Accuracy, Completeness, Consistency and Timeliness",
+        "Data Integration, Data Quality, Location Intelligence and Data Enrichment",
+        "ETL, ELT, CDC and Streaming",
+        "Confidentiality, Integrity, Availability and Privacy"
+      ],
+      "correct": 2,
+      "explanation": "The Data Integrity components listed are Data Integration, Data Quality, Location Intelligence and Data Enrichment."
+    },
+    {
+      "stem": "What is Interoperability, as used in the discussion of Data Integration?",
+      "options": [
+        "The process of removing duplicate records from a dataset",
+        "The encryption of data while it moves between systems",
+        "The audit of results shared with regulatory bodies",
+        "The exchange of information between different systems",
+        "The addition of information that is not available in the source"
+      ],
+      "correct": 3,
+      "explanation": "The exchange of information between different systems is called Interoperability."
+    },
+    {
+      "stem": "Which approach is named as a major way to give uniqueness to entities coming from multiple sources?",
+      "options": [
+        "Data Replication",
+        "Change Data Capture (CDC)",
+        "Data Visualisation",
+        "Location Intelligence",
+        "Master Data Management (MDM)"
+      ],
+      "correct": 4,
+      "explanation": "Master Data Management (MDM) is one of the major approaches for giving uniqueness to entities that come from multiple sources."
+    },
+    {
+      "stem": "Which approaches are described as the best way to prove an organisation's Data Integrity?",
+      "options": [
+        "Data Lineage and Metadata Management",
+        "Data Replication and Streaming",
+        "Encryption and Access Management",
+        "Data Enrichment and Location Intelligence",
+        "Graph databases and NoSQL"
+      ],
+      "correct": 0,
+      "explanation": "Data Lineage and Metadata Management are the best approaches to prove Data Integrity."
+    },
+    {
+      "stem": "In the bank branch example of Location Intelligence, what decision might a decision-maker take on learning that customers travel from a location 10 km away?",
+      "options": [
+        "Close the branch and merge it with a nearer one",
+        "Install an ATM near that location to offload cash withdrawal activities from the branch",
+        "Increase the marketing budget for that branch",
+        "Replace the branch's database with a graph database",
+        "Send the customers' data to an external audit team"
+      ],
+      "correct": 1,
+      "explanation": "If customers in a branch come from a location 10 km away, the decision-maker can install an ATM near that location to offload cash withdrawal activities from the branch."
+    },
+    {
+      "stem": "Which type of database is named as being used for Location Intelligence datasets?",
+      "options": [
+        "Relational databases in third normal form",
+        "Columnar data warehouses",
+        "Graph databases (NoSQL)",
+        "In-memory caches",
+        "Spreadsheet files"
+      ],
+      "correct": 2,
+      "explanation": "For location intelligence datasets, Graph databases (a form of NoSQL database) are used."
+    },
+    {
+      "stem": "What does Data Enrichment mean as a component of Data Integrity?",
+      "options": [
+        "Encrypting data so that it cannot be read by intruders",
+        "Removing inaccurate records before loading data",
+        "Copying data from one system to another without change",
+        "Adding information to the target datastore that is not available from the source, such as comparing marketing expense with customer feedback on social media",
+        "Proving where data came from through lineage"
+      ],
+      "correct": 3,
+      "explanation": "Data Enrichment means adding more information in the target datastore which is not available from the source, for example comparing marketing expense with customer feedback on social media."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a technique for achieving Data Integration?",
+      "options": [
+        "ETL",
+        "ELT",
+        "Change Data Capture (CDC)",
+        "Streaming Data Integration",
+        "Database normalisation"
+      ],
+      "correct": 4,
+      "explanation": "Techniques listed for data integration are ETL, ELT, CDC, Data Replication, Data Visualisation and Streaming Data Integration. Database normalisation is not among them."
+    }
+  ]
+}

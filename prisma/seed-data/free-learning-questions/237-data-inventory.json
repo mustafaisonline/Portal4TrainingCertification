@@ -1,0 +1,125 @@
+{
+  "topic": "data-inventory",
+  "questions": [
+    {
+      "stem": "What is Data Inventory?",
+      "options": [
+        "Knowing which kinds of data an organisation has, with monetary value",
+        "Knowing system details, databases, tables and columns mapped to business requirements",
+        "A consolidation of Data Asset and Data Catalogue information with additional details such as origin, ownership and frequency of change",
+        "A list of passwords for social media applications",
+        "The process of generating synthetic customer data"
+      ],
+      "correct": 2,
+      "explanation": "Data Inventory consolidates the information in Data Assets and Data Catalogue and adds details such as where data comes from, who generated it, when, and how often it changes."
+    },
+    {
+      "stem": "Which concept is about knowing which kind of data an organisation has, together with its monetary value?",
+      "options": [
+        "Data Catalogue",
+        "Data Assets",
+        "Data Inventory",
+        "Data Lineage",
+        "Data Curation"
+      ],
+      "correct": 1,
+      "explanation": "Data Assets is about knowing what data the organisation holds and what monetary value it carries."
+    },
+    {
+      "stem": "Which concept is about knowing system details, databases, tables and columns and mapping them to business requirements?",
+      "options": [
+        "Data Assets",
+        "Data Inventory",
+        "Data Catalogue",
+        "Data Syndication",
+        "Data Profiling"
+      ],
+      "correct": 2,
+      "explanation": "Data Catalogue covers system details, databases, tables and columns and their mapping to business requirements."
+    },
+    {
+      "stem": "Which of the following is NOT listed among the additional details captured in a Data Inventory?",
+      "options": [
+        "Frequency of inserts, updates and deletes",
+        "Licensing details",
+        "Owners of source and target systems",
+        "The exchange rate used for data valuation",
+        "Security and privacy approaches"
+      ],
+      "correct": 3,
+      "explanation": "Change frequency, licensing, system owners and security approaches are all inventory details; an exchange rate for valuation is not."
+    },
+    {
+      "stem": "Which everyday example illustrates the idea of an inventory in *I Am Datapedia!*?",
+      "options": [
+        "A shopping list",
+        "A Passwords Inventory kept safely for social media, Hotmail, Gmail and other accounts",
+        "A car service record",
+        "A library catalogue",
+        "A recipe book"
+      ],
+      "correct": 1,
+      "explanation": "Keeping all one's passwords for the many applications and email services in one safe place is a Password Inventory, an everyday parallel to Data Inventory."
+    },
+    {
+      "stem": "For which parties is Data Inventory described as a key input?",
+      "options": [
+        "Regulatory bodies, compliance and audit",
+        "Marketing campaign planners",
+        "Mobile application developers",
+        "Data scientists building models",
+        "Production houses planning stock"
+      ],
+      "correct": 0,
+      "explanation": "Data inventory is one of the key inputs for regulatory bodies, compliance and auditors."
+    },
+    {
+      "stem": "Which event made Data Inventory more important than ever, according to *I Am Datapedia!*?",
+      "options": [
+        "The introduction of Wi-Fi",
+        "The invention of MDX",
+        "The release of Hadoop",
+        "The acquisition of WhatsApp",
+        "The Covid-19 impact of 2019 to 2022, when working from home pushed reluctant organisations to the cloud"
+      ],
+      "correct": 4,
+      "explanation": "During Covid-19, most of the world was forced to work from home and organisations that had resisted the cloud moved to it, making data inventory more important than ever."
+    },
+    {
+      "stem": "Data Inventory is itself described as an example of what?",
+      "options": [
+        "Metadata",
+        "Reference data",
+        "Master data",
+        "Synthetic data",
+        "Canned data"
+      ],
+      "correct": 0,
+      "explanation": "The topic concludes with the statement that Data Inventory is also a Metadata."
+    },
+    {
+      "stem": "As of May 2022, what proportion of organisations does *I Am Datapedia!* say have both on-premises and cloud presence?",
+      "options": [
+        "Around 25%",
+        "Around 50%",
+        "Around 75%",
+        "99% or more, if not 100%",
+        "Exactly 100%"
+      ],
+      "correct": 3,
+      "explanation": "The author estimates that, if not 100%, then 99% or more of organisations have both on-premises and cloud presence, even if only through conferencing tools or WhatsApp."
+    },
+    {
+      "stem": "Which pair of items both belong to the additional details in a Data Inventory?",
+      "options": [
+        "Landing zone and staging zone",
+        "Latitude and longitude",
+        "Sudden drift and gradual drift",
+        "Tuples and sets",
+        "Transformation details and business rules"
+      ],
+      "correct": 4,
+      "explanation": "Transformation details and business rules are among the listed inventory items, along with data models, software lists, data sources and target systems."
+    }
+  ]
+}

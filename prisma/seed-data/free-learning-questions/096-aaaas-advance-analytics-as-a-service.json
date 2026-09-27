@@ -1,0 +1,125 @@
+{
+  "topic": "aaaas-advance-analytics-as-a-service",
+  "questions": [
+    {
+      "stem": "Where can Advance Analytics as a Service (AAaaS) be hosted?",
+      "options": [
+        "Only in the public Cloud",
+        "Only on-premises",
+        "Either on-premises or in the Cloud",
+        "Only on mobile devices",
+        "Only in a private Cloud"
+      ],
+      "correct": 2,
+      "explanation": "AAaaS has nothing to do with Cloud specifically; it can be on-premises or on Cloud."
+    },
+    {
+      "stem": "For whom is an AAaaS environment set up?",
+      "options": [
+        "Network administrators",
+        "Data Scientists working with Machine Learning and Deep Learning modelling",
+        "Finance auditors",
+        "Front-end web developers",
+        "Sales representatives"
+      ],
+      "correct": 1,
+      "explanation": "AAaaS is an environment set up for Data Scientists to play around with Machine Learning and Deep Learning modelling."
+    },
+    {
+      "stem": "Why is AAaaS described as still very confusing?",
+      "options": [
+        "Because it has been banned in some countries",
+        "Because it only works with one vendor",
+        "Because it requires quantum computing",
+        "Because it is a new, still-maturing concept and different companies offer different approaches",
+        "Because it has no documentation"
+      ],
+      "correct": 3,
+      "explanation": "AAaaS is a new and still-maturing concept, with different companies offering different approaches and no single best one."
+    },
+    {
+      "stem": "How many approaches to AAaaS are described?",
+      "options": [
+        "One",
+        "Two",
+        "Three",
+        "Four",
+        "Five"
+      ],
+      "correct": 1,
+      "explanation": "Two approaches are followed: AAaaS as PaaS and AAaaS as SaaS."
+    },
+    {
+      "stem": "Which tools are given as examples of AAaaS as PaaS?",
+      "options": [
+        "Kafka and Hadoop",
+        "PowerPoint and Excel",
+        "Oracle and MySQL",
+        "Databricks and Azure AML",
+        "Kinesis and Redshift"
+      ],
+      "correct": 3,
+      "explanation": "In the PaaS approach, modelling tools like Databricks and Azure AML are available as pre-installed services customers can provision in a few clicks."
+    },
+    {
+      "stem": "In the AAaaS as PaaS approach, who is responsible for MLOps and CI/CD?",
+      "options": [
+        "The Cloud provider",
+        "The Solution Provider",
+        "The customer, who must have their own MLOps along with CI/CD",
+        "A regulator",
+        "Nobody, since MLOps is not needed"
+      ],
+      "correct": 2,
+      "explanation": "With AAaaS as PaaS, customers build their own models and must have their own MLOps along with CI/CD."
+    },
+    {
+      "stem": "What does a Solution Provider host in the AAaaS as SaaS approach?",
+      "options": [
+        "Pre-built or OOTB Machine Learning and Deep Learning models for customers to consume",
+        "Empty modelling tools for customers to build models",
+        "Only raw datasets",
+        "Only virtual machines",
+        "Only containers"
+      ],
+      "correct": 0,
+      "explanation": "In the SaaS approach, providers host pre-built or OOTB ML and DL models that customers consume by injecting their own datasets."
+    },
+    {
+      "stem": "In AAaaS as SaaS, whose MLOps and CI/CD must the customer follow?",
+      "options": [
+        "The Solution Provider's",
+        "Their own",
+        "The Cloud provider's hardware team",
+        "An open-source community's",
+        "No MLOps is required"
+      ],
+      "correct": 0,
+      "explanation": "With AAaaS as SaaS, customers must follow the Solution Provider's MLOps along with CI/CD."
+    },
+    {
+      "stem": "What do customers contribute in the AAaaS as SaaS approach?",
+      "options": [
+        "Their own hardware",
+        "Their own trained models",
+        "Their own operating system",
+        "Their own modelling tools",
+        "Their own dataset for relevant analysis and analytics"
+      ],
+      "correct": 4,
+      "explanation": "Customers inject their own dataset into the provider's pre-built models for the relevant data analysis and analytics."
+    },
+    {
+      "stem": "Which statement about AAaaS is FALSE?",
+      "options": [
+        "It can run on-premises",
+        "It is an environment for Data Scientists",
+        "It can be offered in a SaaS style",
+        "It can be offered in a PaaS style",
+        "There is one universally agreed best approach"
+      ],
+      "correct": 4,
+      "explanation": "Different companies offer different approaches, so there is no one best approach to AAaaS."
+    }
+  ]
+}

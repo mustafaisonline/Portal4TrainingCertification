@@ -1,0 +1,125 @@
+{
+  "topic": "data-catalog",
+  "questions": [
+    {
+      "stem": "How does a Data Catalog relate to the Data Dictionary and the Data Glossary?",
+      "options": [
+        "It replaces both of them",
+        "It jointly refers to both, showing which business term maps to which table or dashboard",
+        "It is a subset of the Data Dictionary",
+        "It contains only business terms",
+        "It contains only technical field metadata"
+      ],
+      "correct": 1,
+      "explanation": "A Data Catalog jointly refers to the Dictionary and Glossary, giving a complete picture of both, such as which business term refers to which table or dashboard."
+    },
+    {
+      "stem": "Under which discipline does a Data Catalog fall?",
+      "options": [
+        "Metadata Management",
+        "Master Data Management",
+        "Data Quality Management",
+        "Zero Trust Architecture",
+        "Technical Architecture"
+      ],
+      "correct": 0,
+      "explanation": "Like the Dictionary and Glossary, 'Data Catalog comes under Metadata Management.'"
+    },
+    {
+      "stem": "In the Bank Account Number (BAN) example from I Am Datapedia!, what does the Data Glossary say about BAN?",
+      "options": [
+        "That it is a string of length 10 with two # characters",
+        "That it is stored in tables x, y and z",
+        "That it is the unique identifier for a customer across all banking applications",
+        "That it is owned by the Finance department",
+        "That it is refreshed nightly"
+      ],
+      "correct": 2,
+      "explanation": "The Glossary gives the business meaning: BAN is the unique identifier for a customer across all banking applications such as HR, Finance and Marketing."
+    },
+    {
+      "stem": "In the BAN example, which detail belongs to the Data Dictionary?",
+      "options": [
+        "Which department owns the dashboards using BAN",
+        "The field type as string and field length as 10",
+        "The business meaning of BAN across applications",
+        "The marketing campaigns that use BAN",
+        "The tables and schemas where BAN is stored"
+      ],
+      "correct": 1,
+      "explanation": "The Dictionary holds metadata detail such as field type string, field length 10 and the two # characters in it."
+    },
+    {
+      "stem": "What does the Data Catalog add on top of the Glossary and Dictionary in the BAN example?",
+      "options": [
+        "The encryption key for the field",
+        "The customer's account balance",
+        "The SQL used to create the table",
+        "Where BAN is stored (tables, schema, database) and which department owns which assets",
+        "The number of characters in the field"
+      ],
+      "correct": 3,
+      "explanation": "The Catalog tells the whole story: what BAN means, that it is stored in tables x, y and z, in which schema and database, and which department owns which databases, tables, dashboards and reports."
+    },
+    {
+      "stem": "What three things does a Data Catalog make clear about data, giving analysts, designers and developers an advantage?",
+      "options": [
+        "Who created it, when it expires and its price",
+        "Its backup schedule, its size and its owner's email",
+        "Its colour coding, its dashboard layout and its font",
+        "Its encryption, its compression and its replication",
+        "What the data is about, how it is stored and where it is stored"
+      ],
+      "correct": 4,
+      "explanation": "Knowing what the data is about, how it is stored and where it is stored gives an added advantage to analysts, designers and developers."
+    },
+    {
+      "stem": "What does having a Data Catalog imply about the Dictionary and Glossary?",
+      "options": [
+        "That they are no longer needed",
+        "That they are already in place",
+        "That they must be deleted to avoid duplication",
+        "That they are owned by different departments",
+        "That they are stored in a separate database"
+      ],
+      "correct": 1,
+      "explanation": "Having a Data Catalog means a Data Dictionary and Data Glossary are already in place, a perfect recipe to eliminate chances of a Data Swamp."
+    },
+    {
+      "stem": "Why has the Data Catalog moved from the good-to-have to the must-have zone?",
+      "options": [
+        "Because regulators now fine organisations without one",
+        "Because relational databases have been discontinued",
+        "Because of the introduction of semi and unstructured datasets",
+        "Because cloud providers require it",
+        "Because business glossaries have become obsolete"
+      ],
+      "correct": 2,
+      "explanation": "With the introduction of semi and unstructured datasets, the requirement for a Data Catalog moved from good-to-have to must-have."
+    },
+    {
+      "stem": "Who interacts with a Data Catalog?",
+      "options": [
+        "Both technical and business folks",
+        "Technical folks only",
+        "Business folks only",
+        "External auditors only",
+        "Cloud providers only"
+      ],
+      "correct": 0,
+      "explanation": "Unlike the technical Dictionary and the business Glossary, 'Both technical and business folks interact with Data Catalog.'"
+    },
+    {
+      "stem": "Which of the following is NOT one of the three metadata components compared alongside each other?",
+      "options": [
+        "Data Dictionary",
+        "Data or Business Glossary",
+        "Data Catalog",
+        "Data Warehouse",
+        "All three are compared with each other"
+      ],
+      "correct": 3,
+      "explanation": "The three similar-looking components compared are the Data Dictionary, the Data or Business Glossary and the Data Catalog; a Data Warehouse is a storage solution, not a metadata component."
+    }
+  ]
+}

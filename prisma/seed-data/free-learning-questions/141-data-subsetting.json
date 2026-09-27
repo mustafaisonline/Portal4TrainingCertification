@@ -1,0 +1,125 @@
+{
+  "topic": "data-subsetting",
+  "questions": [
+    {
+      "stem": "What is data subsetting?",
+      "options": [
+        "Encrypting a portion of a database for secure transfer",
+        "Taking a small piece of data, with referential integrity in place, for some activity",
+        "Deleting old records to reduce database size",
+        "Replacing sensitive values with fake ones",
+        "Copying an entire database to a test server"
+      ],
+      "correct": 1,
+      "explanation": "Data subsetting is as simple as taking a small piece of data, with referential integrity in place, for a particular activity."
+    },
+    {
+      "stem": "Which property must a data subset preserve?",
+      "options": [
+        "Encryption at rest",
+        "Column-level masking",
+        "Referential integrity",
+        "Real-time refresh",
+        "Cross-border storage"
+      ],
+      "correct": 2,
+      "explanation": "A subset is taken with referential integrity in place, so that related records still link correctly."
+    },
+    {
+      "stem": "In the data subsetting example for a data science model, which users' data is extracted?",
+      "options": [
+        "All users in the database",
+        "Users aged between 25 and 35 from a particular location with certain buying or spending patterns",
+        "Users who have opted out of marketing",
+        "Users with the highest lifetime spend",
+        "Users registered in the last month"
+      ],
+      "correct": 1,
+      "explanation": "The example requirement is data for users aged 25 to 35 from location X having certain buying or spending patterns, extracted for the data science team."
+    },
+    {
+      "stem": "Data subsetting should not be confused with which other practice?",
+      "options": [
+        "Data masking",
+        "Data warehousing",
+        "Data scraping",
+        "Data federation",
+        "Data encoding"
+      ],
+      "correct": 0,
+      "explanation": "Data subsetting must not be confused with data masking; they are different activities, and masking is still needed on a subset."
+    },
+    {
+      "stem": "Is data masking still required after a data subset has been created?",
+      "options": [
+        "No, because the subset is small enough to be safe",
+        "No, because subsetting removes sensitive columns",
+        "Yes, from a security point of view",
+        "Only if the subset leaves the country",
+        "Only if the subset is larger than the original"
+      ],
+      "correct": 2,
+      "explanation": "Data masking is still required on the smaller piece of the data set from a security point of view."
+    },
+    {
+      "stem": "What must one understand first before conducting a data subsetting exercise?",
+      "options": [
+        "The cost of cloud storage",
+        "The functional requirements of the use case",
+        "The encryption standard used by the database",
+        "The number of database administrators",
+        "The BI tool the business prefers"
+      ],
+      "correct": 1,
+      "explanation": "One first must understand the functional requirements of the use case, and then what data exists in the database as a whole."
+    },
+    {
+      "stem": "Besides the use-case requirements, what else must be understood before subsetting data?",
+      "options": [
+        "What data is in the database as a whole",
+        "Which vendor hosts the database",
+        "How many users will view the subset",
+        "The network bandwidth available",
+        "The age of the database software"
+      ],
+      "correct": 0,
+      "explanation": "Alongside the functional requirements, one must understand what data is there in the database as a whole."
+    },
+    {
+      "stem": "What is the consequence of wrong or partial data subsetting?",
+      "options": [
+        "Faster model training",
+        "Wrong data model results and damaged trust in data by decision-makers",
+        "Reduced need for data masking",
+        "Automatic correction by the data science team",
+        "Lower storage costs"
+      ],
+      "correct": 1,
+      "explanation": "Wrong or partial subsetting ends up producing wrong data model results and damages trust in data by decision-makers."
+    },
+    {
+      "stem": "In the data subsetting example, who receives the extracted data set and for what purpose?",
+      "options": [
+        "The finance team, to produce quarterly reports",
+        "The security team, to audit access",
+        "The data science development team, to build and train their models",
+        "The regulator, to verify compliance",
+        "The marketing team, to send emails"
+      ],
+      "correct": 2,
+      "explanation": "The particular data set is extracted for the data science development team to build and train their data models."
+    },
+    {
+      "stem": "Which statement about the difficulty of data subsetting is correct?",
+      "options": [
+        "It is trivial once the database is encrypted",
+        "It requires no knowledge of the use case",
+        "It can be done by simply copying a random sample of rows",
+        "Although the idea is simple, conducting the exercise is not as simple as it sounds",
+        "It is only difficult for NoSQL databases"
+      ],
+      "correct": 3,
+      "explanation": "Although subsetting is described as simple in concept, conducting the exercise is not as simple, because it requires understanding both the use case and the whole database."
+    }
+  ]
+}

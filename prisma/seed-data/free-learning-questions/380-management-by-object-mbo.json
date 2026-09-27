@@ -1,0 +1,125 @@
+{
+  "topic": "management-by-object-mbo",
+  "questions": [
+    {
+      "stem": "Who introduced the concept of Management by Objectives (MBO)?",
+      "options": [
+        "Peter Drucker",
+        "Andy Grove",
+        "Henry Ford",
+        "Larry Page",
+        "Frederick Taylor"
+      ],
+      "correct": 0,
+      "explanation": "Management by Objectives was introduced by Peter Drucker, who emphasised that organisations perform best when objectives are clearly defined and aligned across all levels."
+    },
+    {
+      "stem": "What is the core shift in focus that Management by Objectives (MBO) introduces?",
+      "options": [
+        "From results to daily activity",
+        "From activity to results",
+        "From employees to managers",
+        "From strategy to supervision",
+        "From measurement to intuition"
+      ],
+      "correct": 1,
+      "explanation": "At its core, MBO shifts focus from activity to results. Instead of asking 'Are people busy?', it asks 'Are we achieving what we set out to achieve?'"
+    },
+    {
+      "stem": "Which of the following is NOT one of the fundamental principles of Management by Objectives (MBO)?",
+      "options": [
+        "Clarity of objectives",
+        "Alignment between individual and organisational goals",
+        "Strict supervision and task control by managers",
+        "Participation in goal setting",
+        "Periodic performance review"
+      ],
+      "correct": 2,
+      "explanation": "MBO's fundamental principles are clarity of objectives, alignment between individual and organisational goals, participation in goal setting, measurable outcomes and periodic performance review. Supervision and task control belong to the traditional management MBO moved away from."
+    },
+    {
+      "stem": "In the Management by Objectives (MBO) process, what happens immediately after the organisation defines its high-level strategic objectives?",
+      "options": [
+        "Compensation is paid based on results",
+        "An external audit is conducted",
+        "Results are evaluated at the end of the period",
+        "Managers and employees translate those objectives into individual objectives",
+        "Objectives are published to customers"
+      ],
+      "correct": 3,
+      "explanation": "The MBO cycle starts with high-level strategic objectives. Second, managers and employees translate those organisational objectives into individual objectives, ensuring alignment between corporate direction and personal contribution."
+    },
+    {
+      "stem": "How often does a traditional Management by Objectives (MBO) cycle usually run?",
+      "options": [
+        "Weekly",
+        "Daily",
+        "Every five years",
+        "Continuously with no fixed period",
+        "Annually or semi-annually"
+      ],
+      "correct": 4,
+      "explanation": "The MBO cycle often runs annually or semi-annually, especially in traditional corporate environments. OKRs, by contrast, use shorter cycles, typically quarterly."
+    },
+    {
+      "stem": "How does Management by Objectives (MBO) relate to OKRs and KPIs?",
+      "options": [
+        "MBO is the broader management philosophy, OKRs are a structured evolution of it for fast-changing environments, and KPIs are measurement instruments usable within either",
+        "MBO is a measurement metric, OKRs are the philosophy, and KPIs are the goal cycles",
+        "MBO, OKRs and KPIs are three competing names for the same thing",
+        "KPIs replaced MBO, and OKRs replaced KPIs",
+        "MBO can only be used with KPIs, never with OKRs"
+      ],
+      "correct": 0,
+      "explanation": "MBO is the broader management philosophy. OKRs can be seen as a structured evolution of that philosophy designed for fast-changing environments, and KPIs are measurement instruments that can be used within either system."
+    },
+    {
+      "stem": "Which of the following is a benefit of Management by Objectives (MBO) when implemented properly?",
+      "options": [
+        "It removes the need for performance appraisal systems",
+        "It increases accountability because objectives are agreed upon",
+        "It guarantees creativity and innovation",
+        "It eliminates the need to measure performance",
+        "It ties all pay to fixed objectives"
+      ],
+      "correct": 1,
+      "explanation": "Properly implemented MBO improves clarity, strengthens alignment, increases accountability because objectives are agreed upon, encourages measurable rather than subjective evaluation, and supports structured appraisal systems."
+    },
+    {
+      "stem": "According to the limitations of Management by Objectives (MBO), what may happen if compensation is overly tied to fixed objectives?",
+      "options": [
+        "Objectives become clearer",
+        "Alignment across departments improves",
+        "Risk-taking and innovation may decline",
+        "Measurement becomes more precise",
+        "Feedback cycles become shorter"
+      ],
+      "correct": 2,
+      "explanation": "Among MBO's limitations, if compensation is overly tied to fixed objectives, risk-taking and innovation may decline. Rigid objectives can also make the system inflexible and bureaucratic."
+    },
+    {
+      "stem": "In the Grade 7 school example of Management by Objectives (MBO), the principal sets a goal to increase the average science score by 10 per cent. What objective does the science teacher then set?",
+      "options": [
+        "To reduce the number of science lessons",
+        "To have every student score 100 per cent",
+        "To improve the school's average by 20 per cent",
+        "To improve the class's average science test score from 70 to 80",
+        "To set no objective and wait for the principal's results"
+      ],
+      "correct": 3,
+      "explanation": "In the example, the science teacher sets a related objective: 'My class will improve their average science test score from 70 to 80.' Students then set their own objective, such as reaching at least 85 per cent, so every goal connects to the bigger one."
+    },
+    {
+      "stem": "Why does Management by Objectives (MBO) become even more powerful in data-driven organisations?",
+      "options": [
+        "Because data removes the need to set objectives",
+        "Because dashboards replace managers entirely",
+        "Because employees no longer need to participate in goal setting",
+        "Because annual cycles can be abandoned",
+        "Because objectives can be tracked through dashboards, analytics and performance metrics, making measurement precise"
+      ],
+      "correct": 4,
+      "explanation": "In data-driven organisations, MBO becomes even more powerful because objectives can be tracked through dashboards, analytics and performance metrics. Data makes measurement precise, which strengthens the philosophy behind MBO."
+    }
+  ]
+}

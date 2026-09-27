@@ -1,0 +1,125 @@
+{
+  "topic": "on-premises-vs-cloud",
+  "questions": [
+    {
+      "stem": "What defines an On-Premises IT setup?",
+      "options": [
+        "Servers rented from a provider and accessed over the internet",
+        "An organisation buys servers and infrastructure, places them in its own building and manages them with internal teams",
+        "Software subscribed to on a monthly basis",
+        "Virtual machines provided by a third party",
+        "Data stored on employees' personal laptops"
+      ],
+      "correct": 1,
+      "explanation": "On-Premises means the organisation owns the servers and infrastructure, keeps them in its own location and manages them with its own teams."
+    },
+    {
+      "stem": "What defines Cloud in contrast to On-Premises?",
+      "options": [
+        "Servers owned by the customer but placed in a rented data centre",
+        "Software that runs only on mobile devices",
+        "Someone else places and manages servers in their own location, and the customer accesses them via the internet",
+        "A private network with no internet access",
+        "A backup copy kept on external disks"
+      ],
+      "correct": 2,
+      "explanation": "Cloud is when another party hosts and manages the servers and infrastructure in their building, and the customer accesses them via the internet."
+    },
+    {
+      "stem": "Which event is credited with making Cloud arguably the biggest buzzword in the recent era?",
+      "options": [
+        "The launch of the first smartphone",
+        "The Covid-19 pandemic in 2019/20",
+        "The introduction of Hadoop",
+        "The GDPR regulation",
+        "The release of Windows 95"
+      ],
+      "correct": 1,
+      "explanation": "Cloud became the biggest buzzword after the Covid-19 pandemic, when organisations had to enable Cloud services for employees to keep businesses running."
+    },
+    {
+      "stem": "Which of the following is NOT listed as something the service provider manages in a Cloud setup?",
+      "options": [
+        "Software upgrades",
+        "Disaster Recovery management",
+        "High Availability management",
+        "Auto-scaling and security",
+        "Writing the customer's business strategy"
+      ],
+      "correct": 4,
+      "explanation": "Cloud centralises compute and storage where software, upgrades, DR, HA, auto-scaling and security are managed by the provider; business strategy is not the provider's job."
+    },
+    {
+      "stem": "In the laptop example from I Am Datapedia!, which situation represents the On-Premises approach?",
+      "options": [
+        "Paying someone else to buy laptops, maintain the software and give you access via the internet",
+        "Renting a laptop by the hour",
+        "Buying your own laptop, installing and upgrading all software, security, encryption and backups yourself",
+        "Borrowing a colleague's laptop",
+        "Using a laptop only for email"
+      ],
+      "correct": 2,
+      "explanation": "Self-managing your own laptop, including software installs, encryption, DR/HA backups and upgrades, is the On-Premises approach; paying someone else to do all that is Cloud."
+    },
+    {
+      "stem": "How is a Private Cloud accessed, compared with a Public Cloud?",
+      "options": [
+        "Private Cloud resides in your premises and is accessible via Intranet; Public Cloud resides somewhere around the globe and is accessible via the Internet",
+        "Private Cloud is accessed via the Internet; Public Cloud via Intranet",
+        "Both are accessed only via VPN",
+        "Private Cloud is accessed by phone line",
+        "Public Cloud is only accessible on-site"
+      ],
+      "correct": 0,
+      "explanation": "A Private Cloud sits in your premises and is reached via Intranet, whereas a Public Cloud sits somewhere around the globe and is reached via the Internet."
+    },
+    {
+      "stem": "Which of the following is NOT one of the considerations listed before moving data to the Cloud?",
+      "options": [
+        "Whether regulatory bodies in your country allow it, based on the nature of your data",
+        "The egress cost of moving data out of the Cloud if you later leave",
+        "Whether the provider has all the tools you need or offers third-party tools",
+        "Whether you have the internal skill set to support the Cloud services",
+        "Whether the provider's data centre has a car park"
+      ],
+      "correct": 4,
+      "explanation": "The listed considerations are regulation, egress cost, tool availability (and whether as PaaS, SaaS or IaaS) and internal skills."
+    },
+    {
+      "stem": "Why is a major reason given for using Cloud tied to semi and unstructured data?",
+      "options": [
+        "Because 90% of semi and unstructured datasets come from online applications, so it is worth keeping them in the Cloud",
+        "Because on-premises storage cannot hold structured data",
+        "Because unstructured data is illegal to store on-premises",
+        "Because Cloud data is automatically structured",
+        "Because unstructured data needs no processing"
+      ],
+      "correct": 0,
+      "explanation": "Since about 90% of semi and unstructured data comes from online applications, it makes sense to take it straight to the Cloud rather than download it on-premises."
+    },
+    {
+      "stem": "How much data is Twitter alone said to generate daily?",
+      "options": [
+        "52 GB",
+        "5 TB",
+        "52 TB",
+        "520 TB",
+        "52 PB"
+      ],
+      "correct": 2,
+      "explanation": "As per the stats quoted, Twitter itself generates 52 TB of data daily, which is why such data is best taken directly to the Public Cloud."
+    },
+    {
+      "stem": "Which Cloud service type is described as 'kind of SaaS'?",
+      "options": [
+        "IaaS",
+        "CaaS",
+        "PaaS",
+        "DaaS",
+        "FaaS"
+      ],
+      "correct": 3,
+      "explanation": "DaaS (Data as a Service) is noted as a kind of SaaS, while AAaaS is a kind of PaaS and SaaS."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "data-compression",
+  "questions": [
+    {
+      "stem": "What is data compression?",
+      "options": [
+        "A method of encrypting files so they cannot be read without a key",
+        "A method of decreasing the size of files or data to save storage space and communication bandwidth",
+        "A method of duplicating files across several servers",
+        "A method of converting text files into images",
+        "A method of deleting old files automatically"
+      ],
+      "correct": 1,
+      "explanation": "Data compression reduces the size of files or data by encoding information using fewer bits than the original representation, saving storage space and bandwidth."
+    },
+    {
+      "stem": "Why is data compression described as especially significant in the age of Big Data?",
+      "options": [
+        "Because compressed data cannot be hacked",
+        "Because Big Data is always structured and easy to store",
+        "Because unstructured data has a substantial influence on cloud storage costs, and neglecting compression means unnecessary expenditure and longer return-on-investment timelines",
+        "Because compression eliminates the need for cloud storage entirely",
+        "Because Big Data regulations require all files to be compressed"
+      ],
+      "correct": 2,
+      "explanation": "In the Big Data era, unstructured data drives cloud storage costs; failing to use compression translates into unnecessary spending and extended ROI timelines."
+    },
+    {
+      "stem": "In text compression, how might the sentence 'The quick brown fox jumps over the lazy dog' be made smaller?",
+      "options": [
+        "By storing each character in 16 bits instead of 8",
+        "By translating the sentence into another language",
+        "By deleting every second word",
+        "By replacing commonly used words or phrases with shorter codes that are expanded again on decompression",
+        "By converting the text into an image"
+      ],
+      "correct": 3,
+      "explanation": "Text compression replaces frequently used words or phrases with shorter codes; when decompressed, the original sentence is reconstructed exactly."
+    },
+    {
+      "stem": "Which image compression format is named as achieving significant file size reduction while maintaining reasonable image quality?",
+      "options": [
+        "JPEG",
+        "MP3",
+        "ZIP",
+        "ASCII",
+        "RGB"
+      ],
+      "correct": 0,
+      "explanation": "JPEG is the common image compression format cited for reducing file size substantially while keeping reasonable image quality."
+    },
+    {
+      "stem": "How do audio compression algorithms such as MP3 reduce file size?",
+      "options": [
+        "By increasing the sampling rate of the recording",
+        "By removing redundant or less perceptually important information, exploiting the fact that our ears are less sensitive to certain frequencies",
+        "By storing each note as a text description",
+        "By duplicating the audio track for redundancy",
+        "By converting stereo sound into video"
+      ],
+      "correct": 1,
+      "explanation": "MP3 and similar algorithms discard data that listeners are unlikely to notice, taking advantage of the ear's reduced sensitivity to certain frequencies."
+    },
+    {
+      "stem": "What distinguishes lossless compression from lossy compression?",
+      "options": [
+        "Lossless compression always produces smaller files than lossy compression",
+        "Lossless compression is used only for audio; lossy only for text",
+        "Lossless compression retains all the original data when decompressed, while lossy compression sacrifices some information for higher compression ratios",
+        "Lossy compression retains all data; lossless discards some",
+        "There is no difference; the terms are interchangeable"
+      ],
+      "correct": 2,
+      "explanation": "Lossless compression returns exactly what you started with, like zipping and unzipping a file. Lossy compression trades some detail for a much smaller file, as JPEG does."
+    },
+    {
+      "stem": "Zipping a file and then unzipping it returns exactly the same file. Which kind of compression does this illustrate?",
+      "options": [
+        "Lossy compression",
+        "Audio compression",
+        "Perceptual compression",
+        "Image compression",
+        "Lossless compression"
+      ],
+      "correct": 4,
+      "explanation": "Getting back exactly what you started with after decompression is the defining feature of lossless compression, illustrated by the zip/unzip example."
+    },
+    {
+      "stem": "In JPEG compression, some details in an image may be lost. What is the trade-off for this loss?",
+      "options": [
+        "A much smaller file size",
+        "Higher image resolution",
+        "Better colour accuracy",
+        "Faster camera shutter speed",
+        "Automatic backup of the original"
+      ],
+      "correct": 0,
+      "explanation": "JPEG is lossy: some image detail is sacrificed, and the trade-off is a much smaller file size."
+    },
+    {
+      "stem": "How do streaming services make use of data compression?",
+      "options": [
+        "To store user passwords more securely",
+        "To transmit audio and video efficiently so users can watch or listen without downloading huge files",
+        "To increase the number of adverts shown",
+        "To convert video into text subtitles",
+        "To prevent users from pausing playback"
+      ],
+      "correct": 1,
+      "explanation": "Streaming services use compression to transmit audio and video efficiently, letting users watch videos or listen to music without downloading enormous files."
+    },
+    {
+      "stem": "Which of the following is NOT an example of data compression in use?",
+      "options": [
+        "Downloading a ZIP file and unzipping it to restore the original files",
+        "Using JPEG to store a digital photograph",
+        "Using MP3 to store a music track",
+        "Storing each ASCII character of a text file at its full 8 bits without any encoding",
+        "A streaming service transmitting a film efficiently"
+      ],
+      "correct": 3,
+      "explanation": "Storing each character at its full 8-bit ASCII representation is the uncompressed original; ZIP, JPEG, MP3 and streaming transmission are all forms of compression."
+    }
+  ]
+}

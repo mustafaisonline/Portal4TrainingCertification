@@ -1,0 +1,125 @@
+{
+  "topic": "lakebase",
+  "questions": [
+    {
+      "stem": "In which established class of systems is the conceptual foundation of Lakebase rooted?",
+      "options": [
+        "HTAP (Hybrid Transactional/Analytical Processing)",
+        "Mainframe batch processing",
+        "Flat-file storage",
+        "Spreadsheet software",
+        "Content management systems"
+      ],
+      "correct": 0,
+      "explanation": "Lakebase's conceptual foundation is rooted in HTAP systems, which emerged to break the divide between OLTP and OLAP within a single environment."
+    },
+    {
+      "stem": "Which of the following is NOT one of the modernised architectural elements that Lakebase introduces?",
+      "options": [
+        "Decoupled compute and storage",
+        "Tightly coupled compute and storage",
+        "Metadata-as-control-plane execution",
+        "Branchable workloads and snapshot isolation",
+        "AI-native compatibility and elastic serverless scaling"
+      ],
+      "correct": 1,
+      "explanation": "Lakebase decouples compute from storage; tight compute-storage coupling is a limitation of traditional HTAP that Lakebase addresses."
+    },
+    {
+      "stem": "Which three siloed tool categories are described as having shackled enterprises for decades before Lakebase?",
+      "options": [
+        "Email, spreadsheets and word processors",
+        "Web servers, DNS and firewalls",
+        "OLTP systems for transactions, OLAP platforms for analytics and AI/ML stacks operating in isolation",
+        "Data marts, data warehouses and data lakes",
+        "Backups, archives and cold storage"
+      ],
+      "correct": 2,
+      "explanation": "Enterprises were shackled by OLTP systems for transactions, OLAP platforms for analytics and isolated AI/ML stacks, causing latency, duplication and governance breakdowns."
+    },
+    {
+      "stem": "What storage does Lakebase use, in contrast to the proprietary or row-store storage of traditional HTAP?",
+      "options": [
+        "Plain CSV files",
+        "In-memory tables only",
+        "A proprietary row store",
+        "Delta Tables (columnar, transactional)",
+        "Tape archives"
+      ],
+      "correct": 3,
+      "explanation": "Lakebase stores data in Delta Tables, which are columnar and transactional, whereas traditional HTAP relied on proprietary or row-store storage."
+    },
+    {
+      "stem": "How is governance handled in Lakebase, compared with traditional HTAP?",
+      "options": [
+        "Governance is left to each application",
+        "Governance is engine-bound and limited",
+        "There is no governance layer",
+        "Governance is handled by manual spreadsheets",
+        "Governance is metadata-first via Unity Catalog"
+      ],
+      "correct": 4,
+      "explanation": "Traditional HTAP governance is limited and engine-bound; Lakebase is metadata-first, with governance handled via Unity Catalog."
+    },
+    {
+      "stem": "What does Lakebase transform metadata into?",
+      "options": [
+        "An active, decision-making layer rather than passive documentation",
+        "A read-only archive",
+        "A billing statement",
+        "A backup of the data",
+        "A user manual"
+      ],
+      "correct": 0,
+      "explanation": "Lakebase transforms metadata from passive documentation into an active, decision-making layer, making metadata the control plane."
+    },
+    {
+      "stem": "In the Lakebase architectural flow, what API does the application use to connect?",
+      "options": [
+        "A proprietary binary protocol",
+        "A Postgres-compatible API",
+        "A spreadsheet plug-in",
+        "An FTP endpoint",
+        "A mainframe terminal"
+      ],
+      "correct": 1,
+      "explanation": "In the Lakebase flow, the application connects through a Postgres-compatible API to decoupled compute and Delta Table storage."
+    },
+    {
+      "stem": "In the FinTech fraud detection comparison, which components did the Lakebase approach use?",
+      "options": [
+        "TiDB for ingestion and a local cache",
+        "SAP HANA for combined processing",
+        "Branch-per-session design for scoring, PgVector for embeddings, Delta Lake for storage and Unity Catalog for governance and lineage",
+        "A single monolithic HTAP engine",
+        "Manual spreadsheets for scoring"
+      ],
+      "correct": 2,
+      "explanation": "The Lakebase approach leveraged branch-per-session scoring, PgVector embeddings, Delta Lake storage and Unity Catalog governance, yielding elastic inference and auditability."
+    },
+    {
+      "stem": "In the telecom data monetisation example, what outcome followed the upgrade from SAP HANA to Lakebase?",
+      "options": [
+        "Increased vendor lock-in",
+        "A 30% increase in costs",
+        "No measurable change",
+        "A 30% cost reduction and improved service agility",
+        "The removal of all AI capabilities"
+      ],
+      "correct": 3,
+      "explanation": "Switching to disaggregated compute with Delta Lake and AI API layers produced a 30% cost reduction and improved service agility."
+    },
+    {
+      "stem": "Which statement reflects why Lakebase matters as businesses move toward federated data platforms and autonomous systems?",
+      "options": [
+        "Metadata should be ignored in favour of raw data",
+        "Real-time agents need no snapshots",
+        "Workloads should each have their own separate source of truth",
+        "Analytics and transactions must remain in separate systems",
+        "Metadata is the control plane, real-time agents require rollback-ready snapshots, and workloads span dashboards, models, APIs and pipelines from a single source of truth"
+      ],
+      "correct": 4,
+      "explanation": "The shifted architectural needs are that metadata is the control plane, real-time agents need rollback-ready snapshots, and all workloads draw from a single source of truth."
+    }
+  ]
+}

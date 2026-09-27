@@ -1,0 +1,125 @@
+{
+  "topic": "pilot-or-mvp",
+  "questions": [
+    {
+      "stem": "What is described as the new name of a Pilot?",
+      "options": [
+        "POC",
+        "Prototype",
+        "MVP",
+        "SIT",
+        "UAT"
+      ],
+      "correct": 2,
+      "explanation": "The new name of Pilot is MVP; it is the next stage after Prototyping."
+    },
+    {
+      "stem": "What is considered and used in an MVP?",
+      "options": [
+        "A subset of requirements, real data, hardware, software and a limited number of features",
+        "The complete set of requirements with full production hardware",
+        "Only dummy data with no real requirements",
+        "Every feature, but with no infrastructure",
+        "Full software licences with no data"
+      ],
+      "correct": 0,
+      "explanation": "In an MVP a subset of actual requirements, a subset of real data, a subset of hardware and infrastructure, a subset of software and a limited number of features are used."
+    },
+    {
+      "stem": "Who uses an MVP once it is ready?",
+      "options": [
+        "Only the development team",
+        "Only external auditors",
+        "Only the sales team",
+        "Actual users, giving business users a taste of the real solution",
+        "Nobody; it is archived"
+      ],
+      "correct": 3,
+      "explanation": "Once an MVP is ready it is released to actual users to start using, giving business users a taste of the actual solution."
+    },
+    {
+      "stem": "What is the biggest advantage of the MVP approach?",
+      "options": [
+        "It removes the need for testing",
+        "With a small implementation and small investment, the business can decide whether to go to the next stage or drop the solution",
+        "It guarantees the solution will succeed in Production",
+        "It eliminates the need for data governance",
+        "It requires no infrastructure at all"
+      ],
+      "correct": 1,
+      "explanation": "With a small implementation and small investment, the business can taste the solution and decide to go to the next stage or drop it."
+    },
+    {
+      "stem": "How do many organisations now divide a complete solution using MVPs?",
+      "options": [
+        "By building the whole solution in one release",
+        "By outsourcing every MVP to a different vendor",
+        "By implementing the solution in chunks as multiple MVPs, supported by the Agile approach",
+        "By building one MVP per employee",
+        "By skipping MVPs entirely"
+      ],
+      "correct": 2,
+      "explanation": "Many organisations divide a complete solution into multiple MVPs, implementing in chunks, which is supported by the Agile approach where the product matures over shorter timeframes."
+    },
+    {
+      "stem": "Which three environments are spun up in an MVP, just like an actual implementation?",
+      "options": [
+        "Landing, Staging and Transformed",
+        "Conceptual, Logical and Physical",
+        "Alpha, Beta and Gamma",
+        "Sandbox, Demo and Archive",
+        "DEV, UAT and PROD"
+      ],
+      "correct": 4,
+      "explanation": "In an MVP, three environments are spun up, DEV, UAT and PROD, along with all the steps required to go to Production."
+    },
+    {
+      "stem": "Which of the following is NOT listed among the steps included in an MVP?",
+      "options": [
+        "DevOps and CI/CD",
+        "Metadata Management",
+        "Data Quality and Data Governance",
+        "Sales commission calculation",
+        "Master and Reference Data Management"
+      ],
+      "correct": 3,
+      "explanation": "The MVP includes DevOps, CI/CD, Metadata Management, Data Quality, Data Governance, Data Lineage and Master and Reference Data Management; sales commission calculation is not listed."
+    },
+    {
+      "stem": "Why does going with an MVP approach make sense in the current era?",
+      "options": [
+        "Because business models change frequently, technologies change quarterly and recessions hit every now and then",
+        "Because hardware is now free",
+        "Because regulators require MVPs",
+        "Because business users no longer need to test",
+        "Because MVPs never fail"
+      ],
+      "correct": 0,
+      "explanation": "In an era where business models change frequently, technologies change quarterly and recessions hit every now and then, the MVP approach makes sense."
+    },
+    {
+      "stem": "Which testing and environments are built in the MVP stage, and at what scale?",
+      "options": [
+        "Only UT, with no environments",
+        "UT is done and SIT, UAT and Production environments are built, but on a small scale for business users",
+        "Full-scale Production only",
+        "No testing until the productionised solution",
+        "Only UAT, at full scale"
+      ],
+      "correct": 1,
+      "explanation": "In the MVP stage UT is done and SIT, UAT and Production environments are built, but on a small scale for business users."
+    },
+    {
+      "stem": "How does an MVP differ from a Prototype in terms of who tests the end solution?",
+      "options": [
+        "In both stages only technical folks test the solution",
+        "In an MVP only the sales team tests the solution",
+        "In a Prototype business users test, in an MVP developers test",
+        "In both stages only business users test the solution",
+        "In a Prototype technical folks test the tools and solution, whereas an MVP is released to actual users"
+      ],
+      "correct": 4,
+      "explanation": "MVP is the stage after Prototyping, where tools and technologies were tested by technical folks; the MVP is then released to actual users."
+    }
+  ]
+}

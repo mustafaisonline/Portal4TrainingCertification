@@ -1,0 +1,125 @@
+{
+  "topic": "data-sharing",
+  "questions": [
+    {
+      "stem": "What is Data Sharing about?",
+      "options": [
+        "Restricting data to its owning department",
+        "Making data accessible to all the relevant stakeholders",
+        "Selling data to third parties",
+        "Copying data onto portable disks",
+        "Summarising data for management"
+      ],
+      "correct": 1,
+      "explanation": "As the name says, Data Sharing is about making data accessible to all the relevant stakeholders."
+    },
+    {
+      "stem": "Data Sharing is described as eliminating what?",
+      "options": [
+        "Data Drift",
+        "Scope Creep",
+        "Dark Data",
+        "Data Islands",
+        "Data Discrepancies"
+      ],
+      "correct": 2,
+      "explanation": "The key phrase is that Data Sharing is about eliminating Dark Data."
+    },
+    {
+      "stem": "In what kind of organisation is Data Sharing a key component, and what culture does it aim to build?",
+      "options": [
+        "A regulated organisation aiming for data confidentiality",
+        "A data-driven organisation aiming to build a data culture with Data Liberalisation",
+        "A start-up aiming to reduce storage",
+        "A government body aiming for data islands",
+        "A bank aiming for departmental silos"
+      ],
+      "correct": 1,
+      "explanation": "Data Sharing is a key component of a Data Driven Organisation, which aims to build a data culture through Data Liberalisation."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a Data Sharing channel?",
+      "options": [
+        "Business Intelligence tools",
+        "JDBC or ODBC connectors",
+        "Exporting in Excel, CSV or flat-file formats",
+        "Posting printed reports by courier",
+        "ETL or ELT tools"
+      ],
+      "correct": 3,
+      "explanation": "BI tools, connectors, file exports and ETL/ELT tools are listed channels; sending printed reports by courier is not."
+    },
+    {
+      "stem": "Which languages are named as a channel for Data Sharing?",
+      "options": [
+        "SQL and Python",
+        "HTML and CSS",
+        "Java and C++",
+        "MDX and DAX",
+        "XML and JSON"
+      ],
+      "correct": 0,
+      "explanation": "Using languages like SQL and Python is one of the listed Data Sharing channels."
+    },
+    {
+      "stem": "Which pair of channels describes two directions in which databases and applications can exchange data?",
+      "options": [
+        "Encrypting data and masking data",
+        "Filtering rows and aggregating rows",
+        "Landing data and staging data",
+        "Training models and testing models",
+        "Pushing data to other databases and applications, and letting others pull data"
+      ],
+      "correct": 4,
+      "explanation": "Both pushing data to other databases and applications, and letting other databases and applications pull data, are listed as sharing channels."
+    },
+    {
+      "stem": "Which of these analytical approaches is listed as a channel for Data Sharing?",
+      "options": [
+        "Machine Learning or Data Mining models",
+        "Scope creep analysis",
+        "Data due diligence reports",
+        "Geocoding lookups",
+        "Concept drift detection"
+      ],
+      "correct": 0,
+      "explanation": "Using Machine Learning or Data Mining models is among the Data Sharing channels."
+    },
+    {
+      "stem": "Which type of report is listed as a Data Sharing channel?",
+      "options": [
+        "Project status reports",
+        "Payslips",
+        "Audit, compliance or regulatory reports",
+        "Weather reports",
+        "Marketing brochures"
+      ],
+      "correct": 2,
+      "explanation": "Audit, compliance or regulatory reports are among the ways data is shared."
+    },
+    {
+      "stem": "Which of these connection technologies appear in the Data Sharing channels list?",
+      "options": [
+        "Floppy drives and hard disks",
+        "Kafka and Spark",
+        "Wi-Fi and cables",
+        "APIs and built-in drivers",
+        "Cubes and semantic layers"
+      ],
+      "correct": 3,
+      "explanation": "Using APIs and using built-in drivers are both listed as channels for sharing data."
+    },
+    {
+      "stem": "Which file formats are named as export options for Data Sharing?",
+      "options": [
+        "PDF, DOCX and PPTX",
+        "MP3, MP4 and WAV",
+        "ZIP, TAR and GZ",
+        "PNG, JPEG and GIF",
+        "Excel, CSV and flat files (FF)"
+      ],
+      "correct": 4,
+      "explanation": "Exporting in Excel, CSV and FF (flat file) formats is one of the listed Data Sharing channels."
+    }
+  ]
+}

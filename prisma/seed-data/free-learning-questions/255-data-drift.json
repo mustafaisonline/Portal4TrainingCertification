@@ -1,0 +1,125 @@
+{
+  "topic": "data-drift",
+  "questions": [
+    {
+      "stem": "In which practice is the concept of Data Drift used?",
+      "options": [
+        "Project management",
+        "Data Science",
+        "Network security",
+        "Procurement",
+        "Master Data Management"
+      ],
+      "correct": 1,
+      "explanation": "Data Drift is a Data Science concept used to evaluate the trained versus actual performance of machine learning models."
+    },
+    {
+      "stem": "What is Data Drift?",
+      "options": [
+        "A change in the data elements a model uses",
+        "A change of data within the same selected data elements",
+        "A change in the model's code",
+        "A change in the project scope",
+        "A mismatch between two reports"
+      ],
+      "correct": 1,
+      "explanation": "Data Drift is a change of data within the same selected data elements; the elements and the model stay the same, but the data arriving changes."
+    },
+    {
+      "stem": "By which other names is Data Drift known?",
+      "options": [
+        "Covariate shift, virtual drift or virtual concept drift",
+        "Class drift, real concept drift or posterior probability shift",
+        "Sudden drift, gradual drift or incremental drift",
+        "Scope creep or requirement drift",
+        "Reconciliation drift or discrepancy drift"
+      ],
+      "correct": 0,
+      "explanation": "Data Drift is also known as covariate shift, virtual drift or virtual concept drift."
+    },
+    {
+      "stem": "In the products example, what causes the Data Drift?",
+      "options": [
+        "Salary data replacing product data",
+        "The model's logic being rewritten",
+        "The list of product types growing from 10 during training to 15 in production",
+        "The weather changing unexpectedly",
+        "The database being migrated to the cloud"
+      ],
+      "correct": 2,
+      "explanation": "The model was trained on 10 product types but production has 15; the data element is still 'product', yet new values the model cannot recognise have appeared."
+    },
+    {
+      "stem": "In the products example, how might model accuracy change after Data Drift?",
+      "options": [
+        "It stays at 85%",
+        "It rises to 95%",
+        "It drops from around 85% to perhaps below 70%",
+        "It becomes exactly zero",
+        "It cannot be measured"
+      ],
+      "correct": 2,
+      "explanation": "A model that gave about 85% accuracy may drop to around 70% or below when unexpected product types appear."
+    },
+    {
+      "stem": "Which statement about Data Drift is correct?",
+      "options": [
+        "It means there is something wrong with the model",
+        "It means the model's data elements have changed",
+        "It is a completely unexpected behaviour",
+        "It is one of the most expected behaviours in every data modelling",
+        "It only affects OLTP systems"
+      ],
+      "correct": 3,
+      "explanation": "Data Drift is one of the most expected behaviours in data modelling; it is not a fault in the model but a change in the incoming data."
+    },
+    {
+      "stem": "Why must an organisation have automated ways to track and identify Data Drift?",
+      "options": [
+        "Because regulators require it",
+        "Because drift changes the project scope",
+        "Because drift corrupts the database",
+        "Because drift increases cloud costs",
+        "Because after drift there is a high chance the model will not predict with the planned accuracy, and wrong predictions mean wrong decisions"
+      ],
+      "correct": 4,
+      "explanation": "After Data Drift the model is likely to fall short of its expected accuracy, and wrong predictions lead to wrong decisions."
+    },
+    {
+      "stem": "What is the remedy for Data Drift?",
+      "options": [
+        "Retrain the model quickly in the training environment and deploy it again",
+        "Change the data elements used by the model",
+        "Delete the new data",
+        "Switch from SQL to MDX",
+        "Add more processors"
+      ],
+      "correct": 0,
+      "explanation": "To handle Data Drift you retrain the model in the training environment and redeploy it."
+    },
+    {
+      "stem": "What does 'drift' mean in general?",
+      "options": [
+        "Summarising data into totals",
+        "Deleting data after retention expires",
+        "Copying data between nodes",
+        "Shifting or moving from one point to another, but not in a standard approach",
+        "Encrypting data in transit"
+      ],
+      "correct": 3,
+      "explanation": "Drift is about shifting or moving from one point to another in a non-standard way."
+    },
+    {
+      "stem": "Which scenario would NOT count as Data Drift in the products example?",
+      "options": [
+        "Five new product types appearing in production",
+        "Product data extending beyond the training set",
+        "Product values the model was not trained on",
+        "The model's accuracy falling because of unrecognised products",
+        "Salary data starting to arrive instead of product data"
+      ],
+      "correct": 4,
+      "explanation": "Data Drift keeps the same data element; a switch from product data to salary data would be a change of data elements, which is not Data Drift."
+    }
+  ]
+}

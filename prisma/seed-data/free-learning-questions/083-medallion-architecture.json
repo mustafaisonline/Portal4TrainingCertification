@@ -1,0 +1,125 @@
+{
+  "topic": "medallion-architecture",
+  "questions": [
+    {
+      "stem": "What is the correct order of layers in Medallion Architecture?",
+      "options": [
+        "Gold, Silver, Bronze",
+        "Silver, Bronze, Gold",
+        "Bronze, Silver, Gold",
+        "Bronze, Gold, Silver",
+        "Raw, Gold, Silver"
+      ],
+      "correct": 2,
+      "explanation": "Medallion Architecture processes data in multiple layers: Bronze, then Silver, then Gold Delta Lake tables."
+    },
+    {
+      "stem": "In which kind of tables does Medallion Architecture sit?",
+      "options": [
+        "Oracle RDBMS tables",
+        "Delta Lake tables",
+        "CSV files on a file server",
+        "OLAP cubes",
+        "In-memory tables"
+      ],
+      "correct": 1,
+      "explanation": "Medallion Architecture is sitting in Delta Lake tables, with Bronze, Silver and Gold all being Delta Lake tables."
+    },
+    {
+      "stem": "Why is the Raw layer normally not considered part of Medallion Architecture?",
+      "options": [
+        "Because it is stored in the Gold layer",
+        "Because it is deleted after ingestion",
+        "Because it contains only aggregated data",
+        "Because it is totally raw source data, whereas Bronze, Silver and Gold are Delta Lake tables",
+        "Because Databricks does not support it"
+      ],
+      "correct": 3,
+      "explanation": "The Raw layer hosts source data that cannot be pushed directly to Bronze, and it is totally raw rather than a Delta Lake table."
+    },
+    {
+      "stem": "Which of the following is NOT a standardisation transformation named for the Bronze layer?",
+      "options": [
+        "Standardising date formats from different source systems",
+        "Giving NULL values some values",
+        "Fixing data types and column sizes",
+        "Performing CDC to extract delta or incremental data",
+        "Building data marts around business KPIs"
+      ],
+      "correct": 4,
+      "explanation": "Bronze handles date standardisation, NULL handling, data type fixes and CDC; data marts around business KPIs belong to the Gold layer."
+    },
+    {
+      "stem": "How do data models in the Bronze layer compare with the source systems?",
+      "options": [
+        "They remain the same as the source systems",
+        "They are converted to a star schema",
+        "They are converted to Third Normal Form",
+        "They are flattened into a single wide table",
+        "They are replaced by a semantic layer"
+      ],
+      "correct": 0,
+      "explanation": "At the Bronze layer, data models remain the same versus the source systems despite the standardisation transformations."
+    },
+    {
+      "stem": "What happens in the Silver layer of Medallion Architecture?",
+      "options": [
+        "Raw files are landed from source systems",
+        "Data is transformed into an Enterprise Data Warehouse, often in the Bill Inmon 3NF model",
+        "Cubes are built for reporting",
+        "Data is archived to cold storage",
+        "Access control policies are applied"
+      ],
+      "correct": 1,
+      "explanation": "Silver is where data is transformed into the Enterprise Data Warehouse, not mandatorily but often in the Bill Inmon 3NF model."
+    },
+    {
+      "stem": "Which layer hosts Data Marts or Semantic Layers focused on business KPIs such as Customer Analytics or Product Recommendations?",
+      "options": [
+        "Raw",
+        "Bronze",
+        "Silver",
+        "Gold",
+        "Landing"
+      ],
+      "correct": 3,
+      "explanation": "Gold is where Data Marts or Semantic Layers come into the picture, focusing on business KPIs like Customer Segmentation and Inventory Analytics."
+    },
+    {
+      "stem": "Which traditional layer sequence is Medallion Architecture said to be equivalent to?",
+      "options": [
+        "Landing, Staging, Data Warehouse/Data Mart, Semantic/Aggregation Layers, Cubes",
+        "Extract, Transform, Load",
+        "Batch, Speed, Serving",
+        "OLTP, ODS, OLAP",
+        "Ingest, Encrypt, Publish"
+      ],
+      "correct": 0,
+      "explanation": "The layers mirror the long-used Landing, Staging, Data Warehouse/Data Mart, Semantic/Aggregation and Cube layers."
+    },
+    {
+      "stem": "What is described as the only real difference Databricks brought with Medallion Architecture?",
+      "options": [
+        "It introduced batch processing",
+        "It brought everything into the Data Lake, eliminating RDBMSs",
+        "It added a fourth Platinum layer",
+        "It removed the need for data standardisation",
+        "It replaced SQL with Python"
+      ],
+      "correct": 1,
+      "explanation": "The only difference is that Databricks has brought everything into the Data Lake, eliminating RDBMSs."
+    },
+    {
+      "stem": "Where do most organisations prefer to land all source system data?",
+      "options": [
+        "Directly in the Gold layer",
+        "In the Silver layer",
+        "In the Raw layer",
+        "In an external RDBMS",
+        "In the semantic layer"
+      ],
+      "correct": 2,
+      "explanation": "Most organisations prefer to land all source systems' data in the Raw layer, a preference the author shares."
+    }
+  ]
+}

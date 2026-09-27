@@ -1,0 +1,125 @@
+{
+  "topic": "dknf-domain-key-normal-form",
+  "questions": [
+    {
+      "stem": "When is a relation in Domain–Key Normal Form (DKNF)?",
+      "options": [
+        "When every constraint on the table can be expressed solely as a domain constraint or a key constraint",
+        "When every attribute has its own time-aware table",
+        "When every join dependency is implied by candidate keys",
+        "When every non-key attribute depends on the whole key",
+        "When no two independent multi-valued facts share a key"
+      ],
+      "correct": 0,
+      "explanation": "A relation is in DKNF if every constraint can be expressed solely as either a domain constraint or a key constraint; any other rule means it is not in DKNF."
+    },
+    {
+      "stem": "What does a domain constraint define?",
+      "options": [
+        "Which combination of attributes uniquely identifies a row",
+        "What values are valid for a column",
+        "How tables are joined together",
+        "Which table owns a foreign key",
+        "The order in which rows are stored"
+      ],
+      "correct": 1,
+      "explanation": "A domain constraint governs permissible values, for example a DecisionStatus column allowing only APPROVED, REJECTED or PENDING."
+    },
+    {
+      "stem": "What does a key constraint define?",
+      "options": [
+        "Valid values for a column",
+        "The data type of a column",
+        "Uniqueness: which combination of attributes uniquely identifies a row",
+        "Whether a column may be null",
+        "The validity period of a fact"
+      ],
+      "correct": 2,
+      "explanation": "A key constraint specifies which combination of attributes uniquely identifies a row, such as LoanID for a loan or (LoanID, EffectiveStart) for a time-bound fact."
+    },
+    {
+      "stem": "Why does the rule \"If a loan is APPROVED, it must have a RepaymentSchedule\" prevent a schema from reaching Domain–Key Normal Form?",
+      "options": [
+        "Because it is a domain constraint on the wrong column",
+        "Because it is a key constraint on a composite key",
+        "Because APPROVED is not a valid domain value",
+        "Because it is a cross-table conditional rule that is neither purely a domain constraint nor purely a key constraint",
+        "Because repayment schedules cannot be modelled relationally"
+      ],
+      "correct": 3,
+      "explanation": "The rule is not about valid values nor about uniqueness; it is a cross-table conditional rule, so unless the schema enforces it structurally the relation is not in DKNF."
+    },
+    {
+      "stem": "Why do most real-world schemas not reach Domain–Key Normal Form?",
+      "options": [
+        "Because databases do not support domain constraints",
+        "Because DKNF requires more tables than 6NF",
+        "Because DKNF forbids composite keys",
+        "Because DKNF only applies to NoSQL systems",
+        "Because many business rules are conditional or cross-entity and need triggers, application logic or procedural enforcement"
+      ],
+      "correct": 4,
+      "explanation": "Many business rules are conditional or span entities and require triggers, application logic or procedural enforcement beyond simple domain and key constraints."
+    },
+    {
+      "stem": "Between which normal forms do most practical systems stabilise?",
+      "options": [
+        "Between 3NF and BCNF, occasionally extending to 4NF or 6NF",
+        "Between 1NF and 2NF",
+        "Between 5NF and DKNF",
+        "Always at 6NF",
+        "Always at DKNF"
+      ],
+      "correct": 0,
+      "explanation": "In practical architecture most systems stabilise between 3NF and BCNF, occasionally extending to 4NF or 6NF in specialised cases."
+    },
+    {
+      "stem": "According to the comparison of normalisation with specialised modelling techniques, how does dimensional modelling relate to normal forms?",
+      "options": [
+        "It requires 5NF or 6NF for accuracy",
+        "It is the opposite: intentional denormalisation for analytical performance",
+        "It is explicitly grounded in 6NF principles",
+        "Normalisation is not applicable because it predates the relational model",
+        "It satisfies DKNF by design"
+      ],
+      "correct": 1,
+      "explanation": "Dimensional models such as star, snowflake and USS are designed for analytical performance and intentionally introduce redundancy for faster queries."
+    },
+    {
+      "stem": "Which modelling technique is described as explicitly grounded in 6NF-style decomposition and temporal principles?",
+      "options": [
+        "Hierarchical modelling",
+        "Event-driven modelling",
+        "Anchor Modelling",
+        "API / service modelling",
+        "Object-oriented modelling"
+      ],
+      "correct": 2,
+      "explanation": "Anchor Modelling is the technique marked as explicitly grounded in 6NF-style decomposition and temporal principles, whereas Data Vault and Focal Point are only related."
+    },
+    {
+      "stem": "Which of the following techniques is NOT listed as one where normalisation theory is simply not applicable?",
+      "options": [
+        "Hierarchical and network modelling",
+        "Object-oriented modelling",
+        "NoSQL modelling",
+        "Data Vault modelling",
+        "Event-driven modelling"
+      ],
+      "correct": 3,
+      "explanation": "Data Vault is marked as related to normalisation because its satellites resemble 6NF-style decomposition; the others are marked as not applicable."
+    },
+    {
+      "stem": "What is the central question that changes when moving from foundational normalisation to specialised modelling techniques?",
+      "options": [
+        "From \"Which database vendor?\" to \"Which cloud platform?\"",
+        "From \"How many tables?\" to \"How many rows?\"",
+        "From \"Is the key composite?\" to \"Is the key surrogate?\"",
+        "From \"Is the data atomic?\" to \"Is the data historical?\"",
+        "From \"Is the model fully normalised?\" to \"What problem is this model designed to solve?\""
+      ],
+      "correct": 4,
+      "explanation": "Layer #4 shifts perspective from foundational relational rigour to purposeful specialisation, asking what problem a model is designed to solve rather than whether it is fully normalised."
+    }
+  ]
+}

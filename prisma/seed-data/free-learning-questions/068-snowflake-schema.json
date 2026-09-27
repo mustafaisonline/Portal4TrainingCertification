@@ -1,0 +1,125 @@
+{
+  "topic": "snowflake-schema",
+  "questions": [
+    {
+      "stem": "What distinguishes a snowflake schema from a star schema?",
+      "options": [
+        "One or more dimension tables are normalised into related sub-dimensions",
+        "The fact table is split into several smaller fact tables",
+        "A bridge table replaces the fact table",
+        "Dimensions are removed entirely",
+        "All tables are stored in 6NF"
+      ],
+      "correct": 0,
+      "explanation": "In a snowflake schema dimension tables are decomposed into related sub-dimensions around a central fact table, reducing redundancy and improving governance."
+    },
+    {
+      "stem": "What is the primary goal of the snowflake schema?",
+      "options": [
+        "Minimising the number of joins in every query",
+        "Improving data quality, storage efficiency and reusability, especially for large shared dimensions",
+        "Supporting real-time event streaming",
+        "Providing a single entry point for cross-fact queries",
+        "Storing behaviour alongside data"
+      ],
+      "correct": 1,
+      "explanation": "The snowflake schema aims to improve data quality, storage efficiency and reusability while preserving dimensional modelling semantics for analytics."
+    },
+    {
+      "stem": "In the snowflake example, into which components might Dim_Customer be split?",
+      "options": [
+        "Fact, Bridge and Dimension",
+        "Hub, Link and Satellite",
+        "Customer, Demographics, Employment and Geography",
+        "Anchor, Knot, Attribute and Tie",
+        "Day, Month, Quarter and Year"
+      ],
+      "correct": 2,
+      "explanation": "Dim_Customer may be split into Customer (core identity), Demographics (age band, income band), Employment (industry, employer category) and Geography (city, region, country)."
+    },
+    {
+      "stem": "How does a snowflake schema typically come into being?",
+      "options": [
+        "It is designed from scratch as a 3NF warehouse",
+        "It is generated automatically by a BI tool",
+        "It is derived from a Data Vault",
+        "It begins as a classic star schema whose wide dimensions are normalised over time into sub-dimensions",
+        "It is built by denormalising an Inmon EDW"
+      ],
+      "correct": 3,
+      "explanation": "A snowflake schema typically starts as a classic star schema (Fact + Dimensions), with wide dimension tables normalised into smaller related sub-dimensions over time."
+    },
+    {
+      "stem": "Why is normalising shared dimensions valuable when multiple fact tables such as Loans, Collections and Marketing Campaigns exist?",
+      "options": [
+        "It removes the need for a fact table",
+        "It makes every query a single-table read",
+        "It allows the fact tables to be merged",
+        "It eliminates the need for a Date dimension",
+        "It ensures consistency of conformed dimensions across analytical domains"
+      ],
+      "correct": 4,
+      "explanation": "When several fact tables share the same conformed dimensions, normalisation ensures consistency across analytical domains and clearer conformed hierarchies."
+    },
+    {
+      "stem": "Why are snowflake schemas often paired with a semantic layer or BI modelling tool?",
+      "options": [
+        "To present flattened, business-friendly views that hide the additional joins from analysts",
+        "To convert the schema back into a star schema physically",
+        "To enforce Third Normal Form on the fact table",
+        "To replay events into the dimensions",
+        "To store the dimensions as JSON documents"
+      ],
+      "correct": 0,
+      "explanation": "Because snowflake schemas introduce extra joins and structural depth, a semantic layer abstracts that complexity and presents flattened views to analysts."
+    },
+    {
+      "stem": "Which of the following is NOT listed as an advantage of the snowflake schema?",
+      "options": [
+        "Reduced duplication",
+        "Fewer joins than a star schema",
+        "Improved storage efficiency",
+        "Clearer conformed hierarchies",
+        "Easier management of slowly changing attributes"
+      ],
+      "correct": 1,
+      "explanation": "Snowflake schemas introduce additional joins compared with a star schema; the advantages are reduced duplication, storage efficiency, conformed hierarchies and easier slowly changing attribute management."
+    },
+    {
+      "stem": "In which situation is the snowflake schema particularly useful?",
+      "options": [
+        "When dimensions are tiny and rarely change",
+        "When only one fact table exists",
+        "When dimensions are large, frequently updated and shared across many fact tables",
+        "When transactional updates must be fast",
+        "When queries must avoid all joins"
+      ],
+      "correct": 2,
+      "explanation": "The snowflake schema is particularly useful when dimensions are large, frequently updated and shared across many fact tables in enterprise-scale environments."
+    },
+    {
+      "stem": "Toward which normal-form principles does the snowflake schema move by partially normalising dimensions?",
+      "options": [
+        "5NF or 6NF",
+        "DKNF",
+        "1NF only",
+        "2NF or 3NF",
+        "BCNF strictly"
+      ],
+      "correct": 3,
+      "explanation": "The snowflake schema reintroduces partial normalisation into dimensions, moving closer to 2NF or 3NF principles, though its objective remains analytical usability."
+    },
+    {
+      "stem": "Which query is given as an example that analysts can still run in the snowflake loan approval environment?",
+      "options": [
+        "Which officers are linked to fraud rings?",
+        "Which loan documents embed customer C101?",
+        "What rate was recorded on 20 January?",
+        "Which keys are in the Puppini Bridge?",
+        "Approval rates by income band and region"
+      ],
+      "correct": 4,
+      "explanation": "Analysts can still run queries such as approval rates by income band and region, average interest rate by employment category, and total disbursed amount by branch and quarter."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "data-redaction",
+  "questions": [
+    {
+      "stem": "Which masking approach does Data Redaction work most like?",
+      "options": [
+        "Static Data Masking (SDM)",
+        "Data Tokenisation",
+        "Data Generalisation",
+        "Dynamic Data Masking (DDM)",
+        "Data Swapping"
+      ],
+      "correct": 3,
+      "explanation": "Data Redaction does not work like SDM; it works pretty much like DDM, blacking out data on the fly."
+    },
+    {
+      "stem": "What does Data Redaction do to data?",
+      "options": [
+        "Copies it to a masked dataset for developers",
+        "Blacks it out on the fly, so the result may not even make sense to the user",
+        "Summarises it into ranges",
+        "Stores it in a Token Vault",
+        "Swaps it with values from other records"
+      ],
+      "correct": 1,
+      "explanation": "Data Redaction blacks out the data on the fly, and the redacted output may or may not make sense to the users seeing it."
+    },
+    {
+      "stem": "What are the four types of Data Redaction?",
+      "options": [
+        "Random, RedExp, Partial and Full",
+        "Static, Dynamic, Manual and Automated",
+        "Direct, Quasi, Partial and Full",
+        "Batch, Real-time, Push and Pull",
+        "Lexical, Syntactic, Semantic and Full"
+      ],
+      "correct": 0,
+      "explanation": "The four types of Data Redaction are Random, RedExp, Partial and Full."
+    },
+    {
+      "stem": "What is masked in the RedExp type of Data Redaction?",
+      "options": [
+        "Everything in the record",
+        "Only the last few characters",
+        "Values chosen at random",
+        "Only numeric fields",
+        "Expressions"
+      ],
+      "correct": 4,
+      "explanation": "In RedExp redaction, expressions are masked."
+    },
+    {
+      "stem": "A card transaction message showing all digits as stars except the last few is an example of which type of Data Redaction?",
+      "options": [
+        "Full",
+        "Random",
+        "Partial",
+        "RedExp",
+        "Static"
+      ],
+      "correct": 2,
+      "explanation": "The stars on a card number are redacted values where only some of the data is masked, which is Partial redaction."
+    },
+    {
+      "stem": "What happens in Full Data Redaction?",
+      "options": [
+        "Only expressions are masked",
+        "Everything is masked",
+        "Data is masked at random",
+        "Some of the data is masked",
+        "Nothing is masked but access is logged"
+      ],
+      "correct": 1,
+      "explanation": "In Full redaction everything is masked, whereas Partial masks only some of the data."
+    },
+    {
+      "stem": "Which of the following is NOT one of the types of Data Redaction?",
+      "options": [
+        "Random",
+        "Partial",
+        "Full",
+        "Static",
+        "RedExp"
+      ],
+      "correct": 3,
+      "explanation": "The four types are Random, RedExp, Partial and Full; Static is not one of them, and redaction works on the fly rather than statically."
+    },
+    {
+      "stem": "How is data masked in the Random type of Data Redaction?",
+      "options": [
+        "Randomly",
+        "By expression match",
+        "Completely",
+        "Only for the last few characters",
+        "Only in transit to developers"
+      ],
+      "correct": 0,
+      "explanation": "In Random redaction the data is masked randomly."
+    },
+    {
+      "stem": "What is true of the output of Data Redaction as seen by users?",
+      "options": [
+        "It is always fully readable",
+        "It is reversible by the user",
+        "It is permanently written back to the datastore",
+        "It always preserves the original meaning",
+        "It may or may not even make sense to the users using it"
+      ],
+      "correct": 4,
+      "explanation": "Redaction blacks out data on the fly, and the result may or may not make sense to the users using it."
+    },
+    {
+      "stem": "Which statement about Data Redaction is correct?",
+      "options": [
+        "It creates a permanent masked copy like SDM",
+        "It is identical to Data Masking",
+        "It works on the fly, like DDM, rather than like SDM",
+        "It stores mappings in a Token Vault",
+        "It only applies to structured data"
+      ],
+      "correct": 2,
+      "explanation": "Data Redaction is confused with data masking, but it does not work like SDM; it works pretty much like DDM, on the fly."
+    }
+  ]
+}

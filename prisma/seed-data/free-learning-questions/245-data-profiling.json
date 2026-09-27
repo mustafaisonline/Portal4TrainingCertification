@@ -1,0 +1,125 @@
+{
+  "topic": "data-profiling",
+  "questions": [
+    {
+      "stem": "What is the aim of Data Profiling?",
+      "options": [
+        "To encrypt sensitive columns",
+        "To find out the data patterns by summarising data for analysis",
+        "To replace real data with synthetic data",
+        "To move data from silos into a warehouse",
+        "To assign monetary value to datasets"
+      ],
+      "correct": 1,
+      "explanation": "Data Profiling uses many methods to summarise data for analysis, with the aim of finding out the patterns in the data."
+    },
+    {
+      "stem": "Which teams use Data Profiling as part of their daily routine?",
+      "options": [
+        "Sales and marketing teams",
+        "Data Modellers, Data Engineers, Data Governance and Data Quality teams",
+        "Project managers and sponsors",
+        "Network security teams",
+        "Customer service agents"
+      ],
+      "correct": 1,
+      "explanation": "Data Profiling is a daily routine for Data Modellers, Data Engineers, and the Data Governance and Data Quality teams."
+    },
+    {
+      "stem": "In the customer-age example, what is the quick way to find out whether any customer is aged over 90?",
+      "options": [
+        "Read through each line of data",
+        "Sort the customer list by name",
+        "Run a DISTINCT command on the age column to see all unique ages",
+        "Ask the customers directly",
+        "Delete the age column"
+      ],
+      "correct": 2,
+      "explanation": "Rather than reading every row, running DISTINCT on the age column returns all unique ages at once."
+    },
+    {
+      "stem": "If customers in a database are aged between 21 and 100, what does profiling say about the number of unique age values?",
+      "options": [
+        "It should not be more than 80",
+        "It should be exactly 100",
+        "It should be at least 121",
+        "It should be one",
+        "It cannot be determined"
+      ],
+      "correct": 0,
+      "explanation": "With ages from 21 to 100 the count of unique ages should not exceed 80."
+    },
+    {
+      "stem": "How do Data Quality teams use Data Profiling to enforce a rule that all dates must be in DD/MM/YYYY format?",
+      "options": [
+        "By manually reviewing each new file",
+        "By blocking all incoming data",
+        "By converting all dates to numbers",
+        "By running automated profiling with DISTINCT commands to detect any other date format arriving",
+        "By encrypting the date columns"
+      ],
+      "correct": 3,
+      "explanation": "Because data flows in daily or in real time, automated profiling runs DISTINCT commands on date fields; with a single format there should always be one unique pattern."
+    },
+    {
+      "stem": "What are the three key high-level steps of Data Profiling?",
+      "options": [
+        "Storing, Sharing, Discoverable",
+        "Extract, Transform, Load",
+        "Landing, Staging, Transformed",
+        "Generation, Processing, Removal",
+        "Collecting Data, Cleansing Data, Run Profiling Tasks"
+      ],
+      "correct": 4,
+      "explanation": "The key high-level steps are Collecting Data, Cleansing Data and Run Profiling Tasks."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a Data Profiling task?",
+      "options": [
+        "Gathering min, max and sum of the data",
+        "Gathering datatype and column lengths",
+        "Finding regular patterns",
+        "Negotiating the purchase price of a data company",
+        "Classifying candidate columns for primary and foreign keys"
+      ],
+      "correct": 3,
+      "explanation": "Min/max/sum, datatypes and lengths, patterns and key candidates are all profiling tasks; negotiating a purchase price belongs to due diligence."
+    },
+    {
+      "stem": "Which commands are used in Data Profiling to find keywords, descriptions or categories?",
+      "options": [
+        "DISTINCT and GROUP BY",
+        "INSERT and UPDATE",
+        "JOIN and UNION",
+        "CREATE and DROP",
+        "GRANT and REVOKE"
+      ],
+      "correct": 0,
+      "explanation": "Profiling uses DISTINCT and GROUP BY commands to find keywords, descriptions or categories in the data."
+    },
+    {
+      "stem": "Which artefacts does Data Profiling record, according to its listed tasks?",
+      "options": [
+        "Project plans and budgets",
+        "Invoices and receipts",
+        "Metadata, data dictionary and data catalogue",
+        "Model weights and biases",
+        "Network diagrams"
+      ],
+      "correct": 2,
+      "explanation": "One of the profiling tasks is recording metadata, the data dictionary and the data catalogue."
+    },
+    {
+      "stem": "For what kinds of key classification does Data Profiling assess candidate columns?",
+      "options": [
+        "Encryption keys and API keys",
+        "Keywords for search engines",
+        "Sort keys and partition keys only",
+        "Public and private keys",
+        "Primary keys, foreign keys, uniqueness and composite keys"
+      ],
+      "correct": 4,
+      "explanation": "Profiling classifies candidate columns for primary and foreign keys, for uniqueness and for composite keys."
+    }
+  ]
+}

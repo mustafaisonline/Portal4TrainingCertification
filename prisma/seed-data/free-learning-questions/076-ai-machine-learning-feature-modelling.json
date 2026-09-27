@@ -1,0 +1,125 @@
+{
+  "topic": "ai-machine-learning-feature-modelling",
+  "questions": [
+    {
+      "stem": "In AI / Machine Learning Feature Modelling, what is a feature?",
+      "options": [
+        "A screen in a machine learning application",
+        "A measurable variable used as an input to a machine learning model",
+        "A column in a dimension table",
+        "A rule in a security policy",
+        "A version of a trained model"
+      ],
+      "correct": 1,
+      "explanation": "Features are the measurable variables used as inputs to machine learning models, which Feature Modelling designs, structures and governs."
+    },
+    {
+      "stem": "What is the primary goal of Feature Modelling?",
+      "options": [
+        "To let every data scientist build their own version of each metric",
+        "To replace dimensional modelling in the warehouse",
+        "To provide a standardised, governed framework so features are defined once and reused consistently",
+        "To store raw transactional data directly in ML algorithms",
+        "To eliminate the need for data stewards"
+      ],
+      "correct": 2,
+      "explanation": "Feature Modelling ensures features are defined once, documented clearly and reused consistently rather than being recreated in slightly different versions by each data scientist."
+    },
+    {
+      "stem": "What is a Feature Store?",
+      "options": [
+        "A marketplace where third-party models are sold",
+        "A backup of a data warehouse",
+        "A dashboard showing model accuracy",
+        "A centralised repository where engineered features are stored, versioned and made available for training and inference",
+        "A list of security roles for data scientists"
+      ],
+      "correct": 3,
+      "explanation": "The Feature Store is a centralised repository that stores and versions engineered features so they can be reused consistently across models."
+    },
+    {
+      "stem": "Which of the following must a Feature Definition include?",
+      "options": [
+        "A clear name, calculation logic, data sources, refresh frequency and ownership",
+        "The model's hyperparameters",
+        "The GPU used for training",
+        "A star schema diagram",
+        "The list of end users of the model"
+      ],
+      "correct": 0,
+      "explanation": "Each feature must have a clear name, calculation logic, data sources, refresh frequency and ownership."
+    },
+    {
+      "stem": "How is Repayment_DelinquencyRate defined in the banking example from I Am Datapedia!?",
+      "options": [
+        "The number of prior loans a customer has taken",
+        "The percentage of approvals by each officer over six months",
+        "The customer's credit score from the bureau",
+        "The ratio of late repayments over the past 12 months",
+        "The average loan amount per branch"
+      ],
+      "correct": 3,
+      "explanation": "Repayment_DelinquencyRate is defined as the ratio or proportion of late repayments over the past 12 months."
+    },
+    {
+      "stem": "Which feature in the loan approval example is sourced from credit bureau data and refreshed monthly?",
+      "options": [
+        "Loan_HistoryCount",
+        "Officer_ApprovalRate",
+        "Customer_CreditScore",
+        "Repayment_DelinquencyRate",
+        "Customer_IncomeStability"
+      ],
+      "correct": 2,
+      "explanation": "Customer_CreditScore is sourced from credit bureau data and refreshed monthly, and is flagged as sensitive."
+    },
+    {
+      "stem": "How does Feature Modelling differ from dimensional modelling and metadata modelling?",
+      "options": [
+        "It is focused on analytical reporting",
+        "It describes data assets in general",
+        "It defines physical storage formats",
+        "It is only used for unstructured data",
+        "It is explicitly model-input-centric, sitting between data engineering and ML operations"
+      ],
+      "correct": 4,
+      "explanation": "Dimensional modelling serves reporting and metadata modelling describes assets, whereas Feature Modelling is explicitly centred on machine learning model inputs."
+    },
+    {
+      "stem": "Why do data scientists retrieve features from the Feature Store rather than recalculating them?",
+      "options": [
+        "To ensure consistency between training and production environments and support explainable AI",
+        "Because recalculation is forbidden by GDPR",
+        "Because the Feature Store is faster than any database",
+        "To avoid paying for compute",
+        "Because raw data is never stored anywhere else"
+      ],
+      "correct": 0,
+      "explanation": "Retrieving features from the Feature Store keeps training and production consistent and supports explainability requirements."
+    },
+    {
+      "stem": "Which is described as a drawback of a governed feature catalogue?",
+      "options": [
+        "It increases duplication of features",
+        "Excessive governance can slow experimentation in early-stage innovation",
+        "It makes models less explainable",
+        "It weakens regulatory compliance",
+        "It prevents reuse across models"
+      ],
+      "correct": 1,
+      "explanation": "Maintaining a governed catalogue requires discipline, and excessive governance can slow experimentation, especially early on."
+    },
+    {
+      "stem": "Which of the following is NOT named as a use case that could reuse the same engineered features?",
+      "options": [
+        "Risk scoring",
+        "Fraud detection",
+        "Churn prediction",
+        "Payroll processing",
+        "Loan approval"
+      ],
+      "correct": 3,
+      "explanation": "Features are reused across models such as risk scoring, fraud detection, churn prediction and the loan approval pipeline; payroll processing is not mentioned."
+    }
+  ]
+}

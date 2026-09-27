@@ -1,0 +1,125 @@
+{
+  "topic": "data-science-vsdata-mining",
+  "questions": [
+    {
+      "stem": "What is the major difference between Data Mining and Data Science in terms of the data each works on?",
+      "options": [
+        "Data Mining works only on unstructured data; Data Science only on structured data",
+        "Both work only on structured data",
+        "Data Mining is done only on structured data, whereas Data Science covers structured, semi-structured and unstructured data",
+        "Data Science works only on semi-structured data",
+        "Neither works on structured data"
+      ],
+      "correct": 2,
+      "explanation": "Data Mining is done ONLY on structured data, whereas Data Science is done on structured, semi-structured and unstructured data."
+    },
+    {
+      "stem": "Which statement about the relationship between Data Science and Data Mining is correct?",
+      "options": [
+        "Data Science is the superset of Data Mining",
+        "Data Mining is the superset of Data Science",
+        "They are entirely unrelated disciplines",
+        "Data Science is a technique within Data Mining",
+        "They are two names for the same thing"
+      ],
+      "correct": 0,
+      "explanation": "Data Science is the superset of Data Mining, and Data Mining is a subset of Data Science."
+    },
+    {
+      "stem": "Data Mining is also known by which other name?",
+      "options": [
+        "Business Intelligence",
+        "Data Wrangling",
+        "Neurocomputing",
+        "Knowledge Discovery in Data (KDD)",
+        "Pattern Recognition"
+      ],
+      "correct": 3,
+      "explanation": "Data Mining is also known as KDD, Knowledge Discovery in Data."
+    },
+    {
+      "stem": "Data Science is mostly tagged with Big Data. With which concept is Data Mining mostly tagged?",
+      "options": [
+        "Data Lakes",
+        "Data Warehousing",
+        "NoSQL databases",
+        "Social media",
+        "Cloud computing"
+      ],
+      "correct": 1,
+      "explanation": "Data Science is mostly tagged with Big Data, and Data Mining is tagged with Data Warehousing."
+    },
+    {
+      "stem": "According to I Am Datapedia!, since when has Data Science existed, and when did Data Mining start?",
+      "options": [
+        "Data Science since the 1990s; Data Mining since the 1960s",
+        "Both started in the 1990s",
+        "Data Science since the 2000s; Data Mining since the 1980s",
+        "Both started in the 1960s",
+        "Data Science since the 1960s; Data Mining since the 1990s"
+      ],
+      "correct": 4,
+      "explanation": "Data Science has been there, either manual or not, since the 1960s, whereas Data Mining started in the 1990s for database folks."
+    },
+    {
+      "stem": "In what tool was Data Mining first performed, before the introduction of the Data Warehouse?",
+      "options": [
+        "Hadoop",
+        "SQL Server",
+        "Excel",
+        "R",
+        "Python"
+      ],
+      "correct": 2,
+      "explanation": "Data Mining was first performed in Excel; then, with the introduction of the DWH, an automated process started discovering historical patterns from large structured data sets."
+    },
+    {
+      "stem": "Which of the following correctly contrasts Data Mining and Data Science?",
+      "options": [
+        "Data Mining is a domain, whereas Data Science is a technique",
+        "Data Mining is a technique, whereas Data Science is a domain",
+        "Both are described as domains",
+        "Both are described as techniques",
+        "Data Mining is a product, whereas Data Science is a service"
+      ],
+      "correct": 1,
+      "explanation": "Data Mining is a technique, whereas Data Science is a Domain."
+    },
+    {
+      "stem": "Data Mining focuses on optimising existing systems. What does Data Science focus on instead?",
+      "options": [
+        "Maintaining legacy databases",
+        "Reducing storage costs",
+        "Auditing historical records",
+        "New ideas, new products and services",
+        "Structured data only"
+      ],
+      "correct": 3,
+      "explanation": "Data Mining focuses on optimising existing systems, whereas Data Science focuses on new ideas, new products and services."
+    },
+    {
+      "stem": "Which of the following is listed as part of Data Science but NOT as part of Data Mining?",
+      "options": [
+        "Neurocomputing",
+        "KDD",
+        "Databases and Data Processing",
+        "Machine Learning",
+        "Data Cleansing"
+      ],
+      "correct": 0,
+      "explanation": "Data Science involves machine learning, AI, pattern recognition, statistics, visualisation, databases, KDD, data mining and neurocomputing; Data Mining involves KDD, databases and data processing, and machine learning."
+    },
+    {
+      "stem": "Data Mining focuses on the process. What does Data Science focus on?",
+      "options": [
+        "The hardware of the data",
+        "The storage of the data",
+        "The ownership of the data",
+        "The pricing of the data",
+        "The science of the data"
+      ],
+      "correct": 4,
+      "explanation": "Data Mining focuses on the process, whereas Data Science focuses on the science of the data."
+    }
+  ]
+}

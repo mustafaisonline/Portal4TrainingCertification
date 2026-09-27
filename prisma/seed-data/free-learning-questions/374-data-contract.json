@@ -1,0 +1,125 @@
+{
+  "topic": "data-contract",
+  "questions": [
+    {
+      "stem": "What is a data contract?",
+      "options": [
+        "A formal agreement between systems that defines the structure, format and rules of the data exchanged between them",
+        "A legal document for purchasing a database licence",
+        "An employment contract for data engineers",
+        "A service-level agreement for server uptime",
+        "A marketing agreement to share customer lists"
+      ],
+      "correct": 0,
+      "explanation": "A data contract is a formal agreement between systems defining the structure, format and rules of exchanged data, including fields, types, constraints and validation rules."
+    },
+    {
+      "stem": "Which architectural trends make clearly defined data contracts increasingly essential?",
+      "options": [
+        "Mainframes and batch printing",
+        "Microservices architectures, APIs and distributed systems",
+        "Single-user desktop applications",
+        "Paper-based record keeping",
+        "Monolithic applications with no external interfaces"
+      ],
+      "correct": 1,
+      "explanation": "As businesses adopt microservices, APIs and distributed systems, clear data contracts become essential for seamless interoperability."
+    },
+    {
+      "stem": "How do data contracts support interoperability?",
+      "options": [
+        "By forcing all systems to use the same programming language",
+        "By storing all data in one central database",
+        "By allowing different systems, even those built with different technologies, to interact seamlessly through a common contract",
+        "By removing the need for validation",
+        "By encrypting every message"
+      ],
+      "correct": 2,
+      "explanation": "By adhering to a common contract, different systems, even ones built with different technologies, can interact seamlessly."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a component of a comprehensive data contract?",
+      "options": [
+        "Schema definition",
+        "Validation rules",
+        "Versioning strategy",
+        "Pricing schedule",
+        "Error handling and responses"
+      ],
+      "correct": 3,
+      "explanation": "The components are schema definition, validation rules, versioning strategy, error handling and responses, and security and compliance measures; pricing is not among them."
+    },
+    {
+      "stem": "What does the validation rules component of a data contract define?",
+      "options": [
+        "The programming language of the consumer",
+        "The encryption algorithm used in transit",
+        "How old versions are phased out",
+        "The standard error codes returned",
+        "Constraints such as required fields, length limits and regex patterns"
+      ],
+      "correct": 4,
+      "explanation": "Validation rules define constraints such as required fields, length limits and regex patterns that data must satisfy."
+    },
+    {
+      "stem": "Which of the following technologies is listed as a compact and efficient format for serialising structured data when implementing data contracts?",
+      "options": [
+        "Protocol Buffers (Protobuf)",
+        "OpenAPI Specification",
+        "GraphQL SDL",
+        "JSON Schema",
+        "Microsoft Word"
+      ],
+      "correct": 0,
+      "explanation": "Protocol Buffers (Protobuf) is described as a compact and efficient format used for serialising structured data."
+    },
+    {
+      "stem": "Which standard is used to define RESTful API structures, including request and response formats?",
+      "options": [
+        "Avro",
+        "OpenAPI Specification (OAS)",
+        "Protocol Buffers",
+        "GraphQL Schema Definition Language",
+        "JSON Schema"
+      ],
+      "correct": 1,
+      "explanation": "The OpenAPI Specification defines RESTful API structures, including request and response formats."
+    },
+    {
+      "stem": "Which schema-based serialisation framework is described as commonly used in big data applications?",
+      "options": [
+        "OpenAPI",
+        "GraphQL SDL",
+        "Avro",
+        "JSON Schema",
+        "Protobuf"
+      ],
+      "correct": 2,
+      "explanation": "Avro is a schema-based serialisation framework commonly used in big data applications."
+    },
+    {
+      "stem": "What is described as one of the biggest challenges in managing data contracts?",
+      "options": [
+        "Choosing a colour for the documentation",
+        "Finding enough storage space for the contracts",
+        "Getting lawyers to sign each contract",
+        "Evolving them without breaking existing integrations",
+        "Translating them into multiple languages"
+      ],
+      "correct": 3,
+      "explanation": "One of the biggest challenges is evolving data contracts without breaking existing integrations, addressed by backward compatibility, deprecation strategies, feature flags and automated testing."
+    },
+    {
+      "stem": "Which versioning best practice for data contracts introduces changes gradually so that consumers can adopt new features at their own pace?",
+      "options": [
+        "Backward compatibility",
+        "Deprecation strategies",
+        "Automated testing",
+        "Schema definition",
+        "Feature flags"
+      ],
+      "correct": 4,
+      "explanation": "Feature flags introduce changes gradually and allow consumers to adopt new features at their own pace."
+    }
+  ]
+}

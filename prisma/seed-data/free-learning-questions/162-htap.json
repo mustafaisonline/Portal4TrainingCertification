@@ -1,0 +1,125 @@
+{
+  "topic": "htap",
+  "questions": [
+    {
+      "stem": "What does HTAP stand for?",
+      "options": [
+        "Hybrid Transactional/Analytical Processing",
+        "High-Throughput Application Platform",
+        "Hadoop Transaction and Analytics Protocol",
+        "Hierarchical Table Access Pattern",
+        "Hosted Transactional Archive Processing"
+      ],
+      "correct": 0,
+      "explanation": "HTAP stands for Hybrid Transactional/Analytical Processing."
+    },
+    {
+      "stem": "Which organisation proposed the HTAP architecture, and in which year?",
+      "options": [
+        "Forrester in 2010",
+        "Gartner in 2014",
+        "Microsoft in 2018",
+        "Oracle in 2008",
+        "Apache Software Foundation in 2012"
+      ],
+      "correct": 1,
+      "explanation": "HTAP is a new architecture proposed by Gartner in 2014."
+    },
+    {
+      "stem": "What is the central proposal of HTAP?",
+      "options": [
+        "Move all transactional data to a Data Lake before analysing it",
+        "Keep OLTP and OLAP data in separate storages managed by different teams",
+        "Use one system for both transactional and analytical workloads",
+        "Replace SQL databases with NoSQL databases",
+        "Store all analytical data in a Data Vault"
+      ],
+      "correct": 2,
+      "explanation": "Instead of keeping data separately in OLTP databases and in warehouses, lakes, lakehouses or vaults, HTAP proposes using one system for both transactional and analytical workloads."
+    },
+    {
+      "stem": "Which approach does HTAP offer for analytical processing?",
+      "options": [
+        "A row-based, disk-only approach",
+        "A batch ETL approach into a separate data mart",
+        "A graph-based approach using nodes and edges",
+        "An in-memory plus columnar approach",
+        "A document-based approach without tables"
+      ],
+      "correct": 3,
+      "explanation": "HTAP offers an in-memory plus columnar approach for analytical processes."
+    },
+    {
+      "stem": "Which advancements make Gartner believe transactional and analytical processing on the same database is possible?",
+      "options": [
+        "Advances in printing and networking",
+        "Advances in spreadsheet software",
+        "Advances in tape storage",
+        "Advances in mobile devices",
+        "Advances in hardware, in-memory technology and Cloud"
+      ],
+      "correct": 4,
+      "explanation": "With the advancements in hardware, in-memory and Cloud, Gartner thinks it is very much possible to have both Transactional and Analytical processing on the same database."
+    },
+    {
+      "stem": "Which advantages are claimed for HTAP?",
+      "options": [
+        "No duplication of data and real-time decisions on actual data, since data does not move from the operational database to an OLAP system",
+        "Lower licence costs and simpler backups",
+        "Automatic data cleansing and wrangling",
+        "Elimination of the need for a data model",
+        "Support for unstructured data in HDFS"
+      ],
+      "correct": 0,
+      "explanation": "HTAP's advantages are no duplication of data, because data does not move out of the single operational database, and the ability for business or management to make decisions on actual data in real time rather than waiting for data to move from OLTP to OLAP."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a challenge of HTAP?",
+      "options": [
+        "The skillset, since HTAP is a very new concept",
+        "The lack of any vendor offering HTAP functionality",
+        "Deciding where business transformation logic for KPIs will be applied",
+        "Deciding where data will be cleaned, cleansed, scrubbed and wrangled",
+        "Storing data in both row format for OLTP and columnar format for OLAP"
+      ],
+      "correct": 1,
+      "explanation": "Many database companies offer HTAP functionality, such as MariaDB, Microsoft Azure SQL Database, TiDB and Aerospike. The other items are all listed challenges of HTAP."
+    },
+    {
+      "stem": "Why do data analysts need to know the complete operational 3NF data model when working with HTAP?",
+      "options": [
+        "Because HTAP forbids the use of dimensional models",
+        "Because the 3NF model must be exported to a Data Warehouse first",
+        "Because a lot of joins will be required to present data in BI",
+        "Because analysts must write the transactional application code",
+        "Because HTAP stores data only as documents"
+      ],
+      "correct": 2,
+      "explanation": "In HTAP, data analysis works directly on the operational 3NF data model, so analysts must understand it fully because many joins are required to present data in BI."
+    },
+    {
+      "stem": "Why is the storage format a challenge for HTAP?",
+      "options": [
+        "Because HTAP requires all data to be stored in HDFS",
+        "Because in-memory storage cannot hold transactional data",
+        "Because columnar storage cannot be indexed",
+        "Because operational databases are normally in row format for daily operations, yet analytical processing needs a columnar format, so data must serve both OLTP and OLAP",
+        "Because cloud providers do not support row storage"
+      ],
+      "correct": 3,
+      "explanation": "Operational databases are normally row-oriented to support daily operations, so a key HTAP challenge is how data will be stored in both row and columnar formats for OLTP and OLAP processing."
+    },
+    {
+      "stem": "Which of the following is named as a vendor or product offering HTAP functionality?",
+      "options": [
+        "Oracle Exadata",
+        "Teradata Vantage",
+        "Apache Hive",
+        "IBM DB2",
+        "TiDB"
+      ],
+      "correct": 4,
+      "explanation": "HTAP functionality is offered by products such as MariaDB Enterprise, MariaDB SkySQL, Microsoft Azure SQL Database, Azure Synapse Link for Cosmos DB, Alibaba DRDS, LeanXcale, TiDB, Hubble, MangoDB and Aerospike."
+    }
+  ]
+}

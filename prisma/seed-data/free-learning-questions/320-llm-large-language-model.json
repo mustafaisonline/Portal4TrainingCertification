@@ -1,0 +1,125 @@
+{
+  "topic": "llm-large-language-model",
+  "questions": [
+    {
+      "stem": "What does the term Large Language Model (LLM) generally refer to?",
+      "options": [
+        "A relational database that stores dictionaries",
+        "Advanced artificial intelligence models designed to understand and generate human-like language",
+        "A spreadsheet with many columns of text",
+        "A standard for country codes",
+        "A network protocol for sharing data"
+      ],
+      "correct": 1,
+      "explanation": "A Large Language Model refers to advanced AI models designed to understand and generate human-like language, trained on massive amounts of diverse text data."
+    },
+    {
+      "stem": "What does GPT stand for?",
+      "options": [
+        "Generative Pre-trained Transformer",
+        "General Purpose Technology",
+        "Global Processing Toolkit",
+        "Graphical Pattern Trainer",
+        "Guided Prediction Table"
+      ],
+      "correct": 0,
+      "explanation": "GPT stands for Generative Pre-trained Transformer, the series developed by OpenAI and a notable example of an LLM."
+    },
+    {
+      "stem": "What does an LLM learn to do during the pre-training phase?",
+      "options": [
+        "Translate between exactly two languages",
+        "Classify images into categories",
+        "Predict the next word in a sentence or fill in missing words",
+        "Compute bank capital ratios",
+        "Register data elements in a repository"
+      ],
+      "correct": 2,
+      "explanation": "In pre-training, LLMs learn to predict the next word in a sentence or fill in missing words; afterwards they can be fine-tuned on specific tasks or domains."
+    },
+    {
+      "stem": "What is the purpose of fine-tuning an LLM after pre-training?",
+      "options": [
+        "To reduce the model to a single word vocabulary",
+        "To remove the transformer architecture",
+        "To delete the training data",
+        "To enhance its performance on specific tasks or domains",
+        "To convert the model into a chatbot's database"
+      ],
+      "correct": 3,
+      "explanation": "After pre-training, LLMs can be fine-tuned on specific tasks or domains to enhance their performance in particular areas."
+    },
+    {
+      "stem": "What does the transformer architecture enable LLMs to do?",
+      "options": [
+        "Store data on disk more compactly",
+        "Run without any training data",
+        "Encrypt their outputs",
+        "Convert electricity to a different voltage",
+        "Capture long-range dependencies and contextual information in the data efficiently"
+      ],
+      "correct": 4,
+      "explanation": "Many LLMs use a transformer architecture, which enables them to capture long-range dependencies and contextual information efficiently."
+    },
+    {
+      "stem": "From which kinds of sources are LLM training datasets typically drawn?",
+      "options": [
+        "Books, articles, websites and other textual content from the internet",
+        "Only bank transaction records",
+        "Only satellite images",
+        "Only audio recordings",
+        "Only spreadsheets"
+      ],
+      "correct": 0,
+      "explanation": "LLMs are trained on large and diverse datasets, including a wide range of text sources such as books, articles, websites and other textual content from the internet."
+    },
+    {
+      "stem": "Which of the following is NOT listed as an application of LLMs?",
+      "options": [
+        "Chatbots",
+        "Language translation",
+        "Content generation",
+        "Country code assignment",
+        "Sentiment analysis"
+      ],
+      "correct": 3,
+      "explanation": "LLM applications include chatbots, language translation, content generation, summarisation and sentiment analysis; assigning country codes is not among them."
+    },
+    {
+      "stem": "What role does an LLM play behind a chatbot?",
+      "options": [
+        "It stores the user's login credentials",
+        "It generates responses that are contextually relevant and coherent based on the input it receives",
+        "It manages the network servers",
+        "It bills the user for each message",
+        "It converts speech into binary code"
+      ],
+      "correct": 1,
+      "explanation": "Behind a chatbot, an LLM plays a crucial role in generating responses that are contextually relevant and coherent based on the input it receives."
+    },
+    {
+      "stem": "What ethical considerations do LLMs raise?",
+      "options": [
+        "The cost of paper for printing outputs",
+        "The choice of database vendor",
+        "Concerns about bias in language generation and the potential misuse of AI-generated content",
+        "The expiry of software licences",
+        "The physical location of servers"
+      ],
+      "correct": 2,
+      "explanation": "LLMs raise ethical considerations, including concerns about bias in language generation and the potential misuse of AI-generated content."
+    },
+    {
+      "stem": "What does the infrastructure behind a chatbot powered by an LLM involve?",
+      "options": [
+        "A single desktop computer with no network",
+        "Only a printed manual of responses",
+        "A spreadsheet of pre-written answers",
+        "A paper filing system",
+        "Servers and systems capable of processing and responding to user inputs in real time, with components for handling queries, interacting with the model and integrating external systems"
+      ],
+      "correct": 4,
+      "explanation": "The infrastructure involves servers and systems that process user inputs in real time, with components for handling queries, interacting with the language model, generating responses, and integrating external systems, databases or APIs."
+    }
+  ]
+}

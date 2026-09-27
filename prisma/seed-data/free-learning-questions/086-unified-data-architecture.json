@@ -1,0 +1,125 @@
+{
+  "topic": "unified-data-architecture",
+  "questions": [
+    {
+      "stem": "What is Unified Data Architecture about?",
+      "options": [
+        "Choosing a single database vendor for the whole organisation",
+        "Covering all aspects of data with respect to organisational architectures",
+        "Replacing all data warehouses with a data lake",
+        "Encrypting all data at rest",
+        "Migrating every workload to the public cloud"
+      ],
+      "correct": 1,
+      "explanation": "Unified Data Architecture covers all aspects of data with respect to organisational architectures, and there is no single pre-defined version for everyone."
+    },
+    {
+      "stem": "Is there a pre-defined Unified Data Architecture that suits every organisation?",
+      "options": [
+        "Yes, published by cloud providers",
+        "Yes, defined by ISO standards",
+        "No, there is no pre-defined Unified Data Architecture for everyone",
+        "Yes, the Medallion Architecture",
+        "Yes, the Lambda Architecture"
+      ],
+      "correct": 2,
+      "explanation": "The topic states that there is no pre-defined Unified Data Architecture for everyone."
+    },
+    {
+      "stem": "Which architecture is described for source applications?",
+      "options": [
+        "OLAP and Cubes",
+        "Data Virtualisation",
+        "Advanced Analytics",
+        "OLTP",
+        "Data Mesh"
+      ],
+      "correct": 3,
+      "explanation": "The architecture for source applications is OLTP, while data warehouses use OLAP and cubes."
+    },
+    {
+      "stem": "At what level should a Unified Data Architecture be designed before the individual data architectures?",
+      "options": [
+        "At the table level",
+        "At the query level",
+        "At the 30,000-feet view",
+        "At the network packet level",
+        "At the individual dashboard level"
+      ],
+      "correct": 2,
+      "explanation": "One must design Unified Data Architecture for a 30,000-feet view before designing data architectures for each component."
+    },
+    {
+      "stem": "How does Unified Data Architecture relate to the individual data architectures, by analogy with Enterprise Architecture?",
+      "options": [
+        "Each data architecture may ignore it",
+        "All data architectures in an organisation must follow Unified Data Architecture standards",
+        "It is a replacement for Enterprise Architecture",
+        "It applies only to the data lake",
+        "It applies only to cloud workloads"
+      ],
+      "correct": 1,
+      "explanation": "Just as Business, Application, Technical and Data Architectures follow Enterprise Architecture standards, all data architectures must follow Unified Data Architecture standards."
+    },
+    {
+      "stem": "Which of the following is NOT listed as an approach to building a Unified Data Architecture?",
+      "options": [
+        "Enhancement in existing Legacy Architecture",
+        "Logical Data Warehousing and Data Virtualisation Architecture",
+        "Multi-Cloud Architecture",
+        "Hybrid Architecture (on-prem and cloud)",
+        "Single-vendor mandatory architecture"
+      ],
+      "correct": 4,
+      "explanation": "Listed approaches include legacy enhancement, logical data warehousing and virtualisation, organisational-driven, business or LOB-driven, multi-cloud and hybrid; a single-vendor mandate is not among them."
+    },
+    {
+      "stem": "Which is given as an example of Business or LOB-driven Data Architecture?",
+      "options": [
+        "Data Lake",
+        "Enterprise Data Warehouse",
+        "Data Mesh or Data Mart",
+        "Data Virtualisation",
+        "Multi-Cloud"
+      ],
+      "correct": 2,
+      "explanation": "Business or line-of-business-driven data architecture examples are Data Mesh and Data Mart, whereas Data Lake and Data Warehouse are organisational-driven."
+    },
+    {
+      "stem": "In most Unified Data Architectures, what does the Data Consumption Layer consist of?",
+      "options": [
+        "Source systems",
+        "ETL / ELT processes",
+        "Data stores",
+        "Metadata and data quality",
+        "Machine learning models"
+      ],
+      "correct": 1,
+      "explanation": "The elements are Data Producers (source systems), Data Consumption Layer (ETL/ELT processes), Data Storages, Advanced Analysis, Data Serving Layer and Data Management."
+    },
+    {
+      "stem": "Which of these belongs to the Data Management element of a Unified Data Architecture?",
+      "options": [
+        "Source systems",
+        "ETL pipelines",
+        "Reporting dashboards",
+        "Metadata, data quality, security and privacy, governance, master and reference data",
+        "Virtual machines"
+      ],
+      "correct": 3,
+      "explanation": "Data Management covers metadata, data quality, data security and privacy, data governance, master data and reference data."
+    },
+    {
+      "stem": "Which of the following is listed among the data architectures an organisation may have for Data Lake-style platforms?",
+      "options": [
+        "Delta Lake, Data Mesh, Data Vault, Business Vault, Data Hub and Data Fabric",
+        "OLTP and ERP only",
+        "Spreadsheets and email",
+        "Firewalls and VPNs",
+        "Word processors and slide decks"
+      ],
+      "correct": 0,
+      "explanation": "The Data Lake family of architectures includes Delta Lake, Data Mesh, Data Vault, Business Vault, Data Hub and Data Fabric."
+    }
+  ]
+}

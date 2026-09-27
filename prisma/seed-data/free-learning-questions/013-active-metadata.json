@@ -1,0 +1,125 @@
+{
+  "topic": "active-metadata",
+  "questions": [
+    {
+      "stem": "Metadata Management is described as a key component of which two things?",
+      "options": [
+        "Data Strategy and Data Management",
+        "Data Storage and Data Backup",
+        "Business Intelligence and Reporting",
+        "Data Fabric and Data Lake",
+        "Data Modelling and Data Quality"
+      ],
+      "correct": 0,
+      "explanation": "Metadata Management is one of the key components of Data Strategy and Data Management."
+    },
+    {
+      "stem": "Are Metadata and Active Metadata two different things?",
+      "options": [
+        "Yes, Active Metadata has a different structure",
+        "Yes, Active Metadata is only for unstructured data",
+        "No, in reality there is no difference between passive and active Metadata itself",
+        "Yes, Active Metadata replaces Technical Metadata",
+        "Yes, Active Metadata is stored outside the organisation"
+      ],
+      "correct": 2,
+      "explanation": "In reality there is no difference between traditional or passive Metadata and Active Metadata; the difference lies in how they are generated and managed."
+    },
+    {
+      "stem": "Where does the real difference between active and passive Metadata lie?",
+      "options": [
+        "In the type of database used to store them",
+        "In whether they describe business or technical facts",
+        "In the size of the metadata records",
+        "In whether they are owned by IT or by the business",
+        "In how they are generated and managed"
+      ],
+      "correct": 4,
+      "explanation": "The difference is in how active and passive metadata are generated and managed, not in what they are."
+    },
+    {
+      "stem": "How is Active Metadata generated?",
+      "options": [
+        "Manually by data stewards in a glossary",
+        "Once a year during an audit",
+        "By interviewing business users",
+        "Automatically and continuously by systems or tools",
+        "Only when a report is published"
+      ],
+      "correct": 3,
+      "explanation": "As the name says, active metadata is generated automatically and continuously by systems or tools."
+    },
+    {
+      "stem": "Which systems approach is named as a user of Active Metadata?",
+      "options": [
+        "Data Warehouse",
+        "Data Mart",
+        "Data Swamp",
+        "Master Data Management",
+        "Data Fabric"
+      ],
+      "correct": 4,
+      "explanation": "Active Metadata is used by systems approaches like Data Fabric, which is explained as a separate topic."
+    },
+    {
+      "stem": "In the analogy of a data solution as a body, what is the Data Fabric?",
+      "options": [
+        "The heart",
+        "The skeleton",
+        "The BRAIN",
+        "The skin",
+        "The blood"
+      ],
+      "correct": 2,
+      "explanation": "Data Fabric is the BRAIN, whereas the rest of the data components are parts of the body in a data solution."
+    },
+    {
+      "stem": "What does the BRAIN of a data solution need, in the Active Metadata analogy?",
+      "options": [
+        "Continuous input and to know everything at the right time, dynamically",
+        "A single annual snapshot of metadata",
+        "Only Business Metadata",
+        "Manual approval before each update",
+        "A separate copy of all raw data"
+      ],
+      "correct": 0,
+      "explanation": "The BRAIN needs continuous input and needs to know everything at the right time, or rather all the time, dynamically."
+    },
+    {
+      "stem": "How is the term Active Metadata characterised?",
+      "options": [
+        "As a decades-old standard",
+        "As a new term or jargon surfacing nowadays",
+        "As a retired concept",
+        "As a synonym for Master Data",
+        "As a legal requirement"
+      ],
+      "correct": 1,
+      "explanation": "Active Metadata is described as a new term or jargon surfacing nowadays, though in reality it is not different from traditional Metadata."
+    },
+    {
+      "stem": "Which of the following is NOT true of Active Metadata?",
+      "options": [
+        "It is generated continuously",
+        "It is generated automatically by systems or tools",
+        "It feeds approaches such as Data Fabric",
+        "It is fundamentally a different kind of metadata from passive metadata",
+        "It is a new term in the Data World"
+      ],
+      "correct": 3,
+      "explanation": "Active Metadata is not fundamentally different from passive metadata; only its generation and management differ."
+    },
+    {
+      "stem": "What is traditional metadata called in contrast with Active Metadata?",
+      "options": [
+        "Static Metadata",
+        "Passive Metadata",
+        "Cold Metadata",
+        "Legacy Metadata",
+        "Fixed Metadata"
+      ],
+      "correct": 1,
+      "explanation": "Traditional metadata is referred to as passive metadata in contrast with active metadata."
+    }
+  ]
+}

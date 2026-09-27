@@ -1,0 +1,125 @@
+{
+  "topic": "devsecops-development-security-operations",
+  "questions": [
+    {
+      "stem": "What is DevSecOps?",
+      "options": [
+        "A replacement for DevOps that removes the operations role",
+        "A security audit performed after every production release",
+        "DevOps with the addition of a security step",
+        "A framework for encrypting data pipelines",
+        "A methodology that replaces Agile with security reviews"
+      ],
+      "correct": 2,
+      "explanation": "DevSecOps is nothing less than DevOps, but with an additional step for security."
+    },
+    {
+      "stem": "What do the three parts of the name DevSecOps stand for?",
+      "options": [
+        "Development, Security and Operations",
+        "Device, Section and Optimisation",
+        "Development, Secrecy and Output",
+        "Deployment, Secure and Observation",
+        "Design, Security and Orchestration"
+      ],
+      "correct": 0,
+      "explanation": "DevSecOps stands for development, security and operations."
+    },
+    {
+      "stem": "Why has security become an alarming factor in DevOps?",
+      "options": [
+        "Because DevOps teams no longer use version control",
+        "Because operations teams were removed from projects",
+        "Because Agile forbids security testing",
+        "Because DevOps relies on mainframe infrastructure",
+        "Because of the quick and fast deployment cycles"
+      ],
+      "correct": 4,
+      "explanation": "The speed of DevOps deployment cycles made security an alarming concern, which led to DevSecOps."
+    },
+    {
+      "stem": "At what point in the DevOps flow has security been included to form DevSecOps?",
+      "options": [
+        "After production release",
+        "Right before the creation process",
+        "Only during monitoring",
+        "After packaging but before release",
+        "During version control only"
+      ],
+      "correct": 1,
+      "explanation": "Security has been included right before the creation process, and that is how DevSecOps came onto the surface."
+    },
+    {
+      "stem": "Which of the following is NOT part of the DevSecOps name?",
+      "options": [
+        "Development",
+        "Security",
+        "Operations",
+        "Data",
+        "Sec, meaning security"
+      ],
+      "correct": 3,
+      "explanation": "DevSecOps combines development, security and operations; data is not part of the name."
+    },
+    {
+      "stem": "How does DevSecOps relate to DevOps?",
+      "options": [
+        "It is a smaller subset of DevOps practices",
+        "It is unrelated to DevOps",
+        "It replaces DevOps automation with manual checks",
+        "It is nothing less than DevOps, plus security",
+        "It removes the operations step from DevOps"
+      ],
+      "correct": 3,
+      "explanation": "DevSecOps keeps everything DevOps has and adds security as an extra step."
+    },
+    {
+      "stem": "Which factor caused DevSecOps to come onto the surface?",
+      "options": [
+        "The rise of Big Data file formats",
+        "Security concerns arising from fast DevOps deployment cycles",
+        "The need to reduce data liabilities",
+        "The introduction of machine learning models",
+        "Regulations requiring separate operations teams"
+      ],
+      "correct": 1,
+      "explanation": "DevSecOps emerged because the quick deployment cycles of DevOps made security an alarming factor."
+    },
+    {
+      "stem": "In the abbreviation DevSecOps, what does \"Sec\" refer to?",
+      "options": [
+        "Second-stage testing",
+        "Sector operations",
+        "Secondary deployment",
+        "Section management",
+        "Security"
+      ],
+      "correct": 4,
+      "explanation": "\"Sec\" stands for security, the step added to DevOps to form DevSecOps."
+    },
+    {
+      "stem": "Which statement about DevSecOps is correct?",
+      "options": [
+        "It keeps the DevOps steps and adds security before the creation process",
+        "It applies security only after software reaches production",
+        "It slows deployment cycles deliberately to improve safety",
+        "It replaces automated deployment with manual security sign-off",
+        "It is concerned with data pipelines rather than software"
+      ],
+      "correct": 0,
+      "explanation": "DevSecOps is DevOps with security added right before the creation process."
+    },
+    {
+      "stem": "Which statement about DevSecOps is NOT true?",
+      "options": [
+        "It adds a security step to DevOps",
+        "It arose because fast deployment cycles made security alarming",
+        "It removes the operations step from DevOps",
+        "Its name combines development, security and operations",
+        "It includes security right before the creation process"
+      ],
+      "correct": 2,
+      "explanation": "DevSecOps does not remove anything from DevOps; it adds security to the existing development and operations practices."
+    }
+  ]
+}

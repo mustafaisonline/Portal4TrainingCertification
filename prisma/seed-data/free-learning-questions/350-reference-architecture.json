@@ -1,0 +1,125 @@
+{
+  "topic": "reference-architecture",
+  "questions": [
+    {
+      "stem": "What does a reference architecture provide?",
+      "options": [
+        "A detailed, project-specific design customised for a single solution",
+        "A high-level diagram representing the structural pattern of a solution, giving a consistent framework for similar projects across an organisation",
+        "A list of every server and its IP address",
+        "A budget forecast for a technology programme",
+        "A record of past project failures"
+      ],
+      "correct": 1,
+      "explanation": "Reference architecture is a high-level diagram of a solution's structural pattern that establishes a consistent framework guiding the design and implementation of similar projects across an organisation."
+    },
+    {
+      "stem": "How does a reference architecture differ from a solution architecture?",
+      "options": [
+        "Reference architecture is customised for each project; solution architecture is generic",
+        "They are identical documents produced at different times",
+        "Reference architecture is a generalised template aligned with best practices, while solution architecture is customised for each project",
+        "Solution architecture is only for business stakeholders; reference architecture only for engineers",
+        "Reference architecture covers hardware only; solution architecture covers software only"
+      ],
+      "correct": 2,
+      "explanation": "Unlike solution architecture, which is tailored to each project, reference architecture offers a generalised, best-practice template that is broadly applicable."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a benefit of a reference architecture?",
+      "options": [
+        "Ensuring consistency across solutions",
+        "Reducing redundancy",
+        "Accelerating solution delivery with a clear blueprint",
+        "Eliminating the need for any data governance",
+        "Aiding risk management through tried-and-tested design patterns"
+      ],
+      "correct": 3,
+      "explanation": "Reference architecture ensures consistency, reduces redundancy, accelerates delivery and supports risk management. It does not remove governance; in fact a data governance layer is one of its key components."
+    },
+    {
+      "stem": "In a data and AI cognitive (DAC) reference architecture, what is the role of the landing zone?",
+      "options": [
+        "A centralised area where raw data is ingested and stored temporarily, acting as a buffer before more structured layers",
+        "The final layer where dashboards and reports are delivered to users",
+        "The layer where machine learning models are trained",
+        "A logical view of data that avoids physically moving it",
+        "The layer that enforces regulations and audit logs"
+      ],
+      "correct": 0,
+      "explanation": "The landing zone is where raw data is ingested and held temporarily, providing secure, controlled intake from diverse sources while maintaining integrity and traceability."
+    },
+    {
+      "stem": "In a DAC reference architecture, in which component does data undergo preliminary cleaning and transformation to ensure consistency and completeness before advancing through the pipeline?",
+      "options": [
+        "Data sources",
+        "Presentation and consumption layer",
+        "Virtualization layer",
+        "Analytics and machine learning layer",
+        "Staging area"
+      ],
+      "correct": 4,
+      "explanation": "After ingestion, data moves to the staging area, where it receives preliminary cleaning and transformation in preparation for further processing."
+    },
+    {
+      "stem": "What does the virtualization layer of a reference architecture provide?",
+      "options": [
+        "Physical copies of every dataset on each analyst's machine",
+        "A logical view of data for direct access without physically moving or duplicating it",
+        "Temporary storage for raw ingested files",
+        "Executive dashboards and APIs",
+        "Audit logs and security controls"
+      ],
+      "correct": 1,
+      "explanation": "The virtualization layer offers a logical view of data so it can be accessed directly without being moved or duplicated, optimising resources and supporting diverse queries."
+    },
+    {
+      "stem": "Which layer of a DAC reference architecture incorporates data quality, metadata management, security controls and audit logs to maintain compliance and trustworthiness?",
+      "options": [
+        "Transformation and storage layer",
+        "Landing zone",
+        "Data governance layer",
+        "Virtualization layer",
+        "Staging area"
+      ],
+      "correct": 2,
+      "explanation": "The data governance layer ensures data usage adheres to regulations, standards and policies through data quality, metadata management, security controls and audit logs."
+    },
+    {
+      "stem": "Data scientists building predictive models and applying deep learning, NLP and real-time analytics are working in which layer of a reference architecture?",
+      "options": [
+        "Analytics and machine learning layer",
+        "Landing zone",
+        "Data sources",
+        "Presentation and consumption layer",
+        "Staging area"
+      ],
+      "correct": 0,
+      "explanation": "The analytics and machine learning layer houses analytics, ML and AI workloads where specialists experiment, build predictive models and apply techniques such as deep learning and NLP."
+    },
+    {
+      "stem": "Which tools are named as examples that may populate the presentation layer of a cloud-centric reference architecture?",
+      "options": [
+        "Azure Data Factory and Google BigQuery",
+        "Amazon Redshift and Google BigQuery",
+        "Tableau, Power BI or custom web applications",
+        "MySQL and PostgreSQL",
+        "MongoDB and Cassandra"
+      ],
+      "correct": 2,
+      "explanation": "Tableau, Power BI or custom web applications are cited as presentation-layer tools, whereas Azure Data Factory, Google BigQuery and Amazon Redshift are named for storage and transformation."
+    },
+    {
+      "stem": "From a business perspective, how does a reference architecture serve stakeholders?",
+      "options": [
+        "It replaces the need for any technical team",
+        "It provides line-by-line code for developers",
+        "It sets the pricing of the final product",
+        "It acts as a communication bridge between technical teams and business stakeholders, giving a shared understanding of the solution's structure and strategic objectives",
+        "It restricts access to technical diagrams to engineers only"
+      ],
+      "correct": 3,
+      "explanation": "Reference architecture lets stakeholders grasp complex technical workflows without deep technical knowledge, serving as a communication bridge and creating shared understanding."
+    }
+  ]
+}

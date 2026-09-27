@@ -1,0 +1,125 @@
+{
+  "topic": "batch-processing",
+  "questions": [
+    {
+      "stem": "What is batch processing?",
+      "options": [
+        "A method of handling data in large quantities by grouping it into sets and processing those sets together at scheduled intervals",
+        "A method of processing each piece of data the instant it arrives",
+        "A technique for streaming video to many devices at once",
+        "A way of encrypting data before it is transmitted",
+        "A process for converting analogue records into digital form"
+      ],
+      "correct": 0,
+      "explanation": "Batch processing handles data in large quantities by grouping it into sets, or batches, and processing those sets together at scheduled intervals."
+    },
+    {
+      "stem": "How does batch processing differ from real-time processing?",
+      "options": [
+        "Batch processing handles data immediately, while real-time processing waits",
+        "Batch processing accumulates data over a period and then processes it as a group, whereas real-time processing handles data immediately",
+        "Batch processing only works with images, while real-time processing works with text",
+        "Batch processing requires no hardware, while real-time processing needs servers",
+        "There is no difference; the terms are interchangeable"
+      ],
+      "correct": 1,
+      "explanation": "Unlike real-time processing, where data is handled immediately, batch processing involves accumulating data over a period and then processing it as a group."
+    },
+    {
+      "stem": "Which everyday analogy is used to explain batch processing?",
+      "options": [
+        "Water flowing continuously in a river",
+        "A card catalogue in a library",
+        "Doing your homework assignments at the end of the day rather than right after each class",
+        "A game with friends from different countries",
+        "Superheroes keeping information accurate"
+      ],
+      "correct": 2,
+      "explanation": "Batch processing is compared to doing your homework at the end of the day rather than right after each class: you collect all the tasks and work on them together."
+    },
+    {
+      "stem": "Which example describes batch processing in a bank?",
+      "options": [
+        "A credit card purchase appears in the account balance instantly",
+        "A cash machine displays the balance in real time",
+        "A customer receives a text message the moment a payment is made",
+        "Account balances and transactions are updated overnight, processing all of the day's transactions together",
+        "Fraud alerts are raised the second a suspicious payment occurs"
+      ],
+      "correct": 3,
+      "explanation": "Banks often update account balances and transactions overnight, processing all the transactions that occurred during the day in a batch."
+    },
+    {
+      "stem": "How is payroll described as an example of batch processing?",
+      "options": [
+        "Salaries are paid the moment each hour of work is completed",
+        "Employees are paid in cash at the end of every shift",
+        "Payroll is calculated separately for each employee every day",
+        "Salaries are calculated by an external bank in real time",
+        "Work hours, overtime and other payroll information are collected over a pay period and processed together to generate pay"
+      ],
+      "correct": 4,
+      "explanation": "Companies process payroll in batches: employee work hours, overtime and related information are collected over a pay period and processed together."
+    },
+    {
+      "stem": "In the inventory management example of batch processing, when are inventory levels adjusted?",
+      "options": [
+        "During a nightly batch process, using sales data collected throughout the day",
+        "Immediately after each individual sale",
+        "Only when a customer complains about a missing item",
+        "Once a year during a stock take",
+        "Whenever a supplier sends an invoice"
+      ],
+      "correct": 0,
+      "explanation": "Retailers may collect sales data throughout the day and adjust inventory levels during a nightly batch process rather than after each sale."
+    },
+    {
+      "stem": "How do utility companies apply batch processing to billing and invoicing?",
+      "options": [
+        "They generate a bill for each customer as soon as a service is used",
+        "They create bills for all customers in a batch at the end of the billing cycle",
+        "They only bill customers who request an invoice",
+        "They send invoices in real time through a streaming service",
+        "They bill customers once every ten years"
+      ],
+      "correct": 1,
+      "explanation": "Instead of generating a bill for each customer as soon as they use a service, utility companies create bills in a batch at the end of the billing cycle."
+    },
+    {
+      "stem": "What does batch photo editing involve?",
+      "options": [
+        "Editing a single photo repeatedly until it is perfect",
+        "Printing photographs one at a time",
+        "Applying the same set of edits, such as resizing, cropping or a filter, to multiple photos together",
+        "Streaming photos to a website as they are taken",
+        "Deleting all photos older than a year"
+      ],
+      "correct": 2,
+      "explanation": "In batch photo editing, the same set of edits such as resizing, cropping or applying a filter is applied to a set of pictures processed together in a batch."
+    },
+    {
+      "stem": "Which of the following is NOT given as an example of batch processing?",
+      "options": [
+        "Grade processing in schools at the end of a grading period",
+        "Report generation at daily or monthly intervals",
+        "Nightly bank transaction updates",
+        "Fitness trackers updating heart rate continuously in real time",
+        "Payroll processing at specific intervals"
+      ],
+      "correct": 3,
+      "explanation": "A fitness tracker continuously updating heart rate is a real-time streaming example; grade processing, report generation, nightly bank updates and payroll are all batch examples."
+    },
+    {
+      "stem": "For what kind of workload is batch processing described as efficient?",
+      "options": [
+        "Tasks that require an immediate response every time",
+        "Very small volumes of data that change constantly",
+        "Video calls between two people",
+        "Live traffic signal optimisation",
+        "Large volumes of data and tasks that do not require immediate processing"
+      ],
+      "correct": 4,
+      "explanation": "Batch processing is efficient for handling large volumes of data and tasks that do not require immediate processing, streamlining operations and managing resources effectively."
+    }
+  ]
+}

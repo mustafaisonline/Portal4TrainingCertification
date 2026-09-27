@@ -1,0 +1,125 @@
+{
+  "topic": "digitization-anddigitalization",
+  "questions": [
+    {
+      "stem": "What does digitisation refer to?",
+      "options": [
+        "The process of converting analogue information into digital format",
+        "The strategic use of digital technologies to transform business processes",
+        "The sharing of data between organisations",
+        "The encryption of digital files",
+        "The archiving of old databases"
+      ],
+      "correct": 0,
+      "explanation": "Digitisation refers to the process of converting analogue information, such as text, images or sound, into digital form represented as binary code."
+    },
+    {
+      "stem": "What does digitalisation involve?",
+      "options": [
+        "Scanning paper documents into PDF files",
+        "The use of digital technologies to transform business processes, activities or models",
+        "Converting sound recordings into binary code",
+        "Backing up digital files to the cloud",
+        "Printing digital documents onto paper"
+      ],
+      "correct": 1,
+      "explanation": "Digitalisation is a broader concept involving the use of digital technologies to transform business processes, activities or models, going beyond converting analogue data."
+    },
+    {
+      "stem": "Which of these is an example of digitisation?",
+      "options": [
+        "Adopting automation systems to manage operations",
+        "Building a digital art gallery to organise and share pictures",
+        "Scanning a paper document and converting it into a digital PDF file",
+        "Replacing manual processes with software tools",
+        "Transforming a business model with digital technology"
+      ],
+      "correct": 2,
+      "explanation": "Scanning a paper document and converting it into a digital PDF is the example of digitisation: the original exists in analogue form and is converted into a digital representation."
+    },
+    {
+      "stem": "Which of these is an example of digitalisation?",
+      "options": [
+        "Scanning a hand-drawn picture and saving it on a computer",
+        "Converting a cassette recording into an MP3 file",
+        "Photographing a paper receipt",
+        "A business moving from manual, paper-based processes to digital tools, software and automation to manage operations",
+        "Typing a handwritten letter into a word processor"
+      ],
+      "correct": 3,
+      "explanation": "A business transitioning from manual, paper-based processes to digital tools, software and automation systems is the example of digitalisation."
+    },
+    {
+      "stem": "How do digitisation and digitalisation differ in scope?",
+      "options": [
+        "Digitisation is broader, digitalisation is narrower",
+        "Both have exactly the same scope",
+        "Digitisation applies to businesses, digitalisation applies to individuals",
+        "Digitisation covers strategy, digitalisation covers file conversion",
+        "Digitisation focuses on converting analogue information, whereas digitalisation encompasses a broader transformation using digital technologies"
+      ],
+      "correct": 4,
+      "explanation": "In scope, digitisation focuses specifically on converting analogue information into digital form, while digitalisation encompasses a broader transformation of processes, systems or activities."
+    },
+    {
+      "stem": "In terms of process versus strategy, how is digitisation characterised?",
+      "options": [
+        "Primarily a process of converting data, often associated with archival or preservation efforts",
+        "A strategic use of digital technologies to drive innovation",
+        "A marketing strategy for digital products",
+        "A financial strategy to reduce costs",
+        "A hiring strategy for technical staff"
+      ],
+      "correct": 0,
+      "explanation": "Digitisation is primarily a process of converting data, often associated with archival or preservation efforts, whereas digitalisation involves strategic use of digital technologies."
+    },
+    {
+      "stem": "What is the output of digitalisation?",
+      "options": [
+        "Digital versions of existing analogue documents",
+        "A transformation in the way activities are conducted, often leading to new and improved processes",
+        "Binary code representing scanned images",
+        "A backup copy of paper records",
+        "A list of country codes"
+      ],
+      "correct": 1,
+      "explanation": "Digitalisation produces a transformation in the way activities are conducted, often leading to new and improved processes; digitisation produces digital versions of analogue data."
+    },
+    {
+      "stem": "What is the focus area of digitisation?",
+      "options": [
+        "The overall transformation of business models",
+        "Company-wide systems and strategy",
+        "Individual data items or documents",
+        "Customer relationships",
+        "Employee training"
+      ],
+      "correct": 2,
+      "explanation": "Digitisation mainly focuses on individual data items or documents, whereas digitalisation focuses on the overall transformation of business processes, models or systems."
+    },
+    {
+      "stem": "In the hand-drawn pictures analogy, what represents digitalisation?",
+      "options": [
+        "Scanning each picture and saving it on a computer",
+        "Drawing the pictures on paper",
+        "Storing the paper drawings in a folder",
+        "Creating a digital art gallery that stores the pictures and uses digital tools to organise, edit and share them",
+        "Printing the scanned pictures"
+      ],
+      "correct": 3,
+      "explanation": "Scanning each picture is digitisation; creating a digital art gallery where you organise, edit and share the pictures with digital tools is digitalisation."
+    },
+    {
+      "stem": "Which statement about digitisation is NOT correct?",
+      "options": [
+        "It converts analogue data into binary code that computers can understand",
+        "It makes existing data easier to store, access and share",
+        "It can apply to text, images or sound",
+        "It is often associated with archival efforts",
+        "It transforms an organisation's entire business model"
+      ],
+      "correct": 4,
+      "explanation": "Transforming an entire business model describes digitalisation; digitisation is the conversion of individual analogue items into digital form."
+    }
+  ]
+}

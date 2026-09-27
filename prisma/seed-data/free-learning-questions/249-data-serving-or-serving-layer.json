@@ -1,0 +1,125 @@
+{
+  "topic": "data-serving-or-serving-layer",
+  "questions": [
+    {
+      "stem": "In which architecture is the Serving Layer the last component?",
+      "options": [
+        "Kappa Architecture",
+        "Lambda Architecture",
+        "Star Schema",
+        "Snowflake Schema",
+        "Data Vault"
+      ],
+      "correct": 1,
+      "explanation": "The Serving Layer is the last component of the Lambda Architecture, the layer exposed to end users for reporting."
+    },
+    {
+      "stem": "To whom is the Serving Layer exposed, and for what purpose?",
+      "options": [
+        "To developers, for testing",
+        "To source systems, for data ingestion",
+        "To end users, for reporting purposes",
+        "To auditors, for encryption checks",
+        "To procurement, for buying hardware"
+      ],
+      "correct": 2,
+      "explanation": "The Serving Layer is the last layer, exposed to end users for reporting purposes."
+    },
+    {
+      "stem": "Which kind of system is NOT meant to be exposed for reporting purposes?",
+      "options": [
+        "Data Warehouse",
+        "OLAP",
+        "Semantic Layer",
+        "OLTP systems",
+        "Data Lake"
+      ],
+      "correct": 3,
+      "explanation": "OLTP systems are not meant to be exposed for reporting; the Serving Layer uses stores such as a Data Warehouse, OLAP, Data Lake, NoSQL or Semantic Layer instead."
+    },
+    {
+      "stem": "Which layer should ideally be treated as the Serving Layer when it is designed for a specific business requirement?",
+      "options": [
+        "The Landing Zone",
+        "The Semantic Layer",
+        "The OLTP system",
+        "The Staging Zone",
+        "The Speed Layer"
+      ],
+      "correct": 1,
+      "explanation": "If the Serving Layer is designed for a specific business requirement, the Semantic Layer is the last layer and should be treated as the Serving Layer."
+    },
+    {
+      "stem": "If a Serving Layer is designed for generic use, which stores can fulfil that role?",
+      "options": [
+        "Only the Semantic Layer",
+        "Only OLTP systems",
+        "Data Warehouse, OLAP, Data Lake or NoSQL",
+        "Only Kafka",
+        "Only spreadsheets"
+      ],
+      "correct": 2,
+      "explanation": "For generic use, the Serving Layer can be a Data Warehouse, OLAP, Data Lake, NoSQL and so on."
+    },
+    {
+      "stem": "Why is the JDBC Connector described as the most generic way to connect to any system?",
+      "options": [
+        "Because every system has at least Java",
+        "Because it is the fastest connector",
+        "Because it is free of security parameters",
+        "Because Oracle invented it",
+        "Because it only works with OLAP"
+      ],
+      "correct": 0,
+      "explanation": "Since every system has at least Java, JDBC is the most generic way to connect, using the other system's host name, IP, username and password."
+    },
+    {
+      "stem": "How does a Native Driver differ from a plain JDBC or ODBC connector?",
+      "options": [
+        "It does not use JDBC or ODBC at all",
+        "It cannot connect databases",
+        "It only works on mainframes",
+        "It is used only for online portals",
+        "It is built on JDBC and ODBC connectors but can also include security parameters"
+      ],
+      "correct": 4,
+      "explanation": "Native drivers are internal drivers built with JDBC and ODBC connectors; the difference is that they can also include security parameters."
+    },
+    {
+      "stem": "What is the major difference between Native Drivers and APIs for connecting to the Serving Layer?",
+      "options": [
+        "Native Drivers connect source and target databases, whereas APIs expose data on online portals",
+        "APIs do not use JDBC or ODBC",
+        "Native Drivers are slower than APIs",
+        "APIs cannot include security parameters",
+        "Native Drivers are only for NoSQL"
+      ],
+      "correct": 0,
+      "explanation": "Both are built on JDBC and ODBC with security parameters; Native Drivers connect databases from source to target, while APIs expose data on online portals."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a technology for connecting to the Serving Layer?",
+      "options": [
+        "JDBC Connector",
+        "ODBC Connector",
+        "Native Driver",
+        "API",
+        "Floppy Drive"
+      ],
+      "correct": 4,
+      "explanation": "JDBC, ODBC, Native Driver and API are the listed connection technologies; a floppy drive is not."
+    },
+    {
+      "stem": "Which vendor is named as supporting the ODBC connector?",
+      "options": [
+        "Microsoft",
+        "IBM",
+        "Google",
+        "Oracle",
+        "Amazon"
+      ],
+      "correct": 3,
+      "explanation": "ODBC is described as supported by Oracle and recently available on most systems."
+    }
+  ]
+}

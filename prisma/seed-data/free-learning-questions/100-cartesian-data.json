@@ -1,0 +1,125 @@
+{
+  "topic": "cartesian-data",
+  "questions": [
+    {
+      "stem": "What is Cartesian Data about?",
+      "options": [
+        "Writing a query on tables with a 'Many to Many' relationship",
+        "Storing coordinates in a geographic table",
+        "Encrypting data in transit",
+        "Partitioning a table by date",
+        "Normalising a table to 3NF"
+      ],
+      "correct": 0,
+      "explanation": "'Cartesian Data is about writing a query on tables with Many to Many (M:M) relationship.'"
+    },
+    {
+      "stem": "What should a data modeller introduce when two tables have a 'Many to Many' relationship?",
+      "options": [
+        "A second primary key on each table",
+        "An intermediary table with unique records that has 'One to Many' relationships with both tables",
+        "A UNION ALL between the two tables",
+        "A trigger that deletes duplicates",
+        "A full outer join"
+      ],
+      "correct": 1,
+      "explanation": "The modeller introduces an intermediary table with unique records that then has 'One to Many' relationships with the two original tables."
+    },
+    {
+      "stem": "Why does joining the Sales table directly to the Target table on Employee ID produce Cartesian data?",
+      "options": [
+        "Because Employee ID is a text column",
+        "Because both Sales and Target tables can contain more than one row per Employee ID",
+        "Because the Target table is empty",
+        "Because Sales has no Employee ID",
+        "Because the join uses an index"
+      ],
+      "correct": 1,
+      "explanation": "Both Sales and Target can have more than one row for the same Employee ID, so a direct join multiplies the rows."
+    },
+    {
+      "stem": "Which department is said to get nightmares from Cartesian data, seeing USD 200k when they know the total is USD 100k?",
+      "options": [
+        "Marketing",
+        "Human Resources",
+        "Finance",
+        "Legal",
+        "Procurement"
+      ],
+      "correct": 2,
+      "explanation": "Cartesian data gives nightmares to the Finance department, who know the total manually but see it doubled when they run a query."
+    },
+    {
+      "stem": "Even with an intermediary table in place, what can still cause Cartesian data?",
+      "options": [
+        "A wrongly written query, known as a Chasm Trap",
+        "Adding a primary key",
+        "Using UNION ALL",
+        "Running the query at night",
+        "Having too few rows"
+      ],
+      "correct": 0,
+      "explanation": "Even with an intermediary table, a wrongly written query can still hit the analyst with Cartesian data, known as a Chasm Trap."
+    },
+    {
+      "stem": "In the John example, how many rows are produced when Employee, Target and Sales are joined in one query?",
+      "options": [
+        "2",
+        "10",
+        "12",
+        "20",
+        "100"
+      ],
+      "correct": 3,
+      "explanation": "John's 2 target rows each join to his 10 sales rows, generating 20 rows and an incorrect USD 200k total."
+    },
+    {
+      "stem": "What is the correct row count after resolving the John example with UNION ALL?",
+      "options": [
+        "2 rows",
+        "10 rows",
+        "12 rows",
+        "20 rows",
+        "24 rows"
+      ],
+      "correct": 2,
+      "explanation": "Joining Employee with Target (2 rows) and Employee with Sales (10 rows) and combining them with UNION ALL yields 12 rows, the correct result."
+    },
+    {
+      "stem": "In the department and salary example, how many rows result from joining Dept (2 rows for an employee) and Sal (12 monthly rows) on Employee ID?",
+      "options": [
+        "12 rows with the correct salary",
+        "14 rows with the correct salary",
+        "24 rows with the salary doubled",
+        "2 rows with the salary halved",
+        "1 row with the correct salary"
+      ],
+      "correct": 2,
+      "explanation": "Two department rows times twelve salary rows gives 24 rows, and the total salary comes out double what it should be."
+    },
+    {
+      "stem": "How should the Dept and Sal tables be joined to avoid Cartesian data?",
+      "options": [
+        "Directly on Employee ID",
+        "Each should first join the Employee table, which always has a unique row per employee",
+        "On the month column",
+        "Using a CROSS JOIN",
+        "They should never be queried"
+      ],
+      "correct": 1,
+      "explanation": "Dept should never join Sal directly on Employee ID; both should first join the Employee table, which has a unique number of employee rows."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a cause or symptom of Cartesian data?",
+      "options": [
+        "Joining two tables that both have duplicates on the join column",
+        "Writing one query across tables with Many to Many relationships",
+        "A Chasm Trap in a badly written query",
+        "Totals appearing doubled in Finance reports",
+        "Using an intermediary table with unique records"
+      ],
+      "correct": 4,
+      "explanation": "An intermediary table with unique records is the modelling solution to Many to Many relationships, not a cause of Cartesian data."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "unf-unnormalized-form",
+  "questions": [
+    {
+      "stem": "What does Unnormalized Form (UNF) represent?",
+      "options": [
+        "The raw and unstructured state of data before any normalization rules are applied",
+        "The final, fully normalised state of a relational database",
+        "A table that has had all transitive dependencies removed",
+        "A schema in which every determinant is a superkey",
+        "A read-only archive of historical records"
+      ],
+      "correct": 0,
+      "explanation": "UNF is the natural starting point of most data collections: structure exists, but discipline does not, because no normalization rules have yet been applied."
+    },
+    {
+      "stem": "Which of the following is a typical characteristic of a table in Unnormalized Form?",
+      "options": [
+        "Every column holds a single atomic value",
+        "Repeating groups and multi-valued attributes within a single row",
+        "A formally enforced composite primary key",
+        "Every non-key attribute depends on the whole key",
+        "Each entity is stored in its own separate table"
+      ],
+      "correct": 1,
+      "explanation": "In UNF, tables may contain repeating groups, multi-valued attributes and mixed entities within a single row, which violates the principle that each column should hold one atomic value."
+    },
+    {
+      "stem": "In the loan approval example of Unnormalized Form, what problem do columns such as RepayDates, RepayAmounts and RepayStatuses illustrate?",
+      "options": [
+        "A transitive dependency between customer and loan attributes",
+        "A missing foreign key relationship",
+        "Several values stored in one cell, separated by commas or line breaks",
+        "A partial dependency on a composite key",
+        "Duplicate primary key values across rows"
+      ],
+      "correct": 2,
+      "explanation": "Those columns may store several repayment values in a single cell, separated by commas or line breaks, which breaks the rule that each column should hold a single, atomic value."
+    },
+    {
+      "stem": "What does the term \"entity mixing\" describe in an Unnormalized Form table?",
+      "options": [
+        "Joining two normalised tables in a query",
+        "Storing the same entity under two different names",
+        "Splitting one entity across several tables",
+        "Customer, loan, decision and repayment attributes coexisting in the same structure",
+        "Using a lookup table to resolve entity types"
+      ],
+      "correct": 3,
+      "explanation": "Entity mixing is the blending of distinct entities, such as customer, loan, decision and repayment data, within one structure, which increases redundancy and creates structural confusion."
+    },
+    {
+      "stem": "In an Unnormalized Form loan table, what happens when a customer changes their address?",
+      "options": [
+        "The change propagates automatically through a foreign key",
+        "Only the Customer table needs a single update",
+        "The address is rejected because it is not atomic",
+        "The change is recorded as a new version row",
+        "Every related row must be updated manually"
+      ],
+      "correct": 4,
+      "explanation": "Because customer details repeat across multiple loan records in UNF, every related row must be updated by hand, creating update anomalies and opening the door to inconsistencies."
+    },
+    {
+      "stem": "Which of the following does Unnormalized Form NOT guarantee?",
+      "options": [
+        "Rapid data capture",
+        "Atomicity of column values",
+        "Structure of some kind",
+        "A reflection of how data was collected",
+        "A starting point for normalisation"
+      ],
+      "correct": 1,
+      "explanation": "UNF enforces no structural rules: there are no guarantees of atomicity, dependency integrity or clean key relationships, even though structure of some kind exists."
+    },
+    {
+      "stem": "From which kinds of sources do Unnormalized Form data collections typically originate?",
+      "options": [
+        "Spreadsheets, CSV extracts, operational exports and loosely designed legacy systems",
+        "Fully normalised transactional databases",
+        "Star schemas in a data warehouse",
+        "Data vault hubs and links",
+        "Graph databases with typed relationships"
+      ],
+      "correct": 0,
+      "explanation": "UNF is the natural starting point for data that comes from spreadsheets, CSV extracts, operational exports or loosely designed legacy systems."
+    },
+    {
+      "stem": "Why do many real-world systems begin in Unnormalized Form?",
+      "options": [
+        "Because relational databases cannot store atomic values",
+        "Because normalisation is only possible after data is archived",
+        "Because capturing information quickly is often prioritised over designing it correctly",
+        "Because regulators require raw data to remain unstructured",
+        "Because UNF eliminates update anomalies"
+      ],
+      "correct": 2,
+      "explanation": "UNF allows rapid data capture without upfront modelling discipline, and many systems prioritise capturing information quickly over designing it correctly."
+    },
+    {
+      "stem": "How are composite keys typically present in an Unnormalized Form table?",
+      "options": [
+        "They are always declared explicitly with database constraints",
+        "They are forbidden in UNF",
+        "They are replaced by surrogate keys",
+        "They may appear implicitly, but without formal constraint enforcement",
+        "They are generated by the normalisation process"
+      ],
+      "correct": 3,
+      "explanation": "In UNF, composite keys may appear implicitly, but there is no formal constraint enforcement because the data is stored as it was collected rather than as it should be structured."
+    },
+    {
+      "stem": "What is the intended role of Unnormalized Form in the normalisation journey?",
+      "options": [
+        "The recommended design for transactional systems",
+        "An optional intermediate step after Third Normal Form",
+        "The point at which dependency integrity is enforced",
+        "The final form reached after removing join dependencies",
+        "The starting mess from which normalisation begins, never the stopping point"
+      ],
+      "correct": 4,
+      "explanation": "UNF should never be the stopping point; it is only the starting mess from which each subsequent normal form progressively removes repeating groups, partial and transitive dependencies and other flaws."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "objectives-and-key-results-okr",
+  "questions": [
+    {
+      "stem": "What does the abbreviation OKR stand for?",
+      "options": [
+        "Objectives and Key Results",
+        "Operational Key Ratios",
+        "Organisational Knowledge Register",
+        "Outcomes and Key Responsibilities",
+        "Objectives and Key Reviews"
+      ],
+      "correct": 0,
+      "explanation": "OKR stands for Objectives and Key Results, a goal-setting framework that helps organisations define and track their objectives and the key results needed to achieve them."
+    },
+    {
+      "stem": "Which of these best describes the difference in history between KPIs and OKRs?",
+      "options": [
+        "OKRs are older and KPIs were invented by Google",
+        "KPIs are a long-established, traditional approach; OKRs gained prominence in the 2000s and 2010s",
+        "Both were introduced at the same time by Intel",
+        "KPIs were popularised in the tech industry; OKRs are used only in manufacturing",
+        "OKRs replaced KPIs entirely in the 1990s"
+      ],
+      "correct": 1,
+      "explanation": "KPIs have been a well-established, widely used framework for a long time. OKRs are not new but gained prominence in the 2000s and 2010s, popularised particularly by companies such as Google."
+    },
+    {
+      "stem": "Who is credited with popularising the OKR concept at Intel before it was refined by Google?",
+      "options": [
+        "Peter Drucker",
+        "Larry Page",
+        "Andy Grove",
+        "Bill Gates",
+        "Steve Jobs"
+      ],
+      "correct": 2,
+      "explanation": "The OKR concept was popularised by Andy Grove at Intel and later adopted and refined by companies such as Google."
+    },
+    {
+      "stem": "In the OKR framework, what is an Objective (O)?",
+      "options": [
+        "A specific numerical outcome that measures progress",
+        "A financial budget allocated to a team",
+        "A weekly task list for an employee",
+        "An ambitious, qualitative goal an organisation aims to achieve within a specific timeframe",
+        "A continuous performance metric tracked on a dashboard"
+      ],
+      "correct": 3,
+      "explanation": "Objectives are the ambitious, qualitative goals an organisation aims to achieve within a specific timeframe. They are intended to be inspiring, motivating and aligned with the organisation's mission and vision."
+    },
+    {
+      "stem": "In the OKR framework, what are Key Results (KR)?",
+      "options": [
+        "Inspiring statements of the organisation's mission",
+        "Annual performance appraisal grades",
+        "Qualitative descriptions of team culture",
+        "Compensation targets tied to bonuses",
+        "Specific, quantitative outcomes that serve as measurable milestones towards achieving the objectives"
+      ],
+      "correct": 4,
+      "explanation": "Key Results are specific, quantitative outcomes that serve as measurable milestones towards achieving the defined objectives. They provide a way to track progress and determine whether objectives are being met."
+    },
+    {
+      "stem": "Which three qualities is the OKR framework designed to foster within an organisation?",
+      "options": [
+        "Alignment, transparency and focus",
+        "Supervision, control and hierarchy",
+        "Secrecy, competition and speed",
+        "Cost reduction, compliance and audit",
+        "Automation, outsourcing and scale"
+      ],
+      "correct": 0,
+      "explanation": "The OKR framework is designed to foster alignment, transparency and focus within an organisation, with objectives set at various levels from the organisation down to teams and individuals."
+    },
+    {
+      "stem": "In which sectors have OKRs become especially popular?",
+      "options": [
+        "Agriculture and mining",
+        "Technology and startups",
+        "Public healthcare only",
+        "Traditional banking only",
+        "Shipping and logistics"
+      ],
+      "correct": 1,
+      "explanation": "While KPIs are more widely recognised across industries, OKRs have become increasingly popular in certain sectors, especially in technology and startups, as a means of goal setting and performance management."
+    },
+    {
+      "stem": "Which statement about KPIs and OKRs used together is correct?",
+      "options": [
+        "An organisation must choose one framework and abandon the other",
+        "KPIs are only valid inside an OKR framework",
+        "Both frameworks can complement each other in a comprehensive performance management strategy",
+        "OKRs are a subset of KPIs",
+        "KPIs measure objectives, and OKRs measure metrics"
+      ],
+      "correct": 2,
+      "explanation": "KPIs and OKRs are not mutually exclusive. Both frameworks can complement each other in a comprehensive performance management strategy."
+    },
+    {
+      "stem": "How is progress typically tracked and strategy adjusted within an OKR system?",
+      "options": [
+        "Through a single review at the end of each financial year",
+        "By supervisors monitoring daily task lists",
+        "Through external audits every five years",
+        "Through regular check-ins and assessments",
+        "By automatically adjusting salaries"
+      ],
+      "correct": 3,
+      "explanation": "Within the OKR framework, regular check-ins and assessments help in tracking progress and adjusting strategies as needed."
+    },
+    {
+      "stem": "Which of the following is NOT an accurate description of KPIs?",
+      "options": [
+        "They are a traditional approach to measuring and evaluating performance",
+        "They are commonly associated with specific metrics reflecting the success of processes",
+        "They have a longer history than OKRs",
+        "They are widely recognised across various industries",
+        "They were first popularised by Andy Grove at Intel in the 2010s"
+      ],
+      "correct": 4,
+      "explanation": "KPIs are a long-established, traditional, widely recognised approach associated with specific process metrics. It was the OKR framework, not KPIs, that Andy Grove popularised at Intel and that gained prominence in the 2000s and 2010s."
+    }
+  ]
+}

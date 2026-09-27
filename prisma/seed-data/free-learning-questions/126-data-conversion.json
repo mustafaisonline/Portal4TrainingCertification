@@ -1,0 +1,125 @@
+{
+  "topic": "data-conversion",
+  "questions": [
+    {
+      "stem": "What is the key difference between Data Conversion and Data Transformation?",
+      "options": [
+        "Data Conversion applies only to numbers, Data Transformation only to text",
+        "In Data Conversion the data is not changed, whereas in Data Transformation data can be changed based on business requirements",
+        "Data Conversion is done by business users, Data Transformation by machines",
+        "Data Conversion is always reversible, Data Transformation never",
+        "There is no difference; the terms are interchangeable"
+      ],
+      "correct": 1,
+      "explanation": "In Data Conversion the data itself is not changed, whereas Data Transformation can change data according to business requirements for decision making."
+    },
+    {
+      "stem": "Which of the following is given as a basic example of Data Conversion?",
+      "options": [
+        "Calculating total sales per region",
+        "Removing duplicate customer records",
+        "Masking credit card numbers",
+        "Converting weather data from Celsius to Fahrenheit",
+        "Aggregating daily data into monthly totals"
+      ],
+      "correct": 3,
+      "explanation": "Converting weather data between Celsius and Fahrenheit, or unifying all date formats, are basic examples of Data Conversion."
+    },
+    {
+      "stem": "Why is it better to convert a field that contains only numbers from a string data type to a number data type?",
+      "options": [
+        "Because processing is much faster on a number data type than on a string",
+        "Because strings cannot be stored in databases",
+        "Because regulators require numeric types",
+        "Because it anonymises the data",
+        "Because it reduces the number of rows"
+      ],
+      "correct": 0,
+      "explanation": "Processing is much faster on a number data type compared with a string, so numeric-only fields should be converted."
+    },
+    {
+      "stem": "A field holding predefined values such as Male/Female or Yes/No is stored as varchar; to which data type is it better converted?",
+      "options": [
+        "Integer",
+        "Date",
+        "Blob",
+        "Text",
+        "Char"
+      ],
+      "correct": 4,
+      "explanation": "Fields with predefined values are better converted to char, because processing is much faster on char than on varchar or varchar2."
+    },
+    {
+      "stem": "In the Big Data era, roughly what proportion of datasets are described as semi-structured or unstructured?",
+      "options": [
+        "About 20%",
+        "About 50%",
+        "More than 90%",
+        "Less than 10%",
+        "About 75%"
+      ],
+      "correct": 2,
+      "explanation": "In the new era of Big Data, over 90% of datasets are semi-structured or unstructured, which is why converting and standardising them is so important."
+    },
+    {
+      "stem": "What should happen to semi-structured and unstructured data before it can be cleaned, cleansed or scrubbed?",
+      "options": [
+        "It should be encrypted",
+        "It should be converted or standardised",
+        "It should be archived",
+        "It should be loaded straight into reports",
+        "It should be deleted if older than a year"
+      ],
+      "correct": 1,
+      "explanation": "It is of utmost importance to convert or standardise semi-structured and unstructured data before it can be cleaned, cleansed or scrubbed."
+    },
+    {
+      "stem": "What does Data Governance contribute to Data Conversion?",
+      "options": [
+        "It performs the conversions automatically",
+        "It chooses the database engine",
+        "It replaces the need for Data Quality",
+        "It adds policies to make sure data is standardised",
+        "It converts unstructured data into images"
+      ],
+      "correct": 3,
+      "explanation": "Data Governance adds policies to make sure data is standardised."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a use of Data Conversion?",
+      "options": [
+        "Changing data values according to business decisions",
+        "Standardising different formats into one unified format",
+        "Converting one format into different formats",
+        "Converting one data model to another for business ease of use",
+        "Converting data into reporting and dashboard formats"
+      ],
+      "correct": 0,
+      "explanation": "Changing data values for business decisions is Data Transformation; Data Conversion covers format, model and presentation conversions without changing the data."
+    },
+    {
+      "stem": "Which activity is said to produce much better and faster results once data has been standardised?",
+      "options": [
+        "Data Encryption",
+        "Data Backup",
+        "Data Archiving",
+        "Data Compression",
+        "Data Profiling"
+      ],
+      "correct": 4,
+      "explanation": "Data Profiling produces much better and faster results if the data has been standardised, as do ETL, ELT and Data Quality."
+    },
+    {
+      "stem": "Converting images, PDFs, video or audio into semi-structured or structured file formats is an example of what?",
+      "options": [
+        "Data Masking",
+        "Data Segmentation",
+        "Data Conversion",
+        "Data Lineage",
+        "Data Redaction"
+      ],
+      "correct": 2,
+      "explanation": "Conversion of unstructured content such as images, PDFs, video and audio into semi-structured or structured formats is one of the listed examples of Data Conversion."
+    }
+  ]
+}

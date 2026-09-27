@@ -1,0 +1,125 @@
+{
+  "topic": "concept-drift",
+  "questions": [
+    {
+      "stem": "How does Concept Drift differ from Data Drift?",
+      "options": [
+        "In Concept Drift the data changes within the same elements; in Data Drift the elements change",
+        "In Data Drift the data changes within the same elements; in Concept Drift the data elements themselves change",
+        "They are identical",
+        "Concept Drift applies to OLTP and Data Drift to OLAP",
+        "Concept Drift is expected while Data Drift is unexpected"
+      ],
+      "correct": 1,
+      "explanation": "In Data Drift the data elements do not change, only the data; in Concept Drift the data elements themselves change."
+    },
+    {
+      "stem": "By which other names is Concept Drift known?",
+      "options": [
+        "Class drift, real concept drift or posterior probability shift",
+        "Covariate shift, virtual drift or virtual concept drift",
+        "Scope creep or requirements drift",
+        "Data discrepancy or reconciliation drift",
+        "Sudden shift or gradual shift"
+      ],
+      "correct": 0,
+      "explanation": "Concept Drift is also known as class drift, real concept drift or posterior probability shift."
+    },
+    {
+      "stem": "Is Concept Drift an expected or unexpected behaviour in data?",
+      "options": [
+        "Mostly expected",
+        "Always expected",
+        "Mostly unexpected",
+        "Never occurs in practice",
+        "Expected only in OLAP"
+      ],
+      "correct": 2,
+      "explanation": "Concept Drift is mostly unexpected behaviour in data, unlike Data Drift, which is one of the most expected."
+    },
+    {
+      "stem": "In the cold drinks example, what event constitutes the Concept Drift?",
+      "options": [
+        "Five new drink flavours being added",
+        "The factory increasing production to 1M",
+        "The model being retrained",
+        "A sudden change in weather, with a week of rain and an unexpected temperature drop",
+        "Customers switching to a competitor"
+      ],
+      "correct": 3,
+      "explanation": "Buying behaviour depended on hot weather; a sudden rainy week and temperature drop changed the underlying concept, so the model's behaviour was impacted."
+    },
+    {
+      "stem": "In the cold drinks example, what fraction of the planned 1M weekly production do people consume after the weather changes?",
+      "options": [
+        "10%",
+        "25%",
+        "50%",
+        "75%",
+        "100%"
+      ],
+      "correct": 1,
+      "explanation": "Due to the pleasant weather people consume only 25% of the 1M cold drinks, so the model must quickly change its training data."
+    },
+    {
+      "stem": "What must a machine learning model do after Concept Drift is detected?",
+      "options": [
+        "Nothing; the drift corrects itself",
+        "Archive the old data",
+        "Switch to a different query language",
+        "Increase the number of processors",
+        "Quickly change its training data and predict the new production behaviour"
+      ],
+      "correct": 4,
+      "explanation": "After Concept Drift the model must quickly change its training data and re-predict, since the whole model's behaviour is impacted."
+    },
+    {
+      "stem": "Which of the following is NOT one of the listed types of Concept Drift?",
+      "options": [
+        "Sudden Drift",
+        "Gradual Drift",
+        "Incremental Drift",
+        "Reoccurring Drift",
+        "Covariate Drift"
+      ],
+      "correct": 4,
+      "explanation": "The listed types are Sudden, Gradual, Incremental and Reoccurring Drift; covariate shift is another name for Data Drift."
+    },
+    {
+      "stem": "What is the consequence of Concept Drift for a model's output?",
+      "options": [
+        "The model totally fails to produce or predict the planned output",
+        "Accuracy drops slightly",
+        "The model runs more slowly",
+        "The model's data elements are deleted",
+        "Nothing changes"
+      ],
+      "correct": 0,
+      "explanation": "After Concept Drift the model will totally not produce or predict the output that was planned, and wrong prediction means wrong decisions."
+    },
+    {
+      "stem": "In the cold drinks example, on which external factor does buying behaviour depend?",
+      "options": [
+        "Advertising spend",
+        "Currency exchange rates",
+        "Weather",
+        "Road traffic",
+        "Store opening hours"
+      ],
+      "correct": 2,
+      "explanation": "Buying behaviour of the cold drinks depends on external factors like weather, which is expected to be hot in the region."
+    },
+    {
+      "stem": "Which pair of performances is compared when Concept Drift is evaluated?",
+      "options": [
+        "Development versus production code",
+        "OLTP versus OLAP throughput",
+        "Canned versus ad hoc reports",
+        "Tested versus actual performance of machine learning models",
+        "Cloud versus on-premises cost"
+      ],
+      "correct": 3,
+      "explanation": "Concept Drift is referred to in Data Science practice to evaluate tested versus actual performance of ML models."
+    }
+  ]
+}

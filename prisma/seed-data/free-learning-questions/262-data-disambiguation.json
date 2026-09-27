@@ -1,0 +1,125 @@
+{
+  "topic": "data-disambiguation",
+  "questions": [
+    {
+      "stem": "What does Disambiguation mean?",
+      "options": [
+        "To compress something so it takes less space",
+        "To hide something from unauthorised readers",
+        "To make something clear and understandable",
+        "To copy something to a second location",
+        "To break something into smaller pieces"
+      ],
+      "correct": 2,
+      "explanation": "Disambiguation means to make something clear and understandable, the opposite of ambiguous."
+    },
+    {
+      "stem": "What does the word Ambiguous describe?",
+      "options": [
+        "Data that has been duplicated across systems",
+        "Data that is missing from a dataset",
+        "Data that is stored in an outdated format",
+        "Data that is too large to process quickly",
+        "Something unclear, especially when the same words are used for multiple purposes"
+      ],
+      "correct": 4,
+      "explanation": "Ambiguous means something which is unclear, especially when the same words are used for multiple purposes."
+    },
+    {
+      "stem": "What is described as the biggest use case for Data Disambiguation?",
+      "options": [
+        "Handling sarcasm",
+        "Detecting duplicate customer records",
+        "Compressing audio and video files",
+        "Balancing data across cluster nodes",
+        "Translating documents between languages"
+      ],
+      "correct": 0,
+      "explanation": "Data Disambiguation's biggest use case is handling sarcasm, where dual-meaning words are heavily used."
+    },
+    {
+      "stem": "Why is sarcasm a particular challenge for Data Disambiguation?",
+      "options": [
+        "Because sarcasm only appears in audio, never in text",
+        "Because dual-meaning words are heavily used in sarcasm",
+        "Because sarcasm is always written in capital letters",
+        "Because sarcasm is rare on social media",
+        "Because sarcasm cannot be stored as unstructured data"
+      ],
+      "correct": 1,
+      "explanation": "In sarcasm, words with dual meanings are heavily used, so the right meaning has to be dug out of confusing statements."
+    },
+    {
+      "stem": "The phrase What's up? is used as an example in Data Disambiguation. What does it illustrate?",
+      "options": [
+        "That greetings should be removed from datasets",
+        "That short phrases are easier to classify than long ones",
+        "That slang cannot be processed by machines",
+        "That the same phrase can be a friendly greeting or an expression of anger at a stranger",
+        "That questions are always ambiguous"
+      ],
+      "correct": 3,
+      "explanation": "What's up? can be a greeting to a friend or a way of showing anger to an unknown person in a restricted area, showing how one phrase carries two meanings."
+    },
+    {
+      "stem": "Which of these is one of the jobs of the Data Disambiguation process?",
+      "options": [
+        "Distribute data evenly across cluster nodes",
+        "Fill missing values with the mean",
+        "Archive data older than a set retention period",
+        "Encrypt dual-meaning words before storage",
+        "Translate or replace dual-meaning words with single-meaning words so the end user is not confused"
+      ],
+      "correct": 4,
+      "explanation": "One job of Data Disambiguation is to translate or replace dual-meaning words with single-meaning words so the end user is not confused before taking a decision."
+    },
+    {
+      "stem": "Which of these is NOT a job of the Data Disambiguation process?",
+      "options": [
+        "Dig out the right meaning from confusing statements",
+        "Understand the right concept of a statement",
+        "Compress audio and video files to save storage",
+        "Remove anything that can corrupt the behaviour of a pattern",
+        "Replace dual-meaning words with single-meaning words"
+      ],
+      "correct": 2,
+      "explanation": "Compressing files is not part of disambiguation; its jobs are to find the right meaning, understand the concept, remove what corrupts a pattern, and replace dual-meaning words."
+    },
+    {
+      "stem": "In which data activity can Data Disambiguation be used?",
+      "options": [
+        "Data Wrangling",
+        "Data Mirroring",
+        "Data Compression",
+        "Load Balancing",
+        "Data Archiving"
+      ],
+      "correct": 0,
+      "explanation": "Data Disambiguation can be used in Data Wrangling, and it can also assist in producing Data Quality rules and generating Metadata."
+    },
+    {
+      "stem": "Besides Data Wrangling, what can Data Disambiguation assist in producing?",
+      "options": [
+        "Backup schedules",
+        "Network topologies",
+        "Encryption keys",
+        "Data Quality rules and Metadata for better data understanding",
+        "Cluster node assignments"
+      ],
+      "correct": 3,
+      "explanation": "Data Disambiguation can assist in producing Data Quality rules and in generating Metadata for better data understanding."
+    },
+    {
+      "stem": "In the current era, what has become one of the major sources for customer profiling?",
+      "options": [
+        "Printed surveys",
+        "Social media",
+        "Telephone directories",
+        "Paper invoices",
+        "Internal HR systems"
+      ],
+      "correct": 1,
+      "explanation": "Social media has become one of the major sources for customer profiling, with audio and video as further sources of semi- and unstructured data."
+    }
+  ]
+}

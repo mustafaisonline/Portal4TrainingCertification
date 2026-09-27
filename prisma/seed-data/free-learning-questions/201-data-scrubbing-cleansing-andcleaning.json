@@ -1,0 +1,125 @@
+{
+  "topic": "data-scrubbing-cleansing-andcleaning",
+  "questions": [
+    {
+      "stem": "Who can typically perform Data Cleaning, and why?",
+      "options": [
+        "Only database administrators, because it needs root access",
+        "Only external vendors, because it needs special tools",
+        "Only data scientists, because it needs machine learning",
+        "Business users themselves, because it requires little effort such as exporting data to Excel, cleaning it and sending it downstream",
+        "Nobody, because cleaning happens automatically"
+      ],
+      "correct": 3,
+      "explanation": "Data cleaning can be done at a very high level by business users themselves as it requires little effort, for example exporting to Excel, cleaning and sending downstream."
+    },
+    {
+      "stem": "Who is ideally placed to perform Data Cleansing?",
+      "options": [
+        "Business users using Excel",
+        "IT subject-matter experts writing SQL queries at the database level",
+        "Customers correcting their own records",
+        "The marketing team using a survey",
+        "A regulator conducting an audit"
+      ],
+      "correct": 1,
+      "explanation": "Cleansing can be done by business users, but ideally IT SMEs write SQL queries at the database level so the next extract is already cleansed."
+    },
+    {
+      "stem": "Which activity is described as the best level for achieving the highest Data Quality?",
+      "options": [
+        "Data Cleaning",
+        "Data Cleansing",
+        "Data Enrichment",
+        "Data Splitting",
+        "Data Scrubbing"
+      ],
+      "correct": 4,
+      "explanation": "Scrubbing is described as the best level to achieve the highest Data Quality, making sure data is near to perfect."
+    },
+    {
+      "stem": "In the face-care analogy used to explain the three levels of data cleaning, which situation corresponds to Data Scrubbing?",
+      "options": [
+        "Going to a proper parlour with the best worker and creams before a wedding or valuable event",
+        "Wiping paint splashes off your face while painting",
+        "Washing dust off your face after a walk",
+        "Applying face cream for ten to fifteen minutes after a football match",
+        "Cleaning your face after eating"
+      ],
+      "correct": 0,
+      "explanation": "Scrubbing is likened to preparing for a wedding or valuable event: a proper parlour, the best worker and the best creams to make sure the face is properly cleaned, cleansed and scrubbed."
+    },
+    {
+      "stem": "Which of the following is NOT given as a reason to conduct Data Scrubbing?",
+      "options": [
+        "Wrong data entry",
+        "Two or more databases being merged",
+        "The data having just been validated by an automated tool",
+        "Few or no standards defined in the system",
+        "Very old data that is not yet obsolete"
+      ],
+      "correct": 2,
+      "explanation": "The reasons listed are wrong data entry, merged databases, few or no standards, and very old data; recently validated data is not a reason to scrub."
+    },
+    {
+      "stem": "What happens to corrupt and bad data during a Data Scrubbing exercise?",
+      "options": [
+        "It is permanently deleted without record",
+        "It is sent to customers for correction",
+        "It is left in place but flagged in a report",
+        "It is removed from the mainstream of data and parked separately for investigation",
+        "It is merged with good data to fill gaps"
+      ],
+      "correct": 3,
+      "explanation": "During scrubbing, corrupt and bad data is removed from the mainstream and parked separately so it can be investigated."
+    },
+    {
+      "stem": "According to the statistics cited in the discussion of Data Scrubbing, businesses lose up to what share of their revenue because of bad data quality?",
+      "options": [
+        "5%",
+        "20%",
+        "50%",
+        "75%",
+        "90%"
+      ],
+      "correct": 1,
+      "explanation": "The cited statistic is that businesses lose up to 20% of their revenue because of bad data quality."
+    },
+    {
+      "stem": "How much of their productive time do employees reportedly waste dealing with routine data quality tasks?",
+      "options": [
+        "Up to half",
+        "Up to one tenth",
+        "Up to one quarter",
+        "Almost all of it",
+        "None, because tools handle it"
+      ],
+      "correct": 0,
+      "explanation": "The cited statistic is that employees waste up to half of their productive time on routine data quality tasks."
+    },
+    {
+      "stem": "According to the survey cited in the discussion of Data Scrubbing, what happens in any given hour of the day?",
+      "options": [
+        "Every company changes its address",
+        "About 500 businesses close",
+        "No business names change",
+        "Fewer than five new businesses open",
+        "Almost five dozen companies change address, nearly a dozen change name, and over 40 new businesses open"
+      ],
+      "correct": 4,
+      "explanation": "The survey states that in any hour almost five dozen companies change their addresses, nearly a dozen change their name and over 40 new businesses open."
+    },
+    {
+      "stem": "In Data Scrubbing, across which range of systems should the findings be implemented?",
+      "options": [
+        "Only in the reporting layer",
+        "Only in the spreadsheet where problems were found",
+        "From source systems through to downstream systems",
+        "Only in the staging area",
+        "Only in third-party systems"
+      ],
+      "correct": 2,
+      "explanation": "Scrubbing means finding good tools and resources and making sure the findings are implemented from source to downstream systems."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "partitioning",
+  "questions": [
+    {
+      "stem": "What is Partitioning in a database?",
+      "options": [
+        "Copying a table to several servers for redundancy",
+        "Compressing a table so it occupies fewer blocks",
+        "A data organisation scheme in which table data is divided across multiple storage objects called data partitions according to values in one or more columns",
+        "Splitting a database into separate schemas per department",
+        "Assigning each table to a dedicated node in a shared-nothing cluster"
+      ],
+      "correct": 2,
+      "explanation": "Partitioning divides a table's data into separately stored data partitions based on the values in one or more table columns."
+    },
+    {
+      "stem": "What does each data partition consist of?",
+      "options": [
+        "Its own data, indexes, configuration files and transaction logs",
+        "Only the rows, with indexes held centrally",
+        "A read-only snapshot of the parent table",
+        "Just a pointer to the original table",
+        "Data and indexes, but no logs"
+      ],
+      "correct": 0,
+      "explanation": "Each partition is stored separately and consists of its data, indexes, configuration files and transaction logs."
+    },
+    {
+      "stem": "If a Salary table holding 10 years of data is partitioned yearly, how is it divided at the storage level?",
+      "options": [
+        "Into 2 datasets, one for current and one for historical data",
+        "Into 120 datasets, one per month",
+        "Into one dataset per employee",
+        "Into 10 smaller datasets, one for each year",
+        "Into 10 datasets each holding a copy of all years"
+      ],
+      "correct": 3,
+      "explanation": "Yearly partitioning of 10 years of salary data produces 10 smaller datasets, one per year."
+    },
+    {
+      "stem": "When partitions are stored wherever empty slots exist, so that several partitions may land on one node of a cluster, what is this arrangement called?",
+      "options": [
+        "Shared-nothing architecture",
+        "Shared architecture",
+        "Sharded architecture",
+        "Vertical architecture",
+        "Composite architecture"
+      ],
+      "correct": 1,
+      "explanation": "Storing partitions in whatever empty slots are available, possibly several on one node, is called Shared Architecture."
+    },
+    {
+      "stem": "In the yearly Salary example, a query for years 2 and 3 hits only two partitions, but both sit on the same node. What is the consequence?",
+      "options": [
+        "The query fails because partitions must be on separate nodes",
+        "All 10 nodes process the query in parallel",
+        "The query reads all 10 partitions anyway",
+        "The partitions are moved to separate nodes before the query runs",
+        "The query is faster than a full scan, but only one node's processing power is used"
+      ],
+      "correct": 4,
+      "explanation": "Hitting just two partitions makes the query much faster, but as both are on one node only that node's processing is used."
+    },
+    {
+      "stem": "What is Horizontal Partitioning?",
+      "options": [
+        "Placing entire columns into new, distinct tables",
+        "Separating one table's rows into multiple partitions that share the same schema and columns but hold entirely different rows",
+        "Storing each partition on a dedicated node",
+        "Combining several small tables into one large table",
+        "Splitting a table by the data type of its columns"
+      ],
+      "correct": 1,
+      "explanation": "Horizontal partitioning splits rows into multiple tables, each with the same schema and columns but different rows."
+    },
+    {
+      "stem": "What is Vertical Partitioning?",
+      "options": [
+        "Dividing rows by a date range",
+        "Distributing rows using a hash function",
+        "Hashing the primary key to select a node",
+        "Separating entire columns into new, distinct tables whose data is independent of the others",
+        "Splitting rows into partitions with identical columns"
+      ],
+      "correct": 3,
+      "explanation": "In vertical partitioning entire columns are separated into new tables, each holding distinct rows and columns independent of the others."
+    },
+    {
+      "stem": "Which of the following is NOT a single-level partitioning technique?",
+      "options": [
+        "Range–Hash Partitioning",
+        "Hash Partitioning",
+        "Range Partitioning",
+        "List Partitioning",
+        "Single-level Hash Partitioning"
+      ],
+      "correct": 0,
+      "explanation": "Single-level techniques are Hash, Range and List partitioning; Range–Hash is a composite technique."
+    },
+    {
+      "stem": "Which of the following is a composite partitioning technique?",
+      "options": [
+        "Hash Partitioning",
+        "Range Partitioning",
+        "List Partitioning",
+        "Vertical Partitioning",
+        "List–Hash Partitioning"
+      ],
+      "correct": 4,
+      "explanation": "Composite techniques combine two methods, such as Range–Range, Range–Hash, Range–List, List–Range, List–Hash and List–List."
+    },
+    {
+      "stem": "Which of the following is NOT a stated benefit of partitioning?",
+      "options": [
+        "Queries can be solved for a collection of partitions instead of a giant database",
+        "Planned downtime is reduced",
+        "It eliminates the need for backups",
+        "Parallel execution optimises resource utilisation and shortens execution time",
+        "Administration tasks such as loading, index creation and backup can be done at the partition level"
+      ],
+      "correct": 2,
+      "explanation": "Partitioning makes backup and recovery faster at the partition level, but it does not remove the need for backups."
+    }
+  ]
+}

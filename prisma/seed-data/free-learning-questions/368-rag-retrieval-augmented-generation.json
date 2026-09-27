@@ -1,0 +1,125 @@
+{
+  "topic": "rag-retrieval-augmented-generation",
+  "questions": [
+    {
+      "stem": "What problem with large language models (LLMs) does Retrieval-Augmented Generation (RAG) primarily address?",
+      "options": [
+        "LLMs often generate incorrect answers with confidence, especially about recent events or niche topics",
+        "LLMs are too slow to type responses",
+        "LLMs cannot process text longer than one sentence",
+        "LLMs refuse to answer any question",
+        "LLMs can only work with numeric data"
+      ],
+      "correct": 0,
+      "explanation": "LLMs may fabricate convincing but incorrect responses; RAG integrates external retrieval so outputs are grounded in reliable, up-to-date information."
+    },
+    {
+      "stem": "What are the two fundamental components of a RAG system?",
+      "options": [
+        "A tokeniser and a compiler",
+        "A retriever and a generator",
+        "A database and a spreadsheet",
+        "An encoder and a firewall",
+        "A cache and a scheduler"
+      ],
+      "correct": 1,
+      "explanation": "A RAG system consists of a retriever, which extracts relevant information from external sources, and a generator, which uses it to produce a grounded response."
+    },
+    {
+      "stem": "Which paper first introduced the retrieve-then-generate pattern that RAG follows?",
+      "options": [
+        "Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks (Lewis et al., 2020)",
+        "Learning Transferable Visual Models (Radford et al., 2021)",
+        "Reading Wikipedia to Answer Open-Domain Questions (Chen et al., 2017)",
+        "Attention Is All You Need",
+        "The DeepSeek-V3 technical report"
+      ],
+      "correct": 2,
+      "explanation": "The retrieve-then-generate pattern was first introduced by Chen et al. (2017); the term retrieval-augmented generation was later coined by Lewis et al. (2020)."
+    },
+    {
+      "stem": "In the four phases of how RAG works, what happens during context construction?",
+      "options": [
+        "The user's query is deleted",
+        "The model is retrained from scratch",
+        "Citations are validated after the answer is produced",
+        "The retrieved documents or passages are formatted and added to the model's prompt",
+        "The vector database is rebuilt"
+      ],
+      "correct": 3,
+      "explanation": "Context construction formats the retrieved documents or passages and adds them to the model's prompt, giving it a tailored context for the query."
+    },
+    {
+      "stem": "Which chunking strategy first splits documents into sections, then paragraphs, and finally into sentences if necessary?",
+      "options": [
+        "Fixed-length chunking",
+        "Token-based chunking",
+        "Domain-specific chunking",
+        "Contextual chunking",
+        "Recursive chunking"
+      ],
+      "correct": 4,
+      "explanation": "Recursive chunking is the hierarchical approach of splitting into sections, then paragraphs, then sentences, reducing arbitrary segmentation."
+    },
+    {
+      "stem": "In the query rewriting example, the user input 'How about Mustafa?' is rewritten to 'When was the last time Mustafa made a purchase from us?'. What does this illustrate?",
+      "options": [
+        "Clarifying an ambiguous query so that retrieval matches documents more accurately",
+        "Compressing a long query into a short one",
+        "Translating a query into another language",
+        "Removing personal data from a query",
+        "Caching a frequently asked question"
+      ],
+      "correct": 0,
+      "explanation": "Query rewriting, also called reformulation or normalisation, refines ambiguous user input to ensure more effective document matching."
+    },
+    {
+      "stem": "Which advanced RAG technique converts both queries and documents into vector representations so that semantically relevant documents are found even without exact keyword matches?",
+      "options": [
+        "Query expansion",
+        "Dense retrieval",
+        "Modular RAG",
+        "Caching",
+        "Time-based reranking"
+      ],
+      "correct": 1,
+      "explanation": "Dense retrieval converts queries and documents into dense vectors capturing semantic meaning, retrieving relevant documents even when keywords differ."
+    },
+    {
+      "stem": "How does Agentic RAG differ from standard RAG?",
+      "options": [
+        "It only works with images",
+        "It removes the generator component",
+        "It actively determines how and where to search, dynamically adjusting its strategy, instead of passively following predefined retrieval steps",
+        "It requires a human to approve every retrieval",
+        "It never uses external data"
+      ],
+      "correct": 2,
+      "explanation": "Agentic RAG incorporates decision-making, actively deciding how and where to search and adjusting its strategy based on the query and available sources."
+    },
+    {
+      "stem": "Which of the following is NOT one of the four critical security considerations for RAG systems?",
+      "options": [
+        "Prevent embedding of PII or sensitive data in vector databases",
+        "Implement strict access controls for vector databases",
+        "Secure access to LLM APIs",
+        "Disable all logging of API interactions",
+        "Validate generated data before delivering responses to clients"
+      ],
+      "correct": 3,
+      "explanation": "The four considerations are preventing PII in vector databases, access controls, securing LLM APIs and validating outputs; monitoring API interactions is recommended, not disabling logs."
+    },
+    {
+      "stem": "In evaluating RAG systems, which metric examines how closely the generated response adheres to the retrieved information without introducing hallucinations?",
+      "options": [
+        "Fluency",
+        "Recall",
+        "Precision",
+        "Latency",
+        "Faithfulness"
+      ],
+      "correct": 4,
+      "explanation": "Faithfulness measures how closely the generated response aligns with the retrieved sources, which is paramount in high-stakes uses such as legal or medical applications."
+    }
+  ]
+}

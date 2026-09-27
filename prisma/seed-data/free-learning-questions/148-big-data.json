@@ -1,0 +1,125 @@
+{
+  "topic": "big-data",
+  "questions": [
+    {
+      "stem": "When did the term Big Data emerge, and why?",
+      "options": [
+        "In the 1970s, when relational databases were invented",
+        "In the early 2000s, as enterprises faced unprecedented growth in the amount, speed and diversity of information",
+        "In the 1990s, when Bill Inmon defined the data warehouse",
+        "In 2015, when cloud object storage was launched",
+        "In the 1980s, when tape drives became cheap"
+      ],
+      "correct": 1,
+      "explanation": "Big Data emerged in the early 2000s as traditional databases and warehouses, reliable for structured data, could not handle the new scale, speed and variety of information."
+    },
+    {
+      "stem": "Which of the three Vs of Big Data refers to the speed at which data arrives?",
+      "options": [
+        "Volume",
+        "Variety",
+        "Velocity",
+        "Veracity",
+        "Value"
+      ],
+      "correct": 2,
+      "explanation": "Velocity is the speed at which data arrives, often requiring real-time or near real-time processing instead of traditional batch updates."
+    },
+    {
+      "stem": "In Big Data's Variety dimension, which of the following are examples of semi-structured data?",
+      "options": [
+        "Tables in a relational database",
+        "JSON and XML",
+        "Images and videos",
+        "Audio recordings",
+        "Free-text logs"
+      ],
+      "correct": 1,
+      "explanation": "Variety covers structured data (tables), semi-structured data (JSON, XML) and unstructured data (text, images, videos, audio, logs)."
+    },
+    {
+      "stem": "What does the Veracity characteristic of Big Data address?",
+      "options": [
+        "The physical size of storage clusters",
+        "The number of data sources",
+        "The need to ensure trustworthiness and quality despite scale and diversity",
+        "The speed of streaming ingestion",
+        "The cost of commodity hardware"
+      ],
+      "correct": 2,
+      "explanation": "Veracity, sometimes added as a fourth V, is the need to ensure trustworthiness and quality of data despite its scale and diversity."
+    },
+    {
+      "stem": "What did Hadoop and HDFS (Hadoop Distributed File System) allow organisations to do?",
+      "options": [
+        "Encrypt all data at rest",
+        "Store petabytes of data across clusters of commodity hardware",
+        "Replace SQL with a graph language",
+        "Run transactions with ACID guarantees",
+        "Virtualise data from source systems"
+      ],
+      "correct": 1,
+      "explanation": "Hadoop and HDFS allowed organisations to store petabytes of data across clusters of commodity hardware, a key breakthrough of the Big Data era."
+    },
+    {
+      "stem": "How does MapReduce process large data sets?",
+      "options": [
+        "By loading everything into a single server's memory",
+        "By splitting tasks into smaller units for parallel processing and then aggregating the results",
+        "By converting data into JSON documents",
+        "By streaming records one at a time through Kafka",
+        "By indexing data in a relational table"
+      ],
+      "correct": 1,
+      "explanation": "MapReduce enabled parallel processing of large data sets by splitting tasks into smaller units and aggregating the results."
+    },
+    {
+      "stem": "Which NoSQL database is given as an example of a graph database?",
+      "options": [
+        "Redis",
+        "Cassandra",
+        "MongoDB",
+        "Neo4j",
+        "HBase"
+      ],
+      "correct": 3,
+      "explanation": "The NoSQL examples are Redis (key-value), Cassandra and HBase (columnar), MongoDB (document) and Neo4j (graph)."
+    },
+    {
+      "stem": "Which Big Data use case involves detecting the same card being used hundreds of kilometres apart within minutes?",
+      "options": [
+        "Predictive maintenance in manufacturing",
+        "Targeted marketing in retail",
+        "Fraud detection in banking",
+        "Healthcare analytics",
+        "Inventory optimisation"
+      ],
+      "correct": 2,
+      "explanation": "Fraud detection in banking uses streaming analysis of card transactions to detect anomalies in real time, such as one card being used far apart within minutes."
+    },
+    {
+      "stem": "Which of the following is a streaming framework of the Big Data era that enabled real-time ingestion and analytics?",
+      "options": [
+        "Hive",
+        "Pig",
+        "Apache Kafka",
+        "MongoDB",
+        "HDFS"
+      ],
+      "correct": 2,
+      "explanation": "Streaming frameworks such as Apache Kafka, Storm and later Spark Streaming enabled real-time ingestion and analytics; Hive and Pig are query abstractions, MongoDB a document store and HDFS a file system."
+    },
+    {
+      "stem": "What happened to the Big Data vendor landscape over time?",
+      "options": [
+        "Cloudera and Hortonworks merged, MapR was acquired by Hitachi, and Databricks and Snowflake emerged",
+        "All Hadoop vendors were acquired by Oracle",
+        "Hortonworks acquired Databricks",
+        "MapR merged with Snowflake",
+        "The Apache Software Foundation bought Cloudera"
+      ],
+      "correct": 0,
+      "explanation": "The ecosystem consolidated: Cloudera and Hortonworks merged, MapR was acquired by Hitachi, and newer players such as Databricks and Snowflake pushed towards unified data platforms."
+    }
+  ]
+}

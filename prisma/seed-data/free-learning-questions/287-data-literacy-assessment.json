@@ -1,0 +1,125 @@
+{
+  "topic": "data-literacy-assessment",
+  "questions": [
+    {
+      "stem": "What does a data literacy assessment evaluate?",
+      "options": [
+        "An individual's typing speed when entering data",
+        "An individual's ability to understand, interpret and work with data effectively",
+        "The storage capacity of an organisation's databases",
+        "The cost of an organisation's cloud subscriptions",
+        "The number of datasets a company owns"
+      ],
+      "correct": 1,
+      "explanation": "A data literacy assessment measures how well someone can read, analyse and draw insights from data: their ability to understand, interpret and work with data effectively."
+    },
+    {
+      "stem": "Looking at a table of apples sold each day at a fruit stand and answering 'On which day were the most apples sold?' tests which aspect of data literacy?",
+      "options": [
+        "Data ethics",
+        "Data communication",
+        "Data understanding",
+        "Critical thinking with data",
+        "Data presentation"
+      ],
+      "correct": 2,
+      "explanation": "Data understanding assesses the ability to comprehend the data presented, including its structure, variables and context; reading a simple sales table is the example given."
+    },
+    {
+      "stem": "Which aspect of data literacy assessment evaluates the ability to recognise patterns, trends and relationships in a dataset, such as concluding what the weather was like from a week's temperature chart?",
+      "options": [
+        "Data interpretation",
+        "Data presentation",
+        "Data ethics",
+        "Data communication",
+        "Problem-solving with data"
+      ],
+      "correct": 0,
+      "explanation": "Data interpretation evaluates how well someone can analyse data and draw meaningful insights, recognising patterns, trends and relationships."
+    },
+    {
+      "stem": "Being asked to create a simple bar chart from data about the number of books read by different students assesses which data literacy skill?",
+      "options": [
+        "Data ethics",
+        "Data analysis",
+        "Critical thinking with data",
+        "Data presentation",
+        "Data understanding"
+      ],
+      "correct": 3,
+      "explanation": "Data presentation focuses on selecting appropriate visualisations or formats to convey information clearly to a specific audience, such as choosing a bar chart."
+    },
+    {
+      "stem": "Which aspect of a data literacy assessment is tested by asking whether there is a correlation between students' attendance and their test scores?",
+      "options": [
+        "Data presentation",
+        "Data ethics",
+        "Data communication",
+        "Data understanding",
+        "Data analysis"
+      ],
+      "correct": 4,
+      "explanation": "Data analysis evaluates the ability to process and manipulate data using statistical and computational strategies to uncover patterns, correlations and trends."
+    },
+    {
+      "stem": "Given data on plant growth under different conditions and asked 'Which condition is most favourable for plant growth, and why?', which data literacy aspect is being assessed?",
+      "options": [
+        "Problem-solving with data",
+        "Data presentation",
+        "Data ethics",
+        "Data understanding",
+        "Data communication"
+      ],
+      "correct": 0,
+      "explanation": "Problem-solving with data assesses the ability to apply data-driven approaches to real-world problems and make informed decisions."
+    },
+    {
+      "stem": "Which aspect of data literacy assessment involves recognising and addressing issues such as privacy, consent and fairness when a company collects customer data?",
+      "options": [
+        "Data analysis",
+        "Data ethics",
+        "Data interpretation",
+        "Data presentation",
+        "Data understanding"
+      ],
+      "correct": 1,
+      "explanation": "Data ethics examines understanding of ethical considerations in handling data, including privacy, consent and fairness."
+    },
+    {
+      "stem": "Preparing a short report on city pollution levels for a non-technical audience, explaining the findings and their implications, tests which data literacy skill?",
+      "options": [
+        "Data understanding",
+        "Data analysis",
+        "Data communication",
+        "Data ethics",
+        "Problem-solving with data"
+      ],
+      "correct": 2,
+      "explanation": "Data communication assesses how well someone can convey data insights through reports, visualisations or narratives to both technical and non-technical audiences."
+    },
+    {
+      "stem": "Asking 'What other information would you need to determine the factors influencing students' sports preferences?' assesses which aspect of data literacy?",
+      "options": [
+        "Data presentation",
+        "Data ethics",
+        "Data understanding",
+        "Critical thinking with data",
+        "Data communication"
+      ],
+      "correct": 3,
+      "explanation": "Critical thinking with data evaluates approaching data with a questioning mindset: considering alternative perspectives, asking relevant questions and identifying potential biases."
+    },
+    {
+      "stem": "Which of the following is NOT one of the aspects included in a data literacy assessment?",
+      "options": [
+        "Data interpretation",
+        "Data presentation",
+        "Data ethics",
+        "Data compression",
+        "Critical thinking with data"
+      ],
+      "correct": 3,
+      "explanation": "Data literacy assessment covers understanding, interpreting, presenting, analysing, problem-solving, ethics, communicating and critical thinking with data. Data compression is a storage technique, not a literacy skill."
+    }
+  ]
+}

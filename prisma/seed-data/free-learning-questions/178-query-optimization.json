@@ -1,0 +1,125 @@
+{
+  "topic": "query-optimization",
+  "questions": [
+    {
+      "stem": "What does Query Optimisation mean?",
+      "options": [
+        "Finding the fastest route to execute a query",
+        "Rewriting a query so it returns fewer rows",
+        "Compressing the query text before sending it to the database",
+        "Adding indexes to every column referenced in a query",
+        "Caching the query result for later reuse"
+      ],
+      "correct": 0,
+      "explanation": "Query Optimisation is about finding the fastest route to execute a query: multiple execution plans are generated and the best one is executed."
+    },
+    {
+      "stem": "What are the three phases of query processing?",
+      "options": [
+        "Compile, Link and Run",
+        "Extract, Transform and Load",
+        "Fetch, Filter and Sort",
+        "Parsing and Translation, Optimisation, and Evaluation",
+        "Index, Partition and Shard"
+      ],
+      "correct": 3,
+      "explanation": "Query processing moves through Parsing and Translation, then Optimisation, then Evaluation."
+    },
+    {
+      "stem": "During the Parsing and Translation phase, what does the parser do with a SQL query?",
+      "options": [
+        "Executes the query and returns the result",
+        "Validates the syntax of the query and the relations referenced in the database",
+        "Chooses the lowest-cost execution plan",
+        "Generates machine code for the runtime processor",
+        "Gathers table statistics"
+      ],
+      "correct": 1,
+      "explanation": "The parser translates the SQL into an internal form, validating the syntax and the relations of the query in the database."
+    },
+    {
+      "stem": "After parsing, into what form is a SQL query converted before optimisation?",
+      "options": [
+        "A stored procedure",
+        "A JSON document",
+        "A MapReduce job",
+        "A materialised view",
+        "A relational algebra expression"
+      ],
+      "correct": 4,
+      "explanation": "The validated query is converted into a relational algebra expression, such as a selection and projection over a table."
+    },
+    {
+      "stem": "What structure is usually built from the relational algebra expression for the optimisation engine to analyse?",
+      "options": [
+        "A hash table",
+        "A transaction log",
+        "A query tree or graph",
+        "A B-tree index",
+        "A partition map"
+      ],
+      "correct": 2,
+      "explanation": "The expression is converted into a query tree or graph, on which the optimiser applies rules to find an equivalent, efficient representation."
+    },
+    {
+      "stem": "Which two kinds of optimiser does Oracle use?",
+      "options": [
+        "Static and dynamic optimisers",
+        "Row-based and column-based optimisers",
+        "Parallel and serial optimisers",
+        "Heuristic and statistical optimisers",
+        "Rule-based (RBO) and cost-based (CBO) optimisers"
+      ],
+      "correct": 4,
+      "explanation": "The Oracle Optimizer uses both a rule-based optimiser (RBO) and a cost-based optimiser (CBO)."
+    },
+    {
+      "stem": "What does the Teradata optimiser rely on to decide how best to access, join and aggregate tables?",
+      "options": [
+        "Its knowledge base of statistics and demographics",
+        "A fixed list of rules supplied by the DBA",
+        "The order in which tables appear in the query",
+        "The size of the transaction log",
+        "Hints embedded in the SQL text"
+      ],
+      "correct": 0,
+      "explanation": "Teradata's optimiser uses its knowledge base of statistics and demographics to determine access, join and aggregation strategies."
+    },
+    {
+      "stem": "How does the SQL Server optimiser choose an execution plan?",
+      "options": [
+        "It always uses the first plan generated",
+        "It applies only rule-based transformations",
+        "It estimates the cost of several candidate plans and selects the lowest-cost one",
+        "It asks the user to pick a plan",
+        "It reuses the plan from the previous query regardless of cost"
+      ],
+      "correct": 2,
+      "explanation": "SQL Server's optimiser is cost-based: it analyses several candidate plans, estimates each cost and selects the cheapest."
+    },
+    {
+      "stem": "What is the final step of query processing once the best execution plan has been selected?",
+      "options": [
+        "Re-parsing the SQL to confirm the syntax",
+        "Generating code for the selected plan, which the runtime database processor executes to produce the result",
+        "Storing the plan as a relational algebra expression",
+        "Building a new index on the queried table",
+        "Sending the plan back to the optimiser for a second pass"
+      ],
+      "correct": 1,
+      "explanation": "Code is generated for the chosen execution plan and executed by the runtime database processor to produce the query output."
+    },
+    {
+      "stem": "What is described as the core capability of Query Optimisation?",
+      "options": [
+        "Rejecting queries that have syntax errors",
+        "Compressing result sets",
+        "Enforcing access permissions on tables",
+        "Searching for the execution plan that needs the least time for query evaluation",
+        "Converting SQL into relational algebra"
+      ],
+      "correct": 3,
+      "explanation": "The core capability is to search for an execution plan that requires the least time for query evaluation."
+    }
+  ]
+}

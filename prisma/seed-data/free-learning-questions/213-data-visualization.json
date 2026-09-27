@@ -1,0 +1,125 @@
+{
+  "topic": "data-visualization",
+  "questions": [
+    {
+      "stem": "Why is Data Visualisation said to determine the success or failure of a data project?",
+      "options": [
+        "Because it is the most expensive part of the project",
+        "Because it is what end users actually see; if they cannot make use of the data, all the other effort is wasted",
+        "Because it replaces the need for a data warehouse",
+        "Because regulators only audit dashboards",
+        "Because it is the first step of any data pipeline"
+      ],
+      "correct": 1,
+      "explanation": "Data Visualisation is what is seen by end users; if they cannot see or use the implementation for decision support, the millions spent on strategy and warehouses are a waste of time and dollars."
+    },
+    {
+      "stem": "Which phrase is quoted in I Am Datapedia! to capture the importance of Data Visualisation?",
+      "options": [
+        "If you can't measure it, you can't manage it",
+        "Garbage in, garbage out",
+        "A picture is worth a thousand rows",
+        "If you can't draw it, you don't know it",
+        "Data is the new oil"
+      ],
+      "correct": 3,
+      "explanation": "The author quotes the phrase 'If you can't draw it, you don't know it' and says it is very true."
+    },
+    {
+      "stem": "What is the maximum number of KPIs recommended on one page of a dashboard?",
+      "options": [
+        "Five",
+        "Two",
+        "Ten",
+        "Three",
+        "Twenty"
+      ],
+      "correct": 0,
+      "explanation": "Rule 2 for good Data Visualisation is not to have more than five KPIs on one page."
+    },
+    {
+      "stem": "Why must a dashboard builder know the cardinality of every table they are going to join?",
+      "options": [
+        "To choose the right colour palette",
+        "To reduce licence costs",
+        "To eliminate the chance of producing Cartesian data",
+        "To satisfy the five-KPI rule",
+        "To decide which visualisation tool to buy"
+      ],
+      "correct": 2,
+      "explanation": "Rule 3, flagged as very important, is that the user must know the cardinality of all tables being joined to eliminate the chance of Cartesian data."
+    },
+    {
+      "stem": "How many tabular sections are recommended on a single dashboard page?",
+      "options": [
+        "None; tables should never appear on dashboards",
+        "As many as fit on the screen",
+        "Exactly five",
+        "At least three",
+        "One, with a maximum of two"
+      ],
+      "correct": 4,
+      "explanation": "Rule 4 is to use one tabular section on one page, going up to a maximum of two."
+    },
+    {
+      "stem": "Where should data preparation, such as creating a third column by multiplying two others, be done according to the Data Visualisation rules?",
+      "options": [
+        "In the visualisation tool, to save storage",
+        "In a spreadsheet exported from the dashboard",
+        "At the datastore level, even at the cost of extra storage, so the tool's memory is kept for slicing, dicing and drilling",
+        "In the end user's browser",
+        "It should not be done at all"
+      ],
+      "correct": 2,
+      "explanation": "Rule 5 says never enrich or prepare data in the visualisation tool because it uses a lot of memory; do it at the datastore level, because the target is faster visualisation rather than saving storage."
+    },
+    {
+      "stem": "How should the five Data Visualisation rules be treated?",
+      "options": [
+        "As not hard rules; they can be optimised based on the infrastructure in place and are only a few of many",
+        "As mandatory rules that must never be varied",
+        "As rules that apply only to Tableau",
+        "As rules that apply only to BI Specialists",
+        "As legal requirements for dashboards"
+      ],
+      "correct": 0,
+      "explanation": "The author notes these are not hard rules, can be optimised for the infrastructure in place, and are only a few of the many rules for an effective dashboard or report."
+    },
+    {
+      "stem": "What big mistake are organisations described as making with regard to roles in Data Visualisation?",
+      "options": [
+        "Hiring too many BI Specialists",
+        "Buying more than one visualisation tool",
+        "Letting end users build their own dashboards",
+        "Having their Data Analysts also perform BI Specialist roles, although these are different roles needing different tools",
+        "Storing dashboards in a Data Lake"
+      ],
+      "correct": 3,
+      "explanation": "A big mistake is to have Data Analysts do BI Specialist roles as well; they are different roles and need different kinds of Data Visualisation tools."
+    },
+    {
+      "stem": "In the author's own assessment, which tools are data analysis tools for Data Analysts, and which are for BI Specialists?",
+      "options": [
+        "Cognos, OBIEE and SSRS for Data Analysts; Tableau, Qlik and Power BI for BI Specialists",
+        "Tableau, Qlik and Power BI for Data Analysts; Cognos, OBIEE and SSRS for BI Specialists",
+        "All six tools are for Data Analysts only",
+        "All six tools are for BI Specialists only",
+        "Excel for Data Analysts; everything else for BI Specialists"
+      ],
+      "correct": 1,
+      "explanation": "In the author's assessment, Tableau, Qlik and Power BI are data analysis tools for Data Analysts, whereas Cognos, OBIEE and SSRS are for BI Specialists."
+    },
+    {
+      "stem": "Which of the following is NOT one of the stated rules for good Data Visualisation?",
+      "options": [
+        "First identify all the relevant KPIs to be presented on the same page",
+        "Do not have more than five KPIs on one page",
+        "Know the cardinality of all tables to be joined",
+        "Never enrich or prepare data in the visualisation tool",
+        "Always prepare derived columns inside the visualisation tool to save storage"
+      ],
+      "correct": 4,
+      "explanation": "Preparing data inside the visualisation tool is exactly what Rule 5 warns against; derived columns belong at the datastore level."
+    }
+  ]
+}

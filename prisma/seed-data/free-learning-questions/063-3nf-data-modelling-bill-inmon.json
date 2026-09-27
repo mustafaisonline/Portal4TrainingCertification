@@ -1,0 +1,125 @@
+{
+  "topic": "3nf-data-modelling-bill-inmon",
+  "questions": [
+    {
+      "stem": "What does Bill Inmon's 3NF Data Modelling approach build?",
+      "options": [
+        "A centralised Enterprise Data Warehouse in normalised, typically Third Normal Form, structure",
+        "A set of independent star-schema data marts built first for analytics",
+        "A key–value cache of loan records",
+        "An append-only event log",
+        "A graph of customers and officers"
+      ],
+      "correct": 0,
+      "explanation": "Inmon's approach organises enterprise data in a normalised structure, typically 3NF, to build a centralised Enterprise Data Warehouse that serves as the single source of truth."
+    },
+    {
+      "stem": "Which four characteristics describe the Inmon Enterprise Data Warehouse?",
+      "options": [
+        "Denormalised, fast, intuitive and process-oriented",
+        "Subject-oriented, integrated, time-variant and non-volatile",
+        "Schema-less, distributed, partitioned and eventually consistent",
+        "Immutable, append-only, replayable and streaming",
+        "Hierarchical, navigational, rigid and pointer-based"
+      ],
+      "correct": 1,
+      "explanation": "The EDW is subject-oriented, integrated, time-variant and non-volatile, serving as the authoritative single source of truth for the organisation."
+    },
+    {
+      "stem": "What does a 3NF Enterprise Data Warehouse prioritise over direct query performance?",
+      "options": [
+        "Horizontal scalability",
+        "Developer productivity",
+        "Data quality, traceability and long-term governance",
+        "Minimal table count",
+        "Real-time responsiveness"
+      ],
+      "correct": 2,
+      "explanation": "The 3NF EDW prioritises data quality, traceability and long-term governance, defining core entities once and integrating them across source systems."
+    },
+    {
+      "stem": "How is Customer data from a CRM system and from a Core Banking system handled in an Inmon-style EDW?",
+      "options": [
+        "Each system's customer records are stored in separate warehouses",
+        "Only the CRM version is loaded",
+        "They are stored as duplicate rows for traceability",
+        "They are reconciled and integrated under a single enterprise identifier",
+        "They are embedded together in one JSON document"
+      ],
+      "correct": 3,
+      "explanation": "Data from operational systems is extracted, cleansed, standardised and integrated, so customer data from CRM and Core Banking is reconciled under a single enterprise identifier."
+    },
+    {
+      "stem": "How are business intelligence queries typically served in the Inmon architecture?",
+      "options": [
+        "Directly from the normalised EDW tables",
+        "From a key–value cache in front of the EDW",
+        "From the operational source systems",
+        "From a graph database layered on the EDW",
+        "From dimensional data marts derived from the EDW, such as star or snowflake schemas"
+      ],
+      "correct": 4,
+      "explanation": "The 3NF EDW is not optimised for direct BI queries, so dimensional data marts are derived from it to serve reporting and dashboard needs."
+    },
+    {
+      "stem": "What metaphor describes the relationship between the Inmon EDW and downstream data marts?",
+      "options": [
+        "Hub and spokes: the EDW is the hub and marts are spokes tailored for analytical use cases",
+        "Parent and child: each mart owns part of the EDW",
+        "Producer and consumer: marts emit events to the EDW",
+        "Client and server: the EDW queries the marts",
+        "Key and value: the EDW is the key and marts are values"
+      ],
+      "correct": 0,
+      "explanation": "In this design the EDW acts as the hub and the downstream data marts act as spokes tailored for specific analytical use cases."
+    },
+    {
+      "stem": "In the Inmon-style loan approval EDW, which table has OfficerID and BranchID where BranchID is a foreign key?",
+      "options": [
+        "Loan",
+        "Officer",
+        "Approval",
+        "Branch",
+        "Status"
+      ],
+      "correct": 1,
+      "explanation": "The Officer table has OfficerID as primary key and BranchID as a foreign key referencing the Branch table, with one row per officer."
+    },
+    {
+      "stem": "In the 3NF loan approval EDW, what does one row of the Approval table represent?",
+      "options": [
+        "One customer",
+        "One loan account",
+        "One approval decision event",
+        "One branch",
+        "One status value"
+      ],
+      "correct": 2,
+      "explanation": "Approval (ApprovalID PK, LoanID FK, OfficerID FK, StatusID FK) holds one row per approval decision event."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a trade-off of 3NF Data Modelling in an EDW?",
+      "options": [
+        "Designing and maintaining the EDW can be complex and time-consuming",
+        "Query performance for end users may be slower unless marts are created",
+        "The model is less intuitive for business users than a star schema",
+        "Every data element loses traceability to its source",
+        "Analytical queries may require multiple joins"
+      ],
+      "correct": 3,
+      "explanation": "Traceability is a strength of the 3NF EDW: every data element can be traced back to an integrated, controlled source, which supports regulatory requirements."
+    },
+    {
+      "stem": "How does Inmon's philosophy contrast with Kimball's approach?",
+      "options": [
+        "Inmon builds star schemas first; Kimball builds a normalised core first",
+        "Inmon uses NoSQL; Kimball uses relational databases",
+        "Inmon rejects data marts entirely; Kimball rejects the warehouse",
+        "Inmon is real-time; Kimball is batch",
+        "Inmon is EDW-first, building the normalised core then deriving marts; Kimball is dimensional-first, building marts directly for analytics"
+      ],
+      "correct": 4,
+      "explanation": "Kimball's dimensional-first approach builds data marts directly for analytics and integrates them conceptually later, while Inmon builds the normalised enterprise core first and derives marts as needed."
+    }
+  ]
+}

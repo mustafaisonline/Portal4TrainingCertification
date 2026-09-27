@@ -1,0 +1,125 @@
+{
+  "topic": "attribution-data-models",
+  "questions": [
+    {
+      "stem": "What key question do marketing attribution data models seek to answer?",
+      "options": [
+        "How much budget each department should receive",
+        "Which channels and touchpoints contribute significantly to the final sale",
+        "Which product has the highest profit margin",
+        "How many employees the marketing team needs",
+        "Which customers should be removed from the mailing list"
+      ],
+      "correct": 1,
+      "explanation": "When running campaigns across many channels, the key question attribution models address is which channels and touchpoints contribute significantly to the final sale."
+    },
+    {
+      "stem": "What is the main limitation of single-touch attribution models?",
+      "options": [
+        "They require machine learning expertise",
+        "They cannot be used for e-commerce",
+        "They overlook the cumulative effect of multiple interactions, giving a limited view of overall effectiveness",
+        "They need external economic data",
+        "They only work for TV advertising"
+      ],
+      "correct": 2,
+      "explanation": "Single-touch models are simple but overlook the cumulative effect of multiple interactions, limiting the view of the overall marketing strategy's effectiveness."
+    },
+    {
+      "stem": "Which attribution model credits all sales to the final marketing touchpoint before a purchase?",
+      "options": [
+        "First click",
+        "Linear",
+        "Time decay",
+        "Last click",
+        "U-shaped"
+      ],
+      "correct": 3,
+      "explanation": "Last click credits all sales to the last marketing touchpoint before the purchase, whether an ad click, an email or a referral link."
+    },
+    {
+      "stem": "Which attribution model attributes the sale entirely to the touchpoint that initially attracted the customer's attention?",
+      "options": [
+        "Last click",
+        "Time decay",
+        "Linear",
+        "W-shaped",
+        "First click"
+      ],
+      "correct": 4,
+      "explanation": "First click attributes all sales to the first marketing touchpoint that attracted the customer, emphasising initial interactions and long-term customer value."
+    },
+    {
+      "stem": "Which businesses are said to be best suited to single-touch attribution models?",
+      "options": [
+        "E-commerce stores with short sales cycles and straightforward paths to purchase",
+        "B2B enterprises with long buying cycles",
+        "Service-oriented businesses with complex journeys",
+        "Businesses using many channels simultaneously",
+        "Businesses seeking to model external economic factors"
+      ],
+      "correct": 0,
+      "explanation": "Single-touch models suit businesses like e-commerce stores with short sales cycles where a single interaction has a big influence."
+    },
+    {
+      "stem": "In the linear attribution model, how is credit distributed?",
+      "options": [
+        "All credit goes to the last interaction",
+        "Each touchpoint in the customer's journey receives an equal share of credit",
+        "Credit increases for interactions closer to conversion",
+        "Credit goes mainly to the first and last interactions",
+        "Credit is assigned by a machine learning algorithm"
+      ],
+      "correct": 1,
+      "explanation": "In the linear model every interaction, regardless of its position in the journey, receives an equal share of credit for the sale."
+    },
+    {
+      "stem": "In the time decay attribution model, which interactions receive the most credit?",
+      "options": [
+        "The first interaction only",
+        "Interactions in the middle of the journey",
+        "Interactions that occur closer to the conversion",
+        "All interactions equally",
+        "Interactions on paid channels only"
+      ],
+      "correct": 2,
+      "explanation": "In time decay, interactions closer to the conversion receive more credit, while earlier touchpoints receive progressively less as their influence decays."
+    },
+    {
+      "stem": "How does the W-shaped model differ from the U-shaped model?",
+      "options": [
+        "It gives all credit to the last click",
+        "It ignores the first interaction",
+        "It uses statistical analysis of historical data",
+        "It further emphasises intermediate touchpoints between the first and last interactions",
+        "It assigns equal credit to every touchpoint"
+      ],
+      "correct": 3,
+      "explanation": "The U-shaped model credits the first, last and some middle interactions; the W-shaped model further emphasises the intermediate touchpoints."
+    },
+    {
+      "stem": "What is Marketing Mix Modelling (MMM)?",
+      "options": [
+        "A single-touch model for e-commerce",
+        "A model that credits only the first click",
+        "A position-based model for B2B",
+        "A rule that gives equal credit to every channel",
+        "A data-driven model using statistical analysis of historical data, including external factors, to measure each channel's impact on overall sales"
+      ],
+      "correct": 4,
+      "explanation": "MMM applies statistical analysis to historical internal and external data (sales, spend, economic indicators, seasonality, competition) to quantify each channel's contribution."
+    },
+    {
+      "stem": "Which of the following is NOT one of the multi-touch attribution models described?",
+      "options": [
+        "Last click",
+        "Linear",
+        "Time decay",
+        "U-shaped",
+        "W-shaped"
+      ],
+      "correct": 0,
+      "explanation": "Last click is a single-touch model; the multi-touch models are linear, time decay and position based (U-shaped and W-shaped)."
+    }
+  ]
+}

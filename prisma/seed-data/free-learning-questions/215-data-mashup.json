@@ -1,0 +1,125 @@
+{
+  "topic": "data-mashup",
+  "questions": [
+    {
+      "stem": "With which term is Data Mashup commonly confused, even though the two are totally different?",
+      "options": [
+        "Data Mart",
+        "Data Mesh",
+        "Data Mining",
+        "Data Munging",
+        "Data Model"
+      ],
+      "correct": 1,
+      "explanation": "Data Mashup is normally confused with Data Mesh, but the two are totally different."
+    },
+    {
+      "stem": "What is a Data Mashup?",
+      "options": [
+        "A database that stores only unstructured data",
+        "A process for removing duplicate rows",
+        "A dashboard or web page whose data points come from multiple sources in a single view",
+        "A set of rules for naming tables",
+        "A machine learning model that runs itself"
+      ],
+      "correct": 2,
+      "explanation": "A dashboard or web page with data points coming from multiple sources in a single view is called a Data Mashup."
+    },
+    {
+      "stem": "From what idea does Data Mashup come?",
+      "options": [
+        "Doing self-service on a single source of truth",
+        "Replacing dashboards with printed reports",
+        "Splitting data into training and testing sets",
+        "Outsourcing data analysis",
+        "Encrypting data at rest"
+      ],
+      "correct": 0,
+      "explanation": "Data Mashup comes from the idea of doing self-service on a single source of truth."
+    },
+    {
+      "stem": "Which of the following are given as examples of sources feeding a Data Mashup dashboard?",
+      "options": [
+        "Only relational databases",
+        "Only paper forms",
+        "Only emails",
+        "Only spreadsheets",
+        "Databases, Data Lakes and social media"
+      ],
+      "correct": 4,
+      "explanation": "Dashboards with data coming from multiple sources, such as databases, Data Lakes and social media, are everyday examples of Data Mashup."
+    },
+    {
+      "stem": "What is a Data Mashup called when it is done at the organisation level?",
+      "options": [
+        "Data Mesh",
+        "Data Mart",
+        "Data Warehouse",
+        "Enterprise Mashup",
+        "Data Harmonisation"
+      ],
+      "correct": 3,
+      "explanation": "At the organisation level a Data Mashup is also called an Enterprise Mashup."
+    },
+    {
+      "stem": "In the Big Data era, what kinds of content are described as appearing together on one Data Mashup page?",
+      "options": [
+        "Only numeric tables",
+        "Graphs, pictures and videos",
+        "Only text documents",
+        "Only KPIs from one database",
+        "Only audio files"
+      ],
+      "correct": 1,
+      "explanation": "In the Big Data era, we have graphs, pictures and videos all on one page."
+    },
+    {
+      "stem": "For which role is Data Mashup described as very useful, and why?",
+      "options": [
+        "Data Analysts, to fetch data from different sources, make sense of it and build meaningful data for business decision making",
+        "Database administrators, to tune indexes",
+        "Security officers, to authenticate users",
+        "Network engineers, to monitor bandwidth",
+        "Auditors, to verify financial statements"
+      ],
+      "correct": 0,
+      "explanation": "Data Mashup is very useful for Data Analysts who fetch data from different sources, make sense of it and build meaningful data for business decision making."
+    },
+    {
+      "stem": "How common is Data Mashup in day-to-day practice, according to I Am Datapedia!?",
+      "options": [
+        "It is a rare technique used only by researchers",
+        "It has been retired in favour of Data Mesh",
+        "We all do it daily through dashboards drawing on multiple sources",
+        "It is only used by government organisations",
+        "It is only possible with printed reports"
+      ],
+      "correct": 2,
+      "explanation": "The author notes that nowadays we all do this daily, having dashboards with data coming from multiple sources."
+    },
+    {
+      "stem": "Which statement about Data Mashup is NOT correct?",
+      "options": [
+        "It presents data from multiple sources in a single view",
+        "It can include social media as a source",
+        "It is also called Enterprise Mashup at organisation level",
+        "It is another name for Data Mesh",
+        "It is useful for Data Analysts"
+      ],
+      "correct": 3,
+      "explanation": "Data Mashup is often confused with Data Mesh, but the two are totally different concepts."
+    },
+    {
+      "stem": "A web page shows a sales graph from a database alongside customer comments pulled from social media and a video from a Data Lake. What does this illustrate?",
+      "options": [
+        "Data Splitting",
+        "Data Scrubbing",
+        "Data Dredging",
+        "Data Entitlement",
+        "Data Mashup"
+      ],
+      "correct": 4,
+      "explanation": "A single web page or dashboard combining data points from multiple sources, including graphs, pictures and videos, is a Data Mashup."
+    }
+  ]
+}

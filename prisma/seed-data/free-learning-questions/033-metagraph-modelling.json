@@ -1,0 +1,125 @@
+{
+  "topic": "metagraph-modelling",
+  "questions": [
+    {
+      "stem": "What distinguishes Metagraph Modelling from a standard graph model?",
+      "options": [
+        "In a metagraph, nodes and relationships can themselves represent groups, sets or entire subgraphs, so relationships carry their own structure",
+        "Metagraphs have no edges",
+        "Metagraphs store data only in tables",
+        "Metagraphs cannot represent entities",
+        "Metagraphs are limited to one-to-one relationships"
+      ],
+      "correct": 0,
+      "explanation": "Metagraph Modelling lets nodes and relationships represent groups, sets or subgraphs, allowing relationships to carry their own structure and meaning."
+    },
+    {
+      "stem": "What is the primary goal of Metagraph Modelling?",
+      "options": [
+        "To reduce storage size",
+        "To classify concepts into hierarchies",
+        "To standardise data exchange between systems",
+        "To normalise tables to 3NF",
+        "To provide a more expressive framework for modelling context, grouping and higher-order relationships"
+      ],
+      "correct": 4,
+      "explanation": "Metagraphs describe relationships about relationships, giving a more expressive framework for context, grouping and higher-order relationships."
+    },
+    {
+      "stem": "In a metagraph, how is the act of a customer applying for a loan represented?",
+      "options": [
+        "As a simple edge with no further detail",
+        "As a column in the customer table",
+        "As a taxonomy category",
+        "As a structured object that can include the application date, submission channel and the loan officer who handled it",
+        "As a BPMN gateway"
+      ],
+      "correct": 3,
+      "explanation": "The relationship itself becomes a meaningful object with attributes and constraints, capturing the full context of the application."
+    },
+    {
+      "stem": "In the student competition analogy for metagraphs, what can the participation object include?",
+      "options": [
+        "Only the student's name",
+        "Only the competition title",
+        "The role the student played, the date, the result achieved and the supervising teacher",
+        "The database table storing the competition",
+        "The school's address"
+      ],
+      "correct": 2,
+      "explanation": "In a metagraph, participation becomes an object carrying context such as role, date, result and supervising teacher, not just direction."
+    },
+    {
+      "stem": "Which analytical question is given as an example that a metagraph can answer because relationships carry structured detail?",
+      "options": [
+        "How many tables are in the loan database",
+        "What the Greek roots of the word taxonomy are",
+        "How many customers exist in total",
+        "Which applications submitted online during a specific month resulted in rejection",
+        "Which server hosts the collections system"
+      ],
+      "correct": 3,
+      "explanation": "Because the relationship carries structured detail, analysts can ask which online applications in a given month were rejected, or which officers handled later-delinquent loans."
+    },
+    {
+      "stem": "Why are metagraphs often described as graphs of graphs?",
+      "options": [
+        "Because they contain many unrelated graphs",
+        "Because they allow nested and multi-layered structures where a relationship may connect sets of entities or entire subgraphs",
+        "Because they are drawn using two chart types",
+        "Because each node is a separate database",
+        "Because they duplicate every edge"
+      ],
+      "correct": 1,
+      "explanation": "Metagraphs allow nested, multi-layered structures where relationships can connect not just entities but sets or whole subgraphs."
+    },
+    {
+      "stem": "Which of the following is NOT named as a complex domain suited to Metagraph Modelling?",
+      "options": [
+        "Workflow orchestration",
+        "Contract management",
+        "Semantic integration",
+        "Artificial intelligence reasoning",
+        "Spreadsheet formatting"
+      ],
+      "correct": 4,
+      "explanation": "Metagraphs suit workflow orchestration, contract management, semantic integration and AI reasoning; spreadsheet formatting is not mentioned."
+    },
+    {
+      "stem": "How does Metagraph Modelling relate to knowledge graph principles?",
+      "options": [
+        "It rejects them entirely",
+        "It builds on them but adds an additional layer of structure and semantics",
+        "It is a simplified version with fewer relationships",
+        "It replaces nodes with tables",
+        "It removes the need for ontologies"
+      ],
+      "correct": 1,
+      "explanation": "Metagraph Modelling builds on knowledge graph principles and adds an extra layer of structure and semantics to relationships."
+    },
+    {
+      "stem": "In the comparison of FCO-IM, Knowledge Graph and Metagraph, which technique answers how, when and under what conditions entities are connected?",
+      "options": [
+        "FCO-IM",
+        "Knowledge Graph",
+        "Metagraph",
+        "Taxonomy",
+        "Canonical model"
+      ],
+      "correct": 2,
+      "explanation": "FCO-IM answers what was communicated, Knowledge Graph answers who is connected to whom, and Metagraph answers how, when and under what conditions."
+    },
+    {
+      "stem": "In the metagraph loan example, which details are attached to the appliesFor relationship?",
+      "options": [
+        "Date, Channel, Officer and Campaign",
+        "Interest rate and term",
+        "Customer name and address",
+        "Table name and primary key",
+        "Approval decision and repayment amount"
+      ],
+      "correct": 0,
+      "explanation": "The appliesFor edge includes Date=12-Aug, Channel=Online, Officer=123 and Campaign=SummerPromo, elevating the relationship into a contextual object."
+    }
+  ]
+}

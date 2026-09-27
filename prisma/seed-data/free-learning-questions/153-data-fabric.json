@@ -1,0 +1,125 @@
+{
+  "topic": "data-fabric",
+  "questions": [
+    {
+      "stem": "How does a data fabric differ from a data hub?",
+      "options": [
+        "The fabric is a storage system; the hub is a governance tool",
+        "The hub is the distribution and operationalisation layer, while the fabric is a broader paradigm unifying governance, integration and orchestration across the whole enterprise",
+        "The fabric replaces the hub entirely",
+        "They are the same concept under different vendor names",
+        "The hub works in the cloud; the fabric works on-premises only"
+      ],
+      "correct": 1,
+      "explanation": "Both break down silos but operate at different levels of abstraction: the hub distributes insights back to applications, while the fabric unifies governance, integration and orchestration across all data assets."
+    },
+    {
+      "stem": "Which stages of the data lifecycle does a data fabric coordinate?",
+      "options": [
+        "Only storage and backup",
+        "Discovery, integration, governance, security and consumption",
+        "Only ETL scheduling",
+        "Only reporting and dashboards",
+        "Only encryption and decryption"
+      ],
+      "correct": 1,
+      "explanation": "The data fabric coordinates the entire lifecycle of data: discovery, integration, governance, security and consumption."
+    },
+    {
+      "stem": "Which metaphor is used to describe the data fabric within the enterprise?",
+      "options": [
+        "The skeleton of the enterprise",
+        "The central nervous system of the enterprise",
+        "The bloodstream of the enterprise",
+        "The immune system of the enterprise",
+        "The lungs of the enterprise"
+      ],
+      "correct": 1,
+      "explanation": "The fabric is likened to the central nervous system: each data platform performs its own function, but the fabric, like the brain, ensures they work together under consistent policies."
+    },
+    {
+      "stem": "Why is the data fabric particularly relevant today?",
+      "options": [
+        "Because all data now lives in one central database",
+        "Because most organisations operate in a hybrid and multi-cloud reality with data spread across on-premises systems, private clouds and multiple public clouds",
+        "Because relational databases have been abandoned",
+        "Because regulators require a single vendor",
+        "Because data volumes have shrunk"
+      ],
+      "correct": 1,
+      "explanation": "Data is distributed across on-premises, private cloud and multiple public clouds; without a unifying architecture this creates integration gaps, inconsistent governance and compliance risks."
+    },
+    {
+      "stem": "Which of the following is NOT one of the capabilities a data fabric provides?",
+      "options": [
+        "Centralised governance and policy enforcement across platforms",
+        "Metadata-driven intelligence to automate discovery, lineage and integration",
+        "Security and compliance controls applied consistently in all environments",
+        "Physical consolidation of all data into a single warehouse",
+        "Self-service access for business and technical users"
+      ],
+      "correct": 3,
+      "explanation": "The fabric provides governance, metadata-driven intelligence, consistent security, hybrid and multi-cloud integration and self-service access; it does not physically consolidate all data into one warehouse."
+    },
+    {
+      "stem": "Is the data fabric a single tool or product?",
+      "options": [
+        "Yes, it is a specific software product",
+        "Yes, it is a cloud service offered by one vendor",
+        "No, it is a set of technologies and practices spanning catalogues, metadata platforms, orchestration engines, API gateways and governance frameworks",
+        "No, it is purely a policy document",
+        "Yes, it is a database engine"
+      ],
+      "correct": 2,
+      "explanation": "The data fabric is not a single tool or product but a set of technologies and practices that together create a logical fabric woven across the enterprise."
+    },
+    {
+      "stem": "What role does metadata-driven intelligence play in a data fabric?",
+      "options": [
+        "It encrypts data at rest",
+        "It automates data discovery, lineage and integration",
+        "It replaces the data warehouse",
+        "It stores transactions in real time",
+        "It generates dashboards for executives"
+      ],
+      "correct": 1,
+      "explanation": "Metadata-driven intelligence in the fabric automates data discovery, lineage and integration."
+    },
+    {
+      "stem": "Across which kinds of data assets does a data fabric provide its unified layer of governance and control?",
+      "options": [
+        "Only data lakes",
+        "Only OLTP systems",
+        "OLTP systems, data warehouses, data lakes, lakehouses and BI platforms alike",
+        "Only cloud-hosted systems",
+        "Only BI platforms"
+      ],
+      "correct": 2,
+      "explanation": "The fabric provides governance and control across all data assets, whether they reside in OLTP systems, data warehouses, data lakes, lakehouses or BI platforms."
+    },
+    {
+      "stem": "What does self-service access mean in the context of a data fabric?",
+      "options": [
+        "Users can install their own databases",
+        "Business and technical users can discover and consume governed data themselves",
+        "Users can bypass access controls",
+        "Applications manage their own pipelines",
+        "Data is available without any metadata"
+      ],
+      "correct": 1,
+      "explanation": "Self-service access lets business and technical users discover and consume governed data without waiting on bespoke integration."
+    },
+    {
+      "stem": "Which phrase describes the data fabric's position in modern data ecosystems?",
+      "options": [
+        "The brain coordinating activity across a distributed digital enterprise",
+        "The vault storing all historical facts",
+        "The pipeline moving data into the warehouse",
+        "The dashboard presenting KPIs",
+        "The archive for retired data"
+      ],
+      "correct": 0,
+      "explanation": "The architectural shift positions the data fabric as the brain of modern data ecosystems, coordinating activity across an increasingly distributed digital enterprise."
+    }
+  ]
+}

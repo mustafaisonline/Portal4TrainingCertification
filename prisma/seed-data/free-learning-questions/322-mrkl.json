@@ -1,0 +1,125 @@
+{
+  "topic": "mrkl",
+  "questions": [
+    {
+      "stem": "What does MRKL stand for?",
+      "options": [
+        "Machine Reasoning, Knowledge and Logic",
+        "Modular Reasoning, Knowledge and Language",
+        "Multi-Role Knowledge Learning",
+        "Modular Retrieval, Knowledge and Learning",
+        "Managed Reasoning and Knowledge Layer"
+      ],
+      "correct": 1,
+      "explanation": "MRKL stands for Modular Reasoning, Knowledge, and Language."
+    },
+    {
+      "stem": "What kind of architecture is a MRKL system described as?",
+      "options": [
+        "A purely symbolic architecture",
+        "A client-server architecture",
+        "A neuro-symbolic architecture",
+        "A purely neural architecture",
+        "A microservices architecture"
+      ],
+      "correct": 2,
+      "explanation": "MRKL is a neuro-symbolic architecture that combines neural computation with symbolic computation tools."
+    },
+    {
+      "stem": "In a MRKL system, which component provides the neural computation?",
+      "options": [
+        "Calculators",
+        "Relational databases",
+        "Rule engines",
+        "Large Language Models (LLMs)",
+        "Spreadsheets"
+      ],
+      "correct": 3,
+      "explanation": "The neural computation in MRKL is provided by Large Language Models (LLMs)."
+    },
+    {
+      "stem": "Which external symbolic computation tool is specifically mentioned as part of a MRKL system?",
+      "options": [
+        "A web browser",
+        "A calculator",
+        "A search engine",
+        "A compiler",
+        "A message queue"
+      ],
+      "correct": 1,
+      "explanation": "MRKL integrates external symbolic computation tools, and calculators are the specifically mentioned example."
+    },
+    {
+      "stem": "How is neural computation characterised?",
+      "options": [
+        "Processing information in a way inspired by the human brain",
+        "Manipulating symbols to perform operations",
+        "Storing data in fixed tables",
+        "Executing arithmetic exactly with no approximation",
+        "Following a predefined decision tree"
+      ],
+      "correct": 0,
+      "explanation": "Neural computation involves processing information in a way inspired by the human brain, whereas symbolic computation manipulates symbols to perform operations."
+    },
+    {
+      "stem": "How is symbolic computation characterised?",
+      "options": [
+        "Learning patterns from large amounts of text",
+        "Processing information like a biological brain",
+        "Recognising human-like dialect",
+        "Training on extensive text data",
+        "Manipulating symbols to perform operations"
+      ],
+      "correct": 4,
+      "explanation": "Symbolic computation involves manipulating symbols to perform operations, as a calculator does."
+    },
+    {
+      "stem": "What are Large Language Models (LLMs) trained on?",
+      "options": [
+        "Financial transaction logs",
+        "Extensive text data",
+        "Sensor readings from machines",
+        "Satellite images",
+        "Numerical spreadsheets only"
+      ],
+      "correct": 1,
+      "explanation": "LLMs are sophisticated artificial intelligence models trained on extensive text data, excelling at recognising and producing human-like dialect."
+    },
+    {
+      "stem": "What is described as the ultimate goal of a MRKL system?",
+      "options": [
+        "Reducing cloud computing costs",
+        "Replacing calculators with neural networks",
+        "Solving complex problems",
+        "Generating training data for LLMs",
+        "Storing knowledge in a database"
+      ],
+      "correct": 2,
+      "explanation": "Problem solving is the ultimate goal of a MRKL system: it is designed to address complex problems."
+    },
+    {
+      "stem": "Why does a MRKL system combine neural and symbolic approaches?",
+      "options": [
+        "To reduce the amount of text data needed for training",
+        "To eliminate the need for any external tools",
+        "To make the system run entirely offline",
+        "To benefit from the strengths of both approaches when tackling a wide range of challenges",
+        "To ensure the system produces only numerical output"
+      ],
+      "correct": 3,
+      "explanation": "The combination of LLMs and symbolic tools is leveraged to tackle a wide range of challenges, benefiting from the strengths of both approaches."
+    },
+    {
+      "stem": "Which of the following is NOT part of a MRKL system as described?",
+      "options": [
+        "Large Language Models for neural computation",
+        "External symbolic tools such as calculators",
+        "A hybrid neuro-symbolic approach",
+        "A focus on solving complex problems",
+        "A requirement that all reasoning is done purely by symbolic rules"
+      ],
+      "correct": 4,
+      "explanation": "MRKL is a hybrid: it combines neural computation (LLMs) with symbolic tools rather than relying purely on symbolic rules."
+    }
+  ]
+}

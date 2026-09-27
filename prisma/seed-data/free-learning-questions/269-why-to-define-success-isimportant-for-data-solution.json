@@ -1,0 +1,125 @@
+{
+  "topic": "why-to-define-success-isimportant-for-data-solution",
+  "questions": [
+    {
+      "stem": "What does success mean in general terms when applied to data solutions?",
+      "options": [
+        "Spending the entire project budget",
+        "Storing as much data as possible",
+        "Achieving a goal or doing something well",
+        "Finishing a project ahead of schedule regardless of outcome",
+        "Using the newest available technology"
+      ],
+      "correct": 2,
+      "explanation": "Success, in general, means achieving a goal or doing something well, like hitting a target."
+    },
+    {
+      "stem": "Which analogy is used for working on a data solution without a clear definition of success?",
+      "options": [
+        "Trying to win a game without knowing the rules or the score",
+        "Driving a car without fuel",
+        "Building a house without bricks",
+        "Reading a book in the dark",
+        "Cooking without a recipe"
+      ],
+      "correct": 0,
+      "explanation": "Working without a definition of success is compared to trying to win a game without knowing the rules or the score."
+    },
+    {
+      "stem": "How are data solutions described when discussing the definition of success?",
+      "options": [
+        "Hardware for storing backups",
+        "Legal agreements about data sharing",
+        "Reports produced for regulators",
+        "Software licences for databases",
+        "Ways to manage and use information, including collecting, organising and analysing data"
+      ],
+      "correct": 4,
+      "explanation": "Data solutions are ways to handle and use information effectively, including tasks like collecting, organising and analysing data."
+    },
+    {
+      "stem": "When success is defined for a data solution, what kinds of goals might be set?",
+      "options": [
+        "Goals about office location and staffing",
+        "Goals related to accuracy, efficiency, security or other aspects of managing data",
+        "Goals about the colour scheme of dashboards",
+        "Goals about the number of vendors used",
+        "Goals about the age of the hardware"
+      ],
+      "correct": 1,
+      "explanation": "Defining success means setting goals, which could relate to accuracy, efficiency, security or other aspects of managing data."
+    },
+    {
+      "stem": "Which image is used to describe how a definition of success helps with monitoring progress?",
+      "options": [
+        "A clock counting down",
+        "A scoreboard at a stadium",
+        "A thermometer showing temperature",
+        "A map showing where you are and how far you are from your destination",
+        "A ladder with numbered rungs"
+      ],
+      "correct": 3,
+      "explanation": "Knowing what success looks like is like having a map that shows where you are on your journey and how far you are from your destination."
+    },
+    {
+      "stem": "How does a clear definition of success help with decision-making in data solutions?",
+      "options": [
+        "You know what you are aiming for, so you can choose the best strategies and tools to get there",
+        "It removes the need to consult stakeholders",
+        "It guarantees that no decision will ever need revisiting",
+        "It lets you skip testing",
+        "It allows decisions to be delegated entirely to software"
+      ],
+      "correct": 0,
+      "explanation": "With a clear definition of success you know what you are aiming for, so you can make informed decisions about strategies and tools."
+    },
+    {
+      "stem": "What is said about defining success as part of continuous improvement?",
+      "options": [
+        "It should be done once at project kick-off and never changed",
+        "It only matters after the solution has failed",
+        "It is the responsibility of auditors, not the project team",
+        "It is an ongoing process in which goals can be adjusted and solutions improved over time",
+        "It should be avoided because goals slow teams down"
+      ],
+      "correct": 3,
+      "explanation": "Defining success is not a one-time thing; it is an ongoing process in which goals are adjusted as needed and data solutions keep improving."
+    },
+    {
+      "stem": "If success for a data solution project means having accurate and up-to-date information, what follows?",
+      "options": [
+        "The project only needs to run once",
+        "Accuracy can be ignored once the data is loaded",
+        "Processes and systems are designed for accuracy, and the data is regularly checked and updated",
+        "All historical data must be deleted",
+        "The data must be moved to the cloud"
+      ],
+      "correct": 2,
+      "explanation": "In that example, processes and systems are designed to ensure accuracy, and the data is regularly checked and updated to maintain it."
+    },
+    {
+      "stem": "Which of these is NOT given as a reason why defining success matters for data solutions?",
+      "options": [
+        "It helps set goals",
+        "It helps monitor progress",
+        "It supports informed decisions",
+        "It enables continuous improvement",
+        "It removes the need to monitor progress"
+      ],
+      "correct": 4,
+      "explanation": "Defining success supports setting goals, monitoring progress, informed decisions and continuous improvement; it does not remove the need to monitor progress."
+    },
+    {
+      "stem": "In summary, defining success for a data solution is compared to what?",
+      "options": [
+        "Buying insurance against failure",
+        "Setting clear goals and having a roadmap",
+        "Hiring more staff",
+        "Writing a technical specification",
+        "Choosing a database vendor"
+      ],
+      "correct": 1,
+      "explanation": "Defining success is like setting clear goals and having a roadmap, helping you stay on track, make better decisions and keep improving."
+    }
+  ]
+}

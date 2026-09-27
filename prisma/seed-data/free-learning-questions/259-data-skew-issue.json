@@ -1,0 +1,125 @@
+{
+  "topic": "data-skew-issue",
+  "questions": [
+    {
+      "stem": "What causes a Data Skew Issue?",
+      "options": [
+        "Data not being distributed evenly across the nodes in a cluster",
+        "Indexes being disabled on large tables",
+        "Poorly written join conditions in a query",
+        "Low data quality in the source systems",
+        "A lack of data standardisation across datasets"
+      ],
+      "correct": 0,
+      "explanation": "A Data Skew Issue arises when data is not distributed evenly; uneven distribution at cluster level degrades query performance even when the query, joins and indexes are all correct."
+    },
+    {
+      "stem": "What is the Data Skew Issue normally referred to as in the Data Science domain?",
+      "options": [
+        "Data Coupling",
+        "Uneven Load Balancing",
+        "Data Enrichment",
+        "Skewed Data Distribution",
+        "Massive Parallel Processing"
+      ],
+      "correct": 3,
+      "explanation": "In the Data Science domain the same idea is known as Skewed Data Distribution, a concept related to Statistics."
+    },
+    {
+      "stem": "Which kind of query is said to suffer the most from a Data Skew Issue?",
+      "options": [
+        "Simple single-table lookups",
+        "Queries with joins",
+        "Queries that only count rows",
+        "Queries run against a single node",
+        "Queries on freshly loaded datasets"
+      ],
+      "correct": 1,
+      "explanation": "Data skew heavily degrades query performance, especially for queries that involve joins."
+    },
+    {
+      "stem": "Why does uneven data distribution slow queries in a Massive Parallel Processing (MPP) cluster?",
+      "options": [
+        "Because the cluster has to rebuild every index before the query runs",
+        "Because skewed data forces the query to run on a single node only",
+        "Because uneven data automatically triggers a full backup",
+        "Because MPP switches to a non-parallel mode when data is unequal",
+        "Because MPP cannot be utilised properly, so the compute power of all nodes is not fully used"
+      ],
+      "correct": 4,
+      "explanation": "When data is not spread evenly across all nodes, MPP cannot be utilised properly and not all of the nodes' compute power is used, slowing the query response."
+    },
+    {
+      "stem": "Which activity is named as one of the main reasons for a Data Skew Issue?",
+      "options": [
+        "Adding more CPU and RAM to the cluster",
+        "Enabling indexes on frequently joined columns",
+        "Data Enrichment, such as inserts, updates and delete tags that move data between locations",
+        "Running queries during peak business hours",
+        "Applying data standardisation rules"
+      ],
+      "correct": 2,
+      "explanation": "Data Enrichment moves data from one location to another, creating an imbalance of data across the nodes in a cluster."
+    },
+    {
+      "stem": "In the ten-node cluster example for data skew, three nodes end up with 2% of the data each while three others gain an extra 8% each. What happens when a query runs?",
+      "options": [
+        "All ten nodes work until the 2% nodes finish, after which the remaining data is effectively processed by only seven nodes",
+        "The query fails because the nodes no longer hold equal shares",
+        "The three nodes with 2% each take the longest to complete",
+        "The cluster automatically redistributes the data before running the query",
+        "The query runs entirely on the three heaviest nodes"
+      ],
+      "correct": 0,
+      "explanation": "The query uses all ten nodes until the lightly loaded nodes are done; the data on the heavier nodes then takes longer because MPP is effectively running on seven nodes, so the full compute power is not utilised."
+    },
+    {
+      "stem": "What exercise is normally run to address the Data Skew Issue after a data pipeline execution or Data Enrichment?",
+      "options": [
+        "Index rebuilding",
+        "Data standardisation",
+        "Adding more nodes to the cluster",
+        "Load Balancing, so data is evenly redistributed across the cluster",
+        "Purging the oldest data"
+      ],
+      "correct": 3,
+      "explanation": "Load Balancing exercises are run so that after each pipeline execution or enrichment the data is evenly redistributed across the cluster."
+    },
+    {
+      "stem": "What is described as the first thumb rule for query performance in the era of Cloud and MPP?",
+      "options": [
+        "Queries should always be limited to a single node to avoid contention",
+        "When a query runs, all possible compute power should be utilised",
+        "Data should be kept on as few nodes as possible",
+        "Every query should be cached before it is executed",
+        "Compute should be added before storage"
+      ],
+      "correct": 1,
+      "explanation": "The first thumb rule is that all possible compute power should be utilised when a query runs, which is only possible when data is evenly distributed across the nodes."
+    },
+    {
+      "stem": "Which of these is NOT listed as a type of Skewed Data?",
+      "options": [
+        "Skewed Right (Positive)",
+        "Skewed Left (Negative)",
+        "Skewed Outlier",
+        "Skewed Narrow Range",
+        "Skewed Diagonal"
+      ],
+      "correct": 4,
+      "explanation": "The listed types include Skewed Right, Skewed Left, Symmetric, Evenly Distributed, Two Mode Symmetric, Two Mode Non-Symmetric, Narrow Range, Wide Range and Outlier; Skewed Diagonal is not among them."
+    },
+    {
+      "stem": "A query runs exceptionally well until 99% and then hangs for hours, and adding CPU, RAM and nodes does not help. Which explanation matches this symptom?",
+      "options": [
+        "The joins in the query are incorrect",
+        "The data quality of the dataset is poor",
+        "A Data Skew Issue: the data is unevenly distributed across the cluster",
+        "The indexes on the tables have been disabled",
+        "The dataset is too small to benefit from parallel processing"
+      ],
+      "correct": 2,
+      "explanation": "This is the classic symptom of a Data Skew Issue, where a correct query with correct joins and indexes still performs badly because the data is unevenly distributed across nodes."
+    }
+  ]
+}

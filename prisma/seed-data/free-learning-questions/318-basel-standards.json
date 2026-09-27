@@ -1,0 +1,125 @@
+{
+  "topic": "basel-standards",
+  "questions": [
+    {
+      "stem": "In the data world, what does BASEL most likely refer to?",
+      "options": [
+        "A metadata registry standard",
+        "A standard for country codes",
+        "The Basel Committee on Banking Supervision",
+        "A NewSQL database vendor",
+        "An asset management framework"
+      ],
+      "correct": 2,
+      "explanation": "In the data context, BASEL likely refers to the Basel Committee on Banking Supervision, which shapes international banking regulations."
+    },
+    {
+      "stem": "Which body established the Basel Committee on Banking Supervision?",
+      "options": [
+        "The International Organization for Standardization",
+        "The Bank for International Settlements",
+        "The European Central Bank",
+        "The World Trade Organization",
+        "The United Nations"
+      ],
+      "correct": 1,
+      "explanation": "The Basel Committee was established by the Bank for International Settlements (BIS) to strengthen the regulation, supervision and practices of banks worldwide."
+    },
+    {
+      "stem": "What did Basel I, introduced in 1988, establish?",
+      "options": [
+        "Minimum capital requirements based on credit risk",
+        "New liquidity standards after a financial crisis",
+        "Capital requirements covering operational and market risk",
+        "Rules for country codes in banking",
+        "A standard for metadata management"
+      ],
+      "correct": 0,
+      "explanation": "Basel I, introduced in 1988, established minimum capital requirements based on credit risk."
+    },
+    {
+      "stem": "How did Basel II, developed in 2004, expand the framework?",
+      "options": [
+        "It removed all capital requirements",
+        "It introduced liquidity standards only",
+        "It focused solely on data reporting formats",
+        "It addressed credit, operational and market risks with more risk-sensitive capital requirements",
+        "It replaced the Basel Committee with the ISO"
+      ],
+      "correct": 3,
+      "explanation": "Basel II expanded the framework to address credit, operational and market risks and introduced more risk-sensitive capital requirements."
+    },
+    {
+      "stem": "In response to which event was Basel III implemented?",
+      "options": [
+        "The 1988 stock market crash",
+        "The launch of the euro",
+        "The 2004 banking reforms",
+        "The invention of the internet",
+        "The 2008 financial crisis"
+      ],
+      "correct": 4,
+      "explanation": "Basel III was implemented in response to the 2008 financial crisis, strengthening capital requirements, introducing liquidity standards and enhancing risk management."
+    },
+    {
+      "stem": "What kind of data are banks under Basel regulations required to collect and report?",
+      "options": [
+        "Extensive data related to risk exposure, capital adequacy and stress testing",
+        "Only customer marketing preferences",
+        "Only the number of branches",
+        "Only employee salaries",
+        "Only website traffic statistics"
+      ],
+      "correct": 0,
+      "explanation": "Banks under Basel regulations must collect and report extensive data, including data related to risk exposure, capital adequacy and stress testing."
+    },
+    {
+      "stem": "Why do Basel regulations necessitate robust data governance within financial institutions?",
+      "options": [
+        "To reduce the number of employees",
+        "To ensure the accuracy, consistency and completeness of data used for regulatory reporting",
+        "To standardise country codes",
+        "To speed up customer onboarding",
+        "To replace auditors with software"
+      ],
+      "correct": 1,
+      "explanation": "Basel regulations necessitate robust data governance to ensure the accuracy, consistency and completeness of data used for regulatory reporting."
+    },
+    {
+      "stem": "On what does Basel III place specific emphasis with respect to data?",
+      "options": [
+        "Digitising paper records",
+        "Streaming customer transactions",
+        "Effective systems for aggregating risk data to give a comprehensive and accurate view of risk exposure",
+        "Registering data elements in a metadata repository",
+        "Using ISO codes for all locations"
+      ],
+      "correct": 2,
+      "explanation": "Basel III places specific emphasis on the need for banks to have effective systems for aggregating risk data, giving a comprehensive and accurate view of their risk exposure."
+    },
+    {
+      "stem": "Which of the following is NOT a type of risk the Basel Accords require banks to assess and manage?",
+      "options": [
+        "Credit risk",
+        "Market risk",
+        "Operational risk",
+        "Weather risk",
+        "All of these are named risk types"
+      ],
+      "correct": 3,
+      "explanation": "The Basel Accords emphasise a risk-based approach covering credit risk, market risk and operational risk; weather risk is not named."
+    },
+    {
+      "stem": "In the game analogy for the Basel Committee, what do the rules ensure?",
+      "options": [
+        "That banks pay the lowest possible tax",
+        "That banks use the same software",
+        "That banks share customer data with each other",
+        "That banks close during a crisis",
+        "That banks have enough capital to handle risks and can prove it by tracking data about their risks and resources"
+      ],
+      "correct": 4,
+      "explanation": "The Basel Accords are like rules ensuring banks have enough resources (capital) to handle risks, and banks must keep track of lots of data about their risks and resources to prove they follow the rules."
+    }
+  ]
+}

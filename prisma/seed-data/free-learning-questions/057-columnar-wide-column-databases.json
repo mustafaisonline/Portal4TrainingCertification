@@ -1,0 +1,125 @@
+{
+  "topic": "columnar-wide-column-databases",
+  "questions": [
+    {
+      "stem": "How do wide-column databases organise data?",
+      "options": [
+        "Into rows and dynamic columns grouped into column families",
+        "Into fixed-schema rows where every row has the same columns",
+        "Into nodes and edges",
+        "Into key–value pairs with opaque values",
+        "Into a single-rooted tree of parent–child records"
+      ],
+      "correct": 0,
+      "explanation": "Wide-column, or column-family, databases let each row contain a flexible and potentially sparse set of columns grouped into column families."
+    },
+    {
+      "stem": "What is the primary goal of wide-column databases?",
+      "options": [
+        "Guaranteeing strict relational consistency",
+        "Enabling high write throughput and scalable query performance over massive volumes of data",
+        "Storing behaviour alongside data",
+        "Supporting semantic reasoning",
+        "Minimising the number of tables"
+      ],
+      "correct": 1,
+      "explanation": "Wide-column systems are optimised for distributed storage and partitioned queries, delivering high write throughput and scalable performance over very large datasets."
+    },
+    {
+      "stem": "Which workloads are wide-column databases particularly well suited to?",
+      "options": [
+        "Small single-user desktop applications",
+        "Ad-hoc cross-entity analytics",
+        "Time-series, event-driven and high-velocity workloads",
+        "Complex multi-table reporting",
+        "Rule-based reasoning over ontologies"
+      ],
+      "correct": 2,
+      "explanation": "Wide-column stores suit time-series, event-driven and high-velocity workloads where large amounts of data must be written and retrieved efficiently across clusters."
+    },
+    {
+      "stem": "How is data placed in a wide-column database?",
+      "options": [
+        "Spread randomly across nodes to balance load",
+        "Normalised into separate entity tables",
+        "Stored in one document per entity",
+        "Partitioned by a primary key, with all related data for that key stored together in a partition",
+        "Stored as an append-only event log"
+      ],
+      "correct": 3,
+      "explanation": "Data is partitioned by a primary key such as CustomerID or LoanID, and all related data for that key lives together within the partition."
+    },
+    {
+      "stem": "In the Cassandra loan example, what is the partition key and why?",
+      "options": [
+        "LoanID, so that each loan is stored separately",
+        "OfficerID, so that officers can review their queue",
+        "ApprovalDate, so that loans are ordered by time",
+        "Branch, so that branch reports are fast",
+        "CustomerID, so that all loans for a customer reside together"
+      ],
+      "correct": 4,
+      "explanation": "The partition key is CustomerID, ensuring all loans associated with that customer reside in one partition and can be fetched in a single partition read."
+    },
+    {
+      "stem": "How are repayment amounts represented in the wide-column loan example?",
+      "options": [
+        "As flattened columns such as Repayment_2024_02 and Repayment_2024_03 within the partition",
+        "As a separate Repayment table joined by LoanID",
+        "As an array inside a JSON document",
+        "As edges between Loan and Payment nodes",
+        "As RepaymentMade events in a stream"
+      ],
+      "correct": 0,
+      "explanation": "Each loan's details and repayment amounts are flattened into columns within the same partition, for example Repayment_2024_02 or Repayment_2024_03."
+    },
+    {
+      "stem": "What shapes the schema of a wide-column database?",
+      "options": [
+        "Functional dependencies between attributes",
+        "The expected access patterns and the specific queries to be answered",
+        "Class hierarchies and inheritance",
+        "Domain and key constraints",
+        "The order in which events occur"
+      ],
+      "correct": 1,
+      "explanation": "The schema is shaped primarily by access patterns: designers structure data to answer specific queries efficiently rather than normalising entities into separate tables."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a trade-off of wide-column databases?",
+      "options": [
+        "Query patterns must be known in advance",
+        "Complex joins across partitions are impractical",
+        "Poor write throughput under heavy load",
+        "New query types may require schema redesign",
+        "Limited flexibility for ad-hoc analytical queries"
+      ],
+      "correct": 2,
+      "explanation": "Extremely high write and read throughput is a strength of wide-column databases; the trade-offs concern fixed query patterns, impractical cross-partition joins and limited ad-hoc flexibility."
+    },
+    {
+      "stem": "For which kind of environment are wide-column stores best suited?",
+      "options": [
+        "Environments needing flexible cross-entity analytics",
+        "Environments with constantly changing query requirements",
+        "Environments requiring complex relational reporting",
+        "Large-scale, high-velocity environments where workloads are predictable and performance is critical",
+        "Environments where behaviour must be stored with data"
+      ],
+      "correct": 3,
+      "explanation": "Wide-column stores excel in large-scale, high-velocity environments with predictable workloads; they are less suitable for flexible cross-entity analytics."
+    },
+    {
+      "stem": "In the comparison of relational and columnar models for loan approval, how is the columnar model characterised?",
+      "options": [
+        "Normalised, flexible and consistent, but with costly joins at scale",
+        "Fully normalised with dimensions for Customer, Officer and Repayment",
+        "Optimised for ad-hoc joins across customers",
+        "Stored as one JSON document per loan",
+        "Denormalised, partitioned and built for high-volume throughput and predictable queries"
+      ],
+      "correct": 4,
+      "explanation": "The relational model is normalised and flexible but joins can be costly at scale; the columnar model is denormalised, partitioned and built for high-volume throughput and predictable queries."
+    }
+  ]
+}

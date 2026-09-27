@@ -1,0 +1,125 @@
+{
+  "topic": "concurrent-vs-mpp",
+  "questions": [
+    {
+      "stem": "What does MPP stand for?",
+      "options": [
+        "Multiple Process Pipeline",
+        "Massive Parallel Processing",
+        "Managed Performance Platform",
+        "Master Partition Protocol",
+        "Memory Paging Processor"
+      ],
+      "correct": 1,
+      "explanation": "MPP stands for Massive Parallel Processing, which uses hardware-level concurrency to split one job across multiple nodes."
+    },
+    {
+      "stem": "What is the major difference between concurrent processing and MPP?",
+      "options": [
+        "Concurrent processing depends on developers, whereas MPP depends on hardware",
+        "Concurrent processing is only for NoSQL databases, whereas MPP is only for SQL",
+        "Concurrent processing is faster in every case than MPP",
+        "MPP runs on a single core, whereas concurrent processing needs many",
+        "There is no difference; the terms mean the same thing"
+      ],
+      "correct": 0,
+      "explanation": "There is a major difference: one, concurrent processing, is dependent on the developers and the other, MPP, on hardware."
+    },
+    {
+      "stem": "What does concurrent processing mean in simple words?",
+      "options": [
+        "A single job is split into pieces that run on many nodes",
+        "Jobs are queued and run one after another",
+        "More than one job runs in parallel, executing some code sets at the same time",
+        "A job is paused until hardware becomes available",
+        "Code is compiled before it is executed"
+      ],
+      "correct": 2,
+      "explanation": "Concurrent processing means more than one job runs in parallel and executes some code sets at the same time, usually dependent on the cores handling the queries."
+    },
+    {
+      "stem": "On what does concurrent query capability most often depend?",
+      "options": [
+        "The number of users logged in",
+        "The size of the hard disk",
+        "The version of the operating system",
+        "The cores handling the queries",
+        "The colour scheme of the dashboard"
+      ],
+      "correct": 3,
+      "explanation": "Concurrent processing, where technology can run concurrent queries, is most of the time dependent on the cores handling the queries."
+    },
+    {
+      "stem": "How does MPP execute a single job?",
+      "options": [
+        "It runs the job on one node and caches the result",
+        "It waits for all other jobs to finish first",
+        "It converts the job into a batch to run overnight",
+        "It sends the job to a cloud provider for approval",
+        "It divides the job into multiple pieces that run in parallel across multiple nodes"
+      ],
+      "correct": 4,
+      "explanation": "MPP utilises hardware-level concurrency where one job or code set is divided into multiple pieces and runs in parallel mode across multiple nodes."
+    },
+    {
+      "stem": "Why is a job running under MPP much faster?",
+      "options": [
+        "Because a single job utilises multiple nodes to execute the same code set instead of one node at a time",
+        "Because MPP skips validation steps",
+        "Because MPP compresses the data before processing",
+        "Because MPP only processes a sample of the data",
+        "Because MPP runs the job in memory only"
+      ],
+      "correct": 0,
+      "explanation": "Under MPP a single job utilises multiple nodes to execute the same code set, making it much faster compared with a job using a single node at a time."
+    },
+    {
+      "stem": "What benefit do concurrent and MPP capabilities give a data solution?",
+      "options": [
+        "Lower licensing costs",
+        "A huge benefit when it comes to meeting SLAs",
+        "Automatic data quality fixes",
+        "Elimination of the need for backups",
+        "Guaranteed regulatory compliance"
+      ],
+      "correct": 1,
+      "explanation": "Having concurrent and MPP capability gives a huge benefit to the solution when it comes to meeting SLAs."
+    },
+    {
+      "stem": "In the Big Data era, how are concurrent and MPP capabilities described?",
+      "options": [
+        "As optional luxuries",
+        "As obsolete techniques",
+        "As a must-have",
+        "As relevant only for small datasets",
+        "As a security risk"
+      ],
+      "correct": 2,
+      "explanation": "In the Big Data era, having concurrent and MPP capabilities is described as a MUST-TO-HAVE."
+    },
+    {
+      "stem": "Which statement about MPP is NOT correct?",
+      "options": [
+        "MPP uses hardware-level concurrency",
+        "MPP divides one code set into multiple pieces",
+        "MPP runs those pieces in parallel across nodes",
+        "MPP depends on developers writing many separate jobs",
+        "MPP helps a solution meet its SLAs"
+      ],
+      "correct": 3,
+      "explanation": "MPP depends on hardware, not developers; it is concurrent processing that depends on the developers."
+    },
+    {
+      "stem": "Which scenario is an example of concurrent processing rather than MPP?",
+      "options": [
+        "One large report query split across ten nodes",
+        "A single job divided into pieces at the hardware level",
+        "A node executing one piece of a larger code set",
+        "Hardware partitioning a single query",
+        "Several different jobs running in parallel on the available cores at the same time"
+      ],
+      "correct": 4,
+      "explanation": "Concurrent processing is when more than one job runs in parallel at the same time, whereas MPP splits a single job across multiple nodes."
+    }
+  ]
+}

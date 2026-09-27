@@ -1,0 +1,125 @@
+{
+  "topic": "anchor-data-modelling",
+  "questions": [
+    {
+      "stem": "What are the four main elements of Anchor Data Modelling?",
+      "options": [
+        "Anchor, Knot, Attribute and Tie",
+        "Hub, Link, Satellite and Reference",
+        "Fact, Dimension, Bridge and Hierarchy",
+        "Focal, Relation, Descriptor and Condition",
+        "Node, Edge, Property and Label"
+      ],
+      "correct": 0,
+      "explanation": "Anchor Data Modelling is built from Anchors, Knots, Attributes and Ties."
+    },
+    {
+      "stem": "What does an Anchor represent in Anchor Data Modelling?",
+      "options": [
+        "A set of reference values such as status codes",
+        "A core business entity that exists over time, associated with a business key",
+        "A relationship between two entities",
+        "A changing metric such as a credit score",
+        "A pre-aggregated reporting view"
+      ],
+      "correct": 1,
+      "explanation": "The Anchor is the fundamental building block representing a key business entity such as Customer or Product, stable and persistent, typically identified by a business key."
+    },
+    {
+      "stem": "What is a Knot used for in Anchor Data Modelling?",
+      "options": [
+        "Linking two anchors",
+        "Storing the business key of an entity",
+        "Representing a value set or reference data, such as Customer_Status with values Active, Inactive and Pending",
+        "Recording a fluctuating measure",
+        "Defining the grain of a fact"
+      ],
+      "correct": 2,
+      "explanation": "A Knot holds the possible discrete values for business attributes, such as status codes, regions or categories, so they can be managed and tracked over time."
+    },
+    {
+      "stem": "Which example is given of a Static Attribute of a Customer Anchor?",
+      "options": [
+        "Customer_Score",
+        "Sales_Region",
+        "Customer_Status",
+        "Email_Address or Phone_Number",
+        "Loan interest rate"
+      ],
+      "correct": 3,
+      "explanation": "A Static Attribute keeps a constant value over time; examples given for a Customer Anchor are Email_Address or Phone_Number, alongside Name, Date of Birth or Gender."
+    },
+    {
+      "stem": "What is a Horizontal Attribute in Anchor Data Modelling?",
+      "options": [
+        "An attribute shared across several anchors",
+        "An attribute stored in the anchor table itself",
+        "An attribute that links two anchors",
+        "An attribute whose value never changes",
+        "An attribute whose value may change over time, such as a customer's credit score"
+      ],
+      "correct": 4,
+      "explanation": "Horizontal Attributes represent values that can evolve or fluctuate across time periods, such as Customer_Score."
+    },
+    {
+      "stem": "What is the purpose of a Tie in Anchor Data Modelling?",
+      "options": [
+        "To define relationships between Anchors and track how entities are connected",
+        "To store domain values",
+        "To hold descriptive attributes",
+        "To identify the business key",
+        "To aggregate measures"
+      ],
+      "correct": 0,
+      "explanation": "Ties define relationships between Anchors; the Tie element is what makes the model relational and records the history of relationships."
+    },
+    {
+      "stem": "What distinguishes a Historical Tie from a Static Tie?",
+      "options": [
+        "A Historical Tie links an anchor to an attribute; a Static Tie links two anchors",
+        "A Historical Tie represents a relationship that changes over time, whereas a Static Tie remains constant",
+        "A Historical Tie has no time attributes",
+        "A Static Tie is used only for reference data",
+        "They are the same"
+      ],
+      "correct": 1,
+      "explanation": "A Static Tie is a relationship that stays constant, such as a customer's purchased product, while a Historical Tie tracks the state of a relationship over time, such as a customer's sales region across periods."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a key benefit of Anchor Data Modelling?",
+      "options": [
+        "Flexibility",
+        "Simplicity",
+        "Minimal number of tables and joins",
+        "Historical accuracy",
+        "Scalability"
+      ],
+      "correct": 2,
+      "explanation": "The listed benefits are flexibility, simplicity, historical accuracy, scalability and agility; Anchor modelling decomposes data into many tables rather than minimising them."
+    },
+    {
+      "stem": "In the Anchor Modelling loan example, what does Attr_Status reference?",
+      "options": [
+        "Tie_LoanOfficer",
+        "Anchor_Customer",
+        "Attr_InterestRate",
+        "Knot_Status, which holds values such as Pending, Approved and Rejected",
+        "Sat_LoanDetails"
+      ],
+      "correct": 3,
+      "explanation": "Attr_Status contains a StatusKnotID that points to Knot_Status, ensuring semantic consistency when a loan moves from Pending to Approved."
+    },
+    {
+      "stem": "In the Anchor loan example, what happens in Attr_InterestRate when the rate changes from 7.5% to 8.0%?",
+      "options": [
+        "The existing row is overwritten with 8.0%",
+        "The row is deleted and Anchor_Loan is updated",
+        "The rate is moved to Knot_Status",
+        "A new Tie is created",
+        "The old value stays with its validity range and a new row is added, preserving full history"
+      ],
+      "correct": 4,
+      "explanation": "Attribute tables are temporal by design with ValidFrom/ValidTo, so the old value remains with its validity range and a new row is added."
+    }
+  ]
+}

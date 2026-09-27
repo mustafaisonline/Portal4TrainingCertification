@@ -1,0 +1,125 @@
+{
+  "topic": "graph-theory",
+  "questions": [
+    {
+      "stem": "What is graph theory?",
+      "options": [
+        "A mathematical framework for representing, analysing and solving problems involving interconnected data",
+        "A technique for drawing bar charts",
+        "A method for compressing image files",
+        "A spreadsheet formula language",
+        "A style of database indexing used only in finance"
+      ],
+      "correct": 0,
+      "explanation": "Graph theory is a mathematical framework widely applied to real-world problems involving interconnected data, studying vertices connected by edges."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a field where graph theory is applied?",
+      "options": [
+        "Social networks, to analyse relationships and influence",
+        "Cooking, to combine recipe ingredients",
+        "Biology, to map genetic networks and protein interactions",
+        "Transportation, to improve route planning and traffic flow",
+        "Project management, to visualise tasks and dependencies"
+      ],
+      "correct": 1,
+      "explanation": "The listed application fields are computer science, social networks, biology, transportation and project management; cooking is not among them."
+    },
+    {
+      "stem": "In the three-city example of graph theory, where A is connected to B and B is connected to C, what is the degree of vertex B?",
+      "options": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "5"
+      ],
+      "correct": 2,
+      "explanation": "B has two connections, one to A and one to C, so its degree is 2, while A and C each have a degree of 1."
+    },
+    {
+      "stem": "Graph theory groups its tools under three headings. Which set is correct?",
+      "options": [
+        "Tables, rows and columns",
+        "Input, process and output",
+        "Nodes, weights and colours",
+        "Properties, structures and relationships",
+        "Ingestion, transformation and serving"
+      ],
+      "correct": 3,
+      "explanation": "Graph theory addresses the properties, structures and relationships between data elements."
+    },
+    {
+      "stem": "What real-world analogy is used for a directed graph (digraph) in graph theory?",
+      "options": [
+        "Cities on a map",
+        "Two-way roads",
+        "Bus stops",
+        "Distances in kilometres",
+        "One-way streets"
+      ],
+      "correct": 4,
+      "explanation": "Directed graphs, where edges have a direction, are likened to one-way streets, whereas undirected graphs are likened to two-way roads."
+    },
+    {
+      "stem": "In the three-city graph, what happens to connectivity if vertex B is removed?",
+      "options": [
+        "A and C will no longer be connected",
+        "A and C become directly connected",
+        "The graph gains a cycle",
+        "The degree of A increases to 2",
+        "Nothing changes"
+      ],
+      "correct": 0,
+      "explanation": "B is the only vertex linking A and C, so removing it means there is no longer a path between A and C and the graph is no longer connected."
+    },
+    {
+      "stem": "In graph theory, what is a path?",
+      "options": [
+        "The weight assigned to an edge",
+        "A sequence that shows how to move from one vertex to another",
+        "A vertex with the highest degree",
+        "The removal of a vertex from a graph",
+        "A pair of vertices that are not connected"
+      ],
+      "correct": 1,
+      "explanation": "A path is a sequence showing how to move from one vertex to another, for example A to B to C."
+    },
+    {
+      "stem": "If an edge from C back to A is added to the graph A to B to C, what is formed?",
+      "options": [
+        "A bipartite graph",
+        "A disconnected graph",
+        "A cycle: A to B to C to A",
+        "A tree",
+        "A weighted graph"
+      ],
+      "correct": 2,
+      "explanation": "Adding an edge from C to A produces a path that starts and ends at the same vertex, which is a cycle."
+    },
+    {
+      "stem": "When is a graph described as connected?",
+      "options": [
+        "When every edge carries a weight",
+        "When it has at least one cycle",
+        "When all edges have a direction",
+        "When there is a path between every pair of vertices",
+        "When it has exactly three vertices"
+      ],
+      "correct": 3,
+      "explanation": "A graph is connected if there is a path between every pair of vertices, so all vertices can be reached from any other vertex."
+    },
+    {
+      "stem": "In the school bus analogy for graph theory, with Stop 1 to Stop 2 being 2 km and Stop 2 to Stop 3 being 3 km, what do the vertices, edges and weights represent, and how long is the path from Stop 1 to Stop 3?",
+      "options": [
+        "Vertices are roads, edges are stops, weights are times; the path is 6 km",
+        "Vertices are pupils, edges are timetables, weights are fares; the path is 2 km",
+        "Vertices are buses, edges are drivers, weights are speeds; the path is 3 km",
+        "Vertices are stops, edges are roads, weights are distances; the path is 1 km",
+        "Vertices are bus stops, edges are roads between stops, weights are distances; the path is 5 km"
+      ],
+      "correct": 4,
+      "explanation": "In the analogy, vertices are bus stops, edges are roads and weights are distances, so the path from Stop 1 to Stop 3 is 2 km + 3 km = 5 km."
+    }
+  ]
+}

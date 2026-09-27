@@ -1,0 +1,125 @@
+{
+  "topic": "data-vs-metadata",
+  "questions": [
+    {
+      "stem": "In the Data vs Metadata discussion in *I Am Datapedia!*, what saying is attributed to Daniel Lundin?",
+      "options": [
+        "Data without Metadata is a Data Swamp",
+        "One person's Metadata is Data for another person",
+        "Metadata should always be stored with the raw data",
+        "Raw data must be kept for life",
+        "Summarised data is never Metadata"
+      ],
+      "correct": 1,
+      "explanation": "Daniel Lundin's remark that one person's Metadata is Data for another person frames the whole discussion."
+    },
+    {
+      "stem": "In the Data vs Metadata argument, which kind of data is being referred to?",
+      "options": [
+        "Raw Data coming from source systems into next datastores such as a Data Lake or Data Warehouse",
+        "Only reference data held in lookup tables",
+        "Only data that has already been summarised in a dashboard",
+        "Only structured data in relational tables",
+        "Only data produced by Metadata tools"
+      ],
+      "correct": 0,
+      "explanation": "The discussion refers only to Raw Data arriving from source systems such as OLTP applications, social media or unstructured datasets into a Data Lake or Data Warehouse."
+    },
+    {
+      "stem": "Which of the following is given as an example of an unstructured raw dataset?",
+      "options": [
+        "A relational sales table",
+        "A KPI on a dashboard",
+        "A column name",
+        "Video, audio, PDF or email",
+        "A data dictionary"
+      ],
+      "correct": 3,
+      "explanation": "Video, audio, PDF and email are the examples of unstructured datasets flowing from source systems."
+    },
+    {
+      "stem": "What kind of data do decision makers normally look at, according to the Data vs Metadata argument?",
+      "options": [
+        "Summarised data, which is transformed data and therefore Metadata",
+        "Every individual transaction row",
+        "Only operational log data",
+        "Only raw data from social media",
+        "Only column names and data types"
+      ],
+      "correct": 0,
+      "explanation": "Decision makers normally look at summarised data, which is not actual data but transformed data, that is data about data, or Metadata."
+    },
+    {
+      "stem": "Which figures does a decision maker want when deciding whether to reinvest in a product?",
+      "options": [
+        "Every sale transaction of the product in each region",
+        "The database schema of the sales system",
+        "The raw social media posts about the product",
+        "The list of ETL jobs that load the sales data",
+        "TOTAL sales, TOTAL cost and other totals such as TOTAL marketing cost"
+      ],
+      "correct": 4,
+      "explanation": "A decision maker deciding on reinvestment wants totals: total sales, total product cost and other expenses such as total marketing cost."
+    },
+    {
+      "stem": "Roughly what percentage of occasions call for investigating transactional data, according to the Data vs Metadata argument?",
+      "options": [
+        "About 50%",
+        "About 30%-40%",
+        "About 90%",
+        "Nearly 100%",
+        "About 5%-10%"
+      ],
+      "correct": 4,
+      "explanation": "Investigation comes into the picture only when something is wrong, which is around 5%-10% of occasions."
+    },
+    {
+      "stem": "Why do source systems normally not allow a lot of read hits?",
+      "options": [
+        "Because they do not store raw data",
+        "Because they never want to compromise the performance of their systems",
+        "Because regulators forbid direct queries",
+        "Because Metadata cannot be extracted from them",
+        "Because they only store summarised data"
+      ],
+      "correct": 1,
+      "explanation": "Source systems limit read hits mainly because they do not want to compromise their own performance."
+    },
+    {
+      "stem": "Which development might remove the performance concern that limits read hits on source systems?",
+      "options": [
+        "Storing more raw data in the Data Warehouse",
+        "Replacing Metadata with Master Data",
+        "Cloud with auto-scaling capability",
+        "Purging all Metadata after extraction",
+        "Moving all systems back on-premises"
+      ],
+      "correct": 2,
+      "explanation": "The performance concern is true for on-premises infrastructure, but Cloud with auto-scaling capability may remove that challenge sooner or later."
+    },
+    {
+      "stem": "What is the author's own view on whether raw transactional data still needs to be pulled and maintained in the next storage?",
+      "options": [
+        "It must always be kept for life",
+        "It should be kept only in the source system's backup",
+        "It should be duplicated in every datastore",
+        "For the author there is no need, though time will tell",
+        "It should be kept only for unstructured data"
+      ],
+      "correct": 3,
+      "explanation": "The author's position is that there is no need to pull and maintain raw transactional data, while acknowledging that time will tell."
+    },
+    {
+      "stem": "Which of the following is NOT a reason given for keeping raw data for a certain time?",
+      "options": [
+        "Fulfilling regulatory requirements",
+        "Investigating when something is wrong",
+        "Improving the performance of the source system",
+        "Allowing decision makers to see transactional data",
+        "Extracting Metadata from it"
+      ],
+      "correct": 2,
+      "explanation": "Regulatory needs, investigation, transactional views and Metadata extraction are all discussed; keeping raw data does not improve source system performance."
+    }
+  ]
+}

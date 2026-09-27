@@ -1,0 +1,125 @@
+{
+  "topic": "geocoding",
+  "questions": [
+    {
+      "stem": "What does Geocoding refer to?",
+      "options": [
+        "The postal address of a customer",
+        "The geographic location, expressed as an exact position on Earth",
+        "The country code of a telephone number",
+        "The time zone of a transaction",
+        "The IP address of a device"
+      ],
+      "correct": 1,
+      "explanation": "Geocoding refers to the geographic location: not merely name, street, city or region but the exact location on Earth."
+    },
+    {
+      "stem": "Which data elements exactly represent Geocoding?",
+      "options": [
+        "Street and city",
+        "Postcode and country",
+        "Longitude and Latitude, also known as Lat and Long",
+        "Region and district",
+        "Altitude and bearing"
+      ],
+      "correct": 2,
+      "explanation": "The exact data elements representing Geocoding are Longitude and Latitude, commonly known as Lat and Long."
+    },
+    {
+      "stem": "What can one do using Lat and Long?",
+      "options": [
+        "Reach the exact location anywhere in the world",
+        "Identify a customer's name",
+        "Encrypt a dataset",
+        "Aggregate sales by product",
+        "Determine a device's operating system"
+      ],
+      "correct": 0,
+      "explanation": "Using latitude and longitude one can reach the exact location anywhere in the world."
+    },
+    {
+      "stem": "Why has location information become so important in the current era?",
+      "options": [
+        "Because databases require it as a primary key",
+        "Because social media, mobile applications, sensors, satellite scans and CCTV have become the norm and millions use mobiles everywhere, all the time",
+        "Because regulators mandate it",
+        "Because it replaces customer names",
+        "Because it is cheaper to store than addresses"
+      ],
+      "correct": 1,
+      "explanation": "With data generated everywhere by everyone through mobiles, sensors, satellites and CCTV, location has become one of the most important pieces of information, especially about consumers."
+    },
+    {
+      "stem": "In the Amazon example, what could Amazon not do without knowing where buyers are located?",
+      "options": [
+        "Process payments",
+        "Store product images",
+        "Ship products",
+        "Plan its marketing campaigns",
+        "Calculate taxes"
+      ],
+      "correct": 3,
+      "explanation": "If Amazon does not know where buyers are and where most buyers of a product are located, it cannot plan its marketing campaigns."
+    },
+    {
+      "stem": "According to *I Am Datapedia!*, to whom does Amazon sell data about which products are bought from which locations?",
+      "options": [
+        "Government regulators",
+        "Competing online stores",
+        "Production houses",
+        "Individual customers",
+        "Mobile network operators"
+      ],
+      "correct": 2,
+      "explanation": "Amazon sells location-based buying data to production houses so they can plan production and relocate stock."
+    },
+    {
+      "stem": "How do production houses use location-based buying data?",
+      "options": [
+        "To set employee salaries",
+        "To geocode their factories",
+        "To design new logos",
+        "To choose a database vendor",
+        "To plan their next production or relocate products from low-demand to high-demand locations"
+      ],
+      "correct": 4,
+      "explanation": "Production houses use the data to plan production and to move products from less in-demand locations to high in-demand locations."
+    },
+    {
+      "stem": "Which of the following is NOT named among the modern sources that have made location data ubiquitous?",
+      "options": [
+        "Social media",
+        "Satellite scans",
+        "CCTV",
+        "Floppy drives",
+        "Sensors"
+      ],
+      "correct": 3,
+      "explanation": "Social media, mobile applications, sensors, satellite scans, CCTV and online video and audio are named; floppy drives belong to the Data Island discussion."
+    },
+    {
+      "stem": "Which statement about Geocoding is correct?",
+      "options": [
+        "It is about the exact location on Earth rather than just name, street, city or region",
+        "It is only about the name of a city or region",
+        "It requires a postal address to work",
+        "It is unrelated to consumer data",
+        "It is only used by satellite operators"
+      ],
+      "correct": 0,
+      "explanation": "Geocoding is about the exact position on Earth, represented by latitude and longitude, rather than a descriptive address."
+    },
+    {
+      "stem": "How is Amazon characterised in the Geocoding example?",
+      "options": [
+        "A small regional retailer",
+        "A CCTV manufacturer",
+        "A satellite-scanning company",
+        "A production house",
+        "One of the most used online stores worldwide, used by millions to buy and sell products 24/7"
+      ],
+      "correct": 4,
+      "explanation": "Amazon is described as one of the most used online stores around the globe, used by millions of people to buy and sell products 24/7."
+    }
+  ]
+}

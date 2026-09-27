@@ -1,0 +1,125 @@
+{
+  "topic": "data-value-realization",
+  "questions": [
+    {
+      "stem": "What does Data Value Realisation refer to?",
+      "options": [
+        "The process of selling all company data to the highest bidder",
+        "The process of actualising the value inherent in data through strategies, practices or initiatives that achieve tangible benefits",
+        "The process of archiving data once it has no further use",
+        "The process of encrypting data to protect its value",
+        "The process of counting how many records a company holds"
+      ],
+      "correct": 1,
+      "explanation": "Data Value Realisation is the process of actualising or realising the value inherent in data, through strategies and initiatives aimed at leveraging data for tangible outcomes."
+    },
+    {
+      "stem": "What does Monetisation of Data mean within Data Value Realisation?",
+      "options": [
+        "Charging employees for access to reports",
+        "Converting all data into a single currency field",
+        "Paying a vendor to store the data",
+        "Extracting economic value from data, for example through new revenue streams or cost savings",
+        "Printing data onto invoices"
+      ],
+      "correct": 3,
+      "explanation": "Monetisation of data means extracting economic value from it, for instance by identifying new revenue streams or cost savings through data-driven initiatives."
+    },
+    {
+      "stem": "Which example of Data Value Realisation uses sensor data to anticipate equipment failures?",
+      "options": [
+        "Predictive Maintenance",
+        "Customer Experience improvement",
+        "Cost Optimisation",
+        "Data Monetisation",
+        "Strategy Alignment"
+      ],
+      "correct": 0,
+      "explanation": "Predictive Maintenance uses sensor data analysis to anticipate equipment failures, reducing downtime and maintenance costs."
+    },
+    {
+      "stem": "Which of these is NOT one of the five key levers for validating and unlocking the value of data?",
+      "options": [
+        "Data volume",
+        "Data quality",
+        "Use cases",
+        "Usefulness of use cases",
+        "Storage cost"
+      ],
+      "correct": 4,
+      "explanation": "The five key levers are data volume, data quality, use cases, usefulness of use cases, and how strategy is aligned with those use cases; storage cost is not among them."
+    },
+    {
+      "stem": "Which intangible elements are said to play a crucial role in realising the value of data?",
+      "options": [
+        "Server capacity, bandwidth and disk speed",
+        "Tax rates, interest rates and inflation",
+        "Leadership, cooperation, talent and culture",
+        "Encryption, backups and firewalls",
+        "Office space, furniture and lighting"
+      ],
+      "correct": 2,
+      "explanation": "Beyond the tangible levers, intangible elements such as leadership, cooperation, talent and culture also play a crucial role."
+    },
+    {
+      "stem": "What are the two main reasons given for calculating the value of data?",
+      "options": [
+        "To determine its sale price, and to use it as a primary indicator of the performance of your data management",
+        "To satisfy auditors, and to set employee bonuses",
+        "To choose a cloud provider, and to size the storage budget",
+        "To decide what to delete, and to justify a new database",
+        "To price insurance, and to calculate depreciation"
+      ],
+      "correct": 0,
+      "explanation": "The value of data is calculated to determine its sale price and to serve as a primary indicator of how well data management is performing."
+    },
+    {
+      "stem": "How is the value of data calculated?",
+      "options": [
+        "Data value = Market value plus Internal value",
+        "Data value = Internal value minus management cost",
+        "Data value = the average of Market value and Internal value",
+        "Data value = the maximum of its Market value and its Internal value",
+        "Data value = Market value divided by data volume"
+      ],
+      "correct": 3,
+      "explanation": "The value of data is the maximum of its Market value and its Internal value: Data value = Max [Data Market Value, Data Internal Value]."
+    },
+    {
+      "stem": "What does it mean if your actions increase the value of your data by more than the cost of managing it?",
+      "options": [
+        "The data should be sold immediately",
+        "You are on the right track with your data management",
+        "The data has become a liability",
+        "The market value must be recalculated",
+        "Data management costs should be cut"
+      ],
+      "correct": 1,
+      "explanation": "If your actions increase the value of your data more than the cost of managing it, it means you are on the right track."
+    },
+    {
+      "stem": "What is implied if the value your organisation gets from its data is NOT greater than what it would obtain by selling that data?",
+      "options": [
+        "The data has no market value",
+        "The organisation should stop collecting data",
+        "The data must be encrypted",
+        "The data volume is too small",
+        "Either others can manage your data better than your company, or the synergies from using the data internally are not good enough"
+      ],
+      "correct": 4,
+      "explanation": "Successful data management should make the data worth more than its sale price; if not, either others can manage it better or the internal synergies are insufficient."
+    },
+    {
+      "stem": "What shift in thinking does Data Value Realisation call for regarding strategy?",
+      "options": [
+        "Moving from a data strategy back to a business strategy",
+        "Moving from internal data to purchased data",
+        "Moving from using data for your strategy to having a specific data strategy with clear roles, objectives and an action plan",
+        "Moving from measuring data value to ignoring it",
+        "Moving from cloud storage to on-premises storage"
+      ],
+      "correct": 2,
+      "explanation": "It is about moving from merely using data for your strategy to having a data strategy of its own, with clear roles and responsibilities, objectives and a detailed action plan."
+    }
+  ]
+}

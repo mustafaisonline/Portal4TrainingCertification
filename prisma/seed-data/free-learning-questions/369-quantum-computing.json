@@ -1,0 +1,125 @@
+{
+  "topic": "quantum-computing",
+  "questions": [
+    {
+      "stem": "What is the basic unit of information in a quantum computer, and how does it differ from a classical bit?",
+      "options": [
+        "A qubit, which can exist in multiple states simultaneously through superposition, whereas a bit is either 0 or 1",
+        "A byte, which holds eight classical bits",
+        "A quark, which is smaller than a bit",
+        "A qubit, which can only be 0 or 1 like a classical bit",
+        "A gate, which replaces the need for bits"
+      ],
+      "correct": 0,
+      "explanation": "Classical computers use bits (0 or 1); quantum computers use qubits, which can exist in multiple states at once due to superposition."
+    },
+    {
+      "stem": "In the house analogy for quantum computing, which concept is illustrated by a person being simultaneously present in every room until you check a room?",
+      "options": [
+        "Entanglement",
+        "Superposition",
+        "Interference",
+        "Decoherence",
+        "Scalability"
+      ],
+      "correct": 1,
+      "explanation": "Superposition means a qubit exists in a combination of 0 and 1 until measured, like a person present in every room until one is checked."
+    },
+    {
+      "stem": "What is entanglement in quantum computing?",
+      "options": [
+        "The collapse of quantum states due to environmental interaction",
+        "The amplification of correct outcomes and suppression of incorrect ones",
+        "Qubits becoming so deeply connected that the state of one directly affects the state of the other, regardless of distance",
+        "The process of cooling qubits to near absolute zero",
+        "The conversion of qubits into classical bits"
+      ],
+      "correct": 2,
+      "explanation": "Entanglement connects qubits so deeply that the state of one directly affects the other regardless of distance, enabling powerful coordination."
+    },
+    {
+      "stem": "What does interference do in a quantum algorithm?",
+      "options": [
+        "It introduces random noise into the computation",
+        "It links two qubits together",
+        "It cools the quantum processor",
+        "It amplifies correct quantum outcomes and suppresses incorrect ones by manipulating probability amplitudes",
+        "It converts the result into a classical bit"
+      ],
+      "correct": 3,
+      "explanation": "Interference manipulates probability amplitudes to amplify correct outcomes and suppress incorrect ones, guiding algorithms toward optimal solutions."
+    },
+    {
+      "stem": "Which of the following is listed as an example of a quantum gate?",
+      "options": [
+        "AND",
+        "OR",
+        "NOT",
+        "XOR",
+        "Hadamard"
+      ],
+      "correct": 4,
+      "explanation": "Quantum gates such as Hadamard, Pauli-X and CNOT operate on qubits, whereas AND, OR and NOT are classical logic gates."
+    },
+    {
+      "stem": "Which quantum algorithm is named as able to factor large numbers exponentially faster, threatening traditional encryption systems?",
+      "options": [
+        "Shor's algorithm",
+        "Grover's algorithm",
+        "Dijkstra's algorithm",
+        "The Hadamard algorithm",
+        "The CNOT algorithm"
+      ],
+      "correct": 0,
+      "explanation": "Shor's algorithm can factor large numbers exponentially faster than classical methods, which threatens encryption such as RSA."
+    },
+    {
+      "stem": "How is the difference between classical physics and quantum physics illustrated using a die?",
+      "options": [
+        "Classical physics says a die always shows six; quantum physics says it always shows one",
+        "In classical physics the outcome is predictable given precise knowledge of force and angle; in quantum physics outcomes are random but statistically predictable over many trials",
+        "Classical physics cannot describe dice at all",
+        "Quantum physics makes the outcome fully predictable while classical physics does not",
+        "Both describe the die identically"
+      ],
+      "correct": 1,
+      "explanation": "Classical physics is deterministic: knowing force and angle predicts the roll. Quantum physics is probabilistic: outcomes are random but statistically predictable over many trials."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a real-world application of quantum computing?",
+      "options": [
+        "Cryptography",
+        "Optimisation",
+        "Word processing",
+        "Drug discovery",
+        "Material science"
+      ],
+      "correct": 2,
+      "explanation": "The listed quantum applications are cryptography, optimisation, drug discovery and material science; word processing is given as a classical computing example."
+    },
+    {
+      "stem": "What is decoherence in quantum computing?",
+      "options": [
+        "The design of new quantum algorithms",
+        "The ability to process many inputs in parallel",
+        "The speed advantage of quantum over classical machines",
+        "The collapse of quantum states due to environmental interaction",
+        "The cost saving achieved in logistics"
+      ],
+      "correct": 3,
+      "explanation": "Decoherence is the challenge of quantum states collapsing because of interaction with the environment."
+    },
+    {
+      "stem": "What kind of environment does quantum computing infrastructure require?",
+      "options": [
+        "An ordinary office desktop",
+        "A humid, warm data centre",
+        "Any standard cloud server",
+        "A mobile phone processor",
+        "Extremely controlled environments, such as near-absolute-zero temperatures"
+      ],
+      "correct": 4,
+      "explanation": "Quantum infrastructure needs extremely controlled environments, for example near-absolute-zero temperatures, which is listed as a key challenge."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "iso-11179for-metadata-management",
+  "questions": [
+    {
+      "stem": "What does ISO 11179 provide guidelines for?",
+      "options": [
+        "The representation and management of metadata describing data and information resources",
+        "The codes used to identify countries and territories",
+        "The capital requirements of banks",
+        "The management of physical assets",
+        "The encryption of data in transit"
+      ],
+      "correct": 0,
+      "explanation": "ISO 11179 is an international standard providing guidelines for the representation and management of metadata for describing data and information resources."
+    },
+    {
+      "stem": "What is metadata, as referenced by ISO 11179?",
+      "options": [
+        "Data that has been deleted",
+        "Data about data, describing the characteristics, properties and context of data",
+        "Data stored in a cloud service",
+        "Data that has been encrypted",
+        "Data collected from sensors"
+      ],
+      "correct": 1,
+      "explanation": "Metadata is data about data: it describes the characteristics, properties and context of data, helping users understand what the data is and how it can be used."
+    },
+    {
+      "stem": "What does ISO 11179 define as the basic building blocks of data?",
+      "options": [
+        "Tables",
+        "Countries",
+        "Data elements",
+        "Servers",
+        "Supertypes"
+      ],
+      "correct": 2,
+      "explanation": "ISO 11179 defines the concept of data elements, the basic building blocks of data, each with associated metadata such as name, definition and data type."
+    },
+    {
+      "stem": "What does the representation concept of ISO 11179 cover?",
+      "options": [
+        "How to price data assets",
+        "How to back up a database",
+        "How to assign three-letter codes to countries",
+        "How to define names, data types and relationships between data elements",
+        "How to train employees"
+      ],
+      "correct": 3,
+      "explanation": "Representation provides guidelines for representing data elements, including how to define names, data types and relationships between them."
+    },
+    {
+      "stem": "What does ISO 11179 encourage through registration?",
+      "options": [
+        "Registering each employee's credentials",
+        "Registering software licences with the vendor",
+        "Registering the company with regulators",
+        "Registering servers in a hardware inventory",
+        "Registering data elements in a central repository to promote consistency and reusability"
+      ],
+      "correct": 4,
+      "explanation": "ISO 11179 encourages the registration of data elements in a central repository, promoting consistency and reusability across an organisation."
+    },
+    {
+      "stem": "How does ISO 11179 promote interoperability?",
+      "options": [
+        "By standardising metadata so different systems and organisations can share and integrate data more effectively",
+        "By requiring all systems to use the same database vendor",
+        "By converting all data to a single file format",
+        "By removing metadata from shared data",
+        "By restricting data to one department"
+      ],
+      "correct": 0,
+      "explanation": "By standardising metadata, ISO 11179 promotes interoperability, allowing different systems and organisations to share and integrate data more effectively."
+    },
+    {
+      "stem": "How does ISO 11179 contribute to data quality?",
+      "options": [
+        "By automatically correcting spelling mistakes in records",
+        "By improving metadata so users can understand and trust the information they work with",
+        "By deleting incomplete records",
+        "By enforcing a maximum table size",
+        "By limiting who can insert rows"
+      ],
+      "correct": 1,
+      "explanation": "Improved metadata leads to better data quality, as users can understand and trust the information they are working with."
+    },
+    {
+      "stem": "In the library analogy for ISO 11179, what does the card for each book represent?",
+      "options": [
+        "The database server",
+        "The data warehouse",
+        "The metadata describing a data element",
+        "The user's access rights",
+        "The country code"
+      ],
+      "correct": 2,
+      "explanation": "In the analogy each book is a data element and its card is the metadata telling you the title, author and other details; ISO 11179 is a standard way to write and organise those cards."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a benefit of ISO 11179?",
+      "options": [
+        "Interoperability",
+        "Consistency in data definitions",
+        "Improved data quality",
+        "Reduced bank capital requirements",
+        "All of these are listed benefits"
+      ],
+      "correct": 3,
+      "explanation": "The benefits listed are interoperability, consistency and data quality; bank capital requirements belong to the Basel standards, not ISO 11179."
+    },
+    {
+      "stem": "What kind of metadata is associated with each data element under ISO 11179?",
+      "options": [
+        "Its price and supplier",
+        "Its physical storage address",
+        "Its country and currency",
+        "Its owner's salary",
+        "Its name, definition and data type"
+      ],
+      "correct": 4,
+      "explanation": "Each data element has associated metadata such as its name, definition and data type."
+    }
+  ]
+}

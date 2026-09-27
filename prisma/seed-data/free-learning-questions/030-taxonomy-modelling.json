@@ -1,0 +1,125 @@
+{
+  "topic": "taxonomy-modelling",
+  "questions": [
+    {
+      "stem": "What is Taxonomy Modelling?",
+      "options": [
+        "The practice of organising concepts into hierarchical categories, typically in parent-child structures",
+        "The practice of defining reasoning rules between concepts",
+        "The practice of designing physical database tables",
+        "The practice of drawing process workflows",
+        "The practice of capturing facts in natural language"
+      ],
+      "correct": 0,
+      "explanation": "Taxonomy Modelling organises concepts into hierarchical parent-child categories so terms are classified consistently."
+    },
+    {
+      "stem": "What is the main goal of Taxonomy Modelling?",
+      "options": [
+        "To enable machine reasoning",
+        "To store transactions efficiently",
+        "To provide a clear and simple classification framework",
+        "To define system integrations",
+        "To capture complex business rules"
+      ],
+      "correct": 2,
+      "explanation": "The main goal is a clear, simple classification framework that standardises terminology and improves search and navigation."
+    },
+    {
+      "stem": "In the healthcare example of a taxonomy, which sequence correctly moves from general to specific?",
+      "options": [
+        "COVID-19 → Viral Infections → Infectious Diseases → Diseases",
+        "Infectious Diseases → Diseases → COVID-19 → Viral Infections",
+        "Diseases → Infectious Diseases → Viral Infections → COVID-19",
+        "Viral Infections → Diseases → Infectious Diseases → COVID-19",
+        "Diseases → COVID-19 → Viral Infections → Infectious Diseases"
+      ],
+      "correct": 2,
+      "explanation": "A taxonomy moves from general to specific: Diseases, then Infectious Diseases, then Viral Infections, then COVID-19."
+    },
+    {
+      "stem": "In the banking taxonomy example, how may Home Loans be further classified?",
+      "options": [
+        "Secured or Unsecured",
+        "Approved or Rejected",
+        "Short Term or Long Term",
+        "Fixed Rate or Variable Rate",
+        "Domestic or Foreign"
+      ],
+      "correct": 3,
+      "explanation": "Home Loans may be classified as Fixed Rate or Variable Rate, while Personal Loans are classified as Secured or Unsecured."
+    },
+    {
+      "stem": "Which of the following is NOT one of the loan product categories named in the banking taxonomy example?",
+      "options": [
+        "Personal Loans",
+        "Home Loans",
+        "Auto Loans",
+        "SME Loans",
+        "Student Loans"
+      ],
+      "correct": 4,
+      "explanation": "Under Loan Products the categories are Personal, Home, Auto and SME Loans; Student Loans are not mentioned."
+    },
+    {
+      "stem": "How does a taxonomy differ from an ontology?",
+      "options": [
+        "A taxonomy defines reasoning rules; an ontology only classifies",
+        "They are identical in expressiveness",
+        "A taxonomy is technology-specific; an ontology is not",
+        "A taxonomy focuses only on classification and hierarchy, while an ontology also defines relationships, constraints and reasoning rules",
+        "An ontology is simpler and lighter than a taxonomy"
+      ],
+      "correct": 3,
+      "explanation": "Taxonomy focuses purely on classification and hierarchy; ontologies are more complex and expressive, allowing systems to infer new knowledge."
+    },
+    {
+      "stem": "Which analytical use is given as an example of taxonomies in reporting?",
+      "options": [
+        "Comparing approval rates for secured versus unsecured loans",
+        "Detecting fraud networks through shared addresses",
+        "Inferring that a student is a person",
+        "Tracing a rule back to its original sentence",
+        "Calculating server uptime"
+      ],
+      "correct": 0,
+      "explanation": "Because categories are clearly defined, metrics can be grouped by classification, for example comparing approval rates for secured versus unsecured loans."
+    },
+    {
+      "stem": "In the school library example of a taxonomy, which subjects sit under Science?",
+      "options": [
+        "Literature, History and Art",
+        "Physics, Chemistry and Biology",
+        "Human Biology and Environmental Science",
+        "Fiction and Non-fiction",
+        "Maths, Music and Drama"
+      ],
+      "correct": 1,
+      "explanation": "Under Science there may be subcategories such as Physics, Chemistry and Biology, with Biology further split into Human Biology and Environmental Science."
+    },
+    {
+      "stem": "Which of the following is NOT named as an area where Taxonomy Modelling is widely used?",
+      "options": [
+        "Metadata management",
+        "Retail catalogues",
+        "Digital libraries",
+        "Content management systems",
+        "Fraud detection"
+      ],
+      "correct": 4,
+      "explanation": "Taxonomies are used in metadata management, knowledge organisation, retail catalogues, digital libraries and content management systems; fraud detection is a knowledge graph use."
+    },
+    {
+      "stem": "Why does Taxonomy Modelling often serve as a starting point for more advanced knowledge frameworks?",
+      "options": [
+        "Because it is required by law",
+        "Because it is simpler and lighter than ontology modelling, making it easier to maintain and apply",
+        "Because it already includes reasoning rules",
+        "Because it is tied to a specific database",
+        "Because it captures many-to-many relationships"
+      ],
+      "correct": 1,
+      "explanation": "Taxonomies are simpler and lighter than ontologies, so they are easier to maintain and often the first step towards advanced semantic modelling."
+    }
+  ]
+}

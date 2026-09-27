@@ -1,0 +1,125 @@
+{
+  "topic": "fco-im-modelling",
+  "questions": [
+    {
+      "stem": "What does FCO-IM stand for?",
+      "options": [
+        "Fact-Constrained Object Information Model",
+        "Formal Conceptual Ontology for Information Management",
+        "Fact and Constraint Oriented Integration Method",
+        "Fully Communication Oriented Information Modelling",
+        "Federated Content Object Information Model"
+      ],
+      "correct": 3,
+      "explanation": "FCO-IM is Fully Communication Oriented Information Modelling, a modern fact-oriented method that captures information exactly as it is communicated."
+    },
+    {
+      "stem": "What long-standing modelling problem does FCO-IM address?",
+      "options": [
+        "Slow database queries",
+        "The high cost of storage",
+        "The lack of diagramming tools",
+        "The loss of meaning that occurs when business statements are translated into technical models",
+        "The absence of primary keys"
+      ],
+      "correct": 3,
+      "explanation": "FCO-IM addresses the loss of meaning that often occurs when business statements are translated into technical models."
+    },
+    {
+      "stem": "How does FCO-IM first record a business fact?",
+      "options": [
+        "As a table with columns",
+        "As an entity with attributes",
+        "As a UML class",
+        "As a BPMN task",
+        "In its original verbal form, exactly as communicated"
+      ],
+      "correct": 4,
+      "explanation": "Rather than forcing facts into predefined structures, FCO-IM records facts in their original verbal form and then transforms them systematically."
+    },
+    {
+      "stem": "From the sentence 'Order 123 is placed by Customer John on 1 January 2025', which fact types can FCO-IM later derive?",
+      "options": [
+        "'Customer places Order' and 'Order has Order Date'",
+        "'Order has Price' and 'Customer has Address'",
+        "'Customer is a Person' and 'Order is a Document'",
+        "'Order is shipped to Customer' and 'Customer pays Invoice'",
+        "'Order belongs to Product' and 'Product has Category'"
+      ],
+      "correct": 0,
+      "explanation": "From the retained sentence, formal fact types such as 'Customer places Order' and 'Order has Order Date' are derived, keeping traceability to the original."
+    },
+    {
+      "stem": "What is described as one of the most important characteristics of FCO-IM?",
+      "options": [
+        "Compression",
+        "Encryption",
+        "Traceability",
+        "Denormalisation",
+        "Visual density"
+      ],
+      "correct": 2,
+      "explanation": "Every fact, rule and constraint remains linked to the original business communication that justified it, so the model always reflects how the business talks."
+    },
+    {
+      "stem": "In the loan example of FCO-IM, which constraint is stated about a loan application's approval decision?",
+      "options": [
+        "Each loan application may have many approval decisions",
+        "Approval decisions are optional",
+        "Approval decisions belong to the customer, not the application",
+        "Approval decisions are stored outside the model",
+        "Each loan application must have exactly one approval decision"
+      ],
+      "correct": 4,
+      "explanation": "The example rules state that each loan application must have exactly one approval decision, and may be linked to one or more repayment schedules."
+    },
+    {
+      "stem": "Where does FCO-IM sit in the modelling landscape?",
+      "options": [
+        "Between conceptual understanding and logical data modelling",
+        "Between physical data modelling and database tuning",
+        "After deployment, as documentation",
+        "Between business strategy and process modelling",
+        "It replaces all other modelling techniques"
+      ],
+      "correct": 0,
+      "explanation": "FCO-IM sits between conceptual understanding and logical data modelling, ensuring meaning is preserved before structural decisions are made."
+    },
+    {
+      "stem": "According to Marco Wobben's overview of Fact Oriented Modelling, what does FCO-IM focus on instead of the structure and dependency of data itself?",
+      "options": [
+        "The physical storage of data",
+        "How domain experts communicate about their data",
+        "The performance of database queries",
+        "The cost of data ownership",
+        "The security of data at rest"
+      ],
+      "correct": 1,
+      "explanation": "FCO-IM focuses on how domain experts communicate about their data, a fundamental yet subtle difference from modelling data structure."
+    },
+    {
+      "stem": "Which tool is named as the favourite FCO-IM tool, able to transform information models into UML and relational diagrams?",
+      "options": [
+        "Microsoft Visio",
+        "NORMA",
+        "CaseTalk",
+        "ERwin",
+        "PowerDesigner"
+      ],
+      "correct": 2,
+      "explanation": "CaseTalk is named as the favourite FCO-IM tool, handling enterprise-scale information models and generating many artefacts."
+    },
+    {
+      "stem": "In the comparison of NIAM, ORM and FCO-IM, which summary matches the key takeaway?",
+      "options": [
+        "NIAM = modern best practice; ORM = origin; FCO-IM = expansion",
+        "NIAM = origin; ORM = expansion with roles, rules and constraints; FCO-IM = modern best practice with natural communication and traceability",
+        "All three are equally used in mainstream practice today",
+        "FCO-IM = origin; NIAM = expansion; ORM = modern best practice",
+        "NIAM and ORM are modern best practice; FCO-IM is historical"
+      ],
+      "correct": 1,
+      "explanation": "The key takeaway is NIAM as origin, ORM as expansion adding roles, rules and constraints, and FCO-IM as modern best practice retaining natural communication plus traceability."
+    }
+  ]
+}

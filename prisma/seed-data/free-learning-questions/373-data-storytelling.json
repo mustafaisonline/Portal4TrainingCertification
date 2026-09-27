@@ -1,0 +1,125 @@
+{
+  "topic": "data-storytelling",
+  "questions": [
+    {
+      "stem": "What is data storytelling?",
+      "options": [
+        "The art of translating complex data into a compelling narrative that drives action",
+        "Writing fictional stories using random numbers",
+        "Storing data in narrative text files",
+        "Presenting raw tables without commentary",
+        "A method for encrypting spreadsheets"
+      ],
+      "correct": 0,
+      "explanation": "Data storytelling translates complex data into a compelling narrative that drives action, with characters, context, risks and resolution."
+    },
+    {
+      "stem": "In data storytelling, who are the 'characters' of the story?",
+      "options": [
+        "The columns of a dataset",
+        "The key stakeholders, such as business leaders, data teams, regulators and end-users",
+        "The visualisation tools",
+        "The fictional personas invented for a presentation",
+        "The database administrators only"
+      ],
+      "correct": 1,
+      "explanation": "The characters in data storytelling are the key stakeholders, including business leaders, data teams, regulators and end-users, each with different priorities."
+    },
+    {
+      "stem": "In the banking example of data storytelling, which of the following is NOT listed among the key stakeholders for improving customer satisfaction?",
+      "options": [
+        "Bank Managers",
+        "Customers",
+        "Software vendors",
+        "Loan Officers",
+        "Regulators"
+      ],
+      "correct": 2,
+      "explanation": "The banking stakeholders listed are Bank Managers, Customers, Loan Officers and Regulators; software vendors are not among them."
+    },
+    {
+      "stem": "What provides the 'context' in data storytelling?",
+      "options": [
+        "The colour scheme of the charts",
+        "The number of slides in the presentation",
+        "The list of database tables",
+        "Linking data to the organisation's strategic goals and key performance indicators (KPIs)",
+        "The names of the data engineers"
+      ],
+      "correct": 3,
+      "explanation": "Context in data storytelling means linking data to the business's strategic goals and performance indicators, such as a bank's average wait time or loan approval speed."
+    },
+    {
+      "stem": "In the banking example, which KPIs are tracked by a bank that wants to reduce customer complaints?",
+      "options": [
+        "Number of branches, number of ATMs and staff count",
+        "Share price, dividend yield and market capitalisation",
+        "Server uptime, database size and query latency",
+        "Marketing spend, advertising reach and brand awareness",
+        "Average wait time, loan approval speed and customer retention rate"
+      ],
+      "correct": 4,
+      "explanation": "The bank tracks average wait time, loan approval speed and customer retention rate; long wait times might lead to online appointment booking or AI chatbots."
+    },
+    {
+      "stem": "In data storytelling, what plays the role of the story's conflict?",
+      "options": [
+        "The Cost of Inaction (COI): the risks of not acting on data insights",
+        "Disagreements between data engineers and analysts",
+        "The choice between two visualisation tools",
+        "The budget negotiation for the project",
+        "The competition between departments for data access"
+      ],
+      "correct": 0,
+      "explanation": "The conflict in data storytelling is the risk of not acting on data insights, assessed as the Cost of Inaction (COI)."
+    },
+    {
+      "stem": "In the banking example, which of the following is a risk of inaction when transaction data is collected but not analysed properly?",
+      "options": [
+        "Too many customers opening accounts",
+        "Increased fraud cases because suspicious transactions are not detected early",
+        "Excessive compliance with regulations",
+        "Loan approvals becoming too fast",
+        "Shorter customer wait times"
+      ],
+      "correct": 1,
+      "explanation": "The risks of inaction include increased fraud cases, losing customers who want modern digital services, and regulatory fines for anti-money laundering failures."
+    },
+    {
+      "stem": "What does defining a strategic resolution path involve in data storytelling?",
+      "options": [
+        "Choosing which stakeholders to exclude",
+        "Deleting data that contradicts the story",
+        "Establishing a clear vision, milestones and execution plan to drive meaningful outcomes",
+        "Writing a fictional happy ending",
+        "Selecting the loudest stakeholder's preferred option"
+      ],
+      "correct": 2,
+      "explanation": "The resolution in data storytelling means establishing a clear vision, milestones and an execution plan to drive meaningful outcomes."
+    },
+    {
+      "stem": "In the banking example of reducing loan approval time, what is the first step of the resolution path?",
+      "options": [
+        "Automate verification processes with AI",
+        "Monitor and improve",
+        "Gather customer feedback",
+        "Identify the delay points by analysing past loan applications",
+        "Hire more loan officers"
+      ],
+      "correct": 3,
+      "explanation": "Step 1 is to identify the delay points by analysing past loan applications, followed by automating verification, monitoring and continuous improvement."
+    },
+    {
+      "stem": "What are the four elements that together allow data storytelling to create real-world impact?",
+      "options": [
+        "Collecting, cleaning, storing and archiving data",
+        "Charts, tables, slides and reports",
+        "Budget, staff, tools and timelines",
+        "Extraction, transformation, loading and serving",
+        "Engaging stakeholders, understanding business context, assessing risks and defining a resolution path"
+      ],
+      "correct": 4,
+      "explanation": "Data storytelling creates impact by engaging stakeholders, understanding business context, assessing risks and defining a resolution path."
+    }
+  ]
+}

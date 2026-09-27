@@ -1,0 +1,125 @@
+{
+  "topic": "testing-vs-qa",
+  "questions": [
+    {
+      "stem": "What is testing about?",
+      "options": [
+        "Confirming that output meets customer satisfaction standards",
+        "Discovering problems or bugs in processes or code, during or after implementation",
+        "Writing user documentation",
+        "Training end-users on a new system",
+        "Approving the project budget"
+      ],
+      "correct": 1,
+      "explanation": "Testing is about discovering problems or bugs in processes or code, either during or after implementation."
+    },
+    {
+      "stem": "What is Quality Assurance (QA) about?",
+      "options": [
+        "Finding bugs in individual code units",
+        "Verifying that components work together",
+        "Making sure the standards and output of processes or solutions meet customer satisfaction",
+        "Checking the speed of database queries",
+        "Deploying code to production"
+      ],
+      "correct": 2,
+      "explanation": "QA is about making sure that the standards and output of processes or solutions meet customer satisfaction and expected quality."
+    },
+    {
+      "stem": "Which stage of testing checks individual parts?",
+      "options": [
+        "User Acceptance Testing",
+        "System Integration Testing",
+        "Quality Assurance",
+        "Unit Testing",
+        "Regression Testing"
+      ],
+      "correct": 3,
+      "explanation": "Unit Testing checks individual parts; System Integration Testing verifies components work together; User Acceptance Testing ensures the solution meets user requirements."
+    },
+    {
+      "stem": "Which stage of testing ensures the solution meets user requirements?",
+      "options": [
+        "Unit Testing",
+        "System Integration Testing",
+        "Performance Testing",
+        "Smoke Testing",
+        "User Acceptance Testing"
+      ],
+      "correct": 4,
+      "explanation": "User Acceptance Testing ensures the solution meets user requirements."
+    },
+    {
+      "stem": "In the example of a table with a million rows of country names, what would QA catch that testing might not?",
+      "options": [
+        "Inconsistent spellings of country names or non-uniform data formats",
+        "That some rows are missing",
+        "That the table has the wrong number of columns",
+        "That the query runs too slowly",
+        "That the server ran out of disk space"
+      ],
+      "correct": 0,
+      "explanation": "Testing might confirm all million rows are present, but QA would catch inconsistent spellings or non-uniform data formats."
+    },
+    {
+      "stem": "According to the comparison of testing and QA, what do many project failures result from?",
+      "options": [
+        "Insufficient unit testing",
+        "Poor QA processes rather than bad testing",
+        "Too much user acceptance testing",
+        "Over-reliance on automated tests",
+        "Late delivery of hardware"
+      ],
+      "correct": 1,
+      "explanation": "Many project failures result from poor QA processes rather than bad testing."
+    },
+    {
+      "stem": "Why does data quality become especially crucial in the era of unstructured data?",
+      "options": [
+        "Because unstructured data is always smaller in volume",
+        "Because unstructured data never contains errors",
+        "Because numerous checks and fixes are needed, and if end-users cannot trust the data, having it becomes pointless",
+        "Because unstructured data does not need testing",
+        "Because regulators forbid unstructured data"
+      ],
+      "correct": 2,
+      "explanation": "Unstructured data requires numerous checks and fixes to maintain quality; if end-users cannot trust the quality, having the data is pointless."
+    },
+    {
+      "stem": "What is described as the ultimate factor for a successful implementation?",
+      "options": [
+        "The number of bugs found",
+        "The size of the testing team",
+        "Meeting the project deadline",
+        "Business satisfaction",
+        "The choice of programming language"
+      ],
+      "correct": 3,
+      "explanation": "Business satisfaction is the ultimate factor for a successful implementation."
+    },
+    {
+      "stem": "Which statement best captures the relationship between testing and QA?",
+      "options": [
+        "QA replaces testing once a project goes live",
+        "Testing is more important than QA for any system",
+        "QA is only needed for unstructured data",
+        "Testing and QA are the same activity under different names",
+        "Testing finds bugs, while QA ensures the solution meets the standards and quality expected by users"
+      ],
+      "correct": 4,
+      "explanation": "Testing finds bugs; QA ensures the solution not only functions correctly but also meets the desired standards and quality expected by users."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a stage of testing during an IT project?",
+      "options": [
+        "Unit Testing",
+        "System Integration Testing",
+        "Customer Satisfaction Review",
+        "User Acceptance Testing",
+        "Checking individual parts of the code"
+      ],
+      "correct": 2,
+      "explanation": "The stages listed are Unit Testing, System Integration Testing and User Acceptance Testing; customer satisfaction is the concern of QA, not a named testing stage."
+    }
+  ]
+}

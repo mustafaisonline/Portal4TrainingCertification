@@ -1,0 +1,125 @@
+{
+  "topic": "ontology-knowledge-modelling",
+  "questions": [
+    {
+      "stem": "What is Ontology or Knowledge Modelling?",
+      "options": [
+        "The practice of defining a formal, structured representation of knowledge within a domain, including concepts, relationships and rules",
+        "The practice of arranging concepts into a simple parent-child hierarchy only",
+        "The practice of designing physical storage for documents",
+        "The practice of drawing workflow diagrams",
+        "The practice of normalising relational tables"
+      ],
+      "correct": 0,
+      "explanation": "Ontology Modelling defines a formal representation of domain knowledge: important concepts, how they relate and the rules governing those relationships."
+    },
+    {
+      "stem": "What is the main goal of Ontology Modelling?",
+      "options": [
+        "To minimise storage costs",
+        "To replace all relational databases",
+        "To speed up report rendering",
+        "To build a framework supporting semantic clarity, interoperability and reasoning",
+        "To classify documents by size"
+      ],
+      "correct": 3,
+      "explanation": "Ontologies are designed so systems can understand meaning and draw logical conclusions, supporting semantic clarity, interoperability and reasoning."
+    },
+    {
+      "stem": "In the school example, if the ontology states that a Student is a type of Person, what can a system infer about someone who is a Student?",
+      "options": [
+        "That they are also a Teacher",
+        "That they attend an Online Course",
+        "That they are also a Person",
+        "That they teach a Course",
+        "Nothing further can be inferred"
+      ],
+      "correct": 2,
+      "explanation": "Because of the hierarchy, if someone is a Student the system already knows the person is also a Person."
+    },
+    {
+      "stem": "How can an ontology automatically classify a loan as delinquent?",
+      "options": [
+        "By manually tagging each loan",
+        "By checking the loan's interest rate",
+        "By sorting loans into a taxonomy",
+        "By formalising the rule that a Delinquent Loan is a Loan with a missed Repayment, so the system classifies loans when the condition is met",
+        "By storing loans in a graph database"
+      ],
+      "correct": 3,
+      "explanation": "Once the rule Delinquent Loan = Loan with a missed Repayment is formalised, the system can classify loans as delinquent without manual tagging."
+    },
+    {
+      "stem": "What kinds of relationships can elements have in a Data Taxonomy compared with a Data Ontology?",
+      "options": [
+        "Taxonomy elements can have many-to-many relationships; ontology elements only one-to-one",
+        "Both allow all relationship types",
+        "Neither allows one-to-many relationships",
+        "Taxonomy allows one-to-many; ontology allows only one-to-one",
+        "Taxonomy elements form only a one-to-one relationship with another element; ontology elements can have one-to-one, one-to-many, many-to-one or many-to-many"
+      ],
+      "correct": 4,
+      "explanation": "In a Data Taxonomy each element forms only a one-to-one relationship with another element, while ontology elements can have all types of relationships."
+    },
+    {
+      "stem": "What are the three key components of an ontology?",
+      "options": [
+        "Tables, Columns and Rows",
+        "Nodes, Edges and Weights",
+        "Concepts, Relationships and Attributes",
+        "Facts, Roles and Sentences",
+        "Categories, Tags and Labels"
+      ],
+      "correct": 2,
+      "explanation": "Ontologies have three key components: Concepts (main kinds of things), Relationships (linking concepts) and Attributes (describing each concept)."
+    },
+    {
+      "stem": "Which of the following is NOT one of the relationship types listed for ontologies?",
+      "options": [
+        "Hierarchical",
+        "Temporal",
+        "Causal",
+        "Spatial",
+        "Alphabetical"
+      ],
+      "correct": 4,
+      "explanation": "Ontology relationships include Hierarchical, Associative, Dependency, Role-based, Temporal, Causal, Spatial, Equivalence and Disjoint types; alphabetical is not one."
+    },
+    {
+      "stem": "From which Greek roots does the word taxonomy come?",
+      "options": [
+        "taxis meaning order or arrangement, and nomos meaning law or science",
+        "techne meaning craft, and logos meaning word",
+        "topos meaning place, and nomos meaning name",
+        "taxis meaning tax, and onoma meaning name",
+        "tele meaning far, and nomos meaning rule"
+      ],
+      "correct": 0,
+      "explanation": "Taxonomy comes from the Greek taxis, meaning order or arrangement, and nomos, meaning law or science."
+    },
+    {
+      "stem": "Which statement about the relationship between taxonomies and ontologies is correct?",
+      "options": [
+        "Ontologies can be part of taxonomies, but not the other way around",
+        "Taxonomies can be part of ontologies, but not the other way around",
+        "Taxonomies and ontologies can never be combined",
+        "Taxonomies are more advanced than ontologies",
+        "Ontologies contain no hierarchies"
+      ],
+      "correct": 1,
+      "explanation": "Ontology is a more advanced and complex form of taxonomy, so taxonomies can be part of ontologies but not the other way around."
+    },
+    {
+      "stem": "What common mistake is identified regarding structured and unstructured data?",
+      "options": [
+        "Believing unstructured data cannot be analysed",
+        "Believing that converting structured data from a table into text format turns it into unstructured data",
+        "Believing taxonomies are only for structured data",
+        "Believing ontologies replace databases",
+        "Believing metadata is optional for unstructured data"
+      ],
+      "correct": 1,
+      "explanation": "A frequent misconception is that changing a table's format to text makes it unstructured; structured data needs more than a format change to be unstructured."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "data-discrepancies",
+  "questions": [
+    {
+      "stem": "How do Data Discrepancies relate to Data Errors?",
+      "options": [
+        "They are the same thing",
+        "Data Errors are searched for, identified and fixed based on Data Discrepancies",
+        "Data Discrepancies are caused only by Data Errors",
+        "Data Errors are a type of Data Discrepancy",
+        "Neither can occur without a data warehouse"
+      ],
+      "correct": 1,
+      "explanation": "Data Discrepancies are often confused with Data Errors, but a discrepancy is the signal: data errors are then searched for, identified and fixed based on it."
+    },
+    {
+      "stem": "What is the dictionary definition of a discrepancy?",
+      "options": [
+        "An exact match between two facts",
+        "An illogical or surprising lack of compatibility or similarity between two or more facts",
+        "A record that has been deleted",
+        "A summary of detailed data",
+        "A change in the data arriving at a model"
+      ],
+      "correct": 1,
+      "explanation": "A discrepancy is an illogical or surprising lack of compatibility or similarity between two or more facts."
+    },
+    {
+      "stem": "Which situation is described as a Data Discrepancy?",
+      "options": [
+        "A dashboard loading in under three seconds",
+        "A model retrained after new product types appear",
+        "Manual calculations by a data analyst not matching numbers from automated reports",
+        "A dataset shared with the QA team",
+        "A query with no WHERE clause"
+      ],
+      "correct": 2,
+      "explanation": "When an analyst's manual calculations do not match the automated report, there is a data reconciliation issue, which is a Data Discrepancy."
+    },
+    {
+      "stem": "In the *I Am Datapedia!* example, why do 9,093 plus 6,104 not equal the 'All Users' total of 14,018?",
+      "options": [
+        "Because the totals came from different sources",
+        "Because the arithmetic was done wrongly",
+        "Because one figure was encrypted",
+        "Because the report was in MDX",
+        "Because the data was synthetic"
+      ],
+      "correct": 0,
+      "explanation": "The 14,018 total came from various sources while 9,093 and 6,104 came from different sources, so the figures do not reconcile: a Data Discrepancy."
+    },
+    {
+      "stem": "Once Data Discrepancies are found, what is the next step?",
+      "options": [
+        "Delete the conflicting reports",
+        "Migrate the data to the cloud",
+        "Retrain the machine learning model",
+        "Start identifying data errors, code errors and business rule errors",
+        "Add more filters to the dashboard"
+      ],
+      "correct": 3,
+      "explanation": "After discrepancies are found, the next step is to identify the underlying data, code or business rule errors."
+    },
+    {
+      "stem": "Does a Data Discrepancy always mean there is a data issue?",
+      "options": [
+        "Yes, always",
+        "No, discrepancies never indicate data issues",
+        "No, discrepancies are always caused by hardware faults",
+        "Yes, unless the data is in the cloud",
+        "No, it may be that not all facts were used when processing both sides of the data"
+      ],
+      "correct": 4,
+      "explanation": "It is not always a data issue; sometimes the two sides were produced using different facts, such as one analyst filtering out a region."
+    },
+    {
+      "stem": "In the two-analyst example, why do the two reports' totals not match?",
+      "options": [
+        "One summed all rows while the other filtered out one of the regions",
+        "One analyst used SQL and the other used MDX",
+        "One report was run in development",
+        "The table had duplicate primary keys",
+        "The second analyst used synthetic data"
+      ],
+      "correct": 0,
+      "explanation": "The first analyst summed all rows; the second reported sales by region but filtered one region out, so the totals differ without any data error."
+    },
+    {
+      "stem": "Where are Data Discrepancies normally found?",
+      "options": [
+        "In synthetic datasets",
+        "In OLAP cubes",
+        "In data sitting in silos",
+        "In geocoded records",
+        "In canned reports"
+      ],
+      "correct": 2,
+      "explanation": "Data Discrepancies are normally found when data is sitting in silos, which is why the Single Source of Truth concept surfaced."
+    },
+    {
+      "stem": "Which concept surfaced to address Data Discrepancies caused by silos?",
+      "options": [
+        "Data Island",
+        "Scope Creep",
+        "Concept Drift",
+        "Single Source of Truth, delivered by a Data Warehouse",
+        "Canned Data"
+      ],
+      "correct": 3,
+      "explanation": "The Single Source of Truth concept arose so that a Data Warehouse could bring all data silos together in one place."
+    },
+    {
+      "stem": "In which data model forms does a Data Warehouse ideally consolidate silos to avoid Data Discrepancies?",
+      "options": [
+        "Multiple isolated data islands",
+        "Separate development instances per team",
+        "A landing zone only",
+        "A collection of spreadsheets",
+        "One Unified Data Model, or a Star or Snowflake schema"
+      ],
+      "correct": 4,
+      "explanation": "A Data Warehouse brings silos together ideally in one Unified Data Model or in Star or Snowflake schemas."
+    }
+  ]
+}

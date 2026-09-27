@@ -1,0 +1,125 @@
+{
+  "topic": "data-categorization-vsclassification",
+  "questions": [
+    {
+      "stem": "On what is Data Categorisation based?",
+      "options": [
+        "The business requirements of the organisation",
+        "The attributes and properties of the entities in a dataset",
+        "The size of each record",
+        "The order in which data was loaded",
+        "The cost of storing the data"
+      ],
+      "correct": 1,
+      "explanation": "Categorisation is based on the attributes and properties of entities in the dataset, whereas classification is based on business requirements."
+    },
+    {
+      "stem": "On what is Data Classification based, as distinct from Data Categorisation?",
+      "options": [
+        "The file format of the data",
+        "The physical location of the server",
+        "The attributes of each entity",
+        "Alphabetical order",
+        "The business requirements"
+      ],
+      "correct": 4,
+      "explanation": "Classification is driven by business requirements, such as grouping categories into risk levels or family versus non-family members."
+    },
+    {
+      "stem": "What do Data Categorisation and Data Classification both count as, and what are they used for?",
+      "options": [
+        "Both are Metadata and are used for Data Governance",
+        "Both are encryption methods used for Data Security",
+        "Both are storage formats used for archiving",
+        "Both are database indexes used for performance",
+        "Both are reporting tools used for dashboards"
+      ],
+      "correct": 0,
+      "explanation": "Both Categorisation and Classification are Metadata and are used for Data Governance as well."
+    },
+    {
+      "stem": "In the Data Science domain, under which learning method do Data Categorisation and Data Classification fall?",
+      "options": [
+        "Unsupervised Learning",
+        "Reinforcement Learning",
+        "Self-supervised Learning",
+        "Supervised Learning",
+        "Neither; they are not part of Machine Learning"
+      ],
+      "correct": 3,
+      "explanation": "Both terms fall under Supervised Learning in the Data Science domain."
+    },
+    {
+      "stem": "In the household example from I Am Datapedia!, which of the following is a classification rather than a category?",
+      "options": [
+        "Grandparents",
+        "Cousins",
+        "Family members",
+        "Gardener",
+        "Car painters"
+      ],
+      "correct": 2,
+      "explanation": "Grandparents, parents, children, cousins, gardener, mechanic and car painters are categories; family members and non-family members are the classifications built on them."
+    },
+    {
+      "stem": "In the household example from I Am Datapedia!, which of the following is a category?",
+      "options": [
+        "Gardener",
+        "Family members",
+        "Non-family members",
+        "Medium Risk",
+        "High Risk"
+      ],
+      "correct": 0,
+      "explanation": "Gardener is one of the categories; family members and non-family members are the classifications."
+    },
+    {
+      "stem": "In the I Am Datapedia! example of documents, categories such as passport, health record, financial record and job posting were all classified as what?",
+      "options": [
+        "Public",
+        "Confidential",
+        "Low Risk",
+        "High Risk",
+        "Medium Risk"
+      ],
+      "correct": 4,
+      "explanation": "The data was categorised into passport, health record, financial record and job posting, and those categories were classified as Medium Risk."
+    },
+    {
+      "stem": "Why is the distinction between Data Categorisation and Data Classification described as confusing?",
+      "options": [
+        "Because neither term is defined anywhere",
+        "Because both are types of encryption",
+        "Because the two terms are often used interchangeably",
+        "Because only data scientists are allowed to use them",
+        "Because they apply only to unstructured data"
+      ],
+      "correct": 2,
+      "explanation": "Categorisation and Classification are used interchangeably in practice, even though categorisation reflects entity attributes and classification reflects business requirements."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a category in the household example from I Am Datapedia!?",
+      "options": [
+        "Cousins",
+        "Neighbours",
+        "Children",
+        "Servants",
+        "Mechanic"
+      ],
+      "correct": 1,
+      "explanation": "The listed categories are grandparents, parents, children, cousins, servants, gardener, mechanic and car painters; neighbours are not among them."
+    },
+    {
+      "stem": "In the household example from I Am Datapedia!, under which classification would a car painter fall?",
+      "options": [
+        "Family members",
+        "Medium Risk",
+        "Grandparents",
+        "Non-family members",
+        "Children"
+      ],
+      "correct": 3,
+      "explanation": "Gardener, mechanic, car painters and servants are classified as non-family members."
+    }
+  ]
+}

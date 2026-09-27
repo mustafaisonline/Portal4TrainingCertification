@@ -1,0 +1,125 @@
+{
+  "topic": "ontology-drivendata-integration-andharmonization",
+  "questions": [
+    {
+      "stem": "What is the role of ontology in data integration and harmonisation?",
+      "options": [
+        "To encrypt data in transit between systems",
+        "To describe structure and relations, enabling a coherent structure for data across systems, functions and domains",
+        "To schedule batch data pipelines",
+        "To replace all databases with a single system",
+        "To store backups of source data"
+      ],
+      "correct": 1,
+      "explanation": "Ontology describes structure and relations, giving data a coherent structure across systems, functions and domains."
+    },
+    {
+      "stem": "What do ontologies in data management involve?",
+      "options": [
+        "A list of servers and their IP addresses",
+        "A set of SQL scripts for loading tables",
+        "A shared vocabulary and a set of relationships and rules to model a domain",
+        "A schedule of data refreshes",
+        "A directory of user permissions"
+      ],
+      "correct": 2,
+      "explanation": "Ontologies use a shared vocabulary and a set of relationships and rules to model a domain, giving systems and stakeholders a common language."
+    },
+    {
+      "stem": "Why is a new, ontological approach to data integration said to be needed?",
+      "options": [
+        "Because cloud storage has become too expensive",
+        "Because regulators require ontologies",
+        "Because point-to-point integrations are no longer possible",
+        "Because the cost of maintaining point-to-point integrations and running specific data pipelines is growing",
+        "Because databases can no longer store relationships"
+      ],
+      "correct": 3,
+      "explanation": "As the cost of maintaining point-to-point integrations and running specific data pipelines grows, an ontological approach makes cost control easier."
+    },
+    {
+      "stem": "What is meant by semantic discrepancies as a data integration challenge?",
+      "options": [
+        "Data sources using different file formats",
+        "Network delays between systems",
+        "Missing primary keys in tables",
+        "Duplicate rows in a dataset",
+        "Different interpretations of data across systems leading to inconsistencies and misunderstandings"
+      ],
+      "correct": 4,
+      "explanation": "Semantic discrepancies arise when different systems interpret data differently, causing inconsistencies and misunderstandings."
+    },
+    {
+      "stem": "What does semantic harmonisation ensure in ontology-driven integration?",
+      "options": [
+        "That the meaning of data remains consistent across different systems",
+        "That all data is stored in the same physical database",
+        "That every table uses the same column count",
+        "That data pipelines run at the same time",
+        "That data is compressed uniformly"
+      ],
+      "correct": 0,
+      "explanation": "Semantic harmonisation ensures the meaning of data remains consistent across different systems."
+    },
+    {
+      "stem": "On the make-or-buy question for an ontology, what is the recommendation?",
+      "options": [
+        "Buy a generic industry ontology and use it unchanged",
+        "The ontology needs to be made and developed specifically for each organisation",
+        "Use whichever ontology the database vendor provides",
+        "Avoid ontologies and rely on point-to-point mappings",
+        "Buy first, then discard it after a year"
+      ],
+      "correct": 1,
+      "explanation": "Each company has a unique set of systems, semantics and functions, so the ontology must be made and developed specifically for each organisation."
+    },
+    {
+      "stem": "What does the harmonisation process involve?",
+      "options": [
+        "Deleting data that does not fit the target format",
+        "Migrating all systems to the cloud",
+        "Clarifying differences in data structures, formats and semantics to provide consistent, coherent semantics across the organisation",
+        "Replacing subject matter experts with automated tools",
+        "Encrypting all disparate sources"
+      ],
+      "correct": 2,
+      "explanation": "Harmonisation aligns disparate data by clarifying differences in structures, formats and semantics so the organisation has consistent, coherent semantics."
+    },
+    {
+      "stem": "Which of the following is listed as a benefit of ontology-driven integration and harmonisation?",
+      "options": [
+        "Lower hardware costs for servers",
+        "Elimination of the need for data governance",
+        "Faster network bandwidth",
+        "Better decision-making because unified data leads to clearer insights",
+        "Automatic compliance with all regulations"
+      ],
+      "correct": 3,
+      "explanation": "The benefits listed are improved data quality, efficient data management and better decision-making through unified data."
+    },
+    {
+      "stem": "What recommendation is given for dealing with the complexity of ontology design?",
+      "options": [
+        "Outsource the design entirely",
+        "Design the complete ontology before any use",
+        "Limit the ontology to a single domain forever",
+        "Skip the conceptual stage",
+        "Build it step by step rather than attempting a big-bang approach"
+      ],
+      "correct": 4,
+      "explanation": "Developing a comprehensive ontology is complex and time-consuming, so the recommendation is to build it step by step and avoid a big-bang approach."
+    },
+    {
+      "stem": "Why do ontologies require ongoing maintenance?",
+      "options": [
+        "They need continuous updates and governance to remain relevant and useful",
+        "They expire under software licensing terms",
+        "They must be rebuilt after every database restart",
+        "They lose data when systems are backed up",
+        "They are stored only in memory"
+      ],
+      "correct": 0,
+      "explanation": "Ontologies require continuous updates and governance to remain relevant and useful."
+    }
+  ]
+}

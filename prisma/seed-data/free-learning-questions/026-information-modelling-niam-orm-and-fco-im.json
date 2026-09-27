@@ -1,0 +1,125 @@
+{
+  "topic": "information-modelling-niam-orm-and-fco-im",
+  "questions": [
+    {
+      "stem": "What is Information Modelling concerned with?",
+      "options": [
+        "How information is described, structured and communicated so it is clearly understood and consistently interpreted",
+        "How databases are physically partitioned",
+        "How servers are provisioned for applications",
+        "How reports are formatted for printing",
+        "How network traffic is routed"
+      ],
+      "correct": 0,
+      "explanation": "Information Modelling is the discipline of describing, structuring and communicating information so that people, processes and systems interpret it consistently."
+    },
+    {
+      "stem": "What is the primary goal of Information Modelling?",
+      "options": [
+        "Faster query performance",
+        "Lower storage costs",
+        "Semantic clarity",
+        "Automated workflows",
+        "Standardised diagrams"
+      ],
+      "correct": 2,
+      "explanation": "The primary goal is semantic clarity so information can be exchanged reliably across departments, systems and organisations."
+    },
+    {
+      "stem": "Which statement about Information Modelling as a discipline is correct?",
+      "options": [
+        "It is a single modelling technique",
+        "It is a database product",
+        "It is another name for BPMN",
+        "It is a family of approaches sharing the goal of representing business facts accurately and consistently",
+        "It only applies to unstructured data"
+      ],
+      "correct": 3,
+      "explanation": "Information Modelling is not a single technique but a family of approaches, including NIAM, ORM and FCO-IM, that share a common goal."
+    },
+    {
+      "stem": "Which three techniques are named as falling under the Information Modelling discipline?",
+      "options": [
+        "UML, ERD and BPMN",
+        "Star, Snowflake and Data Vault",
+        "NIAM, ORM and FCO-IM",
+        "DDD, EDM and CDM",
+        "SQL, XML and JSON"
+      ],
+      "correct": 2,
+      "explanation": "NIAM, ORM and FCO-IM are the named techniques that provide structured ways to verbalise facts and transform them into conceptual or logical models."
+    },
+    {
+      "stem": "Which question does Information Modelling ask instead of how data will be stored?",
+      "options": [
+        "Which vendor to choose",
+        "How many servers are needed",
+        "How fast the queries run",
+        "What facts exist in the business, how they are expressed in language and how they relate",
+        "Who owns the backup tapes"
+      ],
+      "correct": 3,
+      "explanation": "Information Modelling emphasises meaning over implementation, asking what facts exist, how they are expressed and how they relate."
+    },
+    {
+      "stem": "What was the limitation of early, natural-language-based fact modelling approaches?",
+      "options": [
+        "They were too formal to read",
+        "They required expensive tools",
+        "They could not be read by business users",
+        "They only worked for numeric data",
+        "They were intuitive and business-friendly but limited in rigour and precision"
+      ],
+      "correct": 4,
+      "explanation": "Early approaches focused on natural language, making models easy to understand but sometimes lacking precision."
+    },
+    {
+      "stem": "What was the trade-off introduced by the more formal second stage of Information Modelling approaches?",
+      "options": [
+        "Improved accuracy through constraints and structure, sometimes at the cost of readability",
+        "Improved readability at the cost of accuracy",
+        "Lower cost at the expense of tooling",
+        "Faster modelling but fewer diagrams",
+        "Better storage but weaker meaning"
+      ],
+      "correct": 0,
+      "explanation": "Later approaches introduced more formal structures and constraints to improve accuracy, though sometimes at the cost of readability."
+    },
+    {
+      "stem": "What is the focus of the most recent evolution of Information Modelling?",
+      "options": [
+        "Physical storage optimisation",
+        "How facts are communicated, preserving every nuance of business language for transformation into multiple technical representations",
+        "Replacing natural language with code",
+        "Eliminating constraints from models",
+        "Modelling only numeric measures"
+      ],
+      "correct": 1,
+      "explanation": "Modern approaches model communication itself, ensuring nuances of business language are preserved and transformable into many technical outputs."
+    },
+    {
+      "stem": "Which of the following is NOT listed as an output that modern information models can be transformed into?",
+      "options": [
+        "Entity-relationship diagrams",
+        "UML models",
+        "XML schemas",
+        "Semantic web representations",
+        "Spreadsheet macros"
+      ],
+      "correct": 4,
+      "explanation": "Named outputs are ER diagrams, UML models, XML schemas, semantic web representations and even executable systems; spreadsheet macros are not mentioned."
+    },
+    {
+      "stem": "What key insight does the evolution of Information Modelling reflect?",
+      "options": [
+        "Information is only stored, never communicated",
+        "Information is not just stored, it is communicated; how a fact is spoken or interpreted matters as much as how it is implemented",
+        "Diagrams are always better than sentences",
+        "Databases should be designed before facts are understood",
+        "Business users should not validate models"
+      ],
+      "correct": 1,
+      "explanation": "The key insight is that information is communicated, not just stored, so how a fact is expressed matters as much as its later implementation."
+    }
+  ]
+}

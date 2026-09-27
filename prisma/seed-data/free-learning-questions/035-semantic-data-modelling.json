@@ -1,0 +1,125 @@
+{
+  "topic": "semantic-data-modelling",
+  "questions": [
+    {
+      "stem": "What is Semantic Data Modelling?",
+      "options": [
+        "The practice of designing data structures enriched with explicit business meaning so humans and machines interpret data consistently",
+        "The practice of defining a standard exchange format between systems",
+        "The practice of arranging concepts in parent-child hierarchies",
+        "The practice of indexing database tables",
+        "The practice of drawing swimlane diagrams"
+      ],
+      "correct": 0,
+      "explanation": "Semantic data models embed meaning directly into the design so data is not only structured correctly but understood correctly across systems."
+    },
+    {
+      "stem": "What is the primary goal of Semantic Data Modelling?",
+      "options": [
+        "To reduce the number of integrations",
+        "To speed up transaction processing",
+        "To create data models that are self-descriptive and semantically precise",
+        "To eliminate the need for ontologies",
+        "To store data as flat files"
+      ],
+      "correct": 2,
+      "explanation": "The goal is self-descriptive, semantically precise models that clarify what data means, not just how it is stored."
+    },
+    {
+      "stem": "In a semantic model, how is a field such as CustomerID treated differently from a traditional model?",
+      "options": [
+        "It is stored as text instead of a number",
+        "It is removed from the model",
+        "It is encrypted",
+        "It is linked to a formal definition stating it identifies a person or organisation holding an account in a business context",
+        "It is renamed to a shorter code"
+      ],
+      "correct": 3,
+      "explanation": "Rather than a bare numeric identifier, the semantic model links CustomerID to a formal definition of what it represents."
+    },
+    {
+      "stem": "What are the subject-predicate-object patterns used in semantic modelling called?",
+      "options": [
+        "Tuples",
+        "Tables",
+        "Trees",
+        "Triples",
+        "Tokens"
+      ],
+      "correct": 3,
+      "explanation": "Semantic modelling represents information as subject-predicate-object patterns, often referred to as triples."
+    },
+    {
+      "stem": "Which of the following is an example of a semantic triple in the loan domain?",
+      "options": [
+        "Customer123 appliesFor LoanApplication456",
+        "SELECT * FROM loans",
+        "Loan Products → Personal Loans",
+        "Customer table has a foreign key to Loan table",
+        "The loan officer works in swimlane two"
+      ],
+      "correct": 0,
+      "explanation": "Statements such as Customer123 appliesFor LoanApplication456 and LoanApplication456 hasApprovalDecision Approved are semantic triples referencing a shared ontology."
+    },
+    {
+      "stem": "How can a semantic model infer that a loan is active?",
+      "options": [
+        "By reading a manually entered status flag",
+        "By counting repayments",
+        "By checking the loan officer's notes",
+        "By sorting loans by date",
+        "Because the ontology defines that an approved loan becomes an active loan, so an Approved decision lets the system infer the loan is active"
+      ],
+      "correct": 4,
+      "explanation": "If the ontology defines that an approved loan becomes active, the system automatically infers activeness from an Approved decision."
+    },
+    {
+      "stem": "How does Semantic Data Modelling differ from Canonical Data Modelling?",
+      "options": [
+        "Canonical models standardise meaning; semantic models standardise structure",
+        "They are identical",
+        "Semantic models only work for unstructured data",
+        "Canonical models enable inference; semantic models do not",
+        "Canonical models standardise structure for exchange; semantic models go further by standardising meaning so machines can reason"
+      ],
+      "correct": 4,
+      "explanation": "Canonical models reduce integration complexity through standard structure, while semantic models enable intelligent interoperability by standardising meaning."
+    },
+    {
+      "stem": "In the analogy of sentences, what does an Ontology represent compared with a Knowledge Graph?",
+      "options": [
+        "The ontology is the network of sentences; the knowledge graph is the dictionary",
+        "The ontology is the dictionary and grammar; the knowledge graph is the network of sentences linked for queries",
+        "Both are sentences with full context",
+        "The ontology is the sentence written with meaning",
+        "Neither is related to sentences"
+      ],
+      "correct": 1,
+      "explanation": "Ontology is the dictionary and grammar, Knowledge Graph is the network of linked sentences, Metagraph adds full context on the links, and a Semantic Data Model is sentences written with meaning."
+    },
+    {
+      "stem": "In Core Data Modelling, which techniques typically follow the first journey, moving directly from conceptual representation to physical design with little or no logical stage?",
+      "options": [
+        "Data Vault, Anchor Modelling and dimensional modelling",
+        "Hierarchical models, network models, event-driven architectures, JSON or XML schema design and API modelling",
+        "Temporal modelling and Unified Star Schema",
+        "Object-oriented modelling and NoSQL design",
+        "Focal Point Modelling and Hook structures"
+      ],
+      "correct": 1,
+      "explanation": "The first journey, with a minimal or absent logical stage, is common in hierarchical, network, event-driven, JSON/XML schema and API or service modelling."
+    },
+    {
+      "stem": "What is the key insight about the two architectural journeys in Core Data Modelling?",
+      "options": [
+        "Every technique requires a separate logical layer",
+        "No technique ever reaches physical implementation",
+        "Not all techniques need a separate logical layer, but all must ultimately move from concept to implementation",
+        "Only NoSQL techniques reach implementation",
+        "The logical layer replaces the physical layer"
+      ],
+      "correct": 2,
+      "explanation": "Not all modelling techniques require a separate logical layer, but all must move from concept to implementation, which is why CDM, LDM and PDM are the core pillars."
+    }
+  ]
+}

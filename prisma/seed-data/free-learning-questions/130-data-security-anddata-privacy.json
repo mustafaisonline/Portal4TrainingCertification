@@ -1,0 +1,125 @@
+{
+  "topic": "data-security-anddata-privacy",
+  "questions": [
+    {
+      "stem": "What is Data Security fundamentally about?",
+      "options": [
+        "Protection: keeping data confidential, accurate and accessible only to those who are authorised",
+        "Rights: governing who may use data, for what purpose and under what conditions",
+        "Compliance with contracts, policies and consent agreements",
+        "Minimising the amount of personal data an organisation collects",
+        "Ensuring data is used ethically across its lifecycle"
+      ],
+      "correct": 0,
+      "explanation": "Data Security is about protection. It ensures data remains confidential, accurate and accessible only to authorised people, safeguarding against unauthorised access, malicious attacks, accidental loss and corruption. Rights, purpose and ethical use belong to Data Privacy."
+    },
+    {
+      "stem": "What do the three letters of the CIA of data stand for in Data Security?",
+      "options": [
+        "Consent, Identity and Authorisation",
+        "Confidentiality, Integrity and Availability",
+        "Control, Inspection and Auditing",
+        "Classification, Isolation and Archiving",
+        "Compliance, Investigation and Accountability"
+      ],
+      "correct": 1,
+      "explanation": "Security preserves the confidentiality, integrity and availability (CIA) of data."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a Data Security technique?",
+      "options": [
+        "Access management",
+        "Encryption",
+        "Consent management",
+        "Masking",
+        "Breach detection"
+      ],
+      "correct": 2,
+      "explanation": "Security techniques include access management, activity monitoring, encryption, masking, breach detection and disaster recovery. Consent management is a Data Privacy matter, alongside contracts, policies and legal compliance."
+    },
+    {
+      "stem": "With which jurisdictions is the PDPA associated as an example of a data privacy law?",
+      "options": [
+        "Europe",
+        "The United States",
+        "Australia and New Zealand",
+        "Singapore and Malaysia",
+        "The United Kingdom"
+      ],
+      "correct": 3,
+      "explanation": "Privacy compliance examples include the GDPR in Europe, the PDPA in Singapore and Malaysia, and the CCPA in the United States."
+    },
+    {
+      "stem": "How is the relationship between Data Security and Data Privacy described?",
+      "options": [
+        "Symmetric: each can exist fully without the other",
+        "Identical: the two terms mean the same thing in practice",
+        "Hierarchical: privacy is a subset of security",
+        "Independent: neither has any bearing on the other",
+        "Asymmetric: security can exist without privacy, but privacy cannot exist without security"
+      ],
+      "correct": 4,
+      "explanation": "The relationship is asymmetric. A dataset can be technically secured without considering whether its use respects personal rights, but if data is not protected, privacy protections collapse."
+    },
+    {
+      "stem": "What does the office access card analogy illustrate about Data Security and Data Privacy?",
+      "options": [
+        "The card requires security because it controls entry, but openly displaying your name on it is not a privacy concern",
+        "The card requires privacy because your name is on it, but losing it is not a security concern",
+        "The card requires neither security nor privacy because it only opens doors",
+        "The card should be masked with dots or asterisks like a password",
+        "The card is a privacy concern only when it is used across borders"
+      ],
+      "correct": 0,
+      "explanation": "An office access card requires security, since you must not lose it because it controls entry. Displaying your name on it openly, however, is not a privacy concern."
+    },
+    {
+      "stem": "Why is a password said to require both Data Security and Data Privacy?",
+      "options": [
+        "Because it must be changed regularly and stored in a database",
+        "Because it must be protected from theft and must also remain unseen, which is why systems mask it with dots or asterisks",
+        "Because it is personally identifiable information regulated by the GDPR",
+        "Because it controls entry to a building as well as to a system",
+        "Because it must be shared with the security team and the privacy officer"
+      ],
+      "correct": 1,
+      "explanation": "A password must be protected from theft (security) and must also remain unseen (privacy), which is why systems mask it with dots or asterisks."
+    },
+    {
+      "stem": "Which phrase summarises the difference between Data Security and Data Privacy?",
+      "options": [
+        "Security governs the purpose, while privacy defends the perimeter",
+        "Security is legal and ethical, while privacy is technical",
+        "Security defends the perimeter, while privacy governs the purpose",
+        "Security is optional, while privacy is mandatory",
+        "Security is about rights, while privacy is about protection"
+      ],
+      "correct": 2,
+      "explanation": "Data Security defends the perimeter, while Data Privacy governs the purpose. One is technical, the other legal and ethical. Together, they build trust."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a consequence for enterprises that neglect the dual lens of Data Security and Data Privacy?",
+      "options": [
+        "Regulatory fines",
+        "Reputational damage",
+        "Customer attrition",
+        "Slower database query performance",
+        "Ethical scandals"
+      ],
+      "correct": 3,
+      "explanation": "Enterprises that neglect the dual lens face consequences far beyond IT: regulatory fines, reputational damage, customer attrition and even ethical scandals. Query performance is not among them."
+    },
+    {
+      "stem": "How does Data Privacy require personally identifiable information (PII) to be handled?",
+      "options": [
+        "Collected in full, stored indefinitely and shared with partners",
+        "Encrypted at rest but otherwise used without restriction",
+        "Collected only from customers who have an office access card",
+        "Deleted immediately after first use",
+        "Collected minimally, used ethically and safeguarded throughout its lifecycle"
+      ],
+      "correct": 4,
+      "explanation": "Privacy ensures that individuals' PII is collected minimally, used ethically and safeguarded throughout its lifecycle."
+    }
+  ]
+}

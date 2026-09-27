@@ -1,0 +1,125 @@
+{
+  "topic": "data-fusion",
+  "questions": [
+    {
+      "stem": "What is Data Fusion?",
+      "options": [
+        "Compressing several datasets into a single archive file",
+        "Splitting one dataset into multiple smaller datasets for parallel processing",
+        "Encrypting data from several systems with a single key",
+        "Pulling the same nature of data from multiple source systems and correlating it to produce one unified output",
+        "Migrating data from an old system to a new one"
+      ],
+      "correct": 3,
+      "explanation": "Data Fusion is about pulling the same nature of data from multiple source systems to correlate it and produce one unified output."
+    },
+    {
+      "stem": "Which sales channels are given as examples of where data for a particular product can come from in Data Fusion?",
+      "options": [
+        "POS (point of sales), shops and online stores",
+        "Payroll, HR and finance systems",
+        "Email, calendars and contact lists",
+        "Weather feeds, maps and traffic data",
+        "Backup servers and archive tapes"
+      ],
+      "correct": 0,
+      "explanation": "The example lists product data coming from POS, from shops and from online stores, alongside conversations about the product elsewhere."
+    },
+    {
+      "stem": "Apart from sales channels, where else might people be talking about a product in the Data Fusion example?",
+      "options": [
+        "In tax returns and audit reports",
+        "In internal database logs",
+        "On social media, in seminars and in webinars",
+        "In supplier invoices",
+        "In warehouse stock counts"
+      ],
+      "correct": 2,
+      "explanation": "The example notes that people can talk about the product on social media, in seminars and in webinars, and fusing those data elements with sales data is valuable."
+    },
+    {
+      "stem": "Which teams are said to gain valuable information from fusing all the data about a product?",
+      "options": [
+        "Legal and compliance teams",
+        "Database administrators",
+        "Network engineers",
+        "Backup and recovery teams",
+        "Sales and marketing teams"
+      ],
+      "correct": 4,
+      "explanation": "Fusion of the product's data elements can produce valuable information about that product for sales and marketing teams."
+    },
+    {
+      "stem": "How is the term Data Fusion characterised in relation to other data terms?",
+      "options": [
+        "As a brand-new term with no equivalent",
+        "As another term that overlaps with many terms already in place",
+        "As a term used only in Data Science",
+        "As a legal term for data sharing agreements",
+        "As an outdated term no longer used"
+      ],
+      "correct": 1,
+      "explanation": "Data Fusion is introduced as another term overlapping with many other terms already in place."
+    },
+    {
+      "stem": "Which of these is NOT named as a data store that can be used for Data Fusion?",
+      "options": [
+        "Data Warehouse",
+        "Data Mart",
+        "Data Lakehouse",
+        "Data Vault / Business Vault",
+        "Integration Hub"
+      ],
+      "correct": 4,
+      "explanation": "Data Warehouse, Data Mart, Data Lake, Data Lakehouse and Data Vault / Business Vault are all named as stores usable for Data Fusion; Integration Hub is not."
+    },
+    {
+      "stem": "What is the intended result of Data Fusion?",
+      "options": [
+        "Several separate reports, one per source system",
+        "One unified output",
+        "A compressed copy of each source system",
+        "A list of duplicate records",
+        "A mirror of the source data"
+      ],
+      "correct": 1,
+      "explanation": "Data Fusion correlates data from multiple sources to produce one unified output."
+    },
+    {
+      "stem": "In Data Fusion, what does pulling the same nature of data mean?",
+      "options": [
+        "Gathering data about the same subject, such as one product, from different source systems",
+        "Gathering only data stored in the same file format",
+        "Gathering data from a single system at different times",
+        "Gathering data that has exactly the same column names",
+        "Gathering data of the same size from each system"
+      ],
+      "correct": 0,
+      "explanation": "The product example shows that data about the same subject is pulled from POS, shops, online stores and social conversations, then correlated."
+    },
+    {
+      "stem": "What is the key activity that Data Fusion performs on the data it pulls from multiple sources?",
+      "options": [
+        "Deleting it after use",
+        "Encrypting it at rest",
+        "Splitting it by region",
+        "Correlating the data elements with each other",
+        "Ranking it by file size"
+      ],
+      "correct": 3,
+      "explanation": "Data Fusion correlates the same nature of data from multiple source systems with each other to produce a unified output."
+    },
+    {
+      "stem": "Which statement about Data Fusion and data stores is correct?",
+      "options": [
+        "Data Fusion can only be achieved in a Data Lake",
+        "Data Fusion requires a dedicated store separate from all existing ones",
+        "Data Warehouses, Data Marts, Data Lakes, Lakehouses and Data Vaults can all be used for Data Fusion",
+        "Data Fusion cannot be done in a Data Mart",
+        "Data Fusion replaces the need for a Data Warehouse"
+      ],
+      "correct": 2,
+      "explanation": "The same fusion can be achieved in a Data Warehouse, Data Mart, Data Lake, Data Lakehouse or Data Vault / Business Vault; all of those stores can be used for Data Fusion."
+    }
+  ]
+}

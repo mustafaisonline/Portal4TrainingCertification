@@ -1,0 +1,125 @@
+{
+  "topic": "scope-creep",
+  "questions": [
+    {
+      "stem": "What is Scope Creep?",
+      "options": [
+        "New requirements never formally added to the project scope, or added without estimating the impact on the deadline",
+        "A change in the data arriving at a machine learning model",
+        "A mismatch between two reports",
+        "The gradual reduction of a project's budget",
+        "A datastore that is not accessible"
+      ],
+      "correct": 0,
+      "explanation": "Scope Creep is those new requirements that are never formally added to the scope, or are added without estimating the impact on time and cost."
+    },
+    {
+      "stem": "In which discipline is Scope Creep a well-known term?",
+      "options": [
+        "Data Science",
+        "Project Management",
+        "Network Security",
+        "Master Data Management",
+        "Database Administration"
+      ],
+      "correct": 1,
+      "explanation": "Scope Creep is a known term in Project Management, but it also impacts data architecture and data modelling."
+    },
+    {
+      "stem": "What does the thumb rule 'TCS' stand for?",
+      "options": [
+        "Testing, Compliance and Security",
+        "Tables, Columns and Schemas",
+        "Time, Cost and Scope",
+        "Transform, Cleanse and Store",
+        "Training, Certification and Support"
+      ],
+      "correct": 2,
+      "explanation": "TCS stands for Time, Cost and Scope, the three pillars of project management."
+    },
+    {
+      "stem": "According to the TCS rule, what happens when one of the three pillars is impacted?",
+      "options": [
+        "The other two are unaffected",
+        "Only cost is affected",
+        "The remaining two will also be impacted",
+        "The project is automatically cancelled",
+        "The scope must be reduced"
+      ],
+      "correct": 2,
+      "explanation": "Whenever one of Time, Cost or Scope is impacted, the remaining two will also be impacted."
+    },
+    {
+      "stem": "In the example of Scope Creep, what does the Project Manager fail to do when a new requirement is added?",
+      "options": [
+        "Inform the sponsor",
+        "Estimate how much more effort is required and whether additional cost is involved",
+        "Update the data model",
+        "Retrain the team",
+        "Archive the old requirements"
+      ],
+      "correct": 1,
+      "explanation": "Scope Creep arises when a requirement is added but the Project Manager does not estimate the extra effort or any additional cost, which may hit the go-live date."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a reason for Scope Creep?",
+      "options": [
+        "Weak project sponsor decision management",
+        "Lack of a change management process",
+        "Vague acceptance criteria",
+        "Excessive use of cloud resources",
+        "Bad effort estimation"
+      ],
+      "correct": 3,
+      "explanation": "Weak sponsor decisions, missing change management, vague acceptance criteria and bad estimation are all listed causes; cloud resource use is not."
+    },
+    {
+      "stem": "Which reason for Scope Creep concerns things that should have been ruled out early in the project?",
+      "options": [
+        "Non-identification of out-of-scope items earlier in the project lifecycle",
+        "Poor assumptions management",
+        "Contradictory business user views",
+        "Missing stakeholders",
+        "Bad management of risks and issues"
+      ],
+      "correct": 0,
+      "explanation": "Failing to identify what is out of scope early in the project lifecycle is one of the listed reasons for Scope Creep."
+    },
+    {
+      "stem": "What ultimate consequence of Scope Creep does *I Am Datapedia!* say no one wants?",
+      "options": [
+        "A larger team",
+        "A smaller data model",
+        "More documentation",
+        "A change of database vendor",
+        "An impact on the project go-live date"
+      ],
+      "correct": 4,
+      "explanation": "At the end of the day Scope Creep may impact the project go-live date, which no one wants."
+    },
+    {
+      "stem": "Why is Scope Creep worth discussing among data professionals?",
+      "options": [
+        "Because it only occurs in data projects",
+        "Because it is a type of data validation",
+        "Because it causes data drift",
+        "Because it can also impact data architecture and data modelling",
+        "Because it replaces change management"
+      ],
+      "correct": 3,
+      "explanation": "Although a project management term, Scope Creep can also impact data architecture and data modelling."
+    },
+    {
+      "stem": "On what does the occurrence of Scope Creep ultimately depend, beyond the listed reasons?",
+      "options": [
+        "The database technology chosen",
+        "The size of the data warehouse",
+        "The cloud provider used",
+        "The number of cores available",
+        "The project management practices in place and the experience of the Project Manager and business stakeholders"
+      ],
+      "correct": 4,
+      "explanation": "Many other causes exist; it all depends on the project management practices in place and the experience of the Project Manager and business stakeholders."
+    }
+  ]
+}

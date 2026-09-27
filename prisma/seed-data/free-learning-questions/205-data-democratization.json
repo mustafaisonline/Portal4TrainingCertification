@@ -1,0 +1,125 @@
+{
+  "topic": "data-democratization",
+  "questions": [
+    {
+      "stem": "What is described as the foundation for a Data Self-Service environment?",
+      "options": [
+        "A Business Intelligence tool",
+        "A data warehouse",
+        "Data Democratisation",
+        "A team of data scientists",
+        "A NoSQL database"
+      ],
+      "correct": 2,
+      "explanation": "The key phrase is that Data Democratisation is the foundation for a Data Self-Service environment."
+    },
+    {
+      "stem": "Which statement correctly describes what Data Democratisation is?",
+      "options": [
+        "It is about the working behaviour of everyone in an organisation with respect to data, not a tool or a technology",
+        "It is a software product installed on every employee's computer",
+        "It is a new database technology for storing data",
+        "It is a reporting tool owned by the IT department",
+        "It is a legal framework for data privacy"
+      ],
+      "correct": 0,
+      "explanation": "Data Democratisation and Data Self-Service are neither a tool nor a technology; they are about how everyone within an organisation behaves with respect to data."
+    },
+    {
+      "stem": "In the traditional model where business users ask IT for reports, what is described as the worrying part?",
+      "options": [
+        "IT refuses to build dashboards",
+        "Business users cannot describe their KPIs in English",
+        "Reports can only be produced in Excel",
+        "Dashboards are too expensive to licence",
+        "After IT spends three months on a dashboard, a request for one more column restarts the whole exercise from scratch"
+      ],
+      "correct": 4,
+      "explanation": "The worrying part is that after IT takes three months to prepare a dashboard, a small change such as adding one more column starts the whole exercise again from scratch."
+    },
+    {
+      "stem": "What does Data Democratisation do for the employees of an organisation?",
+      "options": [
+        "It removes their access to data for security reasons",
+        "It brings each employee near to data and makes the environment data friendly for everyone",
+        "It transfers all data work to an external vendor",
+        "It replaces employees with automated models",
+        "It restricts data access to senior management"
+      ],
+      "correct": 1,
+      "explanation": "Data Democratisation brings each employee of an organisation near to data and makes the environment data friendly for everyone."
+    },
+    {
+      "stem": "According to I Am Datapedia!, what can the Data Driven Organisation dream NOT be achieved without?",
+      "options": [
+        "A bigger IT budget",
+        "A cloud migration",
+        "More dashboards",
+        "The organisation's cultural change",
+        "A new reporting tool"
+      ],
+      "correct": 3,
+      "explanation": "The key phrase is that the Data Driven Organisation dream cannot be achieved without the organisation's cultural change."
+    },
+    {
+      "stem": "Which of the following is NOT an aim of Data Democratisation?",
+      "options": [
+        "To remove the fear factor about data",
+        "To allow everyone to ask analytical questions",
+        "To concentrate all data requests within the IT department",
+        "To have data access availability for everyone",
+        "To allow everyone to raise questions about data and suggest resolutions"
+      ],
+      "correct": 2,
+      "explanation": "Data Democratisation fills the gap created by routing every request through IT; its aims are to remove fear, allow analytical questions, make data available and let everyone question data and suggest fixes."
+    },
+    {
+      "stem": "Which measures are suggested to support the shift towards Data Democratisation?",
+      "options": [
+        "Introducing low-code or no-code tools and planning training",
+        "Removing all tools so employees use raw SQL",
+        "Hiring only data scientists",
+        "Outsourcing all reporting to consultants",
+        "Banning spreadsheets across the organisation"
+      ],
+      "correct": 0,
+      "explanation": "The shift requires user-friendly tools and technology, so low-code or no-code tools can be introduced and training can be planned."
+    },
+    {
+      "stem": "In a nutshell, what is the aim of Data Democratisation?",
+      "options": [
+        "To reduce the cost of data storage",
+        "To make every report available in Excel",
+        "To centralise decision making with the executive team",
+        "To replace analysts with dashboards",
+        "To mature every employee to take decisions based on data rather than gut feel"
+      ],
+      "correct": 4,
+      "explanation": "In a nutshell, the aim of Data Democratisation is to make every employee mature enough to take decisions based on data rather than on gut feel."
+    },
+    {
+      "stem": "Which organisational concept does Data Democratisation make happen?",
+      "options": [
+        "The Data Swamp",
+        "The Data Driven Organisation",
+        "The Hub-and-Spoke architecture",
+        "The Semantic Layer",
+        "The Data Mashup"
+      ],
+      "correct": 1,
+      "explanation": "Data Democratisation is presented as how the Data Driven Organisation concept is made to happen."
+    },
+    {
+      "stem": "In the traditional reporting model, a business user asks for sales reports about a product from a particular region. Whose job is it to find where the relevant data resides and to extract, process and prepare it?",
+      "options": [
+        "The business user's own team",
+        "The external auditor",
+        "The customer",
+        "The IT department",
+        "The regional sales manager"
+      ],
+      "correct": 3,
+      "explanation": "Traditionally the business user states the KPI in simple English and it is IT's job to find the data, extract it, process it and prepare it as a report or dashboard."
+    }
+  ]
+}

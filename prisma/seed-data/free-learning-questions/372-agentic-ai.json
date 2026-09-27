@@ -1,0 +1,125 @@
+{
+  "topic": "agentic-ai",
+  "questions": [
+    {
+      "stem": "What is the essential contrast between traditional AI and Agentic AI?",
+      "options": [
+        "Traditional AI predicts; Agentic AI acts",
+        "Traditional AI is free; Agentic AI is paid",
+        "Traditional AI uses text; Agentic AI uses only images",
+        "Traditional AI acts; Agentic AI only predicts",
+        "Traditional AI runs locally; Agentic AI runs only in the cloud"
+      ],
+      "correct": 0,
+      "explanation": "The starting point is that traditional AI predicts, whereas Agentic AI acts: it pursues goals, makes decisions, uses tools and coordinates with other agents."
+    },
+    {
+      "stem": "What does the word 'agentic' mean in Agentic AI?",
+      "options": [
+        "Being controlled by a human agent at all times",
+        "Having agency: the ability to decide, adapt and operate with autonomy in a live environment",
+        "Being sold through an agency",
+        "Producing only agent-based simulations",
+        "Being unable to use external tools"
+      ],
+      "correct": 1,
+      "explanation": "'Agentic' means having agency, the ability to decide, adapt and operate with autonomy in a live environment."
+    },
+    {
+      "stem": "Which sequence correctly lists the steps of the Agent Loop followed by most agentic systems?",
+      "options": [
+        "Plan, Observe, Reflect, Act, Adjust",
+        "Act, Observe, Plan, Adjust, Reflect",
+        "Observe, Plan, Act, Reflect, Adjust",
+        "Reflect, Plan, Observe, Act, Adjust",
+        "Observe, Act, Plan, Adjust, Reflect"
+      ],
+      "correct": 2,
+      "explanation": "The Agent Loop is Observe, Plan, Act, Reflect, Adjust, and then repeat, which makes agentic systems more adaptive than fixed scripts."
+    },
+    {
+      "stem": "In the Agent Loop, what happens during the Act step?",
+      "options": [
+        "The agent takes in input from users or systems",
+        "The agent breaks the goal into steps",
+        "The agent evaluates what worked or did not",
+        "The agent uses tools, APIs or sub-agents to perform tasks",
+        "The agent updates its memory and repeats"
+      ],
+      "correct": 3,
+      "explanation": "In the Act step the agent uses tools, APIs or sub-agents to perform tasks; observing, planning, reflecting and adjusting are the other steps."
+    },
+    {
+      "stem": "Which of the following is NOT one of the five core ingredients of an agentic system?",
+      "options": [
+        "Autonomy",
+        "Planning",
+        "Tools",
+        "Memory",
+        "Advertising"
+      ],
+      "correct": 4,
+      "explanation": "The five core ingredients are Autonomy, Planning, Tools, Memory and Reasoning."
+    },
+    {
+      "stem": "In an agentic system, what role does Memory play?",
+      "options": [
+        "Remembering context or prior steps",
+        "Interacting with apps, APIs, files or the web",
+        "Acting without constant human control",
+        "Creating and revising strategies",
+        "Making decisions using logic and constraints"
+      ],
+      "correct": 0,
+      "explanation": "Memory lets the agent remember context or prior steps; Tools interact with apps and APIs, Autonomy acts without constant control, Planning revises strategies and Reasoning makes decisions."
+    },
+    {
+      "stem": "Which shift in systems does Agentic AI represent?",
+      "options": [
+        "From 'help me reach my goal' systems to 'do what I say' systems",
+        "From 'do what I say' systems to 'help me reach my goal' systems",
+        "From cloud systems to on-premises systems",
+        "From automated systems to fully manual systems",
+        "From text systems to voice systems"
+      ],
+      "correct": 1,
+      "explanation": "We are moving from 'do what I say' systems to 'help me reach my goal' systems, such as assistants that coordinate schedules or enterprise agents that automate onboarding."
+    },
+    {
+      "stem": "Which of the following is listed as a risk of poorly designed agents?",
+      "options": [
+        "Refusing to ever use a tool",
+        "Being too transparent about their reasoning",
+        "Failing silently",
+        "Asking for human oversight too often",
+        "Working only during office hours"
+      ],
+      "correct": 2,
+      "explanation": "Poorly designed agents can misuse tools, chase the wrong goal, fail silently, and amplify bias or misinformation."
+    },
+    {
+      "stem": "What is meant by wanting 'glass boxes' rather than 'black boxes' in Agentic AI?",
+      "options": [
+        "Agents should be stored in transparent hardware",
+        "Agents should have no memory",
+        "Agents should never escalate to humans",
+        "Agents should explain their thinking, escalate when unsure and act with care",
+        "Agents should be visible to all competitors"
+      ],
+      "correct": 3,
+      "explanation": "Glass boxes are agents that explain their thinking, escalate when unsure and act with care, supported by guardrails, ethics by design and human oversight."
+    },
+    {
+      "stem": "As agentic systems scale, what progression is described?",
+      "options": [
+        "From ecosystems to teammates to tools",
+        "From prompts to chatbots to calculators",
+        "From hardware to software to firmware",
+        "From humans to robots to machines",
+        "From tools to teammates to ecosystems, networks of agents that talk to each other and evolve together"
+      ],
+      "correct": 4,
+      "explanation": "As they scale, agentic systems shift from tools to teammates to ecosystems: networks of agents that talk to each other and evolve together."
+    }
+  ]
+}

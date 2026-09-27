@@ -1,0 +1,125 @@
+{
+  "topic": "domain-driven-design-ddd-modelling",
+  "questions": [
+    {
+      "stem": "In Domain-Driven Design, what does the term domain refer to?",
+      "options": [
+        "The internet address of the company",
+        "The physical database schema",
+        "The network the servers run on",
+        "The problem area the business is working in, such as banking, healthcare, education or retail",
+        "The department that owns the data"
+      ],
+      "correct": 3,
+      "explanation": "The domain is the problem area the business works in, for example banking, healthcare, education or retail."
+    },
+    {
+      "stem": "What is the main goal of DDD Modelling?",
+      "options": [
+        "To minimise storage costs",
+        "To standardise process diagram symbols",
+        "To normalise all tables to third normal form",
+        "To ensure system design closely reflects real business needs rather than technical convenience",
+        "To automate loan disbursement"
+      ],
+      "correct": 3,
+      "explanation": "DDD encourages teams to model software around how the business actually operates so the system grows naturally alongside the business."
+    },
+    {
+      "stem": "What is a ubiquitous language in DDD?",
+      "options": [
+        "A programming language used by all developers",
+        "A universal metadata standard",
+        "A visual notation for processes",
+        "A query language for graph databases",
+        "The same terms used consistently by business experts, analysts and developers"
+      ],
+      "correct": 4,
+      "explanation": "A shared or ubiquitous language means the same terms are used consistently by business experts, analysts and developers, reducing misunderstandings."
+    },
+    {
+      "stem": "What is a bounded context in DDD?",
+      "options": [
+        "A clearly defined area of the business where specific terms, rules and meanings apply consistently",
+        "A limit on the number of tables in a database",
+        "A security boundary around a server",
+        "A time limit on a process",
+        "A fixed list of allowed column values"
+      ],
+      "correct": 0,
+      "explanation": "A bounded context is a clearly defined area of the business within which definitions are precise and agreed upon."
+    },
+    {
+      "stem": "How does DDD handle the fact that large organisations use the same words differently in different parts of the business?",
+      "options": [
+        "It forces one definition to fit everywhere",
+        "It bans the reuse of any term",
+        "It stores every meaning in a single glossary entry",
+        "It leaves the ambiguity unresolved",
+        "It accepts the reality and manages it by clearly separating contexts"
+      ],
+      "correct": 4,
+      "explanation": "DDD accepts that words vary across the business and manages this by separating bounded contexts, each with its own clear meaning."
+    },
+    {
+      "stem": "In the school example of bounded contexts, how might the same person be referred to in an alumni management context?",
+      "options": [
+        "Applicant",
+        "Teacher",
+        "Former student",
+        "Guardian",
+        "Enrolled student"
+      ],
+      "correct": 2,
+      "explanation": "In one context the person is a student currently enrolled; in alumni management the same person is a former student, treated as a separate context."
+    },
+    {
+      "stem": "In the loan business example of DDD, which bounded context defines approval rules, thresholds and risk categories?",
+      "options": [
+        "Credit Scoring context",
+        "Disbursement context",
+        "Risk Management context",
+        "Collections context",
+        "Customer context"
+      ],
+      "correct": 2,
+      "explanation": "The Risk Management context defines approval rules, thresholds and risk categories; Credit Scoring covers score calculation and Disbursement covers payment and accounting."
+    },
+    {
+      "stem": "How does DDD Modelling benefit analytics and reporting?",
+      "options": [
+        "By storing reports inside the operational database",
+        "By ensuring analytical systems use the same domain definitions as operational systems, so metrics are calculated with consistent rules",
+        "By eliminating the need for metrics",
+        "By replacing dashboards with process diagrams",
+        "By merging all bounded contexts into one"
+      ],
+      "correct": 1,
+      "explanation": "Analytical systems reuse the same domain definitions, so metrics like approval rates and default percentages are calculated consistently."
+    },
+    {
+      "stem": "Which statement describes the nature of DDD Modelling?",
+      "options": [
+        "It is business-driven but applied in technical system design, focusing on concepts, rules and language rather than tables or files",
+        "It is purely technical and focuses on physical tables",
+        "It is a visual notation defined by an international body",
+        "It focuses only on high-level roles and responsibilities",
+        "It is concerned mainly with raw data files"
+      ],
+      "correct": 0,
+      "explanation": "DDD is business-driven but applied in technical design; it focuses on concepts, business rules and language consistency, not raw data structures."
+    },
+    {
+      "stem": "In the comparison of Business Modelling, Process Modelling and DDD, which summary line is correct?",
+      "options": [
+        "Business Modelling = how work flows; Process Modelling = who does what; DDD = shared language and contexts",
+        "Business Modelling = who does what; Process Modelling = how work flows; DDD = how to align systems with business contexts and language",
+        "Business Modelling = shared language; Process Modelling = who does what; DDD = how work flows",
+        "All three describe how work flows step by step",
+        "DDD = who does what; Business Modelling = how work flows; Process Modelling = bounded contexts"
+      ],
+      "correct": 1,
+      "explanation": "The comparison shows the progression: Business Modelling is who does what, Process Modelling is how work flows, and DDD aligns systems with business contexts and language."
+    }
+  ]
+}

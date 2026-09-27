@@ -1,0 +1,125 @@
+{
+  "topic": "big-data-file-formats",
+  "questions": [
+    {
+      "stem": "In a row file format, what happens when a user requests data from a single column?",
+      "options": [
+        "Only that column is read into memory",
+        "The column is read from an index without touching the rows",
+        "The whole row is extracted into memory and the requested column is displayed",
+        "The request is rejected because row formats cannot serve single columns",
+        "The file is converted to columnar format first"
+      ],
+      "correct": 2,
+      "explanation": "Row formats load the entire row into memory even when only one column is needed, then display that column."
+    },
+    {
+      "stem": "In a columnar file format, what is extracted into memory when a user requests one column?",
+      "options": [
+        "Only that column's data",
+        "Every column of every row",
+        "The first row of every column",
+        "The whole file, then filtered",
+        "A random sample of rows"
+      ],
+      "correct": 0,
+      "explanation": "Columnar formats read only the requested column into memory, which is why they suit extraction for analysis."
+    },
+    {
+      "stem": "A file has 100 columns and 1 million rows, and a user queries only 5 columns. What does a row file format load into memory?",
+      "options": [
+        "5 columns with 1 million rows",
+        "5 columns with a sample of rows",
+        "100 columns with 5 rows",
+        "Nothing until the query completes",
+        "All 100 columns with 1 million rows"
+      ],
+      "correct": 4,
+      "explanation": "The row format extracts all 100 columns for all 1 million rows, fully using memory although only 5 columns were needed."
+    },
+    {
+      "stem": "Which file format type is best for ETL/ELT processing?",
+      "options": [
+        "Columnar file format",
+        "Row file format",
+        "Compressed image format",
+        "Text-only format",
+        "Binary-only format"
+      ],
+      "correct": 1,
+      "explanation": "Row file formats are best for ETL/ELT processing, whereas columnar formats suit data extraction for analysis."
+    },
+    {
+      "stem": "Which file format type is best for extracting data for analysis?",
+      "options": [
+        "Row file format",
+        "Log file format",
+        "Human-readable format",
+        "Columnar file format",
+        "Nested file format"
+      ],
+      "correct": 3,
+      "explanation": "Columnar file formats load only the columns requested, making them best for data extraction for analysis."
+    },
+    {
+      "stem": "Which of the commonly used big data file formats are human-readable, in ASCII or Unicode text?",
+      "options": [
+        "CSV and JSON",
+        "ORC and Avro",
+        "Parquet and ORC",
+        "Avro and Parquet",
+        "JSON and Parquet"
+      ],
+      "correct": 0,
+      "explanation": "CSV and JSON are human-readable text formats; ORC, Avro and Parquet are binary and not human-readable."
+    },
+    {
+      "stem": "Which file format is described as very CPU-intensive?",
+      "options": [
+        "CSV",
+        "Parquet",
+        "ORC",
+        "JSON",
+        "Avro"
+      ],
+      "correct": 3,
+      "explanation": "Under performance considerations, JSON is singled out as a very CPU-intensive file format."
+    },
+    {
+      "stem": "If a dataset requires nested data, which file formats are recommended?",
+      "options": [
+        "CSV, ORC and Parquet",
+        "JSON, Avro and Parquet",
+        "CSV and JSON only",
+        "ORC and Avro only",
+        "CSV, Avro and ORC"
+      ],
+      "correct": 1,
+      "explanation": "For nested data the choices are JSON, Avro and Parquet, with Avro suited to ETL/ELT and Parquet to querying."
+    },
+    {
+      "stem": "Which formats are said to provide some degree of schema evolution?",
+      "options": [
+        "CSV and JSON",
+        "CSV only",
+        "JSON only",
+        "CSV, JSON and ORC",
+        "ORC, Avro and Parquet"
+      ],
+      "correct": 4,
+      "explanation": "ORC, Avro and Parquet provide some degree of schema evolution."
+    },
+    {
+      "stem": "What are the two normal kinds of data usage that should guide the choice of a big data file format?",
+      "options": [
+        "Backup and restore",
+        "Encryption and compression",
+        "ETL/ELT processing and data extraction",
+        "Streaming and batch",
+        "Storage and archiving"
+      ],
+      "correct": 2,
+      "explanation": "Data is normally used either to do ETL/ELT or to extract data, and the right file format depends on which is intended."
+    }
+  ]
+}

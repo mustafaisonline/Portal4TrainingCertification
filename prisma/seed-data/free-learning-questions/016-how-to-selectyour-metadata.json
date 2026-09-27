@@ -1,0 +1,125 @@
+{
+  "topic": "how-to-selectyour-metadata",
+  "questions": [
+    {
+      "stem": "What type of context should metadata ideally provide for data?",
+      "options": [
+        "A technical context only",
+        "A context limited to one department",
+        "A trustworthy and secure context",
+        "A legal context only",
+        "A context that changes with every query"
+      ],
+      "correct": 2,
+      "explanation": "The objective is to imbue data with context, and ideally that context is trustworthy and secure."
+    },
+    {
+      "stem": "How many high-level steps are outlined for selecting mandatory metadata?",
+      "options": [
+        "Two",
+        "Five",
+        "Six",
+        "Three",
+        "Ten"
+      ],
+      "correct": 3,
+      "explanation": "Three high-level steps guide the selection: the 5W 1H method, three selection criteria and the six Golden Rules."
+    },
+    {
+      "stem": "Which questions make up the 5W 1H method for choosing metadata?",
+      "options": [
+        "Who, What, When, Where, Why and How",
+        "Who, Which, When, Where, Why and How much",
+        "What, Where, Why, Whether, While and How",
+        "Who, What, When, Where, Why and Hence",
+        "Where, When, Which, Why, Who and How many"
+      ],
+      "correct": 0,
+      "explanation": "The 5W 1H method asks Who, What, When, Where, Why and How to choose metadata aligned with specific objectives."
+    },
+    {
+      "stem": "Which of the following is one of the three selection criteria for filtering metadata?",
+      "options": [
+        "For Experts Only",
+        "Anyone Can Create",
+        "Requires Legal Review",
+        "Industry Specific",
+        "Technically Complex"
+      ],
+      "correct": 1,
+      "explanation": "The three criteria are For Everyone, Anyone Can Create and Follow Standards."
+    },
+    {
+      "stem": "What does the For Everyone criterion require of metadata?",
+      "options": [
+        "That it be created only by the legal team",
+        "That it be visible to the public internet",
+        "That anyone can understand it, without being tied to a specific organisation or industry",
+        "That it be free of charge",
+        "That it be stored in every system"
+      ],
+      "correct": 2,
+      "explanation": "For Everyone means choosing metadata anyone can understand, not tied to specific organisations or industries."
+    },
+    {
+      "stem": "Which of the following is NOT named as a recognised universal metadata standard?",
+      "options": [
+        "Dublin Core",
+        "MODS",
+        "PREMIS",
+        "MPEG-7",
+        "ISO 8601"
+      ],
+      "correct": 4,
+      "explanation": "The recognised standards named are Dublin Core, MODS, PREMIS and MPEG-7."
+    },
+    {
+      "stem": "How many Golden Rules act as the final gatekeepers for selected metadata?",
+      "options": [
+        "Three",
+        "Four",
+        "Five",
+        "Six",
+        "Seven"
+      ],
+      "correct": 3,
+      "explanation": "Six Golden Rules act as final gatekeepers, and chosen metadata should follow at least one of them."
+    },
+    {
+      "stem": "Which Golden Rule says metadata should help users find data easily?",
+      "options": [
+        "Contextualisation",
+        "Governance",
+        "Reliability",
+        "Uniqueness",
+        "Discoverability"
+      ],
+      "correct": 4,
+      "explanation": "Discoverability ensures users can quickly find and understand the data they need."
+    },
+    {
+      "stem": "Which Golden Rule is about metadata following the rules and organisational guidelines for using data?",
+      "options": [
+        "Governance",
+        "Reusability",
+        "Discoverability",
+        "Contextualisation",
+        "Uniqueness"
+      ],
+      "correct": 0,
+      "explanation": "Governance requires metadata to follow set rules so that it is consistent and aligned with organisational guidelines."
+    },
+    {
+      "stem": "What is the purpose of the Reusability Golden Rule?",
+      "options": [
+        "To make each piece of metadata stand out",
+        "To make others want to use the data again in different situations",
+        "To ensure metadata is accurate for decision-making",
+        "To explain why the data matters",
+        "To restrict metadata to a single use"
+      ],
+      "correct": 1,
+      "explanation": "Reusability means designing metadata so it can be used in different situations, which makes data management more efficient."
+    }
+  ]
+}

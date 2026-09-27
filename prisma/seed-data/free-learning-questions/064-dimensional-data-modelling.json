@@ -1,0 +1,125 @@
+{
+  "topic": "dimensional-data-modelling",
+  "questions": [
+    {
+      "stem": "Into what two kinds of structure does Dimensional Data Modelling organise data?",
+      "options": [
+        "Facts (quantitative measures) and dimensions (descriptive attributes)",
+        "Hubs and satellites",
+        "Anchors and ties",
+        "Nodes and edges",
+        "Keys and values"
+      ],
+      "correct": 0,
+      "explanation": "Dimensional modelling structures data into facts, which are quantitative measures, and dimensions, which are descriptive attributes, to support reporting and BI."
+    },
+    {
+      "stem": "What is the primary goal of dimensional modelling?",
+      "options": [
+        "Eliminating redundancy at all costs",
+        "Delivering a business-friendly, performance-optimised structure for fast and intuitive access to information",
+        "Enforcing referential integrity across the enterprise",
+        "Supporting fine-grained operational updates",
+        "Capturing every attribute change on its own timeline"
+      ],
+      "correct": 1,
+      "explanation": "Dimensional modelling focuses on making data easy to query, aggregate and understand rather than on eliminating redundancy."
+    },
+    {
+      "stem": "Which two questions do facts and dimensions answer together?",
+      "options": [
+        "How is the data stored, and who owns it?",
+        "When was it recorded, and when was it valid?",
+        "What happened, and under what circumstances did it happen?",
+        "Which node connects to which, and how many hops?",
+        "What is the key, and what is the value?"
+      ],
+      "correct": 2,
+      "explanation": "Facts answer what happened and dimensions answer under what circumstances it happened."
+    },
+    {
+      "stem": "What distinguishes a star schema?",
+      "options": [
+        "Dimensions are partially normalised into sub-dimensions",
+        "Facts are stored as events",
+        "Every dimension references a geography table",
+        "The fact table connects directly to denormalised dimension tables with minimal joins",
+        "Every table is in 6NF"
+      ],
+      "correct": 3,
+      "explanation": "In a star schema the fact table connects directly to denormalised dimension tables, producing a simple, high-performance structure that is the most common dimensional design."
+    },
+    {
+      "stem": "In a snowflake schema, what might a Customer dimension reference?",
+      "options": [
+        "An event stream",
+        "A fact table",
+        "A hub table",
+        "A JSON document",
+        "A separate Geography table"
+      ],
+      "correct": 4,
+      "explanation": "In a snowflake schema dimensions are partially normalised into sub-dimensions; for example a Customer dimension may reference a separate Geography table."
+    },
+    {
+      "stem": "How does dimensional modelling relate to normalisation?",
+      "options": [
+        "It intentionally denormalises data to optimise usability and query performance",
+        "It requires full compliance with 3NF",
+        "It targets 6NF for temporal accuracy",
+        "It applies DKNF constraints to dimensions",
+        "It is identical to Inmon's 3NF approach"
+      ],
+      "correct": 0,
+      "explanation": "Unlike highly normalised relational models, dimensional models intentionally denormalise; snowflake schemas reintroduce limited normalisation but full compliance is not the objective."
+    },
+    {
+      "stem": "Which measures does the example Fact_LoanApproval table contain?",
+      "options": [
+        "CustomerID, Name and Segment",
+        "LoanAmount, InterestRate, ApprovalFlag and ApprovalCount",
+        "Day, Month, Quarter and Year",
+        "Branch and ExperienceLevel",
+        "LoanType and Secured/Unsecured"
+      ],
+      "correct": 1,
+      "explanation": "The Fact_LoanApproval table contains measures such as LoanAmount, InterestRate, ApprovalFlag and ApprovalCount, surrounded by Customer, Officer, Product and Date dimensions."
+    },
+    {
+      "stem": "Which question is given as an example that business users can easily answer with a dimensional loan model?",
+      "options": [
+        "Which officers are connected to high-risk customers?",
+        "What was the interest rate as of 14 January?",
+        "Total Approved Loan Amount by Customer Segment and Quarter",
+        "Which loan documents embed the same customer?",
+        "Which events must be replayed to rebuild the loan?"
+      ],
+      "correct": 2,
+      "explanation": "Example questions include Total Approved Loan Amount by Customer Segment and Quarter, Approval Rate by Branch and Product Type, and Average Interest Rate by Officer Experience Level."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a strength of dimensional modelling?",
+      "options": [
+        "Intuitive structure",
+        "Fast aggregation performance",
+        "Strong alignment with reporting needs",
+        "Suitability for transaction processing and fine-grained operational updates",
+        "Natural scaling by adding new fact tables or dimensions"
+      ],
+      "correct": 3,
+      "explanation": "Dimensional modelling is less suitable for transaction processing or fine-grained operational updates; its strengths lie in intuitive structure, fast aggregation and reporting alignment."
+    },
+    {
+      "stem": "To which modelling family does dimensional modelling belong?",
+      "options": [
+        "The ensemble family alongside Data Vault and Anchor",
+        "The pre-relational family alongside hierarchical and network models",
+        "The semantic family alongside ontologies",
+        "The NoSQL family alongside document stores",
+        "An OLAP-oriented approach rooted in denormalisation, separate from the ensemble family"
+      ],
+      "correct": 4,
+      "explanation": "Dimensional modelling is not part of the ensemble family (Data Vault, Anchor, Focal Point); it is an OLAP-oriented approach rooted in denormalisation."
+    }
+  ]
+}

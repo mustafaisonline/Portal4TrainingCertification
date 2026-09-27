@@ -1,0 +1,125 @@
+{
+  "topic": "data-harmonization",
+  "questions": [
+    {
+      "stem": "How does Data Harmonisation go one step beyond Data Integration, Data Blending, Data Warehousing and Data Marts?",
+      "options": [
+        "It only connects to a single source system",
+        "It standardises data from multiple source systems into one unified format, becoming a bridge between data and business requirements",
+        "It stores data without any transformation",
+        "It removes the need for business stakeholders",
+        "It replaces ETL with manual data entry"
+      ],
+      "correct": 1,
+      "explanation": "All of these bring data from disparate sources into one place, but Data Harmonisation goes further by standardising it into one unified format that bridges data and business requirements."
+    },
+    {
+      "stem": "What does 'one unified format' mean in the context of Data Harmonisation?",
+      "options": [
+        "All data is stored as text",
+        "All data is stored in a single table",
+        "All data is converted to a single currency",
+        "Data is converted in such a way that it becomes accurate for someone",
+        "All data is stored in a spreadsheet"
+      ],
+      "correct": 3,
+      "explanation": "One unified format means data is converted in such a way that it can become accurate for someone, that is, fit for a specific purpose."
+    },
+    {
+      "stem": "Harmonising data in one location for a specific department can be called what?",
+      "options": [
+        "A Data Mart",
+        "A Data Lake",
+        "A Data Mashup",
+        "A Data Swamp",
+        "A Data Mesh"
+      ],
+      "correct": 0,
+      "explanation": "Harmonising data in one location for a specific department can be called a Data Mart."
+    },
+    {
+      "stem": "Defining standard naming conventions, data types and codes from multiple sources in one unique format is described as harmonising data for what?",
+      "options": [
+        "Data Lineage",
+        "Data Visualisation",
+        "Master Data Management",
+        "Data Monetisation",
+        "Data Splitting"
+      ],
+      "correct": 2,
+      "explanation": "Defining standard naming conventions, data types and codes from multiple sources in one unique format is harmonising data for Master Data Management."
+    },
+    {
+      "stem": "Gathering metadata details of all source systems, data lakes, warehouses and marts up to reports and dashboards is harmonising data for what?",
+      "options": [
+        "Data Marts",
+        "Master Data Management",
+        "Data Enrichment",
+        "Data Ethics",
+        "Data Lineage"
+      ],
+      "correct": 4,
+      "explanation": "Gathering metadata across all systems from sources through to reports and dashboards is harmonising data for Data Lineage."
+    },
+    {
+      "stem": "Why is the involvement of business stakeholders described as a must-have step in Data Harmonisation?",
+      "options": [
+        "Because they approve the IT budget",
+        "Because they write the ETL code",
+        "Because without functional knowledge, garbage will flow in",
+        "Because they own the database licences",
+        "Because they define the latitude and longitude values"
+      ],
+      "correct": 2,
+      "explanation": "Business stakeholders must be involved because without functional knowledge garbage will flow into the harmonised data."
+    },
+    {
+      "stem": "Which of the following is NOT one of the ideal steps for conducting Data Harmonisation?",
+      "options": [
+        "Understand the vision of the business requirements, that is, what the converted data will be used for",
+        "Set the baseline by identifying all relevant source systems, tables and columns",
+        "Define standard processes and actions such as ETL, ELT or manual steps",
+        "Skip reconciliation once the initial load is complete",
+        "Define metadata at each step of the harmonisation process"
+      ],
+      "correct": 3,
+      "explanation": "Regular reconciliation and monitoring are a key step so that data quality is not compromised; skipping them is the opposite of the guidance."
+    },
+    {
+      "stem": "Which department is used as the example of one that can perform poorly without harmonised data, and what does it depend on?",
+      "options": [
+        "The Marketing department, which depends on product names, codes, sales locations, timing and buyer details to plan campaigns",
+        "The Legal department, which depends on contract templates",
+        "The HR department, which depends on leave balances",
+        "The IT department, which depends on server logs",
+        "The Facilities department, which depends on printer ink orders"
+      ],
+      "correct": 0,
+      "explanation": "The Marketing department heavily depends on product names, codes, sales locations, dates, times, buyer demographics, events and holidays to plan accurate campaigns, messages and events."
+    },
+    {
+      "stem": "Would the details harmonised for the Marketing department be equally relevant to the Finance department?",
+      "options": [
+        "Yes, every department needs exactly the same harmonised details",
+        "No, for the Finance department the harmonisation steps and required details will be totally different",
+        "Yes, because Finance owns the marketing budget",
+        "No, because Finance does not use data",
+        "Yes, because harmonisation always produces one universal dataset"
+      ],
+      "correct": 1,
+      "explanation": "The details highlighted for Marketing might not be relevant to Finance; for the Finance department the Data Harmonisation steps and required details will be totally different."
+    },
+    {
+      "stem": "What is the first ideal step in conducting Data Harmonisation?",
+      "options": [
+        "Define the ETL processes",
+        "Reconcile the loaded data",
+        "Define metadata for every table",
+        "Buy a Master Data Management tool",
+        "Understand the vision of the business requirements, that is, what purpose the converted data will serve"
+      ],
+      "correct": 4,
+      "explanation": "The ideal steps begin with understanding the vision of the business requirements, in other words what the converted data will be used for."
+    }
+  ]
+}

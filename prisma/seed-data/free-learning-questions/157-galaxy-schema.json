@@ -1,0 +1,125 @@
+{
+  "topic": "galaxy-schema",
+  "questions": [
+    {
+      "stem": "By what other name is the galaxy schema known?",
+      "options": [
+        "Star cluster schema",
+        "Fact constellation schema",
+        "Snowflake schema",
+        "Hypercube schema",
+        "Dimension network schema"
+      ],
+      "correct": 1,
+      "explanation": "The galaxy schema is also known as the fact constellation schema."
+    },
+    {
+      "stem": "How does the galaxy schema compare in complexity with the star and snowflake schemas?",
+      "options": [
+        "It is simpler than both",
+        "It is simpler than star but more complex than snowflake",
+        "It is more complex than both",
+        "It is equally complex",
+        "It has no dimensions, so complexity does not apply"
+      ],
+      "correct": 2,
+      "explanation": "The galaxy schema is more complex than the star and snowflake schemas."
+    },
+    {
+      "stem": "How many fact tables does a galaxy schema contain?",
+      "options": [
+        "Exactly one",
+        "None",
+        "More than one",
+        "Exactly two",
+        "One per dimension"
+      ],
+      "correct": 2,
+      "explanation": "A galaxy schema divides the star schema into smaller star schemas where there is more than one fact table."
+    },
+    {
+      "stem": "What are the dimensions that connect multiple fact tables across multiple star schemas called?",
+      "options": [
+        "Sub-dimensions",
+        "Conformed dimensions",
+        "Degenerate dimensions",
+        "Junk dimensions",
+        "Role-playing dimensions"
+      ],
+      "correct": 1,
+      "explanation": "Dimensions which can connect with multiple fact tables across multiple star schemas are known as conformed dimensions."
+    },
+    {
+      "stem": "What structural change does a galaxy schema make to a star schema?",
+      "options": [
+        "It merges all dimensions into the fact table",
+        "It divides the star schema into smaller star schemas with reusable dimensions connecting them",
+        "It removes the fact table",
+        "It normalises the fact table into 3NF",
+        "It converts dimensions into cubes"
+      ],
+      "correct": 1,
+      "explanation": "The galaxy schema further divides the star schema into small star schemas, with more than one fact table and reusable dimensions connecting them."
+    },
+    {
+      "stem": "Which schema answers the question of where conformed dimensions appear in dimensional modelling?",
+      "options": [
+        "Star schema",
+        "Snowflake schema",
+        "Galaxy schema",
+        "Third Normal Form",
+        "Data Vault"
+      ],
+      "correct": 2,
+      "explanation": "Star and snowflake schemas describe facts and dimensions, but it is the galaxy schema where conformed dimensions come into play."
+    },
+    {
+      "stem": "What is a reusable dimension in a galaxy schema?",
+      "options": [
+        "A dimension copied separately for each fact table",
+        "A dimension that connects multiple fact tables",
+        "A dimension stored in the OLTP system",
+        "A dimension that has been deleted and restored",
+        "A dimension with only one row"
+      ],
+      "correct": 1,
+      "explanation": "A reusable dimension connects multiple fact tables; such dimensions are known as conformed dimensions."
+    },
+    {
+      "stem": "Which of the following is NOT true of the galaxy schema?",
+      "options": [
+        "It is also called the fact constellation schema",
+        "It contains more than one fact table",
+        "It uses conformed dimensions",
+        "It has exactly one fact table at its centre",
+        "It is more complex than the star schema"
+      ],
+      "correct": 3,
+      "explanation": "A galaxy schema has more than one fact table; a single central fact table describes the star schema."
+    },
+    {
+      "stem": "The galaxy schema belongs to which data warehousing approach?",
+      "options": [
+        "Ralph Kimball's dimensional approach",
+        "Bill Inmon's 3NF approach",
+        "Data Vault ensemble modelling",
+        "Anchor modelling",
+        "NoSQL document modelling"
+      ],
+      "correct": 0,
+      "explanation": "Star, snowflake and galaxy schemas all belong to Ralph Kimball's dimensional data warehousing approach."
+    },
+    {
+      "stem": "What do the small star schemas within a galaxy schema share?",
+      "options": [
+        "A single fact table",
+        "Conformed dimensions that connect their fact tables",
+        "The same primary key",
+        "A single sub-dimension",
+        "Nothing; they are fully independent"
+      ],
+      "correct": 1,
+      "explanation": "The small star schemas share reusable, conformed dimensions that connect their multiple fact tables."
+    }
+  ]
+}

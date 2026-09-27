@@ -1,0 +1,125 @@
+{
+  "topic": "watermark",
+  "questions": [
+    {
+      "stem": "What is a watermark?",
+      "options": [
+        "A compression technique for large images",
+        "A recognisable image or pattern embedded into a digital or physical document to identify its authenticity or protect it from unauthorised use",
+        "A database index used to speed up searches",
+        "A timestamp recorded when a file is saved",
+        "A digital signature stored in file metadata"
+      ],
+      "correct": 1,
+      "explanation": "A watermark is a recognisable image or pattern embedded into a document to identify its authenticity or protect it from unauthorised use."
+    },
+    {
+      "stem": "In digital media such as images or videos, what form does a watermark often take?",
+      "options": [
+        "A hidden metadata tag",
+        "An encrypted file header",
+        "A semi-transparent logo or text overlaid onto the content",
+        "A separate licence file",
+        "A checksum appended to the file"
+      ],
+      "correct": 2,
+      "explanation": "In digital media, a watermark is often a semi-transparent logo or text overlaid onto the content."
+    },
+    {
+      "stem": "Which purpose of a watermark involves content creators asserting ownership and discouraging unauthorised use?",
+      "options": [
+        "Branding",
+        "Authentication",
+        "Security",
+        "Copyright protection",
+        "Compression"
+      ],
+      "correct": 3,
+      "explanation": "Copyright protection: creators use watermarks to assert ownership, discourage unauthorised use and help identify the original creator."
+    },
+    {
+      "stem": "Why might a company add its logo as a watermark to content shared online?",
+      "options": [
+        "To reduce the file size",
+        "To encrypt the content",
+        "To verify the paper's legitimacy",
+        "To prevent the content from being opened",
+        "For branding, promoting brand recognition even when the content is shared"
+      ],
+      "correct": 4,
+      "explanation": "Watermarks serve branding purposes: companies add logos or brand names to promote brand recognition when content is shared online."
+    },
+    {
+      "stem": "How can watermarks serve a security purpose for internal documents?",
+      "options": [
+        "They discourage leaks or unauthorised distribution of confidential documents",
+        "They encrypt the document contents",
+        "They automatically delete the document after reading",
+        "They restrict who can log in to the document system",
+        "They compress the document for storage"
+      ],
+      "correct": 0,
+      "explanation": "Companies add watermarks to internal documents to discourage leaks or unauthorised distribution of confidential material."
+    },
+    {
+      "stem": "How are watermarks embedded in physical documents such as banknotes or certificates?",
+      "options": [
+        "Printed on top after the document is finished",
+        "During the papermaking process",
+        "Stamped by hand at the point of issue",
+        "Added by a laminating machine",
+        "Attached as a separate hologram sticker"
+      ],
+      "correct": 1,
+      "explanation": "For physical documents such as banknotes, watermarks are embedded during the papermaking process and serve as authentication."
+    },
+    {
+      "stem": "What purpose do watermarks serve on banknotes and certificates?",
+      "options": [
+        "Branding",
+        "Copyright protection",
+        "Authentication, to verify the document's legitimacy",
+        "Reducing printing costs",
+        "Tracking the document's location"
+      ],
+      "correct": 2,
+      "explanation": "On physical documents like banknotes, watermarks serve as a form of authentication to verify legitimacy."
+    },
+    {
+      "stem": "In which contexts are watermarks said to be commonly used?",
+      "options": [
+        "Only in software licensing",
+        "Only in email communication",
+        "Only in database backups",
+        "Photography, art, documents and currency",
+        "Only in video streaming"
+      ],
+      "correct": 3,
+      "explanation": "Watermarks are commonly used in photography, art, documents and currency."
+    },
+    {
+      "stem": "What caution is given about using watermarks?",
+      "options": [
+        "They must always be placed in the top-left corner",
+        "They should never be used on digital content",
+        "They are legally required on all published images",
+        "They should be fully opaque to be effective",
+        "They should be used thoughtfully to avoid distracting from the main content, and not every situation requires one"
+      ],
+      "correct": 4,
+      "explanation": "Watermarks should be applied thoughtfully to avoid distracting from the main content, and the purpose and context should be considered before using one."
+    },
+    {
+      "stem": "Which of the following is NOT a stated purpose of a watermark?",
+      "options": [
+        "Encrypting the content so it cannot be read",
+        "Copyright protection",
+        "Branding",
+        "Security of confidential documents",
+        "Authentication of physical documents"
+      ],
+      "correct": 0,
+      "explanation": "A watermark is a visual identification or protection method; it conveys information, asserts ownership or enhances security but does not encrypt content."
+    }
+  ]
+}

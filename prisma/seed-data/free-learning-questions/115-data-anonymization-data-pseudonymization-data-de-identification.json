@@ -1,0 +1,125 @@
+{
+  "topic": "data-anonymization-data-pseudonymization-data-de-identification",
+  "questions": [
+    {
+      "stem": "What is Data Anonymisation?",
+      "options": [
+        "Compressing personal data to save storage",
+        "Removing or modifying personal information before sharing so that the people the data is about remain anonymous",
+        "Backing up personal data to an offsite location",
+        "Publishing personal data with the owner's consent",
+        "Converting personal data into a different file format"
+      ],
+      "correct": 1,
+      "explanation": "Data Anonymisation hides the identity of a person so that it is undetectable, by removing or modifying personal information before sharing."
+    },
+    {
+      "stem": "To which area of data practice are Data Anonymisation, Data Pseudonymisation and Data De-identification related?",
+      "options": [
+        "Data Warehousing",
+        "Data Visualisation",
+        "Data Modelling",
+        "Data Privacy",
+        "Data Archiving"
+      ],
+      "correct": 3,
+      "explanation": "All three work the same way and are related to Data Privacy."
+    },
+    {
+      "stem": "Which scenario is given as an example of when Data Anonymisation is required?",
+      "options": [
+        "Sharing data with a development team while implementing a data solution",
+        "Printing a monthly sales report",
+        "Creating a database index",
+        "Running a nightly backup",
+        "Upgrading the database server"
+      ],
+      "correct": 0,
+      "explanation": "Before sharing data with the development team, one must make sure it is anonymised so details such as name, contact number, address and credit card number are not exposed."
+    },
+    {
+      "stem": "By whom is Data Anonymisation normally enforced?",
+      "options": [
+        "The marketing department",
+        "Software vendors",
+        "Regulatory bodies",
+        "Database administrators",
+        "End users"
+      ],
+      "correct": 2,
+      "explanation": "Data Anonymisation is normally enforced by regulatory bodies."
+    },
+    {
+      "stem": "What can happen to an organisation that fails to anonymise data as required?",
+      "options": [
+        "It gains a competitive advantage",
+        "Nothing, since anonymisation is optional",
+        "Its data becomes more valuable",
+        "It receives a certificate of compliance",
+        "It faces heavy penalties and a bad reputation"
+      ],
+      "correct": 4,
+      "explanation": "Not following anonymisation requirements can result in heavy penalties and a bad reputation for the organisation."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a Data Anonymisation technique?",
+      "options": [
+        "Data Masking",
+        "Data Swapping",
+        "Data Compression",
+        "Data Generalisation",
+        "Data Scrambling"
+      ],
+      "correct": 2,
+      "explanation": "The listed techniques include masking, pseudonymisation, generalisation, swapping, perturbation, synthetic data, shuffling, scrambling, encoding and de-identification; compression is not one of them."
+    },
+    {
+      "stem": "Which of the following is a disadvantage of Data Anonymisation?",
+      "options": [
+        "Anonymised data cannot be used for marketing",
+        "Anonymised data takes up more storage",
+        "Anonymised data cannot be shared with development teams",
+        "Anonymised data is illegal in most countries",
+        "Anonymised data cannot be loaded into a database"
+      ],
+      "correct": 0,
+      "explanation": "One disadvantage is that anonymised data cannot be used for marketing; another is that data migration testing may show mismatches."
+    },
+    {
+      "stem": "Why can Data Anonymisation cause problems in a Data Migration project?",
+      "options": [
+        "Because anonymised data is always larger",
+        "Because regulators forbid migrating anonymised data",
+        "Because migration tools cannot read anonymised files",
+        "Because migration projects normally require the original dataset for testing, so anonymisation can lead to mismatches",
+        "Because anonymisation deletes the source database"
+      ],
+      "correct": 3,
+      "explanation": "Data Migration projects normally require the original dataset for testing, so anonymised data can lead to a mismatch."
+    },
+    {
+      "stem": "Which technique is used in the Data Anonymisation before-and-after example in I Am Datapedia!?",
+      "options": [
+        "Data Encoding",
+        "Data Masking",
+        "Data Synthetic",
+        "Data Generalisation",
+        "Data Swapping"
+      ],
+      "correct": 4,
+      "explanation": "The example of Data Anonymisation uses the Data Swapping technique."
+    },
+    {
+      "stem": "How do Data Anonymisation, Data Pseudonymisation and Data De-identification relate to one another?",
+      "options": [
+        "They are three unrelated disciplines",
+        "They all work the same way and relate to Data Privacy",
+        "Only Data Anonymisation is enforced by regulators",
+        "Data Pseudonymisation is the opposite of Data Anonymisation",
+        "Data De-identification applies only to unstructured data"
+      ],
+      "correct": 1,
+      "explanation": "Data Anonymisation, Data Pseudonymisation and Data De-identification all work the same way and are related to Data Privacy."
+    }
+  ]
+}

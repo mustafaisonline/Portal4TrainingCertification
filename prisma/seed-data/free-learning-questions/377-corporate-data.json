@@ -1,0 +1,125 @@
+{
+  "topic": "corporate-data",
+  "questions": [
+    {
+      "stem": "What does Corporate Data refer to?",
+      "options": [
+        "All the information that belongs to a company and is used to run its business",
+        "Only the financial accounts of a company",
+        "Data purchased from external vendors",
+        "Only the data stored in the IT department's servers",
+        "Public information about a company's share price"
+      ],
+      "correct": 0,
+      "explanation": "Corporate data is the complete collection of information that belongs to a company and helps it function and grow, created by employees, systems, customers and partners."
+    },
+    {
+      "stem": "Which category of corporate data includes day-to-day transactions such as sales orders, payments and inventory updates?",
+      "options": [
+        "Master data",
+        "Operational data",
+        "Analytical data",
+        "Financial data",
+        "Unstructured data"
+      ],
+      "correct": 1,
+      "explanation": "Operational data covers day-to-day transactions such as sales orders, payments and inventory updates."
+    },
+    {
+      "stem": "Which category of corporate data includes core entities such as customers, products, employees and suppliers?",
+      "options": [
+        "Operational data",
+        "Financial data",
+        "Master data",
+        "Unstructured data",
+        "Analytical data"
+      ],
+      "correct": 2,
+      "explanation": "Master data includes the core entities of the business: customers, products, employees and suppliers."
+    },
+    {
+      "stem": "Which of the following is an example of unstructured corporate data?",
+      "options": [
+        "A database table of sales orders",
+        "A budget spreadsheet",
+        "A customer master record",
+        "Call recordings and social media comments",
+        "Aggregated quarterly revenue figures"
+      ],
+      "correct": 3,
+      "explanation": "Unstructured data includes emails, PDFs, contracts, social media comments and call recordings."
+    },
+    {
+      "stem": "Which category of corporate data includes aggregated and historical information used for reporting and decision-making?",
+      "options": [
+        "Operational data",
+        "Master data",
+        "Financial data",
+        "Unstructured data",
+        "Analytical data"
+      ],
+      "correct": 4,
+      "explanation": "Analytical data is aggregated and historical information used for reporting and decision-making."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a department in which corporate data exists?",
+      "options": [
+        "Astronomy",
+        "Finance",
+        "Human Resources",
+        "Supply chain",
+        "Customer service"
+      ],
+      "correct": 0,
+      "explanation": "Corporate data exists across finance, sales, marketing, operations, HR, supply chain, customer service and IT; astronomy is not among them."
+    },
+    {
+      "stem": "What can poor-quality or poorly governed corporate data lead to?",
+      "options": [
+        "Faster decision-making",
+        "Wrong strategies, financial losses or regulatory risks",
+        "Lower storage costs",
+        "Improved compliance",
+        "Better customer trust"
+      ],
+      "correct": 1,
+      "explanation": "Poor-quality or poorly governed data can lead to wrong strategies, financial losses or regulatory risks, which is why organisations invest in governance and quality management."
+    },
+    {
+      "stem": "Although HR manages employee records and finance manages accounting systems, who owns corporate data?",
+      "options": [
+        "Each department owns its data exclusively",
+        "The IT department owns all data",
+        "The organisation as a whole, since corporate data is a strategic asset",
+        "The external auditors",
+        "The individual employee who created it"
+      ],
+      "correct": 2,
+      "explanation": "Although departments manage their own data, corporate data belongs to the organisation as a whole and is considered a strategic asset."
+    },
+    {
+      "stem": "In the school example of corporate data, why can the principal's question 'How many students improved their Maths scores this year?' only be answered from properly stored and managed data?",
+      "options": [
+        "Because the principal is not allowed to ask teachers",
+        "Because students are unreliable witnesses",
+        "Because only the IT department knows the answer",
+        "Because if the data is incomplete or incorrect, the answers will also be wrong",
+        "Because Maths scores are unstructured data"
+      ],
+      "correct": 3,
+      "explanation": "Just as companies rely on corporate data to answer business questions, if the school's data is incomplete or incorrect the answers will also be wrong."
+    },
+    {
+      "stem": "What is the key idea about corporate data?",
+      "options": [
+        "It is simply stored information with no strategic value",
+        "It should be kept only by the finance team",
+        "It is a risk that should be minimised by storing less",
+        "It matters only for daily operations, not long-term planning",
+        "When managed properly it becomes a competitive advantage; when ignored it becomes a risk"
+      ],
+      "correct": 4,
+      "explanation": "Corporate data is a valuable resource supporting operations, planning and growth; managed properly it is a competitive advantage, ignored it becomes a risk."
+    }
+  ]
+}

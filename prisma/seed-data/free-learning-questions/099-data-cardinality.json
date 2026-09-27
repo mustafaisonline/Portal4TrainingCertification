@@ -1,0 +1,125 @@
+{
+  "topic": "data-cardinality",
+  "questions": [
+    {
+      "stem": "What is Data Cardinality about?",
+      "options": [
+        "The physical size of a table on disk",
+        "Maintaining the level of details in a table",
+        "The number of users who can query a table",
+        "The encryption applied to a column",
+        "The order in which rows are stored"
+      ],
+      "correct": 1,
+      "explanation": "Data Cardinality is about maintaining the level of details in a table, and understanding it is said to solve 90% of data problems."
+    },
+    {
+      "stem": "What is High Cardinality?",
+      "options": [
+        "When a table has a high number of duplicates",
+        "When a table has many columns",
+        "When there are no or few duplicates in a table",
+        "When a table has many foreign keys",
+        "When a table is very large"
+      ],
+      "correct": 2,
+      "explanation": "High Cardinality is when there are no or few duplicates in a table; tables with a primary key are mostly in highest cardinality mode."
+    },
+    {
+      "stem": "Which kind of table is mostly in Low Cardinality mode?",
+      "options": [
+        "Tables with a primary key",
+        "Tables with a foreign key",
+        "Empty tables",
+        "Lookup tables",
+        "Temporary tables"
+      ],
+      "correct": 1,
+      "explanation": "Low Cardinality is when there is a high number of duplicates, and tables with foreign keys are mostly in Low Cardinality mode."
+    },
+    {
+      "stem": "In the Product and Sales example, why does the Sales table have Low Cardinality with respect to Products?",
+      "options": [
+        "Because it has no primary key",
+        "Because Product names are stored in it",
+        "Because it stores fewer rows than the Product table",
+        "Because Sales rows are deleted daily",
+        "Because one product can be sold many times, so Product ID repeats across many rows"
+      ],
+      "correct": 4,
+      "explanation": "One type of product can be sold many times, so the Sales table holds thousands of rows with repeated Product IDs."
+    },
+    {
+      "stem": "On what basic concept is normalisation said to depend?",
+      "options": [
+        "Encryption",
+        "Compression",
+        "Indexing",
+        "Partitioning",
+        "Cardinality"
+      ],
+      "correct": 4,
+      "explanation": "The basic concept of normalisation is dependent on Cardinality; breaking denormalised tables apart leaves the main table with High Cardinality data."
+    },
+    {
+      "stem": "Why can we NOT say that all primary key tables have absolute highest cardinality?",
+      "options": [
+        "Because primary keys can be null",
+        "Because cardinality only applies to fact tables",
+        "Because primary keys are only used in OLAP",
+        "Because tables with a foreign key can also have a primary key and become the primary table for another foreign key table",
+        "Because duplicates are always allowed in primary tables"
+      ],
+      "correct": 3,
+      "explanation": "A table holding a foreign key can also carry its own primary key and act as the primary table for yet another table, so absolute highest cardinality cannot be assumed."
+    },
+    {
+      "stem": "Which of the following is NOT one of the three degrees of cardinality?",
+      "options": [
+        "One to One (1:1)",
+        "One to Many (1:M)",
+        "Many to Many (M:N)",
+        "Many to None (M:0)",
+        "All of these are degrees of cardinality"
+      ],
+      "correct": 3,
+      "explanation": "The three degrees are One to One, One to Many and Many to Many; 'Many to None' is not a degree of cardinality."
+    },
+    {
+      "stem": "What does a One to Many (1:M) relationship mean?",
+      "options": [
+        "A single row in table A relates to many rows in table B",
+        "A single row in table A relates to a single row in table B",
+        "Many rows in table A relate to many rows in table B",
+        "Table A has no relationship with table B",
+        "Table A and table B are the same table"
+      ],
+      "correct": 0,
+      "explanation": "One to Many means a single row in table A relates to many rows in table B."
+    },
+    {
+      "stem": "What can happen when tables are joined using the wrong columns, without direct primary and foreign key relationships?",
+      "options": [
+        "The query runs faster",
+        "The result is automatically deduplicated",
+        "The result can end up as Cartesian data",
+        "Cardinality increases",
+        "Foreign keys are created automatically"
+      ],
+      "correct": 2,
+      "explanation": "Joining with no direct Pkey and Fkey relationship, or using wrong columns, can end up in Cartesian data."
+    },
+    {
+      "stem": "When a table structure changes for a business requirement, what is the first question to ask, and what helps trace the impact?",
+      "options": [
+        "Whether the change affects cardinality; Data Lineage, backed by Metadata Management, shows the end-to-end impact",
+        "Whether the change affects disk space; the DBA shows the impact",
+        "Whether the change affects colour schemes; the BI tool shows the impact",
+        "Whether the change affects licensing; the vendor shows the impact",
+        "Whether the change affects network load; the firewall shows the impact"
+      ],
+      "correct": 0,
+      "explanation": "The first question is whether the change impacts the cardinality of any table; if so, Data Lineage, which needs Metadata Management in place, shows the end-to-end impact."
+    }
+  ]
+}

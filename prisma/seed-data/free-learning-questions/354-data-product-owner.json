@@ -1,0 +1,125 @@
+{
+  "topic": "data-product-owner",
+  "questions": [
+    {
+      "stem": "What is a Data Product Owner (DPO) responsible for?",
+      "options": [
+        "Overseeing the development, maintenance and evolution of a data product",
+        "Writing all of the code for a data product personally",
+        "Auditing the organisation's financial statements",
+        "Managing the physical data centre",
+        "Approving employee holiday requests"
+      ],
+      "correct": 0,
+      "explanation": "A Data Product Owner oversees the development, maintenance and evolution of a data product so that it serves user needs and business goals."
+    },
+    {
+      "stem": "Why are business leaders such as a Chief Data Officer (CDO) or Chief Analytics Officer (CAO) considered well suited to the Data Product Owner role?",
+      "options": [
+        "Because they usually write the most code",
+        "Because they typically have a deep understanding of the organisation's strategic goals and data-driven needs",
+        "Because they have no other responsibilities",
+        "Because they manage the network infrastructure",
+        "Because they are always the founders of the company"
+      ],
+      "correct": 1,
+      "explanation": "CDOs and CAOs understand the organisation's strategic goals and data-driven needs, so they can align data products with business objectives."
+    },
+    {
+      "stem": "In which kind of organisation is a CTO or CIO suggested as a good fit for the Data Product Owner role?",
+      "options": [
+        "Organisations with no IT department",
+        "Small charities",
+        "Organisations where data products are highly technical or integrated with broader IT systems",
+        "Organisations that have banned dashboards",
+        "Organisations run entirely by founders"
+      ],
+      "correct": 2,
+      "explanation": "A CTO or CIO suits organisations where data products are highly technical or integrated with broader IT systems, given their infrastructure expertise."
+    },
+    {
+      "stem": "What condition is placed on a visionary founder or CEO acting as Data Product Owner?",
+      "options": [
+        "They must first obtain a data science degree",
+        "They must hand the role to IT within six months",
+        "They must report to the CDO",
+        "They should have a solid understanding of data and a clear vision of how it will add value",
+        "They must be the company's largest shareholder"
+      ],
+      "correct": 3,
+      "explanation": "For a visionary leader to work effectively as DPO, they should have a solid understanding of data and a clear vision of how it will add value."
+    },
+    {
+      "stem": "Which candidate group for the Data Product Owner role includes Product Managers with data knowledge and senior Data Analysts?",
+      "options": [
+        "Business Leaders",
+        "Technical Leaders",
+        "Data Visionaries",
+        "Dedicated Data Product Owners",
+        "Cross-Functional Managers"
+      ],
+      "correct": 4,
+      "explanation": "Cross-Functional Managers such as Product Managers with data knowledge or senior Data Analysts can connect data insights, business goals and user needs."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a key skill or quality of a Data Product Owner?",
+      "options": [
+        "Fluency in several foreign languages",
+        "Strategic thinking",
+        "Technical knowledge",
+        "User-centric mindset",
+        "Communication and collaboration"
+      ],
+      "correct": 0,
+      "explanation": "The listed skills are strategic thinking, technical knowledge, a user-centric mindset, analytical skills, and communication and collaboration; foreign-language fluency is not among them."
+    },
+    {
+      "stem": "What does a user-centric mindset mean for a Data Product Owner?",
+      "options": [
+        "Prioritising the DPO's own preferences",
+        "Focusing on the end-user experience and usability",
+        "Measuring only the number of users",
+        "Restricting access to senior users only",
+        "Designing the product for the IT department first"
+      ],
+      "correct": 1,
+      "explanation": "A user-centric mindset focuses on the end-user experience and the usability of the data product."
+    },
+    {
+      "stem": "According to the guidance on choosing a Data Product Owner, what does the ideal choice depend on?",
+      "options": [
+        "The number of offices the company has",
+        "The age of the company's database software",
+        "The organisation's data maturity, business model and specific needs",
+        "The size of the marketing budget",
+        "Whether the company is publicly listed"
+      ],
+      "correct": 2,
+      "explanation": "The ideal Data Product Owner varies with the organisation's data maturity, business model and specific needs."
+    },
+    {
+      "stem": "Which option does the author of I Am Datapedia! personally recommend for the Data Product Owner role?",
+      "options": [
+        "Rotating the role among all managers each quarter",
+        "Assigning it to the CEO in every organisation",
+        "Leaving the role unfilled until the data product is mature",
+        "Having Dedicated Data Product Owners",
+        "Outsourcing the role to a consultancy"
+      ],
+      "correct": 3,
+      "explanation": "The author's personal recommendation is Dedicated Data Product Owners, given the rapid evolution of the data and AI landscape."
+    },
+    {
+      "stem": "What advantage does a Dedicated Data Product Owner offer regarding Key Performance Indicators (KPIs)?",
+      "options": [
+        "The DPO is exempt from having any KPIs",
+        "KPIs are set by the consumers rather than the organisation",
+        "KPIs are replaced by OKRs",
+        "The DPO's KPIs are shared equally with every department",
+        "Someone's KPIs are directly tied to the quality, usability and impact of data products"
+      ],
+      "correct": 4,
+      "explanation": "A Dedicated DPO ensures that someone's KPIs are directly tied to the quality, usability and impact of data products, driving continuous improvement."
+    }
+  ]
+}

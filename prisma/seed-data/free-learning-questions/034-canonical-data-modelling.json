@@ -1,0 +1,125 @@
+{
+  "topic": "canonical-data-modelling",
+  "questions": [
+    {
+      "stem": "What is Canonical Data Modelling?",
+      "options": [
+        "The practice of defining a standard, enterprise-wide representation of core data entities so all systems can exchange information consistently",
+        "The practice of defining reasoning rules for machines",
+        "The practice of arranging concepts into hierarchies",
+        "The practice of tuning a database for performance",
+        "The practice of writing natural-language fact sentences"
+      ],
+      "correct": 0,
+      "explanation": "A canonical model establishes a shared, authoritative structure that serves as the common reference point for integration across systems."
+    },
+    {
+      "stem": "What does the term canonical refer to?",
+      "options": [
+        "A historical or archived form",
+        "A compressed form",
+        "A standard or accepted form",
+        "An encrypted form",
+        "A temporary form"
+      ],
+      "correct": 2,
+      "explanation": "Canonical refers to a standard or accepted form, as in a mathematics representation expressed in a normalised, agreed structure."
+    },
+    {
+      "stem": "What problem arises with point-to-point integration as an enterprise grows?",
+      "options": [
+        "Systems cannot be connected at all",
+        "Data becomes automatically standardised",
+        "Only one system can send data",
+        "The number of integrations expands rapidly, creating tight coupling, duplicated transformation logic and high maintenance overhead",
+        "Storage costs fall too quickly"
+      ],
+      "correct": 3,
+      "explanation": "With point-to-point mappings the integration landscape becomes fragile, with tight coupling, duplicated logic and high maintenance as systems are added."
+    },
+    {
+      "stem": "In a canonical approach, what does each system translate to and from?",
+      "options": [
+        "Every other system's proprietary format",
+        "The data warehouse only",
+        "The canonical structure only",
+        "A spreadsheet",
+        "The ERP system's format"
+      ],
+      "correct": 2,
+      "explanation": "Instead of every system translating to every other system, each system translates only to and from the canonical structure."
+    },
+    {
+      "stem": "If an ERP integrated with twenty applications is replaced under a canonical model, what must be updated?",
+      "options": [
+        "All twenty application mappings",
+        "The canonical model itself",
+        "Every downstream database",
+        "Only the ERP-to-canonical mapping",
+        "Nothing needs updating"
+      ],
+      "correct": 3,
+      "explanation": "Only the ERP-to-canonical mapping changes; the other applications keep communicating with the canonical structure unchanged."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a standardised element of a canonical Loan Application?",
+      "options": [
+        "Customer Identifier",
+        "Application Identifier",
+        "Application Date",
+        "Loan Amount",
+        "Branch Manager Name"
+      ],
+      "correct": 4,
+      "explanation": "The canonical Loan Application includes Customer Identifier, Application Identifier, Application Date, Loan Amount and Approval Decision."
+    },
+    {
+      "stem": "How does Canonical Data Modelling differ from ontology modelling?",
+      "options": [
+        "Canonical modelling focuses on practical interoperability and exchange; ontology modelling focuses on meaning, classification and reasoning",
+        "Canonical modelling enables inference; ontology modelling does not",
+        "They are the same technique",
+        "Ontology modelling is used only at integration layers",
+        "Canonical modelling defines hierarchies of concepts"
+      ],
+      "correct": 0,
+      "explanation": "Canonical modelling's objective is predictable, standardised exchange between heterogeneous systems, not inference or reasoning."
+    },
+    {
+      "stem": "Where are canonical models typically implemented?",
+      "options": [
+        "In end-user spreadsheets",
+        "In business glossaries only",
+        "In process diagrams",
+        "In physical storage indexes",
+        "At integration layers such as APIs, service buses, integration hubs or event-driven architectures"
+      ],
+      "correct": 4,
+      "explanation": "Canonical models are typically implemented at integration layers such as APIs, service buses, integration hubs or event-driven architectures."
+    },
+    {
+      "stem": "How many mappings does a point-to-point approach require, as expressed in the integration comparison?",
+      "options": [
+        "n mappings",
+        "n × (n-1) mappings",
+        "2n mappings",
+        "n/2 mappings",
+        "One mapping"
+      ],
+      "correct": 1,
+      "explanation": "In point-to-point every system translates directly to every other system, giving n × (n-1) mappings; canonical modelling maps each system once."
+    },
+    {
+      "stem": "What kind of integration pattern does Canonical Modelling replace, and with what?",
+      "options": [
+        "It replaces one-to-one with many-to-many",
+        "It replaces many-to-many integrations with one-to-many",
+        "It replaces one-to-many with many-to-many",
+        "It removes integration altogether",
+        "It replaces batch with real-time"
+      ],
+      "correct": 1,
+      "explanation": "Canonical Modelling replaces many-to-many spaghetti integrations with one-to-many via a shared hub, a massive reduction in complexity."
+    }
+  ]
+}

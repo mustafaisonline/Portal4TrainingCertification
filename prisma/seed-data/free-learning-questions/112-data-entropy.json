@@ -1,0 +1,125 @@
+{
+  "topic": "data-entropy",
+  "questions": [
+    {
+      "stem": "In which domain is the term Entropy normally used when applied to data?",
+      "options": [
+        "Network Security",
+        "Data Science",
+        "Data Warehousing",
+        "Database Administration",
+        "Project Management"
+      ],
+      "correct": 1,
+      "explanation": "Entropy is normally used in the Data Science domain, where finding unexpected outcomes is the aim."
+    },
+    {
+      "stem": "What does High Entropy mean in a dataset?",
+      "options": [
+        "The data has been fully validated",
+        "All values are identical",
+        "The data is ready for reporting",
+        "More surprises and more unexpected values, which are considered more informative",
+        "Fewer surprises and less informative values"
+      ],
+      "correct": 3,
+      "explanation": "High Entropy means more surprises; more unexpected values are considered more informative."
+    },
+    {
+      "stem": "What does Low Entropy mean in a dataset?",
+      "options": [
+        "Fewer surprises and fewer unexpected values, which are considered less informative",
+        "More unexpected values that are highly informative",
+        "The data contains many errors",
+        "The data cannot be stored",
+        "Every value has a probability of zero"
+      ],
+      "correct": 0,
+      "explanation": "Low Entropy means fewer surprises; less unexpected values are considered less informative."
+    },
+    {
+      "stem": "By what other name is Entropy described?",
+      "options": [
+        "Perfect Order of values",
+        "Average Deviation of values",
+        "Central Tendency of values",
+        "Normal Distribution of values",
+        "Extreme Disorder of values"
+      ],
+      "correct": 4,
+      "explanation": "Entropy is also called the Extreme Disorder of values."
+    },
+    {
+      "stem": "In the plus-and-minus illustration of Entropy from I Am Datapedia!, where is Entropy at its lowest?",
+      "options": [
+        "In the circles where the mix of pluses and minuses cannot be determined",
+        "In every circle equally",
+        "At the starting point where all the signs are MINUS",
+        "Only in the second circle",
+        "Wherever the values are hidden"
+      ],
+      "correct": 2,
+      "explanation": "At the starting point (all MINUS), the 50/50 middle and the end (all PLUS), Entropy is at its lowest because no surprises are expected."
+    },
+    {
+      "stem": "How is probability treated when analysing results in terms of Entropy?",
+      "options": [
+        "The higher the probability, the more informative the outcome",
+        "The lower the probability, the better the outcome",
+        "Probability is ignored entirely",
+        "Only probabilities above 50% are considered",
+        "Probability is only used for structured data"
+      ],
+      "correct": 1,
+      "explanation": "Results are analysed on a probability ratio where the lower the probability, the better, because unexpected outcomes are what is sought."
+    },
+    {
+      "stem": "In the context of Entropy, what counts as informative information?",
+      "options": [
+        "Information that has been verified by an auditor",
+        "Information that is repeated in every record",
+        "Information that comes from a trusted source",
+        "Information stored in a data dictionary",
+        "Something that was not already known"
+      ],
+      "correct": 4,
+      "explanation": "Informative information is something which was not known; surprises are welcomed."
+    },
+    {
+      "stem": "Which of the following is NOT true of how Entropy is used in Data Science?",
+      "options": [
+        "Surprises are avoided at all costs",
+        "Finding unexpected outcomes is the aim",
+        "Results are analysed based on a probability ratio",
+        "It helps Data Scientists try to predict unknown values",
+        "More unexpected values are considered more informative"
+      ],
+      "correct": 0,
+      "explanation": "In Entropy analysis surprises are welcomed, not avoided, because unexpected outcomes are the most informative."
+    },
+    {
+      "stem": "What is the situation for a Data Scientist when Entropy in a dataset is at its lowest?",
+      "options": [
+        "The data must be discarded",
+        "The model will produce the most surprises",
+        "The data is at its most informative",
+        "No surprises are expected, so there is not much to predict",
+        "The probability of every value is unknown"
+      ],
+      "correct": 3,
+      "explanation": "Where Entropy is lowest, no surprises are expected, so there is nothing much for Data Scientists to predict."
+    },
+    {
+      "stem": "What do Data Scientists use the concept of Entropy for?",
+      "options": [
+        "Compressing datasets before storage",
+        "Designing database schemas",
+        "Finding unknown values and trying to predict them",
+        "Assigning user access rights",
+        "Scheduling batch jobs"
+      ],
+      "correct": 2,
+      "explanation": "Entropy is how Data Scientists find unknown values and try to predict them, focusing on the points where the outcome is hardest to determine."
+    }
+  ]
+}

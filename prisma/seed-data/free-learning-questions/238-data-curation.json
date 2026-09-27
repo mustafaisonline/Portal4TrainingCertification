@@ -1,0 +1,125 @@
+{
+  "topic": "data-curation",
+  "questions": [
+    {
+      "stem": "What is Data Curation about?",
+      "options": [
+        "Generating, managing and maintaining data for future use",
+        "Reducing rows returned by a query",
+        "Matching records across systems",
+        "Generating fake datasets for testing",
+        "Assigning monetary value to data"
+      ],
+      "correct": 0,
+      "explanation": "Data Curation is about generating, managing and maintaining data for future use, taking care of it from start to end."
+    },
+    {
+      "stem": "From which Latin word does 'curation' come, and what does it mean?",
+      "options": [
+        "'datum', meaning something given",
+        "'curae', meaning care for",
+        "'syndicus', meaning caretaker of an issue",
+        "'currere', meaning to run",
+        "'cura', meaning to cure"
+      ],
+      "correct": 1,
+      "explanation": "Curation comes from the Latin 'curae', meaning care for, a meaning it still carries in relation to data."
+    },
+    {
+      "stem": "Which phrase best captures the span of Data Curation?",
+      "options": [
+        "From landing zone to staging zone only",
+        "From extraction till loading, from raw till transformed, from generation till secured and private storage",
+        "From training data to production model",
+        "From source system to floppy drive",
+        "From canned data to ad hoc report"
+      ],
+      "correct": 1,
+      "explanation": "Data Curation takes care of data from start to end: extracting to loading, management to governance, raw to transformed, open to encrypted."
+    },
+    {
+      "stem": "Besides day-to-day care, what else does Data Curation involve?",
+      "options": [
+        "Deleting data as soon as it is used",
+        "Selling data as a service",
+        "Taking steps to preserve data for future reference",
+        "Restricting data to one department",
+        "Converting data to synthetic form"
+      ],
+      "correct": 2,
+      "explanation": "Data Curation also includes taking steps to preserve data for future reference."
+    },
+    {
+      "stem": "Data Curation is described as the process of preparing data for what?",
+      "options": [
+        "Encryption and archiving",
+        "Regulatory submission only",
+        "Machine learning only",
+        "Business and decision support systems",
+        "Physical transport between sites"
+      ],
+      "correct": 3,
+      "explanation": "Data Curation is the process of preparing data for business and for decision support systems."
+    },
+    {
+      "stem": "Which of the following is NOT one of the listed steps for Data Curation?",
+      "options": [
+        "Understanding the data",
+        "Transformation",
+        "Metadata Management",
+        "Geocoding",
+        "Reconciliation"
+      ],
+      "correct": 3,
+      "explanation": "The steps are understanding the data, transformation, metadata management, cleansing and reconciliation; geocoding is a separate topic."
+    },
+    {
+      "stem": "What are the three stages of Data Curation, in order?",
+      "options": [
+        "Sharing, Storing, Discoverable",
+        "Discoverable, Storing, Sharing",
+        "Storing, Sharing, Discoverable",
+        "Collecting, Cleansing, Profiling",
+        "Landing, Staging, Transformed"
+      ],
+      "correct": 2,
+      "explanation": "The stages of Data Curation run from Storing to Sharing to Discoverable."
+    },
+    {
+      "stem": "Which step of Data Curation is concerned with cleaning the data?",
+      "options": [
+        "Understanding the data",
+        "Transformation",
+        "Metadata Management",
+        "Reconciliation",
+        "Cleansing"
+      ],
+      "correct": 4,
+      "explanation": "Cleansing is the step in Data Curation dedicated to cleaning the data."
+    },
+    {
+      "stem": "Which pair of contrasts both describe the reach of Data Curation?",
+      "options": [
+        "From open till encryption, and from management to governance",
+        "From SISD till SIMD, and from OLTP till OLAP",
+        "From canned till ad hoc, and from cube till warehouse",
+        "From data drift till concept drift",
+        "From latitude till longitude"
+      ],
+      "correct": 0,
+      "explanation": "Data Curation is described as caring for data from open till encryption and from management to governance, among other contrasts."
+    },
+    {
+      "stem": "How does the author of *I Am Datapedia!* characterise the definition of Data Curation?",
+      "options": [
+        "As highly technical and complex",
+        "As controversial among experts",
+        "As identical to Data Governance",
+        "As outdated since Big Data",
+        "As something with nothing complex about it"
+      ],
+      "correct": 4,
+      "explanation": "The author remarks that there is nothing complex about the definition of Data Curation; as the name says, it is about caring for data."
+    }
+  ]
+}

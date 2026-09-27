@@ -1,0 +1,125 @@
+{
+  "topic": "business-modelling",
+  "questions": [
+    {
+      "stem": "What is the focus of Business Modelling?",
+      "options": [
+        "The business itself: how value is created, how work flows, who is involved and how decisions are made",
+        "The design of databases and tables",
+        "The choice of reporting tools",
+        "The physical storage of data",
+        "The network architecture of systems"
+      ],
+      "correct": 0,
+      "explanation": "Business Modelling focuses not on data, databases or systems but on the business itself and how it achieves its objectives."
+    },
+    {
+      "stem": "What is the main goal of Business Modelling?",
+      "options": [
+        "To define primary and foreign keys",
+        "To choose a cloud platform",
+        "To normalise transaction tables",
+        "To document ETL jobs",
+        "To provide a complete and holistic view of the business"
+      ],
+      "correct": 4,
+      "explanation": "The main goal is a complete and holistic view of the business, which makes it easier to align operations, decisions and systems with strategic goals."
+    },
+    {
+      "stem": "Which two questions does Business Modelling concentrate on?",
+      "options": [
+        "The who and the when",
+        "The where and the why",
+        "The what and the how of the business",
+        "The cost and the benefit",
+        "The input and the output"
+      ],
+      "correct": 2,
+      "explanation": "Business Modelling concentrates on the what and the how of the business, looking at processes, roles, responsibilities, rules and policies."
+    },
+    {
+      "stem": "Where does Business Modelling usually sit in the sequence of modelling activities?",
+      "options": [
+        "After physical data modelling",
+        "Only after systems have gone live",
+        "Between logical and physical data modelling",
+        "As the first step before information modelling and data modelling",
+        "It is done last, as documentation"
+      ],
+      "correct": 3,
+      "explanation": "Business Modelling is usually the first step before moving into information modelling and data modelling."
+    },
+    {
+      "stem": "In the school example of Business Modelling, what does the description deliberately NOT include?",
+      "options": [
+        "The teacher checking the answer sheet",
+        "The head teacher reviewing results",
+        "The principal looking at overall performance",
+        "Marks tables, student databases or report formats",
+        "The school office publishing grades"
+      ],
+      "correct": 3,
+      "explanation": "The school example describes the process, people and decisions but not marks tables, student databases or report formats."
+    },
+    {
+      "stem": "In the loan approval example, who decides whether to approve or reject the loan?",
+      "options": [
+        "The loan officer",
+        "The credit department",
+        "The risk manager",
+        "The finance team",
+        "The collections team"
+      ],
+      "correct": 2,
+      "explanation": "In the operational view, a risk manager decides whether to approve or reject the loan after the credit department checks credit history."
+    },
+    {
+      "stem": "In the loan approval example, which team monitors repayments after funds are released?",
+      "options": [
+        "The collections team",
+        "The credit department",
+        "The loan officer",
+        "The risk manager",
+        "The sales team"
+      ],
+      "correct": 0,
+      "explanation": "The finance team releases the funds and the collections team later monitors repayments."
+    },
+    {
+      "stem": "Which of the following is an example of the analytical side that Business Modelling connects to daily operations?",
+      "options": [
+        "A loan officer verifying documents",
+        "A customer submitting an application",
+        "The finance team releasing funds",
+        "A student sitting an exam",
+        "Managers analysing approval and rejection rates, average loan amounts or repayment behaviour"
+      ],
+      "correct": 4,
+      "explanation": "Business Modelling links operational activities with analytical outcomes such as approval rates, loan amounts and repayment trends."
+    },
+    {
+      "stem": "Which statement describes the nature of Business Modelling?",
+      "options": [
+        "It is detailed, technical and tool-specific",
+        "It is high-level, strategic and independent of technology and tools",
+        "It is concerned mainly with database performance",
+        "It is a low-level description of individual tasks",
+        "It is only used by IT departments"
+      ],
+      "correct": 1,
+      "explanation": "Business Modelling is high-level and strategic in nature, independent of technology and tools, and avoids technical details."
+    },
+    {
+      "stem": "Why does Business Modelling act as the baseline for all other modelling techniques?",
+      "options": [
+        "Because it defines the physical schema first",
+        "Because it tells the story of the business so information and data models are grounded in real needs rather than assumptions",
+        "Because it selects the database vendor",
+        "Because it produces the final reports",
+        "Because it replaces the need for data modelling"
+      ],
+      "correct": 1,
+      "explanation": "Once the story of the business is understood, information models and data models can be designed with confidence, grounded in real business needs."
+    }
+  ]
+}

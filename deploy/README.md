@@ -77,6 +77,15 @@ GITHUB ACTIONS release.yml (on tag v*)                      │   typed on the s
    ssh deploy@<droplet> 'docker run --rm --env-file /etc/p4tc/staging.env <registry>/p4tc-portal-migrate:<tag> npm run db:seed'
    ```
    (the promote step runs the migrations first; run this after the first successful promotion.)
+   **Free Learning content (Milestone 14) is loaded the same way, from the same image** — it carries the repository's scripts, the question files and the docx reader:
+   ```bash
+   # the book — the docx is NOT in the repository (Book/ is git-ignored); scp it once to the server, root-owned
+   scp "Book/I Am Datapedia.docx" root@<droplet>:/opt/p4tc/book/datapedia.docx
+   ssh deploy@<droplet> 'docker run --rm --env-file /etc/p4tc/production.env -v /opt/p4tc/book:/book:ro <registry>/p4tc-portal-migrate:<tag> npm run learning:import -- /book/datapedia.docx'
+   # the questions — JSON files in the repository, ten per topic; loaded as drafts, then reviewed in Admin → Free Learning
+   ssh deploy@<droplet> 'docker run --rm --env-file /etc/p4tc/production.env <registry>/p4tc-portal-migrate:<tag> npm run learning:import-questions -- prisma/seed-data/free-learning-questions'
+   ```
+   Both are idempotent per topic (a re-imported topic keeps its published/unpublished flag; a topic that already has questions is skipped). Neither is part of `db:seed`, so `db:reset` on a laptop never touches them and the book never enters the seed. Mark topics' questions reviewed in the admin (one click per topic, audited) — or, on the founder's explicit instruction, all at once.
 8. `deploy/start.sh --audit --env staging` must say **GO**.
 
 ## 4. Every deploy

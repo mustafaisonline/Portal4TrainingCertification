@@ -1,0 +1,125 @@
+{
+  "topic": "business-intelligence-andbusiness-analytics",
+  "questions": [
+    {
+      "stem": "Who coined the modern definition of the term business intelligence, and in which year?",
+      "options": [
+        "Edgar Codd in 1970",
+        "Bill Inmon in 1992",
+        "Ralph Kimball in 1996",
+        "Howard Dresner in 1989",
+        "Peter Drucker in 1954"
+      ],
+      "correct": 3,
+      "explanation": "Howard Dresner coined the modern definition of business intelligence in 1989, in the sense typically used in industry today."
+    },
+    {
+      "stem": "What is the modern definition of business intelligence attributed to Howard Dresner?",
+      "options": [
+        "End-user access to and analysis of structured content, that is, data",
+        "Automated forecasting of future KPIs",
+        "The manual effort of financial consultants",
+        "A repository for unstructured social media data",
+        "A machine learning model that runs itself"
+      ],
+      "correct": 0,
+      "explanation": "Dresner's definition is end-user access to and analysis of structured content, that is, data."
+    },
+    {
+      "stem": "How do Business Intelligence and Business Analytics differ in what they work on?",
+      "options": [
+        "Both work only on real-time data",
+        "Business Intelligence forecasts the future; Business Analytics reports the past",
+        "Business Intelligence is done on historical data; Business Analytics uses that generated intelligence to predict or forecast future KPIs",
+        "Business Intelligence works on unstructured data; Business Analytics on structured data",
+        "There is no difference in how they process data"
+      ],
+      "correct": 2,
+      "explanation": "Business Intelligence is done on historical data, and Business Analytics uses that generated intelligence to predict or forecast the potential KPIs for the future."
+    },
+    {
+      "stem": "Historically, with what was Business Analytics mostly tagged?",
+      "options": [
+        "Automated reporting tools",
+        "Database administration",
+        "Data warehouse design",
+        "Network security",
+        "Manual effort by functional, business or financial consultants"
+      ],
+      "correct": 4,
+      "explanation": "Business Analytics has been around for a long time but was mostly tagged with manual effort by Functional, Business or Financial Consultants."
+    },
+    {
+      "stem": "Why were many companies able to make fortunes from Business Analytics in earlier years?",
+      "options": [
+        "Because business intelligence did not yet exist",
+        "Because there were not a lot of tools available in the market for Analytics, so the work was manual",
+        "Because governments subsidised analytics",
+        "Because data was free to obtain",
+        "Because every organisation had its own data scientists"
+      ],
+      "correct": 1,
+      "explanation": "As there were not many Analytics tools in the market, companies made fortunes for that piece of manual effort."
+    },
+    {
+      "stem": "What enabled customers to become self-sufficient in building in-house data science, machine learning and deep learning models?",
+      "options": [
+        "The retirement of Business Intelligence tools",
+        "The end of manual consulting",
+        "A drop in the cost of Excel licences",
+        "Big Data, NoSQL databases, and tools that can host and process structured, semi-structured and unstructured datasets",
+        "New regulations requiring in-house models"
+      ],
+      "correct": 3,
+      "explanation": "With Big Data, NoSQL databases and tools that can host and process structured, semi-structured and unstructured data, customers became self-sufficient to build their own models."
+    },
+    {
+      "stem": "In the new era, what is the role of Business Intelligence in relation to Business Analytics?",
+      "options": [
+        "Business Intelligence is an input for Business Analytics",
+        "Business Intelligence has replaced Business Analytics",
+        "Business Intelligence is the output of Business Analytics",
+        "Business Intelligence is no longer used",
+        "Business Intelligence is only used by consultants"
+      ],
+      "correct": 0,
+      "explanation": "The new era has brought Business Analytics to the front end, with Business Intelligence now serving as an input for it."
+    },
+    {
+      "stem": "What can business users now plan within their own organisations, saving millions of dollars?",
+      "options": [
+        "Database indexes versus storage costs",
+        "Server uptime versus network bandwidth",
+        "Use cases versus ROI versus time to market",
+        "Hiring versus firing decisions",
+        "Printer ink versus paper orders"
+      ],
+      "correct": 2,
+      "explanation": "Business users can now plan their use cases against ROI and time to market within their own organisations, saving millions of dollars."
+    },
+    {
+      "stem": "What is the consequence of ignoring the importance of Data Strategy while building in-house analytics?",
+      "options": [
+        "A faster time to market",
+        "A larger data warehouse",
+        "Better customer segmentation",
+        "A return to manual consulting",
+        "A Data Swamp, with a 180-degree impact on ROI"
+      ],
+      "correct": 4,
+      "explanation": "Customers should not ignore Data Strategy, or they will face a Data Swamp which will impact their ROI by 180 degrees."
+    },
+    {
+      "stem": "Which statement about Business Intelligence and Business Analytics is NOT correct?",
+      "options": [
+        "Business Intelligence has existed for decades in terms of tools and technologies",
+        "Business Intelligence and Business Analytics have the same standing in decision making",
+        "Business Analytics predicts or forecasts future KPIs",
+        "Organisations used to extract data and hand it to analytics companies",
+        "Business Intelligence is done on historical data"
+      ],
+      "correct": 1,
+      "explanation": "Although they look the same, Business Intelligence and Business Analytics have different standing in terms of decision making."
+    }
+  ]
+}

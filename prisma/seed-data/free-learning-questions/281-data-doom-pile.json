@@ -1,0 +1,125 @@
+{
+  "topic": "data-doom-pile",
+  "questions": [
+    {
+      "stem": "What is a 'data doom pile'?",
+      "options": [
+        "A backup archive kept for disaster recovery",
+        "A collection of unorganised or unprocessed data waiting to be sorted, analysed or managed",
+        "A dataset that has been fully cleansed and catalogued",
+        "A database index that has become corrupted",
+        "A report showing which datasets were deleted"
+      ],
+      "correct": 1,
+      "explanation": "A data doom pile is a virtual space where unorganised or unprocessed data accumulates before it is properly sorted, cleansed, processed or analysed."
+    },
+    {
+      "stem": "The data doom pile is compared to which everyday physical space?",
+      "options": [
+        "A locked filing cabinet",
+        "A library catalogue",
+        "A junk drawer or cluttered area for miscellaneous items",
+        "A bank vault",
+        "A museum display case"
+      ],
+      "correct": 2,
+      "explanation": "Just as people keep a junk drawer or cluttered area for miscellaneous items, data doom piles are repositories, folders or databases where unstructured or unprocessed data accumulates."
+    },
+    {
+      "stem": "Which of the following is given as an example of a data doom pile?",
+      "options": [
+        "A spreadsheet of survey responses that has not yet been analysed or organised",
+        "A published research paper with its findings",
+        "A photo album carefully sorted by year",
+        "A completed report card with verified grades",
+        "An indexed database with documented schemas"
+      ],
+      "correct": 0,
+      "explanation": "Unprocessed survey responses sitting in a spreadsheet before analysis are one of the examples of a data doom pile; the other options describe already-organised outputs."
+    },
+    {
+      "stem": "A student's email inbox holds many emails with attachments and links, some important and some not, all waiting to be categorised, archived or deleted. How is this inbox described in the data doom pile concept?",
+      "options": [
+        "As a data warehouse",
+        "As a governance framework",
+        "As a data catalogue",
+        "As a data doom pile",
+        "As a data lake"
+      ],
+      "correct": 3,
+      "explanation": "Uncategorised emails in an inbox are used as a relatable example of a data doom pile: information that has accumulated without yet being sorted or managed."
+    },
+    {
+      "stem": "Which of the following is NOT one of the examples used to illustrate a data doom pile?",
+      "options": [
+        "Unsorted data files in a computer folder",
+        "Raw data from science experiments",
+        "Unprocessed sensor readings",
+        "Images in an unorganised gallery",
+        "A fully labelled and filed set of tax returns"
+      ],
+      "correct": 4,
+      "explanation": "Unsorted files, raw experiment data, unprocessed sensor readings and unorganised photo galleries are all listed examples. A fully labelled, filed set of documents is the opposite of a doom pile."
+    },
+    {
+      "stem": "Why is it important to address a data doom pile?",
+      "options": [
+        "Because unprocessed data automatically deletes itself after a period",
+        "Because ignoring it can lead to missed opportunities, lost insights and difficulty locating particular information when needed",
+        "Because storage providers charge only for organised data",
+        "Because raw data cannot legally be stored",
+        "Because doom piles cause hardware failures"
+      ],
+      "correct": 1,
+      "explanation": "Organising and analysing data is crucial for informed decisions; ignoring the doom pile can mean ignored opportunities, missed insights and trouble finding specific information."
+    },
+    {
+      "stem": "Which of these is a recommended way to address a data doom pile?",
+      "options": [
+        "Delete all unprocessed data immediately",
+        "Move the data to a second unorganised folder",
+        "Implement an organising system such as folders, naming conventions or tagging",
+        "Wait until the pile stops growing before acting",
+        "Restrict access so nobody can view the data"
+      ],
+      "correct": 2,
+      "explanation": "The recommended approaches are to implement a system for organising data (folders, naming conventions, tagging), schedule regular review times, and use analysis tools to extract insights."
+    },
+    {
+      "stem": "In an engineering project, readings collected from several sensors have not yet been processed or interpreted. What does this dataset represent?",
+      "options": [
+        "A data doom pile awaiting analysis",
+        "A finished data product",
+        "A governance policy",
+        "A data quality standard",
+        "A technology roadmap"
+      ],
+      "correct": 0,
+      "explanation": "Unprocessed sensor readings are one of the examples of a data doom pile: collected data that is waiting for processing and interpretation."
+    },
+    {
+      "stem": "What role does scheduling regular review times play in managing a data doom pile?",
+      "options": [
+        "It makes data collection unnecessary",
+        "It helps prevent the accumulation of unorganised data",
+        "It converts raw data into images",
+        "It replaces the need for naming conventions",
+        "It guarantees the data is accurate"
+      ],
+      "correct": 1,
+      "explanation": "Scheduling regular times to review and process unorganised data is recommended specifically to prevent accumulation of the doom pile."
+    },
+    {
+      "stem": "The data doom pile idea is compared to cleaning up a physical space. What is the point of this comparison?",
+      "options": [
+        "That data should be printed out and stored physically",
+        "That physical clutter and data clutter are unrelated problems",
+        "That organising and analysing data, like tidying a space, makes it more functional and supports informed decisions",
+        "That only physical spaces need tidying",
+        "That data doom piles are always caused by hardware"
+      ],
+      "correct": 2,
+      "explanation": "Just as cleaning a physical space makes it more functional, organising and analysing data is crucial for making informed decisions."
+    }
+  ]
+}

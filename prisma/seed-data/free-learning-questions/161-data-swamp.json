@@ -1,0 +1,125 @@
+{
+  "topic": "data-swamp",
+  "questions": [
+    {
+      "stem": "What turns a datastore such as a Data Lake into a Data Swamp?",
+      "options": [
+        "Missing Master Data, Metadata and Data Lineage",
+        "Storing semi-structured and unstructured data alongside structured data",
+        "Using HDFS rather than an operating-system file system",
+        "Having more than one domain own the data",
+        "Encrypting the data at rest"
+      ],
+      "correct": 0,
+      "explanation": "A Data Lake or other datastore stays organised when it has proper Master Data, Metadata and Data Lineage. If a datastore is missing these, it becomes a Data Swamp."
+    },
+    {
+      "stem": "For which role is Data Swamp described as a famous nightmare?",
+      "options": [
+        "The Chief Financial Officer",
+        "The Chief Data Officer (CDO)",
+        "The Database Administrator",
+        "The Marketing Manager",
+        "The External Auditor"
+      ],
+      "correct": 1,
+      "explanation": "Data Swamp is a term famous as a nightmare for the CDO."
+    },
+    {
+      "stem": "Which of the following is NOT a characteristic of a Data Swamp?",
+      "options": [
+        "It is not organised",
+        "It is very hard to extract information from",
+        "It has clear lineage showing where every dataset came from",
+        "It has a lot of duplications",
+        "It has a lot of data quality issues"
+      ],
+      "correct": 2,
+      "explanation": "A Data Swamp is a datastore that is not organised, is very hard to extract information from, has many duplications and many data quality issues. Clear lineage is exactly what it lacks."
+    },
+    {
+      "stem": "What becomes no longer possible once a datastore turns into a Data Swamp?",
+      "options": [
+        "Storing any further structured data",
+        "Connecting the datastore to the cloud",
+        "Backing up the datastore",
+        "Retrieving and transforming data",
+        "Assigning a custodian to the datastore"
+      ],
+      "correct": 3,
+      "explanation": "Retrieving and transforming data is no longer possible when a datastore becomes a Data Swamp, which is a serious problem for companies relying on it for analytics."
+    },
+    {
+      "stem": "On which disciplines must an organisation first focus if it is becoming a Data-Driven Organisation and wants to avoid a Data Swamp?",
+      "options": [
+        "Data Visualisation, Dashboards and Reporting",
+        "Cloud Migration, Streaming and Real-Time Analytics",
+        "Machine Learning, AI and Predictive Modelling",
+        "Row Storage, Columnar Storage and In-Memory Processing",
+        "Data Governance, Metadata Management, Master Data Management and Data Lineage"
+      ],
+      "correct": 4,
+      "explanation": "Any organisation in the process of becoming a Data-Driven Organisation must first focus on Data Governance, Metadata Management, Master Data Management and Data Lineage."
+    },
+    {
+      "stem": "How quickly can a Data Swamp develop?",
+      "options": [
+        "Quickly, and it can create a serious problem for companies relying on the storage for analytics",
+        "Only after several decades of neglect",
+        "Never, if the data is stored in a cloud service",
+        "Only when an organisation has more than one Data Lake",
+        "Only in the research sector"
+      ],
+      "correct": 0,
+      "explanation": "Data Swamps can happen quickly and can create a serious problem for companies relying on the storage, extraction and transformation system for analytics."
+    },
+    {
+      "stem": "Why is a data-driven organisation with a Data Swamp described as a waste of time and effort?",
+      "options": [
+        "Because storage costs exceed the value of the analytics",
+        "Because it has no clue what data it holds or where the data is residing",
+        "Because regulators forbid analytics on unstructured data",
+        "Because all data must be re-entered manually",
+        "Because it must appoint a separate CDO for each datastore"
+      ],
+      "correct": 1,
+      "explanation": "Having a data-driven organisation with no clue what data exists and where it resides is a nightmare and a waste of time and effort."
+    },
+    {
+      "stem": "Which sectors are named as facing very serious threats from a Data Swamp?",
+      "options": [
+        "Agriculture and tourism",
+        "Retail and hospitality",
+        "Financial, telco and other sectors",
+        "Education and sport",
+        "Construction and mining"
+      ],
+      "correct": 2,
+      "explanation": "Data Swamp poses very serious threats to organisations in the financial, telco and other sectors, where regulatory bodies keep an eye on organisations' data."
+    },
+    {
+      "stem": "What consequence can follow from not producing compliance reports, or producing them with wrong statistics, because of a Data Swamp?",
+      "options": [
+        "A temporary suspension of cloud services",
+        "Loss of the organisation's HDFS storage",
+        "Automatic conversion of the swamp back into a Data Lake",
+        "Fines of millions of dollars on the organisation and top management personnel being sacked",
+        "A requirement to appoint an external CDO"
+      ],
+      "correct": 3,
+      "explanation": "Regulatory bodies keep an eye on organisations' data through compliance reports. Not producing them, or producing them with wrong stats, can bring fines of millions of dollars, and top management personnel can be sacked."
+    },
+    {
+      "stem": "How does a well-run Data Lake differ from a Data Swamp?",
+      "options": [
+        "A Data Lake stores only structured data, while a Data Swamp stores unstructured data",
+        "A Data Lake is on-premises, while a Data Swamp is in the cloud",
+        "A Data Lake is owned by IT, while a Data Swamp is owned by the business",
+        "A Data Lake has no duplicates because it uses a relational schema",
+        "A Data Lake stores structured, semi-structured and unstructured data in an organised manner with proper Master Data, Metadata and Data Lineage"
+      ],
+      "correct": 4,
+      "explanation": "A Data Lake, like many other datastores, holds structured, semi-structured and unstructured data in an organised manner with proper Master Data, Metadata and Data Lineage. Without these it becomes a Data Swamp."
+    }
+  ]
+}

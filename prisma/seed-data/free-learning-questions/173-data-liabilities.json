@@ -1,0 +1,125 @@
+{
+  "topic": "data-liabilities",
+  "questions": [
+    {
+      "stem": "When does data hosted in databases, warehouses, marts, lakes or vaults become a Data Liability?",
+      "options": [
+        "When it is not utilised properly, has no proper ROI and cannot be used for revenue generation or management decision-making",
+        "When it is stored in more than one system",
+        "When it is older than the retention period",
+        "When it is used by more than one department",
+        "When it is stored in a NoSQL database"
+      ],
+      "correct": 0,
+      "explanation": "Data that costs money to host but delivers no ROI, no revenue and no decision support is a liability: you pay for something and get nothing."
+    },
+    {
+      "stem": "What happens when Data Liabilities overcome Data Assets in an organisation?",
+      "options": [
+        "Storage costs fall",
+        "Data governance becomes unnecessary",
+        "Regulators must be notified",
+        "The value of data is negatively impacted",
+        "The data warehouse must be rebuilt"
+      ],
+      "correct": 3,
+      "explanation": "If liabilities outweigh assets, the overall value of the organisation's data is damaged."
+    },
+    {
+      "stem": "Which objective should be one of the major KPIs for any Chief Data Officer?",
+      "options": [
+        "Maximise the number of databases",
+        "Increase the volume of stored data",
+        "Reduce data liabilities as much as possible",
+        "Eliminate all reference data",
+        "Move all data to object storage"
+      ],
+      "correct": 2,
+      "explanation": "Reducing data liabilities as far as possible is named as a major KPI for a CDO."
+    },
+    {
+      "stem": "How does poor Data Quality turn data into a liability?",
+      "options": [
+        "It increases the cost of encryption",
+        "It forces the data to be re-partitioned",
+        "It prevents data from being backed up",
+        "It makes data unreadable by ETL tools",
+        "Users do not trust the data, so it is a liability to maintain"
+      ],
+      "correct": 4,
+      "explanation": "If users do not trust data because of bad quality, the data is not used and becomes a liability to maintain."
+    },
+    {
+      "stem": "How does a lack of Data Democratisation make data a liability?",
+      "options": [
+        "It exposes data to security breaches",
+        "A non-data-friendly organisational culture means users do not use data for decision-making",
+        "It causes data to be duplicated across vendors",
+        "It prevents the creation of golden records",
+        "It slows down query optimisation"
+      ],
+      "correct": 1,
+      "explanation": "Where the culture is not data-friendly, users do not base decisions on data, so the data being maintained becomes a liability."
+    },
+    {
+      "stem": "How do missing Golden Records in Master and Reference Data contribute to Data Liabilities?",
+      "options": [
+        "They lead to redundant data, and excess data is a liability to maintain",
+        "They prevent users from logging in",
+        "They stop dashboards from refreshing",
+        "They increase the cost of data lineage tools",
+        "They make data self-service impossible"
+      ],
+      "correct": 0,
+      "explanation": "Without proper master and reference data, redundant data is expected, and that excess data is a liability to maintain."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a reason that Data Assets can become Data Liabilities?",
+      "options": [
+        "Data Security and Privacy",
+        "Metadata",
+        "Data Lineage",
+        "Data Catalog",
+        "Data Compression"
+      ],
+      "correct": 4,
+      "explanation": "The reasons listed include Security and Privacy, Quality, Democratisation, Self-Service, Master and Reference Data, Metadata, Lineage, Governance and Catalog; compression is not among them."
+    },
+    {
+      "stem": "Which two items are named as the biggest data liabilities?",
+      "options": [
+        "Data Lineage and Metadata",
+        "Data Quality and Data Security",
+        "Data Swap and Dark Data",
+        "Data Marts and Data Lakes",
+        "Reference Data and Master Data"
+      ],
+      "correct": 2,
+      "explanation": "The two biggest data liabilities named are Data Swap and Dark Data."
+    },
+    {
+      "stem": "According to the tagline offered for defending the ROI of data governance initiatives, how does Data Governance keep the balance between Data Assets and Data Liabilities?",
+      "options": [
+        "By purging all Dark Data",
+        "By implementing DLP",
+        "By outsourcing data storage",
+        "By removing the data catalog",
+        "By increasing data sprawl"
+      ],
+      "correct": 1,
+      "explanation": "The tagline states that Data Governance keeps the balance between Data Assets and Data Liabilities by implementing DLP."
+    },
+    {
+      "stem": "What common thread links every listed cause of Data Liabilities?",
+      "options": [
+        "Each involves a hardware failure",
+        "Each involves an external vendor",
+        "Each involves a data breach",
+        "Each involves data underutilisation, and any underutilised data is a liability",
+        "Each involves excessive data quality checks"
+      ],
+      "correct": 3,
+      "explanation": "In every case the effect is that data is underutilised in some way, and any underutilised data is a liability for the organisation."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "data-island",
+  "questions": [
+    {
+      "stem": "What is a Data Island?",
+      "options": [
+        "A datastore that is only accessible to its relevant stakeholders",
+        "A datastore that holds only reference data",
+        "A datastore, or set of datastores, that is not accessible",
+        "A datastore hosted on a remote cloud region",
+        "A datastore that has been fully encrypted"
+      ],
+      "correct": 2,
+      "explanation": "The defining phrase is that a Data Island is a datastore, or datastores, which are not accessible; external integration with them is not possible."
+    },
+    {
+      "stem": "Why has the Data Island largely disappeared?",
+      "options": [
+        "Because organisations no longer store confidential data",
+        "Because integration technologies have matured",
+        "Because floppy drives were replaced by hard disks",
+        "Because data silos replaced them",
+        "Because network security concerns have vanished"
+      ],
+      "correct": 1,
+      "explanation": "Data Islands belong to earlier eras of poor or absent connectivity; as integration technologies matured, datastores stopped being unreachable."
+    },
+    {
+      "stem": "In the era before wireless networking, which of the following was a way data was physically moved between locations, as described in *I Am Datapedia!*?",
+      "options": [
+        "Uploading it to a shared cloud folder",
+        "Streaming it through an API",
+        "Sending it over a Wi-Fi link",
+        "Replicating it with a CDC tool",
+        "Carrying floppy drives, big hard disks or even whole desktops"
+      ],
+      "correct": 4,
+      "explanation": "When datastores could not be connected, small data travelled on floppy drives and large data on big hard disks, and sometimes desktops themselves were moved."
+    },
+    {
+      "stem": "Which reason can lead an organisation to make a datastore a Data Island on purpose?",
+      "options": [
+        "A risk of exposing confidential data to irrelevant stakeholders",
+        "A desire to speed up cross-departmental reporting",
+        "A need to give every department read access",
+        "A plan to build a data warehouse from it",
+        "A shortage of database licences"
+      ],
+      "correct": 0,
+      "explanation": "Where data privacy, security or encryption is lacking and confidential data could reach the wrong people, a datastore is sometimes intentionally isolated as a Data Island."
+    },
+    {
+      "stem": "Which statement about Data Islands and Data Silos is correct?",
+      "options": [
+        "Data Islands and Data Silos are two names for the same thing",
+        "Data Silos have disappeared while Data Islands still exist",
+        "Data Islands are a modern replacement for Data Silos",
+        "Data Islands should not be confused with Data Silos, which still exist",
+        "Data Silos are always a subset of a Data Island"
+      ],
+      "correct": 3,
+      "explanation": "The two terms are distinct: Data Islands have largely disappeared, whereas Data Silos still exist and are treated as a separate topic."
+    },
+    {
+      "stem": "Roughly when does *I Am Datapedia!* say Wi-Fi was 'not a thing', so that only cables connected desktops and laptops to a network?",
+      "options": [
+        "Before 1990",
+        "Before 1995",
+        "Before 2005",
+        "Before 2015",
+        "Before 2020"
+      ],
+      "correct": 2,
+      "explanation": "The author recalls that before 2005 Wi-Fi was not a thing and only cables connected computers to the network."
+    },
+    {
+      "stem": "In which circumstances did datastores come to be regarded as Data Islands?",
+      "options": [
+        "When their data quality was too low to share",
+        "When they were used only by one development team",
+        "When they were hosted by third-party data companies",
+        "When they exceeded a certain storage size",
+        "When network security was a big concern or network connectivity did not exist"
+      ],
+      "correct": 4,
+      "explanation": "In earlier eras, heavy network-security concerns or the absence of network connectivity made external integration impossible, so those datastores were Data Islands."
+    },
+    {
+      "stem": "Which of the following is NOT given as a reason a Data Island may exist?",
+      "options": [
+        "Lack of a data catalogue",
+        "Lack of data security",
+        "Lack of data encryption",
+        "Absence of network connectivity",
+        "Lack of data privacy measures"
+      ],
+      "correct": 0,
+      "explanation": "Missing privacy, security or encryption, and missing connectivity, are all cited; a missing data catalogue is not mentioned as a cause of Data Islands."
+    },
+    {
+      "stem": "What is the key characteristic that distinguishes a Data Island from other datastores?",
+      "options": [
+        "It stores only unstructured data",
+        "It cannot be connected with other datastores",
+        "It is always located in a different city",
+        "It is owned by the finance department",
+        "It is refreshed only once a year"
+      ],
+      "correct": 1,
+      "explanation": "A Data Island is precisely a datastore that was not connectable with other datastores, whatever its content or location."
+    },
+    {
+      "stem": "How does the author of *I Am Datapedia!* describe modern life without Wi-Fi?",
+      "options": [
+        "Like working on a mainframe",
+        "Like living without electricity",
+        "Like living in a Data Silo",
+        "Like living without air",
+        "Like using a floppy drive"
+      ],
+      "correct": 3,
+      "explanation": "The author jokes that Wi-Fi has become such a norm that living without it is like living without air."
+    }
+  ]
+}

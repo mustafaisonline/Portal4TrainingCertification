@@ -1,0 +1,125 @@
+{
+  "topic": "data-as-a-product",
+  "questions": [
+    {
+      "stem": "How does Data-As-a-Product (DAaP) differ from a traditional data product?",
+      "options": [
+        "DAaP is a curated, production-grade dataset or model designed for consumption by multiple downstream users, systems or applications, rather than a narrow, predefined use case",
+        "DAaP is always a dashboard, whereas traditional data products are always datasets",
+        "DAaP is stored only in memory for speed",
+        "DAaP is built exclusively by external vendors",
+        "DAaP has no owner, whereas traditional data products do"
+      ],
+      "correct": 0,
+      "explanation": "Traditional data products serve narrow, predefined use cases; DAaP is curated and production-grade, designed for consumption by many downstream users, systems or applications."
+    },
+    {
+      "stem": "Which two pathways lead a data product to become Data-As-a-Product (DAaP)?",
+      "options": [
+        "Migration and replication",
+        "Organic maturity and purposeful design",
+        "Certification and audit",
+        "Outsourcing and insourcing",
+        "Archiving and restoration"
+      ],
+      "correct": 1,
+      "explanation": "A data product evolves into DAaP either through organic maturity, when its utility extends beyond its original intent, or through purposeful design from day one."
+    },
+    {
+      "stem": "A regional sales insights dashboard's curated datasets start feeding forecasting models, executive dashboards and marketing analytics. Which DAaP pathway does this illustrate?",
+      "options": [
+        "Purposeful design",
+        "Decommissioning",
+        "Organic maturity",
+        "Cost allocation",
+        "Dependency shifting"
+      ],
+      "correct": 2,
+      "explanation": "This is the organic maturity example: the dashboard's utility extended beyond its original intent and began powering other systems."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a core feature that a data product must demonstrate to qualify as DAaP?",
+      "options": [
+        "Semantic modelling and clarity",
+        "Enforced data contracts",
+        "Discoverability and accessibility",
+        "Exclusive single-consumer access",
+        "Independent lifecycle management"
+      ],
+      "correct": 3,
+      "explanation": "DAaP is designed for multiple consumers; exclusive single-consumer access contradicts its purpose, whereas the other four are listed core features."
+    },
+    {
+      "stem": "What must enforced data contracts in DAaP codify and version?",
+      "options": [
+        "Employee names and departments",
+        "Only the price charged to consumers",
+        "The colour scheme of dashboards",
+        "The hardware specification of servers",
+        "Schemas, data types, expected freshness and delivery protocols"
+      ],
+      "correct": 4,
+      "explanation": "Enforced data contracts codify and version schemas, data types, expected freshness and delivery protocols to ensure consumer confidence and system interoperability."
+    },
+    {
+      "stem": "What is a dependency web in the context of DAaP?",
+      "options": [
+        "The situation where a DAaP serves many consumers, so modifying or decommissioning its originating system risks cascading failures",
+        "A website listing all data products",
+        "A network diagram of servers in a data centre",
+        "The set of people who report to the Data Product Owner",
+        "A graph of customer relationships"
+      ],
+      "correct": 0,
+      "explanation": "Because a DAaP serves a variety of consumers, changes to or decommissioning of the originating system can break those dependencies and cause cascading failures."
+    },
+    {
+      "stem": "When a DAaP faces decommissioning, what is the stated downside of shifting dependencies so that consumers source data directly from origin systems?",
+      "options": [
+        "It makes the DAaP more expensive to run",
+        "It increases integration effort and consumer-side complexity",
+        "It removes all governance from the data",
+        "It requires a new database technology",
+        "It forces producers to retain the DAaP indefinitely"
+      ],
+      "correct": 1,
+      "explanation": "Shifting dependencies reduces DAaP operational overhead but increases integration effort and consumer-side complexity."
+    },
+    {
+      "stem": "Why do ownership and funding conflicts arise as a DAaP grows in reach?",
+      "options": [
+        "Because regulators require a single funder for every dataset",
+        "Because DAaP cannot be shared across more than two teams",
+        "Because producers may resist carrying the operational burden while consumers are reluctant to own upstream complexity",
+        "Because the cost of storage always doubles each year",
+        "Because data contracts forbid cost sharing"
+      ],
+      "correct": 2,
+      "explanation": "As reach grows, ambiguity surfaces around maintenance responsibilities and funding: producers resist the operational burden and consumers avoid upstream complexity."
+    },
+    {
+      "stem": "Which DAaP management strategy recommends architecting DAaPs as composable services so they can be selectively migrated or deprecated?",
+      "options": [
+        "Monitor usage patterns",
+        "Implement cost allocation models",
+        "Embed collaborative governance",
+        "Design for modularity",
+        "Plan decommissioning at inception"
+      ],
+      "correct": 3,
+      "explanation": "Designing for modularity means building DAaPs as composable services, allowing selective migration or deprecation without ecosystem-wide disruption."
+    },
+    {
+      "stem": "What does 'Plan decommissioning at inception' mean for a DAaP?",
+      "options": [
+        "Every DAaP should be shut down within its first year",
+        "A DAaP should never be decommissioned once built",
+        "Decommissioning should be decided only by the consumers",
+        "A DAaP should be built without any consumers",
+        "Every DAaP should have a sunset strategy aligned with downstream transition plans from the start"
+      ],
+      "correct": 4,
+      "explanation": "Planning decommissioning at inception means every DAaP has a sunset strategy aligned with downstream transition plans, minimising reactive disruption."
+    }
+  ]
+}

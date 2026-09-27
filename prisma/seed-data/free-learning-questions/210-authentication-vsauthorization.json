@@ -1,0 +1,125 @@
+{
+  "topic": "authentication-vsauthorization",
+  "questions": [
+    {
+      "stem": "What is an organisation without Authentication compared to?",
+      "options": [
+        "A library without a catalogue",
+        "A gold mine without any guard",
+        "A car without a steering wheel",
+        "A hospital without doctors",
+        "A ship without a compass"
+      ],
+      "correct": 1,
+      "explanation": "Authentication is the basic security feature of any organisation; an organisation without it is like a gold mine without any guard."
+    },
+    {
+      "stem": "With which concepts are Authentication and Authorisation each majorly tagged?",
+      "options": [
+        "Authentication with Privacy; Authorisation with Security",
+        "Both with Privacy",
+        "Both with Security",
+        "Authentication with Cost; Authorisation with Speed",
+        "Authentication with Security; Authorisation with Privacy"
+      ],
+      "correct": 4,
+      "explanation": "Authentication is majorly tagged with Security, whereas Authorisation is majorly tagged with Privacy."
+    },
+    {
+      "stem": "In the hospital example, the guard at the main gate checks visitors' ID cards and asks why they are there. What does this represent?",
+      "options": [
+        "Authentication",
+        "Authorisation",
+        "Entitlement",
+        "Data Enrichment",
+        "Privacy"
+      ],
+      "correct": 0,
+      "explanation": "The guard checking that visitors are legitimate people is the Authentication, or security, process."
+    },
+    {
+      "stem": "In the hospital example, once visitors have passed the gate and the counter they could walk into any room on any floor. Which process is missing?",
+      "options": [
+        "Authentication",
+        "Registration",
+        "Authorisation",
+        "Data Validation",
+        "Encryption"
+      ],
+      "correct": 2,
+      "explanation": "Having passed security, the visitors could still violate other patients' privacy by entering any room, which shows that the Authorisation process is missing."
+    },
+    {
+      "stem": "A hospital staff member is assigned to take visitors only to the exact room of their patient. What does this illustrate?",
+      "options": [
+        "Authentication protecting security",
+        "A failure of the guard at the gate",
+        "Data Democratisation",
+        "Authorisation protecting the privacy of other patients",
+        "Entitlement to a company car"
+      ],
+      "correct": 3,
+      "explanation": "The escorted visitors are Authorised for only one room, so the privacy of other patients is taken care of by the Authorisation process."
+    },
+    {
+      "stem": "When mapped to data, what does the Authentication process establish before a user accesses an application or database?",
+      "options": [
+        "Which columns the user may see",
+        "That the person is a legitimate employee of the company",
+        "Which rows the user may edit",
+        "How much data the user may download",
+        "Which reports the user may publish"
+      ],
+      "correct": 1,
+      "explanation": "Authentication makes sure the person is a legitimate employee of the company before they are given access to the application or database."
+    },
+    {
+      "stem": "When mapped to data, what does Authorisation restrict a user to?",
+      "options": [
+        "Only the login page",
+        "Only read-only access to every table",
+        "Only data stored in the cloud",
+        "Only data older than one year",
+        "Only the relevant tables, columns or rows they are entitled to"
+      ],
+      "correct": 4,
+      "explanation": "Authorisation restricts the user to accessing only the relevant tables, columns or rows they are entitled for."
+    },
+    {
+      "stem": "How are Authentication and Authorisation described in relation to each other?",
+      "options": [
+        "They work hand in hand and are a must-have in any organisation, system or application",
+        "They are alternatives; an organisation chooses one",
+        "Authentication is optional if Authorisation exists",
+        "They are only relevant to hospitals",
+        "Authorisation is a newer replacement for Authentication"
+      ],
+      "correct": 0,
+      "explanation": "Authentication and Authorisation work hand in hand and are a must-to-have in any organisation, system or application."
+    },
+    {
+      "stem": "Which statement about Authentication and Authorisation is NOT correct?",
+      "options": [
+        "Authentication is the basic security feature of any organisation",
+        "Authorisation is majorly tagged with Privacy",
+        "Authorisation alone is sufficient, so Authentication can be skipped",
+        "Authorisation restricts a user to relevant tables, columns or rows",
+        "Authentication checks that a user is a legitimate employee"
+      ],
+      "correct": 2,
+      "explanation": "Both processes are a must-have and work together; skipping Authentication would leave the organisation like a gold mine without a guard."
+    },
+    {
+      "stem": "In the hospital example, the counter checks that the patient's name is in the system before visitors may proceed. Together with the gate check, which process have the visitors passed at that point?",
+      "options": [
+        "The Authorisation process",
+        "The Data Enrichment process",
+        "The Entitlement process",
+        "The Security (Authentication) process",
+        "The Privacy process"
+      ],
+      "correct": 3,
+      "explanation": "After the gate and the counter, the visitors have passed the Security, or Authentication, process, but Authorisation is still missing until they are limited to one room."
+    }
+  ]
+}

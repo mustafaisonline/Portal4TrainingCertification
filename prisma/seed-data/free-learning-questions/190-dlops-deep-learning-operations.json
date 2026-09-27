@@ -1,0 +1,125 @@
+{
+  "topic": "dlops-deep-learning-operations",
+  "questions": [
+    {
+      "stem": "Which statement summarises the difference between Machine Learning and Deep Learning use cases, as needed to understand DLOps?",
+      "options": [
+        "Machine Learning is for images; Deep Learning is for tables",
+        "Machine Learning needs no training data; Deep Learning does",
+        "Both handle the same use cases but Deep Learning is faster",
+        "Machine Learning is for simpler, structured and semi-structured use cases; Deep Learning is for complex, unstructured use cases",
+        "Machine Learning is only for text; Deep Learning is only for audio"
+      ],
+      "correct": 3,
+      "explanation": "Machine Learning suits simpler, structured and semi-structured use cases, whereas Deep Learning handles complex and unstructured ones."
+    },
+    {
+      "stem": "To count the cars, bikes and buses in a set of pictures, which kind of model is needed?",
+      "options": [
+        "Deep Learning models that can recognise objects in pictures",
+        "Machine Learning models over rows and columns",
+        "A SQL query on a feature table",
+        "A data mining model on a data warehouse",
+        "A statistical regression"
+      ],
+      "correct": 0,
+      "explanation": "Recognising objects in pictures requires Deep Learning models; Machine Learning models normally work only on structured or semi-structured data."
+    },
+    {
+      "stem": "Why can a Machine Learning model not count vehicles when given pictures rather than a table?",
+      "options": [
+        "Because pictures are too large to load",
+        "Because Machine Learning models require CI/CD",
+        "Because Machine Learning models normally work on structured or semi-structured datasets",
+        "Because pictures are not stored in Hadoop",
+        "Because Machine Learning cannot count above 100"
+      ],
+      "correct": 2,
+      "explanation": "ML models normally operate on structured or semi-structured datasets in rows and columns, not on unstructured data such as pictures."
+    },
+    {
+      "stem": "How does the Data Selection step differ between DLOps and MLOps?",
+      "options": [
+        "DLOps selects smaller datasets",
+        "DLOps skips Data Selection entirely",
+        "MLOps selects unstructured data while DLOps selects structured data",
+        "Data Selection is identical in both",
+        "DLOps selects unstructured data whereas MLOps selects structured data"
+      ],
+      "correct": 4,
+      "explanation": "In DLOps Data Selection deals with unstructured data, in contrast to structured data in MLOps."
+    },
+    {
+      "stem": "Which Model Development step is described as not relevant in DLOps because of unstructured datasets?",
+      "options": [
+        "Problem Definition",
+        "Data Wrangling",
+        "Model Preparation",
+        "Model Validation",
+        "Data Selection"
+      ],
+      "correct": 1,
+      "explanation": "Data Wrangling is marked as not relevant in DLOps due to the unstructured nature of the datasets."
+    },
+    {
+      "stem": "Which DLOps phase is described as much more difficult in the Deep Learning world?",
+      "options": [
+        "Problem Definition",
+        "Model Registration",
+        "Smoke Test",
+        "Data Ingestion",
+        "Prediction Serving"
+      ],
+      "correct": 4,
+      "explanation": "Prediction Serving, covering online, batch, streaming and embedded inference, is flagged as much more difficult in Deep Learning."
+    },
+    {
+      "stem": "In the Deep Learning world, what proportion of models is said not to go to production?",
+      "options": [
+        "25%",
+        "50%",
+        "90%",
+        "10%",
+        "70%"
+      ],
+      "correct": 2,
+      "explanation": "Just as in Machine Learning, 90% of Deep Learning models do not reach production, which makes CI/CD a critical part of DLOps."
+    },
+    {
+      "stem": "To which domain do DLOps and MLOps belong?",
+      "options": [
+        "Data Science",
+        "Network Engineering",
+        "Data Warehousing",
+        "IT Service Management",
+        "Database Administration"
+      ],
+      "correct": 0,
+      "explanation": "DLOps is like MLOps and belongs to the Data Science domain."
+    },
+    {
+      "stem": "Which step is flagged as one that \"might not be relevant\" in DLOps?",
+      "options": [
+        "Model Training",
+        "Data Exploration",
+        "Deployment to Staging",
+        "Acceptance Testing",
+        "Model Evaluation"
+      ],
+      "correct": 1,
+      "explanation": "Data Exploration in Model Development, and Data Transformation in Continuous Training, are both marked as possibly not relevant in DLOps."
+    },
+    {
+      "stem": "In the vehicle-counting example, which attributes allow a Machine Learning model to identify cars, bikes and buses from a structured dataset?",
+      "options": [
+        "Colour, brand and price",
+        "Pixel values of each photograph",
+        "Engine size and fuel type",
+        "Width, length and height of each vehicle",
+        "Registration number and owner"
+      ],
+      "correct": 3,
+      "explanation": "With width, length and height in rows and columns, an ML model can easily read the dataset and produce the expected count."
+    }
+  ]
+}

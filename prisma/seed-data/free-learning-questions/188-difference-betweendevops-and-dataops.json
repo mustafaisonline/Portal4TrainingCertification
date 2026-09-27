@@ -1,0 +1,125 @@
+{
+  "topic": "difference-betweendevops-and-dataops",
+  "questions": [
+    {
+      "stem": "DevOps focuses on development by software developers, quality and operations. What does DataOps focus on?",
+      "options": [
+        "Mobile application performance",
+        "Server provisioning and version control",
+        "Source and target integrations, data transformation by data engineers, data quality and security",
+        "User interface design",
+        "Network security only"
+      ],
+      "correct": 2,
+      "explanation": "DataOps concentrates on integrating sources and targets, the data transformation done by data engineers, and data quality and security."
+    },
+    {
+      "stem": "While DevOps ensures there is no hindrance to a high-quality development cycle, what does DataOps ensure end users receive?",
+      "options": [
+        "Faster application logins",
+        "More frequent software releases",
+        "Cheaper cloud storage",
+        "Automated server patches",
+        "High-quality, trusted, ready-to-use data and actionable KPIs"
+      ],
+      "correct": 4,
+      "explanation": "DataOps makes sure end users get high-quality, trusted, ready-to-use data and actionable KPIs."
+    },
+    {
+      "stem": "DevOps aligns IT, operations and business team members to SPEED UP the process after every sprint. What does DataOps align roles and responsibilities for?",
+      "options": [
+        "Faster collaborative work across teams",
+        "Reducing the number of sprints",
+        "Eliminating business involvement",
+        "Replacing data engineers with developers",
+        "Longer release cycles"
+      ],
+      "correct": 0,
+      "explanation": "DataOps aligns the roles and responsibilities of IT, development and business team members for faster collaborative work across teams."
+    },
+    {
+      "stem": "DevOps automates server management, version control, configuration, testing and release management. Which activities does DataOps make sure are automated?",
+      "options": [
+        "Code compilation and linting",
+        "User acceptance testing only",
+        "Payroll and invoicing",
+        "Data acquisition, integration, metadata management, self-service, data governance and cross-cloud operation",
+        "Hardware procurement"
+      ],
+      "correct": 3,
+      "explanation": "DataOps ensures data acquisition, integration, metadata management, self-service, data governance and cross-cloud activities all work in an automated fashion."
+    },
+    {
+      "stem": "DevOps works with stakeholders for real-time feedback after every sprint. How is DataOps' optimisation with stakeholders characterised?",
+      "options": [
+        "Feedback-oriented optimisation",
+        "Result-oriented optimisation, drawing regular insights from new data flowing in",
+        "Cost-oriented optimisation",
+        "Schedule-oriented optimisation",
+        "Tool-oriented optimisation"
+      ],
+      "correct": 1,
+      "explanation": "DevOps optimisation is feedback-oriented, whereas DataOps is result-oriented, drawing insights from new data arriving in real time or in batch."
+    },
+    {
+      "stem": "DevOps goes for regular implementations for quick recovery from failures in agile mode. What does DataOps aim to fix quickly through regular implementations?",
+      "options": [
+        "Server outages",
+        "Code merge conflicts",
+        "User interface bugs",
+        "Data quality issues and minimum metadata discovery",
+        "Network latency"
+      ],
+      "correct": 3,
+      "explanation": "DataOps uses regular implementations to quickly fix data quality problems and improve metadata discovery in agile mode."
+    },
+    {
+      "stem": "In the DevOps workflow of builds, codes, unit test, performance, SIT, UAT, PROD deployment and business value, which step comes immediately after UAT?",
+      "options": [
+        "PROD deployment",
+        "Performance testing",
+        "SIT",
+        "Unit test",
+        "Business value"
+      ],
+      "correct": 0,
+      "explanation": "After UAT the DevOps workflow moves to PROD deployment, and then to business value."
+    },
+    {
+      "stem": "Which sequence describes the DataOps workflow?",
+      "options": [
+        "Codes, unit test, SIT, UAT, business value",
+        "Provision, configure, deploy, monitor",
+        "Collect, label, train, serve",
+        "Plan, build, release, run",
+        "Data pipelining, transformations, data look and feel, business value"
+      ],
+      "correct": 4,
+      "explanation": "DataOps focuses on data: data pipelining, transformations, data look and feel, and finally business value."
+    },
+    {
+      "stem": "Which of the following is a DataOps concern rather than a DevOps concern?",
+      "options": [
+        "Version control",
+        "Metadata management",
+        "Server management",
+        "Release management",
+        "Configuration automation"
+      ],
+      "correct": 1,
+      "explanation": "Metadata management is one of the things DataOps automates, whereas servers, version control, configuration and release management belong to DevOps."
+    },
+    {
+      "stem": "What is the final outcome that both the DevOps and DataOps workflows lead to?",
+      "options": [
+        "PROD deployment",
+        "Data transformation",
+        "Business value",
+        "Unit testing",
+        "Data pipelining"
+      ],
+      "correct": 2,
+      "explanation": "Both workflows, whether starting from what developers build or from data pipelining, end in business value."
+    }
+  ]
+}

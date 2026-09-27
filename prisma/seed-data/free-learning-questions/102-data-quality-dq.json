@@ -1,0 +1,125 @@
+{
+  "topic": "data-quality-dq",
+  "questions": [
+    {
+      "stem": "How is Data Quality defined in one line?",
+      "options": [
+        "When data is stored in the Cloud",
+        "When we compare data against Business Rules",
+        "When data is encrypted",
+        "When data has a primary key",
+        "When data is loaded on time"
+      ],
+      "correct": 1,
+      "explanation": "'Data Quality is when we compare data against Business Rules.'"
+    },
+    {
+      "stem": "How many dimensions of Data Quality are described?",
+      "options": [
+        "Four",
+        "Five",
+        "Six",
+        "Seven",
+        "Eight"
+      ],
+      "correct": 2,
+      "explanation": "The six dimensions are Accuracy, Completeness, Consistency, Validity, Uniqueness and Timeliness."
+    },
+    {
+      "stem": "On what does the Accuracy dimension of Data Quality depend?",
+      "options": [
+        "Traceability through data lineage",
+        "The number of rows in a table",
+        "The speed of the network",
+        "The file format",
+        "The number of users"
+      ],
+      "correct": 0,
+      "explanation": "Accuracy depends on traceability through data lineage; without lineage, accuracy is always questionable."
+    },
+    {
+      "stem": "What does Completeness mean as a Data Quality dimension?",
+      "options": [
+        "Having every possible piece of data",
+        "Having data in a consistent format",
+        "Having no duplicate records",
+        "Having data arrive on time",
+        "Ensuring critical attributes exist to fulfil KPIs or regulatory needs"
+      ],
+      "correct": 4,
+      "explanation": "Completeness is not about all data but about ensuring the critical attributes exist to serve the business purpose, KPIs or regulatory needs."
+    },
+    {
+      "stem": "A customer's birthdate appearing in three different formats across platforms is a failure of which dimension?",
+      "options": [
+        "Uniqueness",
+        "Timeliness",
+        "Consistency",
+        "Completeness",
+        "Accuracy"
+      ],
+      "correct": 2,
+      "explanation": "Consistency means data values must not conflict across systems; a birthdate in three formats collapses trust."
+    },
+    {
+      "stem": "Which dimension is violated by duplicate customer IDs or accounts?",
+      "options": [
+        "Validity",
+        "Timeliness",
+        "Accuracy",
+        "Uniqueness",
+        "Completeness"
+      ],
+      "correct": 3,
+      "explanation": "Uniqueness requires records to be free of duplication; duplicate IDs lead to wasted marketing spend and skewed analytics."
+    },
+    {
+      "stem": "What is the difference between Data Quality and Data Quality Management (DQM)?",
+      "options": [
+        "There is no difference",
+        "DQM is only for cloud data",
+        "DQM is the state; Data Quality is the discipline",
+        "Data Quality applies to structured data; DQM to unstructured",
+        "Data Quality is the state; DQM is the discipline of processes and controls that achieve and sustain it"
+      ],
+      "correct": 4,
+      "explanation": "Data Quality is the state in which data exhibits the six dimensions; DQM is the discipline of processes and controls needed to reach and keep that state."
+    },
+    {
+      "stem": "Which method to improve Data Quality identifies and merges duplicate records?",
+      "options": [
+        "Profiling",
+        "Standardisation",
+        "Geocoding",
+        "Matching and Linking",
+        "Continuous Monitoring"
+      ],
+      "correct": 3,
+      "explanation": "Matching and Linking identifies and merges duplicate records; profiling detects anomalies and geocoding enriches location data."
+    },
+    {
+      "stem": "What is the correct order of the Data Quality Life Cycle?",
+      "options": [
+        "Correct, Detect, Investigate, Analyse, Sustain",
+        "Detect, Investigate, Analyse, Correct, Sustain",
+        "Analyse, Detect, Correct, Investigate, Sustain",
+        "Sustain, Detect, Analyse, Investigate, Correct",
+        "Investigate, Detect, Correct, Sustain, Analyse"
+      ],
+      "correct": 1,
+      "explanation": "The life cycle runs Detect, Investigate, Analyse, Correct (as close to the source as possible) and Sustain."
+    },
+    {
+      "stem": "Which statement about the cost of poor Data Quality is made?",
+      "options": [
+        "Bad data costs more than no data at all",
+        "Bad data is always better than no data",
+        "Bad data has no cost if it is stored cheaply",
+        "Poor data quality only affects reports",
+        "Poor data quality cannot lead to regulatory fines"
+      ],
+      "correct": 0,
+      "explanation": "Poor data quality is linked to fines, reputational loss, failed AI models and operational costs; simply put, bad data costs more than no data at all."
+    }
+  ]
+}

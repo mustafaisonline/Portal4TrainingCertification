@@ -1,0 +1,125 @@
+{
+  "topic": "sql-and-nosql-databases",
+  "questions": [
+    {
+      "stem": "What does the term NoSQL actually mean?",
+      "options": [
+        "Not-Only-SQL",
+        "No SQL is permitted",
+        "Non-Structured Query Language",
+        "Network-Oriented SQL",
+        "Normalised SQL"
+      ],
+      "correct": 0,
+      "explanation": "NoSQL means Not-Only-SQL, so standard SQL can still be used with NoSQL databases, with minor syntax changes."
+    },
+    {
+      "stem": "Which four types of NoSQL database came onto the surface with the introduction of Big Data?",
+      "options": [
+        "Relational, Hierarchical, Network and Object",
+        "Key-Value, Columnar, Document and Graph",
+        "Hive, HDFS, Oracle and Teradata",
+        "In-memory, Time-series, Spatial and Ledger",
+        "Star, Snowflake, Vault and Anchor"
+      ],
+      "correct": 1,
+      "explanation": "In the past there was only one database type, RDBMS (SQL). With Big Data, four more types of NoSQL database appeared: Key-Value, Columnar, Document and Graph DB."
+    },
+    {
+      "stem": "Which of the following is NOT given as an example of a SQL/RDBMS database?",
+      "options": [
+        "Oracle",
+        "DB2",
+        "Hive",
+        "Teradata",
+        "MySQL"
+      ],
+      "correct": 2,
+      "explanation": "Examples of SQL database types are Oracle, DB2, Teradata, SQL Server and MySQL. Hive is a wrapper over files in HDFS, not an RDBMS."
+    },
+    {
+      "stem": "What storage can NoSQL databases use in addition to server OS file systems such as EXT and FAT?",
+      "options": [
+        "Oracle tablespaces",
+        "Spreadsheet files",
+        "Relational tables",
+        "HDFS, the Hadoop file storage",
+        "Cloud object storage only"
+      ],
+      "correct": 3,
+      "explanation": "In contrast with SQL/RDBMS databases, which use server OS file systems like EXT and FAT, the new NoSQL databases can additionally use HDFS."
+    },
+    {
+      "stem": "Among the five data stores in Hadoop (Hive, Key-Value, Columnar, Document and Graph DB), which one uses only HDFS as its storage?",
+      "options": [
+        "Key-Value DB",
+        "Columnar DB",
+        "Document DB",
+        "Graph DB",
+        "Hive"
+      ],
+      "correct": 4,
+      "explanation": "Hive only uses HDFS as storage. The Key-Value, Columnar, Document and Graph databases can use either OS file systems or HDFS."
+    },
+    {
+      "stem": "What is Hive?",
+      "options": [
+        "A wrapper on top of files sitting in HDFS that shows the files in the shape of tables for ease of use",
+        "A relational database that replaces Oracle in Hadoop",
+        "A graph database that stores entities as nodes and relationships as edges",
+        "A file system used by SQL Server",
+        "A key-value cache for HDFS metadata"
+      ],
+      "correct": 0,
+      "explanation": "Hive is a wrapper on top of files sitting in HDFS. It shows files in the shape of tables for ease of use for users."
+    },
+    {
+      "stem": "How does a Key-Value database store data?",
+      "options": [
+        "As tables with rows, columns and schemas",
+        "As a collection of key-value pairs in which the key normally serves as a unique identifier",
+        "As documents with data type descriptions and values",
+        "As nodes and edges with unique identifiers",
+        "As columns rather than rows for analytical processing"
+      ],
+      "correct": 1,
+      "explanation": "A key-value database stores data as a collection of key-value pairs, in which a key normally serves as a unique identifier. Both keys and values can range from simple objects to complex compound objects."
+    },
+    {
+      "stem": "Why is a Columnar database suitable for analytical query processing and data warehouses?",
+      "options": [
+        "Because it stores entities as nodes and relationships as edges",
+        "Because it requires no SQL and no tables",
+        "Because it stores data by columns rather than by rows",
+        "Because it uses only HDFS as its storage",
+        "Because it stores each record as a document"
+      ],
+      "correct": 2,
+      "explanation": "A columnar database stores data by columns rather than by rows, which makes it suitable for analytical query processing and thus for data warehouses."
+    },
+    {
+      "stem": "What do NoSQL Document databases use instead of the tables, columns, rows, schemas and tabular relations of relational databases?",
+      "options": [
+        "Key-value pairs with compound objects",
+        "Nodes and edges",
+        "Flat files in HDFS shown as tables",
+        "Documents with data type descriptions and values",
+        "Star schemas with fact and dimension tables"
+      ],
+      "correct": 3,
+      "explanation": "NoSQL document databases are based on a model that does not require SQL and tables. Instead they use documents with data type descriptions and values."
+    },
+    {
+      "stem": "How is a Graph database characterised in comparison with a relational database?",
+      "options": [
+        "It stores data by columns and is best for data warehouses",
+        "It uses documents rather than tables",
+        "It has no unique identifiers on its entities",
+        "It can only use OS file systems, never HDFS",
+        "It is multi-relational in nature, whereas relational tables are loosely connected"
+      ],
+      "correct": 4,
+      "explanation": "In a Graph database the entity is stored as a node and the relationship as an edge, each with a unique identifier. Compared with a relational database where tables are loosely connected, a Graph database is multi-relational in nature."
+    }
+  ]
+}

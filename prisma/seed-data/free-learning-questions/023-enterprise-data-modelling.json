@@ -1,0 +1,125 @@
+{
+  "topic": "enterprise-data-modelling",
+  "questions": [
+    {
+      "stem": "What is Enterprise Data Modelling?",
+      "options": [
+        "The practice of designing one database per project",
+        "The practice of tuning enterprise servers",
+        "The practice of creating a single, high-level view of data for the entire organisation",
+        "The practice of documenting ETL jobs across systems",
+        "The practice of choosing an enterprise reporting tool"
+      ],
+      "correct": 2,
+      "explanation": "Enterprise Data Modelling creates a single, high-level view of data across all business areas rather than system by system or project by project."
+    },
+    {
+      "stem": "What is the main goal of Enterprise Data Modelling?",
+      "options": [
+        "To reduce the number of servers",
+        "To speed up a single application's queries",
+        "To provide a consistent framework for managing data across the whole enterprise",
+        "To replace all departmental systems with one system",
+        "To define workflow diagrams"
+      ],
+      "correct": 2,
+      "explanation": "The main goal is a consistent enterprise-wide framework so departments and systems can work together and data becomes easier to integrate, compare and trust."
+    },
+    {
+      "stem": "How is Enterprise Data Modelling characterised in terms of its role?",
+      "options": [
+        "As a detailed design for a single application",
+        "As a physical storage plan",
+        "As a temporary project deliverable",
+        "As a strategic blueprint rather than a detailed design for one application",
+        "As a low-level technical specification"
+      ],
+      "correct": 3,
+      "explanation": "Because it defines common entities and relationships that apply everywhere, Enterprise Data Modelling acts as a strategic blueprint rather than a detailed design for one application."
+    },
+    {
+      "stem": "In the school example of Enterprise Data Modelling, what problem arises when admissions, exams and fees systems each define a student differently?",
+      "options": [
+        "The systems cannot be installed",
+        "Students cannot enrol",
+        "The databases become too large",
+        "Reports will not match",
+        "Exams cannot be marked"
+      ],
+      "correct": 3,
+      "explanation": "If each system defines a student differently, reports will not match; defining student once at the school level fixes this."
+    },
+    {
+      "stem": "In the banking example, which attributes are listed for the Loan entity?",
+      "options": [
+        "Customer identifier, name, date of birth and contact information",
+        "Payment date and payment amount",
+        "Branch code and manager name",
+        "Credit score and risk category",
+        "Loan amount, term, interest rate and status"
+      ],
+      "correct": 4,
+      "explanation": "A Loan may include attributes such as loan amount, term, interest rate and status; the customer attributes belong to the Customer entity."
+    },
+    {
+      "stem": "Which of the following is NOT one of the banking systems named as sharing the enterprise definitions of Customer, Loan and Repayment?",
+      "options": [
+        "Loan origination",
+        "Risk management",
+        "Core banking",
+        "Collections",
+        "Human resources"
+      ],
+      "correct": 4,
+      "explanation": "The definitions are shared across loan origination, risk management, core banking and collections; human resources is not mentioned."
+    },
+    {
+      "stem": "Why does consistency matter even more when data is analysed at an enterprise level?",
+      "options": [
+        "Because analytics runs on faster hardware",
+        "Because measures such as loan amount, approval rate or portfolio risk must mean the same thing in finance, risk and sales reports",
+        "Because analysts prefer fewer tables",
+        "Because enterprise data is always stored in a data lake",
+        "Because reports are printed on paper"
+      ],
+      "correct": 1,
+      "explanation": "Enterprise KPIs are built on the same standard entities and definitions so measures mean the same across finance, risk and sales, and leaders can trust the insights."
+    },
+    {
+      "stem": "Which statement about the nature of Enterprise Data Modelling is correct?",
+      "options": [
+        "It is project-specific and tied to one platform",
+        "It is strategic, technology-independent and can scale across operational systems, data warehouses and data lakes",
+        "It focuses on short-term delivery",
+        "It only applies to data stored in data warehouses",
+        "It is a physical modelling technique"
+      ],
+      "correct": 1,
+      "explanation": "Enterprise Data Modelling is strategic rather than project-specific, independent of technology, and scales across multiple platforms."
+    },
+    {
+      "stem": "What phrase describes the value Enterprise Data Modelling adds by eliminating conflicting definitions such as differing meanings of active loan?",
+      "options": [
+        "A single version of the truth",
+        "A bounded context",
+        "A data swamp",
+        "A ubiquitous language",
+        "A star schema"
+      ],
+      "correct": 0,
+      "explanation": "Enterprise Data Modelling provides a single version of the truth by eliminating conflicting definitions of the same data."
+    },
+    {
+      "stem": "Which initiatives are said to depend on the shared foundation that Enterprise Data Modelling provides?",
+      "options": [
+        "Data governance, master data management and large-scale digital transformation",
+        "Server virtualisation and network upgrades",
+        "Email migration and desktop support",
+        "Payroll processing and recruitment",
+        "Website design and social media marketing"
+      ],
+      "correct": 0,
+      "explanation": "The shared foundation is essential for effective data governance, master data management and large-scale digital transformation initiatives."
+    }
+  ]
+}

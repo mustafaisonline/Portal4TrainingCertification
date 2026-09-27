@@ -1,0 +1,125 @@
+{
+  "topic": "data-backup-and-mirroring",
+  "questions": [
+    {
+      "stem": "What is the main purpose of data backup?",
+      "options": [
+        "To create an identical replica for User Acceptance Testing",
+        "To speed up queries on active databases",
+        "To safeguard information for future use, regulatory adherence, or retrieval in the event of loss",
+        "To distribute data evenly across cluster nodes",
+        "To give developers a fresh copy of data each morning"
+      ],
+      "correct": 2,
+      "explanation": "The main purpose of data backup is to safeguard information for future use, regulatory adherence, or data retrieval if data is lost."
+    },
+    {
+      "stem": "In the banking example for data backup, how long must customer data be retained after the customer leaves the bank?",
+      "options": [
+        "A minimum of seven years",
+        "One year",
+        "Three months",
+        "Twelve months after the account is closed",
+        "Indefinitely, with no time limit"
+      ],
+      "correct": 0,
+      "explanation": "In the banking sector of certain countries, regulations require retaining customer and associated data for at least seven years after the customer departs."
+    },
+    {
+      "stem": "According to the banking example, how long is data about active customers kept?",
+      "options": [
+        "Seven years",
+        "Until the next annual backup",
+        "Ninety days",
+        "Only while the account has a balance",
+        "Indefinitely"
+      ],
+      "correct": 4,
+      "explanation": "Data pertaining to active customers is kept indefinitely, while departed customers' data is kept for a minimum of seven years."
+    },
+    {
+      "stem": "Which active databases are named as housing the particular data that decision support systems demand?",
+      "options": [
+        "Tape libraries and object storage",
+        "OLTP (Online Transaction Processing) and OLAP (Online Analytical Processing)",
+        "Spreadsheets and flat files",
+        "Mirrored laptops and workstations",
+        "Archive and cold storage"
+      ],
+      "correct": 1,
+      "explanation": "Decision support systems often demand particular data housed in active databases such as OLTP and OLAP; the remaining data is backed up elsewhere."
+    },
+    {
+      "stem": "Which technologies are mentioned for backing up data that is not needed operationally?",
+      "options": [
+        "In-memory caches",
+        "OLAP cubes",
+        "Solid-state drives inside the production server",
+        "Tape drives or affordable storage such as Object Storage",
+        "Mirrored laptops"
+      ],
+      "correct": 3,
+      "explanation": "Data not needed for operational or reporting purposes is backed up using technologies such as tape drives or affordable Object Storage."
+    },
+    {
+      "stem": "What is the key distinction between data mirroring and data backup?",
+      "options": [
+        "Mirroring is not about long-term retention but about establishing a starting point from which data can be restored",
+        "Mirroring keeps data for longer than backup does",
+        "Mirroring only applies to databases while backup applies to files",
+        "Mirroring is required by regulation while backup is optional",
+        "Mirroring compresses data while backup does not"
+      ],
+      "correct": 0,
+      "explanation": "Both duplicate data, but mirroring's purpose is not long-term retention; it establishes a starting point from which data can be mirrored back or restored."
+    },
+    {
+      "stem": "In the laptop example of data mirroring, when would a user restore from the mirrored copy?",
+      "options": [
+        "When the laptop is sold",
+        "When a regulator requests historical records",
+        "When the laptop's storage is full",
+        "When moving data to a colleague's machine",
+        "When data is corrupted by bugs, viruses or patches, to revert to a previous state"
+      ],
+      "correct": 4,
+      "explanation": "The operating system periodically creates mirrored copies, and if data is corrupted by bugs, viruses or patches the user can restore the system and data to a previous state."
+    },
+    {
+      "stem": "Within the data domain, for which testing activity is data mirroring used?",
+      "options": [
+        "Penetration testing",
+        "Load testing of network links",
+        "User Acceptance Testing (UAT), where an identical replica is created for business users to test",
+        "Unit testing of individual functions",
+        "Regulatory compliance audits"
+      ],
+      "correct": 2,
+      "explanation": "Mirroring is used for User Acceptance Testing, where an identical data replica is generated for business users to perform testing."
+    },
+    {
+      "stem": "How do backup and mirroring differ regarding incremental updates?",
+      "options": [
+        "Both are always incremental",
+        "Backups can be incremental, saving only changes since the last backup, while mirroring does not involve incremental updates",
+        "Mirroring is incremental while backups always copy everything",
+        "Neither can be incremental",
+        "Only cloud backups can be incremental"
+      ],
+      "correct": 1,
+      "explanation": "Backups can be incremental, saving only the changes since the last backup, whereas mirroring does not involve such incremental updates."
+    },
+    {
+      "stem": "Which of these is NOT listed as a frequency on which backups can be performed?",
+      "options": [
+        "Daily",
+        "Weekly",
+        "Quarterly",
+        "Hourly",
+        "Annual"
+      ],
+      "correct": 3,
+      "explanation": "Backups are listed as daily, weekly, monthly, quarterly, semi-annual or annual; hourly is not among the listed frequencies."
+    }
+  ]
+}

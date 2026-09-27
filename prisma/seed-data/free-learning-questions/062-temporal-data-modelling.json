@@ -1,0 +1,125 @@
+{
+  "topic": "temporal-data-modelling",
+  "questions": [
+    {
+      "stem": "What is Temporal Data Modelling?",
+      "options": [
+        "Structuring data so that changes over time are explicitly captured and preserved",
+        "Structuring data around measurable facts and descriptive dimensions",
+        "Structuring data as nodes and edges for traversal",
+        "Structuring data for single-key lookup",
+        "Structuring data as message contracts between services"
+      ],
+      "correct": 0,
+      "explanation": "Temporal models record how data has evolved instead of only its current state, enabling questions about the past, present and even planned future states."
+    },
+    {
+      "stem": "What does Valid Time refer to in temporal modelling?",
+      "options": [
+        "When the fact was recorded in the system",
+        "When a fact is true in the real world",
+        "When the database was last backed up",
+        "When a query was executed",
+        "When a record was archived"
+      ],
+      "correct": 1,
+      "explanation": "Valid Time is when a fact is true in the real world, for example an interest rate valid from January to March."
+    },
+    {
+      "stem": "What does Transaction Time refer to in temporal modelling?",
+      "options": [
+        "When the loan was originated",
+        "When the fact is true in the business world",
+        "When the fact was recorded in the system",
+        "When the repayment was due",
+        "When the customer applied"
+      ],
+      "correct": 2,
+      "explanation": "Transaction Time is when the fact was recorded in the system; a correction entered in February about a January event has a different transaction time from its valid time."
+    },
+    {
+      "stem": "What is a model called when it captures both Valid Time and Transaction Time?",
+      "options": [
+        "Uni-temporal",
+        "Snapshot",
+        "Slowly changing",
+        "Bi-temporal",
+        "Event-sourced"
+      ],
+      "correct": 3,
+      "explanation": "When both valid time and transaction time are captured together, the model is called bi-temporal."
+    },
+    {
+      "stem": "What is the key principle governing updates in a temporal model?",
+      "options": [
+        "Rows are updated in place and the old value discarded",
+        "Rows are deleted and reinserted with new values",
+        "Only the latest value is kept in a cache",
+        "Changes are stored in a separate audit log only",
+        "Data is never overwritten; new versions are inserted with time boundaries"
+      ],
+      "correct": 4,
+      "explanation": "Instead of updating a row in place, new versions are inserted carrying attributes such as ValidFrom and ValidTo, preserving a complete timeline."
+    },
+    {
+      "stem": "In the temporal loan timeline for Loan L001, what happens on 1 February 2024?",
+      "options": [
+        "The interest rate is corrected to 8.0%, stored as a new time slice",
+        "The loan is submitted with status Pending",
+        "The loan is approved at 7.5%",
+        "The loan is rejected",
+        "The earlier version is deleted"
+      ],
+      "correct": 0,
+      "explanation": "On 1 February 2024 the rate is corrected to 8.0%; the corrected rate does not erase history but adds another time-bound record while the earlier version remains intact."
+    },
+    {
+      "stem": "Which of the following is an example of an \"as-of\" query enabled by temporal modelling?",
+      "options": [
+        "Total loan amount approved by branch",
+        "Show the loan status as of 14 January 2024",
+        "Count of loans per customer segment",
+        "List all officers in the Central branch",
+        "Average repayment amount per product"
+      ],
+      "correct": 1,
+      "explanation": "Temporal models support as-of queries such as showing the loan status on 14 January 2024 or which rate was valid on 20 January 2024."
+    },
+    {
+      "stem": "With which normal-form principles do temporal tables frequently align when attributes change independently over time?",
+      "options": [
+        "1NF and 2NF",
+        "BCNF only",
+        "5NF or 6NF",
+        "DKNF",
+        "UNF"
+      ],
+      "correct": 2,
+      "explanation": "Temporal tables often require careful decomposition, frequently aligning with 5NF or 6NF principles, especially when attributes change independently."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a strength of Temporal Data Modelling?",
+      "options": [
+        "Full audit trail of changes",
+        "Accurate historical reconstruction",
+        "Support for regulatory and compliance requirements",
+        "Reduced storage and simpler queries",
+        "Time-travel queries for analytics"
+      ],
+      "correct": 3,
+      "explanation": "Temporal modelling introduces additional storage and design complexity, and queries become more sophisticated because they must account for time dimensions."
+    },
+    {
+      "stem": "Which industries are named as needing to show what data looked like at a specific point in time?",
+      "options": [
+        "Retail, hospitality and entertainment",
+        "Manufacturing, logistics and agriculture",
+        "Education, sport and media",
+        "Advertising, gaming and travel",
+        "Banking, insurance, healthcare and government"
+      ],
+      "correct": 4,
+      "explanation": "Banking, insurance, healthcare and government are named as industries where organisations must demonstrate what data looked like at a specific point in time."
+    }
+  ]
+}

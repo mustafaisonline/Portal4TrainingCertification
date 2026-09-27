@@ -1,0 +1,125 @@
+{
+  "topic": "multidimensional-expression-mdx",
+  "questions": [
+    {
+      "stem": "What is MDX?",
+      "options": [
+        "The query language for relational databases used by OLTP systems",
+        "The query language for OLAP databases, used to extract multi-dimensional data from OLAP Cubes",
+        "A data transfer protocol for the cloud",
+        "A file format for semi-structured data",
+        "A machine learning framework"
+      ],
+      "correct": 1,
+      "explanation": "MDX (Multidimensional eXpression) is the query language for OLAP databases, used to extract multi-dimensional data from OLAP Cubes."
+    },
+    {
+      "stem": "Who invented MDX, and when?",
+      "options": [
+        "Oracle engineers in 1987",
+        "IBM engineers in 2007",
+        "SQL Server engineers in 1997",
+        "Google engineers in 2010",
+        "Hadoop contributors in 2005"
+      ],
+      "correct": 2,
+      "explanation": "MDX was invented by SQL Server engineers in 1997."
+    },
+    {
+      "stem": "What is SQL primarily used for, in contrast to MDX?",
+      "options": [
+        "Querying OLAP Cubes",
+        "Querying relational databases, primarily in OLTP systems, though also in warehouses, lakes and vaults",
+        "Writing spreadsheet formulas",
+        "Training machine learning models",
+        "Encrypting data"
+      ],
+      "correct": 1,
+      "explanation": "SQL is for relational databases, used primarily by OLTP systems but also by almost all datastores such as Data Warehouse, Data Lake, Data Vault and Business Vault."
+    },
+    {
+      "stem": "What is MDX syntax said to resemble?",
+      "options": [
+        "An XLS (spreadsheet) formula",
+        "Python code",
+        "A JSON document",
+        "A shell script",
+        "An XML schema"
+      ],
+      "correct": 0,
+      "explanation": "MDX syntax is described as being just like an XLS formula."
+    },
+    {
+      "stem": "Why is MDX hardly used nowadays, despite being decades old?",
+      "options": [
+        "Because OLAP Cubes no longer exist",
+        "Because it was never released commercially",
+        "Because of the ease of use of the SQL language",
+        "Because it only works on mainframes",
+        "Because it is too expensive to license"
+      ],
+      "correct": 2,
+      "explanation": "MDX is hardly used now because SQL is so easy to use, although experts predict a revival of MDX."
+    },
+    {
+      "stem": "In MDX data types, what is a Scalar?",
+      "options": [
+        "A number or a string",
+        "A dimension such as time",
+        "A level such as year or month",
+        "One or more members of a hierarchy",
+        "A column in a cube"
+      ],
+      "correct": 0,
+      "explanation": "A Scalar in MDX can be a number or a string."
+    },
+    {
+      "stem": "In MDX, what is a Hierarchy?",
+      "options": [
+        "A single date value",
+        "A numeric measure",
+        "A set of tuples",
+        "Something like a dimension, for example year, month, week and day within a time dimension",
+        "A relational table"
+      ],
+      "correct": 3,
+      "explanation": "A Hierarchy is like a dimension; in a time dimension the hierarchy is year, month, week, day and so on."
+    },
+    {
+      "stem": "In MDX, what is a Member?",
+      "options": [
+        "The level of a hierarchy, such as year or month",
+        "A collection of tuples",
+        "A string constant",
+        "The name of a cube",
+        "A member of a hierarchy, such as an exact date, week or month"
+      ],
+      "correct": 4,
+      "explanation": "A Member is a member of a hierarchy, for example an exact date, week or month."
+    },
+    {
+      "stem": "How do Tuples and Sets relate in MDX?",
+      "options": [
+        "A Tuple contains one or more Sets",
+        "A Set is a numeric measure and a Tuple is a string",
+        "They are the same thing",
+        "A Set contains one or more Tuples, and a Tuple contains one or more members of a hierarchy",
+        "A Tuple is a table and a Set is a column"
+      ],
+      "correct": 3,
+      "explanation": "Tuples contain one or more members of a hierarchy, and a Set contains one or more tuples."
+    },
+    {
+      "stem": "Which of the following is NOT one of the MDX data types listed?",
+      "options": [
+        "Scalar",
+        "Hierarchy",
+        "Level",
+        "Tuple",
+        "Vector"
+      ],
+      "correct": 4,
+      "explanation": "The MDX data types listed are Scalar, Hierarchy, Level, Member, Tuple, Set and the other cube field types; Vector is not among them."
+    }
+  ]
+}

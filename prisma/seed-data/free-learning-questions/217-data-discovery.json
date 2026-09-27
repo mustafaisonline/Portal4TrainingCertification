@@ -1,0 +1,125 @@
+{
+  "topic": "data-discovery",
+  "questions": [
+    {
+      "stem": "What does Data Discovery involve?",
+      "options": [
+        "Deleting data that is no longer used",
+        "The collection and evaluation of data from various sources, often to understand trends and patterns",
+        "Assigning access rights to database tables",
+        "Splitting a dataset into training and testing subsets",
+        "Selling data to third parties"
+      ],
+      "correct": 1,
+      "explanation": "Data Discovery involves the collection and evaluation of data from various sources and is often used to understand trends and patterns in the data."
+    },
+    {
+      "stem": "Which of the following is NOT one of the data problems listed as reasons why raw source data must be streamlined before Data Discovery results reach end users?",
+      "options": [
+        "Null values",
+        "Different date formats",
+        "Spelling mistakes and special characters",
+        "Different codes for the same product across systems",
+        "Data stored in more than one language"
+      ],
+      "correct": 4,
+      "explanation": "The listed problems are nulls, differing date formats, spelling mistakes, special characters, different product codes and duplicates; multiple languages are not mentioned."
+    },
+    {
+      "stem": "In the Data Discovery example, a Glass product is coded GLS in one source system and GS in another. What problem does this illustrate?",
+      "options": [
+        "Different codes for the same product across source systems",
+        "Null values in the product table",
+        "Duplicate rows in one system",
+        "Special characters in product names",
+        "Different date formats"
+      ],
+      "correct": 0,
+      "explanation": "The Glass code being GLS in one system and GS in another illustrates that data can have different codes for the same product."
+    },
+    {
+      "stem": "Which group mostly prefers raw data without any cleaning, cleansing or scrubbing, for use in Data Dredging, Snooping, p-hacking and Fishing?",
+      "options": [
+        "Business end users",
+        "C-level executives",
+        "Data Scientists",
+        "Data Analysts",
+        "Finance consultants"
+      ],
+      "correct": 2,
+      "explanation": "Data Scientists mostly prefer raw data without cleaning, cleansing or scrubbing so they can use techniques such as Data Dredging, Snooping, p-hacking and Fishing."
+    },
+    {
+      "stem": "What state of data do Data Analysts mostly prefer for Data Discovery?",
+      "options": [
+        "Completely raw data",
+        "Data that is encrypted",
+        "Data that has been fully scrubbed, wrangled and munged",
+        "Data that has at least been cleaned and cleansed",
+        "Data that has been aggregated into KPIs only"
+      ],
+      "correct": 3,
+      "explanation": "Data Analysts mostly prefer data after it has at least been cleaned and cleansed."
+    },
+    {
+      "stem": "What do Business End Users and C-level executives expect of data before it reaches them for decision making?",
+      "options": [
+        "That it is raw, so they can explore it themselves",
+        "That it is cleaned, cleansed, scrubbed, wrangled and munged",
+        "That it is only cleaned",
+        "That it is stored in a Data Lake",
+        "That it is delivered as a spreadsheet"
+      ],
+      "correct": 1,
+      "explanation": "Business End Users and C-level expect data to be cleaned, cleansed, scrubbed, wrangled and munged before it reaches them, which the author calls a fair expectation."
+    },
+    {
+      "stem": "How does Data Discovery differ across roles?",
+      "options": [
+        "It is identical for every role in the organisation",
+        "It only applies to Data Scientists",
+        "It only applies to C-level executives",
+        "It applies only to IT staff",
+        "It is different for Data Scientists, Data Analysts, Business End Users and C-level"
+      ],
+      "correct": 4,
+      "explanation": "Data Discovery is different for different roles, namely Data Scientists, Data Analysts, Business End Users and C-level."
+    },
+    {
+      "stem": "With which discipline is Data Discovery usually associated?",
+      "options": [
+        "Business Intelligence",
+        "Network security",
+        "Software testing",
+        "Payroll processing",
+        "Physical data modelling"
+      ],
+      "correct": 0,
+      "explanation": "Data Discovery is usually associated with Business Intelligence and helps inform business decisions."
+    },
+    {
+      "stem": "How does Data Discovery help inform business decisions?",
+      "options": [
+        "By deleting siloed data sources",
+        "By restricting analysis to a single source",
+        "By bringing together disparate, siloed data sources to be analysed",
+        "By replacing analysis with intuition",
+        "By outsourcing analysis to consultants"
+      ],
+      "correct": 2,
+      "explanation": "Data Discovery helps inform business decisions by bringing together disparate, siloed data sources so they can be analysed."
+    },
+    {
+      "stem": "Why can understanding trends and patterns NOT simply be done on data straight from source systems?",
+      "options": [
+        "Because source systems are always offline",
+        "Because trends only exist in Data Lakes",
+        "Because end users are not allowed to see source data",
+        "Because source data can contain nulls, inconsistent formats, mistakes, differing codes and duplicates that must be streamlined first",
+        "Because source data is always encrypted"
+      ],
+      "correct": 3,
+      "explanation": "Source data can have null values, different date formats, spelling mistakes, special characters, different codes for the same product and duplicates, so it must be streamlined before it is presented to end users."
+    }
+  ]
+}

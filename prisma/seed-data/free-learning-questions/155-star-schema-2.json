@@ -1,0 +1,125 @@
+{
+  "topic": "star-schema-2",
+  "questions": [
+    {
+      "stem": "Whose data warehousing approach do the star schema and snowflake schema belong to?",
+      "options": [
+        "Bill Inmon",
+        "Ralph Kimball",
+        "Edgar Codd",
+        "Dan Linstedt",
+        "Peter Chen"
+      ],
+      "correct": 1,
+      "explanation": "Star schema and snowflake schema both refer to Ralph Kimball's data warehousing approach, which insists on dimensional modelling."
+    },
+    {
+      "stem": "According to Ralph Kimball, which modelling approach must be used for data warehouses and data marts?",
+      "options": [
+        "Third Normal Form",
+        "Data Vault",
+        "Dimensional modelling, consisting of star and snowflake schemas",
+        "Anchor modelling",
+        "Entity-relationship modelling"
+      ],
+      "correct": 2,
+      "explanation": "As per Ralph Kimball, dimensional modelling, consisting of star and snowflake schemas, must be used for data warehousing and data marts."
+    },
+    {
+      "stem": "In a star schema, what sits in the middle of the model?",
+      "options": [
+        "A dimension table",
+        "A fact table",
+        "A conformed dimension",
+        "A staging table",
+        "An OLAP cube"
+      ],
+      "correct": 1,
+      "explanation": "In a star schema the model has a fact table in the middle, and all the dimensions are joined with the fact."
+    },
+    {
+      "stem": "In a star schema, how are the dimensions related to the fact table?",
+      "options": [
+        "Each dimension is joined directly to the fact table",
+        "Dimensions are joined to each other in a chain",
+        "Dimensions are nested inside the fact table",
+        "Dimensions are stored in a separate database",
+        "Dimensions are joined only through sub-dimensions"
+      ],
+      "correct": 0,
+      "explanation": "All dimensions are joined directly with the central fact table, so any query has one direct join with any dimension."
+    },
+    {
+      "stem": "In the star schema example with a Sales fact table, which of the following is given as a dimension?",
+      "options": [
+        "Revenue",
+        "Quantity sold",
+        "Time",
+        "Discount amount",
+        "Transaction ID"
+      ],
+      "correct": 2,
+      "explanation": "The example lists dimensions such as Time, Location, Product and Categories around a Sales fact table."
+    },
+    {
+      "stem": "What makes up the primary key of the fact table in a star schema?",
+      "options": [
+        "A single auto-generated surrogate key",
+        "All the foreign key columns coming from the dimensions",
+        "The transaction timestamp",
+        "The product name",
+        "The sales amount"
+      ],
+      "correct": 1,
+      "explanation": "The primary key of the fact table consists of all the foreign key columns coming from the dimensions."
+    },
+    {
+      "stem": "When a report or query is created against a star schema, how many joins are needed to reach any dimension?",
+      "options": [
+        "Always one direct join",
+        "Two joins via a sub-dimension",
+        "As many joins as there are dimensions",
+        "No joins, because dimensions are embedded",
+        "A variable number depending on normalisation"
+      ],
+      "correct": 0,
+      "explanation": "Because every dimension connects directly to the fact table, there is always one direct join with any dimension."
+    },
+    {
+      "stem": "Which of the following is NOT a dimension named in the Sales star schema example?",
+      "options": [
+        "Time",
+        "Location",
+        "Product",
+        "Categories",
+        "Supplier"
+      ],
+      "correct": 4,
+      "explanation": "The dimensions named in the example are Time, Location, Product and Categories; Supplier is not among them."
+    },
+    {
+      "stem": "In which kinds of data store is the star schema applied?",
+      "options": [
+        "OLTP systems only",
+        "Data warehouses and data marts",
+        "Data lakes only",
+        "Web scraping outputs",
+        "Message queues"
+      ],
+      "correct": 1,
+      "explanation": "Star and snowflake schemas belong to dimensional modelling for data warehousing and data marts."
+    },
+    {
+      "stem": "In the star schema example, which table is the fact table?",
+      "options": [
+        "Time",
+        "Location",
+        "Product",
+        "Sales",
+        "Categories"
+      ],
+      "correct": 3,
+      "explanation": "The example uses a fact table called Sales, with dimensions such as Time, Location, Product and Categories joined to it."
+    }
+  ]
+}

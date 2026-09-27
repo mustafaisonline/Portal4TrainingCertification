@@ -1,0 +1,125 @@
+{
+  "topic": "json-xml-schema-modelling",
+  "questions": [
+    {
+      "stem": "What is JSON / XML Schema Modelling?",
+      "options": [
+        "The practice of defining structured schemas for semi-structured formats such as JSON and XML",
+        "The practice of normalising documents into relational tables",
+        "The practice of storing behaviour with data in objects",
+        "The practice of partitioning documents by key",
+        "The practice of replaying document changes as events"
+      ],
+      "correct": 0,
+      "explanation": "JSON / XML Schema Modelling defines the allowed structure, elements, datatypes and constraints of documents to ensure consistency, validation and interoperability."
+    },
+    {
+      "stem": "What is the primary goal of JSON / XML Schema Modelling?",
+      "options": [
+        "Optimising database storage",
+        "Providing a clear and enforceable contract for APIs, integration workflows and document-based systems",
+        "Supporting complex analytical joins",
+        "Eliminating redundancy through normal forms",
+        "Enabling relationship traversal"
+      ],
+      "correct": 1,
+      "explanation": "Rather than focusing on database storage, the technique focuses on structured data exchange, giving systems an enforceable contract for the data they share."
+    },
+    {
+      "stem": "Which rule might a Loan schema define for the Status field?",
+      "options": [
+        "It must be a numeric value greater than zero",
+        "It must be a required string identifier",
+        "It must be one of a predefined set of values",
+        "It must be a nested object",
+        "It must be unique across all loans"
+      ],
+      "correct": 2,
+      "explanation": "The example Loan schema defines LoanID as a required string, LoanAmount as a numeric field greater than zero and Status as one of a predefined set of values."
+    },
+    {
+      "stem": "In the loan approval example, why might a bank use both JSON and XML?",
+      "options": [
+        "Because JSON is required by regulators and XML by mobile apps",
+        "Because XML is faster to parse than JSON",
+        "Because JSON cannot represent nested objects",
+        "Because JSON serves mobile applications and partner integrations while a regulatory authority requires XML submissions",
+        "Because XML is needed for caching"
+      ],
+      "correct": 3,
+      "explanation": "JSON provides agility for modern applications and partner APIs, while XML supports compliance, standards-based exchange and legacy integration required by regulators."
+    },
+    {
+      "stem": "In the JSON loan representation, which fields are nested objects?",
+      "options": [
+        "LoanID and Status",
+        "LoanAmount and InterestRate",
+        "Repayments and Branch",
+        "LoanID and LoanAmount",
+        "Customer and Officer"
+      ],
+      "correct": 4,
+      "explanation": "The JSON loan has a nested Customer object with CustomerID and Name, a nested Officer object with OfficerID and Name, and LoanAmount and Status at the top level."
+    },
+    {
+      "stem": "How does the XML representation of the loan relate to the JSON representation?",
+      "options": [
+        "It preserves the same logical structure using nested tags under a root Loan element",
+        "It flattens all fields into attributes of a single tag",
+        "It stores the loan as a comma-separated string",
+        "It omits the Customer and Officer information",
+        "It uses a different set of field names"
+      ],
+      "correct": 0,
+      "explanation": "The equivalent XML structures the same information using nested tags under a root Loan element, preserving the logical structure in XML syntax."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a strength of JSON and XML schemas?",
+      "options": [
+        "Human readability and wide platform support",
+        "Optimisation for complex joins and analytical workloads",
+        "Self-describing documents and structured validation",
+        "Effectiveness for integration between distributed systems",
+        "Consistent interpretation of data by all participants"
+      ],
+      "correct": 1,
+      "explanation": "Neither JSON nor XML is optimised for complex joins or analytical workloads; their purpose is structured data exchange rather than relational querying."
+    },
+    {
+      "stem": "What limitation does JSON have on its own regarding data types?",
+      "options": [
+        "It cannot store numbers",
+        "It cannot represent arrays",
+        "It lacks strict typing unless paired with a formal JSON Schema",
+        "It requires a root element for every document",
+        "It cannot be read by humans"
+      ],
+      "correct": 2,
+      "explanation": "JSON by itself lacks strict typing; a formal JSON Schema is needed to enforce types and constraints."
+    },
+    {
+      "stem": "What trade-off is associated with XML?",
+      "options": [
+        "It cannot express nesting",
+        "It is not supported by regulators",
+        "It lacks any validation mechanism",
+        "It can be verbose and computationally heavier to process",
+        "It cannot be used for legacy integration"
+      ],
+      "correct": 3,
+      "explanation": "XML is powerful and expressive but can be verbose and computationally heavier to process than JSON."
+    },
+    {
+      "stem": "Why do normalisation forms not apply to JSON / XML Schema Modelling?",
+      "options": [
+        "Because these formats have no data types",
+        "Because these formats are always stored in key–value databases",
+        "Because these formats cannot contain redundancy",
+        "Because these formats are governed by 6NF instead",
+        "Because these formats are hierarchical and document-centric rather than relational"
+      ],
+      "correct": 4,
+      "explanation": "Designers may structure documents cleanly and avoid redundancy, but that is not governed by formal normal forms because the formats are hierarchical and document-centric."
+    }
+  ]
+}

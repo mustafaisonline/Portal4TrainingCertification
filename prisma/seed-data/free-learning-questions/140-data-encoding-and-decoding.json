@@ -1,0 +1,125 @@
+{
+  "topic": "data-encoding-and-decoding",
+  "questions": [
+    {
+      "stem": "What is the key difference between the keys used in encoding and the keys used in encryption?",
+      "options": [
+        "Encoding keys are longer than encryption keys",
+        "Encoding keys are used publicly by unknown entities, while encryption keys are used by known entities",
+        "Encoding keys expire, while encryption keys do not",
+        "Encoding uses no key at all",
+        "Encryption keys are always public"
+      ],
+      "correct": 1,
+      "explanation": "Encryption and decryption keys are used by known entities or individuals, whereas encoding and decoding keys are used publicly by unknown entities."
+    },
+    {
+      "stem": "Who or what normally performs data encoding and decoding?",
+      "options": [
+        "Proprietary, expensive security software",
+        "The security department manually",
+        "Programs or systems internally",
+        "External regulators",
+        "Business users through a BI tool"
+      ],
+      "correct": 2,
+      "explanation": "Encoding and decoding are normally used by programs or systems internally, whereas encryption and decryption are used by proprietary, expensive software."
+    },
+    {
+      "stem": "Which example illustrates the analog-data-to-digital-signal encoding technique?",
+      "options": [
+        "A microphone connected directly to speakers",
+        "A microphone connected to a computer for recording",
+        "A computer sending sound to speakers",
+        "A computer transferring a file to another computer",
+        "A radio tuned to an analog station"
+      ],
+      "correct": 1,
+      "explanation": "Analog data to digital signals is used when the sender is analog and the receiver is digital, such as a microphone feeding a computer for recording."
+    },
+    {
+      "stem": "Which example illustrates digital data being encoded to analog signals?",
+      "options": [
+        "A microphone to a computer",
+        "A computer to a computer",
+        "A computer to speakers",
+        "A microphone to speakers",
+        "A keyboard to a computer"
+      ],
+      "correct": 2,
+      "explanation": "Digital data to analog signals applies when the sender is digital and the receiver is analog, such as sound going from a computer to speakers."
+    },
+    {
+      "stem": "A microphone connected directly to speakers is an example of which encoding technique?",
+      "options": [
+        "Analog data to analog signals",
+        "Analog data to digital signals",
+        "Digital data to analog signals",
+        "Digital data to digital signals",
+        "Encrypted data to digital signals"
+      ],
+      "correct": 0,
+      "explanation": "Analog data to analog signals is used when both sender and receiver are analog compatible, like a microphone connected directly to speakers."
+    },
+    {
+      "stem": "What values does a digital signal carry?",
+      "options": [
+        "A continuous range of values",
+        "Only 0 and 1",
+        "Any whole number",
+        "Time-varying qualitative values",
+        "Positive and negative voltages of any size"
+      ],
+      "correct": 1,
+      "explanation": "A digital signal carries only 0 and 1 values, unlike an analog signal, which is a continuous range of values."
+    },
+    {
+      "stem": "Which type of signal is used in audio and video?",
+      "options": [
+        "Digital signals",
+        "Encrypted signals",
+        "Analog signals",
+        "Binary signals",
+        "Packet signals"
+      ],
+      "correct": 2,
+      "explanation": "Analog signals are used in audio and video, whereas digital signals are used for transmitting computer-generated data sets."
+    },
+    {
+      "stem": "Which statement about breaks in transmission is correct?",
+      "options": [
+        "There can be breaks in analog transmission but not in digital",
+        "There cannot be breaks in analog transmission, but there can be in digital transmission",
+        "Neither analog nor digital transmission can have breaks",
+        "Both analog and digital transmission always have breaks",
+        "Breaks occur only when data is encrypted"
+      ],
+      "correct": 1,
+      "explanation": "There cannot be breaks while transmitting analog data or signals, whereas there can be breaks while transmitting digital data or signals."
+    },
+    {
+      "stem": "What is a signal, in the context of data encoding?",
+      "options": [
+        "A key used to unlock encrypted data",
+        "An electromagnetic or electric current that carries data from one location to another",
+        "A file format for compressing audio",
+        "A software wrapper around a database",
+        "A schedule for transferring data overnight"
+      ],
+      "correct": 1,
+      "explanation": "A signal is an electromagnetic or electric current which carries data or information from one location to another."
+    },
+    {
+      "stem": "Which of the following is NOT one of the four major encoding techniques?",
+      "options": [
+        "Analog data to analog signals",
+        "Analog data to digital signals",
+        "Digital data to optical signals",
+        "Digital data to analog signals",
+        "Digital data to digital signals"
+      ],
+      "correct": 2,
+      "explanation": "The four major techniques pair analog or digital data with analog or digital signals; digital data to optical signals is not one of them."
+    }
+  ]
+}

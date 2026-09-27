@@ -1,0 +1,125 @@
+{
+  "topic": "3nf-third-normal-form",
+  "questions": [
+    {
+      "stem": "What kind of dependency does Third Normal Form (3NF) remove?",
+      "options": [
+        "Transitive dependencies",
+        "Partial dependencies",
+        "Multi-valued dependencies",
+        "Join dependencies",
+        "Repeating groups"
+      ],
+      "correct": 0,
+      "explanation": "3NF removes transitive dependencies, so that every non-key attribute depends only on the primary key and not on another non-key attribute."
+    },
+    {
+      "stem": "What is a transitive dependency?",
+      "options": [
+        "An attribute that depends on only part of a composite key",
+        "A non-key attribute that depends on another non-key attribute rather than directly on the primary key",
+        "A key that is made up of more than one column",
+        "A column that holds several values in one cell",
+        "A foreign key that references its own table"
+      ],
+      "correct": 1,
+      "explanation": "A transitive dependency occurs when a non-key attribute depends on another non-key attribute rather than directly on the primary key, creating hidden redundancy."
+    },
+    {
+      "stem": "In the dependency pattern A → B → C used to describe a transitive dependency, what does A represent?",
+      "options": [
+        "A non-key attribute",
+        "A foreign key",
+        "The primary key",
+        "A multi-valued attribute",
+        "A derived attribute"
+      ],
+      "correct": 2,
+      "explanation": "In A → B → C, A is the primary key, B is a non-key attribute and C depends on B instead of directly on A."
+    },
+    {
+      "stem": "In the loan approval example, which chain illustrates a transitive dependency in the Loan table?",
+      "options": [
+        "RepayDate → LoanID → LoanAmount",
+        "CustomerName → LoanID → CustID",
+        "ProductType → InterestRate → LoanID",
+        "LoanID → CustID → CustomerName",
+        "CustID → LoanID → CustomerAddress"
+      ],
+      "correct": 3,
+      "explanation": "LoanID determines CustID, but CustomerName and CustomerAddress depend on CustID rather than directly on LoanID, giving the chain LoanID → CustID → CustomerName."
+    },
+    {
+      "stem": "Why do CustomerName and CustomerAddress not belong in the Loan table under Third Normal Form?",
+      "options": [
+        "Because they are multi-valued attributes",
+        "Because they form part of the composite key",
+        "Because they are derived from LoanAmount",
+        "Because they are optional fields",
+        "Because they are properties of the customer, not of the loan itself"
+      ],
+      "correct": 4,
+      "explanation": "Customer details are properties of the customer, so 3NF moves them into a Customer table keyed by CustID."
+    },
+    {
+      "stem": "How does Third Normal Form resolve the customer-detail dependency in the Loan table?",
+      "options": [
+        "By moving CustomerName and CustomerAddress into a Customer table keyed by CustID",
+        "By making CustomerName part of the Loan primary key",
+        "By storing customer details as a JSON column",
+        "By deleting the CustID attribute from the Loan table",
+        "By duplicating the Loan table for each customer"
+      ],
+      "correct": 0,
+      "explanation": "3NF separates the dependent attributes into their own table, leaving the Loan table with only attributes that depend directly on LoanID."
+    },
+    {
+      "stem": "What benefit follows from Third Normal Form when a customer's address changes?",
+      "options": [
+        "The address is archived automatically",
+        "It is updated in exactly one place",
+        "Every loan row is updated by a trigger",
+        "The loan must be re-approved",
+        "A new composite key is generated"
+      ],
+      "correct": 1,
+      "explanation": "Because customer details live only in the Customer table, an address change is made in exactly one place, eliminating redundancy."
+    },
+    {
+      "stem": "Which of the following is NOT part of the rule for achieving Third Normal Form?",
+      "options": [
+        "Begin with a table that is already in 2NF",
+        "Examine all non-key attributes carefully",
+        "Ensure that every determinant is a superkey",
+        "Move attributes that depend on another non-key attribute into a new table",
+        "Establish a foreign key relationship to maintain the connection"
+      ],
+      "correct": 2,
+      "explanation": "Requiring every determinant to be a superkey is the stricter rule of Boyce–Codd Normal Form, not the rule for reaching 3NF."
+    },
+    {
+      "stem": "For which kind of system is Third Normal Form often considered sufficient?",
+      "options": [
+        "Graph databases",
+        "Key–value stores",
+        "Data warehouses built as star schemas",
+        "Most transactional systems",
+        "Document databases"
+      ],
+      "correct": 3,
+      "explanation": "3NF is often sufficient for most transactional systems because partial and transitive dependencies have been eliminated and most common anomalies are gone."
+    },
+    {
+      "stem": "Which normal form addresses the subtle integrity problems that Third Normal Form may still allow?",
+      "options": [
+        "First Normal Form",
+        "Second Normal Form",
+        "Unnormalized Form",
+        "Domain–Key Normal Form",
+        "Boyce–Codd Normal Form"
+      ],
+      "correct": 4,
+      "explanation": "Certain edge cases remain in 3NF, and these are addressed in Boyce–Codd Normal Form, which strengthens the dependency rules further."
+    }
+  ]
+}

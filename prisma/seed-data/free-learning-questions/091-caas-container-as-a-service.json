@@ -1,0 +1,125 @@
+{
+  "topic": "caas-container-as-a-service",
+  "questions": [
+    {
+      "stem": "What is CaaS (Container as a Service) about?",
+      "options": [
+        "Renting whole physical servers",
+        "Deploying code in a container and deploying that container in the Cloud",
+        "Subscribing to a pre-built business solution",
+        "Pulling data on demand through APIs",
+        "Renting office space for IT teams"
+      ],
+      "correct": 1,
+      "explanation": "As the name says, CaaS is about deploying code in a container and deploying that container in the Cloud."
+    },
+    {
+      "stem": "How is CaaS positioned relative to IaaS in the cloud rental hierarchy?",
+      "options": [
+        "One level lower than IaaS",
+        "One level higher than IaaS",
+        "Exactly the same as IaaS",
+        "Two levels above PaaS",
+        "Unrelated to IaaS"
+      ],
+      "correct": 0,
+      "explanation": "CaaS is described as one level lower than IaaS for renting resources on the Cloud, at a smaller scale."
+    },
+    {
+      "stem": "What does CaaS save the customer from having to do?",
+      "options": [
+        "Writing any application code",
+        "Managing hardware on their own in the Cloud",
+        "Testing their software",
+        "Using a version control system",
+        "Following an implementation methodology"
+      ],
+      "correct": 1,
+      "explanation": "With CaaS the customer deploys containers and the underlying hardware is managed by the Cloud provider, unlike IaaS."
+    },
+    {
+      "stem": "What are the stated motivations for renting containers rather than whole infrastructure?",
+      "options": [
+        "Higher cost and centralised control",
+        "Slower deployments and fewer teams",
+        "Saving cost and better management of resources",
+        "Avoiding the use of CI/CD",
+        "Eliminating Agile practices"
+      ],
+      "correct": 2,
+      "explanation": "Renting containers at a small scale saves cost and gives better management of resources."
+    },
+    {
+      "stem": "Which methodology is CaaS described as being very helpful for?",
+      "options": [
+        "Waterfall",
+        "V-Model",
+        "Six Sigma",
+        "Prince2",
+        "Agile with CI/CD pipelines"
+      ],
+      "correct": 4,
+      "explanation": "In Agile, multiple teams work in silos on different modules, and CaaS lets each develop and deploy their code set at any time using CI/CD pipelines."
+    },
+    {
+      "stem": "In Agile projects, why is CaaS particularly useful for multiple teams?",
+      "options": [
+        "Because it forces all teams to deploy together once a quarter",
+        "Because it prevents parallel development",
+        "Because it removes the need for sprints",
+        "Because it merges all modules into one container",
+        "Because different teams can develop and deploy their code sets at any time"
+      ],
+      "correct": 4,
+      "explanation": "CaaS lets different teams, working in silos on different modules, develop and deploy their own code sets at any time."
+    },
+    {
+      "stem": "What does IaaS rent from Cloud providers, in contrast to CaaS?",
+      "options": [
+        "Only Hardware",
+        "Only functions",
+        "Pre-built solutions",
+        "Business data",
+        "Machine learning models"
+      ],
+      "correct": 0,
+      "explanation": "With IaaS only hardware is rented; CaaS is the next stage where containers are rented instead."
+    },
+    {
+      "stem": "Which statement about CaaS availability is made?",
+      "options": [
+        "Only one Cloud provider offers it",
+        "It is not yet offered by any Cloud provider",
+        "Most of the Cloud providers are offering CaaS",
+        "It is available only on-premises",
+        "It has been discontinued"
+      ],
+      "correct": 2,
+      "explanation": "The topic states that most of the Cloud providers are offering CaaS."
+    },
+    {
+      "stem": "Under CaaS, who manages the hardware underneath the deployed containers?",
+      "options": [
+        "The customer's infrastructure team",
+        "An external auditor",
+        "The container's own code",
+        "The Cloud provider",
+        "The end users"
+      ],
+      "correct": 3,
+      "explanation": "Customers deploy their containers and underneath them the hardware is managed by the Cloud providers."
+    },
+    {
+      "stem": "CaaS is described as the next stage of which paradigm change?",
+      "options": [
+        "Moving from Cloud back to On-Premises",
+        "Moving from SaaS to DaaS",
+        "Moving from Agile to Waterfall",
+        "Moving from renting hardware (IaaS) to renting containers at a smaller scale",
+        "Moving from containers to mainframes"
+      ],
+      "correct": 3,
+      "explanation": "After On-Premises versus Cloud and IaaS, the next stage of the paradigm change is renting containers at a small scale."
+    }
+  ]
+}

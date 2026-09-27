@@ -1,0 +1,125 @@
+{
+  "topic": "data-self-service",
+  "questions": [
+    {
+      "stem": "How does Data Enrichment relate to Self-Service?",
+      "options": [
+        "Data Enrichment is a synonym for Self-Service",
+        "Data Enrichment must be completed before any Self-Service is possible",
+        "Data Enrichment is just one part of one of the types of Self-Service",
+        "Data Enrichment replaces Self-Service in the analytics era",
+        "Data Enrichment and Self-Service are unrelated"
+      ],
+      "correct": 2,
+      "explanation": "Self-Service and Data Enrichment are often confused, but Data Enrichment is just one part of one of the types of Self-Service."
+    },
+    {
+      "stem": "What is Self-Service about?",
+      "options": [
+        "Empowering business users and decision makers to conduct activities themselves to shorten end-to-end delivery time",
+        "Transferring all reporting work to the IT department",
+        "Allowing customers to update their own bank balances",
+        "Automating the hiring of data scientists",
+        "Replacing business users with machine learning"
+      ],
+      "correct": 0,
+      "explanation": "Self-Service empowers business users and decision makers to conduct activities by themselves in order to shorten the end-to-end delivery time."
+    },
+    {
+      "stem": "What does I Am Datapedia! say is a prerequisite for any type of Self-Service?",
+      "options": [
+        "A NoSQL database",
+        "A Data Mashup",
+        "A Semantic Layer",
+        "A Heat Map",
+        "Data Democratisation"
+      ],
+      "correct": 4,
+      "explanation": "Because it is risky to let people change things they do not understand, Data Democratisation is a prerequisite for any type of Self-Service."
+    },
+    {
+      "stem": "Why is Self-Service described as risky without the right foundation?",
+      "options": [
+        "Because it requires expensive licences",
+        "Because it allows people to make changes when they do not understand the data",
+        "Because it slows down delivery time",
+        "Because it removes access control from systems",
+        "Because it can only be used by IT"
+      ],
+      "correct": 1,
+      "explanation": "It is too risky to allow people to go and make changes if they do not understand data, which is why Data Democratisation must come first."
+    },
+    {
+      "stem": "Which capabilities belong to Data Self-Service?",
+      "options": [
+        "Running deep learning models on unstructured data",
+        "Provisioning servers without IT approval",
+        "Publishing dashboards to external customers",
+        "A data-friendly environment where users are trained on data, may question its accuracy and integrity, and may extend its context through Data Enrichment",
+        "Automatically approving leave requests"
+      ],
+      "correct": 3,
+      "explanation": "In Data Self-Service a data-friendly environment is provided, users are trained, allowed to question accuracy and integrity, and allowed to enrich first-hand data with second-hand and third-party datasets."
+    },
+    {
+      "stem": "Who are the major users of Analytics Self-Service, and what do they do?",
+      "options": [
+        "Data Citizens, who run data science or data mining models using low-code or no-code tools",
+        "Database administrators, who tune indexes",
+        "External auditors, who verify financial statements",
+        "Network engineers, who configure firewalls",
+        "Customers, who file support tickets"
+      ],
+      "correct": 0,
+      "explanation": "Analytics Self-Service involves machine learning and data modelling; Data Citizens are its major users, running data science or data mining models with low-code or no-code tools."
+    },
+    {
+      "stem": "What does BI Self-Service allow users to do?",
+      "options": [
+        "Modify the database schema",
+        "Train machine learning models",
+        "Connect to internal or external source systems, within their access level, and create their own reports and dashboards",
+        "Purchase third-party datasets",
+        "Approve other users' access requests"
+      ],
+      "correct": 2,
+      "explanation": "In BI Self-Service, users connect to any internal or external source system, based on their access level, and create reports and dashboards on their own."
+    },
+    {
+      "stem": "What is the main purpose of BI Self-Service?",
+      "options": [
+        "To increase the number of data scientists",
+        "To eliminate the need for access control",
+        "To replace Data Democratisation",
+        "To speed up database backups",
+        "To reduce the dependency on IT for creating reports for business users"
+      ],
+      "correct": 4,
+      "explanation": "BI Self-Service exists majorly to reduce the dependency on IT to create reports for business users."
+    },
+    {
+      "stem": "In the current era, how has the paradigm of report and dashboard creation shifted?",
+      "options": [
+        "From business users to IT",
+        "From IT to business users",
+        "From consultants to regulators",
+        "From on-premises to paper",
+        "From dashboards back to Excel"
+      ],
+      "correct": 1,
+      "explanation": "The paradigm of creating reports and dashboards has moved from IT to business users."
+    },
+    {
+      "stem": "Which of the following is NOT one of the types of Self-Service discussed in I Am Datapedia!?",
+      "options": [
+        "Data Self-Service",
+        "Analytics Self-Service",
+        "BI Self-Service",
+        "Infrastructure Self-Service",
+        "Analytics Self-Service for Data Citizens"
+      ],
+      "correct": 3,
+      "explanation": "The three types discussed are Data Self-Service, Analytics Self-Service (for Data Citizens) and BI Self-Service; Infrastructure Self-Service is not among them."
+    }
+  ]
+}

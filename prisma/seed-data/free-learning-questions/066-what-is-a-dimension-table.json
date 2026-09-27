@@ -1,0 +1,125 @@
+{
+  "topic": "what-is-a-dimension-table",
+  "questions": [
+    {
+      "stem": "What role does a dimension table play in dimensional modelling?",
+      "options": [
+        "It provides descriptive context to fact tables",
+        "It stores the numeric measures of a business process",
+        "It records the grain of each business event",
+        "It holds the event log for replay",
+        "It stores hashed business keys"
+      ],
+      "correct": 0,
+      "explanation": "A dimension is a descriptive table that explains events recorded in facts by supplying attributes such as names, categories, locations and time periods."
+    },
+    {
+      "stem": "Which questions do dimensions answer?",
+      "options": [
+        "How much and how many",
+        "Who, what, when, where and sometimes how",
+        "Only when",
+        "Only how much",
+        "Which key and which value"
+      ],
+      "correct": 1,
+      "explanation": "Dimensions answer questions such as who, what, when, where and sometimes how, making numeric measures meaningful."
+    },
+    {
+      "stem": "What does a dimension table typically contain?",
+      "options": [
+        "Numeric measures and foreign keys",
+        "Immutable events with timestamps",
+        "A primary key, descriptive attributes and hierarchies for reporting",
+        "Hubs, links and satellites",
+        "Request and response payloads"
+      ],
+      "correct": 2,
+      "explanation": "A dimension table typically contains a primary key such as Customer_ID, descriptive attributes such as Name or Region, and hierarchies such as Day → Month → Quarter → Year."
+    },
+    {
+      "stem": "Which attributes are listed for Dim_Customer in the loan approval warehouse?",
+      "options": [
+        "OfficerID, Name, Branch and ExperienceYears",
+        "BranchID, City and Region",
+        "DateID, Day, Month, Quarter and Year",
+        "CustomerID, Name, AgeGroup, IncomeBand and Segment",
+        "LoanAmount, InterestRate and ApprovalFlag"
+      ],
+      "correct": 3,
+      "explanation": "Dim_Customer may include CustomerID, Name, AgeGroup, IncomeBand and Segment; the other lists belong to Dim_Officer, Dim_Branch, Dim_Date and the fact table."
+    },
+    {
+      "stem": "What analytical capability do hierarchies within dimensions enable?",
+      "options": [
+        "Event replay",
+        "Multi-hop traversal",
+        "Schema validation",
+        "Idempotent consumption",
+        "Roll-up and drill-down analysis"
+      ],
+      "correct": 4,
+      "explanation": "Hierarchies such as daily, monthly, quarterly and yearly levels in a Date dimension enable roll-up and drill-down analysis."
+    },
+    {
+      "stem": "Which technique is used to manage business attributes such as customer segment that change over time in a dimension?",
+      "options": [
+        "Slowly Changing Dimensions (SCD Type 1, Type 2 or Type 3)",
+        "Cartesian decomposition",
+        "Partition keys",
+        "Projection–join decomposition",
+        "Owner–member sets"
+      ],
+      "correct": 0,
+      "explanation": "Slowly Changing Dimension techniques (SCD Type 1, 2 or 3) preserve historical accuracy while maintaining reporting consistency when attributes change."
+    },
+    {
+      "stem": "Why are dimensions described as the \"face\" of the data warehouse?",
+      "options": [
+        "Because they hold the largest number of rows",
+        "Because business users primarily interact with dimension attributes when building reports",
+        "Because they are loaded first",
+        "Because they contain all the numeric measures",
+        "Because they define the grain"
+      ],
+      "correct": 1,
+      "explanation": "Dimensions make facts understandable and accessible, and business users mainly work with dimension attributes when building reports."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a trade-off of dimension tables?",
+      "options": [
+        "Dimension tables in a star schema may contain redundant data",
+        "Managing slowly changing attributes requires careful governance",
+        "Poorly designed hierarchies can create inconsistent reporting results",
+        "Dimensions cannot integrate with BI tools",
+        "Denormalisation increases redundancy"
+      ],
+      "correct": 3,
+      "explanation": "Seamless integration with BI tools is a strength of dimensions; the trade-offs concern redundancy, slowly changing attribute governance and poorly designed hierarchies."
+    },
+    {
+      "stem": "How do dimensions differ between a star schema and a snowflake schema?",
+      "options": [
+        "Star dimensions are normalised to 6NF; snowflake dimensions are flat",
+        "Star dimensions store measures; snowflake dimensions store keys only",
+        "Star dimensions are denormalised for simplicity and performance; snowflake dimensions may be partially normalised to reduce redundancy",
+        "Star dimensions have no primary key; snowflake dimensions do",
+        "There is no difference"
+      ],
+      "correct": 2,
+      "explanation": "In a star schema dimensions are denormalised; in a snowflake schema they may be partially normalised, moving slightly closer to 2NF or 3NF principles."
+    },
+    {
+      "stem": "Which normal forms does dimensional modelling NOT aim to comply with?",
+      "options": [
+        "1NF",
+        "2NF",
+        "3NF",
+        "None; it complies with all normal forms",
+        "Higher forms such as 4NF, 5NF or 6NF"
+      ],
+      "correct": 4,
+      "explanation": "Dimensional modelling does not aim to comply with higher normal forms such as 4NF, 5NF or 6NF; its priority is usability and analytical performance."
+    }
+  ]
+}

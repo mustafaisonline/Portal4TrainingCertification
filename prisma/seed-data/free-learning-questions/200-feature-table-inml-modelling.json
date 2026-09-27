@@ -1,0 +1,125 @@
+{
+  "topic": "feature-table-inml-modelling",
+  "questions": [
+    {
+      "stem": "In machine learning modelling, what is a Feature?",
+      "options": [
+        "A new table created and populated from raw data using data wrangling, used as the source for an ML model",
+        "A button in a dashboard that runs a model",
+        "The algorithm that a data scientist chooses",
+        "The prediction produced by a model",
+        "A licence option in a data science tool"
+      ],
+      "correct": 0,
+      "explanation": "A Feature is a new table, created and populated from raw data through data wrangling, that serves as the source data for a machine learning model."
+    },
+    {
+      "stem": "How does I Am Datapedia! summarise what a Feature is in its key phrase?",
+      "options": [
+        "A Feature is a trained model",
+        "A Feature is a data scientist's hypothesis",
+        "A Feature is nothing more than a traditional table",
+        "A Feature is a chart of raw data",
+        "A Feature is an unstructured document"
+      ],
+      "correct": 2,
+      "explanation": "The author's key phrase is that a Feature is nothing more than a traditional table."
+    },
+    {
+      "stem": "Why do data scientists need raw but relevant data rather than all raw data?",
+      "options": [
+        "Because raw data is always encrypted",
+        "Because ML models cannot read tables",
+        "Because raw data is stored only on paper",
+        "Because raw data must be deleted after use",
+        "Because raw data includes irrelevant data, and training a model does not need all of it"
+      ],
+      "correct": 4,
+      "explanation": "Raw data means irrelevant data as well, and in Big Data the sizes are huge, so only the relevant raw data is needed to train models."
+    },
+    {
+      "stem": "Who ideally cleans and filters the data before it is fed into a machine learning model?",
+      "options": [
+        "The end customers",
+        "Data engineers, or the data scientists themselves",
+        "The database vendor",
+        "The marketing department",
+        "The model itself"
+      ],
+      "correct": 1,
+      "explanation": "Data scientists themselves, or ideally data engineers, clean and filter the data through data wrangling before feeding it to ML models."
+    },
+    {
+      "stem": "A global table holds one million customer rows, but a model must predict buying behaviour for one country and one set of products. What is created?",
+      "options": [
+        "A copy of the full one million rows",
+        "A random sample of one hundred rows",
+        "A second model for every other country",
+        "A new table holding only that country's data for the required products, used as the model's source",
+        "A summary report for management"
+      ],
+      "correct": 3,
+      "explanation": "Rather than feeding all one million rows to the model, a Feature table is created containing only data for that country and product set, and it becomes the source for the ML model."
+    },
+    {
+      "stem": "Which process is used to populate a Feature table from raw data?",
+      "options": [
+        "Data Encryption",
+        "Data Archiving",
+        "Data Wrangling",
+        "Data Monetisation",
+        "Data Splitting"
+      ],
+      "correct": 2,
+      "explanation": "The Feature table is created and populated from raw data using data wrangling, the cleaning and filtering done before data reaches the model."
+    },
+    {
+      "stem": "How is Data Science described in the discussion of Feature tables?",
+      "options": [
+        "Running algorithms and machine learning models on structured, semi-structured and unstructured datasets for analytics",
+        "Designing relational databases for transactions",
+        "Writing reports for senior management",
+        "Backing up data to the cloud",
+        "Managing user access to data"
+      ],
+      "correct": 0,
+      "explanation": "Data Science is described as running algorithms and ML models on structured, semi-structured and unstructured datasets for analytics."
+    },
+    {
+      "stem": "Which statement about a Feature table is NOT correct?",
+      "options": [
+        "It is a table created from raw data",
+        "It is used as the source for a machine learning model",
+        "It is populated using data wrangling",
+        "It holds only the relevant raw data",
+        "It must contain all of the raw data available"
+      ],
+      "correct": 4,
+      "explanation": "A Feature keeps only the raw data that is relevant to the model; one does not need all the raw data to train a model."
+    },
+    {
+      "stem": "According to I Am Datapedia!, which group might not be aware of the term Feature as used in Data Science?",
+      "options": [
+        "Data engineers",
+        "Non-data scientists and non-data citizens",
+        "Machine learning researchers",
+        "Database designers",
+        "ETL developers"
+      ],
+      "correct": 1,
+      "explanation": "The author notes that non-data scientists or non-data citizens might not be aware of the term Feature."
+    },
+    {
+      "stem": "What is described as the basic requirement of any machine learning model?",
+      "options": [
+        "A cloud subscription",
+        "A graphical user interface",
+        "A dedicated data scientist per model",
+        "Data",
+        "A relational database licence"
+      ],
+      "correct": 3,
+      "explanation": "For any ML model there is a basic requirement of data, and data scientists need raw but relevant raw data to work with."
+    }
+  ]
+}

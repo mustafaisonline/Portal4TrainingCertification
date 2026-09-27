@@ -1,0 +1,125 @@
+{
+  "topic": "data-literacy",
+  "questions": [
+    {
+      "stem": "Data Literacy is described as the key for what?",
+      "options": [
+        "All data initiatives",
+        "Only machine learning projects",
+        "Only financial reporting",
+        "Only database administration",
+        "Only executive dashboards"
+      ],
+      "correct": 0,
+      "explanation": "Data Literacy is described as the key for all Data Initiatives."
+    },
+    {
+      "stem": "In previous eras, what was the role of a Business Analyst in relation to a Business Intelligence developer?",
+      "options": [
+        "The BA built the dashboards while the BI developer talked to the business",
+        "The BA managed the database while the BI developer wrote KPIs",
+        "The BA and BI developer had identical responsibilities",
+        "The BA talked to the business, created KPIs and passed them to the BI developer to build reports and dashboards",
+        "The BA reviewed the BI developer's code for errors"
+      ],
+      "correct": 3,
+      "explanation": "In previous eras, the BA talked to the business, created the KPIs and passed them to the BI developer to create reports and dashboards."
+    },
+    {
+      "stem": "According to I Am Datapedia!, what share of Business Intelligence developers in the previous era would not know what a report or dashboard was for?",
+      "options": [
+        "10%",
+        "90%",
+        "50%",
+        "25%",
+        "75%"
+      ],
+      "correct": 1,
+      "explanation": "The author states that 90% of BI developers would not know what a report or dashboard was for, nor the impact of good and bad reports."
+    },
+    {
+      "stem": "What is the difference between Analysis and Analytics?",
+      "options": [
+        "Analysis is automated while Analytics is manual",
+        "Analysis is done on unstructured data while Analytics is done on structured data",
+        "Analysis is a tool while Analytics is a job title",
+        "Analysis predicts the future while Analytics describes the past",
+        "Analysis is about finding the Whys and Whats, whereas Analytics is about finding the Hows"
+      ],
+      "correct": 4,
+      "explanation": "The difference is simple but tricky: Analysis finds the Whys and Whats from a dataset, whereas Analytics finds the Hows."
+    },
+    {
+      "stem": "How does I Am Datapedia! summarise what Analysis and Analytics each do within a dataset?",
+      "options": [
+        "Analysis stores data and Analytics deletes data",
+        "Analysis builds tables and Analytics builds charts",
+        "Analysis searches for questions and Analytics proposes answers",
+        "Analysis proposes answers and Analytics searches for questions",
+        "Analysis and Analytics both only describe the data"
+      ],
+      "correct": 2,
+      "explanation": "In other words, in datasets Analysis searches for questions and Analytics proposes answers."
+    },
+    {
+      "stem": "What is the current era called, in contrast with the previous era of Analysis?",
+      "options": [
+        "The Analytics era",
+        "The Reporting era",
+        "The Spreadsheet era",
+        "The Storage era",
+        "The Dashboard era"
+      ],
+      "correct": 0,
+      "explanation": "Time has changed and we have entered the Analytics era, as compared to the previous era of Analysis."
+    },
+    {
+      "stem": "When Data Literacy says everyone must understand data and its value, who does everyone include?",
+      "options": [
+        "Only senior executives",
+        "Only business analysts",
+        "Only data scientists",
+        "Everyone from the ETL developer through to the BI developer",
+        "Only external consultants"
+      ],
+      "correct": 3,
+      "explanation": "Everyone means everyone, from the ETL developer till the BI developer; one cannot create something one does not understand."
+    },
+    {
+      "stem": "Which of the following is NOT one of the questions a data literate person should be able to answer, according to I Am Datapedia!?",
+      "options": [
+        "Where the data comes from and where it will go",
+        "Which programming language was used to store the data",
+        "Who needs the report and what its purpose is",
+        "Which KPIs are served and what value it can generate",
+        "What the impact on organisational revenue will be"
+      ],
+      "correct": 1,
+      "explanation": "The author's data literacy questions cover reading data, its source and destination, who needs it, its purpose, value, KPIs and revenue impact; the storage language is not among them."
+    },
+    {
+      "stem": "In the era before data became a driving force, where did most decision making happen?",
+      "options": [
+        "In machine learning models",
+        "In real-time dashboards",
+        "In data science notebooks",
+        "In NoSQL databases",
+        "In reports extracted into Excel"
+      ],
+      "correct": 4,
+      "explanation": "In that era reports and dashboards were good to have, and most decision making happened in reports extracted into Excel."
+    },
+    {
+      "stem": "According to Data Literacy, what must someone who is creating a report or dashboard do?",
+      "options": [
+        "Obtain a certification first",
+        "Use only approved colours",
+        "Understand the report or dashboard they are creating",
+        "Build it in Excel before any other tool",
+        "Ask a data scientist to sign it off"
+      ],
+      "correct": 2,
+      "explanation": "One cannot create something one does not understand, so anyone creating a report or dashboard must understand it."
+    }
+  ]
+}

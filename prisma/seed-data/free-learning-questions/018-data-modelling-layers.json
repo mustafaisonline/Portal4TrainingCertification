@@ -1,0 +1,125 @@
+{
+  "topic": "data-modelling-layers",
+  "questions": [
+    {
+      "stem": "Into how many layers are the roughly 37 data modelling techniques categorised?",
+      "options": [
+        "Three",
+        "Four",
+        "Seven",
+        "Ten",
+        "Five"
+      ],
+      "correct": 4,
+      "explanation": "The around 37 data modelling techniques are categorised into five layers."
+    },
+    {
+      "stem": "Which of the following is one of the five layers of data modelling techniques?",
+      "options": [
+        "Storage & Backup Modelling",
+        "Semantic & Information Modelling",
+        "Network & Security Modelling",
+        "Cloud & Infrastructure Modelling",
+        "Reporting & Dashboard Modelling"
+      ],
+      "correct": 1,
+      "explanation": "Semantic & Information Modelling is one of the five layers alongside Business & Enterprise, Core Data, Specialized Techniques and Governance & AI Extensions."
+    },
+    {
+      "stem": "Which layer of data modelling techniques is named first in the flow?",
+      "options": [
+        "Core Data Modelling",
+        "Governance & AI Extensions",
+        "Specialized Techniques",
+        "Business & Enterprise Modelling",
+        "Semantic & Information Modelling"
+      ],
+      "correct": 3,
+      "explanation": "Business & Enterprise Modelling is the first of the five layers."
+    },
+    {
+      "stem": "Which layer of data modelling techniques is named last in the flow?",
+      "options": [
+        "Core Data Modelling",
+        "Business & Enterprise Modelling",
+        "Specialized Techniques",
+        "Semantic & Information Modelling",
+        "Governance & AI Extensions"
+      ],
+      "correct": 4,
+      "explanation": "Governance & AI Extensions is the fifth and final layer."
+    },
+    {
+      "stem": "Which of the following is NOT one of the five layers of data modelling techniques?",
+      "options": [
+        "Business & Enterprise Modelling",
+        "Core Data Modelling",
+        "Physical Storage Modelling",
+        "Specialized Techniques",
+        "Governance & AI Extensions"
+      ],
+      "correct": 2,
+      "explanation": "Physical Storage Modelling is not a layer; the five are Business & Enterprise, Semantic & Information, Core Data, Specialized Techniques and Governance & AI Extensions."
+    },
+    {
+      "stem": "How is Data Modelling characterised within the field of data management and analytics?",
+      "options": [
+        "As an optional add-on for large organisations",
+        "As a foundational concept",
+        "As a purely technical database task",
+        "As a replacement for business analysis",
+        "As a reporting technique"
+      ],
+      "correct": 1,
+      "explanation": "Data Modelling is a foundational concept in the field of data management and analytics."
+    },
+    {
+      "stem": "What does Data Modelling involve creating?",
+      "options": [
+        "Different representations of data structures to support business and technical requirements",
+        "A single physical database for the whole organisation",
+        "Backup schedules for every table",
+        "Dashboards for executives",
+        "Network diagrams of the data centre"
+      ],
+      "correct": 0,
+      "explanation": "Data Modelling involves creating different representations of data structures to support various business and technical requirements."
+    },
+    {
+      "stem": "Which layer sits between Semantic & Information Modelling and Specialized Techniques in the five-layer flow?",
+      "options": [
+        "Business & Enterprise Modelling",
+        "Governance & AI Extensions",
+        "Core Data Modelling",
+        "Process Modelling",
+        "Physical Data Modelling"
+      ],
+      "correct": 2,
+      "explanation": "The order is Business & Enterprise, Semantic & Information, Core Data Modelling, Specialized Techniques, then Governance & AI Extensions."
+    },
+    {
+      "stem": "Which layer directly follows Business & Enterprise Modelling in the five-layer flow?",
+      "options": [
+        "Core Data Modelling",
+        "Governance & AI Extensions",
+        "Specialized Techniques",
+        "Semantic & Information Modelling",
+        "Dimensional Modelling"
+      ],
+      "correct": 3,
+      "explanation": "Semantic & Information Modelling is the second layer, immediately after Business & Enterprise Modelling."
+    },
+    {
+      "stem": "Which layer is named fourth in the five-layer flow of data modelling techniques?",
+      "options": [
+        "Specialized Techniques",
+        "Core Data Modelling",
+        "Business & Enterprise Modelling",
+        "Semantic & Information Modelling",
+        "Governance & AI Extensions"
+      ],
+      "correct": 0,
+      "explanation": "Specialized Techniques is the fourth layer, after Core Data Modelling and before Governance & AI Extensions."
+    }
+  ]
+}

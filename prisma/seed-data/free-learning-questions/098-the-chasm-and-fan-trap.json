@@ -1,0 +1,125 @@
+{
+  "topic": "the-chasm-and-fan-trap",
+  "questions": [
+    {
+      "stem": "What do Chasm and Fan Traps lead to?",
+      "options": [
+        "Faster queries",
+        "Cartesian Data",
+        "Higher cardinality",
+        "Better normalisation",
+        "Smaller tables"
+      ],
+      "correct": 1,
+      "explanation": "'Chasm and Fan Trap lead to Cartesian Data', which can impact the whole data model."
+    },
+    {
+      "stem": "How is a Fan Trap defined?",
+      "options": [
+        "A model with a 'Many to One' relationship in more than two tables joined in one query",
+        "A model that ends up having a 'One to Many' relationship chained across more than two tables",
+        "A table with no primary key",
+        "A query that uses UNION ALL",
+        "A missing foreign key"
+      ],
+      "correct": 1,
+      "explanation": "In a Fan Trap the model has 'One to Many' relationships in more than two tables, such as Customer to Order and Order to Order Product."
+    },
+    {
+      "stem": "In the Fan Trap example, what is the problem with adding Order Id as a foreign key in the Order Products table?",
+      "options": [
+        "It makes the Orders table too large",
+        "It removes the relationship between Customer and Order",
+        "It prevents customers from placing orders",
+        "It causes low cardinality in Order Products and duplication of Product, when Product ID should be unique",
+        "It requires a UNION ALL"
+      ],
+      "correct": 3,
+      "explanation": "Order Id as Fkey in Order Products creates low cardinality and duplicates products, whereas in the Products table Product ID should be unique."
+    },
+    {
+      "stem": "What is the suggested solution to the Fan Trap in the Customer, Order and Product example?",
+      "options": [
+        "Delete the Products table",
+        "Merge Orders and Products into one table",
+        "Write two separate queries",
+        "Add Customer ID to the Products table",
+        "Have Product ID from the Order Products table as the foreign key in the Orders table, since one Product can have many Orders"
+      ],
+      "correct": 4,
+      "explanation": "One Product can have many Orders but not the other way round, so the correct approach is to carry Product ID as Fkey in Orders."
+    },
+    {
+      "stem": "How is a Chasm Trap defined?",
+      "options": [
+        "A model with 'Many to One' relationships in more than two tables that are joined in one query",
+        "A physical model with duplicate primary keys",
+        "A table without a foreign key",
+        "A star schema with too many dimensions",
+        "A missing index on a fact table"
+      ],
+      "correct": 0,
+      "explanation": "In a Chasm Trap the model has 'Many to One' relationships across more than two tables, which is fine until all three are joined in ONE query."
+    },
+    {
+      "stem": "In a Chasm Trap, where does the issue lie?",
+      "options": [
+        "In the data model",
+        "In the hardware",
+        "In the data types",
+        "In the primary key definitions",
+        "In the way the query is written, not the data model"
+      ],
+      "correct": 4,
+      "explanation": "For the Chasm Trap the issue is not the data model; the issue is writing the query."
+    },
+    {
+      "stem": "In the John example from I Am Datapedia!, how many rows result from joining Employee, Target and Sales in one query, and what total is shown?",
+      "options": [
+        "12 rows and USD 100k",
+        "10 rows and USD 100k",
+        "20 rows and USD 200k",
+        "2 rows and USD 3M",
+        "22 rows and USD 220k"
+      ],
+      "correct": 2,
+      "explanation": "John's 2 target rows each join with his 10 sales rows, producing 20 rows and a wrong total of USD 200k instead of USD 100k."
+    },
+    {
+      "stem": "Which two approaches are given to handle the Chasm Trap?",
+      "options": [
+        "Add an index or drop the Target table",
+        "Denormalise the tables or delete duplicates",
+        "Use an OUTER JOIN or a CROSS JOIN",
+        "Write two queries separately, or write two queries within one query using UNION ALL",
+        "Add a surrogate key or a composite key"
+      ],
+      "correct": 3,
+      "explanation": "Either write two separate queries, or combine two queries within one using UNION ALL, which in the example yields the correct 12 rows."
+    },
+    {
+      "stem": "How many rows does the UNION ALL solution produce in the John example?",
+      "options": [
+        "2",
+        "10",
+        "12",
+        "20",
+        "22"
+      ],
+      "correct": 2,
+      "explanation": "The first query yields 2 target rows and the second 10 sales rows; joined by UNION ALL they give 12 rows, the correct result."
+    },
+    {
+      "stem": "Which rule about transactional and master tables must one not forget when modelling?",
+      "options": [
+        "Transactional tables should be 'Many' and master/reference tables 'One'",
+        "Transactional tables should be 'One' and master tables 'Many'",
+        "Both should always be 'Many'",
+        "Both should always be 'One'",
+        "Master tables should have no keys"
+      ],
+      "correct": 0,
+      "explanation": "'One must not forget to have transactional table to be Many, and Master/Reference table be One in the equation.'"
+    }
+  ]
+}

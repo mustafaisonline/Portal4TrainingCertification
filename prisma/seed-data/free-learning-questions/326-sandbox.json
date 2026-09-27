@@ -1,0 +1,125 @@
+{
+  "topic": "sandbox",
+  "questions": [
+    {
+      "stem": "What is a Data Sandbox?",
+      "options": [
+        "A backup copy of the production database",
+        "A controlled and isolated environment where data scientists, analysts or developers can explore, test and experiment with data without affecting production",
+        "A tool for compressing large datasets",
+        "A production server reserved for executives",
+        "A physical storage device for archived data"
+      ],
+      "correct": 1,
+      "explanation": "A Data Sandbox is a controlled, isolated environment for exploring, testing and experimenting with data without affecting the production environment."
+    },
+    {
+      "stem": "From what idea is the sandbox concept borrowed?",
+      "options": [
+        "A laboratory clean room",
+        "A bank vault",
+        "A children's sandbox where they can play and experiment freely within a confined area",
+        "A quarantine ward",
+        "A construction site"
+      ],
+      "correct": 2,
+      "explanation": "The concept is borrowed from a children's sandbox, where they can play and experiment freely within a confined area."
+    },
+    {
+      "stem": "Why is a Data Sandbox isolated from the production environment?",
+      "options": [
+        "To reduce licensing costs",
+        "To make it faster than production",
+        "To prevent unauthorised users from seeing production dashboards",
+        "To prevent unintended consequences or disruptions to critical systems or data",
+        "To ensure it uses a different programming language"
+      ],
+      "correct": 3,
+      "explanation": "Isolation prevents unintended consequences or disruptions, allowing users to experiment without affecting critical systems or data."
+    },
+    {
+      "stem": "Which activity is described as part of prototyping in a Data Sandbox?",
+      "options": [
+        "Archiving old records",
+        "Approving production deployments",
+        "Monitoring live system uptime",
+        "Billing cloud usage",
+        "Developing new solutions, algorithms or models before deploying them to production"
+      ],
+      "correct": 4,
+      "explanation": "Data scientists and developers use the sandbox to prototype new solutions, algorithms or models before deploying them to the production environment."
+    },
+    {
+      "stem": "Why are Data Sandboxes valuable for learning and training?",
+      "options": [
+        "They allow professionals to train and educate others without the risk of impacting live systems",
+        "They automatically generate training certificates",
+        "They replace formal courses entirely",
+        "They contain no data at all",
+        "They are only accessible to trainers"
+      ],
+      "correct": 0,
+      "explanation": "Sandboxes let data professionals train and educate others without the risk of impacting live systems."
+    },
+    {
+      "stem": "Why might data in a sandbox be masked or anonymised?",
+      "options": [
+        "To reduce storage size",
+        "To comply with privacy regulations while still allowing meaningful analysis",
+        "To speed up query execution",
+        "To prevent version control conflicts",
+        "To make the data easier to visualise"
+      ],
+      "correct": 1,
+      "explanation": "To comply with privacy regulations, sandbox data may be masked or anonymised to protect sensitive information while still allowing meaningful analysis."
+    },
+    {
+      "stem": "What does version control in a Data Sandbox allow users to do?",
+      "options": [
+        "Encrypt sensitive columns",
+        "Grant access to external partners",
+        "Track changes and revert to previous states if needed",
+        "Deploy directly to production",
+        "Increase the sandbox's storage quota"
+      ],
+      "correct": 2,
+      "explanation": "Some Data Sandboxes incorporate version control mechanisms, allowing users to track changes and revert to previous states."
+    },
+    {
+      "stem": "Although sandboxes are designed for experimentation, what must they still adhere to?",
+      "options": [
+        "Production release schedules",
+        "Marketing guidelines",
+        "Financial reporting standards",
+        "Security best practices, including access controls and permissions",
+        "Hardware procurement rules"
+      ],
+      "correct": 3,
+      "explanation": "Sandboxes still need to follow security best practices; access controls and permissions ensure sensitive data is not misused."
+    },
+    {
+      "stem": "What benefit comes from integrating sandboxes with development and deployment processes?",
+      "options": [
+        "Production data is automatically overwritten",
+        "Testing becomes unnecessary",
+        "Sandboxes no longer need access controls",
+        "All experiments are deleted after each session",
+        "A seamless transition from testing and experimentation to production deployment"
+      ],
+      "correct": 4,
+      "explanation": "Integration with development processes enables a seamless transition from testing and experimentation to production deployment."
+    },
+    {
+      "stem": "Which of the following is NOT a key aspect of a Data Sandbox as described?",
+      "options": [
+        "Direct modification of live production data",
+        "Isolation from the production environment",
+        "Experimentation and testing in a risk-free environment",
+        "Data exploration without altering the original data",
+        "Data masking and anonymisation"
+      ],
+      "correct": 0,
+      "explanation": "A sandbox exists precisely so users can experiment without altering original data or production systems; direct modification of live production data is the opposite of its purpose."
+    }
+  ]
+}

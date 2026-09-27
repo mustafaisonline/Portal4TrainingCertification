@@ -1,0 +1,125 @@
+{
+  "topic": "data-syndication",
+  "questions": [
+    {
+      "stem": "By what other name is Data Syndication known?",
+      "options": [
+        "Data Standardisation",
+        "Data Synchronisation",
+        "Data Serialisation",
+        "Data Segmentation",
+        "Data Simulation"
+      ],
+      "correct": 1,
+      "explanation": "Syndication is also known as synchronisation."
+    },
+    {
+      "stem": "Which statement about Data Syndication is correct?",
+      "options": [
+        "It is a technology that must be bought from a vendor",
+        "It is a database feature available only in the cloud",
+        "It is a process, not a technology",
+        "It is another name for a data warehouse",
+        "It can only handle structured input"
+      ],
+      "correct": 2,
+      "explanation": "Data Syndication is a process, not a technology, so any expensive or cheap technology can be used to implement it."
+    },
+    {
+      "stem": "What is Data Syndication about?",
+      "options": [
+        "Encrypting data before it leaves the organisation",
+        "Removing duplicate records from master data",
+        "Collecting and preparing an up-to-date dataset for a particular activity",
+        "Reducing rows in a query",
+        "Summarising data into totals"
+      ],
+      "correct": 2,
+      "explanation": "Data Syndication is to collect and prepare an up-to-date dataset for a particular activity, such as a marketing campaign."
+    },
+    {
+      "stem": "Which example illustrates Data Syndication in *I Am Datapedia!*?",
+      "options": [
+        "Preparing a dataset from multiple source systems for the marketing team to plan an upcoming campaign",
+        "Running a DISTINCT command on an age column",
+        "Copying a source data model into a landing zone",
+        "Retraining a model after product types increase",
+        "Generating fake customer records for developers"
+      ],
+      "correct": 0,
+      "explanation": "The example given is preparing a dataset from multiple source systems so the marketing team can plan its campaign exercise."
+    },
+    {
+      "stem": "What is the meaning of the Greek word 'syndikos', from which 'syndicate' ultimately derives?",
+      "options": [
+        "Something given",
+        "Caretaker of an issue",
+        "Care for",
+        "Trade union",
+        "Administrator"
+      ],
+      "correct": 1,
+      "explanation": "The Greek 'syndikos' means caretaker of an issue, comparable to an ombudsman or representative; the French 'syndicat' means trade union."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a capability of a Data Syndication process?",
+      "options": [
+        "Handling any type of format as input and output",
+        "Sending alerts",
+        "Configuring an access matrix",
+        "Providing monitoring dashboards and reports for compliance and audit trails",
+        "Automatically generating a physical data model"
+      ],
+      "correct": 4,
+      "explanation": "Format flexibility, alerts, access matrix and compliance monitoring are all listed; generating a physical data model is not."
+    },
+    {
+      "stem": "In what forms can a Data Syndication process deliver its output?",
+      "options": [
+        "Only as a database table",
+        "Only as a PDF report",
+        "Only as an API",
+        "Email, SMS, spreadsheet, database, ML models and other formats designed to customer requirements",
+        "Only as a canned report"
+      ],
+      "correct": 3,
+      "explanation": "Output formats can be designed to customer requirements and sent as email, SMS, spreadsheet, database, ML models and more."
+    },
+    {
+      "stem": "How do third-party data syndication companies make money?",
+      "options": [
+        "By collecting and preparing syndicated datasets and selling them as a DaaS service",
+        "By licensing database engines",
+        "By charging per query run in the cloud",
+        "By building data warehouses for clients",
+        "By auditing compliance reports"
+      ],
+      "correct": 0,
+      "explanation": "Specialist syndication companies collect and prepare relevant syndicated datasets for large organisations and sell them as Data as a Service."
+    },
+    {
+      "stem": "Why has a Data Syndication process become so important in the current era?",
+      "options": [
+        "Because databases no longer support joins",
+        "Because cloud storage is expensive",
+        "Because regulators forbid data sharing",
+        "Because so many sources and channels produce structured, semi-structured and unstructured data, such as social media, CCTV, audio, emails, PDFs and scans",
+        "Because marketing teams no longer use data"
+      ],
+      "correct": 3,
+      "explanation": "With data arriving from many channels and in many formats, organisations need a process to syndicate it into a usable dataset."
+    },
+    {
+      "stem": "Which use of syndicated customer behavioural data does *I Am Datapedia!* suggest?",
+      "options": [
+        "Training staff on SQL",
+        "Replacing the finance ledger",
+        "Encrypting customer contact details",
+        "Deciding which database vendor to buy",
+        "Helping organisations plan their production"
+      ],
+      "correct": 4,
+      "explanation": "Collecting customer behavioural data from all the various channels can help many organisations plan their production."
+    }
+  ]
+}

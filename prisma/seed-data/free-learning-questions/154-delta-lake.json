@@ -1,0 +1,125 @@
+{
+  "topic": "delta-lake",
+  "questions": [
+    {
+      "stem": "What was one of the biggest criticisms of early data lakes that Delta Lake set out to solve?",
+      "options": [
+        "They could not store unstructured data",
+        "Their lack of reliability, with no transactional integrity or data consistency on file-based storage",
+        "They were too small to hold enterprise data",
+        "They required expensive proprietary hardware",
+        "They could not be queried with Spark"
+      ],
+      "correct": 1,
+      "explanation": "Early lakes excelled at storing vast volumes of data but struggled to provide the transactional integrity and consistency that databases and warehouses delivered as a matter of course."
+    },
+    {
+      "stem": "What does DML (Data Manipulation Language) refer to?",
+      "options": [
+        "Operations such as inserts, updates and deletes",
+        "The metadata catalogue of a data lake",
+        "The JSON transaction log",
+        "A columnar file format",
+        "A streaming ingestion framework"
+      ],
+      "correct": 0,
+      "explanation": "DML refers collectively to inserts, updates and deletes, which were difficult to perform reliably on file-based storage such as HDFS or Amazon S3."
+    },
+    {
+      "stem": "What problem did Apache Spark introduce even though it enabled fast queries and analytics?",
+      "options": [
+        "It could only process batch workloads",
+        "It could not read Parquet files",
+        "It was not ACID-compliant, risking incomplete writes or corrupted data when jobs failed midway",
+        "It required a relational database underneath",
+        "It stored all data on a single node"
+      ],
+      "correct": 2,
+      "explanation": "Spark was not ACID-compliant; without atomicity, consistency, isolation and durability, organisations risked incomplete writes, corrupted data or inconsistencies when jobs failed."
+    },
+    {
+      "stem": "Who originally developed Delta Lake, and what kind of technology is it?",
+      "options": [
+        "Cloudera, a Hadoop distribution",
+        "Databricks, an open-source storage layer",
+        "Amazon, a proprietary object store",
+        "Microsoft, a relational database",
+        "Google, a streaming framework"
+      ],
+      "correct": 1,
+      "explanation": "Delta Lake is an open-source storage layer originally developed by Databricks that extends Spark by adding ACID transactions to big data workloads."
+    },
+    {
+      "stem": "On which file format is Delta Lake built, and in what format is its transaction log stored?",
+      "options": [
+        "Built on CSV, log stored in XML",
+        "Built on Apache Parquet, log stored in JSON",
+        "Built on Avro, log stored in Parquet",
+        "Built on JSON, log stored in CSV",
+        "Built on ORC, log stored in YAML"
+      ],
+      "correct": 1,
+      "explanation": "Delta Lake is built on Apache Parquet, an efficient columnar file format, and introduces a transaction log (the Delta Log) stored in JSON."
+    },
+    {
+      "stem": "What does the Delta Log enable?",
+      "options": [
+        "Compression of Parquet files",
+        "Transactional guarantees, auditability and rollback by recording every change to the data",
+        "Conversion of data into relational tables",
+        "Encryption of data at rest",
+        "Automatic dimensional modelling"
+      ],
+      "correct": 1,
+      "explanation": "The Delta Log records every change to the data, enabling transactional guarantees, auditability and rollback."
+    },
+    {
+      "stem": "What is the Time Travel feature of Delta Lake?",
+      "options": [
+        "Scheduling jobs to run at a future time",
+        "Keeping historical versions of data for rollback or auditing, accessible by timestamp or version number",
+        "Replicating data across time zones",
+        "Streaming data with sub-second latency",
+        "Archiving old partitions to tape"
+      ],
+      "correct": 1,
+      "explanation": "Time Travel keeps historical versions of data for rollback or auditing, accessible by timestamp or version number."
+    },
+    {
+      "stem": "How does Delta Lake support Change Data Capture (CDC)?",
+      "options": [
+        "By scanning the whole data set on every run",
+        "Through the Delta Log, so downstream systems can consume incremental changes rather than reprocessing entire data sets",
+        "By emailing change reports to analysts",
+        "By locking tables during updates",
+        "By storing changes in a separate relational database"
+      ],
+      "correct": 1,
+      "explanation": "Through the Delta Log, downstream systems can consume incremental changes rather than reprocessing entire data sets."
+    },
+    {
+      "stem": "Which of the following is NOT one of the innovations Delta Lake introduced?",
+      "options": [
+        "ACID transactions",
+        "Unified batch and streaming",
+        "Schema enforcement and evolution",
+        "Schema-on-read with no validation",
+        "Upserts and deletes"
+      ],
+      "correct": 3,
+      "explanation": "Delta Lake validates incoming data against table definitions while allowing controlled schema changes; unvalidated schema-on-read is the opposite of its schema enforcement."
+    },
+    {
+      "stem": "What broader architecture did Delta Lake lay the groundwork for?",
+      "options": [
+        "The data mart",
+        "The data lakehouse",
+        "The OLTP database",
+        "The data swamp",
+        "The tape archive"
+      ],
+      "correct": 1,
+      "explanation": "By transforming data lakes into reliable, production-ready environments, Delta Lake laid the groundwork for the data lakehouse architecture that merges the strengths of warehouses and lakes."
+    }
+  ]
+}

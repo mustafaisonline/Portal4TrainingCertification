@@ -1,0 +1,125 @@
+{
+  "topic": "hadoop-architecture",
+  "questions": [
+    {
+      "stem": "In the Big Data ecosystem, which component is described as the backbone and the main reason for Big Data's popularity?",
+      "options": [
+        "NoSQL databases",
+        "In-memory processing",
+        "MPP engines",
+        "Hadoop",
+        "The 3 Vs"
+      ],
+      "correct": 3,
+      "explanation": "The ecosystem has many components, but Hadoop is called the backbone and was the selling pitch that made Big Data popular."
+    },
+    {
+      "stem": "Hadoop is a framework based on which programming language?",
+      "options": [
+        "Java",
+        "Python",
+        "Scala",
+        "C++",
+        "Go"
+      ],
+      "correct": 0,
+      "explanation": "Hadoop is described as a Java-based framework."
+    },
+    {
+      "stem": "What is meant by the statement that Hadoop is \"an empty storage\" rather than a solution?",
+      "options": [
+        "Hadoop cannot store unstructured data",
+        "Hadoop only works after it is connected to a mainframe",
+        "Data must be loaded into it first, just as with a traditional database, before any analytics can be generated",
+        "Hadoop stores data but cannot replicate it",
+        "Hadoop has no file system of its own"
+      ],
+      "correct": 2,
+      "explanation": "Buying Hadoop does not deliver analytics by itself: like a traditional database, it must be loaded with data before anything can be produced from it."
+    },
+    {
+      "stem": "What lesson does the story of Big Data being sold as \"magic\" for its first five to seven years teach about adopting a new technology?",
+      "options": [
+        "Wait for the technology to reach version 3 before buying",
+        "Always buy from the largest vendor",
+        "Adopt only open-source technology",
+        "Replace mainframes before anything else",
+        "First hire a specialist internally, then invest"
+      ],
+      "correct": 4,
+      "explanation": "The stated learning is that for every new technology an organisation should first hire an internal specialist and only then invest."
+    },
+    {
+      "stem": "Which capabilities made mainframe systems suitable for critical systems in large organisations?",
+      "options": [
+        "Low cost and small physical size",
+        "High availability, fault tolerance and massive parallel processing",
+        "Built-in social media connectors",
+        "Support for commodity hardware",
+        "Automatic schema evolution"
+      ],
+      "correct": 1,
+      "explanation": "Mainframes offered high availability, fault tolerance and massive parallel processing, which is why only large organisations with huge datasets could afford and justify them."
+    },
+    {
+      "stem": "Why did organisations turn to Hadoop storage when social media began generating data in milliseconds?",
+      "options": [
+        "Mainframes could not connect to the internet",
+        "Hadoop offered better data security than mainframes",
+        "Regulators required open-source storage",
+        "They needed mainframe-like capabilities at a cheaper rate on commodity hardware",
+        "Hadoop removed the need to load data before analysis"
+      ],
+      "correct": 3,
+      "explanation": "With huge volumes arriving, organisations wanted availability, fault tolerance and parallel processing like a mainframe but at commodity-hardware prices, which Hadoop provided."
+    },
+    {
+      "stem": "How does Hadoop deliver a highly available service on a cluster of computers that may each be prone to failure?",
+      "options": [
+        "The Hadoop library itself detects and handles failures at the application layer",
+        "It requires enterprise-grade hardware with redundant power",
+        "It keeps a single master copy of every file on the most reliable node",
+        "It pauses all processing until a failed node is repaired",
+        "It relies on the operating system to restart failed machines"
+      ],
+      "correct": 0,
+      "explanation": "Rather than relying on hardware for high availability, Hadoop is designed to detect and handle failures at the application layer."
+    },
+    {
+      "stem": "Which of the following is NOT listed among the terms of Hadoop architecture?",
+      "options": [
+        "HDFS",
+        "YARN",
+        "MapReduce",
+        "Replication Factor",
+        "Kafka"
+      ],
+      "correct": 4,
+      "explanation": "The listed terms are HDFS, Name and Data Node, YARN, Resource and Node Manager, MapReduce, Replication Factor, High Availability and MPP; Kafka is not among them."
+    },
+    {
+      "stem": "According to the figure quoted in I Am Datapedia!, roughly how much data does Twitter alone generate per day?",
+      "options": [
+        "52 GB",
+        "5 TB",
+        "52 TB",
+        "520 TB",
+        "52 PB"
+      ],
+      "correct": 2,
+      "explanation": "Twitter alone is quoted as generating about 52 TB per day, illustrating the volume that made cheaper mainframe-like storage necessary."
+    },
+    {
+      "stem": "Which release is cited as the latest version of Apache Hadoop?",
+      "options": [
+        "Apache Hadoop 2.7.1",
+        "Apache Hadoop 3.3.4",
+        "Apache Hadoop 1.0",
+        "Apache Hadoop 4.0",
+        "Apache Hadoop 3.0.0"
+      ],
+      "correct": 1,
+      "explanation": "The version cited as current is Apache Hadoop 3.3.4."
+    }
+  ]
+}

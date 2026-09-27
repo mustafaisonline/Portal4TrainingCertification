@@ -1,0 +1,125 @@
+{
+  "topic": "data-liberalization",
+  "questions": [
+    {
+      "stem": "How is Data Liberalisation related to Data Democratisation?",
+      "options": [
+        "Data Liberalisation replaces Data Democratisation",
+        "Data Liberalisation is ideally a prerequisite for Data Democratisation",
+        "Data Liberalisation is a tool used after Data Democratisation is complete",
+        "Data Liberalisation applies only to unstructured data",
+        "The two have nothing to do with each other"
+      ],
+      "correct": 1,
+      "explanation": "The key phrase is that Data Liberalisation ideally is a prerequisite for Data Democratisation; the two work together and are often confused."
+    },
+    {
+      "stem": "What is Data Liberalisation about?",
+      "options": [
+        "Removing all access controls from data",
+        "Selling data to third parties",
+        "Deleting data that is no longer needed",
+        "Providing data in such a way that it is reusable by users",
+        "Storing data in a single central database"
+      ],
+      "correct": 3,
+      "explanation": "Data Liberalisation is about providing data in such a way that it should be reusable by users, whatever the format."
+    },
+    {
+      "stem": "Which are given as examples of the formats through which liberalised data can be provided?",
+      "options": [
+        "Via an API, via BI tools, or via DaaS",
+        "Only via printed reports",
+        "Only via email attachments",
+        "Only via a data warehouse",
+        "Only via spreadsheets"
+      ],
+      "correct": 0,
+      "explanation": "Liberalised data can be in any format, for example via API, via BI tools or via Data as a Service."
+    },
+    {
+      "stem": "When Data Democratisation aims for data access availability for everyone, what does that NOT mean?",
+      "options": [
+        "That data should be reusable",
+        "That users can ask analytical questions",
+        "That the fear factor about data should be removed",
+        "That users can raise questions about data",
+        "That everything is shown to everyone without access control"
+      ],
+      "correct": 4,
+      "explanation": "Data access availability for everyone does not mean showing everything; access is still governed by access control."
+    },
+    {
+      "stem": "What does Data Liberalisation complete the cycle to make sure of?",
+      "options": [
+        "That data is deleted after use",
+        "That only IT can access data",
+        "That whatever a user accesses is usable rather than a pile of junk data",
+        "That data is stored in the cloud",
+        "That every report is approved by management"
+      ],
+      "correct": 2,
+      "explanation": "Data Liberalisation completes the cycle by making sure that whatever the user accesses is usable for them rather than a pile of junk data."
+    },
+    {
+      "stem": "Can the Data Driven Organisation concept be completed by Data Democratisation alone?",
+      "options": [
+        "Yes, Data Democratisation is sufficient on its own",
+        "No, Data Liberalisation is also a very crucial component",
+        "Yes, as long as a BI tool is purchased",
+        "No, it also requires outsourcing analytics",
+        "Yes, provided the IT department approves"
+      ],
+      "correct": 1,
+      "explanation": "The Data Driven Organisation concept cannot be completed just by Data Democratisation; Data Liberalisation is also a very crucial component."
+    },
+    {
+      "stem": "What is the consequence of opening the door of data to everyone when the data is not in a usable format?",
+      "options": [
+        "Users become more data literate",
+        "Cultural change is accelerated",
+        "Storage costs fall",
+        "End users lose confidence and question the integrity of the data, causing greater harm to the organisation",
+        "IT receives fewer report requests"
+      ],
+      "correct": 3,
+      "explanation": "Opening data that is not usable has a negative impact on cultural change: end users lose confidence, question the data's integrity, and the organisation can suffer greater harm."
+    },
+    {
+      "stem": "In a nutshell, what does Data Liberalisation teach about accessibility and usability?",
+      "options": [
+        "Data accessibility is as important as data usability for a Data Driven Organisation",
+        "Data accessibility matters far more than usability",
+        "Data usability matters only for IT users",
+        "Neither accessibility nor usability affects cultural change",
+        "Usability can be ignored once data is accessible"
+      ],
+      "correct": 0,
+      "explanation": "The nutshell statement is that data accessibility is as important as data usability in becoming a Data Driven Organisation."
+    },
+    {
+      "stem": "Why are Data Liberalisation and Data Democratisation described as confusing terms?",
+      "options": [
+        "Because they are both names for a single software product",
+        "Because neither has ever been defined",
+        "Because they belong to different industries",
+        "Because one is about hardware and the other about software",
+        "Because they work together and are most of the time mixed with each other"
+      ],
+      "correct": 4,
+      "explanation": "The two terms are confusing because they work together and are, most of the time, mixed up with each other."
+    },
+    {
+      "stem": "Which of the following is stated as an aim of Data Democratisation?",
+      "options": [
+        "To convert all data to an API format",
+        "To limit analytical questions to trained analysts",
+        "To remove the fear factor about data",
+        "To make data reusable through DaaS",
+        "To centralise data ownership in IT"
+      ],
+      "correct": 2,
+      "explanation": "Data Democratisation aims to remove the fear factor about data, allow everyone to ask analytical questions and have data access availability for everyone."
+    }
+  ]
+}

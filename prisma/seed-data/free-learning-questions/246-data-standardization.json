@@ -1,0 +1,125 @@
+{
+  "topic": "data-standardization",
+  "questions": [
+    {
+      "stem": "What does Data Standardisation mean?",
+      "options": [
+        "Converting data into a format that is accessible, usable, readable and actionable",
+        "Reducing the number of rows in a query result",
+        "Replacing real data with synthetic values",
+        "Summarising detail into totals",
+        "Isolating data so only one team can see it"
+      ],
+      "correct": 0,
+      "explanation": "Data Standardisation means converting data into such a format that it is accessible, usable, readable and actionable."
+    },
+    {
+      "stem": "At which two levels can Data Standardisation be imposed?",
+      "options": [
+        "Network level and application level",
+        "Data level and data store level",
+        "Cloud level and on-premises level",
+        "Row level and column level",
+        "Project level and programme level"
+      ],
+      "correct": 1,
+      "explanation": "Data Standardisation can be imposed at a data level or at a data store level."
+    },
+    {
+      "stem": "Which of the following is NOT listed as an effect of Data Standardisation?",
+      "options": [
+        "Reduces manual effort",
+        "Removes duplications",
+        "Enforces data governance",
+        "Increases the number of data silos",
+        "Enables segmentation"
+      ],
+      "correct": 3,
+      "explanation": "Standardisation reduces manual effort, removes duplication, enforces governance and enables segmentation; it works against silos rather than increasing them."
+    },
+    {
+      "stem": "What is the first of the listed steps for Data Standardisation?",
+      "options": [
+        "Outline the data standards",
+        "Recognise data entry points",
+        "Know your data and what it is required for",
+        "Standardise your data with the help of data scoring",
+        "Create quality gates"
+      ],
+      "correct": 2,
+      "explanation": "The steps begin with knowing your data and what it is required for, then recognising entry points, outlining standards and standardising with data scoring."
+    },
+    {
+      "stem": "Which technique is named in the final step of Data Standardisation?",
+      "options": [
+        "Data masking",
+        "Data scoring",
+        "Data swapping",
+        "Data encryption",
+        "Data vectorisation"
+      ],
+      "correct": 1,
+      "explanation": "The last listed step is to standardise your data with the help of data scoring."
+    },
+    {
+      "stem": "Which example illustrates a Data Standardisation approach for semi-structured data?",
+      "options": [
+        "Converting all dates into a single format",
+        "Sorting a database on requirements",
+        "Translating data from different languages into English",
+        "Exposing data as reports and dashboards",
+        "Converting JSON and XML into one readable format"
+      ],
+      "correct": 4,
+      "explanation": "Converting multiple semi-structured formats such as JSON and XML into one readable format is a listed standardisation approach."
+    },
+    {
+      "stem": "Which Data Standardisation approach relies on an MDM system?",
+      "options": [
+        "Data pipeline processing at one given time",
+        "Converting video and audio into a readable format",
+        "Having Gold Records",
+        "Enriching metadata",
+        "Converting dates into a single format"
+      ],
+      "correct": 2,
+      "explanation": "Having Gold Records using an MDM system is one of the standardisation approaches."
+    },
+    {
+      "stem": "Which of these is listed as a benefit of Data Standardisation?",
+      "options": [
+        "Better Data Lineage",
+        "Lower cloud costs",
+        "Fewer employees",
+        "Faster procurement cycles",
+        "More synthetic data"
+      ],
+      "correct": 0,
+      "explanation": "Better Data Lineage is among the benefits, along with a single source of truth, easier data quality, access management, reusability and easier catalogue and metadata management."
+    },
+    {
+      "stem": "What do the 'quality gates' created during Data Standardisation indicate?",
+      "options": [
+        "The cost of each query",
+        "The number of cores available",
+        "The owner of each table",
+        "Freshness and anomaly",
+        "The project deadline"
+      ],
+      "correct": 3,
+      "explanation": "Enriching metadata and creating quality gates that indicate freshness and anomaly is a listed standardisation approach."
+    },
+    {
+      "stem": "Into which structures can data from all relevant source systems be brought as a Data Standardisation approach?",
+      "options": [
+        "Floppy drives and hard disks",
+        "Separate development instances per team",
+        "A password inventory",
+        "Individual spreadsheets per department",
+        "A Unified Data Model in a Data Warehouse, a Star or Snowflake schema, a Semantic Layer or a multi-dimensional Cube"
+      ],
+      "correct": 4,
+      "explanation": "One approach brings data from all relevant sources into one Unified Data Model in a Data Warehouse, Star or Snowflake schema, Semantic Layer or multi-dimensional Cube."
+    }
+  ]
+}

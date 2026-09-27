@@ -1,0 +1,125 @@
+{
+  "topic": "types-of-architecture",
+  "questions": [
+    {
+      "stem": "With which question does a holistic Enterprise Architecture framework begin?",
+      "options": [
+        "HOW?",
+        "WHEN?",
+        "WHY?",
+        "WHO?",
+        "WHERE?"
+      ],
+      "correct": 2,
+      "explanation": "Every project, product and solution starts with the question WHY; without answering why a solution is required, management will not approve the initiative."
+    },
+    {
+      "stem": "How many types of architecture are there in an organisation according to the Enterprise Architecture framework?",
+      "options": [
+        "Two",
+        "Three",
+        "Five",
+        "Four",
+        "Six"
+      ],
+      "correct": 3,
+      "explanation": "There are four types: Business Architecture, Data Architecture, Application Architecture and Technical Architecture."
+    },
+    {
+      "stem": "Which architecture focuses on business requirements and creating value for business users and customers?",
+      "options": [
+        "Business Architecture",
+        "Data Architecture",
+        "Application Architecture",
+        "Technical Architecture",
+        "Network Architecture"
+      ],
+      "correct": 0,
+      "explanation": "Business Architecture focuses on business requirements, covering business strategy, business models, processes and capabilities, and services and events."
+    },
+    {
+      "stem": "Which of the following activities belongs to Data Architecture?",
+      "options": [
+        "Implementing physical hardware, security and network",
+        "Creating data models, data definitions, data mapping documents and data flows",
+        "Defining business strategy and business models",
+        "Elaborating the functionalities of business systems and packages",
+        "Deciding Go-Live timelines"
+      ],
+      "correct": 1,
+      "explanation": "Data Architecture organises and manages data through data models, definitions, mapping documents, data flows and data structures."
+    },
+    {
+      "stem": "Which roles are named as being involved in Business Architecture?",
+      "options": [
+        "Infrastructure Architects and Security Architects",
+        "Data Architects and Data Modelers",
+        "Application Architects only",
+        "Business Analysts, Business Architects and Business Data Stewards",
+        "Technical Architects and Network Engineers"
+      ],
+      "correct": 3,
+      "explanation": "Business Architecture involves Business Analysts, Business Architects and Business Data Stewards, among others."
+    },
+    {
+      "stem": "What is the focus of Application Architecture?",
+      "options": [
+        "Physical hardware and network solutions",
+        "Business strategy and models",
+        "Application requirements and creating value for application users",
+        "Conceptual and logical data models",
+        "Regulatory compliance reporting"
+      ],
+      "correct": 2,
+      "explanation": "Application Architecture focuses on application requirements, explaining the functionalities of business systems, databases and packages within the organisation."
+    },
+    {
+      "stem": "Which architecture implements physical hardware, security, network, tools and technologies?",
+      "options": [
+        "Business Architecture",
+        "Data Architecture",
+        "Application Architecture",
+        "Semantic Architecture",
+        "Technical Architecture"
+      ],
+      "correct": 4,
+      "explanation": "Technical Architecture implements physical hardware, security, network, tools and technologies, and executes the Application Architecture."
+    },
+    {
+      "stem": "Which of the following is NOT one of the roles named under Technical Architecture?",
+      "options": [
+        "Infrastructure Architects",
+        "Technical Architects",
+        "Security Architects",
+        "Data Modelers",
+        "All of these are named under Technical Architecture"
+      ],
+      "correct": 3,
+      "explanation": "Technical Architecture names Infrastructure, Technical and Security Architects; Data Modelers belong to Data Architecture."
+    },
+    {
+      "stem": "In the Enterprise Architecture framework, what does management ask after Go-Live timing and resource requirements are settled?",
+      "options": [
+        "Whether the solution will be implemented on physical servers or on Cloud (private, public or hybrid)",
+        "Which programming language will be used",
+        "Who will write the user manual",
+        "Which colour scheme the dashboards will use",
+        "How many test cases are needed"
+      ],
+      "correct": 0,
+      "explanation": "After WHY, Go-Live timing and internal/external resources, management asks whether the solution will run on physical servers or on Cloud, then how and what will be implemented."
+    },
+    {
+      "stem": "How does Application Architecture relate to Business and Data Architectures?",
+      "options": [
+        "It defines the business requirements that the other two follow",
+        "It works and implements data as per the business requirements defined by Business and Data Architectures",
+        "It is independent of both",
+        "It replaces Data Architecture in cloud environments",
+        "It approves the budgets of the other two"
+      ],
+      "correct": 1,
+      "explanation": "Application Architecture works and implements data according to the business requirements defined by the Business and Data Architectures."
+    }
+  ]
+}

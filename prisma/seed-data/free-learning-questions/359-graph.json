@@ -1,0 +1,125 @@
+{
+  "topic": "graph",
+  "questions": [
+    {
+      "stem": "What are the two basic building blocks of a graph?",
+      "options": [
+        "Vertices (nodes) and edges (links)",
+        "Rows and columns",
+        "Tables and keys",
+        "Files and folders",
+        "Classes and objects"
+      ],
+      "correct": 0,
+      "explanation": "A graph is made up of dots called vertices (or nodes) and lines called edges (or links) that connect them."
+    },
+    {
+      "stem": "What is the correct use of the terms 'vertex' and 'vertices'?",
+      "options": [
+        "Vertex means an edge, vertices means many edges",
+        "One node is called a vertex; multiple nodes are called vertices",
+        "Vertex is the plural of vertices",
+        "Both terms refer only to directed graphs",
+        "Vertex means a weighted node"
+      ],
+      "correct": 1,
+      "explanation": "One node is called a vertex whereas multiple nodes are called vertices."
+    },
+    {
+      "stem": "In which type of graph do the edges have a direction, shown by arrows?",
+      "options": [
+        "Undirected graph",
+        "Simple graph",
+        "Directed graph (digraph)",
+        "Complete graph",
+        "Bipartite graph"
+      ],
+      "correct": 2,
+      "explanation": "In a directed graph, or digraph, the edges have a direction shown by arrows; in an undirected graph the connection works both ways."
+    },
+    {
+      "stem": "What is a weighted graph?",
+      "options": [
+        "A graph in which every point is connected to every other point",
+        "A graph with no loops or duplicate edges",
+        "A graph whose vertices are split into two groups",
+        "A graph whose edges carry values or weights, such as distance or cost",
+        "A graph with no cycles"
+      ],
+      "correct": 3,
+      "explanation": "In a weighted graph the edges have values or weights, like distance or cost."
+    },
+    {
+      "stem": "Which type of graph has every point connected to every other point?",
+      "options": [
+        "Simple graph",
+        "Bipartite graph",
+        "Tree",
+        "Directed graph",
+        "Complete graph"
+      ],
+      "correct": 4,
+      "explanation": "A complete graph is one in which every point is connected to every other point."
+    },
+    {
+      "stem": "In a bipartite graph, how are the points and lines arranged?",
+      "options": [
+        "The points are split into two groups and lines only connect points from different groups",
+        "Every point is connected to every other point",
+        "All lines start and end at the same point",
+        "The points form a single cycle",
+        "Each point has exactly one edge"
+      ],
+      "correct": 0,
+      "explanation": "A bipartite graph splits the points into two groups, and lines only connect points from different groups."
+    },
+    {
+      "stem": "What does the degree of a vertex measure?",
+      "options": [
+        "The angle between two edges",
+        "The number of edges connected to that point",
+        "The distance to the farthest vertex",
+        "The weight of the heaviest edge",
+        "The number of cycles in the graph"
+      ],
+      "correct": 1,
+      "explanation": "Degree is the number of edges connected to a point; in a directed graph this splits into in-degree and out-degree."
+    },
+    {
+      "stem": "In a directed graph, what is the in-degree of a vertex?",
+      "options": [
+        "The number of edges pointing away from the vertex",
+        "The total number of vertices in the graph",
+        "The number of edges pointing to the vertex",
+        "The number of loops at the vertex",
+        "The weight of the vertex"
+      ],
+      "correct": 2,
+      "explanation": "In-degree counts the edges pointing to a vertex, while out-degree counts the edges pointing away from it."
+    },
+    {
+      "stem": "What is a cycle in a graph?",
+      "options": [
+        "Any two vertices connected by an edge",
+        "A graph with no edges",
+        "A vertex with degree zero",
+        "A path that starts and ends at the same point",
+        "An edge with a weight of zero"
+      ],
+      "correct": 3,
+      "explanation": "A cycle is a path that starts and ends at the same point."
+    },
+    {
+      "stem": "What is a tree in graph terms?",
+      "options": [
+        "A graph in which every edge is weighted",
+        "A graph with exactly one cycle",
+        "A graph whose vertices fall into two groups",
+        "A graph that is disconnected",
+        "A special type of graph that is connected and has no cycles"
+      ],
+      "correct": 4,
+      "explanation": "A tree is a special type of graph that is connected and has no cycles."
+    }
+  ]
+}

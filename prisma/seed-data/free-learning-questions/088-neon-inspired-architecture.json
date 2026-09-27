@@ -1,0 +1,125 @@
+{
+  "topic": "neon-inspired-architecture",
+  "questions": [
+    {
+      "stem": "What is the defining characteristic of a NEON-inspired architecture?",
+      "options": [
+        "Storage and compute are tightly bundled in one server",
+        "Storage is separated from compute so each can scale independently",
+        "All data is kept in memory",
+        "Every query runs on a single node",
+        "Data is stored only on the client device"
+      ],
+      "correct": 1,
+      "explanation": "NEON-inspired architecture separates storage from compute, allowing systems to scale more efficiently and flexibly."
+    },
+    {
+      "stem": "In traditional database systems, what happens when more processing power is needed?",
+      "options": [
+        "Only the compute tier is scaled",
+        "Storage is automatically reduced",
+        "The entire system, including storage, often has to be scaled even if storage is sufficient",
+        "Nothing changes because compute is unlimited",
+        "Queries are moved to the client"
+      ],
+      "correct": 2,
+      "explanation": "Because storage and compute are bundled, scaling processing power often means scaling the whole system, which creates cost and scalability inefficiencies."
+    },
+    {
+      "stem": "Which well-known implementation applies serverless principles to PostgreSQL by separating compute nodes from storage layers?",
+      "options": [
+        "Databricks",
+        "Hadoop",
+        "Kafka",
+        "Neon",
+        "Redshift"
+      ],
+      "correct": 3,
+      "explanation": "Neon is named as a well-known implementation that separates compute from storage for PostgreSQL using serverless principles."
+    },
+    {
+      "stem": "Which of the following is NOT a core characteristic of a NEON-inspired architecture?",
+      "options": [
+        "Shared storage that remains persistent and durable",
+        "Stateless or semi-stateless compute nodes that can start or stop quickly",
+        "A coordination layer that manages consistency and transaction integrity",
+        "Compute nodes that each hold their own private copy of all data",
+        "Multiple workloads operating on the same storage without duplicating data"
+      ],
+      "correct": 3,
+      "explanation": "Because compute nodes are independent, multiple workloads share the same storage without duplicating data; private per-node copies would defeat the design."
+    },
+    {
+      "stem": "In the school analogy from I Am Datapedia!, what do the library and the desks represent?",
+      "options": [
+        "The library is compute; the desks are storage",
+        "The library is storage; the desks are compute",
+        "Both represent storage",
+        "Both represent compute",
+        "The library is the network; the desks are users"
+      ],
+      "correct": 1,
+      "explanation": "The library where all books are stored represents storage, and the desks students borrow to read represent compute."
+    },
+    {
+      "stem": "In the school analogy, what does adding more desks during exam season illustrate?",
+      "options": [
+        "Compute can scale without building a new library (storage)",
+        "Storage must be duplicated for every new user",
+        "Books must be copied to each desk",
+        "The library must close during peak times",
+        "Compute and storage must grow together"
+      ],
+      "correct": 0,
+      "explanation": "The school adds desks without building a new library, showing that compute scales independently while storage stays centralised."
+    },
+    {
+      "stem": "Why does a NEON-inspired architecture enable cost efficiency?",
+      "options": [
+        "Because storage is free",
+        "Because all data is compressed",
+        "Because it needs no coordination layer",
+        "Because it eliminates the need for backups",
+        "Because organisations only pay for compute when it is actively used"
+      ],
+      "correct": 4,
+      "explanation": "Cost efficiency comes from paying for compute only while it is actively used, since compute instances can scale up or down with demand."
+    },
+    {
+      "stem": "How does separating storage from compute improve reliability?",
+      "options": [
+        "By storing every record twice on each node",
+        "By removing the need for transactions",
+        "By making compute nodes permanent",
+        "By running all queries in the browser",
+        "By managing storage durability independently from compute failures"
+      ],
+      "correct": 4,
+      "explanation": "Storage durability is managed independently, so a compute failure does not threaten the durable storage layer."
+    },
+    {
+      "stem": "How can development, testing and production environments benefit from a NEON-inspired design?",
+      "options": [
+        "They can spin up separate compute instances pointing to the same underlying data layer",
+        "Each must copy the full dataset into its own storage",
+        "They must share a single compute node",
+        "Only production is allowed to access storage",
+        "They must run on-premises"
+      ],
+      "correct": 0,
+      "explanation": "Separate compute instances can point to the same underlying data layer, improving agility without duplicating data."
+    },
+    {
+      "stem": "With which broader architectural shift does NEON-inspired architecture align?",
+      "options": [
+        "Monolithic, on-premises mainframe design",
+        "Tightly coupled single-server databases",
+        "Cloud-native, elastic and disaggregated system design",
+        "Paper-based record keeping",
+        "Client-only desktop applications"
+      ],
+      "correct": 2,
+      "explanation": "NEON-inspired architecture reflects the broader move toward cloud-native, elastic and disaggregated design, aligning with lakehouse and distributed systems."
+    }
+  ]
+}

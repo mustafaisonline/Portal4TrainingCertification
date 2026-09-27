@@ -1,0 +1,125 @@
+{
+  "topic": "difference-betweenmetagraph-ontology-andtaxonomy",
+  "questions": [
+    {
+      "stem": "In simple words, how are Graph Theory, MetaGraph, Taxonomies and Ontologies distinguished from one another?",
+      "options": [
+        "Graph Theory defines the structure, MetaGraph is the metadata, Taxonomies are the classifications and Ontologies are the rules",
+        "Graph Theory is the rules, MetaGraph is the classification, Taxonomies are the structure and Ontologies are the metadata",
+        "All four are different names for the same thing",
+        "Graph Theory is the data, and the other three are query languages",
+        "MetaGraph is the data, Taxonomies are the rules, Ontologies are the structure and Graph Theory is the metadata"
+      ],
+      "correct": 0,
+      "explanation": "Graph Theory defines the structure or data model, MetaGraph is the metadata, Taxonomies are the classifications and Ontologies are the rules."
+    },
+    {
+      "stem": "What is the structure of a Taxonomy?",
+      "options": [
+        "A flat list with no hierarchy",
+        "Tree-like, where each node represents a class or category in parent-child relationships",
+        "A graph allowing 'part-of' and 'related-to' relationships",
+        "A schema of node and edge types with constraints",
+        "A table of key-value pairs"
+      ],
+      "correct": 1,
+      "explanation": "A Taxonomy organises entities hierarchically in a tree-like structure using parent-child relationships, such as Kingdom to Phylum to Class."
+    },
+    {
+      "stem": "Which of the following is an example of a Taxonomy?",
+      "options": [
+        "A schema stating that a Factory is linked to a Warehouse via 'Ships'",
+        "A rule that a Kitchen is used for cooking and is next to the Dining Room",
+        "Electronics, Mobile Phones, Smartphones, iPhone",
+        "A relationship such as 'buys' between Customers and Products",
+        "An attribute such as 'price' on a Product"
+      ],
+      "correct": 2,
+      "explanation": "The product hierarchy Electronics to Mobile Phones to Smartphones to iPhone is a taxonomy: a hierarchical classification with a controlled vocabulary."
+    },
+    {
+      "stem": "How does an Ontology extend beyond a Taxonomy?",
+      "options": [
+        "It removes all hierarchy",
+        "It only stores physical data rows",
+        "It is limited to parent-child relationships",
+        "It models complex entities, attributes and relationships within a domain and often incorporates reasoning rules",
+        "It restricts relationships to a single type"
+      ],
+      "correct": 3,
+      "explanation": "An Ontology goes beyond hierarchical classification, modelling entities, attributes and diverse relationships such as 'is-a', 'part-of' and 'related-to', often with reasoning rules."
+    },
+    {
+      "stem": "In the supply chain example, what is the MetaGraph's role?",
+      "options": [
+        "Recording each individual shipment that occurred",
+        "Classifying products into a hierarchy",
+        "Reasoning about which factory is most profitable",
+        "Storing the delivery dates",
+        "Specifying the entities and relationships, such as defining 'Factory' as linked to 'Warehouse' via 'Ships'"
+      ],
+      "correct": 4,
+      "explanation": "The MetaGraph functions like a schema, specifying node and edge types such as Factory linked to Warehouse via 'Ships'."
+    },
+    {
+      "stem": "In the house analogy, what does the MetaGraph correspond to?",
+      "options": [
+        "The blueprint or structural framework: what kinds of rooms exist and how they are connected",
+        "The purpose of each room and how rooms relate semantically",
+        "The hierarchical grouping of rooms into private and functional spaces",
+        "The furniture inside each room",
+        "The people living in the house"
+      ],
+      "correct": 0,
+      "explanation": "The MetaGraph is the blueprint or skeleton of the house, defining the types of rooms and how they are connected, without describing their purpose."
+    },
+    {
+      "stem": "In the house analogy, which layer answers 'What is the kitchen used for?' and 'Why is the dining room next to the kitchen?'",
+      "options": [
+        "Taxonomy",
+        "Ontology",
+        "MetaGraph",
+        "Graph Theory",
+        "Knowledge Graph"
+      ],
+      "correct": 1,
+      "explanation": "The Ontology defines the purpose of each room and the relationships between them, such as the kitchen being used for cooking and next to the dining room."
+    },
+    {
+      "stem": "In the house analogy, grouping rooms as 'Private Spaces: Bedroom' and 'Functional Spaces: Kitchen' illustrates which concept?",
+      "options": [
+        "MetaGraph",
+        "Ontology",
+        "Taxonomy",
+        "Execution graph",
+        "Hypergraph"
+      ],
+      "correct": 2,
+      "explanation": "The Taxonomy is the simplest layer, organising rooms into a hierarchical classification such as private versus functional spaces."
+    },
+    {
+      "stem": "How do Taxonomies typically relate to Ontologies?",
+      "options": [
+        "Taxonomies always replace ontologies",
+        "Ontologies are subsets of taxonomies",
+        "They can never be used together",
+        "Taxonomies often appear as subsets of ontologies, providing hierarchical classifications within a broader context",
+        "Taxonomies define the reasoning rules used by ontologies"
+      ],
+      "correct": 3,
+      "explanation": "Taxonomies often appear as subsets of ontologies, providing hierarchical classifications within the ontology's broader context."
+    },
+    {
+      "stem": "Which guidance is given on when to use MetaGraph, Taxonomies and Ontologies?",
+      "options": [
+        "Use Taxonomies for schemas, Ontologies for categorisation and MetaGraph for AI",
+        "Use Ontologies only for graph database schemas",
+        "Use all three interchangeably for any purpose",
+        "Use MetaGraph for categorisation and Taxonomies for detailed semantics",
+        "Use MetaGraph for managing graph database schemas, Taxonomies for straightforward categorisation, and Ontologies for detailed semantics and advanced AI applications"
+      ],
+      "correct": 4,
+      "explanation": "MetaGraph is for managing and describing graph database schemas, Taxonomies for straightforward categorisation, and Ontologies for capturing detailed semantics and enabling advanced AI applications."
+    }
+  ]
+}

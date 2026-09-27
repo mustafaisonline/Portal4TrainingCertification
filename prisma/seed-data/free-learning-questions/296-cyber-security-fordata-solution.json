@@ -1,0 +1,125 @@
+{
+  "topic": "cyber-security-fordata-solution",
+  "questions": [
+    {
+      "stem": "Which elements does a robust cybersecurity strategy for a data solution involve?",
+      "options": [
+        "Encryption, regular audits, access controls, employee training and staying updated on emerging threats",
+        "Only a strong firewall at the network perimeter",
+        "Only antivirus software on every laptop",
+        "Only annual penetration testing by an external vendor",
+        "Only encrypting passwords in the user table"
+      ],
+      "correct": 0,
+      "explanation": "A robust cybersecurity strategy involves encryption, regular audits, access controls, employee training and staying updated on emerging threats."
+    },
+    {
+      "stem": "What does the data encryption pointer for a data solution recommend?",
+      "options": [
+        "Encrypting only data stored on backup tapes",
+        "Employing end-to-end encryption to protect data during transmission and at rest, using strong algorithms",
+        "Encrypting data only when it leaves the country",
+        "Replacing encryption with password protection",
+        "Encrypting only the database administrator's account"
+      ],
+      "correct": 1,
+      "explanation": "The guidance is to employ end-to-end encryption to protect data during transmission and at rest, using strong encryption algorithms."
+    },
+    {
+      "stem": "How should access controls be implemented in a data solution?",
+      "options": [
+        "Grant every user full administrator rights for convenience",
+        "Grant access based on seniority rather than role",
+        "Grant users only the permissions necessary for their roles, reviewing and updating privileges regularly",
+        "Remove all access controls once the system is in production",
+        "Allow shared accounts to simplify management"
+      ],
+      "correct": 2,
+      "explanation": "Strict access controls grant users only the permissions necessary for their roles, with privileges regularly reviewed and updated to match current responsibilities."
+    },
+    {
+      "stem": "What human-related risk is employee cybersecurity training intended to minimise?",
+      "options": [
+        "Hardware failure",
+        "Software licence expiry",
+        "Power outages",
+        "Phishing attacks and similar threats",
+        "Database schema drift"
+      ],
+      "correct": 3,
+      "explanation": "Employee training raises awareness of threats and promotes a culture of security consciousness to minimise human-related risks such as phishing attacks."
+    },
+    {
+      "stem": "Where should data backups be stored to protect against compromise?",
+      "options": [
+        "On the same server as the live database",
+        "In the application's memory cache",
+        "On individual employees' laptops",
+        "In a shared email folder",
+        "In a remote location"
+      ],
+      "correct": 4,
+      "explanation": "Backups should be stored in a remote location so that they are not compromised along with the primary systems."
+    },
+    {
+      "stem": "What does an incident response plan for a data solution require?",
+      "options": [
+        "Development, regular testing, and clearly defined roles and responsibilities to minimise downtime",
+        "Only a phone number for the IT help desk",
+        "A promise never to disclose incidents",
+        "Disabling all systems permanently after any incident",
+        "Waiting for regulators to instruct the organisation"
+      ],
+      "correct": 0,
+      "explanation": "An incident response plan should be developed and regularly tested, with clearly defined roles and responsibilities to minimise downtime during an incident."
+    },
+    {
+      "stem": "Which measures are listed under network security for a data solution?",
+      "options": [
+        "Printing network diagrams for the audit file",
+        "Firewalls, intrusion detection and prevention systems, and regular software updates and patching",
+        "Replacing the network with paper forms",
+        "Sharing the Wi-Fi password with all visitors",
+        "Turning off logging to improve speed"
+      ],
+      "correct": 1,
+      "explanation": "Network security involves firewalls and intrusion detection and prevention systems, along with regularly updating and patching software to address known vulnerabilities."
+    },
+    {
+      "stem": "Why is a vendor security assessment part of a data solution's cybersecurity strategy?",
+      "options": [
+        "To negotiate lower prices from suppliers",
+        "To replace internal security controls entirely",
+        "To assess and monitor the cybersecurity measures of third-party vendors handling your data and ensure they comply with security standards",
+        "To outsource all responsibility for breaches to vendors",
+        "To choose vendors based on their marketing"
+      ],
+      "correct": 2,
+      "explanation": "Organisations should assess and monitor the cybersecurity measures of third-party vendors handling their data and ensure the vendors comply with security standards and protocols."
+    },
+    {
+      "stem": "What does data lifecycle management contribute to cybersecurity for a data solution?",
+      "options": [
+        "It increases the amount of data retained indefinitely",
+        "It removes the need for backups",
+        "It replaces access controls",
+        "Retention and destruction policies that minimise the risk of unauthorised access, defining how data is collected, processed, stored and disposed of",
+        "It converts all data to paper records"
+      ],
+      "correct": 3,
+      "explanation": "Data lifecycle management implements data retention and destruction policies to minimise the risk of unauthorised access, clearly defining how data is collected, processed, stored and disposed of."
+    },
+    {
+      "stem": "Which of the following is NOT one of the cybersecurity pointers listed for a data solution?",
+      "options": [
+        "Regular audits",
+        "Security patching",
+        "Incident response plan",
+        "Data backups",
+        "Removing all user authentication to reduce friction"
+      ],
+      "correct": 4,
+      "explanation": "Regular audits, security patching, an incident response plan and data backups are all listed pointers; removing authentication would weaken security and is not recommended."
+    }
+  ]
+}

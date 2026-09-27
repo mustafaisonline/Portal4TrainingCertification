@@ -1,0 +1,125 @@
+{
+  "topic": "devops-development-operations",
+  "questions": [
+    {
+      "stem": "DevOps is a set of practices that combines which two things?",
+      "options": [
+        "Data engineering and data science",
+        "Waterfall and Agile methodologies",
+        "Software development (Dev) and IT Operations (Ops)",
+        "Security testing and release management",
+        "Business analysis and project management"
+      ],
+      "correct": 2,
+      "explanation": "DevOps combines software development (Dev) with IT Operations (Ops) into one set of practices."
+    },
+    {
+      "stem": "DevOps is described as \"a physical face of Agile\". What does DevOps mostly operationalise?",
+      "options": [
+        "Agile processes",
+        "Waterfall stage gates",
+        "Data governance policies",
+        "Machine learning models",
+        "Mainframe batch jobs"
+      ],
+      "correct": 0,
+      "explanation": "DevOps is mostly about operationalising Agile processes, which is why it is called the physical face of Agile."
+    },
+    {
+      "stem": "Which of the following is NOT listed among the activities DevOps includes?",
+      "options": [
+        "Plan",
+        "Verify",
+        "Package",
+        "Version Control",
+        "Data Wrangling"
+      ],
+      "correct": 4,
+      "explanation": "DevOps includes Plan, Create, Verify, Package, Release, Configure, Monitor and Version Control; Data Wrangling is not among them."
+    },
+    {
+      "stem": "Under what condition can engineers in DevOps independently accomplish tasks such as deploying code or provisioning infrastructure?",
+      "options": [
+        "Only when a separate operations team approves each step",
+        "Only if most activities, from provisioning resources to testing and deployment, are automated",
+        "Only when working in a Waterfall project",
+        "Only if security is handled by a different department",
+        "Only when the team is smaller than five people"
+      ],
+      "correct": 1,
+      "explanation": "Engineers can run their own end-to-end show only if most activities, such as provisioning VMs and compute, testing, integration testing and deployment, are automated."
+    },
+    {
+      "stem": "Which framework automates the DevOps activities such as provisioning, testing, integration testing and deployment?",
+      "options": [
+        "Waterfall",
+        "MapReduce",
+        "ITIL",
+        "CI/CD, Continuous Integration and Continuous Delivery/Deployment",
+        "Scrum"
+      ],
+      "correct": 3,
+      "explanation": "The automation is provided by CI/CD, which stands for Continuous Integration and Continuous Delivery or Deployment."
+    },
+    {
+      "stem": "Which of the following is NOT one of the DevOps key elements?",
+      "options": [
+        "Automation",
+        "Large quarterly releases",
+        "Small Changes",
+        "Regular Enhancement and Fixes",
+        "Teamwork"
+      ],
+      "correct": 1,
+      "explanation": "The key elements are Automation, Small Changes, Regular Enhancement/Fixes and Teamwork; large infrequent releases run counter to DevOps."
+    },
+    {
+      "stem": "Which sequence describes the DevOps process flow?",
+      "options": [
+        "Requirements, Design, Implementation, Verification, Maintenance",
+        "Collect, Clean, Model, Deploy, Monitor",
+        "Plan, Analyse, Approve, Release",
+        "Regular Development, Regular Build, Regular Testing, Regular Deployment, Regular Run",
+        "Integrate, Transform, Load, Serve"
+      ],
+      "correct": 3,
+      "explanation": "The DevOps process flow is Regular Development, Regular Build, Regular Testing, Regular Deployment and Regular Run."
+    },
+    {
+      "stem": "According to the quotes attributed to Synopsys, what does DevOps focus on?",
+      "options": [
+        "Culture, highlighting roles that emphasise responsiveness",
+        "Processes, highlighting change while accelerating delivery",
+        "Software-defined life cycles, highlighting tools that emphasise automation",
+        "Data quality, highlighting trusted data",
+        "Cost, highlighting return on investment"
+      ],
+      "correct": 0,
+      "explanation": "The quote says DevOps focuses on culture, highlighting roles that emphasise responsiveness."
+    },
+    {
+      "stem": "According to the same set of quotes, what does CI/CD focus on?",
+      "options": [
+        "Culture and roles",
+        "Processes and change",
+        "Security and compliance",
+        "Data pipelines and quality",
+        "Software-defined life cycles, highlighting tools that emphasise automation"
+      ],
+      "correct": 4,
+      "explanation": "CI/CD focuses on software-defined life cycles, highlighting tools that emphasise automation."
+    },
+    {
+      "stem": "How is Agile characterised in contrast with DevOps and CI/CD?",
+      "options": [
+        "Agile focuses on tools that emphasise automation",
+        "Agile focuses on roles that emphasise responsiveness",
+        "Agile focuses on processes, highlighting change while accelerating delivery",
+        "Agile focuses on infrastructure provisioning",
+        "Agile focuses on version control"
+      ],
+      "correct": 2,
+      "explanation": "Agile focuses on processes highlighting change while accelerating delivery, whereas CI/CD emphasises tools and DevOps emphasises culture."
+    }
+  ]
+}

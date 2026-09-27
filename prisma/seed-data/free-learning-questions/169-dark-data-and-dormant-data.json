@@ -1,0 +1,125 @@
+{
+  "topic": "dark-data-and-dormant-data",
+  "questions": [
+    {
+      "stem": "How is Dark Data defined?",
+      "options": [
+        "Data that is not utilised",
+        "Data that has been encrypted",
+        "Data stored on tape drives",
+        "Data that is used only occasionally",
+        "Data older than the retention policy allows"
+      ],
+      "correct": 0,
+      "explanation": "The definition given is that data which is not utilised is Dark Data."
+    },
+    {
+      "stem": "Why is Dark Data typically not in use, and how does this affect its status as an asset?",
+      "options": [
+        "It is in use but too expensive to store, so it is an asset",
+        "It has been deleted, so it is no longer an asset",
+        "It is not in use due to a lack of technology, and it is not a Data Asset",
+        "It is fully utilised but poorly documented, so it is a liability",
+        "It is in use only for marketing, so it is a partial asset"
+      ],
+      "correct": 2,
+      "explanation": "Dark Data sits unused because the technology to exploit it was lacking or too expensive, and for that reason it is not a Data Asset."
+    },
+    {
+      "stem": "Which statement best defines Dormant Data?",
+      "options": [
+        "Data that can never be analysed",
+        "Data that must be purged immediately",
+        "Data that is still being loaded into the warehouse",
+        "Data whose format is unknown",
+        "Data that is usable but underutilised, because decision-makers do not use it or it is not currently required for analysis"
+      ],
+      "correct": 4,
+      "explanation": "Dormant Data is usable data that is underutilised: decision-makers do not use it or it is not needed for analysis at present, but it cannot simply be deleted."
+    },
+    {
+      "stem": "Where is Dormant Data typically kept?",
+      "options": [
+        "In the operational database alongside live data",
+        "On tape drives, in Hadoop or, nowadays, in Object Storage",
+        "Only in printed archives",
+        "In the data warehouse serving layer",
+        "In application memory for quick access"
+      ],
+      "correct": 1,
+      "explanation": "Because Dormant Data cannot be deleted or purged, it is kept on tape drives, in Hadoop and increasingly in Object Storage."
+    },
+    {
+      "stem": "Before the introduction of Big Data, roughly what percentage of data was Dark Data?",
+      "options": [
+        "About 10%",
+        "About 25%",
+        "About 50%",
+        "About 90%",
+        "About 100%"
+      ],
+      "correct": 3,
+      "explanation": "Around 90% of data was Dark before Big Data, since it included semi-structured and unstructured datasets and sometimes structured data as well."
+    },
+    {
+      "stem": "Before Big Data technologies, what was the only reason companies kept datasets such as logs, JSON, XML, video and audio files?",
+      "options": [
+        "To train machine learning models",
+        "To sell them to advertisers",
+        "For compliance or audit purposes",
+        "To feed marketing campaigns",
+        "To populate dashboards"
+      ],
+      "correct": 2,
+      "explanation": "The technologies to analyse such data were absent or too expensive, so companies retained it only for compliance or audit purposes."
+    },
+    {
+      "stem": "Which example is given of data becoming Dormant?",
+      "options": [
+        "Customer buying and spending data from before January 2020 after the Covid-19 changes in behaviour",
+        "Server logs that were never parsed",
+        "Video files that no tool could analyse",
+        "Duplicate customer records created by a migration",
+        "Metadata that was never catalogued"
+      ],
+      "correct": 0,
+      "explanation": "Covid-19 changed buying and spending behaviour so much that pre-January 2020 data became Dormant for marketing and campaigning in most organisations."
+    },
+    {
+      "stem": "Which of the following is NOT listed among the technologies and frameworks companies invest in to make use of Dark Data?",
+      "options": [
+        "Data Lake",
+        "Delta Lake",
+        "Lakehouse",
+        "Data Vault",
+        "Mainframe"
+      ],
+      "correct": 4,
+      "explanation": "The investments named are Data Lake, Delta Lake, Lakehouse, Data Vault, Business Vault, HDFS, Object Storage and NoSQL databases; mainframes are not among them."
+    },
+    {
+      "stem": "What is the relationship between the amount of Dark Data in an organisation and cost?",
+      "options": [
+        "Dark Data is free to hold because it is never processed",
+        "The more Dark Data, the more cost without any return on investment",
+        "Dark Data reduces cost by replacing structured storage",
+        "Cost falls as Dark Data grows because it is compressed",
+        "Dark Data costs are always recovered through compliance fines avoided"
+      ],
+      "correct": 1,
+      "explanation": "More Dark Data means more cost with no ROI, which is why a CDO should keep it as low as possible."
+    },
+    {
+      "stem": "What is predicted to become the most essential and obvious KPI for a Chief Data Officer?",
+      "options": [
+        "Number of dashboards published",
+        "Volume of structured data loaded",
+        "Size of the data warehouse",
+        "Dark Data Management",
+        "Number of NoSQL databases deployed"
+      ],
+      "correct": 3,
+      "explanation": "Dark Data Management is expected to become the key KPI for a CDO, since Dark Data represents cost without return."
+    }
+  ]
+}

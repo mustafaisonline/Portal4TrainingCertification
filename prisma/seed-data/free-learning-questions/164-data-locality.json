@@ -1,0 +1,125 @@
+{
+  "topic": "data-locality",
+  "questions": [
+    {
+      "stem": "What is Data Locality?",
+      "options": [
+        "Moving the computation close to where the data resides on the storage or data node, instead of moving large data to the computation",
+        "Knowing the geographical location from which data was generated",
+        "Storing data in the country where it was generated to satisfy sovereignty laws",
+        "Copying all data from data nodes into the master nodes before querying",
+        "Separating compute and storage into different clusters"
+      ],
+      "correct": 0,
+      "explanation": "Data Locality is the process of moving the computation close to where the actual data resides on the storage/data node, rather than moving large data to the computation."
+    },
+    {
+      "stem": "Traditionally, where was data fetched to for computation in analysis?",
+      "options": [
+        "From master nodes into storage nodes",
+        "From storage or data nodes into master nodes",
+        "From the cloud into on-premises servers",
+        "From a Data Room into a Data Lake",
+        "From columnar storage into row storage"
+      ],
+      "correct": 1,
+      "explanation": "Traditionally, to use data for analysis, the data was fetched at the backend from storage/data nodes into master nodes for computation."
+    },
+    {
+      "stem": "Why did fetching data into master nodes for computation become impractical?",
+      "options": [
+        "Because master nodes cannot run SQL",
+        "Because network links between nodes were removed",
+        "Because semi-structured and unstructured data now runs to terabytes and petabytes on clusters of hundreds of data nodes, while master nodes are normally few",
+        "Because data must stay in the country where it was generated",
+        "Because master nodes only store metadata"
+      ],
+      "correct": 2,
+      "explanation": "Semi-structured and unstructured data brings huge storage requirements, in TB and even PB, hosted on clusters of hundreds of storage/data nodes. Pulling that much data into the few master nodes for computation is not possible."
+    },
+    {
+      "stem": "With the introduction of Big Data, Hadoop and HDFS, in what shape is data stored on the data nodes?",
+      "options": [
+        "As documents",
+        "As key-value pairs",
+        "As graph nodes and edges",
+        "As blocks",
+        "As spreadsheets"
+      ],
+      "correct": 3,
+      "explanation": "With Big Data, Hadoop and HDFS, data is stored in the shape of blocks, and the Data Locality concept surfaced of taking the query to the storage/data nodes."
+    },
+    {
+      "stem": "Under Data Locality, what is sent back from the storage or data nodes after the query is processed there?",
+      "options": [
+        "The complete raw dataset",
+        "Every block that the query touched",
+        "A copy of the whole cluster's metadata",
+        "The query itself, for re-execution on the master node",
+        "Only the processed data"
+      ],
+      "correct": 4,
+      "explanation": "Instead of fetching data for computation, the query is taken to the storage/data nodes, processed there, and only the processed data is fetched back."
+    },
+    {
+      "stem": "In a nutshell, when is a query said to exhibit Data Locality?",
+      "options": [
+        "When the query runs on the same node where the data is located",
+        "When the query is written in standard SQL",
+        "When the query returns results in real time",
+        "When the query is executed on a master node",
+        "When the query uses columnar rather than row storage"
+      ],
+      "correct": 0,
+      "explanation": "In a nutshell, when a query runs on the same node where the data is located, it is called Data Locality."
+    },
+    {
+      "stem": "Which newer concept is described as surfacing in recent times, in contrast to Data Locality?",
+      "options": [
+        "Pulling whole datasets into master nodes",
+        "Separating computing and storage",
+        "Storing all data in a single Physical Data Room",
+        "Replacing HDFS with operating-system file systems",
+        "Merging master nodes and data nodes into one"
+      ],
+      "correct": 1,
+      "explanation": "In recent times, a new concept of separating computing and storage has been surfacing."
+    },
+    {
+      "stem": "How relevant is the literal reading of Data Locality as simply knowing the location of the data?",
+      "options": [
+        "Entirely accurate: that is the whole meaning",
+        "Entirely wrong: location has nothing to do with it",
+        "Partially relevant: the name suggests location, but the concept is about moving computation to the data",
+        "Relevant only for relational databases",
+        "Relevant only for cloud storage"
+      ],
+      "correct": 2,
+      "explanation": "As the name suggests, Data Locality looks like knowing the location of the data, which is only partially relevant. The concept is about processing queries where the data is residing."
+    },
+    {
+      "stem": "Which of the following is NOT part of the history of how data was pulled for processing before Data Locality?",
+      "options": [
+        "Initially the whole data was pulled",
+        "Later, blocks were pulled",
+        "Later, the columnar pull concept came in",
+        "Later, data was pulled as printed reports",
+        "Eventually the query was taken to the data instead"
+      ],
+      "correct": 3,
+      "explanation": "The history runs from pulling the whole data, to pulling blocks, to the columnar pull concept, and finally to taking the query to the data nodes. Printed reports are not part of it."
+    },
+    {
+      "stem": "What was the critical requirement that led to the Data Locality concept?",
+      "options": [
+        "To encrypt data on every data node",
+        "To reduce the number of master nodes to one",
+        "To convert all data to structured form",
+        "To keep data in the country where it was generated",
+        "To process queries where the data is residing"
+      ],
+      "correct": 4,
+      "explanation": "It was a critical requirement to process queries where the data is residing, because pulling terabytes or petabytes into a few master nodes was not possible."
+    }
+  ]
+}

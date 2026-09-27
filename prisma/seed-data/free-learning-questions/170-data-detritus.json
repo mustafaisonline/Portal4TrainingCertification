@@ -1,0 +1,125 @@
+{
+  "topic": "data-detritus",
+  "questions": [
+    {
+      "stem": "How is Data Detritus defined?",
+      "options": [
+        "Data that has never been analysed because of technology barriers",
+        "Data that is used only during audits",
+        "Data that is corrupted during transfer",
+        "Data that is no more required and of no use anymore",
+        "Data duplicated across several systems"
+      ],
+      "correct": 3,
+      "explanation": "Data Detritus means data which is no longer required and is of no use anymore."
+    },
+    {
+      "stem": "Which description distinguishes Detritus data from Dark data and Dormant data?",
+      "options": [
+        "Detritus data was and is not in use",
+        "Detritus data was once in use but will not be in use anymore",
+        "Detritus data is hardly in use",
+        "Detritus data is used every day",
+        "Detritus data is data whose format cannot be read"
+      ],
+      "correct": 1,
+      "explanation": "Dark data was and is not in use, Dormant data is hardly in use, and Detritus data was in use but will not be anymore."
+    },
+    {
+      "stem": "Why is Detritus data normally not deleted or purged?",
+      "options": [
+        "Because it is too large to delete efficiently",
+        "Because it is still used for daily analytics",
+        "Because deleting it would break data pipelines",
+        "Because it is needed to train new models",
+        "Because Regulatory or Compliance parties can still require it"
+      ],
+      "correct": 4,
+      "explanation": "Although no longer useful for analytics, Detritus data may be demanded by regulators or compliance bodies, so it is retained."
+    },
+    {
+      "stem": "Which banking example illustrates Data Detritus?",
+      "options": [
+        "The first transaction of a customer who has been active with the bank for 20 years",
+        "The daily balance of every current account",
+        "Card transactions from the last quarter used for fraud detection",
+        "The interest rate table for mortgages",
+        "Yesterday's ATM withdrawals"
+      ],
+      "correct": 0,
+      "explanation": "The bank has no analytical need for a long-standing customer's first transaction, yet it cannot purge it because a regulator may ask when and where the customer came on board."
+    },
+    {
+      "stem": "Is all Dark Data bad?",
+      "options": [
+        "Yes, all Dark Data should be purged",
+        "Yes, because it never has value",
+        "No",
+        "Only if it is structured",
+        "Only if it is older than five years"
+      ],
+      "correct": 2,
+      "explanation": "The answer given is a clear No: not all Dark Data is bad, and some can still be required or become useful."
+    },
+    {
+      "stem": "Can all Dark Data be deleted or purged?",
+      "options": [
+        "Always yes",
+        "Never",
+        "Only structured Dark Data",
+        "Yes and No, depending on whether it may still be required",
+        "Only after it becomes Dormant"
+      ],
+      "correct": 3,
+      "explanation": "The answer is Yes and No: some Dark Data can be purged, but some must be kept, for example for regulatory reasons."
+    },
+    {
+      "stem": "Which business model is said to delete or purge most of its data after extracting valuable insights from it?",
+      "options": [
+        "Banking",
+        "E-commerce",
+        "Government",
+        "Healthcare",
+        "Insurance"
+      ],
+      "correct": 1,
+      "explanation": "E-commerce is named as the business model that purges most of its data once the valuable insights have been extracted."
+    },
+    {
+      "stem": "In a nutshell, what should happen to data that was in use in the past compared with the rest?",
+      "options": [
+        "Everything should be kept in the data warehouse forever",
+        "Everything should be deleted after one year",
+        "Past data should be moved to the operational database",
+        "Past data should be re-analysed each quarter",
+        "Data that was in use is most probably kept in cold storage, and the rest can be deleted or purged"
+      ],
+      "correct": 4,
+      "explanation": "Data elements that were used for decision-making are kept in cold storage, while the rest can be deleted or purged."
+    },
+    {
+      "stem": "Compared with Detritus data, what characterises traditional Dark Data?",
+      "options": [
+        "It was never in use because of technology barriers",
+        "It was valuable once and then became Dormant",
+        "It is always deleted after an audit",
+        "It is only found in e-commerce",
+        "It is used heavily by regulators"
+      ],
+      "correct": 0,
+      "explanation": "Detritus data was once valuable before becoming Dormant, whereas traditional Dark Data was never in use due to technology barriers."
+    },
+    {
+      "stem": "Given that Twitter alone processes about 52 terabytes of data daily, what is recommended for such huge social media data rather than keeping all of it forever?",
+      "options": [
+        "Keep all of it in the data warehouse",
+        "Purge all of it immediately after collection",
+        "Convert the elements that were used for decision-making into Dark data and delete or purge the rest",
+        "Move all of it to tape drives permanently",
+        "Hand all of it to regulators"
+      ],
+      "correct": 2,
+      "explanation": "Not all such data needs to be kept forever: the elements used for decision-making can be retained as Dark data while the rest is deleted or purged."
+    }
+  ]
+}

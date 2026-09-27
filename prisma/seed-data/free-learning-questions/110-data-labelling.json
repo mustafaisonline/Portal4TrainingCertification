@@ -1,0 +1,125 @@
+{
+  "topic": "data-labelling",
+  "questions": [
+    {
+      "stem": "What is Data Labelling?",
+      "options": [
+        "Encrypting data so that its source cannot be identified",
+        "Grouping data based on an existing parameter without any tagging",
+        "Tagging something that is not identifiable when it comes from the source, based on a defined parameter",
+        "Deleting data that cannot be identified",
+        "Converting data from one format to another"
+      ],
+      "correct": 2,
+      "explanation": "Data Labelling is about tagging something that is not identifiable coming from the source, based on some defined parameter."
+    },
+    {
+      "stem": "On which kinds of data can Data Labelling be performed?",
+      "options": [
+        "Both known data and unknown data",
+        "Known data only",
+        "Unknown data only",
+        "Structured data only",
+        "Numeric data only"
+      ],
+      "correct": 0,
+      "explanation": "Labelling can be done on known data and on unknown data as well."
+    },
+    {
+      "stem": "On what basis does Data Classification group data?",
+      "options": [
+        "Random sampling",
+        "Existing parameters only, with no human input",
+        "The size of each record",
+        "The order of arrival",
+        "Manually labelled data"
+      ],
+      "correct": 4,
+      "explanation": "Data Classification groups data based on manually labelled data and falls under Supervised Learning."
+    },
+    {
+      "stem": "On what basis does Data Clustering group data?",
+      "options": [
+        "Manually labelled data",
+        "An existing parameter",
+        "Business requirements",
+        "A training dataset",
+        "Customer feedback"
+      ],
+      "correct": 1,
+      "explanation": "Data Clustering groups data based on an existing parameter and falls under Unsupervised Learning."
+    },
+    {
+      "stem": "Why do specialised tools exist to tag or label unstructured datasets?",
+      "options": [
+        "To compress the data for cheaper storage",
+        "To delete duplicate files",
+        "To convert the data into relational tables",
+        "So the unstructured data can become input for Machine Learning models",
+        "To satisfy backup regulations"
+      ],
+      "correct": 3,
+      "explanation": "Specialised tools tag or label unstructured data so it can become input for Machine Learning models."
+    },
+    {
+      "stem": "What can unstructured data labelled by an ML library then be used for?",
+      "options": [
+        "Only for archival purposes",
+        "As input to another ML model for Supervised Learning",
+        "Replacing the original source system",
+        "Generating database schemas automatically",
+        "Encrypting the original dataset"
+      ],
+      "correct": 1,
+      "explanation": "Certain libraries used in ML models label unstructured data, which can then become the input of another ML model for Supervised Learning."
+    },
+    {
+      "stem": "Of Data Labelling, Data Classification and Data Clustering, which one falls under Unsupervised Learning?",
+      "options": [
+        "Data Labelling",
+        "Data Classification",
+        "All three",
+        "Data Clustering",
+        "None of them"
+      ],
+      "correct": 3,
+      "explanation": "Data Clustering groups data on existing parameters and is Unsupervised Learning, whereas Data Classification uses labelled data and is Supervised Learning."
+    },
+    {
+      "stem": "What development has driven the need for tools that label data?",
+      "options": [
+        "The era of unstructured datasets, with data arriving in many formats",
+        "The decline of relational databases",
+        "A shortage of database administrators",
+        "The introduction of cloud billing",
+        "The end of batch processing"
+      ],
+      "correct": 0,
+      "explanation": "Since the era of unstructured datasets, data comes in many formats, so specialised tools are needed to tag or label it."
+    },
+    {
+      "stem": "Which statement correctly describes the relationship between Data Labelling and Data Classification?",
+      "options": [
+        "Data Classification produces the labels that Data Labelling then applies",
+        "They are the same activity under different names",
+        "Data Labelling can only happen after clustering has finished",
+        "Data Classification never uses labelled data",
+        "Data Classification groups data using data that has been manually labelled"
+      ],
+      "correct": 4,
+      "explanation": "Data Labelling tags data based on defined parameters, and Data Classification groups data based on that manually labelled data."
+    },
+    {
+      "stem": "Which of the following is NOT true of Data Labelling?",
+      "options": [
+        "It tags data based on some defined parameter",
+        "It can be performed on unknown data",
+        "It can only be applied to data that is already identifiable at source",
+        "Specialised tools and ML libraries can perform it on unstructured data",
+        "Its output can feed a Supervised Learning model"
+      ],
+      "correct": 2,
+      "explanation": "Data Labelling exists precisely to tag data that is not identifiable when it comes from the source."
+    }
+  ]
+}

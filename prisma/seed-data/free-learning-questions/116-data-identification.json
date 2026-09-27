@@ -1,0 +1,125 @@
+{
+  "topic": "data-identification",
+  "questions": [
+    {
+      "stem": "How does Data Identification relate to Data Anonymisation?",
+      "options": [
+        "Data Identification is performed after Data Anonymisation",
+        "The two are unrelated",
+        "Data Identification is the prerequisite for Data Anonymisation, since data must be identified before it can be anonymised",
+        "Data Identification replaces the need for Data Anonymisation",
+        "Data Anonymisation is a step within Data Identification"
+      ],
+      "correct": 2,
+      "explanation": "Data Identification is the opposite of, and the prerequisite for, Data Anonymisation: one must first identify data before anonymising it."
+    },
+    {
+      "stem": "What is Data Identification concerned with?",
+      "options": [
+        "The set of details which assist in identifying an entity or individual",
+        "Assigning primary keys to every table",
+        "Labelling files by creation date",
+        "Choosing which server hosts a database",
+        "Compressing datasets for transfer"
+      ],
+      "correct": 0,
+      "explanation": "Data Identification is about those details, direct or indirect, which help identify an entity or individual."
+    },
+    {
+      "stem": "Which of the following is an example of an indirect identifying detail?",
+      "options": [
+        "A person's name",
+        "A contact number",
+        "A postal address",
+        "A credit card number",
+        "A unique identification number that links to other datasets to identify an individual"
+      ],
+      "correct": 4,
+      "explanation": "Direct details include name, contact number, address and credit card number; an indirect detail is a unique identification number that connects with other datasets."
+    },
+    {
+      "stem": "In a data migration project, what is the correct order of activities involving Data Identification?",
+      "options": [
+        "Data migration, then data discovery, then data identification",
+        "Data discovery, then data identification, then data migration",
+        "Data identification, then data migration, then data discovery",
+        "Data migration only; identification is not required",
+        "Data identification, then data discovery, then data migration"
+      ],
+      "correct": 1,
+      "explanation": "The process is to first conduct data discovery, then data identification, and only then can data migration take place."
+    },
+    {
+      "stem": "On which kind of dataset is it recommended practice to perform Data Identification?",
+      "options": [
+        "Unstructured datasets",
+        "Semi-structured datasets",
+        "Image datasets only",
+        "Structured datasets",
+        "Streaming datasets only"
+      ],
+      "correct": 3,
+      "explanation": "Data Identification can be done in structured, semi-structured and unstructured datasets, but the recommended practice is to do it in structured datasets."
+    },
+    {
+      "stem": "Which artefacts are named as a good source for Data Identification?",
+      "options": [
+        "Server logs",
+        "Data dictionaries and data glossaries",
+        "Marketing brochures",
+        "Firewall configurations",
+        "Backup schedules"
+      ],
+      "correct": 1,
+      "explanation": "Data dictionaries and data glossaries are a good source for data identification."
+    },
+    {
+      "stem": "Which discipline being in place makes Data Anonymisation easy, according to the benefits of Data Identification?",
+      "options": [
+        "Network Management",
+        "Release Management",
+        "Change Management",
+        "Incident Management",
+        "Metadata Management"
+      ],
+      "correct": 4,
+      "explanation": "Data Anonymisation becomes easy when Metadata Management is in place."
+    },
+    {
+      "stem": "How does Data Lineage help once elements have been identified?",
+      "options": [
+        "It tracks where an identified element has come from and where it will flow to",
+        "It deletes identified elements automatically",
+        "It encrypts identified elements",
+        "It converts identified elements into reference data",
+        "It assigns identified elements to a data owner"
+      ],
+      "correct": 0,
+      "explanation": "Data Lineage makes life easy by tracking where an identified element has come from or where it will flow to."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a benefit of Data Identification?",
+      "options": [
+        "Better Data Cleansing and Data Wrangling",
+        "Data Quality implementation becomes highly achievable",
+        "Reduced storage costs",
+        "Support for defining Golden Records in Master Data Management",
+        "Support for defining Reference data"
+      ],
+      "correct": 2,
+      "explanation": "Data Identification assists cleansing, wrangling, data quality, golden records and reference data; reduced storage cost is not among its benefits."
+    },
+    {
+      "stem": "In Master Data Management, where does Data Identification play a vital role?",
+      "options": [
+        "In choosing the database vendor",
+        "In scheduling batch loads",
+        "In sizing the hardware",
+        "In defining Golden Records",
+        "In writing user manuals"
+      ],
+      "correct": 3,
+      "explanation": "While defining Golden Records during Master Data Management, or defining Reference data, Data Identification plays a vital role."
+    }
+  ]
+}

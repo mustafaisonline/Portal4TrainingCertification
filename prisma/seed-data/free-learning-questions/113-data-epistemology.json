@@ -1,0 +1,125 @@
+{
+  "topic": "data-epistemology",
+  "questions": [
+    {
+      "stem": "From which Greek roots does the word Epistemology come?",
+      "options": [
+        "Epi meaning \"upon\" and stema meaning \"structure\"",
+        "Ethos meaning \"character\" and logos meaning \"word\"",
+        "Episteme meaning \"knowledge\" and logos meaning \"discourse\" or \"communication\"",
+        "Epistole meaning \"letter\" and nomos meaning \"law\"",
+        "Episteme meaning \"belief\" and logos meaning \"number\""
+      ],
+      "correct": 2,
+      "explanation": "Epistemology is rooted in episteme, meaning knowledge, and logos, meaning discourse or communication."
+    },
+    {
+      "stem": "What central concept does Epistemology explore?",
+      "options": [
+        "Justified knowledge",
+        "Data storage efficiency",
+        "Network topology",
+        "Statistical sampling",
+        "Financial forecasting"
+      ],
+      "correct": 0,
+      "explanation": "Epistemology explores the concept of justified knowledge, asking what we know and how we can claim to know it."
+    },
+    {
+      "stem": "Which of the following is NOT one of the questions Epistemology addresses?",
+      "options": [
+        "What do we know?",
+        "How can we claim to know something?",
+        "What validates our beliefs?",
+        "How do we ascertain the certainty of our knowledge?",
+        "How much does it cost to store the data?"
+      ],
+      "correct": 4,
+      "explanation": "Epistemology asks what we know, how we claim to know it, what validates our beliefs and how certain our knowledge is; storage cost is not an epistemological question."
+    },
+    {
+      "stem": "How do data science teams turn raw data into knowledge in the Big Data era?",
+      "options": [
+        "By archiving it in a data warehouse",
+        "By applying machine learning or deep learning models to extract insights",
+        "By converting it into structured tables",
+        "By encrypting it before analysis",
+        "By publishing it to business users unchanged"
+      ],
+      "correct": 1,
+      "explanation": "Data science teams apply machine learning or deep learning models to extract insights, turning raw data into knowledge."
+    },
+    {
+      "stem": "Why is a justification of knowledge essential in Data Epistemology?",
+      "options": [
+        "To reduce the size of the dataset",
+        "To satisfy licensing requirements",
+        "To speed up model training",
+        "To ensure that the insights extracted align with their origins and truly reflect what was expected",
+        "To remove the need for evidence"
+      ],
+      "correct": 3,
+      "explanation": "Justification of knowledge ensures that what is extracted from data truly reflects what was expected and aligns with its origins."
+    },
+    {
+      "stem": "What kind of validation does Data Epistemology emphasise?",
+      "options": [
+        "Evidence-based validation",
+        "Opinion-based validation",
+        "Vendor-based validation",
+        "Cost-based validation",
+        "Schedule-based validation"
+      ],
+      "correct": 0,
+      "explanation": "The process emphasises evidence-based validation, where qualitative research relies on the quality of the design and the data collected."
+    },
+    {
+      "stem": "What is identified as a key challenge in Big Data from an epistemological point of view?",
+      "options": [
+        "Choosing a cloud provider",
+        "Finding enough storage",
+        "The generation and validation of knowledge",
+        "Hiring database administrators",
+        "Converting unstructured data into images"
+      ],
+      "correct": 2,
+      "explanation": "A key challenge in Big Data is the generation and validation of knowledge."
+    },
+    {
+      "stem": "Which relationships must be analysed to address the challenge of knowledge generation in Big Data?",
+      "options": [
+        "Between the budget, the timeline and the team",
+        "Between the hardware, the network and the software",
+        "Between the customer, the supplier and the regulator",
+        "Between the tables, the columns and the indexes",
+        "Between the knowledge produced, the entities that produce it and the methods used to generate it"
+      ],
+      "correct": 4,
+      "explanation": "It is crucial to analyse the complex relationships between the knowledge produced, the entities that produce it and the methods used to generate it."
+    },
+    {
+      "stem": "How does the view of knowledge in I Am Datapedia! differ from the conventional view?",
+      "options": [
+        "Knowledge is considered impossible to derive from data",
+        "Knowledge can be derived directly from data, rather than only building on information",
+        "Knowledge is treated as identical to wisdom",
+        "Knowledge is considered only to come from qualitative research",
+        "Knowledge is treated as a subset of raw data"
+      ],
+      "correct": 1,
+      "explanation": "Conventionally knowledge builds on information, but the author believes it can be derived directly from data."
+    },
+    {
+      "stem": "In evidence-based validation, on what does qualitative research rely?",
+      "options": [
+        "The number of models trained",
+        "The speed of the database",
+        "The seniority of the analyst",
+        "The quality of the design and the data collected",
+        "The size of the budget"
+      ],
+      "correct": 3,
+      "explanation": "Qualitative research relies on the quality of the design and the data collected."
+    }
+  ]
+}

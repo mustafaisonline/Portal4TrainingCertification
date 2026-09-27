@@ -1,0 +1,125 @@
+{
+  "topic": "data-classification-categorization-and-data-clustering",
+  "questions": [
+    {
+      "stem": "Which learning method does Data Clustering belong to?",
+      "options": [
+        "Supervised Learning",
+        "Reinforcement Learning",
+        "Transfer Learning",
+        "Unsupervised Learning",
+        "Semi-supervised Learning"
+      ],
+      "correct": 3,
+      "explanation": "Data Clustering equals Unsupervised Learning, while Data Classification or Categorisation equals Supervised Learning."
+    },
+    {
+      "stem": "Which learning method does Data Classification belong to?",
+      "options": [
+        "Supervised Learning",
+        "Unsupervised Learning",
+        "Reinforcement Learning",
+        "Deep Learning only",
+        "Federated Learning"
+      ],
+      "correct": 0,
+      "explanation": "Data Classification or Categorisation is Supervised Learning: it works from labelled data with known outputs."
+    },
+    {
+      "stem": "What kind of data does Data Classification use?",
+      "options": [
+        "Unlabelled data",
+        "Encrypted data",
+        "Labelled data",
+        "Only numeric data",
+        "Only image data"
+      ],
+      "correct": 2,
+      "explanation": "Data Classification uses labelled data, whereas Data Clustering uses unlabelled data."
+    },
+    {
+      "stem": "Which two algorithms are named as the common Data Clustering algorithms in data mining?",
+      "options": [
+        "K-Nearest Neighbour and decision tree",
+        "K-means clustering and hierarchical clustering",
+        "Linear regression and logistic regression",
+        "Naive Bayes and random forest",
+        "Gradient boosting and support vector machines"
+      ],
+      "correct": 1,
+      "explanation": "The two common Data Clustering algorithms are K-means clustering and hierarchical clustering."
+    },
+    {
+      "stem": "Which of the following is named as one of the most popular Data Classification algorithms in data mining?",
+      "options": [
+        "K-means clustering",
+        "Hierarchical clustering",
+        "Principal component analysis",
+        "Apriori",
+        "K-Nearest Neighbour"
+      ],
+      "correct": 4,
+      "explanation": "The most popular Data Classification algorithms are K-Nearest Neighbour and decision tree algorithms."
+    },
+    {
+      "stem": "Grouping animals into those with two legs and those with four legs is an example of which technique?",
+      "options": [
+        "Data Classification",
+        "Data Labelling",
+        "Data Clustering",
+        "Data Segmentation",
+        "Data Annotation"
+      ],
+      "correct": 2,
+      "explanation": "Clustering groups data by shared characteristics, such as animals with two legs and animals with four legs, whereas classification tags each item by its uniqueness."
+    },
+    {
+      "stem": "Which statement about the output of Data Clustering is correct?",
+      "options": [
+        "The output is unknown in advance",
+        "The output is known in advance",
+        "The output is always a single group",
+        "The output must match the training labels",
+        "The output is a decision tree"
+      ],
+      "correct": 0,
+      "explanation": "Data Classification output is known, but Data Clustering output is unknown because no labels or training data are provided."
+    },
+    {
+      "stem": "Which of the following is NOT true of Data Classification?",
+      "options": [
+        "It uses labelled data",
+        "Its output is known",
+        "Training data is provided",
+        "It is a form of Supervised Learning",
+        "No training data is provided"
+      ],
+      "correct": 4,
+      "explanation": "Training data is provided for Data Classification; it is Data Clustering that receives no training data."
+    },
+    {
+      "stem": "At what stage are Data Classification and Data Clustering used in Machine Learning?",
+      "options": [
+        "After the final model has been deployed",
+        "For pattern identification before complex algorithms come into action",
+        "Only during data backup",
+        "When writing the user interface",
+        "During database schema design"
+      ],
+      "correct": 1,
+      "explanation": "Both techniques are used for pattern identification before the more complex algorithms are applied."
+    },
+    {
+      "stem": "On what basis is Data Classification performed?",
+      "options": [
+        "The shared characteristics of items",
+        "The size of the dataset",
+        "The order in which data arrived",
+        "The uniqueness of the data, so that each item such as each animal is tagged separately",
+        "The storage cost of each record"
+      ],
+      "correct": 3,
+      "explanation": "Classification is done based on the uniqueness of the data, tagging all animals separately, while clustering is based on characteristics."
+    }
+  ]
+}

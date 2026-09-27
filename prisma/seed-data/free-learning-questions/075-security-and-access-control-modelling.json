@@ -1,0 +1,125 @@
+{
+  "topic": "security-and-access-control-modelling",
+  "questions": [
+    {
+      "stem": "What does Security & Access Control Modelling define?",
+      "options": [
+        "How data is physically partitioned across disks",
+        "Structured rules for who can access what data, under which conditions and in what manner",
+        "The semantic meaning of business concepts",
+        "The schedule for refreshing a data warehouse",
+        "The calculation logic of machine learning features"
+      ],
+      "correct": 1,
+      "explanation": "Security & Access Control Modelling formalises data protection through roles, permissions, entitlements and policies that determine who can access what, under which conditions and how."
+    },
+    {
+      "stem": "Which of the following is NOT one of the core entities defined in Security & Access Control Modelling?",
+      "options": [
+        "Users",
+        "Roles",
+        "Permissions",
+        "Policies",
+        "Dimensions"
+      ],
+      "correct": 4,
+      "explanation": "The core entities are Users, Roles, Permissions and Policies; dimensions belong to dimensional modelling, not access control."
+    },
+    {
+      "stem": "In a typical access control model, how are users, roles and permissions connected?",
+      "options": [
+        "Permissions are assigned directly to users, and roles are decorative labels",
+        "Roles are assigned to permissions, and users inherit nothing",
+        "Users are assigned to roles, and roles carry permissions",
+        "Users and roles are the same entity",
+        "Policies replace both roles and permissions"
+      ],
+      "correct": 2,
+      "explanation": "Typically users are assigned to roles, roles carry permissions, and policies add constraints such as time, location or device."
+    },
+    {
+      "stem": "What does Row-Level Security (RLS) do?",
+      "options": [
+        "Restricts access to specific rows based on attributes such as branch assignment",
+        "Masks or hides sensitive columns such as Salary",
+        "Encrypts the entire table at rest",
+        "Limits the number of rows a query may return",
+        "Prevents users from creating new tables"
+      ],
+      "correct": 0,
+      "explanation": "Row-Level Security restricts access to particular rows based on attributes, for example allowing a Branch Officer to see only loans in their own branch."
+    },
+    {
+      "stem": "Which control masks or hides sensitive fields such as LoanAmount?",
+      "options": [
+        "Row-Level Security",
+        "Attribute-Based Access Control",
+        "Policy-based time restrictions",
+        "Column-Level Security",
+        "Role explosion"
+      ],
+      "correct": 3,
+      "explanation": "Column-Level Security (CLS) masks or hides sensitive fields such as Salary or LoanAmount."
+    },
+    {
+      "stem": "What does Attribute-Based Access Control (ABAC) base its rules on?",
+      "options": [
+        "Only the user's job title",
+        "Only the table's primary key",
+        "The database vendor's default settings",
+        "The order in which users were created",
+        "User attributes, data attributes and environmental conditions"
+      ],
+      "correct": 4,
+      "explanation": "ABAC enforces rules based on a combination of user attributes, data attributes and environmental conditions."
+    },
+    {
+      "stem": "In the loan approval example from I Am Datapedia!, what condition applies to Risk Managers' full access?",
+      "options": [
+        "Only for loans in their own branch",
+        "Only during office hours and from corporate-managed devices",
+        "Only for loans below a certain amount",
+        "Only after approval by a Branch Officer",
+        "Only through the BI dashboard"
+      ],
+      "correct": 1,
+      "explanation": "Risk Managers have full access but only during office hours and from corporate-managed devices, an example of policy-based access control."
+    },
+    {
+      "stem": "What is 'role explosion'?",
+      "options": [
+        "A security breach caused by a compromised administrator role",
+        "The automatic deletion of unused roles",
+        "A situation where too many narrowly defined roles become difficult to manage",
+        "The merging of all roles into a single super-user role",
+        "A performance failure when a role has too many users"
+      ],
+      "correct": 2,
+      "explanation": "Role explosion occurs in large organisations when too many narrowly defined roles are created and become hard to manage."
+    },
+    {
+      "stem": "What is 'access creep'?",
+      "options": [
+        "Slow query performance caused by security checks",
+        "The gradual expansion of a data warehouse",
+        "Users losing permissions after a role change",
+        "Users accumulating permissions over time without disciplined governance",
+        "Unauthorised access by external hackers"
+      ],
+      "correct": 3,
+      "explanation": "Access creep happens when, without disciplined governance and change management, users accumulate permissions over time."
+    },
+    {
+      "stem": "Which regulations are named as examples that a well-designed security model helps comply with?",
+      "options": [
+        "GDPR and PCI DSS",
+        "SOX and Basel III",
+        "HIPAA and FERPA",
+        "ISO 9001 and ISO 14001",
+        "COBIT and ITIL"
+      ],
+      "correct": 0,
+      "explanation": "The loan approval example states that such a model ensures compliance with regulations such as GDPR or PCI DSS."
+    }
+  ]
+}

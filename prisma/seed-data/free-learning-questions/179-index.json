@@ -1,0 +1,125 @@
+{
+  "topic": "index",
+  "questions": [
+    {
+      "stem": "What is the purpose of a database index?",
+      "options": [
+        "To enforce foreign key relationships",
+        "To compress table data on disk",
+        "To store a backup copy of the table",
+        "To partition the table across nodes",
+        "To enhance the performance of database queries on tables"
+      ],
+      "correct": 4,
+      "explanation": "An index is used to enhance the performance of database queries on tables by holding the information needed to reach data quickly."
+    },
+    {
+      "stem": "What happens if a table has more indexes than it needs?",
+      "options": [
+        "Query performance always improves further",
+        "Performance can decrease",
+        "The table becomes read-only",
+        "The primary key is dropped",
+        "Nothing changes, because unused indexes are ignored"
+      ],
+      "correct": 1,
+      "explanation": "Although many indexes can be created, having more than required can decrease performance as well."
+    },
+    {
+      "stem": "When is an index normally created on a table?",
+      "options": [
+        "Before any data has been loaded",
+        "Only when the table is archived",
+        "Only after a backup has been taken",
+        "When the database starts growing",
+        "Only when the table is partitioned"
+      ],
+      "correct": 3,
+      "explanation": "Indexes are normally created once the database starts growing and lookups become expensive."
+    },
+    {
+      "stem": "In the Library of Congress analogy for indexing, roughly how many items does the library hold?",
+      "options": [
+        "About 170 million",
+        "About 17 million",
+        "About 1.7 billion",
+        "About 70 million",
+        "About 700 thousand"
+      ],
+      "correct": 0,
+      "explanation": "The Library of Congress, described as the largest library in the world, houses approximately 170 million items."
+    },
+    {
+      "stem": "What does the Library of Congress analogy illustrate about why indexes are needed?",
+      "options": [
+        "That libraries need more staff than databases",
+        "That every book must be stored in alphabetical order",
+        "That an index contains all the information needed to access items quickly and efficiently, just as a database index does for data",
+        "That searching manually is faster than searching by computer",
+        "That large collections should be split across buildings"
+      ],
+      "correct": 2,
+      "explanation": "Asking for the library's index of names and locations is the smart way to find a book in ten minutes; a database index plays the same role for data."
+    },
+    {
+      "stem": "Which of the following is an advantage of indexing?",
+      "options": [
+        "It speeds up INSERT and UPDATE statements",
+        "It removes the need for a primary key",
+        "It allows the table to be partitioned freely",
+        "It reduces the total number of I/O operations needed to retrieve data",
+        "It stores the ROWID in every index entry"
+      ],
+      "correct": 3,
+      "explanation": "Indexing reduces the number of I/O operations needed to retrieve data and offers faster search and retrieval."
+    },
+    {
+      "stem": "Which of the following is a disadvantage of indexing?",
+      "options": [
+        "It decreases performance in INSERT, DELETE and UPDATE queries",
+        "It increases the number of I/O operations for reads",
+        "It makes data retrieval slower for users",
+        "It increases tablespace by storing every row twice",
+        "It prevents the creation of a primary key"
+      ],
+      "correct": 0,
+      "explanation": "SQL indexing decreases the performance of INSERT, DELETE and UPDATE queries, since the index must be maintained."
+    },
+    {
+      "stem": "What does a database management system need on a table in order to perform indexing?",
+      "options": [
+        "A foreign key to another table",
+        "At least one partition",
+        "A primary key with a unique value",
+        "A clustered and a non-clustered index already in place",
+        "A column store"
+      ],
+      "correct": 2,
+      "explanation": "To perform indexing, the database management system needs a primary key on the table with a unique value."
+    },
+    {
+      "stem": "Which of the following is NOT listed among the types of index?",
+      "options": [
+        "B-Tree Index",
+        "Bitmap Index",
+        "Hash Index",
+        "Reverse Index",
+        "Quadtree Index"
+      ],
+      "correct": 4,
+      "explanation": "B-Tree, Bitmap, Hash and Reverse indexes are all listed, alongside many others; a Quadtree index is not."
+    },
+    {
+      "stem": "Which restriction applies to an index-organised table?",
+      "options": [
+        "It cannot have a primary key",
+        "It is not allowed to be partitioned",
+        "It cannot be queried with SQL",
+        "It must use a bitmap index",
+        "It cannot be backed up"
+      ],
+      "correct": 1,
+      "explanation": "Among the disadvantages of indexing is that you are not allowed to partition an index-organised table."
+    }
+  ]
+}

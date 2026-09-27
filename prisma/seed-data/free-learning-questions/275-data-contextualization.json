@@ -1,0 +1,125 @@
+{
+  "topic": "data-contextualization",
+  "questions": [
+    {
+      "stem": "Data Contextualisation has emerged as a critical factor in dealing with which kind of datasets?",
+      "options": [
+        "Small, static, well-structured reference tables",
+        "Vast, rapidly changing and diverse unstructured datasets",
+        "Encrypted datasets held by regulators",
+        "Archived datasets no longer in use",
+        "Datasets stored only on tape"
+      ],
+      "correct": 1,
+      "explanation": "Data Contextualisation is a critical factor in dealing with and summarising vast, rapidly changing and diverse unstructured datasets."
+    },
+    {
+      "stem": "Which everyday situation is used to explain the idea of context in Data Contextualisation?",
+      "options": [
+        "Reading a map before a journey",
+        "Filing a tax return",
+        "Backing up a laptop",
+        "Choosing a database vendor",
+        "Opening a meeting with management by acknowledging them and stating its purpose"
+      ],
+      "correct": 4,
+      "explanation": "Beginning a management meeting by acknowledging the audience and stating the purpose establishes context, so people know how to interpret what follows."
+    },
+    {
+      "stem": "What does unstructured data typically contain, according to the case for Data Contextualisation?",
+      "options": [
+        "A substantial amount of information that is irrelevant to decision-making",
+        "Only data that has already been validated",
+        "Perfectly consistent metadata",
+        "No information of any value",
+        "Only numeric measurements"
+      ],
+      "correct": 0,
+      "explanation": "Unstructured data typically contains a substantial amount of information that is irrelevant to decision-making, which is why contextualisation matters."
+    },
+    {
+      "stem": "How does filtering irrelevant data through Data Contextualisation help?",
+      "options": [
+        "It increases the volume of data available for analysis",
+        "It makes all data structured",
+        "It reduces the overall data volume, simplifying processing, cleaning, transformation and maintenance",
+        "It removes the need for data governance",
+        "It guarantees complete data accuracy"
+      ],
+      "correct": 2,
+      "explanation": "Filtering eliminates irrelevant data, reducing the overall volume and thereby simplifying data processing, cleaning, transformation and maintenance."
+    },
+    {
+      "stem": "How does Data Contextualisation enhance decision-making?",
+      "options": [
+        "By removing all external data from consideration",
+        "By replacing human decisions with automated rules",
+        "By limiting analysis to a single data source",
+        "By combining external data with internal data to give a more comprehensive foundation",
+        "By encrypting decision records"
+      ],
+      "correct": 3,
+      "explanation": "By contextualising data you can combine external data with internal data, providing a more comprehensive foundation for decision-making."
+    },
+    {
+      "stem": "What reduction in data processing, cleaning, transformation and maintenance effort is suggested from a robust Data Contextualisation process?",
+      "options": [
+        "About 5 to 10 percent, as confirmed by industry benchmarks",
+        "Approximately 30 to 40 percent, based on personal experience rather than formal statistics",
+        "Exactly 50 percent, as set by regulation",
+        "Around 80 to 90 percent, as measured in formal studies",
+        "No reduction; the effort increases"
+      ],
+      "correct": 1,
+      "explanation": "There are no formal statistics or benchmarks, but from personal experience a robust process can reduce the effort by approximately 30 to 40 percent."
+    },
+    {
+      "stem": "In the student exam scores example of Data Contextualisation, what contextual data is added to the scores?",
+      "options": [
+        "Teachers' salaries and school budgets",
+        "Students' home addresses and ages",
+        "Exam paper difficulty ratings",
+        "Textbook prices and library opening hours",
+        "Study hours, attendance records and participation in class discussions"
+      ],
+      "correct": 4,
+      "explanation": "The scores are contextualised with data on study hours, attendance records and participation in class discussions."
+    },
+    {
+      "stem": "In the student exam scores example, what serves as the raw data?",
+      "options": [
+        "The exam scores",
+        "The attendance records",
+        "The study hours",
+        "The class participation notes",
+        "The correlation results"
+      ],
+      "correct": 0,
+      "explanation": "Exam scores serve as the raw data, which alone may not fully depict student performance until contextual factors are integrated."
+    },
+    {
+      "stem": "Which of these is NOT listed as a reason why Data Contextualisation is essential?",
+      "options": [
+        "Filtering irrelevant data",
+        "Enhancing decision-making",
+        "Encrypting sensitive data",
+        "Providing clarity",
+        "Adding points of interest"
+      ],
+      "correct": 2,
+      "explanation": "The listed reasons are filtering irrelevant data, enhancing decision-making, providing clarity and adding points of interest; encryption is not among them."
+    },
+    {
+      "stem": "In Data Contextualisation, on what does the relevance of a data element depend?",
+      "options": [
+        "The size of the dataset",
+        "The age of the data",
+        "The format in which the data is stored",
+        "The specific decision being made",
+        "The number of users who access it"
+      ],
+      "correct": 3,
+      "explanation": "The relevance of a data element may vary depending on the specific decision being made."
+    }
+  ]
+}

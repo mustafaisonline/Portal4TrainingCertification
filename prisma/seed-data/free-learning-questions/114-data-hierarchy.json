@@ -1,0 +1,125 @@
+{
+  "topic": "data-hierarchy",
+  "questions": [
+    {
+      "stem": "What distinguishes Data Hierarchy from Data Taxonomy and Data Ontology?",
+      "options": [
+        "Data Hierarchy is metadata while the other two present actual data",
+        "Data Hierarchy applies only to unstructured data",
+        "Data Hierarchy is used for security, the others for reporting",
+        "Data Hierarchy presents actual data, whereas Data Taxonomy and Data Ontology are metadata for Data Governance",
+        "There is no difference; the terms are interchangeable"
+      ],
+      "correct": 3,
+      "explanation": "Data Taxonomy and Data Ontology are metadata for the purpose of Data Governance, whereas Data Hierarchy presents actual data."
+    },
+    {
+      "stem": "Which of the following is given as a well-known example of a Data Hierarchy?",
+      "options": [
+        "An organisational chart running from the CEO down to the Database Administrator",
+        "A data dictionary",
+        "A business glossary",
+        "A list of regulatory requirements",
+        "A firewall rule set"
+      ],
+      "correct": 0,
+      "explanation": "The organisational chart, starting from the CEO and going down to the Database Administrator, is the famous example; a family tree is another."
+    },
+    {
+      "stem": "To what do Data Taxonomies apply?",
+      "options": [
+        "Terms, concepts or categories",
+        "Bytes and bits",
+        "Identified objects or phenomena",
+        "Network segments",
+        "User access rights"
+      ],
+      "correct": 2,
+      "explanation": "Data Taxonomies apply to identified objects or phenomena, whereas Data Ontologies apply to terms, concepts or categories."
+    },
+    {
+      "stem": "To what do Data Ontologies apply?",
+      "options": [
+        "Identified objects or phenomena",
+        "Physical storage devices",
+        "Rows of actual data",
+        "Database backup schedules",
+        "Terms, concepts or categories"
+      ],
+      "correct": 4,
+      "explanation": "Data Ontologies apply to terms, concepts or categories."
+    },
+    {
+      "stem": "Which sequence correctly shows the Data Hierarchy at database level?",
+      "options": [
+        "Bits, Bytes, Database, Tables, Records, Columns",
+        "Database, Files or Tables, Records, Fields or Columns, Bytes, Bits",
+        "Records, Database, Tables, Bits, Bytes, Columns",
+        "Database, Bits, Bytes, Records, Tables, Columns",
+        "Tables, Database, Columns, Records, Bytes, Bits"
+      ],
+      "correct": 1,
+      "explanation": "At database level the hierarchy runs Database, then Files or Tables, then Records, then Fields or Columns, then Bytes, then Bits."
+    },
+    {
+      "stem": "What kind of parent-child relationship exists among the rows of a dataset in a Data Hierarchy?",
+      "options": [
+        "Multiple parents and a single child",
+        "No parent-child relationship at all",
+        "Multiple parents and multiple children",
+        "A single parent and multiple children",
+        "A single parent and a single child"
+      ],
+      "correct": 3,
+      "explanation": "Like Data Taxonomy, Data Hierarchy has a single parent and multiple child relationship among the rows of the dataset."
+    },
+    {
+      "stem": "Which of the following is NOT given as an example of a Data Hierarchy?",
+      "options": [
+        "An organisational chart",
+        "A data dictionary",
+        "A family tree",
+        "Database, Tables, Records, Columns, Bytes, Bits",
+        "A chain of relationships in actual data"
+      ],
+      "correct": 1,
+      "explanation": "The examples are the organisational chart, the family tree and the database-level chain; a data dictionary is not one of them."
+    },
+    {
+      "stem": "Why is data grouped into a Data Hierarchy?",
+      "options": [
+        "So that data exploration and representation become easy",
+        "To reduce the storage footprint",
+        "To satisfy encryption standards",
+        "To eliminate the need for metadata",
+        "To prevent users from querying it"
+      ],
+      "correct": 0,
+      "explanation": "Data can be grouped in a way where data exploration and representation become easy."
+    },
+    {
+      "stem": "Which two terms are described as metadata used for the purpose of Data Governance?",
+      "options": [
+        "Data Hierarchy and Data Lineage",
+        "Data Hierarchy and Family Tree",
+        "Data Ontology and Data Hierarchy",
+        "Data Taxonomy and Data Hierarchy",
+        "Data Taxonomy and Data Ontology"
+      ],
+      "correct": 4,
+      "explanation": "Data Taxonomy and Data Ontology are metadata for Data Governance; Data Hierarchy presents actual data."
+    },
+    {
+      "stem": "How is Data Hierarchy defined?",
+      "options": [
+        "A set of terms and concepts",
+        "A classification of identified phenomena",
+        "A chain of relationship in actual data",
+        "A list of governance policies",
+        "A collection of unrelated records"
+      ],
+      "correct": 2,
+      "explanation": "Data Hierarchy is a chain of relationship in actual data, such as the organisational chart or the family tree."
+    }
+  ]
+}

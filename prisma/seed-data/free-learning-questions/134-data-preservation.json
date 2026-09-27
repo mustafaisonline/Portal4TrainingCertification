@@ -1,0 +1,125 @@
+{
+  "topic": "data-preservation",
+  "questions": [
+    {
+      "stem": "What is Data Preservation about?",
+      "options": [
+        "Securing and maintaining the safety and integrity of data after it has been processed, for future reference",
+        "Cleaning and standardising data before it is loaded into a warehouse",
+        "Encrypting data while it is in transit between systems",
+        "Deleting data as soon as it is no longer needed for daily operations",
+        "Collecting personal data minimally and using it ethically"
+      ],
+      "correct": 0,
+      "explanation": "Data Preservation is about securing and maintaining the safety and integrity of data after it has been processed, for future reference."
+    },
+    {
+      "stem": "Which statement describes data that has been preserved?",
+      "options": [
+        "It can be freely edited but never copied",
+        "It cannot be changed and is hardly ever purged or deleted",
+        "It must be deleted after seven years in every industry",
+        "It is kept only in memory for fast access",
+        "It is refreshed daily from the source system"
+      ],
+      "correct": 1,
+      "explanation": "Data which is preserved cannot be changed and is hardly purged or deleted."
+    },
+    {
+      "stem": "Which of the following is NOT one of the three things to consider for Data Preservation?",
+      "options": [
+        "What data is to be preserved",
+        "What the retention period is",
+        "Which visualisation tool will present the preserved data",
+        "Who will be responsible for preserving the data",
+        "For how long the data should be kept"
+      ],
+      "correct": 2,
+      "explanation": "The considerations are what data to preserve, the retention period (how long to keep data) and who is responsible (a custodian). The choice of visualisation tool is not among them."
+    },
+    {
+      "stem": "Who is required for a data repository under Data Preservation?",
+      "options": [
+        "An external auditor",
+        "A regulatory body",
+        "A data scientist",
+        "A custodian",
+        "An investor"
+      ],
+      "correct": 3,
+      "explanation": "A custodian is required for the data repository; someone must be responsible for preserving the data."
+    },
+    {
+      "stem": "Why is it not possible to preserve everything in the current era of big data?",
+      "options": [
+        "Because regulators forbid preserving unstructured data",
+        "Because preserved data must be stored on paper",
+        "Because only relational databases can preserve data",
+        "Because custodians are not allowed to keep data for more than a year",
+        "Because big data brings huge semi-structured and unstructured datasets, so one must decide what to preserve and for how long"
+      ],
+      "correct": 4,
+      "explanation": "With big data's huge semi-structured and unstructured datasets, it is not worth, and not possible, to preserve everything. One must decide what to preserve and for how long."
+    },
+    {
+      "stem": "In the traditional banking example of Data Preservation, for how long is the history of customers who have closed their accounts preserved?",
+      "options": [
+        "Seven years from the day they closed their accounts",
+        "One year from the day they opened their accounts",
+        "Indefinitely, with no retention limit",
+        "Thirty days after the final transaction",
+        "Until the next external audit"
+      ],
+      "correct": 0,
+      "explanation": "Traditionally in the banking sector, the history of customers who have closed their accounts is preserved for seven years from the day they closed them."
+    },
+    {
+      "stem": "Where is a good starting point for deciding which datasets to preserve?",
+      "options": [
+        "The list of the most frequently queried tables",
+        "The list of compliance requirements",
+        "The list of the largest datasets by storage size",
+        "The list of dashboards used by management",
+        "The list of datasets with the poorest quality"
+      ],
+      "correct": 1,
+      "explanation": "One can start from the list of compliance requirements, such as the banking rule of preserving closed-account history for seven years."
+    },
+    {
+      "stem": "In the research field example, which data is preserved when hundreds of tests run daily?",
+      "options": [
+        "Every piece of test data, without exception",
+        "Only the data produced on the first day of each month",
+        "Only the data which can convince investors to keep investing, until new investment is in",
+        "Only the data that failed quality checks",
+        "Only the data older than seven years"
+      ],
+      "correct": 2,
+      "explanation": "In research, where hundreds of tests run daily, not every piece of data is preserved; only the data which can convince investors to keep investing is preserved, until the new investment is in."
+    },
+    {
+      "stem": "Which datastores are given as examples in which certain datasets are chosen for preservation?",
+      "options": [
+        "Spreadsheets, email archives and shared drives",
+        "Key-value stores, caches and message queues",
+        "Source transactional systems only",
+        "Data Warehouse, Data Mart and Data Lake",
+        "Backup tapes and printed reports"
+      ],
+      "correct": 3,
+      "explanation": "In datastores such as a Data Warehouse, a Data Mart or a Data Lake, there are certain datasets to preserve."
+    },
+    {
+      "stem": "Alongside Data Security, Data Privacy, Data Integrity and Data Compliance, to what does Data Preservation refer?",
+      "options": [
+        "The monetisation of the data",
+        "The visualisation of the data",
+        "The modelling of the data",
+        "The transformation of the data",
+        "The protection of the data"
+      ],
+      "correct": 4,
+      "explanation": "Data Preservation, Data Security, Data Privacy, Data Integrity and Data Compliance all refer to the protection of the data."
+    }
+  ]
+}

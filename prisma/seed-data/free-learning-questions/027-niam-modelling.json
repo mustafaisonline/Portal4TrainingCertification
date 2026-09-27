@@ -1,0 +1,125 @@
+{
+  "topic": "niam-modelling",
+  "questions": [
+    {
+      "stem": "What does NIAM stand for today?",
+      "options": [
+        "Natural Language Information Analysis Method",
+        "Normalised Information Architecture Model",
+        "Network Information Access Method",
+        "Nested Information Attribute Model",
+        "Numerical Information Analysis Method"
+      ],
+      "correct": 0,
+      "explanation": "NIAM now stands for Natural Language Information Analysis Method, having originally been Nijssen's Information Analysis Methodology."
+    },
+    {
+      "stem": "What did NIAM originally stand for?",
+      "options": [
+        "Nijssen's Information Analysis Methodology",
+        "Natural Information Attribute Mapping",
+        "New Integrated Analysis Method",
+        "Nominal Information Access Model",
+        "Normalised Information Analysis Method"
+      ],
+      "correct": 0,
+      "explanation": "NIAM originally referred to Nijssen's Information Analysis Methodology, developed by G. M. Nijssen in the 1970s."
+    },
+    {
+      "stem": "Why was the NIAM acronym generalised to Natural Language Information Analysis Method?",
+      "options": [
+        "Because Nijssen left the project",
+        "Because the method was renamed by a standards body",
+        "Because the original name was trademarked",
+        "Because many people contributed to the method, and to emphasise its basis in natural language",
+        "Because it was merged with ORM"
+      ],
+      "correct": 3,
+      "explanation": "The acronym was generalised because many people contributed, not just Nijssen, and to emphasise the method's natural-language basis."
+    },
+    {
+      "stem": "In which decades was NIAM developed?",
+      "options": [
+        "The 1950s and 1960s",
+        "The 1990s and 2000s",
+        "The 2000s and 2010s",
+        "The 1970s and 1980s",
+        "The 1960s and 1970s"
+      ],
+      "correct": 3,
+      "explanation": "NIAM is an early fact-oriented approach developed in the 1970s and 1980s."
+    },
+    {
+      "stem": "What is the key idea behind NIAM?",
+      "options": [
+        "Business information should be modelled first as tables",
+        "Diagrams should replace sentences",
+        "Data types should be decided before facts",
+        "Only technical staff should validate models",
+        "Business information should first be expressed in plain natural language before being transformed into formal models"
+      ],
+      "correct": 4,
+      "explanation": "NIAM begins with natural-language sentences describing business facts so business users can validate models without technical knowledge."
+    },
+    {
+      "stem": "In the NIAM fact 'A customer submits a loan application', what are customer and loan application?",
+      "options": [
+        "Roles",
+        "Constraints",
+        "Objects",
+        "Attributes",
+        "Tables"
+      ],
+      "correct": 2,
+      "explanation": "NIAM breaks information into facts, objects and roles: customer and loan application are objects, and submits describes the role connecting them."
+    },
+    {
+      "stem": "In the sentence 'Customer John places Order 123', how does NIAM treat the statement?",
+      "options": [
+        "As a table with two columns",
+        "As a constraint on orders",
+        "As an attribute of the customer",
+        "As a process step in a workflow",
+        "As a fact type where a customer plays the role of placing and an order plays the role of being placed"
+      ],
+      "correct": 4,
+      "explanation": "NIAM treats the sentence as a fact type in which the customer plays the placing role and the order plays the being-placed role."
+    },
+    {
+      "stem": "What is NIAM's greatest strength?",
+      "options": [
+        "Its handling of complex constraints",
+        "Its business friendliness, allowing domain experts to validate models expressed in natural language",
+        "Its support for large-scale enterprise models",
+        "Its visual density",
+        "Its automatic generation of database schemas"
+      ],
+      "correct": 1,
+      "explanation": "Because models are in natural language, domain experts can validate them directly, reducing misunderstandings between business and technical teams."
+    },
+    {
+      "stem": "Which of the following is a stated limitation of NIAM?",
+      "options": [
+        "It cannot express any facts about a business",
+        "It is too technical for business users",
+        "It becomes less practical for complex constraints, advanced rules or large-scale enterprise models",
+        "It requires a specific database engine",
+        "It can only model numeric data"
+      ],
+      "correct": 2,
+      "explanation": "NIAM is effective for basic facts but less practical for complex constraints, advanced rules and large-scale enterprise models."
+    },
+    {
+      "stem": "Which later techniques build on NIAM's core principles while addressing its limitations?",
+      "options": [
+        "BPMN and DDD",
+        "ORM and FCO-IM",
+        "UML and ERD",
+        "Star and Snowflake schemas",
+        "Data Vault and Anchor Modelling"
+      ],
+      "correct": 1,
+      "explanation": "NIAM laid the foundation for ORM and FCO-IM, which build on its principles while addressing its limitations."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "slowly-changingdimensions-scd",
+  "questions": [
+    {
+      "stem": "In which concept are Slowly Changing Dimensions (SCD) used?",
+      "options": [
+        "Network security",
+        "Data Warehousing",
+        "Web page design",
+        "Video streaming",
+        "Country code standards"
+      ],
+      "correct": 1,
+      "explanation": "Slowly Changing Dimensions, also known as SCD, is a term used in the Data Warehouse concept."
+    },
+    {
+      "stem": "What are the two types of schema found in a dimensional Data Warehouse or Data Mart?",
+      "options": [
+        "Star and Snowflake schemas",
+        "Landing and Staging schemas",
+        "Public and Private schemas",
+        "Relational and Document schemas",
+        "Primary and Secondary schemas"
+      ],
+      "correct": 0,
+      "explanation": "In a dimensional Data Warehouse or Data Mart there are two types of schema, Star and Snowflake, both built on Facts and Dimensions."
+    },
+    {
+      "stem": "What does a Fact table keep?",
+      "options": [
+        "Descriptions of regions and products",
+        "The list of database users and their permissions",
+        "The transaction's lowest level of data, such as sales numbers, clicks or searches",
+        "The history of schema changes",
+        "Metadata about each column's data type"
+      ],
+      "correct": 2,
+      "explanation": "A Fact table keeps the transaction's lowest level of data, which can be numeric or non-numeric, like sales numbers, clicks on a social media portal or searches in Google."
+    },
+    {
+      "stem": "How is a Fact table mainly loaded?",
+      "options": [
+        "In overwrite mode, replacing all rows each night",
+        "In delete mode, removing old rows first",
+        "In read-only mode with no new rows",
+        "In append mode, meaning rows always get inserted",
+        "In merge mode, updating rows in place"
+      ],
+      "correct": 3,
+      "explanation": "A Fact table is mainly loaded in append mode, meaning rows always get inserted; it is a very fast-moving table and organisations hardly ever update or delete from it."
+    },
+    {
+      "stem": "Which of these is an example of a Dimension?",
+      "options": [
+        "The number of clicks on a portal",
+        "The daily sales amount",
+        "The count of Google searches",
+        "The transaction timestamp value in a fact row",
+        "Region, by which sales can be analysed"
+      ],
+      "correct": 4,
+      "explanation": "A Dimension table keeps the data elements by which a Fact can be analysed, such as sales by time, region or product, so Time, Regions and Products are dimensions."
+    },
+    {
+      "stem": "How does the frequency of new rows in a Dimension table compare with a Fact table?",
+      "options": [
+        "Dimension rows arrive at a very low frequency compared with the fast-moving Fact table",
+        "Dimension rows arrive far more often than Fact rows",
+        "Both tables receive rows at exactly the same rate",
+        "Dimension tables never receive any rows after the first load",
+        "Fact tables receive rows only once a year"
+      ],
+      "correct": 0,
+      "explanation": "In contrast with the Fact table, the frequency of rows coming into Dimension tables is very low; once regions or time are loaded they rarely or never change."
+    },
+    {
+      "stem": "If a product code changed from 001 to 002, then 003, then 004, what would SCD Type 1 keep?",
+      "options": [
+        "001 only",
+        "004 only",
+        "001 and 004",
+        "001, 002, 003 and 004",
+        "002 and 003"
+      ],
+      "correct": 1,
+      "explanation": "SCD 1 keeps only the latest status, so after the changes it would keep 004 only."
+    },
+    {
+      "stem": "Which SCD type keeps a complete history of every change to a dimension?",
+      "options": [
+        "SCD 1",
+        "SCD 0",
+        "SCD 2",
+        "SCD 3",
+        "SCD 4"
+      ],
+      "correct": 2,
+      "explanation": "SCD 2 keeps a complete history of every change; for a product code changing 001 to 004 it would keep 001, 002, 003 and 004."
+    },
+    {
+      "stem": "If a product code changed from 001 to 002, then 003, then 004, what would SCD Type 3 keep?",
+      "options": [
+        "004 only",
+        "All four values",
+        "002 and 003 only",
+        "001 and 004 only",
+        "Nothing, since SCD 3 discards history"
+      ],
+      "correct": 3,
+      "explanation": "SCD 3 keeps the first and latest status of changes, so it would keep 001 and 004 only."
+    },
+    {
+      "stem": "Why is a Dimension such as Products a candidate for Slowly Changing Dimension handling?",
+      "options": [
+        "Because product data is loaded in append mode like a fact",
+        "Because products are never analysed in reports",
+        "Because product tables receive thousands of rows per second",
+        "Because product data is stored outside the warehouse",
+        "Because a company can add products over time and the attributes of a product can change in future"
+      ],
+      "correct": 4,
+      "explanation": "A company with 100 products today can have more in future, and a product's attributes can change, so SCD principles are used to keep the history of changes in Dimensions."
+    }
+  ]
+}

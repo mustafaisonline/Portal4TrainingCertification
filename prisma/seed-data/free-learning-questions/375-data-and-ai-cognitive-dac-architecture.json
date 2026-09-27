@@ -1,0 +1,125 @@
+{
+  "topic": "data-and-ai-cognitive-dac-architecture",
+  "questions": [
+    {
+      "stem": "What is identified as the biggest challenge organisations face in today's technological landscape, motivating the Data and AI Cognitive (DAC) Architecture?",
+      "options": [
+        "Data integration and maintainability",
+        "A shortage of dashboards",
+        "The cost of office space",
+        "Too few programming languages",
+        "The decline of relational databases"
+      ],
+      "correct": 0,
+      "explanation": "The biggest challenge is data integration and maintainability, as organisations grapple with exponential data growth and widespread AI adoption."
+    },
+    {
+      "stem": "What primary issue with traditional architectures does DAC Architecture aim to overcome?",
+      "options": [
+        "Too much automation of AI deployment",
+        "The fragmentation of data and AI systems into separate silos, with data managed in one architecture and AI models in another",
+        "Excessive centralisation of all data in one place",
+        "The lack of any cloud services",
+        "The absence of business intelligence tools"
+      ],
+      "correct": 1,
+      "explanation": "Traditional architectures treat data and AI as distinct entities in separate silos, creating significant friction; DAC unifies them."
+    },
+    {
+      "stem": "What is the Data and AI Cognitive (DAC) Architecture?",
+      "options": [
+        "A machine learning algorithm for image recognition",
+        "A relational database schema for finance",
+        "A next-generation unified framework that seamlessly supports both data and AI architectures, breaking down the silos between them",
+        "A project management methodology",
+        "A vendor-specific cloud product"
+      ],
+      "correct": 2,
+      "explanation": "DAC Architecture is a next-generation unified framework supporting both data and AI architectures, enabling organisations to break down traditional silos."
+    },
+    {
+      "stem": "Which DAC capability empowers stakeholders with secure, role-based data access while maintaining strong governance?",
+      "options": [
+        "Cost Segregation and Recovery",
+        "Scalability and Flexibility",
+        "Interoperability",
+        "Data Ownership and Accessibility",
+        "Unified Data and AI Architecture"
+      ],
+      "correct": 3,
+      "explanation": "Data Ownership and Accessibility empowers stakeholders with secure, role-based data access while maintaining strong governance for collaboration."
+    },
+    {
+      "stem": "What do the Cost Segregation and Recovery mechanisms of DAC Architecture provide?",
+      "options": [
+        "Automatic deletion of unused data",
+        "Free cloud storage",
+        "A single flat fee for all business units",
+        "Role-based access to data",
+        "Precise cost tracking, allocation and optimisation of resources"
+      ],
+      "correct": 4,
+      "explanation": "Cost Segregation and Recovery allows precise cost tracking, allocation and optimisation of resources, supporting financial transparency."
+    },
+    {
+      "stem": "What is the role of the Integration Hub in DAC Architecture?",
+      "options": [
+        "It acts as a single source for data from multiple systems, so business units access pre-integrated data without building separate pipelines",
+        "It stores AI models only",
+        "It replaces the data governance practice",
+        "It provides read-only views for consumers",
+        "It bills business units for compute usage"
+      ],
+      "correct": 0,
+      "explanation": "The Integration Hub is a single source for data from multiple systems, letting business units access pre-integrated data without separate pipelines."
+    },
+    {
+      "stem": "How does the Integration Hub reduce the risk of data leakage and vulnerabilities?",
+      "options": [
+        "By deleting sensitive data",
+        "By establishing a single connection to each source system",
+        "By allowing each business unit its own connection to every source",
+        "By disabling all external access",
+        "By copying data into every Business Zone"
+      ],
+      "correct": 1,
+      "explanation": "By establishing a single connection to each source system, the Integration Hub minimises the risk of data leakage and vulnerabilities."
+    },
+    {
+      "stem": "In DAC Architecture, what does the Virtualization Layer do?",
+      "options": [
+        "It trains machine learning models",
+        "It ingests raw data from source systems",
+        "It manages all read-only views across Enterprise and Business Zones, serving as a unified platform for data consumers",
+        "It stores the governance blueprint",
+        "It allocates cloud costs to departments"
+      ],
+      "correct": 2,
+      "explanation": "The Virtualization Layer manages all read-only views across Enterprise and Business Zones and serves as the unified platform for data consumers."
+    },
+    {
+      "stem": "In DAC Architecture, which body manages the blueprint for all standards, policies, metadata, data quality, privacy and security controls, and data lifecycle management?",
+      "options": [
+        "The Integration Hub",
+        "The Virtualization Layer",
+        "Each Business Zone independently",
+        "The Centralised Data Governance Practice (Data Practice Management Team)",
+        "The external cloud provider"
+      ],
+      "correct": 3,
+      "explanation": "The Centralised Data Governance Practice manages the blueprint for standards, policies, metadata, data quality, privacy and security controls, and lifecycle management for the Enterprise and Business Zones."
+    },
+    {
+      "stem": "How do the Business Zone (BZ) Data Governance Practices relate to the Centralised Data Governance Practice in DAC Architecture?",
+      "options": [
+        "The BZ practices have no governance responsibilities at all",
+        "The BZ practices override the central practice",
+        "The central practice manages every BZ decision directly",
+        "The BZ practices report only to the Integration Hub",
+        "Each BZ practice has its own data stewardship and manages its specific standards, adhering to best practices shared by the central practice, which regularly reviews them"
+      ],
+      "correct": 4,
+      "explanation": "Enterprise and Business Zones each have dedicated data stewardships; BZ practices manage their own standards while following central best practices, and the central practice regularly evaluates them."
+    }
+  ]
+}

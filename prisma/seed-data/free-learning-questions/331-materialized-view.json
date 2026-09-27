@@ -1,0 +1,125 @@
+{
+  "topic": "materialized-view",
+  "questions": [
+    {
+      "stem": "What is a materialised view?",
+      "options": [
+        "A virtual table that fetches data on every query",
+        "A database object that physically stores the output of a query",
+        "A temporary table dropped at the end of a session",
+        "An index built on a regular view",
+        "A file exported from a table"
+      ],
+      "correct": 1,
+      "explanation": "A materialised view is a database object that stores the output of a query physically, unlike a regular view which is virtual."
+    },
+    {
+      "stem": "How does a materialised view differ from a regular view?",
+      "options": [
+        "A materialised view cannot be queried with SELECT",
+        "A materialised view is always smaller",
+        "A materialised view physically stores the data, whereas a regular view is a virtual table derived from a SELECT query",
+        "A regular view stores data but a materialised view does not",
+        "A materialised view cannot join multiple tables"
+      ],
+      "correct": 2,
+      "explanation": "Unlike a regular view, which is virtual, a materialised view stores the result set in a table-like structure within the database."
+    },
+    {
+      "stem": "What does a materialised view represent in terms of timing?",
+      "options": [
+        "Live data reflecting every change instantly",
+        "Data as it will be after the next scheduled load",
+        "A random sample of the underlying tables",
+        "A snapshot of the data at the time it was last refreshed",
+        "Only the rows inserted since creation"
+      ],
+      "correct": 3,
+      "explanation": "A materialised view is a snapshot of the data at the time the materialised view was last refreshed."
+    },
+    {
+      "stem": "Are materialised views automatically updated when the underlying data changes?",
+      "options": [
+        "Yes, always in real time",
+        "Yes, but only for inserts",
+        "Only if they contain an aggregate",
+        "Yes, whenever a SELECT is run against them",
+        "No, they typically need to be refreshed periodically"
+      ],
+      "correct": 4,
+      "explanation": "Materialised views are not automatically updated; you typically refresh them periodically to synchronise with the base tables."
+    },
+    {
+      "stem": "Which command updates a materialised view with the latest data from the underlying tables?",
+      "options": [
+        "REFRESH MATERIALIZED VIEW EmployeeProfile;",
+        "UPDATE MATERIALIZED VIEW EmployeeProfile;",
+        "RELOAD VIEW EmployeeProfile;",
+        "SYNC VIEW EmployeeProfile;",
+        "REBUILD VIEW EmployeeProfile;"
+      ],
+      "correct": 0,
+      "explanation": "REFRESH MATERIALIZED VIEW EmployeeProfile; updates the materialised view with the latest data from the underlying tables."
+    },
+    {
+      "stem": "Why can materialised views significantly improve query performance?",
+      "options": [
+        "They compress the underlying tables",
+        "They store precomputed results, reducing the need to perform complex calculations on the fly",
+        "They lock the base tables during queries",
+        "They run queries on a separate server",
+        "They remove the need for indexes"
+      ],
+      "correct": 1,
+      "explanation": "Performance optimisation comes from storing precomputed results so complex calculations need not be performed on the fly."
+    },
+    {
+      "stem": "For which scenario are materialised views described as particularly useful?",
+      "options": [
+        "Real-time transaction processing",
+        "Enforcing referential integrity",
+        "Offline analysis on a specific snapshot of the data without querying the live database",
+        "Storing unstructured documents",
+        "Managing user permissions"
+      ],
+      "correct": 2,
+      "explanation": "Materialised views are particularly useful for offline analysis on a specific snapshot without querying the live database."
+    },
+    {
+      "stem": "When are materialised views especially effective for aggregation and summary?",
+      "options": [
+        "When the underlying data changes every second",
+        "When the tables have no primary keys",
+        "When queries are run very rarely",
+        "When the underlying data changes infrequently compared to the frequency of querying",
+        "When the data is stored in external files"
+      ],
+      "correct": 3,
+      "explanation": "They are effective for aggregating and summarising data where the underlying data changes infrequently compared with how often it is queried."
+    },
+    {
+      "stem": "How might a regular view and a materialised view be used together in one application?",
+      "options": [
+        "The materialised view enforces security while the regular view stores data",
+        "Both must always be refreshed at the same time",
+        "The regular view is used only for inserts and the materialised view for deletes",
+        "The materialised view replaces the regular view entirely",
+        "A regular view for real-time querying and a materialised view for periodic reporting or analytical purposes"
+      ],
+      "correct": 4,
+      "explanation": "You might use a regular view for real-time querying and a materialised view for periodic reporting or analytics, depending on requirements."
+    },
+    {
+      "stem": "How is a materialised view queried once it has been created?",
+      "options": [
+        "Just like any other table or view, for example SELECT * FROM EmployeeProfile WHERE Age > 25;",
+        "Only through a stored procedure",
+        "Only after it has been converted to a regular table",
+        "Through a special MATERIALIZED SELECT statement",
+        "By reading its underlying data file directly"
+      ],
+      "correct": 0,
+      "explanation": "Once created, a materialised view can be queried just like any other table or view, leveraging the precomputed results."
+    }
+  ]
+}

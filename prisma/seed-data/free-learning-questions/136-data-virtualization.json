@@ -1,0 +1,125 @@
+{
+  "topic": "data-virtualization",
+  "questions": [
+    {
+      "stem": "What is data virtualization?",
+      "options": [
+        "A physical copy of all source systems held in a data warehouse",
+        "A virtual consumption layer that connects directly with many data stores",
+        "A technique for compressing data before it is stored",
+        "A backup process that snapshots databases nightly",
+        "A method of encrypting data in transit"
+      ],
+      "correct": 1,
+      "explanation": "Data virtualization is a virtual consumption layer that connects directly with data stores such as RDBMS, data appliances, NoSQL, web services, SaaS and enterprise applications."
+    },
+    {
+      "stem": "What happens to the data models of the source systems when data virtualization is used?",
+      "options": [
+        "They are converted to a star schema",
+        "They are merged into a single physical table",
+        "They remain intact with no change",
+        "They are replaced by NoSQL documents",
+        "They are archived and rebuilt in the data lake"
+      ],
+      "correct": 2,
+      "explanation": "Because the virtualization layer connects directly with all data stores, the data models of all systems remain intact with no change."
+    },
+    {
+      "stem": "Data virtualization is described as one of the solutions for which problem statement?",
+      "options": [
+        "Data sovereignty",
+        "Data compression",
+        "Data encryption",
+        "Data subsetting",
+        "Data scraping"
+      ],
+      "correct": 0,
+      "explanation": "Data virtualization is considered one of the solutions for the data sovereignty problem statement, since data can stay where it is and be consumed virtually."
+    },
+    {
+      "stem": "What does a data virtualization layer host in order to expose data?",
+      "options": [
+        "Physical copies of every source table",
+        "Scheduled ETL jobs that move data nightly",
+        "Views connecting directly with the data stores, which may be one-to-one or complex SQL views",
+        "Encrypted archives of historical data",
+        "Cubes pre-aggregated for each department"
+      ],
+      "correct": 2,
+      "explanation": "Data virtualization hosts views that connect directly with all possible data stores; these can be one-to-one views or complex SQL views pulling from multiple source systems."
+    },
+    {
+      "stem": "What name is given to the second, third or fourth virtual data model layers built on top of the base virtualization layer?",
+      "options": [
+        "Staging area",
+        "Virtual semantic layer",
+        "Operational data store",
+        "Data mart",
+        "Business vault"
+      ],
+      "correct": 1,
+      "explanation": "Additional virtualized data models can be created as further layers to fulfil different business requirements, and all these layers can be called the virtual semantic layer."
+    },
+    {
+      "stem": "In the data quality example, a data issue is found in three source systems and one data mart. What does data virtualization allow?",
+      "options": [
+        "The issue is logged and each system owner fixes it separately",
+        "Only the data mart copy can be corrected",
+        "The four data stores are dropped and reloaded",
+        "The data in all four data stores can be fixed directly from the virtualization layer",
+        "The affected rows are hidden from the BI tool until IT resolves them"
+      ],
+      "correct": 3,
+      "explanation": "Data virtualization has write-back capability, so data residing in the three source systems and the data mart can be fixed directly from the virtualization layer without separate implementation exercises."
+    },
+    {
+      "stem": "A user wants one more column in a BI dashboard, but the pipeline from Data Lake to Data Warehouse to Data Marts to OLAP would take weeks or months. What solution does data virtualization offer?",
+      "options": [
+        "Virtualize the source systems to get the column immediately, while IT processes the pipeline in parallel",
+        "Skip the data warehouse permanently and build the dashboard on the lake",
+        "Ask the user to wait until the next pipeline release",
+        "Hard-code the column value in the BI tool",
+        "Export the source table to a spreadsheet for the user"
+      ],
+      "correct": 0,
+      "explanation": "The column is virtualized from the source and shown in the BI tool at once; once IT completes the pipeline, the virtual column is replaced with the pipelined one."
+    },
+    {
+      "stem": "Which of the following is NOT an advantage claimed for data virtualization?",
+      "options": [
+        "Single access point to all data stores",
+        "No additional storage is needed",
+        "Users write queries in one language and a wrapper talks to the connected systems",
+        "Historical data is maintained automatically",
+        "Write-back capability into source systems"
+      ],
+      "correct": 3,
+      "explanation": "No historical data is a listed disadvantage: because no copy of the data is hosted, history is not maintained. The other four are listed advantages."
+    },
+    {
+      "stem": "Why does data virtualization carry a performance impact as a disadvantage?",
+      "options": [
+        "Because all data is duplicated into an in-memory cache",
+        "Because some queries run at the source systems",
+        "Because the semantic layer must be rebuilt after each query",
+        "Because ETL jobs compete for the same server",
+        "Because views are stored on slow disk"
+      ],
+      "correct": 1,
+      "explanation": "The performance impact arises because some queries will run at the source, placing load on the source systems."
+    },
+    {
+      "stem": "Alongside which data store is data virtualization said to be best suited?",
+      "options": [
+        "A Kafka stream",
+        "A NoSQL database",
+        "A data warehouse already in place",
+        "A web scraping tool",
+        "A spreadsheet"
+      ],
+      "correct": 2,
+      "explanation": "Data virtualization is best suited alongside a data warehouse in place, which supplies the history that virtualization alone does not keep."
+    }
+  ]
+}

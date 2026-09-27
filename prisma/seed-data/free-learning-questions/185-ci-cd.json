@@ -1,0 +1,125 @@
+{
+  "topic": "ci-cd",
+  "questions": [
+    {
+      "stem": "What does CI stand for in CI/CD?",
+      "options": [
+        "Continuous Improvement",
+        "Continuous Integration",
+        "Code Inspection",
+        "Configuration Integration",
+        "Controlled Implementation"
+      ],
+      "correct": 1,
+      "explanation": "CI stands for Continuous Integration."
+    },
+    {
+      "stem": "What does CD stand for in CI/CD?",
+      "options": [
+        "Code Development",
+        "Continuous Design",
+        "Change Documentation",
+        "Continuous Delivery or Deployment",
+        "Configuration Database"
+      ],
+      "correct": 3,
+      "explanation": "CD stands for Continuous Delivery or Continuous Deployment."
+    },
+    {
+      "stem": "What was the challenge with the traditional development and implementation life cycle once coding was complete?",
+      "options": [
+        "The remaining steps were time-consuming, with many manual processes and dependencies on departments for review, approval and deployment",
+        "Developers had no access to version control",
+        "Code could not be packaged for production",
+        "Testing was not permitted before deployment",
+        "Deployments could only happen once a year"
+      ],
+      "correct": 0,
+      "explanation": "After development, packaging, testing and deployment relied on slow manual processes and cross-department dependencies, with a constant risk of human error."
+    },
+    {
+      "stem": "In the example where five deployments are carried out at the same time, four go smoothly and the fifth breaks the other four. What does this illustrate?",
+      "options": [
+        "That deployments should always be done in batches of five",
+        "That testing is unnecessary for small changes",
+        "That automated pipelines cause more failures than manual ones",
+        "That version control cannot handle parallel work",
+        "That with manual processes one deployment can affect other people's code as well"
+      ],
+      "correct": 4,
+      "explanation": "The incident shows how manual, human-driven deployments can impact other deployments, which is the risk CI/CD is designed to remove."
+    },
+    {
+      "stem": "Once development is done and code is pushed into the CI process, what does CI do?",
+      "options": [
+        "Deploys the code straight to production",
+        "Archives the code for audit",
+        "Builds and tests the code before passing it to the CD process",
+        "Provisions new servers",
+        "Requests manual approval from each department"
+      ],
+      "correct": 2,
+      "explanation": "The CI process builds and tests the code, then hands it to the CD process."
+    },
+    {
+      "stem": "What does the CD process do after receiving code from CI?",
+      "options": [
+        "Builds, configures, packages and deploys it so that it meets all production-ready standards",
+        "Runs unit tests only",
+        "Writes the release notes",
+        "Rolls the code back to the previous version",
+        "Sends the code to business users for sign-off"
+      ],
+      "correct": 0,
+      "explanation": "CD builds, configures, packages and deploys the code in a way that fulfils production-ready standards."
+    },
+    {
+      "stem": "With the help of CI/CD, how much has the release cycle for small deployments been reduced?",
+      "options": [
+        "From years to months",
+        "From weeks to a few days",
+        "From hours to seconds",
+        "From days or sometimes weeks to minutes",
+        "From months to weeks"
+      ],
+      "correct": 3,
+      "explanation": "A cycle that used to take days or even weeks can now be completed in minutes for small deployments."
+    },
+    {
+      "stem": "Which development approach does CI/CD directly support, enabling mini code deployments?",
+      "options": [
+        "Waterfall development",
+        "Big-bang releases",
+        "Agile development",
+        "Mainframe batch development",
+        "Prototype-only development"
+      ],
+      "correct": 2,
+      "explanation": "CI/CD directly supports agile development, so small, frequent code deployments can take place."
+    },
+    {
+      "stem": "What is identified as the fundamental reason errors were inevitable in the traditional release process?",
+      "options": [
+        "Insufficient hardware",
+        "Poorly written code",
+        "Lack of a data warehouse",
+        "Slow network connections",
+        "Human involvement in the manual steps"
+      ],
+      "correct": 4,
+      "explanation": "Whenever there is human involvement, errors are inevitable, which is why automation through CI/CD is the answer."
+    },
+    {
+      "stem": "What is said about the future of release management?",
+      "options": [
+        "Manual review boards will return for safety",
+        "The future is CI/CD for any and every kind of release management",
+        "Release management will be replaced by data governance",
+        "Only large enterprises will need release management",
+        "Releases will be limited to once per quarter"
+      ],
+      "correct": 1,
+      "explanation": "The closing statement is that the future is CI/CD for any or every kind of release management."
+    }
+  ]
+}

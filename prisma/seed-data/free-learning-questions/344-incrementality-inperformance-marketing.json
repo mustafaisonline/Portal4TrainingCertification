@@ -1,0 +1,125 @@
+{
+  "topic": "incrementality-inperformance-marketing",
+  "questions": [
+    {
+      "stem": "What pivotal question lies at the core of incrementality in marketing?",
+      "options": [
+        "Which advertising channel is cheapest?",
+        "Would customers buy without the corresponding paid advertising?",
+        "How many ads should be shown per day?",
+        "Which creative design performs best?",
+        "How large should the marketing budget be?"
+      ],
+      "correct": 1,
+      "explanation": "Incrementality is built on the question of whether customers would purchase a product or service without paid advertising."
+    },
+    {
+      "stem": "Into how many groups does incrementality analysis divide audience reactions to ads?",
+      "options": [
+        "Two",
+        "Four",
+        "Three",
+        "Five",
+        "Six"
+      ],
+      "correct": 2,
+      "explanation": "Audiences are divided into three groups: non-responsive, pre-existing demand and incremental."
+    },
+    {
+      "stem": "Which audience group is unaffected by ads no matter how much they see them?",
+      "options": [
+        "Incremental audience",
+        "Pre-existing demand audience",
+        "Control group",
+        "Non-responsive audience",
+        "Exposed audience"
+      ],
+      "correct": 3,
+      "explanation": "The non-responsive audience does not engage or buy because of ads, regardless of how much they see them."
+    },
+    {
+      "stem": "How does the pre-existing demand audience respond to ads?",
+      "options": [
+        "They never buy, with or without ads",
+        "They buy only because they saw an ad",
+        "They ignore all marketing channels",
+        "They switch to a competitor's product",
+        "They were already planning to buy; ads might change when they buy but not whether they buy"
+      ],
+      "correct": 4,
+      "explanation": "People with pre-existing demand were already planning to buy; ads might change the timing but will not change their mind about buying."
+    },
+    {
+      "stem": "Which audience group engages or buys only because they saw ads?",
+      "options": [
+        "Incremental audience",
+        "Non-responsive audience",
+        "Pre-existing demand audience",
+        "Loyal audience",
+        "Organic audience"
+      ],
+      "correct": 0,
+      "explanation": "The incremental audience is directly affected by ads: these customers engage or buy only because they saw them."
+    },
+    {
+      "stem": "How is an incrementality test structured?",
+      "options": [
+        "One group sees ads at different times of day",
+        "Group A is exposed to advertising and Group B is not, with both groups otherwise as identical as possible",
+        "Two groups are shown different products",
+        "A single group is surveyed about their purchase intent",
+        "Ads are shown only to previous customers"
+      ],
+      "correct": 1,
+      "explanation": "Incrementality tests compare Group A, exposed to advertising, with Group B, not exposed, keeping the groups identical in every other respect."
+    },
+    {
+      "stem": "Which metrics are evaluated when comparing the two groups after an incrementality test?",
+      "options": [
+        "Page load time and bounce rate",
+        "Employee headcount and payroll",
+        "Conversion rates, order rates and revenue per user",
+        "Number of ads shown and ad size",
+        "Social media followers and likes"
+      ],
+      "correct": 2,
+      "explanation": "Businesses determine the actual impact of advertising by evaluating conversion rates, order rates and revenue per user across the two groups."
+    },
+    {
+      "stem": "What is the purpose of identifying the audience directly influenced by ads?",
+      "options": [
+        "To exclude them from future campaigns",
+        "To charge them higher prices",
+        "To reduce the total number of customers",
+        "To optimise resources efficiently and maximise the impact of advertising efforts",
+        "To replace paid advertising with organic content"
+      ],
+      "correct": 3,
+      "explanation": "Targeting the audience directly affected by ads lets marketers direct resources where they maximise advertising impact, driving ongoing growth."
+    },
+    {
+      "stem": "Which statement about the non-responsive audience is correct?",
+      "options": [
+        "They buy earlier when shown more ads",
+        "They are the main source of incremental revenue",
+        "They are the exposed group in an incrementality test",
+        "They respond best to email marketing",
+        "Ads do not make them feel like engaging or buying"
+      ],
+      "correct": 4,
+      "explanation": "The non-responsive audience does not feel like engaging or buying because of ads, however often they see them."
+    },
+    {
+      "stem": "Which of the following is NOT one of the three audience groups in incrementality analysis?",
+      "options": [
+        "Price-sensitive audience",
+        "Non-responsive audience",
+        "Pre-existing demand audience",
+        "Incremental audience",
+        "People who buy only because they saw ads"
+      ],
+      "correct": 0,
+      "explanation": "The three groups are non-responsive, pre-existing demand and incremental (those who buy only because of ads); a price-sensitive group is not one of them."
+    }
+  ]
+}

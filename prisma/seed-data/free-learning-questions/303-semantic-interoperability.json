@@ -1,0 +1,125 @@
+{
+  "topic": "semantic-interoperability",
+  "questions": [
+    {
+      "stem": "What is semantic interoperability?",
+      "options": [
+        "Exchanging semantic information across systems, departments or organisations",
+        "Encrypting data before it is shared",
+        "Copying a database from one server to another",
+        "Translating documents into multiple languages",
+        "Standardising country codes for locations"
+      ],
+      "correct": 0,
+      "explanation": "Semantic interoperability is about exchanging semantic information across systems, across departments or across organisations."
+    },
+    {
+      "stem": "How can the same salary data mean different things to HR and Finance?",
+      "options": [
+        "HR stores salary as text while Finance stores it as a number",
+        "HR uses salary to see who is paid what and to benchmark new hires, while Finance uses it to calculate the company's annual expense",
+        "HR and Finance always interpret salary identically",
+        "HR is not permitted to see salary data",
+        "Finance only records salary in a different currency"
+      ],
+      "correct": 1,
+      "explanation": "For HR, salary shows who is getting what and helps benchmark new candidates by role and skills; for Finance, salary is used to calculate the annual expense for the company."
+    },
+    {
+      "stem": "On what is a semantic layer in a decision support system based?",
+      "options": [
+        "The physical storage format of the disks",
+        "The vendor's default database schema",
+        "Business requirements, expressed in the business's own language, key words and codes",
+        "The network topology of the organisation",
+        "The programming language used by developers"
+      ],
+      "correct": 2,
+      "explanation": "Semantic layers in decision support systems are based on business requirements, in the business's language, using their own key words and codes."
+    },
+    {
+      "stem": "What is interoperability about?",
+      "options": [
+        "Deleting duplicate information across systems",
+        "Restricting information to one department",
+        "Converting analogue records to digital",
+        "Exchanging something across systems so others do not need to regenerate it again and again",
+        "Backing up data to a remote location"
+      ],
+      "correct": 3,
+      "explanation": "Interoperability is about exchanging something across systems so that others do not need to regenerate it repeatedly."
+    },
+    {
+      "stem": "What is the main challenge that comes with semantic interoperability?",
+      "options": [
+        "The cost of network bandwidth",
+        "The size of the tables being exchanged",
+        "The speed of the database engine",
+        "The number of users who need accounts",
+        "Whether the receiving party can understand the sending party's keywords, symbols and terminologies"
+      ],
+      "correct": 4,
+      "explanation": "The challenge is whether the receiving party can understand the keywords, symbols and terminologies from the sending party; otherwise the information flowing in is useless."
+    },
+    {
+      "stem": "In the medical industry example of semantic interoperability, what must happen when semantic-layer tables are shared with another department?",
+      "options": [
+        "The receiving department must be able to understand what the data means, or the information is useless",
+        "The tables must first be converted to a NoSQL format",
+        "The data must be deleted after it is read",
+        "The receiving department must rebuild the tables from scratch",
+        "The tables must be printed for archival"
+      ],
+      "correct": 0,
+      "explanation": "When data from semantic-layer tables hosting medical data is shared with another department, they should be able to understand what the data means or else the information flowing in will be useless."
+    },
+    {
+      "stem": "Under which approach does semantic interoperability become virtually impossible without data governance?",
+      "options": [
+        "Centralised approach",
+        "Federated approach",
+        "Batch approach",
+        "Streaming approach",
+        "Monolithic approach"
+      ],
+      "correct": 1,
+      "explanation": "In a Federated approach, semantic interoperability becomes very challenging and virtually impossible without data governance."
+    },
+    {
+      "stem": "Why are semantics said to be different for everyone in an organisation?",
+      "options": [
+        "Because every department uses a different database vendor",
+        "Because data is stored in different countries",
+        "Because each department has its own semantics for viewing data, so the same data can have different meanings",
+        "Because employees speak different languages",
+        "Because semantics change every financial year"
+      ],
+      "correct": 2,
+      "explanation": "In an organisation each department has its own semantics to view data, so the same data can have different meanings for one department compared with others."
+    },
+    {
+      "stem": "Which of the following is NOT part of semantic interoperability as described?",
+      "options": [
+        "Exchanging semantic information across organisations",
+        "Ensuring the receiver understands the sender's terminology",
+        "Sharing semantic-layer tables between departments",
+        "Physically relocating servers between data centres",
+        "Relying on data governance in a federated setting"
+      ],
+      "correct": 3,
+      "explanation": "Semantic interoperability concerns the exchange and shared understanding of semantic information; relocating servers is unrelated."
+    },
+    {
+      "stem": "What is the purpose of semantic interoperability with respect to information already generated by one party?",
+      "options": [
+        "To ensure the information is regenerated by every party independently",
+        "To restrict the information to its original author",
+        "To convert the information into a physical model",
+        "To archive the information permanently",
+        "To exchange the information so others do not need to regenerate it again and again"
+      ],
+      "correct": 4,
+      "explanation": "Interoperability exists so that something can be exchanged across systems and others do not need to regenerate it again and again; semantic interoperability applies this to semantic information."
+    }
+  ]
+}

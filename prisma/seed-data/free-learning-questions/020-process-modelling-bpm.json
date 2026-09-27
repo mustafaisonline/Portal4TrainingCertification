@@ -1,0 +1,125 @@
+{
+  "topic": "process-modelling-bpm",
+  "questions": [
+    {
+      "stem": "What is Process Modelling, often called Business Process Modelling (BPM)?",
+      "options": [
+        "The practice of describing how work is carried out step by step inside an organisation",
+        "The practice of designing database tables",
+        "The practice of choosing a workflow vendor",
+        "The practice of measuring server performance",
+        "The practice of writing business strategy"
+      ],
+      "correct": 0,
+      "explanation": "Process Modelling describes how work is carried out step by step, visually representing workflows, activities and decision points."
+    },
+    {
+      "stem": "How does Process Modelling differ from Business Modelling?",
+      "options": [
+        "Process Modelling focuses on data structures; Business Modelling on workflows",
+        "Process Modelling is technology-specific; Business Modelling is not",
+        "They are the same technique under two names",
+        "Business Modelling is more detailed than Process Modelling",
+        "Business Modelling explains the business at a high level; Process Modelling focuses on the actual flow of work"
+      ],
+      "correct": 4,
+      "explanation": "Business Modelling explains what the business does at a high level, while Process Modelling explains how the work actually happens."
+    },
+    {
+      "stem": "What is the main goal of Process Modelling?",
+      "options": [
+        "To reduce data redundancy",
+        "To define a shared vocabulary",
+        "To design star schemas",
+        "To assign database permissions",
+        "To analyse and improve business processes"
+      ],
+      "correct": 4,
+      "explanation": "The main goal is to analyse and improve business processes by documenting each step so delays, repeated tasks and unclear responsibilities become visible."
+    },
+    {
+      "stem": "In the school library example of Process Modelling, what happens if the requested book is not available?",
+      "options": [
+        "The book is issued anyway",
+        "The librarian orders a new copy",
+        "The student is informed to try again later",
+        "The student is added to a database",
+        "The process restarts from the beginning"
+      ],
+      "correct": 2,
+      "explanation": "If the book is not available, the student is informed to try again later; the decision is made based on availability."
+    },
+    {
+      "stem": "In the loan approval example of Process Modelling, which step follows the credit department's credit check?",
+      "options": [
+        "The customer submits the application",
+        "The loan officer collects documents",
+        "The finance department disburses the funds",
+        "A risk manager reviews and decides whether to approve or reject",
+        "The collections team monitors repayments"
+      ],
+      "correct": 3,
+      "explanation": "After the credit check, a risk manager reviews the information and decides whether to approve or reject the loan."
+    },
+    {
+      "stem": "Which of the following is an example of a decision rule in Process Modelling?",
+      "options": [
+        "Storing the customer's address in a table",
+        "Escalating an application to a senior risk officer if the loan amount exceeds a defined threshold",
+        "Naming the workflow tool",
+        "Backing up the loan database nightly",
+        "Publishing a dashboard of branch performance"
+      ],
+      "correct": 1,
+      "explanation": "Decision rules guide the flow, for example rejecting a loan when the credit score is below a value or escalating when the amount is above a threshold."
+    },
+    {
+      "stem": "Which measurement is given as an analytical use of Process Modelling?",
+      "options": [
+        "The average time taken from loan application to approval",
+        "The number of columns in the loan table",
+        "The size of the database in gigabytes",
+        "The salary of the loan officer",
+        "The number of servers in use"
+      ],
+      "correct": 0,
+      "explanation": "Analysts may measure the average time from application to approval, the number of escalations or common rejection reasons to find bottlenecks."
+    },
+    {
+      "stem": "Process Modelling often acts as a bridge between which two things?",
+      "options": [
+        "Storage and compute",
+        "Business requirements and system design",
+        "Raw data and metadata",
+        "Sales and marketing",
+        "On-premises and cloud"
+      ],
+      "correct": 1,
+      "explanation": "Because it shows who performs each task and how work is handed over, Process Modelling bridges business requirements and system design."
+    },
+    {
+      "stem": "Which statement about the nature of Process Modelling is correct?",
+      "options": [
+        "It focuses on data structures rather than workflows",
+        "It can only be created at a highly detailed level",
+        "It is generally independent of technology, although often implemented using workflow or automation tools",
+        "It requires a specific database engine",
+        "It cannot be used for compliance checks"
+      ],
+      "correct": 2,
+      "explanation": "Process Modelling focuses on workflows rather than data structures and is generally technology-independent, though often implemented with workflow or automation tools."
+    },
+    {
+      "stem": "Which of the following is NOT something Process Modelling is said to make work?",
+      "options": [
+        "Visible",
+        "Measurable",
+        "Improvable",
+        "Normalised",
+        "All of these are named"
+      ],
+      "correct": 3,
+      "explanation": "Process Modelling makes work visible, measurable and improvable; normalisation is a data modelling concept."
+    }
+  ]
+}

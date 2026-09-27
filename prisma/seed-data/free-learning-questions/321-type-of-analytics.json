@@ -1,0 +1,125 @@
+{
+  "topic": "type-of-analytics",
+  "questions": [
+    {
+      "stem": "What does analytics refer to?",
+      "options": [
+        "The systematic analysis of data or statistics to uncover meaningful patterns, insights and trends",
+        "The physical storage of data on servers",
+        "The process of writing software applications",
+        "The manual entry of data into spreadsheets",
+        "The encryption of data before transmission"
+      ],
+      "correct": 0,
+      "explanation": "Analytics is the systematic analysis of data or statistics to uncover meaningful patterns, insights and trends."
+    },
+    {
+      "stem": "Which type of analytics describes what has happened in the past, providing a historical overview?",
+      "options": [
+        "Predictive analytics",
+        "Prescriptive analytics",
+        "Descriptive analytics",
+        "Diagnostic analytics",
+        "Spatial analytics"
+      ],
+      "correct": 2,
+      "explanation": "Descriptive analytics describes what has happened in the past, for example summarising sales data to understand total revenue for a period."
+    },
+    {
+      "stem": "Investigating a drop in website traffic to determine the reasons behind the decline is an example of which type of analytics?",
+      "options": [
+        "Descriptive analytics",
+        "Predictive analytics",
+        "Web analytics only",
+        "Diagnostic analytics",
+        "Prescriptive analytics"
+      ],
+      "correct": 3,
+      "explanation": "Diagnostic analytics focuses on why a particular event or trend occurred by identifying its root causes; the traffic-drop investigation is the given example."
+    },
+    {
+      "stem": "Which type of analytics predicts future outcomes or trends based on historical data and statistical algorithms?",
+      "options": [
+        "Diagnostic analytics",
+        "Predictive analytics",
+        "Descriptive analytics",
+        "Customer analytics",
+        "Text analytics"
+      ],
+      "correct": 1,
+      "explanation": "Predictive analytics predicts future outcomes or trends from historical data and statistical algorithms, such as using machine learning to predict customer churn."
+    },
+    {
+      "stem": "What does prescriptive analytics do?",
+      "options": [
+        "Summarises historical revenue for a period",
+        "Maps geographic data to find spatial patterns",
+        "Identifies the root cause of a past event",
+        "Analyses unstructured text for sentiment",
+        "Recommends actions to optimise outcomes based on predictive analytics results"
+      ],
+      "correct": 4,
+      "explanation": "Prescriptive analytics recommends actions to optimise outcomes based on the results of predictive analytics, such as suggesting strategies to increase customer retention."
+    },
+    {
+      "stem": "Analysing customer reviews to understand sentiment and identify common themes is an example of which type of analytics?",
+      "options": [
+        "Text analytics (text mining)",
+        "Spatial analytics",
+        "Big data analytics",
+        "Business intelligence",
+        "Diagnostic analytics"
+      ],
+      "correct": 0,
+      "explanation": "Text analytics, also called text mining, analyses unstructured text data to extract insights, sentiment or patterns."
+    },
+    {
+      "stem": "Mapping crime rates in a city to identify high-crime areas is an example of which type of analytics?",
+      "options": [
+        "Web analytics",
+        "Social media analytics",
+        "Spatial analytics",
+        "Customer analytics",
+        "Descriptive analytics"
+      ],
+      "correct": 2,
+      "explanation": "Spatial analytics analyses geographic or location-based data to uncover spatial patterns and relationships."
+    },
+    {
+      "stem": "Which type of analytics involves tracking page views, bounce rates and click-through rates?",
+      "options": [
+        "Social media analytics",
+        "Big data analytics",
+        "Customer analytics",
+        "Web analytics",
+        "Prescriptive analytics"
+      ],
+      "correct": 3,
+      "explanation": "Web analytics analyses website data to understand user behaviour, track performance and optimise user experience."
+    },
+    {
+      "stem": "Creating dashboards to monitor key performance indicators (KPIs) in real time is an example of which type of analytics?",
+      "options": [
+        "Text analytics",
+        "Business intelligence (BI)",
+        "Spatial analytics",
+        "Diagnostic analytics",
+        "Social media analytics"
+      ],
+      "correct": 1,
+      "explanation": "Business intelligence uses tools and processes to analyse and visualise business data for decision-making, such as KPI dashboards."
+    },
+    {
+      "stem": "Which advancements are said to play a crucial role in predictive and prescriptive analytics?",
+      "options": [
+        "Relational databases and SQL",
+        "Spreadsheets and pivot tables",
+        "Paper-based reporting and manual audits",
+        "Local area networks and wide area networks",
+        "Machine learning and artificial intelligence"
+      ],
+      "correct": 4,
+      "explanation": "The evolution of analytics includes machine learning and artificial intelligence, which play a crucial role in predictive and prescriptive analytics."
+    }
+  ]
+}

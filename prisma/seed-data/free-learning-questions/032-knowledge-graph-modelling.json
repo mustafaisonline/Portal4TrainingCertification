@@ -1,0 +1,125 @@
+{
+  "topic": "knowledge-graph-modelling",
+  "questions": [
+    {
+      "stem": "What is Knowledge Graph Modelling?",
+      "options": [
+        "The practice of representing information as a network of interconnected entities and relationships enriched with semantic meaning",
+        "The practice of storing data as isolated records in tables",
+        "The practice of classifying terms into parent-child hierarchies",
+        "The practice of drawing charts for dashboards",
+        "The practice of normalising data to third normal form"
+      ],
+      "correct": 0,
+      "explanation": "Knowledge Graph Modelling treats knowledge as a web of connections, with entities as nodes and relationships as edges."
+    },
+    {
+      "stem": "In a knowledge graph, what do nodes and edges represent?",
+      "options": [
+        "Nodes are tables and edges are columns",
+        "Nodes are servers and edges are network links",
+        "Nodes are entities such as Customer or Loan, and edges are relationships such as applies for or owns",
+        "Nodes are processes and edges are decisions",
+        "Nodes are attributes and edges are data types"
+      ],
+      "correct": 2,
+      "explanation": "Nodes represent entities such as Customer, Loan or Product; edges represent relationships such as applies for, owns, guarantees or reviews."
+    },
+    {
+      "stem": "How do relationships in a knowledge graph differ from those in a traditional relational model?",
+      "options": [
+        "Knowledge graphs have no relationships",
+        "Relational models make relationships more visible than graphs",
+        "Knowledge graphs store relationships only as text",
+        "In a knowledge graph relationships are first-class elements that are visible and traversable, rather than embedded in foreign keys",
+        "There is no difference"
+      ],
+      "correct": 3,
+      "explanation": "Unlike relational models where relationships are often embedded in foreign keys, knowledge graph connections are first-class, visible and traversable."
+    },
+    {
+      "stem": "Which everyday example is used to explain why connections matter in a knowledge graph?",
+      "options": [
+        "A school library",
+        "A book index",
+        "A spreadsheet of employees",
+        "A social network where finding mutual friends means following connections between people",
+        "A homework submission process"
+      ],
+      "correct": 3,
+      "explanation": "A social network shows that the value lies not only in the individuals but in how they are connected; knowledge graphs apply this to business domains."
+    },
+    {
+      "stem": "Which analytical question is given as an example that graph traversal can answer?",
+      "options": [
+        "The average salary of employees",
+        "The number of columns in the loan table",
+        "The order of steps in a loan process",
+        "The Greek origin of the word taxonomy",
+        "Detecting fraud networks by following connections between guarantors, borrowers and shared addresses"
+      ],
+      "correct": 4,
+      "explanation": "Advanced graph traversal can detect fraud networks by following links between guarantors, borrowers and shared addresses."
+    },
+    {
+      "stem": "How do ontologies relate to knowledge graphs?",
+      "options": [
+        "Ontologies replace knowledge graphs",
+        "Ontologies define vocabulary and rules, and the knowledge graph operationalises them into a living network of connected data",
+        "Knowledge graphs define the vocabulary for ontologies",
+        "They are unrelated techniques",
+        "Ontologies store the data and knowledge graphs store the rules"
+      ],
+      "correct": 1,
+      "explanation": "Ontology modelling defines meaning and rules; the knowledge graph operationalises those definitions into a connected network of data."
+    },
+    {
+      "stem": "Why is Knowledge Graph Modelling often described as schema-light?",
+      "options": [
+        "Because it has no structure at all",
+        "Because new nodes and relationships can be added without redesigning rigid table structures",
+        "Because it stores less data than a relational model",
+        "Because it does not use ontologies",
+        "Because it only works with small datasets"
+      ],
+      "correct": 1,
+      "explanation": "It is flexible and schema-light because new nodes and relationships can be added without redesigning rigid table structures, while ontologies preserve consistency."
+    },
+    {
+      "stem": "Which of the following is NOT named as a common use of knowledge graphs?",
+      "options": [
+        "Search engines",
+        "Recommendation systems",
+        "Fraud detection",
+        "Enterprise data fabrics",
+        "Payroll processing"
+      ],
+      "correct": 4,
+      "explanation": "Knowledge graphs are used in search engines, recommendation systems, fraud detection, enterprise data fabrics and AI applications; payroll is not mentioned."
+    },
+    {
+      "stem": "In the loan example of a knowledge graph, which relationship connects a Loan Officer to a Loan Application?",
+      "options": [
+        "applies for",
+        "has approval decision",
+        "reviews",
+        "is linked to repayment schedule",
+        "guarantees"
+      ],
+      "correct": 2,
+      "explanation": "A Loan Officer reviews a Loan Application, while a Customer applies for one and the application has an Approval Decision."
+    },
+    {
+      "stem": "In the comparison of FCO-IM, Taxonomy, Ontology and Knowledge Graph, what does each contribute?",
+      "options": [
+        "FCO-IM = precise facts; Taxonomy = classification subset; Ontology = shared vocabulary and logic; Knowledge Graph = dynamic, connected intelligence",
+        "FCO-IM = classification; Taxonomy = precise facts; Ontology = connected intelligence; Knowledge Graph = vocabulary",
+        "All four provide the same connected intelligence",
+        "FCO-IM = shared vocabulary; Ontology = precise facts; Taxonomy = connected intelligence; Knowledge Graph = classification",
+        "Taxonomy = full reasoning; Ontology = classification only"
+      ],
+      "correct": 0,
+      "explanation": "The comparison makes it explicit: FCO-IM gives precise facts, Taxonomy is a classification subset, Ontology gives shared vocabulary and logic, and Knowledge Graph gives dynamic connected intelligence."
+    }
+  ]
+}

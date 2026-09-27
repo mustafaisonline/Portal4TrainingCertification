@@ -1,0 +1,125 @@
+{
+  "topic": "deep-dive-into-normalization-forms",
+  "questions": [
+    {
+      "stem": "What is the correct order of the full normalisation ladder?",
+      "options": [
+        "UNF → 1NF → 2NF → 3NF → BCNF → 4NF → 5NF → 6NF → DKNF",
+        "1NF → UNF → 2NF → BCNF → 3NF → 4NF → 5NF → 6NF → DKNF",
+        "UNF → 1NF → 2NF → 3NF → 4NF → BCNF → 5NF → DKNF → 6NF",
+        "DKNF → 6NF → 5NF → 4NF → BCNF → 3NF → 2NF → 1NF → UNF",
+        "UNF → 1NF → 3NF → 2NF → BCNF → 4NF → 5NF → 6NF → DKNF"
+      ],
+      "correct": 0,
+      "explanation": "The normalisation journey follows UNF, 1NF, 2NF, 3NF, BCNF, 4NF, 5NF, 6NF and finally DKNF, each stage building on the previous one."
+    },
+    {
+      "stem": "Which of the following is NOT one of the consistent objectives of normalisation across the ladder?",
+      "options": [
+        "Eliminate redundancy",
+        "Prevent update, insert and delete anomalies",
+        "Increase structural integrity",
+        "Prepare the model for specialised architectural use",
+        "Minimise the number of joins in reports"
+      ],
+      "correct": 4,
+      "explanation": "The objectives are eliminating redundancy, preventing anomalies, increasing integrity and preparing for specialised use; fewer joins is a denormalisation aim."
+    },
+    {
+      "stem": "What does First Normal Form (1NF) require?",
+      "options": [
+        "Removal of transitive dependencies",
+        "Every determinant to be a candidate key",
+        "Removal of multi-valued dependencies",
+        "Elimination of repeating groups and atomic, indivisible values in each column",
+        "Each table to store a single attribute"
+      ],
+      "correct": 3,
+      "explanation": "1NF eliminates repeating groups and ensures each column contains atomic, indivisible values."
+    },
+    {
+      "stem": "What does Second Normal Form (2NF) remove?",
+      "options": [
+        "Transitive dependencies",
+        "Join dependencies",
+        "Partial dependencies, so every non-key attribute depends on the entire primary key",
+        "Multi-valued dependencies",
+        "Repeating groups"
+      ],
+      "correct": 2,
+      "explanation": "2NF removes partial dependencies; every non-key attribute must depend on the entire primary key, which matters for composite keys."
+    },
+    {
+      "stem": "What does Third Normal Form (3NF) eliminate?",
+      "options": [
+        "Repeating groups",
+        "Partial dependencies",
+        "Transitive dependencies, so non-key attributes depend only on the key and not on other non-key attributes",
+        "Join dependencies",
+        "Domain constraints"
+      ],
+      "correct": 2,
+      "explanation": "3NF eliminates transitive dependencies: non-key attributes must depend only on the key, not on other non-key attributes."
+    },
+    {
+      "stem": "What does Boyce-Codd Normal Form (BCNF) require?",
+      "options": [
+        "That every determinant be a candidate key",
+        "That every column be atomic",
+        "That every table store a single fact",
+        "That there be no join dependencies",
+        "That all constraints be expressed through domains"
+      ],
+      "correct": 0,
+      "explanation": "BCNF strengthens 3NF by requiring that every determinant be a candidate key, addressing edge cases where 3NF still allows anomalies."
+    },
+    {
+      "stem": "Which normal form removes multi-valued dependencies?",
+      "options": [
+        "2NF",
+        "3NF",
+        "BCNF",
+        "4NF",
+        "5NF"
+      ],
+      "correct": 3,
+      "explanation": "4NF removes multi-valued dependencies, so a table does not contain multiple independent sets of attributes depending on the same key."
+    },
+    {
+      "stem": "What does Fifth Normal Form (5NF) ensure?",
+      "options": [
+        "That each column is atomic",
+        "That every determinant is a candidate key",
+        "That each table stores a single attribute",
+        "That repeating groups are removed",
+        "That decomposed tables can only be recombined in one correct way without introducing spurious data"
+      ],
+      "correct": 4,
+      "explanation": "5NF removes join dependencies, ensuring decomposed tables recombine in only one correct way without spurious data."
+    },
+    {
+      "stem": "Which specialised approaches are influenced by higher normal forms such as 6NF?",
+      "options": [
+        "Star and snowflake schemas",
+        "Temporal modelling and ensemble approaches like Data Vault, Anchor Modelling and Focal Point Modelling",
+        "BPMN and process modelling",
+        "Taxonomies and ontologies",
+        "Canonical data models"
+      ],
+      "correct": 1,
+      "explanation": "Higher normal forms such as 6NF influence temporal modelling and ensemble approaches like Data Vault, Anchor Modelling and Focal Point Modelling."
+    },
+    {
+      "stem": "In the loan approval case study for the normalisation ladder, what is the starting structure?",
+      "options": [
+        "Four already-normalised tables",
+        "A single messy flattened table containing all Customer, Loan, ApprovalDecision and RepaymentSchedule information",
+        "A star schema with one fact table",
+        "A knowledge graph of customers",
+        "A set of natural-language sentences"
+      ],
+      "correct": 1,
+      "explanation": "The case study begins with a single messy flattened table holding all four entities' information, which is then transformed step by step."
+    }
+  ]
+}

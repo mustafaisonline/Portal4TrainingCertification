@@ -1,0 +1,125 @@
+{
+  "topic": "data-vs-information-vsknowledge-vswisdom",
+  "questions": [
+    {
+      "stem": "In what sequence does the DIKW model generally arrange its four terms?",
+      "options": [
+        "Wisdom, Knowledge, Information, Data",
+        "Information, Data, Knowledge, Wisdom",
+        "Data, Information, Knowledge, Wisdom",
+        "Knowledge, Data, Wisdom, Information",
+        "Data, Knowledge, Information, Wisdom"
+      ],
+      "correct": 2,
+      "explanation": "The DIKW model is generally arranged as Data, then Information, then Knowledge, then Wisdom."
+    },
+    {
+      "stem": "How does the author of I Am Datapedia! propose to rearrange Data, Information, Knowledge and Wisdom?",
+      "options": [
+        "Wisdom comes first and produces Data",
+        "Information and Knowledge both come from Data, and Wisdom comes from both Information and Knowledge",
+        "Knowledge comes from Wisdom, and Information from Knowledge",
+        "Data comes from Information",
+        "All four are independent of each other"
+      ],
+      "correct": 1,
+      "explanation": "The author's alternative view is that Information and Knowledge both come from Data, and Wisdom comes from both Information and Knowledge."
+    },
+    {
+      "stem": "Is all Data equal to Information, and can all Data become Information?",
+      "options": [
+        "All Data is Information, and none of it needs to change",
+        "No Data can ever become Information",
+        "All Data is Information only if it is stored in a database",
+        "Not all Data is Information, but all Data can become Information depending on the nature of the business or requirement",
+        "Only unstructured Data can become Information"
+      ],
+      "correct": 3,
+      "explanation": "Not all Data is equal to Information, but all Data can become Information based on the nature of the business or the requirement."
+    },
+    {
+      "stem": "What is Information tightly coupled with?",
+      "options": [
+        "What one wants to know",
+        "The size of the database",
+        "The number of source systems",
+        "The programming language used",
+        "The age of the data"
+      ],
+      "correct": 0,
+      "explanation": "Information is tightly coupled with what one wants to know; it is specific details in response to a specific requirement."
+    },
+    {
+      "stem": "In the shopping mall example, what does asking the Information Counter for one particular shop illustrate?",
+      "options": [
+        "That Data is about a single shop",
+        "That Knowledge is knowing every shop",
+        "That Wisdom comes from the counter staff",
+        "That Information is unrelated to requirements",
+        "That Information is the specific detail you need, not the details of all the shops in the mall"
+      ],
+      "correct": 4,
+      "explanation": "You want the location of one shop, not details of every shop; Information is about specific details in response to a specific requirement, whereas Data is all the details in the system."
+    },
+    {
+      "stem": "How is the success of a data solution measured, according to I Am Datapedia!?",
+      "options": [
+        "By the number of tables it contains",
+        "By the extractable Information it provides; if it cannot serve decision makers it is equal to not having it",
+        "By the cost of the hardware",
+        "By the number of users who log in",
+        "By how much raw Data it stores"
+      ],
+      "correct": 1,
+      "explanation": "Success is measured on the extractable Information from a solution; if the solution cannot serve decision makers, it is equal to not having it."
+    },
+    {
+      "stem": "How does Knowledge differ from Information?",
+      "options": [
+        "Knowledge is a subset of Information",
+        "Knowledge is only about business requirements",
+        "Knowledge is knowing insights about almost everything inside the data, regardless of business requirements",
+        "Knowledge is stored in the database while Information is not",
+        "Knowledge and Information are the same"
+      ],
+      "correct": 2,
+      "explanation": "Information is knowing what the business requires, whereas Knowledge is knowing insights about almost everything inside the data regardless of business requirements."
+    },
+    {
+      "stem": "Why is the Subject Matter Expert used as an example when explaining Knowledge?",
+      "options": [
+        "Because an SME only knows the business requirements",
+        "Because an SME is always a data scientist",
+        "Because an SME never uses Data",
+        "Because we say an SME has good Knowledge of a system, never merely good Information about it",
+        "Because an SME is responsible for Wisdom"
+      ],
+      "correct": 3,
+      "explanation": "We never say an SME has good Information about a system; we say they have good Knowledge of it, which shows Knowledge means insight beyond specific requirements."
+    },
+    {
+      "stem": "What is Wisdom, in the terms of Data, Information, Knowledge and Wisdom?",
+      "options": [
+        "Having both Information and Knowledge: knowing insights about all raw data in the organisation and knowing the business requirements",
+        "Knowing only the business requirements",
+        "Knowing only the raw data",
+        "Owning the largest database",
+        "Having access to every dashboard"
+      ],
+      "correct": 0,
+      "explanation": "Wisdom is something special: an individual with both Information and Knowledge, who knows insights about all raw data and the business requirements, and can therefore take decisions."
+    },
+    {
+      "stem": "What can an individual with Wisdom do that others cannot?",
+      "options": [
+        "Store more Data than anyone else",
+        "Delete Data without approval",
+        "Write faster SQL queries",
+        "Ignore business requirements entirely",
+        "Take decisions and find more relevant Information from Dark Data"
+      ],
+      "correct": 4,
+      "explanation": "Based on having both Information and Knowledge, an individual with Wisdom can take decisions or find more relevant Information from Dark Data."
+    }
+  ]
+}

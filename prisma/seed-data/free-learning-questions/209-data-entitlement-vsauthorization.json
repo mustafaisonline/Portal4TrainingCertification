@@ -1,0 +1,125 @@
+{
+  "topic": "data-entitlement-vsauthorization",
+  "questions": [
+    {
+      "stem": "How is Entitlement characterised in contrast to Authorisation?",
+      "options": [
+        "Entitlement is granted only after an audit",
+        "Entitlement is something a manager must approve each time",
+        "Entitlement expires after every action",
+        "Entitlement is something you inherit, get by default, or get along with something else",
+        "Entitlement applies only to data, never to people"
+      ],
+      "correct": 3,
+      "explanation": "Entitlement is something you inherit, that comes as a default, or that you get along with something else, whereas Authorisation comes because of an action."
+    },
+    {
+      "stem": "Where does Authorisation come from, as distinct from Entitlement?",
+      "options": [
+        "It comes because of an action, or it expects an action in the future",
+        "It comes automatically with a job title",
+        "It is inherited from a previous role",
+        "It is a default setting in every system",
+        "It is granted by the data itself"
+      ],
+      "correct": 0,
+      "explanation": "Authorisation comes because of an action, or it expects an action in the future, which is why it has a prescriptive behaviour."
+    },
+    {
+      "stem": "What does Prescriptive behaviour mean?",
+      "options": [
+        "How things currently are",
+        "How things were in the past",
+        "How it should be, with an action expected",
+        "How a doctor records a diagnosis",
+        "How data is described in a catalogue"
+      ],
+      "correct": 2,
+      "explanation": "Prescriptive means how it should be, and an action is expected."
+    },
+    {
+      "stem": "What does Descriptive behaviour mean?",
+      "options": [
+        "How an action must be carried out",
+        "How a rule will be enforced",
+        "How a future decision will be made",
+        "How a manager approves a request",
+        "How it is"
+      ],
+      "correct": 4,
+      "explanation": "Descriptive simply means how it is, which is why Entitlement, something you already have, is descriptive."
+    },
+    {
+      "stem": "Which of the following has a Prescriptive behaviour?",
+      "options": [
+        "Entitlement",
+        "Authorisation",
+        "Both Entitlement and Authorisation",
+        "Neither Entitlement nor Authorisation",
+        "Only Entitlement to leave"
+      ],
+      "correct": 1,
+      "explanation": "The key phrase is that Authorisation has a Prescriptive behaviour whereas Entitlement has a Descriptive behaviour."
+    },
+    {
+      "stem": "An employee is entitled to 20 annual leaves, and the manager can accept or reject a leave application. Which part of this example illustrates Authorisation?",
+      "options": [
+        "The 20 annual leaves the employee has",
+        "The 12 medical leaves the employee has",
+        "The employee's job title",
+        "The manager's power to accept or reject the application",
+        "The leave policy document"
+      ],
+      "correct": 3,
+      "explanation": "The leaves themselves are an Entitlement; the manager's authority to accept or reject the leave application is Authorisation."
+    },
+    {
+      "stem": "A Procurement user who deals only with electronics can see only the electronics rows of a table that also holds furniture and IT hardware data. What does this illustrate?",
+      "options": [
+        "Entitlement at the row level",
+        "Authorisation to delete data",
+        "Authentication of the user",
+        "Data Enrichment",
+        "A prescriptive action"
+      ],
+      "correct": 0,
+      "explanation": "Being able to see only the electronics rows is an Entitlement that comes with the user's role, in this case applied at the row level."
+    },
+    {
+      "stem": "In the Procurement example, a few people are able to fix or delete data in procurement tables to maintain data quality. What do they have?",
+      "options": [
+        "Entitlement to see the tables",
+        "Descriptive behaviour",
+        "A default inheritance",
+        "Data Literacy",
+        "Authority to fix or delete data"
+      ],
+      "correct": 4,
+      "explanation": "Seeing procurement tables is an Entitlement of the department, but the few people who may fix or delete data have Authorisation for that action."
+    },
+    {
+      "stem": "A Vice President has a company car. How does the Entitlement versus Authorisation distinction apply?",
+      "options": [
+        "The VP is authorised to own the car but entitled to sell it",
+        "The VP is entitled to the car only after driving it",
+        "The VP is entitled to have the car and authorised to use it for company use only",
+        "The VP is entitled to use the car for personal trips",
+        "The VP has neither entitlement nor authorisation"
+      ],
+      "correct": 2,
+      "explanation": "The VP is Entitled to have a company car and at the same time Authorised to use it for company use only."
+    },
+    {
+      "stem": "Can the terms Entitlement and Authorisation be used interchangeably?",
+      "options": [
+        "Yes, they always mean the same thing",
+        "In a few places they can be, but mostly they should not be",
+        "No, never under any circumstances",
+        "Only when talking about leave policies",
+        "Only in database security"
+      ],
+      "correct": 1,
+      "explanation": "There are a few places where both can be used interchangeably, but mostly they should not be; mixing them up is not 100% accurate."
+    }
+  ]
+}

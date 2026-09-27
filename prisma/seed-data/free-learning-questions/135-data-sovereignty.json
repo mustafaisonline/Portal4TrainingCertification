@@ -1,0 +1,125 @@
+{
+  "topic": "data-sovereignty",
+  "questions": [
+    {
+      "stem": "What does data sovereignty require of an organisation's data?",
+      "options": [
+        "That it is encrypted before it is analysed",
+        "That it is accessed only by database administrators",
+        "That it remains within the country or defined boundary where it was generated",
+        "That it is copied to at least two cloud regions",
+        "That it is deleted once it is no longer needed"
+      ],
+      "correct": 2,
+      "explanation": "Data sovereignty means keeping data within defined boundaries: if data is generated in Singapore, it should remain within the borders of Singapore."
+    },
+    {
+      "stem": "Which two terms are described as being very near to data sovereignty?",
+      "options": [
+        "Data security and data privacy",
+        "Data quality and data lineage",
+        "Data warehousing and data mining",
+        "Data masking and data subsetting",
+        "Data encoding and data encryption"
+      ],
+      "correct": 0,
+      "explanation": "Data sovereignty is introduced as a term very near to data security and data privacy, which make sure data is accessed only by those who need it or own it."
+    },
+    {
+      "stem": "Within an organisation, what does an ACL (Access Control List) record?",
+      "options": [
+        "The countries in which each data set may be stored",
+        "The list of users and the level of access each may have on certain data sets",
+        "The encryption keys assigned to each database",
+        "The audit history of every query run against the data",
+        "The cloud vendors approved for hosting data"
+      ],
+      "correct": 1,
+      "explanation": "An ACL records all the users together with the level of access they can have on certain data sets, such as developers, DBAs, managers, business users and cost-centre staff."
+    },
+    {
+      "stem": "In an on-premises infrastructure, how must employees access company applications from home?",
+      "options": [
+        "Through a public web portal",
+        "By downloading a local copy of the data",
+        "By emailing the database administrator for an extract",
+        "By logging in via a VPN (Virtual Private Network)",
+        "By using any BI tool with their normal password"
+      ],
+      "correct": 3,
+      "explanation": "In an on-premises solution data is not allowed to leave the network, so employees working from home must log in via a VPN to minimise the risk of losing data."
+    },
+    {
+      "stem": "What does an organisation do in a cloud solution instead of buying its own hardware and servers?",
+      "options": [
+        "It shares hardware with other companies in its own data centre",
+        "It builds a private network across several offices",
+        "It rents storage and processing from vendors such as Amazon, Microsoft or Google",
+        "It stores all data on employee laptops",
+        "It outsources its ACL to a regulator"
+      ],
+      "correct": 2,
+      "explanation": "In the cloud, organisations do not need to buy hardware or servers; they rent them from vendors such as Amazon, Microsoft, Google, Oracle, IBM or Ali Baba."
+    },
+    {
+      "stem": "In the Singapore and Azure example, why does using a cloud service make data sovereignty a question mark?",
+      "options": [
+        "Because Azure does not support access control lists",
+        "Because the customer's data would leave Singapore and be stored in a USA data centre",
+        "Because Microsoft charges more for customers outside the USA",
+        "Because cloud data cannot be encrypted",
+        "Because Singapore has no data privacy laws"
+      ],
+      "correct": 1,
+      "explanation": "Azure belongs to a USA-based company, so a Singapore customer's data would leave the Singapore border and be stored in a USA data centre, breaching the boundary rule."
+    },
+    {
+      "stem": "How are cloud vendors responding to the data sovereignty problem?",
+      "options": [
+        "By refusing customers from regulated sectors",
+        "By encrypting all data before it crosses a border",
+        "By opening data centres in different countries",
+        "By letting customers host the vendor's software on-premises only",
+        "By asking regulators to remove border restrictions"
+      ],
+      "correct": 2,
+      "explanation": "To cater to the data sovereignty problem statement, vendors are opening data centres in different countries so data can stay within its own region."
+    },
+    {
+      "stem": "Which activity does the author argue cannot realistically be restricted under data sovereignty?",
+      "options": [
+        "Storing data in a vendor's overseas data centre",
+        "Viewing data from across a border",
+        "Granting developers access to production data",
+        "Renting cloud servers from a foreign vendor",
+        "Backing up data outside the country"
+      ],
+      "correct": 1,
+      "explanation": "The author's view is that storage must stay within defined boundaries, but viewing cannot be limited, because opening the World Wide Web already means going cross-border."
+    },
+    {
+      "stem": "What is the recommended solution for keeping data sovereign while still using it globally?",
+      "options": [
+        "Store data in your own region and access it via any BI tool from anywhere",
+        "Keep all data on-premises and forbid remote access",
+        "Store a copy of the data in every country where users sit",
+        "Use only vendors headquartered in your own country",
+        "Replace cloud services with paper records"
+      ],
+      "correct": 0,
+      "explanation": "The suggested approach is to store data within your own region or defined boundaries and access it through any BI tool anywhere in the world."
+    },
+    {
+      "stem": "Which of the following is NOT listed among the roles that may be given different levels of data access in an organisation's ACL?",
+      "options": [
+        "Developers",
+        "Database administrators",
+        "Department managers",
+        "Business users",
+        "External auditors"
+      ],
+      "correct": 4,
+      "explanation": "The example roles are developers, database administrators, department managers, business users and cost-centre staff; external auditors are not mentioned."
+    }
+  ]
+}

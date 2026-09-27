@@ -1,0 +1,125 @@
+{
+  "topic": "dags-directed-acyclic-graphs-orexecuton-graph",
+  "questions": [
+    {
+      "stem": "What is an Execution Graph?",
+      "options": [
+        "A visual and logical representation of how tasks, operations or computations are executed in a system, showing their order and dependencies",
+        "A chart of how long each server has been running",
+        "A list of employees and their managers",
+        "A pie chart of CPU usage",
+        "A table of database permissions"
+      ],
+      "correct": 0,
+      "explanation": "An Execution Graph shows the order in which activities run and how they depend on one another."
+    },
+    {
+      "stem": "In a Directed Acyclic Graph (DAG), what does 'acyclic' mean?",
+      "options": [
+        "Tasks may run in any order",
+        "The graph does not loop back on itself",
+        "Every task runs twice",
+        "The graph has no edges",
+        "Tasks always run in parallel"
+      ],
+      "correct": 1,
+      "explanation": "'Directed' means tasks move in one direction and 'acyclic' means the graph does not loop back on itself; once a task finishes the flow moves forward."
+    },
+    {
+      "stem": "Which single question does an execution graph answer, in simple terms?",
+      "options": [
+        "How much does each task cost?",
+        "Who wrote each task?",
+        "What runs first, what runs next and what depends on what?",
+        "Where is the data physically stored?",
+        "Which programming language is fastest?"
+      ],
+      "correct": 2,
+      "explanation": "An execution graph answers one important question: what runs first, what runs next and what depends on what."
+    },
+    {
+      "stem": "Which of the following is NOT listed as something an execution graph helps systems do?",
+      "options": [
+        "Understand task dependencies",
+        "Run independent tasks in parallel",
+        "Recover from failures",
+        "Choose the cheapest cloud provider",
+        "Track processing stages"
+      ],
+      "correct": 3,
+      "explanation": "Execution graphs help systems understand dependencies, optimise performance, run independent tasks in parallel, recover from failures and track processing stages."
+    },
+    {
+      "stem": "When a job is submitted to a distributed processing engine, what does the system do before executing it?",
+      "options": [
+        "It runs each line of code immediately in the order written",
+        "It sends the code to a human reviewer",
+        "It converts the code into a relational table",
+        "It compresses the code to save memory",
+        "It builds an execution plan, which is converted into an execution graph"
+      ],
+      "correct": 4,
+      "explanation": "The system does not execute each line immediately; it builds an execution plan and converts it into an execution graph."
+    },
+    {
+      "stem": "In an execution graph, what do the nodes and edges represent?",
+      "options": [
+        "Nodes are tasks or transformations; edges are dependencies between tasks",
+        "Nodes are servers; edges are network cables",
+        "Nodes are users; edges are permissions",
+        "Nodes are tables; edges are foreign keys",
+        "Nodes are files; edges are folders"
+      ],
+      "correct": 0,
+      "explanation": "Each node in an execution graph represents a task or transformation and each edge represents a dependency between tasks."
+    },
+    {
+      "stem": "In the pipeline Read Data, Filter Rows, Aggregate Results, Write Output, when can the Aggregate Results step start?",
+      "options": [
+        "At any time, since all steps are independent",
+        "Only after the Filter Rows step it depends on has finished",
+        "Before Read Data, to save time",
+        "Simultaneously with Write Output",
+        "Only after Write Output has completed"
+      ],
+      "correct": 1,
+      "explanation": "If one step depends on another, it cannot start until the previous one finishes; only independent tasks may run at the same time."
+    },
+    {
+      "stem": "In the school project example of an execution graph, which task can run in parallel with writing notes?",
+      "options": [
+        "Presenting to the class",
+        "Collecting information from books",
+        "A friend drawing pictures for the poster",
+        "Creating the poster",
+        "Nothing; every step must wait"
+      ],
+      "correct": 2,
+      "explanation": "While you write notes, your friend can draw pictures for the poster, showing that some work can happen at the same time."
+    },
+    {
+      "stem": "Why are execution graphs especially important in distributed environments?",
+      "options": [
+        "Because distributed systems have no dependencies",
+        "Because they replace the need for code",
+        "Because they store the data itself",
+        "Because multiple machines process data simultaneously and need tasks ordered correctly",
+        "Because they prevent any task from running in parallel"
+      ],
+      "correct": 3,
+      "explanation": "Execution graphs are especially important where multiple machines process data simultaneously, ensuring correct order and enabling parallel work."
+    },
+    {
+      "stem": "Which statement best captures the key idea of an Execution Graph?",
+      "options": [
+        "It is only a decorative diagram for documentation",
+        "It is a type of relational database",
+        "It replaces data engineers",
+        "It guarantees that tasks never fail",
+        "It is how modern data systems organise and optimise work, ensuring correct order, parallel processing and dependency management"
+      ],
+      "correct": 4,
+      "explanation": "An Execution Graph is not just a diagram: it is how modern data systems organise and optimise work, ensuring correct order and parallelism."
+    }
+  ]
+}

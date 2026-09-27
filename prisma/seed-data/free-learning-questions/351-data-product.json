@@ -1,0 +1,125 @@
+{
+  "topic": "data-product",
+  "questions": [
+    {
+      "stem": "In which layer of an enterprise data environment are data products primarily built and operated?",
+      "options": [
+        "The OLTP (Online Transaction Processing) layer",
+        "The OLAP (Online Analytical Processing) layer",
+        "The network security layer",
+        "The email server layer",
+        "The hardware firmware layer"
+      ],
+      "correct": 1,
+      "explanation": "OLTP generates operational data and OLAP serves it; data products are almost always born, shaped and consumed in the OLAP layer, where raw data becomes trustworthy outputs for business consumption."
+    },
+    {
+      "stem": "At its core, what is a data product?",
+      "options": [
+        "A hardware device for storing databases",
+        "A licence to use a third-party analytics tool",
+        "A tangible, consumable asset that derives its value from data and is presented so that users, human or machine, can act upon it",
+        "A transactional application that records sales orders",
+        "A spreadsheet template with no data in it"
+      ],
+      "correct": 2,
+      "explanation": "A data product is a tangible, consumable asset whose value comes from data, built by orchestrating ingestion, transformation, modelling, storage, quality, governance and delivery."
+    },
+    {
+      "stem": "What is the defining purpose of a Data Product Application (DPA)?",
+      "options": [
+        "To directly answer specific business questions with immediate insight delivery, typically as dashboards, reports, Excel files or data exports",
+        "To provide a production-grade dataset for reuse by other systems",
+        "To generate transactional data for operational processes",
+        "To enforce data contracts across many downstream consumers",
+        "To store raw data in its natural state"
+      ],
+      "correct": 0,
+      "explanation": "A DPA is created to answer specific business questions directly, with a focus on usability and clarity; there is no expectation that it will be reused or integrated by other systems."
+    },
+    {
+      "stem": "What does Data-As-a-Product (DAaP) refer to?",
+      "options": [
+        "A one-off dashboard built for a single executive",
+        "A transactional system that captures orders",
+        "An Excel export intended for offline analysis only",
+        "Curated, production-grade datasets or models designed explicitly for consumption by other users, systems or applications",
+        "A physical device that collects sensor data"
+      ],
+      "correct": 3,
+      "explanation": "DAaP is a curated, production-grade dataset or model built for downstream consumption, processing and transformation by other users, systems or applications."
+    },
+    {
+      "stem": "Why do schema, structure or logic changes to a Data-As-a-Product require rigorous impact assessment and governance?",
+      "options": [
+        "Because DAaP products are never allowed to change",
+        "Because multiple downstream consumers may depend on the product",
+        "Because DAaP products are stored only in OLTP systems",
+        "Because they are consumed by a single executive",
+        "Because changes automatically delete the underlying data"
+      ],
+      "correct": 1,
+      "explanation": "DAaP places emphasis on semantic modelling, data contracts and stability because many downstream consumers may rely on it, so changes must be carefully assessed and governed."
+    },
+    {
+      "stem": "A dashboard originally built for one internal team attracts interest from other teams and applications wanting to reuse its curated data, so it gains stronger modelling, governance and versioning. Which journey does this illustrate?",
+      "options": [
+        "From OLAP to OLTP",
+        "From DAaP to DPA",
+        "From data lake to data warehouse",
+        "From raw data to archived data",
+        "From DPA to DAaP"
+      ],
+      "correct": 4,
+      "explanation": "A product first built as a DPA for internal use may gradually evolve into a DAaP as other teams seek to reuse it, requiring more robust modelling, governance and versioning."
+    },
+    {
+      "stem": "Which of the following is NOT listed among the questions to consider for successful data product development?",
+      "options": [
+        "Who the end user or system is",
+        "What questions the product is meant to answer",
+        "How the data lifecycle and governance will be maintained",
+        "Which programming language the developers prefer",
+        "Whether the product is application-facing (DPA) or platform-facing (DAaP)"
+      ],
+      "correct": 3,
+      "explanation": "The field perspective lists end user, questions to answer, lifecycle and governance, and DPA-versus-DAaP orientation. Developer language preference is not one of the considerations."
+    },
+    {
+      "stem": "Which of the following is given as an example of a data product?",
+      "options": [
+        "A recommendation system such as those used by Netflix or Amazon to personalise suggestions",
+        "A paper filing cabinet",
+        "An office chair",
+        "A printed telephone directory",
+        "A conference room booking whiteboard"
+      ],
+      "correct": 0,
+      "explanation": "Recommendation systems, predictive analytics tools, BI dashboards, health monitoring devices and fraud detection systems are the examples given of data products."
+    },
+    {
+      "stem": "What stages does the development process of a data product involve?",
+      "options": [
+        "Marketing, sales and customer support",
+        "Data collection, processing, analysis and creation of a user interface or platform for accessing insights",
+        "Hiring, onboarding and training staff",
+        "Budgeting, procurement and auditing",
+        "Compression, archiving and deletion"
+      ],
+      "correct": 1,
+      "explanation": "Developing a data product involves data collection, processing, analysis and building a user interface or platform through which users access the insights."
+    },
+    {
+      "stem": "Where does the value of a data product lie?",
+      "options": [
+        "In the physical size of its database",
+        "In the number of columns it contains",
+        "In its ability to turn raw data into actionable insights that help users make better decisions, improve processes or gain a competitive advantage",
+        "In the cost of the hardware it runs on",
+        "In how many transactions it records per second"
+      ],
+      "correct": 2,
+      "explanation": "Data products derive value not from what they are but from what they enable: turning raw data into actionable insights for better decisions, improved processes and competitive advantage."
+    }
+  ]
+}

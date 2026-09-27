@@ -1,0 +1,125 @@
+{
+  "topic": "paas-platform-as-a-service",
+  "questions": [
+    {
+      "stem": "What does the Cloud provider make available to customers in PaaS?",
+      "options": [
+        "Only bare virtual machines with an operating system",
+        "Software already installed and ready to use, with compute and storage managed automatically",
+        "A pre-implemented business solution",
+        "Only a container runtime",
+        "Only data feeds"
+      ],
+      "correct": 1,
+      "explanation": "In PaaS all software is made available pre-installed and ready to use, and customers do not manage compute or storage."
+    },
+    {
+      "stem": "Which phrase summarises PaaS in a nutshell?",
+      "options": [
+        "Only infrastructure with no support to maintain software",
+        "Pre-built solutions in the Cloud",
+        "Platforms, i.e. software with infrastructure and storage",
+        "Deploying only functions",
+        "Data on demand via APIs"
+      ],
+      "correct": 2,
+      "explanation": "'In nutshell, Platforms i.e., software(s) with infrastructure and storage is PaaS.'"
+    },
+    {
+      "stem": "In PaaS, what is provided for an Oracle database?",
+      "options": [
+        "A fully built data warehouse with tables and relationships",
+        "Only the operating system, with Oracle to be installed by the customer",
+        "The pre-installed Oracle software, ready for the customer to create tables or solutions",
+        "A read-only copy of someone else's database",
+        "Oracle licences but no installation"
+      ],
+      "correct": 2,
+      "explanation": "In PaaS only the installed software version is provided, not an implemented solution: Oracle sits pre-installed and the customer creates tables and solutions."
+    },
+    {
+      "stem": "In the Software versus Solution distinction from I Am Datapedia!, what does installing Microsoft PowerPoint represent?",
+      "options": [
+        "Creating a Solution",
+        "Software installation, giving you an empty PowerPoint",
+        "Data as a Service",
+        "Infrastructure provisioning",
+        "Function deployment"
+      ],
+      "correct": 1,
+      "explanation": "Installing Word, Excel or PowerPoint gives you empty applications and is called Software installation; creating diagrams in PowerPoint equals creating a Solution."
+    },
+    {
+      "stem": "In the Oracle example, what is equal to creating a Solution?",
+      "options": [
+        "Installing the Oracle database",
+        "Buying an Oracle licence",
+        "Renting the server",
+        "Choosing the operating system",
+        "Building physical data models, i.e. creating tables and relationships in the database"
+      ],
+      "correct": 4,
+      "explanation": "Installing Oracle is installing Software; building physical data models by creating tables and relationships is creating a Solution."
+    },
+    {
+      "stem": "Which of the following is handled by the Cloud provider in PaaS but by the customer in IaaS and CaaS?",
+      "options": [
+        "Defining business requirements",
+        "Naming the database tables",
+        "Writing the customer's application logic",
+        "Choosing which reports to build",
+        "Installing security software, encryption, DR/HA configuration and software upgrades"
+      ],
+      "correct": 4,
+      "explanation": "In PaaS the provider handles security software, encryption, DR and HA and periodic upgrades, activities the customer manages under IaaS and CaaS."
+    },
+    {
+      "stem": "In the laptop analogy, how is PaaS described?",
+      "options": [
+        "Laptops with all possible software pre-installed, available via the Internet and ready in a few clicks",
+        "Laptops with only an operating system, everything else done by you",
+        "Laptops with pre-created diagrams ready to use",
+        "Laptops shared between many customers",
+        "Laptops without internet access"
+      ],
+      "correct": 0,
+      "explanation": "PaaS is when the provider buys the laptops with all possible software pre-installed and makes them available via the Internet, ready to use in a few clicks."
+    },
+    {
+      "stem": "What does a customer have to manage in terms of compute or storage under PaaS?",
+      "options": [
+        "All compute and storage",
+        "Only storage",
+        "Only compute",
+        "Nothing, as everything is managed automatically by the Cloud provider",
+        "Only backups"
+      ],
+      "correct": 3,
+      "explanation": "Customers do not have to manage any compute or storage; everything is managed automatically by the Cloud provider."
+    },
+    {
+      "stem": "Why is the Software versus Solution concept described as key?",
+      "options": [
+        "Because it is needed to understand the topic of SaaS",
+        "Because it explains how to configure networks",
+        "Because it defines the price of IaaS",
+        "Because it is required for Zero Trust",
+        "Because it determines container size"
+      ],
+      "correct": 0,
+      "explanation": "Readers are asked to hold on to the Software and Solution concept because it is key to understanding SaaS."
+    },
+    {
+      "stem": "Which statement about PaaS is FALSE?",
+      "options": [
+        "Software is pre-installed and ready to use",
+        "Python can be available for the customer to start developing",
+        "The Cloud provider manages upgrades and DR/HA",
+        "An implemented business solution is delivered ready to use",
+        "The customer does not manage compute or storage"
+      ],
+      "correct": 3,
+      "explanation": "PaaS provides only installed software, not an implemented solution; the ready-to-use solution is what distinguishes SaaS."
+    }
+  ]
+}

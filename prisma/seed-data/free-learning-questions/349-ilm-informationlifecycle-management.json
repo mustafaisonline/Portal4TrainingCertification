@@ -1,0 +1,125 @@
+{
+  "topic": "ilm-informationlifecycle-management",
+  "questions": [
+    {
+      "stem": "What is Information Lifecycle Management (ILM)?",
+      "options": [
+        "A method for encrypting data at each stage of processing",
+        "The process of optimising data storage by automatically tiering data to different locations based on its age, access frequency and required read/write speeds",
+        "A framework for training data analysts",
+        "A backup rotation schedule",
+        "A standard for naming database columns"
+      ],
+      "correct": 1,
+      "explanation": "ILM optimises storage by automatically tiering data to different locations based on age, access frequency and required read/write speeds, minimising cost."
+    },
+    {
+      "stem": "How is the data lifecycle classified based on usage in ILM?",
+      "options": [
+        "Primary, secondary and tertiary",
+        "Raw, refined and reported",
+        "Hot, warm and cold, possibly extended to dead for deleted data",
+        "Bronze, silver and gold",
+        "Structured, semi-structured and unstructured"
+      ],
+      "correct": 2,
+      "explanation": "The lifecycle for data is classified by usage as hot, warm and cold, which can be extended to dead for deleted data."
+    },
+    {
+      "stem": "In on-premise storage tiering, which tier uses SSDs to store frequently accessed hot data?",
+      "options": [
+        "Tier 3",
+        "Tier 2",
+        "The archive tier",
+        "Tier 1",
+        "The external tier"
+      ],
+      "correct": 3,
+      "explanation": "Tier 1 uses SSDs (Solid State Drives) for frequently accessed hot data such as frequently used tables, partitions or indexes."
+    },
+    {
+      "stem": "What kind of data is stored in Tier 3 (external storage) of a database appliance?",
+      "options": [
+        "Frequently used indexes",
+        "The current year's transactions",
+        "Recently modified partitions",
+        "Session-specific temporary results",
+        "Cold data for long-term retention, such as old backups or compliance archives"
+      ],
+      "correct": 4,
+      "explanation": "Tier 3 external storage supports access to cold data for long-term retention, like old backups or compliance archives, and is the most cost-effective per gigabyte."
+    },
+    {
+      "stem": "In the sales transaction table example, what happens to transactions older than seven years?",
+      "options": [
+        "They can be deleted based on defined data retention policies",
+        "They are moved to Tier 1 for auditing",
+        "They are compressed and kept in Tier 2",
+        "They are copied to a materialised view",
+        "They are re-partitioned by month"
+      ],
+      "correct": 0,
+      "explanation": "In the example, transactions older than seven years can be deleted according to the defined data retention policies."
+    },
+    {
+      "stem": "At what level can ILM be applied to very large tables for finer-grained control?",
+      "options": [
+        "The column level",
+        "The partition level",
+        "The row level",
+        "The schema level",
+        "The user level"
+      ],
+      "correct": 1,
+      "explanation": "For very large tables, ILM can be applied at the partition level for even finer-grained control, as in the year and month partitioned sales table."
+    },
+    {
+      "stem": "How do SaaS cloud data platforms such as Snowflake, Databricks and BigQuery handle storage tiering?",
+      "options": [
+        "They require the DBA to script tier movements manually",
+        "They do not support tiering at all",
+        "They manage the underlying storage automatically and use tiered storage implicitly behind the scenes",
+        "They store all data in the most expensive tier",
+        "They require data to be exported before archiving"
+      ],
+      "correct": 2,
+      "explanation": "Cloud data platforms manage the underlying storage automatically and often leverage tiered storage internally, giving tiering benefits without manual setup."
+    },
+    {
+      "stem": "How does Apache Iceberg relate to storage tiering?",
+      "options": [
+        "It directly manages tiers within its own file format",
+        "It replaces cloud storage entirely",
+        "It prevents files from being moved between tiers",
+        "It does not manage tiers itself but works with storage systems that offer tiering, for example through storage tags such as those on Amazon S3",
+        "It only supports a single hot tier"
+      ],
+      "correct": 3,
+      "explanation": "Iceberg does not manage tiers directly, but it can use cloud storage tags to indicate a preferred tier and integrates with tools so data stays consistent when files move."
+    },
+    {
+      "stem": "Which Amazon S3 tier automatically monitors access and migrates data between frequent, infrequent and rarely accessed tiers?",
+      "options": [
+        "S3 Standard",
+        "S3 One Zone-IA",
+        "S3 Glacier Deep Archive",
+        "S3 Standard-IA",
+        "S3 Intelligent-Tiering"
+      ],
+      "correct": 4,
+      "explanation": "S3 Intelligent-Tiering is designed for data with unknown or changing access patterns and migrates data between tiers automatically."
+    },
+    {
+      "stem": "Which Amazon S3 tiers provide the lowest storage costs but retrieval times ranging from minutes to hours?",
+      "options": [
+        "The S3 Glacier tiers (Instant Retrieval, Flexible Retrieval and Deep Archive)",
+        "S3 Standard",
+        "S3 Intelligent-Tiering",
+        "S3 Standard-IA",
+        "S3 One Zone-IA"
+      ],
+      "correct": 0,
+      "explanation": "The S3 Glacier tiers target long-term archive and preservation, with the lowest storage costs and retrieval times from minutes (Instant Retrieval) to hours (Deep Archive)."
+    }
+  ]
+}

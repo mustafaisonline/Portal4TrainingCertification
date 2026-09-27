@@ -1,0 +1,125 @@
+{
+  "topic": "kpi-vs-okr-vs-mbo",
+  "questions": [
+    {
+      "stem": "In the comparison of MBO, OKR and KPI, what is the 'nature' of each concept?",
+      "options": [
+        "MBO is a management philosophy, OKR is a goal-setting framework, KPI is a performance measurement metric",
+        "MBO is a metric, OKR is a philosophy, KPI is a framework",
+        "MBO is a framework, OKR is a metric, KPI is a philosophy",
+        "All three are performance measurement metrics",
+        "All three are goal-setting frameworks"
+      ],
+      "correct": 0,
+      "explanation": "MBO (Management by Objectives) is a management philosophy, OKR (Objectives and Key Results) is a structured goal-setting framework, and KPI (Key Performance Indicator) is a performance measurement metric."
+    },
+    {
+      "stem": "What is the typical time horizon of OKRs compared with MBO and KPIs?",
+      "options": [
+        "OKRs are annual, MBO is quarterly, KPIs are weekly",
+        "OKRs are usually quarterly, MBO is usually annual or semi-annual, KPIs are tracked continuously",
+        "OKRs are continuous, MBO is quarterly, KPIs are annual",
+        "OKRs, MBO and KPIs all run on the same annual cycle",
+        "OKRs are semi-annual, MBO is continuous, KPIs are quarterly"
+      ],
+      "correct": 1,
+      "explanation": "OKRs typically run in quarterly cycles, MBO is usually annual or semi-annual, and KPIs are tracked continuously, independent of any goal cycle."
+    },
+    {
+      "stem": "Which of the following is the KPI example given when comparing MBO, OKR and KPI?",
+      "options": [
+        "Improve annual revenue by 15 per cent",
+        "Increase customer satisfaction score from 75 to 82 this quarter",
+        "Customer satisfaction score and revenue growth rate",
+        "Align employees with organisational objectives",
+        "Improve maths performance this term"
+      ],
+      "correct": 2,
+      "explanation": "The KPI examples are the customer satisfaction score and the revenue growth rate. 'Improve annual revenue by 15 per cent' is the MBO example and 'Increase customer satisfaction score from 75 to 82 this quarter' is the OKR example."
+    },
+    {
+      "stem": "How does the link to evaluation differ between MBO, OKR and KPI?",
+      "options": [
+        "All three are always tied to compensation",
+        "None of the three is ever tied to compensation",
+        "KPIs are always tied to compensation, MBO never is",
+        "MBO is often tied to appraisal and compensation, OKR may or may not be, and KPIs inform evaluation but are not goals themselves",
+        "OKRs are always tied to compensation, MBO never is"
+      ],
+      "correct": 3,
+      "explanation": "MBO is often tied to performance appraisal and compensation; OKR may or may not be tied to compensation; KPIs are used to inform evaluation but are not goals in themselves."
+    },
+    {
+      "stem": "Which statement about the relationship between MBO, OKR and KPI is correct?",
+      "options": [
+        "They are competing systems and an organisation must pick one",
+        "KPIs make MBO and OKR unnecessary",
+        "OKRs are a type of KPI",
+        "MBO and KPI are the same thing under different names",
+        "They are different layers of performance management that can work together"
+      ],
+      "correct": 4,
+      "explanation": "MBO, OKR and KPI are not competing systems but different layers of performance management that can work together. MBO and OKR focus on goal setting and alignment, while KPIs focus purely on measurement."
+    },
+    {
+      "stem": "In the school example comparing MBO, OKR and KPI, which goal is set under MBO?",
+      "options": [
+        "The principal's annual objective to increase the school's average score by 10 per cent",
+        "The maths teacher's quarterly goal to improve maths performance this term",
+        "The class average score tracked each week",
+        "The homework completion rate",
+        "The attendance percentage"
+      ],
+      "correct": 0,
+      "explanation": "Under MBO, the principal sets an annual objective: 'Increase the school's average score by 10 per cent this year.' Teachers and staff agree their roles, and performance is evaluated at year end against that objective."
+    },
+    {
+      "stem": "In the school example comparing MBO, OKR and KPI, what are the key results attached to the maths teacher's quarterly OKR?",
+      "options": [
+        "Increasing the school's average score by 10 per cent over the year",
+        "Increasing the class average from 70 to 80 and ensuring 90 per cent of students complete weekly practice tests",
+        "Tracking attendance percentage continuously",
+        "Evaluating the principal's performance at year end",
+        "Reducing homework to improve wellbeing"
+      ],
+      "correct": 1,
+      "explanation": "The maths teacher's objective is 'Improve maths performance this term', with key results of raising the class average from 70 to 80 and ensuring 90 per cent of students complete weekly practice tests: specific, measurable outcomes for a short period."
+    },
+    {
+      "stem": "Which of the following is NOT listed among the KPIs in the school example comparing MBO, OKR and KPI?",
+      "options": [
+        "Class average score",
+        "Homework completion rate",
+        "Number of teachers hired",
+        "Attendance percentage",
+        "None; all of these are listed KPIs"
+      ],
+      "correct": 2,
+      "explanation": "The KPIs in the school example are the class average score, homework completion rate and attendance percentage. These numbers are tracked regularly and may be used within both the MBO and OKR frameworks."
+    },
+    {
+      "stem": "How does the flexibility of MBO, OKR and KPI compare?",
+      "options": [
+        "MBO is the most agile of the three",
+        "KPIs are the most formal and structured",
+        "OKR is the most rigid and formal",
+        "MBO is relatively structured and formal, OKR is more agile and adaptable, and KPI is independent of the goal cycle",
+        "All three are equally rigid"
+      ],
+      "correct": 3,
+      "explanation": "MBO is relatively structured and formal, OKR is more agile and adaptable, and a KPI is independent of any goal cycle because it is a continuous measurement rather than a goal."
+    },
+    {
+      "stem": "What is the primary purpose of a KPI when set alongside MBO and OKR?",
+      "options": [
+        "To align employees with organisational objectives",
+        "To define short-term focused goals with measurable outcomes",
+        "To replace annual performance appraisals",
+        "To set ambitious qualitative objectives",
+        "To measure ongoing performance"
+      ],
+      "correct": 4,
+      "explanation": "The purpose of a KPI is to measure ongoing performance. Aligning employees with organisational objectives is the purpose of MBO, and defining short-term focused goals with measurable outcomes is the purpose of OKR."
+    }
+  ]
+}

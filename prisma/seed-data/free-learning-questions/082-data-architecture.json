@@ -1,0 +1,125 @@
+{
+  "topic": "data-architecture",
+  "questions": [
+    {
+      "stem": "Why must one first understand the existing Enterprise Data Architecture Landscape before starting a new project?",
+      "options": [
+        "Because every project must introduce at least one new tool",
+        "Because every new project's data architecture must follow the existing landscape rather than introducing new components",
+        "Because regulators require a written landscape document",
+        "Because the landscape defines the project budget",
+        "Because cloud providers require it"
+      ],
+      "correct": 1,
+      "explanation": "Every new project's data architecture must follow the existing landscape instead of adding new components with each project."
+    },
+    {
+      "stem": "What is a 'Data Components / Tools Swamp'?",
+      "options": [
+        "A data lake with no metadata",
+        "A network with too many switches",
+        "An organisation accumulating many tools that offer the same functionality",
+        "A database with too many indexes",
+        "A warehouse with no primary keys"
+      ],
+      "correct": 2,
+      "explanation": "In the Big Data era hundreds of tools offer the same functionality, so organisations end up with a swamp of duplicate tools, described as one of the biggest risks today."
+    },
+    {
+      "stem": "Which three types of architecture do most organisations confuse or mix up, which is called a recipe for disaster?",
+      "options": [
+        "Business, Data and Application Architecture",
+        "Business, Application and Technical Architecture",
+        "Data, Application and Technical Architecture",
+        "Data, Semantic and Security Architecture",
+        "Business, Data and Technical Architecture"
+      ],
+      "correct": 2,
+      "explanation": "Of the four architectures, most organisations mix up the last three (Data, Application and Technical); Data Architecture should remain standalone."
+    },
+    {
+      "stem": "Which two components of Enterprise Data Architecture are described as very critical?",
+      "options": [
+        "Data Warehouse and Data Lake",
+        "Enterprise Data Model and Data Flows",
+        "Business Glossary and Data Dictionary",
+        "ETL and Reporting",
+        "Backup and Disaster Recovery"
+      ],
+      "correct": 1,
+      "explanation": "Enterprise Data Architecture has many components, but the Enterprise Data Model and Data Flows are the two critical ones."
+    },
+    {
+      "stem": "What does an Enterprise Data Model include?",
+      "options": [
+        "Only the physical tables in production",
+        "Only the conceptual model agreed by the board",
+        "The network diagram of all servers",
+        "The list of approved software vendors",
+        "Conceptual, logical and physical data models with all entities, attributes, relationships and rules across the organisation"
+      ],
+      "correct": 4,
+      "explanation": "The Enterprise Data Model includes conceptual, logical and physical models with all possible data points, entities, attributes, relationships and rules, agreed by all stakeholders."
+    },
+    {
+      "stem": "In the Data Flows example, which process is a Product sold by?",
+      "options": [
+        "Product Development Process",
+        "Manufacturing Process",
+        "Human Resources Process",
+        "Order Management Process",
+        "Finance Process"
+      ],
+      "correct": 3,
+      "explanation": "Data Flows relate entities to business processes: a Product is created by Product Development, produced by Manufacturing and sold by Order Management."
+    },
+    {
+      "stem": "Which of the following is NOT one of the listed steps for project or product Data Architecture?",
+      "options": [
+        "Outline Architectural Scope",
+        "Business Requirement Scope",
+        "Design and Plan",
+        "Implement",
+        "Decommission Legacy Systems"
+      ],
+      "correct": 4,
+      "explanation": "The steps are Outline Architectural Scope, Business Requirement Scope, Design and Plan, and Implement; decommissioning is not among them."
+    },
+    {
+      "stem": "How does the Waterfall implementation methodology proceed?",
+      "options": [
+        "Sequentially, with each phase or module dependent on the previous one",
+        "In parallel sprints with an object-oriented approach",
+        "By deploying functions one at a time",
+        "By starting with the last phase first",
+        "Randomly, as resources become available"
+      ],
+      "correct": 0,
+      "explanation": "Waterfall follows a sequential implementation approach where each phase or module depends on the previous one."
+    },
+    {
+      "stem": "Which methodologies are described as inherited from Agile?",
+      "options": [
+        "DevOps, DataOps and MLOps",
+        "Waterfall, Spiral and V-Model",
+        "Kimball, Inmon and Data Vault",
+        "IaaS, PaaS and SaaS",
+        "Lambda, Kappa and Medallion"
+      ],
+      "correct": 0,
+      "explanation": "DevOps, DataOps and MLOps are all inherited from the Agile methodology."
+    },
+    {
+      "stem": "Who drives Data Architecture and towards what does it work?",
+      "options": [
+        "Application Architects, towards faster deployments",
+        "Security Architects, towards zero trust",
+        "Project Managers, towards on-time delivery",
+        "Data Architects, towards business value, compliance and an implementation process aligned with Enterprise Data Architecture",
+        "Database Administrators, towards query performance"
+      ],
+      "correct": 3,
+      "explanation": "Data Architecture is driven by Data Architects and works towards business value, compliance and implementation aligned with Enterprise Data Architecture."
+    }
+  ]
+}

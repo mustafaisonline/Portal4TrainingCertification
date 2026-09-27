@@ -1,0 +1,125 @@
+{
+  "topic": "key-value-databases",
+  "questions": [
+    {
+      "stem": "How does a key–value database store data?",
+      "options": [
+        "As a pair consisting of a unique key and its associated value",
+        "As rows with dynamic columns grouped into families",
+        "As nodes and edges",
+        "As nested JSON documents queried by field",
+        "As immutable events in a chronological log"
+      ],
+      "correct": 0,
+      "explanation": "Key–value databases store data as a unique key that serves as an identifier and a value that contains the data itself, eliminating structural complexity."
+    },
+    {
+      "stem": "What is the primary goal of key–value databases?",
+      "options": [
+        "Supporting complex joins across entities",
+        "Delivering ultra-fast lookups with minimal overhead",
+        "Enforcing relational integrity constraints",
+        "Enabling semantic reasoning over relationships",
+        "Providing rich ad-hoc analytical queries"
+      ],
+      "correct": 1,
+      "explanation": "Key–value systems optimise for speed and scalability in workloads where the access pattern is simple and predictable rather than supporting complex queries."
+    },
+    {
+      "stem": "Which forms can the value in a key–value database take?",
+      "options": [
+        "Only fixed-length strings",
+        "Only numeric types",
+        "A simple string, a JSON object or even a binary blob",
+        "Only references to other keys",
+        "Only relational rows"
+      ],
+      "correct": 2,
+      "explanation": "The value associated with a key can be a simple string, a JSON object or a binary blob; the database does not impose structure on it."
+    },
+    {
+      "stem": "Which workloads are named as typical uses for key–value databases?",
+      "options": [
+        "Regulatory reporting and cross-portfolio analytics",
+        "Fraud-ring detection and multi-hop traversal",
+        "Enterprise data warehousing",
+        "Caching, session management, token storage and high-volume read/write operations",
+        "Schema validation for partner integrations"
+      ],
+      "correct": 3,
+      "explanation": "Key–value stores suit simple, predictable access patterns such as caching, session management, token storage and high-volume read/write operations."
+    },
+    {
+      "stem": "In the loan approval example using Redis, what is used as the key and what does the value contain?",
+      "options": [
+        "CustomerID as the key and a list of repayment dates as the value",
+        "OfficerID as the key and a branch name as the value",
+        "A composite of LoanID and RepayDate as the key and an amount as the value",
+        "Status as the key and a list of loans as the value",
+        "LoanID as the key and a JSON structure with LoanAmount, InterestRate, Status, CustomerID and OfficerID as the value"
+      ],
+      "correct": 4,
+      "explanation": "The key is LoanID (for example L001) and the value is a JSON structure containing LoanAmount, InterestRate, Status, CustomerID and OfficerID, retrieved in a single lookup."
+    },
+    {
+      "stem": "What response time is typical when a loan record is retrieved from a key–value cache in a single lookup?",
+      "options": [
+        "Sub-millisecond latency",
+        "Several seconds",
+        "Around one minute",
+        "Batch-level latency of hours",
+        "The same latency as a multi-table relational join"
+      ],
+      "correct": 0,
+      "explanation": "Because the entire record is fetched by key without querying a relational database or document store, the result is near-instant, often sub-millisecond latency."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a strength of key–value databases?",
+      "options": [
+        "Extremely fast read and write performance",
+        "Support for ad-hoc queries beyond key retrieval",
+        "Simplicity of design and operation",
+        "Easy horizontal scaling",
+        "Suitability for caching layers in distributed architectures"
+      ],
+      "correct": 1,
+      "explanation": "Key–value stores do not support ad-hoc queries beyond direct key retrieval; that is one of their main limitations."
+    },
+    {
+      "stem": "How are key–value databases best understood within an enterprise architecture?",
+      "options": [
+        "As the primary system of record for financial transactions",
+        "As replacements for relational databases",
+        "As performance accelerators that complement relational or document databases",
+        "As analytical engines for reporting",
+        "As the backbone for knowledge graphs"
+      ],
+      "correct": 2,
+      "explanation": "Key–value databases are performance accelerators rather than full enterprise data platforms; they offload high-speed access needs, often as a caching layer beside primary storage."
+    },
+    {
+      "stem": "In the comparison of relational and key–value models for loan approval, what is the key difference?",
+      "options": [
+        "The relational model needs no joins while the key–value model needs many",
+        "The key–value model is normalised while the relational model is denormalised",
+        "The relational model is used only for caching",
+        "The relational model is structured and normalised with complex queries and joins, whereas the key–value model gives ultra-fast lookups with limited querying",
+        "Both models offer identical query flexibility"
+      ],
+      "correct": 3,
+      "explanation": "The relational model stores the loan in a fact table joined to dimensions and supports complex queries; the key–value model stores a denormalised object retrievable in one lookup with limited querying."
+    },
+    {
+      "stem": "Why is the key–value model described as the purest form of workload-driven data modelling?",
+      "options": [
+        "Because it enforces the strictest schema of any NoSQL family",
+        "Because it supports every type of query",
+        "Because it is grounded in relational algebra",
+        "Because it stores relationships as first-class elements",
+        "Because it is optimised for simplicity and performance above all else"
+      ],
+      "correct": 4,
+      "explanation": "The key–value model is unmatched in speed for direct lookups but too limited for relational integrity or analytics; it is optimised for simplicity and performance above everything."
+    }
+  ]
+}

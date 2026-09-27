@@ -1,0 +1,125 @@
+{
+  "topic": "data-imputation",
+  "questions": [
+    {
+      "stem": "What does the word Imputation mean in the context of data?",
+      "options": [
+        "Removing duplicate records",
+        "Filling in missing data",
+        "Encrypting sensitive values",
+        "Sorting data into categories",
+        "Converting text into numbers"
+      ],
+      "correct": 1,
+      "explanation": "Imputation means filling missing data."
+    },
+    {
+      "stem": "In which domain is Data Imputation majorly used?",
+      "options": [
+        "Data Governance",
+        "Database Administration",
+        "Network Security",
+        "Data Science",
+        "Data Archiving"
+      ],
+      "correct": 3,
+      "explanation": "Data Imputation is majorly used in the Data Science domain, typically before a Machine Learning model runs."
+    },
+    {
+      "stem": "Why does Data Imputation normally come into play?",
+      "options": [
+        "So business rules can be imposed on all data rather than on subsets of data",
+        "So data can be stored more compactly",
+        "So sensitive values can be masked before sharing",
+        "So historical data can be retired safely",
+        "So queries can run faster on large clusters"
+      ],
+      "correct": 0,
+      "explanation": "Data Imputation is used so that business rules can be applied to all of the data rather than only to the subsets that happen to be complete."
+    },
+    {
+      "stem": "Before a Machine Learning model runs, which two ways of handling missing data are described for Data Imputation?",
+      "options": [
+        "Encrypting the missing values or flagging them for review",
+        "Duplicating the row or moving it to an archive table",
+        "Converting the value to zero or converting it to text",
+        "Splitting the dataset or merging it with another",
+        "Filling in the missing data or removing the whole row"
+      ],
+      "correct": 4,
+      "explanation": "Data imputation is done either by filling up the missing data or by removing the whole row before the model runs."
+    },
+    {
+      "stem": "Which kinds of activity are said to give imperfect results when data is missing?",
+      "options": [
+        "Backing up, restoring and mirroring",
+        "Compressing, archiving and indexing",
+        "Categorising, classifying and clustering",
+        "Encrypting, hashing and signing",
+        "Sorting, filtering and paging"
+      ],
+      "correct": 2,
+      "explanation": "If data is missing during categorising, classifying, clustering and similar activities, the results will not be 100%."
+    },
+    {
+      "stem": "In numeric datasets, what value is generally used to replace missing values?",
+      "options": [
+        "The MEAN value",
+        "Zero",
+        "The maximum value",
+        "The most recent value",
+        "A randomly generated value"
+      ],
+      "correct": 0,
+      "explanation": "Generally, in numeric datasets, missing values are replaced with MEAN values, although many other ways of dealing with missing data exist."
+    },
+    {
+      "stem": "In the first imputation technique described, what happens to data that is missing at random?",
+      "options": [
+        "It is replaced with the median of the column",
+        "It is flagged and kept in the dataset",
+        "It is estimated from a separate reference dataset",
+        "It is completely removed from the dataset before use",
+        "It is replaced with the previous row's value"
+      ],
+      "correct": 3,
+      "explanation": "The first technique applies when data is missing at random and the affected data is completely removed from the dataset before it is used."
+    },
+    {
+      "stem": "How does the second imputation technique treat values that are missing at random?",
+      "options": [
+        "They are left blank for the model to handle",
+        "They are replaced by referring to other data points available within the current dataset",
+        "They are replaced with values from an external system",
+        "They are replaced with zero",
+        "They cause the entire dataset to be rejected"
+      ],
+      "correct": 1,
+      "explanation": "In the second technique, missing values that occur at random are filled by referring to the other data points available in the current dataset."
+    },
+    {
+      "stem": "The third imputation technique applies when data is NOT missing at random. How are those values mainly replaced?",
+      "options": [
+        "By removing every affected column",
+        "By copying values from the nearest row",
+        "By asking the data owner to supply them",
+        "By replacing them with null markers",
+        "Using Mean, Median or Mode values"
+      ],
+      "correct": 4,
+      "explanation": "When data is not missing at random, the missing values are mainly replaced using Mean, Median or Mode values."
+    },
+    {
+      "stem": "Which of these is NOT described as a way of dealing with missing data in Data Imputation?",
+      "options": [
+        "Removing the whole row that contains the missing value",
+        "Replacing the missing value with the MEAN",
+        "Leaving the missing values in place and training the model directly on them",
+        "Replacing the value by referring to other data points in the dataset",
+        "Replacing the value with the Median or Mode"
+      ],
+      "correct": 2,
+      "explanation": "Data Imputation either fills the missing values (with Mean, Median, Mode or other data points) or removes the row; leaving gaps in place for the model is not one of the described approaches."
+    }
+  ]
+}

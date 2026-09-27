@@ -1,0 +1,125 @@
+{
+  "topic": "logical-data-modelling-ldm",
+  "questions": [
+    {
+      "stem": "What does Logical Data Modelling define?",
+      "options": [
+        "The detailed structure of entities, attributes and relationships using formal principles such as normalisation, independent of any database technology",
+        "The physical storage layout for a specific database engine",
+        "The high-level business view of entities without attributes",
+        "The workflow of business processes",
+        "The network of connected knowledge nodes"
+      ],
+      "correct": 0,
+      "explanation": "Logical Data Modelling specifies exactly how entities are structured in attributes, identifiers and constraints while remaining technology-independent."
+    },
+    {
+      "stem": "What is the primary goal of Logical Data Modelling?",
+      "options": [
+        "To choose indexing and partitioning strategies",
+        "To describe the business in plain language",
+        "To create a precise, normalised representation of data that is implementation-ready but not tied to a platform",
+        "To define a canonical exchange format",
+        "To classify concepts into hierarchies"
+      ],
+      "correct": 2,
+      "explanation": "The logical model is a structural blueprint ensuring integrity, clear relationships and business rules before physical optimisation."
+    },
+    {
+      "stem": "In the logical loan model, which attributes are listed for the Loan entity?",
+      "options": [
+        "CustID, Name and Address",
+        "DecisionID, Status and DecisionDate",
+        "RepayID, DueDate and Status",
+        "LoanID, CustID as a foreign key, Amount and ProductType",
+        "Interest rate, partition key and index name"
+      ],
+      "correct": 3,
+      "explanation": "The logical model specifies Loan with LoanID, CustID as a foreign key, Amount and ProductType, while Customer has CustID, Name and Address."
+    },
+    {
+      "stem": "Which rule ensures a Loan cannot exist without a valid Customer in the logical model?",
+      "options": [
+        "A partitioning rule",
+        "A denormalisation rule",
+        "An indexing rule",
+        "A naming convention",
+        "A referential integrity rule"
+      ],
+      "correct": 4,
+      "explanation": "Referential integrity rules ensure a Loan cannot exist without a valid Customer and an ApprovalDecision cannot exist without a valid Loan."
+    },
+    {
+      "stem": "How does normalisation handle customer details in the loan example at the logical stage?",
+      "options": [
+        "Customer details are repeated inside every loan record",
+        "Customer details are stored in a spreadsheet",
+        "The Customer entity is separated and referenced from Loan through a foreign key, so each fact is stored in one place",
+        "Customer details are dropped from the model",
+        "Customer details are stored in the ApprovalDecision entity"
+      ],
+      "correct": 2,
+      "explanation": "Instead of repeating customer details within each loan record, the Customer entity is separated and referenced through a foreign key."
+    },
+    {
+      "stem": "With which type of system is normalised logical modelling particularly aligned?",
+      "options": [
+        "OLAP systems",
+        "OLTP systems, where accuracy and consistency are critical",
+        "Content management systems",
+        "Search engines",
+        "Recommendation systems"
+      ],
+      "correct": 1,
+      "explanation": "Logical modelling with strict normalisation aligns with OLTP (Online Transaction Processing) systems where accuracy and consistency are critical."
+    },
+    {
+      "stem": "How might the loan domain be represented logically for OLAP analytical purposes?",
+      "options": [
+        "As a single unnormalised text file",
+        "As a fact table such as FactLoanApproval linked to dimension tables such as Customer, Product, Date and Decision",
+        "As a set of BPMN diagrams",
+        "As a knowledge graph only",
+        "As a 6NF decomposition"
+      ],
+      "correct": 1,
+      "explanation": "For OLAP, the same domain may use a fact table with measures and foreign keys linked to dimension tables; denormalised but still logically structured."
+    },
+    {
+      "stem": "Which of the following is deferred to the physical modelling stage rather than defined logically?",
+      "options": [
+        "Primary keys",
+        "Foreign keys",
+        "Cardinalities",
+        "Data types, indexing strategies and partitioning schemes",
+        "Uniqueness constraints"
+      ],
+      "correct": 3,
+      "explanation": "Data types, indexing, partitioning and storage optimisations are deferred to physical modelling; keys, cardinalities and constraints are logical."
+    },
+    {
+      "stem": "Which of the following is NOT something the Logical Data Model explicitly defines?",
+      "options": [
+        "Primary keys",
+        "Foreign keys",
+        "Optionality",
+        "Uniqueness constraints",
+        "Storage clustering"
+      ],
+      "correct": 4,
+      "explanation": "The logical model defines primary keys, foreign keys, cardinalities, uniqueness constraints and optionality; storage clustering is a physical concern."
+    },
+    {
+      "stem": "What transition does Logical Data Modelling mark?",
+      "options": [
+        "From abstract business entities to structured schemas with attributes, keys and formal constraints",
+        "From physical tables to business concepts",
+        "From process modelling to business modelling",
+        "From metadata to raw data",
+        "From cloud to on-premises deployment"
+      ],
+      "correct": 0,
+      "explanation": "Logical Data Modelling refines the conceptual view into a rigorous, normalised representation ready to be implemented on any database platform."
+    }
+  ]
+}

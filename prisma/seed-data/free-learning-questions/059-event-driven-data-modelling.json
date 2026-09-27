@@ -1,0 +1,125 @@
+{
+  "topic": "event-driven-data-modelling",
+  "questions": [
+    {
+      "stem": "What is the primary unit of design in Event-Driven Data Modelling?",
+      "options": [
+        "The event, a discrete occurrence capturing something that has happened",
+        "The static entity such as Customer or Loan",
+        "The fact table",
+        "The partition key",
+        "The class with its methods"
+      ],
+      "correct": 0,
+      "explanation": "Event-driven modelling treats events, each representing a fact in time with a timestamp and contextual details, as the primary unit of design rather than static entities."
+    },
+    {
+      "stem": "What two properties characterise events in an event-driven model?",
+      "options": [
+        "Normalised and indexed",
+        "Immutable and append-only",
+        "Mutable and versioned",
+        "Cached and volatile",
+        "Hierarchical and nested"
+      ],
+      "correct": 1,
+      "explanation": "Events are immutable and append-only: once an event is written it is never updated or deleted."
+    },
+    {
+      "stem": "Which of the following is an example event from the loan approval domain?",
+      "options": [
+        "LoanCollateral",
+        "CustomerProfile",
+        "LoanApplicationSubmitted",
+        "InterestRateDimension",
+        "RepaymentSchedule"
+      ],
+      "correct": 2,
+      "explanation": "Typical loan approval events include LoanApplicationSubmitted, LoanApplicationApproved and RepaymentMade, each with identifying information, context and a timestamp."
+    },
+    {
+      "stem": "How is the current state of a loan determined in an event-driven system?",
+      "options": [
+        "It is stored directly in a Loan table",
+        "It is cached in a key–value store as the source of truth",
+        "It is looked up from a dimension table",
+        "It is derived by replaying the sequence of events",
+        "It is computed by joining fact and dimension tables"
+      ],
+      "correct": 3,
+      "explanation": "Because events are preserved in sequence, the state of the system can be reconstructed at any point in time by replaying the event log; the current state is derived, not stored."
+    },
+    {
+      "stem": "Which platform is named as an event streaming implementation for a loan approval system?",
+      "options": [
+        "Neo4j",
+        "MongoDB",
+        "Cassandra",
+        "Redis",
+        "Apache Kafka"
+      ],
+      "correct": 4,
+      "explanation": "A bank might implement an event streaming platform such as Apache Kafka, with Pulsar and Kinesis also named as distributed streaming platforms."
+    },
+    {
+      "stem": "In the event-driven loan example, what happens after the underwriting service consumes a LoanApplicationSubmitted event?",
+      "options": [
+        "It processes the application and emits a LoanApplicationApproved or LoanApplicationRejected event",
+        "It updates the original event with the decision",
+        "It deletes the submitted event",
+        "It writes the decision to a dimension table",
+        "It locks the customer record"
+      ],
+      "correct": 0,
+      "explanation": "The underwriting service consumes the submitted event, processes it and emits a new approved or rejected event; the original event is never modified."
+    },
+    {
+      "stem": "Which teams can subscribe to the same loan event streams in real time without interfering with operational systems?",
+      "options": [
+        "Only the underwriting service",
+        "Fraud detection, compliance monitoring and analytics teams",
+        "Only the mobile application",
+        "Only the database administrators",
+        "Only the regulator"
+      ],
+      "correct": 1,
+      "explanation": "Fraud detection, compliance monitoring and analytics teams can subscribe to the same streams in real time without disturbing operational processing."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a strength of event-driven data modelling?",
+      "options": [
+        "Real-time responsiveness and reactive architectures",
+        "A built-in audit trail because every change is an immutable event",
+        "Simple infrastructure with no need for streaming platforms",
+        "Replayability to rebuild projections or generate analytics retrospectively",
+        "Support for audit, compliance, debugging, simulation and machine learning training"
+      ],
+      "correct": 2,
+      "explanation": "Event-driven systems typically require distributed streaming platforms such as Kafka, Pulsar or Kinesis, and event replay needs careful infrastructure support; simplicity is not a strength."
+    },
+    {
+      "stem": "Which challenge is named as part of the complexity of event-driven modelling?",
+      "options": [
+        "Eliminating transitive dependencies",
+        "Choosing a partition key",
+        "Defining class inheritance",
+        "Managing event schema versioning rigorously as systems evolve",
+        "Avoiding Cartesian explosion"
+      ],
+      "correct": 3,
+      "explanation": "Event schema versioning must be managed rigorously, alongside designing idempotent consumers and ensuring consistency across services."
+    },
+    {
+      "stem": "Why do normalisation forms not directly apply to event-driven modelling?",
+      "options": [
+        "Because events are always stored in 6NF",
+        "Because events have no timestamps",
+        "Because events are stored as graph edges",
+        "Because event stores enforce domain–key constraints",
+        "Because events are append-only records centred on temporal sequencing rather than relational dependency theory"
+      ],
+      "correct": 4,
+      "explanation": "Events are append-only records that may follow schema-on-write or schema-on-read patterns, and the design centres on temporal sequencing rather than functional dependencies."
+    }
+  ]
+}

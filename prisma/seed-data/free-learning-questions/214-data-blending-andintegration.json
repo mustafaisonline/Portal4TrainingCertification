@@ -1,0 +1,125 @@
+{
+  "topic": "data-blending-andintegration",
+  "questions": [
+    {
+      "stem": "What is Data Integration?",
+      "options": [
+        "Merging datasets into a single presentation view",
+        "Deleting duplicate records from a warehouse",
+        "Connecting with one or more source systems to pull data",
+        "Building a dashboard for business users",
+        "Encrypting data in transit between systems"
+      ],
+      "correct": 2,
+      "explanation": "Data Integration is to connect with one or more source systems to pull data; it is the prerequisite for blending."
+    },
+    {
+      "stem": "What is Data Blending?",
+      "options": [
+        "Merging all datasets into one viewable and understandable presentation view to answer business KPIs",
+        "Pulling data from a single source system",
+        "Storing raw data in a Data Lake",
+        "Removing special characters from text fields",
+        "Assigning access rights to tables"
+      ],
+      "correct": 0,
+      "explanation": "Data Blending merges all datasets into one viewable and understandable presentation view in order to answer business KPIs."
+    },
+    {
+      "stem": "How are Data Integration and Data Blending related?",
+      "options": [
+        "Data Blending is the prerequisite for Data Integration",
+        "They are two names for the same process",
+        "Data Blending replaces Data Integration in a Data Lake",
+        "Data Integration is the prerequisite process for Data Blending",
+        "They are performed by different departments and never interact"
+      ],
+      "correct": 3,
+      "explanation": "Data Integration is the prerequisite for Data Blending: if you cannot get data from source systems, you cannot blend it to present to management."
+    },
+    {
+      "stem": "What single goal do Data Science, Business Intelligence and every kind of Analytics all work towards, according to I Am Datapedia!?",
+      "options": [
+        "Reducing storage costs",
+        "Achieving one or another business KPI",
+        "Replacing the IT department",
+        "Building the largest possible Data Lake",
+        "Automating data entry"
+      ],
+      "correct": 1,
+      "explanation": "The author's 'one big fat reality' is that all of these disciplines work toward achieving one or the other business KPI."
+    },
+    {
+      "stem": "In the product-sales example, a product is sold from a shop, an online website and a mobile application. Why is this a blending challenge?",
+      "options": [
+        "Because the product has a different price in each channel",
+        "Because only the shop stores its data in a database",
+        "Because the website has no transaction data",
+        "Because a Data Warehouse cannot hold more than one channel",
+        "Because the different systems may store transactions in different ways, yet all must be gathered into one target table"
+      ],
+      "correct": 4,
+      "explanation": "Loading product transactions from all systems into one target table is not simple because different systems may store transactions in different patterns."
+    },
+    {
+      "stem": "What does the development team create during the Blending process?",
+      "options": [
+        "Joins, unions and other transformation logic to convert all transaction types into one standardised list",
+        "New source systems for each sales channel",
+        "A separate warehouse for every channel",
+        "Access policies for business users",
+        "A backup of every source table"
+      ],
+      "correct": 0,
+      "explanation": "In the Blending process the development team creates joins, unions and all kinds of transformation logic to blend the different product-selling transactions into one standardised list."
+    },
+    {
+      "stem": "In a nutshell, what does the Blending process assist with?",
+      "options": [
+        "Compressing historical data",
+        "Presenting standardised data in dashboards and reports for business users' decision making",
+        "Granting authentication to new employees",
+        "Pulling raw data from source systems",
+        "Choosing a NoSQL database"
+      ],
+      "correct": 1,
+      "explanation": "In a nutshell, blending assists in presenting standardised data in dashboards and reporting so business users can make decisions."
+    },
+    {
+      "stem": "Which sources of data are mentioned as possible inputs to blending in the current era?",
+      "options": [
+        "Only relational databases",
+        "Only spreadsheets and CSV files",
+        "Social media, videos, audios, PDFs and emails",
+        "Only data warehouses",
+        "Only mobile applications"
+      ],
+      "correct": 2,
+      "explanation": "In this era data can come from social media, videos, audios, PDFs, emails and more."
+    },
+    {
+      "stem": "What has made it possible to blend structured, semi-structured and unstructured data into one comprehensive view?",
+      "options": [
+        "The retirement of Data Warehouses",
+        "The use of a single sales channel",
+        "The end of social media data",
+        "The introduction of Data Lakes",
+        "The five-KPI dashboard rule"
+      ],
+      "correct": 3,
+      "explanation": "With the introduction of Data Lakes, all kinds of data, structured, semi-structured or unstructured, can be blended into one comprehensive view to target a business KPI."
+    },
+    {
+      "stem": "Which statement about Data Integration and Data Blending is NOT correct?",
+      "options": [
+        "They are core to the Data Pipeline",
+        "They are commonly confused with each other",
+        "In the product example the target system is a Data Warehouse",
+        "Blending produces a standardised list of transactions",
+        "Blending can be done without first integrating data from source systems"
+      ],
+      "correct": 4,
+      "explanation": "Blending depends on integration: if you cannot get data from the source systems, you cannot blend it."
+    }
+  ]
+}

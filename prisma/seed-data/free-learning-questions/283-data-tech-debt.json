@@ -1,0 +1,125 @@
+{
+  "topic": "data-tech-debt",
+  "questions": [
+    {
+      "stem": "What does the term 'technical debt' refer to in software development?",
+      "options": [
+        "The licence fees owed for software tools",
+        "The implied cost of additional work created when software is built in a way that prioritises short-term goals over long-term sustainability",
+        "The number of bugs found during testing",
+        "The interest paid on loans used to buy hardware",
+        "The time spent training new developers"
+      ],
+      "correct": 1,
+      "explanation": "Technical debt is a metaphor for the implied cost of extra future work incurred when quick, easy solutions are chosen over better long-term ones."
+    },
+    {
+      "stem": "Technical debt is compared to which everyday concept?",
+      "options": [
+        "A savings account earning interest",
+        "A lottery ticket",
+        "Financial debt, where money borrowed must be paid back with interest",
+        "A rental agreement",
+        "An insurance policy"
+      ],
+      "correct": 2,
+      "explanation": "Technical debt is likened to financial debt: taking a shortcut now is like borrowing, and the cost is repaid later with interest in the form of extra work."
+    },
+    {
+      "stem": "Which type of general technical debt describes rushed or inadequate system architecture that makes adding new features difficult?",
+      "options": [
+        "Code debt",
+        "Testing debt",
+        "Documentation debt",
+        "Design debt",
+        "Governance debt"
+      ],
+      "correct": 3,
+      "explanation": "Design debt is rushed or inadequate system or software architecture that leads to inefficiencies and difficulties in adding features or maintaining the system."
+    },
+    {
+      "stem": "In the data world, which kind of technical debt is illustrated by rushing to type in students' grades and ending up with inaccurate information, like wrong scores on a report card?",
+      "options": [
+        "Data quality debt",
+        "Data integration debt",
+        "Data architecture debt",
+        "Data governance debt",
+        "Data documentation debt"
+      ],
+      "correct": 0,
+      "explanation": "Data quality debt arises when the cleaning or checking of data is done too quickly or not thoroughly, leaving information that is hard to rely on for decisions."
+    },
+    {
+      "stem": "Information gathered from several friends for a school project does not fit together because their different formats were never reconciled, like a puzzle with mismatched pieces. Which data technical debt does this describe?",
+      "options": [
+        "Data quality debt",
+        "Data integration debt",
+        "Data governance debt",
+        "Data documentation debt",
+        "Data architecture debt"
+      ],
+      "correct": 1,
+      "explanation": "Data integration debt comes from using fast solutions that ignore differing formats or structures, so data does not combine neatly and may be duplicated."
+    },
+    {
+      "stem": "The treehouse analogy, where a poor initial plan makes it hard to add a slide or secret door later, illustrates which data technical debt?",
+      "options": [
+        "Data quality debt",
+        "Data documentation debt",
+        "Data architecture debt",
+        "Data integration debt",
+        "Data governance debt"
+      ],
+      "correct": 2,
+      "explanation": "Data architecture debt is like not having a good, flexible plan from the start, which makes adding new features later tricky and the whole project less efficient."
+    },
+    {
+      "stem": "Which consequence is associated with data governance debt, illustrated by a school with unclear rules?",
+      "options": [
+        "Faster query performance",
+        "Data breaches or problems following privacy rules because policies were poorly defined",
+        "Smaller storage requirements",
+        "Improved documentation",
+        "Fewer data sources to integrate"
+      ],
+      "correct": 1,
+      "explanation": "When governance policies are made up quickly without considering the details, rules are unclear and easier to break accidentally, leading to data breaches or privacy compliance issues."
+    },
+    {
+      "stem": "The treasure map analogy, where important clues and rules were never written down, illustrates which data technical debt?",
+      "options": [
+        "Data architecture debt",
+        "Data quality debt",
+        "Data integration debt",
+        "Data governance debt",
+        "Data documentation debt"
+      ],
+      "correct": 4,
+      "explanation": "Data documentation debt is the lack of documentation for data structures, transformations and business rules, making it hard for newcomers to join or for anyone to fix things later."
+    },
+    {
+      "stem": "Which of the following is NOT listed as a way of addressing technical debt in the data world?",
+      "options": [
+        "Implementing better data quality checks",
+        "Redesigning data architectures",
+        "Enhancing data governance practices",
+        "Ignoring the shortcuts until the system fails",
+        "Creating comprehensive documentation"
+      ],
+      "correct": 3,
+      "explanation": "Addressing data technical debt means allocating time and resources to refactor and improve: better quality checks, redesigned architectures, stronger governance and comprehensive documentation. Ignoring it is not a remedy."
+    },
+    {
+      "stem": "Which factors are given as causes of technical debt arising?",
+      "options": [
+        "Tight deadlines, evolving requirements or a need for rapid prototyping",
+        "Too much documentation and excessive testing",
+        "Overly slow delivery and long planning phases",
+        "Using only open-source software",
+        "Having too many data sources"
+      ],
+      "correct": 0,
+      "explanation": "Technical debt arises when developers choose quick, easy solutions because of factors such as tight deadlines, evolving requirements or the need for rapid prototyping."
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "topic": "olap-cube",
+  "questions": [
+    {
+      "stem": "What is an OLAP cube?",
+      "options": [
+        "A normalised table of transactions",
+        "Data joined from fact and dimension tables and loaded into one table with multi-dimensional data pre-loaded",
+        "A virtual view over source systems",
+        "A JSON transaction log",
+        "A web-based reporting tool"
+      ],
+      "correct": 1,
+      "explanation": "When data is joined from fact and dimension tables and loaded into one table it is called an OLAP cube; the multi-dimensional data is pre-loaded so queries can be super-fast."
+    },
+    {
+      "stem": "Which of the following is NOT a listed disadvantage of OLAP cubes?",
+      "options": [
+        "They are huge in size",
+        "They are very difficult to refresh in real time",
+        "Housekeeping is a challenge",
+        "Queries against them are slow",
+        "They are seen by many as not worth having"
+      ],
+      "correct": 3,
+      "explanation": "Cubes are huge, hard to refresh in real time and challenging to house-keep, but their whole point is that queries are super-fast."
+    },
+    {
+      "stem": "Which OLAP type sits directly on top of an RDBMS star or snowflake schema and can be built with standard SQL?",
+      "options": [
+        "MOLAP",
+        "ROLAP",
+        "HOLAP",
+        "WOLAP",
+        "SOLAP"
+      ],
+      "correct": 1,
+      "explanation": "ROLAP (Relational OLAP) sits directly on top of the RDBMS, can be built using standard SQL, and needs no additional storage."
+    },
+    {
+      "stem": "Cubes are the best example of which OLAP type?",
+      "options": [
+        "ROLAP",
+        "DOLAP",
+        "MOLAP",
+        "WOLAP",
+        "HTAP"
+      ],
+      "correct": 2,
+      "explanation": "Cubes are the best example of MOLAP (Multi-dimensional OLAP), where multi-dimensional data is loaded into separate storage in an extremely fast manner."
+    },
+    {
+      "stem": "What is a cube with more than three dimensions of data called?",
+      "options": [
+        "A supercube",
+        "A galaxy",
+        "A hypercube",
+        "A constellation",
+        "A tesseract table"
+      ],
+      "correct": 2,
+      "explanation": "If a cube has more than three dimensions of data in it, it is called a hypercube."
+    },
+    {
+      "stem": "Which operations can users perform within a single MOLAP cube without joining other tables?",
+      "options": [
+        "Insert, update and delete",
+        "Slice, dice, drill up and down, roll up and pivot",
+        "Encrypt and decrypt",
+        "Scrape and harvest",
+        "Normalise and denormalise"
+      ],
+      "correct": 1,
+      "explanation": "Using cubes, users can slice, dice, drill up or down, roll up and pivot the data within the same cube, eliminating the need to join with other tables."
+    },
+    {
+      "stem": "What is HOLAP?",
+      "options": [
+        "A hybrid mixture of ROLAP and MOLAP",
+        "A web-only OLAP accessed through a browser",
+        "An OLAP for geo-business intelligence",
+        "An in-memory system doing both OLTP and OLAP",
+        "An offline desktop portion of OLAP"
+      ],
+      "correct": 0,
+      "explanation": "HOLAP (Hybrid OLAP) is a mixture of ROLAP and MOLAP."
+    },
+    {
+      "stem": "Which OLAP type allows users to download a portion of the OLAP data to their own machine for offline working?",
+      "options": [
+        "WOLAP",
+        "SOLAP",
+        "DOLAP",
+        "HOLAP",
+        "ROLAP"
+      ],
+      "correct": 2,
+      "explanation": "DOLAP (Desktop OLAP) lets users download a portion of OLAP onto their machine for offline working."
+    },
+    {
+      "stem": "What is SOLAP designed to tackle?",
+      "options": [
+        "Issues in the field of geo-business intelligence",
+        "Streaming social media data",
+        "Secure encrypted cubes",
+        "Server-side caching of queries",
+        "Scheduling of cube refreshes"
+      ],
+      "correct": 0,
+      "explanation": "SOLAP (Spatial OLAP) is designed to tackle issues in the field of geo-business intelligence."
+    },
+    {
+      "stem": "What is a benefit of ROLAP over MOLAP with respect to storage?",
+      "options": [
+        "ROLAP compresses cubes to half their size",
+        "ROLAP needs no additional storage because it runs on top of the RDBMS",
+        "ROLAP stores everything in memory",
+        "ROLAP downloads data to the desktop",
+        "ROLAP stores data only in the browser"
+      ],
+      "correct": 1,
+      "explanation": "ROLAP does not need additional storage as it runs on top of the RDBMS, whereas MOLAP loads multi-dimensional data into separate storage."
+    }
+  ]
+}

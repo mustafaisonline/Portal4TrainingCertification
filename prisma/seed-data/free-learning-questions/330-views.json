@@ -1,0 +1,125 @@
+{
+  "topic": "views",
+  "questions": [
+    {
+      "stem": "In a database, what is a view?",
+      "options": [
+        "A physical copy of a table stored on disk",
+        "A virtual representation of a table that encapsulates a query",
+        "A backup of the database taken at a point in time",
+        "An index that speeds up joins",
+        "A stored file containing exported rows"
+      ],
+      "correct": 1,
+      "explanation": "A view encapsulates a query and acts as a virtual representation of a table; querying it retrieves the combined results without rewriting the query."
+    },
+    {
+      "stem": "Does a database view store its own data?",
+      "options": [
+        "Yes, it stores a permanent copy of the query result",
+        "Yes, but only for the most recent query",
+        "No, it dynamically fetches data from the underlying tables whenever it is queried",
+        "Only when the view joins more than two tables",
+        "Only if it is created with an index"
+      ],
+      "correct": 2,
+      "explanation": "A view itself does not store any data; it dynamically fetches data from the underlying tables whenever it is queried."
+    },
+    {
+      "stem": "When does creating a view become advantageous?",
+      "options": [
+        "When a table has fewer than ten rows",
+        "When the database has no primary keys",
+        "When a query is run only once",
+        "When a query joining several tables is run frequently, such as daily or monthly",
+        "When the data must be stored in an external file"
+      ],
+      "correct": 3,
+      "explanation": "If a join query is run frequently, creating a view lets you execute a simple SELECT on the view instead of rewriting the complex join each time."
+    },
+    {
+      "stem": "How do you retrieve the combined results once a view has been created?",
+      "options": [
+        "By exporting the view to a CSV file",
+        "By running REFRESH on the view",
+        "By rebuilding the underlying tables",
+        "By re-running the original join query manually",
+        "By executing a simple SELECT command on the view"
+      ],
+      "correct": 4,
+      "explanation": "Once the query is encapsulated in a view, a simple SELECT on the view returns the combined results from the underlying tables."
+    },
+    {
+      "stem": "In the EmployeeProfile example, which tables are combined by the view?",
+      "options": [
+        "Employee and Department",
+        "Customer and Order",
+        "Product and Supplier",
+        "Student and Course",
+        "Invoice and Payment"
+      ],
+      "correct": 0,
+      "explanation": "The example view EmployeeProfile selects from Employee and Department where Employee.DeptID = Department.DeptID."
+    },
+    {
+      "stem": "Which SQL statement creates a view?",
+      "options": [
+        "CREATE TABLE ... AS SELECT",
+        "CREATE VIEW ... AS SELECT",
+        "INSERT INTO VIEW",
+        "ALTER TABLE ... ADD VIEW",
+        "SELECT INTO VIEW"
+      ],
+      "correct": 1,
+      "explanation": "A view is created with CREATE VIEW followed by the SELECT query it encapsulates, as in CREATE VIEW EmployeeProfile AS SELECT ..."
+    },
+    {
+      "stem": "In the EmployeeProfile example, on which condition are the Employee and Department tables joined?",
+      "options": [
+        "Employee.Name = Department.Name",
+        "Employee.Salary = Department.Budget",
+        "Employee.DeptID = Department.DeptID",
+        "Employee.ID = Department.ManagerID",
+        "Employee.Location = Department.Location"
+      ],
+      "correct": 2,
+      "explanation": "The WHERE clause in the example joins the tables on Employee.DeptID = Department.DeptID."
+    },
+    {
+      "stem": "Why is understanding views described as crucial?",
+      "options": [
+        "Because views are the only way to store data securely",
+        "Because views replace the need for tables",
+        "Because views are required for every SELECT statement",
+        "Because they are a foundational concept leading into more advanced topics such as Materialised Views and External Tables",
+        "Because views are needed to create primary keys"
+      ],
+      "correct": 3,
+      "explanation": "Views are a foundational concept whose understanding is needed before moving to more advanced topics such as Materialised Views and External Tables."
+    },
+    {
+      "stem": "What is the main benefit of a view for a frequently needed multi-table result?",
+      "options": [
+        "It doubles the storage used by the tables",
+        "It makes the underlying tables read-only",
+        "It automatically normalises the tables",
+        "It caches the result permanently on disk",
+        "It avoids rewriting the complex join query every time the consolidated information is needed"
+      ],
+      "correct": 4,
+      "explanation": "Querying the view provides the consolidated information without having to rewrite the complex join query each time."
+    },
+    {
+      "stem": "Which statement about a regular database view is NOT correct?",
+      "options": [
+        "A view physically stores a snapshot of the query result",
+        "A view can combine data from several tables",
+        "A view is queried with a SELECT statement",
+        "A view is described as the virtual representation of a table",
+        "A view fetches data from the underlying tables at query time"
+      ],
+      "correct": 0,
+      "explanation": "A regular view does not store any data; it is virtual and fetches from the underlying tables dynamically each time it is queried."
+    }
+  ]
+}

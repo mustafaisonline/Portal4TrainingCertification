@@ -23,10 +23,10 @@ From `docs/execution/MILESTONE_9_EXECUTION_PLAN.md` §4. Each document marks whe
 
 | # | Decision | Recommendation (AP-12, free-first) | State |
 |---|---|---|---|
-| J1 | Data residency (ADR-032) | Verify the seven inputs; if none binds, Singapore region | **SGP1 accepted 2026-09-26 (K5)** — the residency *question* (law/contract/preference) is still to be confirmed before production data is provisioned (ADR-032 sequencing rule) |
+| J1 | Data residency (ADR-032) | Verify the seven inputs; if none binds, Singapore region | **RESOLVED 2026-09-27** — none of the seven inputs binds this deployment to a specific jurisdiction (founder's own classification); proceeds with **SGP1** (accepted 2026-09-26, K5) |
 | J2 | Hosting (ADR-016) | ~~Vercel Pro or one container on Fly.io / Railway / VPS~~ | **DECIDED 2026-09-26 (K2, ADR-046): one DigitalOcean Droplet, container image behind Caddy** — `deploy/` |
 | J3 | Production PostgreSQL (ADR-005a) | ~~Neon~~ | **DECIDED 2026-09-26 (K3, ADR-046): DigitalOcean Managed PostgreSQL 16, same VPC** — not yet provisioned |
-| J4 | Domain and email sending domain | One apex domain; `/verify` on it (ADR-039); SPF/DKIM/DMARC before the first real email | **OPEN (K13)** — blocks Phase B |
+| J4 | Domain and email sending domain | One apex domain; `/verify` on it (ADR-039); SPF/DKIM/DMARC before the first real email | **No domain registered yet (2026-09-27).** Interim: a free `sslip.io` hostname derived from the Droplet's IP once provisioned (Caddy can issue a real Let's Encrypt certificate for it — it's a genuine, resolvable DNS name, not a workaround that skips TLS). Swapping in a real domain later is a `deploy/config.env` change only, no rebuild. Email sending domain (SPF/DKIM/DMARC) still **blocks the first real email** and remains open until a real domain exists |
 | J5 | Email provider (ADR-015) | Resend free tier; `EMAIL_TRANSPORT=resend` once the transport is implemented | **DEFERRED at go-live (K14)** — `EMAIL_TRANSPORT=log` |
 | J6 | Release gate (OQ-18) | Full Vitest + Playwright + build before every production deploy | **ADOPTED 2026-09-26 (K11)** — Playwright blocking; `deploy/04-release-gate.sh` |
 | J7 | RPO / RTO (OQ-10), retention | RPO 24 h until PITR, RTO 4 h; retention per Data Arch §7.1 assumptions | **Backups decided (K10)**: managed PITR primary + nightly on-server dump (`BACKUP_KEEP=7`) + weekly off-host copy; RPO/RTO figures themselves still to be recorded |

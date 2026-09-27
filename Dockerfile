@@ -47,8 +47,25 @@ COPY . .
 # `prisma generate` needs no database; it writes src/generated/prisma from the
 # schema. `next build` needs no database either (all DB reads are dynamic).
 # A throwaway DATABASE_URL satisfies prisma.config.ts, which reads the name.
-RUN DATABASE_URL="postgresql://build:build@localhost:5432/build" npx prisma generate \
- && npm run build
+#
+# BETTER_AUTH_SECRET is also a throwaway build-time value, for a different
+# reason: src/modules/identity/auth.ts constructs `betterAuth({ secret:
+# requiredEnv("BETTER_AUTH_SECRET"), ... })` at MODULE LOAD time, so merely
+# importing that module throws if the variable is absent — and Next's build
+# imports every route module (even ones marked `force-dynamic`, like
+# /admin/reports/[report]/csv) to collect its exported config. This value is
+# never the one the running container uses: `next start` re-executes this
+# same module fresh against whatever real env file the server was launched
+# with (deploy/README.md §1), so a placeholder here cannot leak into
+# production. Found running the release workflow for the first time
+# (v2026.09.27): the build failed with "Failed to collect page data for
+# /admin/reports/[report]/csv" / "BETTER_AUTH_SECRET is not set".
+RUN DATABASE_URL="postgresql://build:build@localhost:5432/build" \
+    BETTER_AUTH_SECRET="build-time-placeholder-not-used-at-runtime" \
+    npx prisma generate \
+ && DATABASE_URL="postgresql://build:build@localhost:5432/build" \
+    BETTER_AUTH_SECRET="build-time-placeholder-not-used-at-runtime" \
+    npm run build
 
 # ── 2b. migrate: the operator's tools image (Milestone 11, deploy/) ──────────
 # Everything the build stage has (full node_modules incl. the Prisma CLI, the

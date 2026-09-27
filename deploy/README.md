@@ -1,6 +1,8 @@
 # `deploy/` — the governed deployment framework
 
 > **Status: BUILT 2026-09-26 (Milestone 11, Phase A) — rehearsed in `--dry-run` only. No server exists yet.** Phase B (provisioning the DigitalOcean Droplet and Managed PostgreSQL) is the founder's, step by step, per [`docs/execution/MILESTONE_11_EXECUTION_PLAN.md`](../docs/execution/MILESTONE_11_EXECUTION_PLAN.md) §2. Decisions K1–K16 were approved 2026-09-26 (ADR-046).
+>
+> **⚠ 2026-09-27 — staging DROPPED, founder instruction (see `ARCHITECTURE_DECISION_REGISTER.md` ADR-029's supersession note).** Only production will be provisioned. This document's narrative below is annotated where staging no longer applies, but the `--env` flag, `compose.production.yaml`, `Caddyfile.example` and the systemd units still name/support a staging environment — those files are updated for real during Step 6/7 provisioning, not blindly ahead of it. Do not run a `staging` env step from this document without first confirming with the founder that it still applies.
 
 This is the portal's equivalent of eCard's `Deployement-Steps/`: the same **controls** — clean-git gate, release gate, signed deployment token, root-owned server wrapper, backup before every promotion, migration sandbox, post-deploy validation, governed rollback, read-only audit, per-step reports, timeouts on every task, no bypass flags — on the portal's own **runtime model**: an immutable container image built by CI, a managed PostgreSQL, Caddy for TLS. Section 6 says what differs from eCard and why.
 
@@ -58,8 +60,8 @@ GITHUB ACTIONS release.yml (on tag v*)                      │   typed on the s
 
 ## 3. First-time setup (Phase B — each step is a RED action the founder takes)
 
-1. **DigitalOcean**: Droplet (Ubuntu 24.04, 2 GiB / 2 vCPU, SGP1 — K4/K5), Managed PostgreSQL 16 (Basic, same VPC — K3), a Container Registry (starter — D5). On the cluster create `p4tc_production`, `p4tc_staging`, `p4tc_migration` and set each to UTC: `ALTER DATABASE p4tc_production SET timezone TO 'UTC';` (and the other two). Add the Droplet to the cluster's trusted sources.
-2. **DNS (K13)**: `A` records for the apex, `www` and `staging` → the Droplet's IP.
+1. **DigitalOcean**: Droplet (Ubuntu 24.04, SGP1 — K5; size re-decided 2026-09-27, no longer sharing with staging — see K4 note in the execution plan), Managed PostgreSQL 16 (Basic, same VPC — K3), a Container Registry (starter — D5). On the cluster create `p4tc_production`, ~~`p4tc_staging`,~~ `p4tc_migration` and set each to UTC: `ALTER DATABASE p4tc_production SET timezone TO 'UTC';` (and `p4tc_migration`). Add the Droplet to the cluster's trusted sources.
+2. **DNS (K13)**: `A` records for the apex and `www` ~~and `staging`~~ → the Droplet's IP. (No `staging` record — staging dropped 2026-09-27.)
 3. **Fill `deploy/config.env`** (`SERVER_HOST`, `DOMAIN`, `REGISTRY`) — names only — commit it.
 4. **Bootstrap** (as root, once):
    ```bash
@@ -70,7 +72,7 @@ GITHUB ACTIONS release.yml (on tag v*)                      │   typed on the s
    ```bash
    ssh root@<droplet> cat /etc/p4tc/governance-hmac.key > deploy/.governance-hmac.key && chmod 600 deploy/.governance-hmac.key
    ```
-5. **Type the env files on the server** — `nano /etc/p4tc/staging.env`, then `production.env` (templates were written with every name; see `.env.example` for each rule). Staging gets **test-mode** Stripe keys and the test-mode webhook secret; production gets the **live restricted key** with exactly the §1.2 permissions and the live endpoint's secret (`DEPLOYMENT_RUNBOOK.md` §6). Values never travel through this framework.
+5. **Type the env file on the server** — `nano /etc/p4tc/production.env` (template was written with every name; see `.env.example` for each rule). ~~Staging gets **test-mode** Stripe keys and the test-mode webhook secret;~~ production gets the **live restricted key** with exactly the §1.2 permissions and the live endpoint's secret (`DEPLOYMENT_RUNBOOK.md` §6) — or, as the lighter substitute the founder was offered for the dropped staging step, a test-mode key for the very first deploy's first registration + refund before switching to live. Values never travel through this framework.
 6. **GitHub**: repository variable `P4TC_REGISTRY` = `registry.digitalocean.com/<name>`; secret `DIGITALOCEAN_ACCESS_TOKEN` (registry read/write). `gh auth login` on the laptop.
 7. **Seed reference data** once per environment (idempotent; never test users), using the tools image on the server:
    ```bash
@@ -86,17 +88,22 @@ GITHUB ACTIONS release.yml (on tag v*)                      │   typed on the s
    ssh deploy@<droplet> 'docker run --rm --env-file /etc/p4tc/production.env <registry>/p4tc-portal-migrate:<tag> npm run learning:import-questions -- prisma/seed-data/free-learning-questions'
    ```
    Both are idempotent per topic (a re-imported topic keeps its published/unpublished flag; a topic that already has questions is skipped). Neither is part of `db:seed`, so `db:reset` on a laptop never touches them and the book never enters the seed. Mark topics' questions reviewed in the admin (one click per topic, audited) — or, on the founder's explicit instruction, all at once.
-8. `deploy/start.sh --audit --env staging` must say **GO**.
+8. `deploy/start.sh --audit --env production` must say **GO**.
 
 ## 4. Every deploy
+
+**2026-09-27: staging dropped — deploys go straight to production, no staging step first (founder's explicit instruction; see ADR-029's supersession note). The pattern below is what actually runs now; the original staging-first pattern is kept as a comment for history.**
 
 ```bash
 git checkout main && git pull                       # only main deploys (config DEPLOY_GIT_REMOTE_BRANCH)
 git tag v2026.10.03 && git push origin v2026.10.03  # release.yml builds, proves and pushes the images
-deploy/start.sh --audit --env staging --tag v2026.10.03          # GO?
-deploy/start.sh --env staging --tag v2026.10.03                  # staging first — always
-#   … exercise staging (test-mode checkout + refund on Stripe's hosted page) …
+deploy/start.sh --audit --env production --tag v2026.10.03      # GO?
 deploy/start.sh --env production --tag v2026.10.03
+# Original (pre-2026-09-27) pattern, no longer used — staging dropped:
+#   deploy/start.sh --audit --env staging --tag v2026.10.03
+#   deploy/start.sh --env staging --tag v2026.10.03            # staging first — always
+#   … exercise staging (test-mode checkout + refund on Stripe's hosted page) …
+#   deploy/start.sh --env production --tag v2026.10.03
 ```
 
 What the pipeline refuses, by design: a dirty tree · a tag not at HEAD or not on `origin/main` · a tag the release workflow has not built · a failing gate · a failing backup · a sandbox that cannot apply the pending migrations · destructive DDL not listed in `DESTRUCTIVE_MIGRATIONS_APPROVED` · `05-deploy.sh` called directly · any `FORCE_DEPLOY`/`SKIP_*`-style variable or flag. Every refusal prints what / why / fix.
@@ -124,13 +131,15 @@ deploy/07-rollback.sh --env production --restore-db p4tc-production-20261003T020
 | python3 verifies the HMAC on the server | openssl on both sides | One fewer runtime on the box; same primitive |
 | `GOVERNED_MIGRATION_MAX` numeric ceiling | Prisma's own ledger + a sandbox that lists *pending* migrations from the tag's image | The migrations travel with the image, so the sandbox is exact |
 | Destructive DDL: scanned, warned | Scanned, **refused** unless named in `DESTRUCTIVE_MIGRATIONS_APPROVED` (committed) | ADR-029 makes destructive migrations a RED gate; the approval is recorded in git |
-| No staging (dry-run instead) | Staging container + database on the same Droplet under `staging.<domain>` | ADR-029 requires it; payments and issuance are exercised on test-mode keys first (K7) |
+| No staging (dry-run instead) | ~~Staging container + database on the same Droplet under `staging.<domain>`~~ **Reversed 2026-09-27**: no staging here either — dropped on the founder's explicit instruction after the risk was explained in full | ADR-029 requires it; payments and issuance are exercised on test-mode keys first (K7) — risk now accepted rather than mitigated; see ADR-029's supersession note |
 | Rollback restores code + DB from one tarball | Rollback = previous image tag; DB restore is separate, explicit and confirmed | Code rollback is instant and safe; data rollback is destructive and must be a deliberate act |
 | `.env` backed up in the package | Not backed up by the framework | The env file holds live keys; it is root-owned on the server and re-typable from the Stripe/DO dashboards. Backing it up would put secrets in a tarball |
 
 Kept as-is from eCard: production data never leaves the server · no bypass flags or variables · the deploy user cannot write anything the app runs · a signed, expiring, single-use token per deploy · a report per step · a timeout on every task · `--dry-run` everywhere · GO/NO-GO audit.
 
 ## 7. Rehearsing without a server (what Phase A verified — V2)
+
+*(Rehearsed 2026-09-26, before the 2026-09-27 no-staging decision — the commands below still exercise the `--env staging` code path as a generic harness check, not as a plan to provision staging.)*
 
 ```bash
 cat > deploy/config.local.env <<'EOF'

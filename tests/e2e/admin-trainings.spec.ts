@@ -223,7 +223,7 @@ test("an administrator launches a training from the portal: draft → sections �
   // the schedule filtered to this training — M13, the page lists no dates
   // itself) and from the grouped /schedule.
   await page.goto(`/programs/${slug}`);
-  await expect(page.getByTestId("hero-register")).toHaveAttribute("href", `/schedule?training=${slug}`);
+  await expect(page.getByTestId("hero-dates")).toHaveAttribute("href", `/schedule?training=${slug}`);
   await expect(page.getByTestId("programme-dates")).toHaveCount(0);
   await page.goto(`/schedule?training=${slug}`);
   await expect(page.getByTestId("schedule-title")).toHaveText(`Dates for ${title}`);

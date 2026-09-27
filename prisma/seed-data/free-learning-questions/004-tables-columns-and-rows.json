@@ -2,7 +2,7 @@
   "topic": "tables-columns-and-rows",
   "questions": [
     {
-      "stem": "In the chapter's family example, what does the whole family represent?",
+      "stem": "In the family example for tables, columns and rows, what does the whole family represent?",
       "options": [
         "A column",
         "A row",
@@ -38,7 +38,7 @@
       "explanation": "The details of one person in the family are a row; details of all the members are multiple rows."
     },
     {
-      "stem": "What is a table made of, according to the chapter?",
+      "stem": "What is a database table made of?",
       "options": [
         "Only columns",
         "Only rows",
@@ -62,7 +62,7 @@
       "explanation": "A database consists of many tables holding different kinds of dataset."
     },
     {
-      "stem": "Another word the chapter uses for \"columns\" is:",
+      "stem": "Another word for a table's \"columns\" is:",
       "options": [
         "Fields",
         "Rows",
@@ -74,7 +74,7 @@
       "explanation": "Columns are also called fields."
     },
     {
-      "stem": "How many members were in the chapter's example family?",
+      "stem": "In the family example for tables, columns and rows, how many family members were listed?",
       "options": [
         "Three",
         "Four",
@@ -98,7 +98,7 @@
       "explanation": "One row per member (six) and one column per detail (three)."
     },
     {
-      "stem": "Which of these would be a sensible name for the table in the chapter's example?",
+      "stem": "Which of these would be a sensible name for the table in the family example?",
       "options": [
         "Family",
         "Grandfather",

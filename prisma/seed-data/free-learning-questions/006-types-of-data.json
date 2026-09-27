@@ -2,7 +2,7 @@
   "topic": "types-of-data",
   "questions": [
     {
-      "stem": "What are the three fundamental data types named in the chapter?",
+      "stem": "What are the three fundamental types of data?",
       "options": [
         "Numeric, text and date",
         "Structured, semi-structured and unstructured",
@@ -26,7 +26,7 @@
       "explanation": "Structured data has a stable, predefined format known before data entry, which makes extraction easy and automated."
     },
     {
-      "stem": "A table with 6 columns and 10 rows is exported. Some cells are empty. What does the chapter say about its structure?",
+      "stem": "A table with 6 columns and 10 rows is exported. Some cells are empty. What type of data is it?",
       "options": [
         "The empty rows are dropped",
         "The structure stays intact: every row keeps the same number of columns",
@@ -38,7 +38,7 @@
       "explanation": "Structured data keeps its format regardless of missing entries — 6 columns and 10 rows remain."
     },
     {
-      "stem": "Which formats does the chapter give as examples of semi-structured data?",
+      "stem": "Which formats are examples of semi-structured data?",
       "options": [
         "CSV and spreadsheets",
         "XML and JSON",
@@ -62,7 +62,7 @@
       "explanation": "Semi-structured data does not keep a consistent set of fields across entries; empty fields may be omitted, so column counts vary."
     },
     {
-      "stem": "Which platforms does the chapter give as examples of semi-structured data?",
+      "stem": "Which platforms are examples of sources of semi-structured data?",
       "options": [
         "Bank ledgers",
         "Facebook and Twitter",
@@ -86,7 +86,7 @@
       "explanation": "Unstructured data lacks a predefined structure — images, videos, audio, emails, documents, presentations and PDFs."
     },
     {
-      "stem": "What can sometimes impose a semblance of structure on unstructured data, according to the chapter?",
+      "stem": "What can sometimes impose a semblance of structure on unstructured data?",
       "options": [
         "Deleting half of it",
         "Metadata",
@@ -98,7 +98,7 @@
       "explanation": "Metadata can help impose a semblance of structure on unstructured data such as an image library."
     },
     {
-      "stem": "Which is a characteristic of unstructured data listed in the chapter?",
+      "stem": "Which is a characteristic of unstructured data?",
       "options": [
         "Known structure before data entry",
         "Easy, automated extraction",

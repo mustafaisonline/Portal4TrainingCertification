@@ -111,7 +111,7 @@ function GlyphArrowRight() {
 export const metadata: Metadata = {
   title: "Trainers",
   description:
-    "The practitioners who design and deliver Data & AI Academy courses.",
+    "The practitioners who design and deliver Data & AI Academy trainings.",
 };
 
 /** What a trainer must be able to show. Genuine selection criteria, not
@@ -154,7 +154,7 @@ export default async function TrainersPage() {
             The people who actually built this work
           </h1>
           <p className="text-body-lg max-w-[640px] text-[var(--color-ink-quiet)]">
-            Every course is designed and delivered by a practitioner with
+            Every training is designed and delivered by a practitioner with
             real enterprise delivery behind them — people who have built, led
             and operated data and AI capabilities, not only taught them. This
             is who they are, and how you can check.

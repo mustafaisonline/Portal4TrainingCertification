@@ -126,7 +126,7 @@ export function RegisterForm({
         inputMode="email"
         required
         maxLength={254}
-        hint="One account per email address; this is how you sign in."
+        hint="You sign in with this address."
       />
       <div className="grid gap-5 sm:grid-cols-2">
         {/* Stored on the profile row (user_profiles.date_of_birth), not on the

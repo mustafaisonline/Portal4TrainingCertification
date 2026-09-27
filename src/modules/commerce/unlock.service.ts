@@ -22,7 +22,8 @@ import { enabledUnlockSetting } from "./unlock.repository";
  *      attempt — or none is due because the person's profile country is
  *      Pakistan (founder decision P13, the card-payment rule).
  * The ID and the /verify page are never gated. Non-refundable once shown
- * (P14, refund policy §1).
+ * (P14, refund policy §1). UX review 2026-09-27 U5: the document is offered
+ * after a PASS only — a fail keeps its ID and verify page and can be retaken.
  */
 
 export type UnlockStatus = {
@@ -53,7 +54,7 @@ export async function unlockStatusForAttempt(attempt: AttemptRecord, now = new D
     reviewSatisfied,
     fee,
     pendingOrderId: pending?.id ?? null,
-    unlocked: reviewSatisfied && (fee === "paid" || fee === "exempt"),
+    unlocked: attempt.passed === true && reviewSatisfied && (fee === "paid" || fee === "exempt"),
     amountMinor: setting?.amountMinor ?? null,
     currency: setting?.currency ?? null,
   };
@@ -75,6 +76,7 @@ export async function startUnlockCheckout(input: StartUnlockInput): Promise<Star
     const attempt = await getAttemptForUser(input.attemptId, user.id, tx);
     if (!attempt) throw new CommerceError("unlock_not_finished", `Attempt ${input.attemptId} not found for user ${user.id}.`);
     if (!attempt.finishedAt) throw new CommerceError("unlock_not_finished", `Attempt ${attempt.id} is not finished.`);
+    if (!attempt.passed) throw new CommerceError("unlock_not_passed", `Attempt ${attempt.id} was not passed.`);
     const status = await unlockStatusForAttempt(attempt, now, tx);
     if (status.fee === "paid") throw new CommerceError("unlock_already_paid", `Attempt ${attempt.id} is already unlocked.`);
     if (status.fee === "exempt") throw new CommerceError("unlock_fee_exempt", `User ${user.id} is exempt from the unlock fee.`);

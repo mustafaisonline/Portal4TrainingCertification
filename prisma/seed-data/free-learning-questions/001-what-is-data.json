@@ -38,7 +38,7 @@
       "explanation": "The chapter notes that in the data world an object is called an entity, its features are attributes, and its activities are transactions."
     },
     {
-      "stem": "Which of these is an example of an INTERNAL activity of a car, as the chapter describes it?",
+      "stem": "In the car example in I Am Datapedia!, which of these is an INTERNAL activity of the car?",
       "options": [
         "The car being sold to a new owner",
         "An insurance policy affecting its value",
@@ -50,7 +50,7 @@
       "explanation": "Internal activities are changes that occur within the object itself, driven by its own properties and conditions; buying, selling, leasing and modifications are external."
     },
     {
-      "stem": "What does the chapter say corporate data must be tied to in order to be valuable?",
+      "stem": "What must corporate data be tied to in order to be valuable?",
       "options": [
         "A database vendor",
         "Return on Investment (ROI) of at least one line of business",
@@ -62,7 +62,7 @@
       "explanation": "\"For Corporate, 'Data MUST tag with ROI'\" — each line of business has data and an ROI model, and data should align with those business goals."
     },
     {
-      "stem": "What criticism does the chapter make of the traditional DIKW model?",
+      "stem": "What criticism does I Am Datapedia! make of the traditional DIKW (data–information–knowledge–wisdom) model?",
       "options": [
         "It has too many stages",
         "It treats wisdom as unimportant",
@@ -74,7 +74,7 @@
       "explanation": "Data → Information → Knowledge → Wisdom is helpful but linear; in reality one cycle's output becomes another's input, perpetually."
     },
     {
-      "stem": "Which of the following is NOT one of the three states of data named in the chapter?",
+      "stem": "Which of the following is NOT one of the three states of data?",
       "options": [
         "Data-at-rest",
         "Data-in-transit",
@@ -86,7 +86,7 @@
       "explanation": "The three states are data-at-rest, data-in-transit and data-in-use; \"data-in-archive\" is not one of them."
     },
     {
-      "stem": "What is metadata, as described in the chapter?",
+      "stem": "What is metadata?",
       "options": [
         "Data that has been deleted",
         "Data about data, which offers context and improves accessibility",
@@ -98,7 +98,7 @@
       "explanation": "Metadata is data about data; master and reference data are the core entities; transactional data captures actions and habits."
     },
     {
-      "stem": "How does data differ from traditional assets such as machinery, according to the chapter?",
+      "stem": "How does data differ from traditional assets such as machinery?",
       "options": [
         "Data depreciates faster than machinery",
         "Data must be replaced every year",
@@ -110,7 +110,7 @@
       "explanation": "Physical assets deplete or depreciate with use; data's utility increases with each use, it generates more data, and it has no expiry date."
     },
     {
-      "stem": "What does every interaction with data produce, according to the chapter's list of data's unique properties?",
+      "stem": "Among data's unique properties, what does every interaction with data produce?",
       "options": [
         "A backup copy",
         "Metadata such as who accessed it, when and why",

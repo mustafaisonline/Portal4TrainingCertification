@@ -18,6 +18,8 @@ export const STEM_MIN = 10;
 export const STEM_MAX = 500;
 export const OPTION_MAX = 300;
 export const EXPLANATION_MAX = 600;
+/** Stems that lean on the book's chapter framing are refused (U6). */
+export const STEM_CHAPTER_RE = /\b(the|this) chapter\b/i;
 
 export type QuestionStatus = "draft" | "reviewed";
 
@@ -44,6 +46,9 @@ export class QuestionValidationError extends Error {
 export function validateQuestion(raw: QuestionInput, index: number): Required<Pick<QuestionInput, "stem" | "options" | "correct">> & { explanation: string | null } {
   const stem = String(raw.stem ?? "").trim();
   if (stem.length < STEM_MIN || stem.length > STEM_MAX) throw new QuestionValidationError(index, `the question must be ${STEM_MIN}–${STEM_MAX} characters`);
+  // UX review 2026-09-27 U6: a question is read in a 50-question mix drawn from
+  // many topics, so it must name its subject — "the chapter" means nothing there.
+  if (STEM_CHAPTER_RE.test(stem)) throw new QuestionValidationError(index, 'the question must name its subject rather than say "the chapter" or "this chapter"');
   if (!Array.isArray(raw.options) || raw.options.length !== QUESTION_OPTION_COUNT) throw new QuestionValidationError(index, `exactly ${QUESTION_OPTION_COUNT} options are required`);
   const options = raw.options.map((o) => String(o ?? "").trim());
   if (options.some((o) => o.length === 0 || o.length > OPTION_MAX)) throw new QuestionValidationError(index, `every option must be 1–${OPTION_MAX} characters`);

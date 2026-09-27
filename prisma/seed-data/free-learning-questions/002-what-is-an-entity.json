@@ -14,7 +14,7 @@
       "explanation": "An entity is anything that can be uniquely identified and described — a real-world object, person, concept or event that matters within a system."
     },
     {
-      "stem": "Which three components does the chapter break an entity into?",
+      "stem": "Which three components is an entity broken into in data modelling?",
       "options": [
         "Table, index and view",
         "Entity type, entity attribute and entity instance",

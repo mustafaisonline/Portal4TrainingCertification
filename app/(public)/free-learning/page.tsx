@@ -3,6 +3,7 @@ import Link from "next/link";
 import { listPublishedExperts } from "@/modules/catalogue/experts/repository";
 import { countPublishedTopics } from "@/modules/free-learning/book.repository";
 import { bankSize } from "@/modules/free-learning/knowledge-check.repository";
+import { questionCountsByTopic } from "@/modules/free-learning/quiz.repository";
 import { TakeAwayBooks } from "@/shared/marketing/TakeAwayBooks";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
@@ -34,7 +35,9 @@ export const dynamic = "force-dynamic";
 const DATAPEDIA_ASIN = "B0F1NT87CL";
 
 export default async function FreeLearningPage() {
-  const [experts, topicCount, bank] = await Promise.all([listPublishedExperts(), countPublishedTopics(), bankSize()]);
+  const [experts, topicCount, bank, counts] = await Promise.all([listPublishedExperts(), countPublishedTopics(), bankSize(), questionCountsByTopic()]);
+  // UX review 2026-09-27 D3: say what exists — topics with at least one reviewed self-check question.
+  const selfCheckTopics = [...counts.values()].filter((c) => c.reviewed > 0).length;
   const author = experts.find((e) => e.profile.books?.some((b) => b.url.includes(DATAPEDIA_ASIN))) ?? experts.find((e) => (e.profile.books?.length ?? 0) > 0) ?? null;
   const datapedia = author?.profile.books?.find((b) => b.url.includes(DATAPEDIA_ASIN)) ?? null;
 
@@ -60,8 +63,8 @@ export default async function FreeLearningPage() {
             <p className="text-label mb-2 text-[var(--color-primary)]">1 · Learn free</p>
             <h2 className="text-h1 mb-3">Learn from <em>I Am Datapedia!</em></h2>
             <p className="text-body-sm mb-4 text-[var(--color-ink-quiet)]">
-              Every topic of the book, readable here, with a search box to find the one you need — and, soon, a self-check at the
-              end of each.
+              Every topic of the book, readable here, with a search box to find the one you need —{" "}
+              {selfCheckTopics > 0 ? `${selfCheckTopics} of them with a self-check at the end` : "self-checks are being added topic by topic"}.
             </p>
             <div className="mb-5 flex flex-wrap items-center gap-3">
               {topicCount > 0 ? (
@@ -69,7 +72,7 @@ export default async function FreeLearningPage() {
                   <Button href="/free-learning/topics" data-testid="browse-topics">
                     Browse {topicCount} topics
                   </Button>
-                  <Chip>Self-checks coming</Chip>
+                  <Chip data-testid="self-check-count">{selfCheckTopics > 0 ? `Self-checks on ${selfCheckTopics} topics` : "Self-checks coming"}</Chip>
                 </>
               ) : (
                 <Chip>Topics coming</Chip>

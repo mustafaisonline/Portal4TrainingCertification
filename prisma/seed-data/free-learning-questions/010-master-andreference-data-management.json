@@ -2,7 +2,7 @@
   "topic": "master-andreference-data-management",
   "questions": [
     {
-      "stem": "What does the chapter say Master Data refers to?",
+      "stem": "What does Master Data refer to?",
       "options": [
         "Temporary files created during a backup",
         "The core datasets essential for business operations that act as the foundation for all other data",
@@ -50,7 +50,7 @@
       "explanation": "MDM gives each customer one unique identifier across all systems, so decision makers do not count one person as several customers."
     },
     {
-      "stem": "How does the chapter characterise Reference Data compared with Master Data?",
+      "stem": "How is Reference Data characterised compared with Master Data?",
       "options": [
         "Much larger in volume and changing constantly",
         "Very close to Master Data but small in volume, with little change expected",
@@ -74,7 +74,7 @@
       "explanation": "Codes and descriptions for entities are Reference Data; the customer is Master Data."
     },
     {
-      "stem": "According to the chapter's chain of consequences, what happens if Master and Reference Data are not in place?",
+      "stem": "In the chain of consequences for Master and Reference Data management, what happens if they are not in place?",
       "options": [
         "Metadata becomes enormous, lineage is lost, data becomes a swamp, and analytics needs far more processing power",
         "Nothing changes",

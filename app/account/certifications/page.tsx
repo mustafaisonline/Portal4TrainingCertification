@@ -205,7 +205,7 @@ async function CertificateSection({ certificate, userId, today }: { certificate:
           <h3 className="text-h1 mb-2">Share your review to view and download your certificate</h3>
           <p className="text-body-sm mb-5 max-w-[60ch] text-[var(--color-ink-quiet)]">
             Your certificate has been issued and anyone can verify it by its ID. The document itself opens here once you have shared
-            your experience of the programme — a private review counts too.
+            your experience of the training — a private review counts too.
           </p>
           <Button href={`/reviews#registration-${certificate.registrationId}`} data-testid="certificate-gate-review-link">
             Share your review
@@ -306,7 +306,7 @@ export default async function CertificatePage({ searchParams }: { searchParams: 
           <Card variant="panel" className="p-6 sm:p-8">
             <h2 className="text-h1 mb-3">How it works</h2>
             <ol className="text-body-sm flex list-decimal flex-col gap-2 pl-5 text-[var(--color-ink-quiet)]">
-              <li>When you complete the programme you receive a Certificate of Completion with a unique ID and its own web address.</li>
+              <li>When you complete a training you receive a Certificate of Completion with a unique ID and its own web address.</li>
               <li>Anyone can check it on the public verification page and see whether it is active.</li>
             </ol>
             <p className="text-body-sm mt-4 text-[var(--color-ink-faint)]">{NOT_EARNED}</p>

@@ -38,7 +38,7 @@
       "explanation": "Consistency means standardised formats and structures, which make integration and comparison easy."
     },
     {
-      "stem": "Stock market data updated in real time is the chapter's example of which quality?",
+      "stem": "Stock market data updated in real time is an example of which quality of good data?",
       "options": [
         "Reliability",
         "Timeliness",
@@ -74,7 +74,7 @@
       "explanation": "Validity is adherence to predefined rules and standards."
     },
     {
-      "stem": "What does bad data's \"inconsistency\" mean, according to the chapter?",
+      "stem": "What does \"inconsistency\" mean as a quality of bad data?",
       "options": [
         "The data is too recent",
         "Variations in formatting, units or structure that complicate integration and analysis",
@@ -98,7 +98,7 @@
       "explanation": "Irrelevance is including unnecessary or unrelated information that does not serve the intended purpose."
     },
     {
-      "stem": "Which of these is an example of INACCESSIBLE data given in the chapter?",
+      "stem": "Which of these is an example of INACCESSIBLE data?",
       "options": [
         "Invalid email addresses",
         "Outdated product information on a website",
@@ -110,7 +110,7 @@
       "explanation": "Inaccessible employee records impede HR processes because the information cannot be retrieved promptly."
     },
     {
-      "stem": "According to the chapter's summary, what is the impact of bad data?",
+      "stem": "In summary, what is the impact of bad data on an organisation?",
       "options": [
         "Faster decisions",
         "Incorrect conclusions, inefficiencies and unreliable outcomes",

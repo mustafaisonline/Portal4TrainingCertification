@@ -19,7 +19,7 @@ import { Chip } from "@/shared/ui/Chip";
  */
 export const metadata: Metadata = {
   title: "FAQ",
-  description: "Answers about the programme, registering and paying, the certificate, and your account.",
+  description: "Answers about the trainings, registering and paying, the certificate, and your account.",
 };
 
 export default async function FaqPage() {

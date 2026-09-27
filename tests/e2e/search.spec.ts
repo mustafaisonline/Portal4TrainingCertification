@@ -39,10 +39,11 @@ async function expectNoAxeViolations(page: Page) {
   expect(results.violations, JSON.stringify(results.violations, null, 2)).toEqual([]);
 }
 
-test("the header has exactly the five items and a search bar; the retired routes redirect", async ({ page }) => {
+test("the header has the four items beside the logo (which is Home) and a search bar; the retired routes redirect", async ({ page }) => {
   await page.goto("/");
   const nav = page.getByRole("navigation", { name: "Primary", exact: true });
-  expect(await nav.getByRole("link").allTextContents()).toEqual(["Home", "Trainings & HRD Corp", "Free Training & Certification", "Trainers", "Reviews"]);
+  // UX review 2026-09-27 D1: "Home" is the logo on the desktop bar; the phone menu keeps the item.
+  expect(await nav.getByRole("link").allTextContents()).toEqual(["Trainings & HRD Corp", "Free Training & Certification", "Trainers", "Reviews"]);
   const search = page.getByTestId("site-search").getByRole("searchbox");
   await expect(search).toHaveAttribute("placeholder", "Search Candidates or Training");
   await search.fill("vibe");

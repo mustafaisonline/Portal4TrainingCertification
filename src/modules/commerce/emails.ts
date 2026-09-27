@@ -35,7 +35,7 @@ export function registrationConfirmedMessage(input: {
       `${offeringLine(input.offering)}\n` +
       `Order ${input.orderId.slice(0, 8).toUpperCase()} · Paid ${formatMoney(input.amountMinor, input.currency)}\n\n` +
       `Joining details are sent before the first session. Your registration, order and receipt are in your account:\n${input.accountUrl}\n\n` +
-      `Need a different date? You can transfer once, free, before the programme starts. The refund and cancellation policy applies otherwise.` +
+      `Need a different date? You can transfer once, free, before the training starts. The refund and cancellation policy applies otherwise.` +
       SIGN_OFF,
   };
 }

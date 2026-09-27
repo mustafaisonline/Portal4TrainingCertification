@@ -10,6 +10,7 @@
  */
 
 import Link from "next/link";
+import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { Chip } from "@/shared/ui/Chip";
 import {
@@ -99,9 +100,16 @@ export function CourseCard({
    * related rail is unchanged.
    */
   showAllRegions = false,
+  /**
+   * UX review 2026-09-27 U4: the region shown first and open; the other two
+   * fold under "Other regions". The hub passes the signed-in profile's region,
+   * or Malaysia for a visitor.
+   */
+  leadCard = "malaysia",
 }: {
   course: CourseCardProgramme;
   showAllRegions?: boolean;
+  leadCard?: PriceCard;
 }) {
   const pricing = entryPricing(course);
   const homeRegion = priceRegionMeta(HOME_REGION);
@@ -170,7 +178,7 @@ export function CourseCard({
         <div className="mb-5 border-t border-[var(--color-line)] pt-4">
           <p className="text-label mb-3">Investment</p>
           <ul className="flex flex-col gap-3" data-testid="card-prices">
-            {LISTING_CARD_ORDER.map((card) => {
+            {[leadCard, ...LISTING_CARD_ORDER.filter((c) => c !== leadCard)].map((card, cardIndex) => {
               const meta = priceCardMeta(card);
               const figure = pricing[card];
               if (!figure) return null;
@@ -179,8 +187,8 @@ export function CourseCard({
               const rows = course.prices ? pricesForCard(course.prices, card) : [];
               const multi = rows.length > 1;
               const notes = rows.flatMap((p) => (p.note ? [p.note] : [])).filter((n, i, all) => all.indexOf(n) === i);
-              return (
-                <li key={card} data-testid={`card-price-${card}`}>
+              const body = (
+                <>
                   <span className="mb-1 flex flex-wrap items-center gap-2">
                     <span className="text-body-sm font-medium text-[var(--color-ink)]">{meta.label}</span>
                     {/* When a card lists two fee rows (Malaysia's "Via HRD
@@ -227,18 +235,42 @@ export function CourseCard({
                   {notes.map((note) => (
                     <span key={note} className="text-body-sm mt-1 block leading-snug text-[var(--color-ink-quiet)]">{note}</span>
                   ))}
+                </>
+              );
+              if (cardIndex === 0) {
+                return (
+                  <li key={card} data-testid={`card-price-${card}`}>
+                    {body}
+                  </li>
+                );
+              }
+              return (
+                <li key={card} data-testid={`card-price-${card}`}>
+                  <details className="group">
+                    <summary className="text-body-sm cursor-pointer list-none font-medium text-[var(--color-primary)] underline-offset-4 hover:underline [&::-webkit-details-marker]:hidden" data-testid={`card-price-toggle-${card}`}>
+                      <span className="group-open:hidden">Price for {meta.label} →</span>
+                      <span className="hidden group-open:inline">Price for {meta.label} ↓</span>
+                    </summary>
+                    <div className="mt-2">{body}</div>
+                  </details>
                 </li>
               );
             })}
           </ul>
         </div>
       )}
-      <Link
-        href={`/programs/${course.slug}`}
-        className="text-body-sm mt-auto inline-block py-2 font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
-      >
-        Register or check course details →
-      </Link>
+      <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-2 pt-2">
+        <Button href={`/schedule?training=${course.slug}`} data-testid="card-register">
+          See dates and register
+        </Button>
+        <Link
+          href={`/programs/${course.slug}`}
+          className="text-body-sm py-2 font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
+          data-testid="card-details"
+        >
+          About this training →
+        </Link>
+      </div>
     </Card>
   );
 }

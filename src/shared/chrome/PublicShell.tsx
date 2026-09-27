@@ -74,9 +74,12 @@ export function PublicShell({
           </Link>
           <nav
             aria-label="Primary"
-            className="hidden items-center gap-7 whitespace-nowrap text-body-sm text-[var(--color-ink-quiet)] xl:flex"
+            className="hidden items-center gap-5 whitespace-nowrap text-body-sm text-[var(--color-ink-quiet)] lg:flex xl:gap-7"
           >
-            {primaryNav.map((item) => {
+            {/* UX review 2026-09-27 D1: the logo is Home, so the desktop bar
+                skips the "Home" item (the phone menu keeps it) and shows from
+                1024 px — at 1280 px the five items collided with the wordmark. */}
+            {primaryNav.filter((item) => item.href !== "/").map((item) => {
               const active = isActive(pathname, item.href);
               return (
                 <Link
@@ -106,7 +109,7 @@ export function PublicShell({
               placeholder={siteSearch.placeholder}
               autoComplete="off"
               maxLength={200}
-              className="text-body-sm w-56 rounded-[var(--radius-plate)] border border-[var(--color-line-strong)] bg-[var(--color-ground)] px-3 py-1.5 text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] xl:w-64"
+              className="text-body-sm w-44 xl:w-56 rounded-[var(--radius-plate)] border border-[var(--color-line-strong)] bg-[var(--color-ground)] px-3 py-1.5 text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] xl:w-64"
             />
           </form>
           <div className="flex shrink-0 items-center gap-3">
@@ -119,7 +122,7 @@ export function PublicShell({
               aria-expanded={menuOpen}
               aria-controls="mobile-nav"
               aria-label={menuOpen ? "Close menu" : "Open menu"}
-              className="grid h-10 w-10 shrink-0 place-items-center rounded-[var(--radius-plate)] border border-[var(--color-line-strong)] text-[var(--color-ink)] xl:hidden"
+              className="grid h-10 w-10 shrink-0 place-items-center rounded-[var(--radius-plate)] border border-[var(--color-line-strong)] text-[var(--color-ink)] lg:hidden"
             >
               {menuOpen ? <IconClose /> : <IconMenu />}
             </button>
@@ -129,7 +132,7 @@ export function PublicShell({
             the panel on click, in case client-side navigation doesn't unmount
             this component (e.g. same-page anchors). */}
         {menuOpen && (
-          <div id="mobile-nav" className="border-t border-[var(--color-line)] px-4 pb-4 pt-2 sm:px-6 xl:hidden">
+          <div id="mobile-nav" className="border-t border-[var(--color-line)] px-4 pb-4 pt-2 sm:px-6 lg:hidden">
             <form role="search" action={siteSearch.action} method="get" className="mb-2 flex items-center gap-2 lg:hidden" data-testid="site-search-mobile">
               <label htmlFor="site-search-q-mobile" className="sr-only">
                 {siteSearch.label}
@@ -223,9 +226,9 @@ export function PublicShell({
               </Link>
             </p>
             <p className="text-[var(--color-ink-faint)]">
-              Credential verification
+              Certificate verification
               <br />
-              <span className="text-mono text-[0.7rem]">available once the first credential is issued</span>
+              <span className="text-mono text-[0.7rem]">available once the first certificate is issued</span>
             </p>
           </div>
         </div>

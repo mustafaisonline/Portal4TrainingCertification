@@ -61,7 +61,7 @@ export function RegistrationActions({
               Transfer to another date
             </label>
             {targets.length === 0 ? (
-              <p className="text-body-sm text-[var(--color-ink-quiet)]">No other date of this programme is open right now.</p>
+              <p className="text-body-sm text-[var(--color-ink-quiet)]">No other date of this training is open right now.</p>
             ) : (
               <select id={selectId} name="targetOfferingId" required defaultValue="" className={inputClass}>
                 <option value="" disabled>

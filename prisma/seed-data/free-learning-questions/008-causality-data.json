@@ -14,7 +14,7 @@
       "explanation": "Causality data helps establish how changes in one variable influence another — cause and effect."
     },
     {
-      "stem": "Which statement does the chapter stress about correlation?",
+      "stem": "Which statement about correlation and causality is stressed in causality data?",
       "options": [
         "Correlation always proves causation",
         "Correlation does not imply causation",
@@ -38,7 +38,7 @@
       "explanation": "Hot weather leads people to buy both; neither purchase causes the other."
     },
     {
-      "stem": "Which method is best suited to establishing causality, according to the chapter?",
+      "stem": "Which method is best suited to establishing causality?",
       "options": [
         "Observational studies alone",
         "Controlled experiments that manipulate one variable while keeping others constant",
@@ -86,7 +86,7 @@
       "explanation": "Causality requires that the cause precedes the effect in time."
     },
     {
-      "stem": "Which of these is a statistical technique the chapter names for inferring causal relationships?",
+      "stem": "Which of these is a statistical technique for inferring causal relationships?",
       "options": [
         "Propensity score matching",
         "Alphabetical sorting",
@@ -98,7 +98,7 @@
       "explanation": "Regression analysis, propensity score matching and instrumental variable analysis are named."
     },
     {
-      "stem": "In the studying and exam example, what alternative explanation does the chapter offer for the correlation?",
+      "stem": "In the studying-and-exam-scores example of causality data, what alternative explanation is offered for the correlation?",
       "options": [
         "Exams are getting easier",
         "Naturally diligent students both study more and perform better",
@@ -110,7 +110,7 @@
       "explanation": "Diligence could drive both behaviours; a controlled experiment would be needed to establish causation."
     },
     {
-      "stem": "In which fields does the chapter say causality data is particularly valuable?",
+      "stem": "In which fields is causality data particularly valuable?",
       "options": [
         "Healthcare, economics, social sciences and marketing",
         "Only astronomy",

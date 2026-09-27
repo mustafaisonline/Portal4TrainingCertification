@@ -30,6 +30,12 @@ describe("validateQuestion", () => {
     expect(() => validateQuestion(raw, 3)).toThrowError(/question 4:/);
   });
 
+  it('refuses a stem that leans on "the chapter" — a question is read in a mixed 50-question check (UX review U6)', () => {
+    expect(() => validateQuestion({ ...good, stem: "What does the chapter say metadata is?" }, 0)).toThrowError(/name its subject/);
+    expect(() => validateQuestion({ ...good, stem: "In this chapter's example, which column is the key?" }, 0)).toThrowError(QuestionValidationError);
+    expect(validateQuestion({ ...good, stem: "What is metadata, as I Am Datapedia! describes it?" }, 0).stem).toContain("metadata");
+  });
+
   it("treats a blank explanation as none", () => {
     expect(validateQuestion({ ...good, explanation: "   " }, 0).explanation).toBeNull();
     expect(validateQuestion({ ...good, explanation: undefined }, 0).explanation).toBeNull();

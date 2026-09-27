@@ -2,7 +2,7 @@
   "topic": "inference-data",
   "questions": [
     {
-      "stem": "What is inference data, according to the chapter?",
+      "stem": "What is inference data?",
       "options": [
         "Data produced by the machine-learning process of drawing conclusions, making predictions or generalising from a features dataset",
         "A list of database tables",
@@ -74,7 +74,7 @@
       "explanation": "The model generalises what it learned from the training data to make predictions on new instances."
     },
     {
-      "stem": "Which is a reason the chapter gives for using a sample rather than everyone?",
+      "stem": "Which is a reason for using a sample rather than surveying everyone?",
       "options": [
         "Asking every single person could be too much work",
         "Samples are always more accurate",
@@ -110,7 +110,7 @@
       "explanation": "Conclusions and predictions (inference data) come from the analysis of the features dataset."
     },
     {
-      "stem": "Which statement best matches the chapter's view of inference?",
+      "stem": "Which statement best describes inference from data?",
       "options": [
         "It is a crucial step in extracting meaningful insights from data",
         "It is an optional final formatting step",

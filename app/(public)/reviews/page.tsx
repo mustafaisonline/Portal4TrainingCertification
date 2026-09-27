@@ -44,7 +44,7 @@ function Outcome({ kind, review }: { kind: "submitted" | "exists" | "edited"; re
       ? `Thank you for sharing your experience! ${tail}`
       : kind === "edited"
         ? `Your changes have been saved. ${review.consentPublic ? "Your review will be read again before it is published." : "It will stay private."}`
-        : `You have already shared a review for this programme — it is listed below. ${tail}`;
+        : `You have already shared a review for this training — it is listed below. ${tail}`;
   return (
     <Card variant="feature" className="p-5! sm:p-6!">
       <p role="status" className="text-body-lg font-medium text-[var(--color-ink)]" data-testid="review-outcome">
@@ -182,7 +182,7 @@ export default async function ReviewsPage({ searchParams }: { searchParams: Prom
               </h2>
               {signedIn.reviewable.length === 0 ? (
                 <p className="text-body-sm text-[var(--color-ink-quiet)]" data-testid="nothing-to-review">
-                  A review can be shared once a programme you registered for has ended.
+                  A review can be shared once a training you registered for has ended.
                 </p>
               ) : (
                 <ul className="flex flex-col gap-4">

@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { listPublishedProgrammesWithPrices } from "@/modules/catalogue/programmes/repository";
 import { formatMoney } from "@/modules/catalogue/programmes/types";
+import { regionForCountry } from "@/modules/commerce/pricing";
 import { enabledSupportSetting } from "@/modules/commerce/support.repository";
+import { getProfile } from "@/modules/identity/profile.repository";
+import { getCurrentUser } from "@/modules/identity/session";
 import { CourseCard } from "@/shared/marketing/CourseCard";
 import { HrdCorpSections } from "@/shared/marketing/HrdCorpSections";
 import { Button } from "@/shared/ui/Button";
@@ -29,7 +32,10 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function TrainingsPage() {
-  const [programmes, support] = await Promise.all([listPublishedProgrammesWithPrices(), enabledSupportSetting()]);
+  const [programmes, support, user] = await Promise.all([listPublishedProgrammesWithPrices(), enabledSupportSetting(), getCurrentUser()]);
+  // UX review 2026-09-27 U4: lead each card with the visitor's own fee region.
+  const profile = user ? await getProfile(user.id) : null;
+  const leadCard = profile?.countryCode ? regionForCountry(profile.countryCode) : "malaysia";
 
   return (
     <>
@@ -69,7 +75,7 @@ export default async function TrainingsPage() {
           >
             {programmes.map((p) => (
               <li key={p.slug} className="min-w-0">
-                <CourseCard course={p} showAllRegions />
+                <CourseCard course={p} showAllRegions leadCard={leadCard} />
               </li>
             ))}
           </ol>

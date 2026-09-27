@@ -99,14 +99,25 @@ test("a finished result shows both gate conditions; a Free Learning review satis
   await signInViaUi(page, email);
   const { withTransaction } = await import("../../src/db/prisma");
   const { findUserByEmail } = await import("../../src/modules/identity/users.repository");
-  const { startAttempt, finishAttempt } = await import("../../src/modules/free-learning/knowledge-check.repository");
+  const { startAttempt, finishAttempt, saveAnswers } = await import("../../src/modules/free-learning/knowledge-check.repository");
   const user = (await findUserByEmail(email))!;
+  // UX review 2026-09-27 U5: the document is offered after a pass only — a fail shows the retake hint and no gate.
+  const failed = await withTransaction((tx) => startAttempt(tx, { userId: user.id, size: 50 }));
+  await withTransaction((tx) => finishAttempt(tx, { attemptId: failed.id, userId: user.id }));
+  await page.goto(`/free-learning/knowledge-check/${failed.id}/result`);
+  await expect(page.getByTestId("result-title")).toContainText("Not passed — 0 of 50");
+  await expect(page.getByTestId("result-document")).toHaveCount(0);
+  await expect(page.getByTestId("result-retake-hint")).toContainText("offered once you pass");
+  await page.goto(`/free-learning/knowledge-check/${failed.id}/document`);
+  await expect(page).toHaveURL(new RegExp(`/free-learning/knowledge-check/${failed.id}/result$`));
+
   const attempt = await withTransaction((tx) => startAttempt(tx, { userId: user.id, size: 50 }));
   attemptId = attempt.id;
+  await withTransaction((tx) => saveAnswers(tx, { attemptId, userId: user.id, answers: Object.fromEntries(attempt.questionIds.map((id) => [id, 1])) }));
   await withTransaction((tx) => finishAttempt(tx, { attemptId, userId: user.id }));
 
   await page.goto(`/free-learning/knowledge-check/${attemptId}/result`);
-  await expect(page.getByTestId("result-title")).toContainText("Not passed — 0 of 50");
+  await expect(page.getByTestId("result-title")).toContainText("Passed — 50 of 50");
   await expect(page.getByTestId("result-gate-review")).toHaveAttribute("data-satisfied", "no");
   await expect(page.getByTestId("result-gate-fee")).toHaveAttribute("data-fee", "required");
   await expect(page.getByTestId("result-gate-fee")).toContainText("USD 10");

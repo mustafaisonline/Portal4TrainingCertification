@@ -66,6 +66,6 @@ export function describeRefundTiers(): { when: string; outcome: string }[] {
     { when: "Cancel 14 or more days before the start date", outcome: "100 % refund, less the payment-processing fee" },
     { when: "Cancel 7 to 13 days before the start date", outcome: "50 % refund, less the payment-processing fee" },
     { when: "Cancel fewer than 7 days before, or after the start date", outcome: "No refund" },
-    { when: "Transfer to another date of the same programme, before it starts", outcome: "Free, once" },
+    { when: "Transfer to another date of the same training, before it starts", outcome: "Free, once" },
   ];
 }

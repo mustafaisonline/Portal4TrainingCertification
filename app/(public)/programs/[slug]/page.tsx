@@ -139,7 +139,7 @@ export default async function CourseDetailPage({
           </Link>
           <div className="mb-5 flex flex-wrap items-center gap-2">
             <Chip tone="primary">{levelLabel(course.level)}</Chip>
-            {course.flagship && <Chip>Flagship course</Chip>}
+            {course.flagship && <Chip>Flagship training</Chip>}
           </div>
           <h1 className="text-display-lg mb-4 max-w-[820px]">
             {course.title}
@@ -160,15 +160,12 @@ export default async function CourseDetailPage({
                 for it; otherwise it stays the enquiry. M13 (founder, 2026-09-27):
                 the page no longer lists dates itself — both buttons lead to
                 the schedule filtered to THIS training, where Register lives. */}
-            {openDates > 0 ? (
-              <Button href={datesHref} data-testid="hero-register">
-                Register for a date
-              </Button>
-            ) : (
-              <Button href={enquiryHref}>Register your interest</Button>
-            )}
-            <Button variant="secondary" href={datesHref} data-testid="hero-dates">
-              See upcoming dates
+            {/* UX review 2026-09-27 F4: ONE schedule button. With an open date it
+                is the primary action; with none, the enquiry leads and the
+                schedule button stays as the secondary. */}
+            {openDates === 0 && <Button href={enquiryHref}>Register your interest</Button>}
+            <Button variant={openDates > 0 ? "primary" : "secondary"} href={datesHref} data-testid="hero-dates">
+              See dates and register
             </Button>
             <Button variant="secondary" href="#investment">
               See the investment
@@ -229,7 +226,7 @@ export default async function CourseDetailPage({
             )}
           </div>
           <Card variant="panel" className="h-fit">
-            <p className="text-label mb-4">Course highlights</p>
+            <p className="text-label mb-4">Training highlights</p>
             <ul className="flex flex-col gap-2.5">
               {content.highlights.map((h) => (
                 <li
@@ -366,7 +363,7 @@ export default async function CourseDetailPage({
       >
         <div className="mx-auto max-w-[1280px] scroll-mt-24 px-6 py-16">
           <p className="text-label mb-3 text-[var(--color-primary)]">
-            Course content
+            Training content
           </p>
           <h2 className="text-display mb-4">Curriculum</h2>
           <p className="text-body-sm mb-10 text-[var(--color-ink-faint)]">
@@ -656,13 +653,13 @@ export default async function CourseDetailPage({
         <Card variant="plate" className="max-w-[760px] p-6">
           <p className="text-label mb-2">Certification</p>
           <p className="text-body-sm text-[var(--color-ink-quiet)]">
-            This course awards a{" "}
+            This training awards a{" "}
             <span className="text-[var(--color-ink)]">
               {course.certificateLabel.toLowerCase()}
             </span>
             . That is deliberately distinct from the Academy credential, which
             is earned through assessed applied work judged by a qualified
-            assessor — taking part in a course is part of that pathway, and
+            assessor — taking part in a training is part of that pathway, and
             attendance alone is never sufficient.{" "}
             <Link
               href="/certifications"
@@ -754,7 +751,7 @@ export default async function CourseDetailPage({
         />
         <div className="relative mx-auto max-w-[1280px] px-6 py-16">
           <h2 className="text-display mb-4 max-w-[620px]">
-            Bring this course to your team
+            Bring this training to your team
           </h2>
           <p className="text-body-lg mb-9 max-w-[620px] text-[var(--color-ink-quiet)]">
             {offerings.length > 0

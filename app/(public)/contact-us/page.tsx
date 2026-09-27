@@ -34,15 +34,15 @@ import { EnquiryForm } from "./EnquiryForm";
 export const metadata: Metadata = {
   title: "Contact Us",
   description:
-    "Talk to us about courses for yourself, capability development for your team, or teaching with the Academy.",
+    "Talk to us about a training for yourself, capability development for your team, or teaching with the Academy.",
 };
 
 const routes = [
   {
     label: "For individuals",
-    title: "A course for yourself",
-    body: "Tell us where you are and what you need to be able to do. If a course fits, we will say which one — and if none does, we will say that too.",
-    cta: "Explore courses",
+    title: "A training for yourself",
+    body: "Tell us where you are and what you need to be able to do. If a training fits, we will say which one — and if none does, we will say that too.",
+    cta: "Explore trainings",
     href: "/programs",
   },
   {
@@ -97,7 +97,7 @@ export default async function ContactPage({
           </h1>
           <p className="text-body-lg max-w-[640px] text-[var(--color-ink-quiet)]">
             Whether that is your own capability, your team&rsquo;s, or a
-            course you want delivered at your location — start here and a
+            training you want delivered at your location — start here and a
             practitioner will answer, not a sales sequence.
           </p>
         </div>

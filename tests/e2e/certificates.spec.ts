@@ -137,11 +137,11 @@ test("a guest searches: empty hint, too short, unknown ID, listed holder by name
   await expectNoAxeViolations(page);
 
   // Too short, through the form.
-  await page.getByLabel("Certificate ID or holder's name").fill("ab");
+  await page.getByLabel("Certificate ID, Knowledge Check ID or holder's name").fill("ab");
   await page.getByTestId("verify-submit").click();
   await expect(page).toHaveURL(/\/verify\?q=ab$/);
   await expect(page.getByTestId("verify-too-short")).toHaveText("Enter at least 3 characters of a name, or a full certificate ID.");
-  await expect(page.getByLabel("Certificate ID or holder's name")).toHaveValue("ab");
+  await expect(page.getByLabel("Certificate ID, Knowledge Check ID or holder's name")).toHaveValue("ab");
 
   // Unknown ID → neutral not-found.
   await page.goto(`/verify?q=${UNKNOWN_ID}`);

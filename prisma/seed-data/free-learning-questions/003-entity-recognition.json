@@ -14,7 +14,7 @@
       "explanation": "Named Entity Recognition identifies and extracts entities — people, organisations, locations, dates, amounts and domain terms — from unstructured text."
     },
     {
-      "stem": "By what other names does the chapter say Entity Recognition is known?",
+      "stem": "By what other names is Entity Recognition also known?",
       "options": [
         "Data cleansing and data masking",
         "Entity identification and entity extraction",
@@ -62,7 +62,7 @@
       "explanation": "Exact-match processors compare text against known dictionaries or master data lists; hybrids combine statistical learning with rules."
     },
     {
-      "stem": "What is the first step in any data model, according to the chapter?",
+      "stem": "What is the first step in building any data model?",
       "options": [
         "Choosing a database vendor",
         "Entity identification",
@@ -74,7 +74,7 @@
       "explanation": "The first step in any data model is entity identification; Entity Recognition helps dig entities out of unstructured datasets."
     },
     {
-      "stem": "How does Entity Recognition support data governance, as the chapter describes?",
+      "stem": "How does Entity Recognition support data governance?",
       "options": [
         "By deleting sensitive data automatically",
         "By enriching metadata and improving data lineage tracking back to unstructured origins",
@@ -86,7 +86,7 @@
       "explanation": "Consistently identified entities can be tagged and catalogued, improving lineage tracking even to unstructured origins."
     },
     {
-      "stem": "Which is an example of a more advanced Entity Recognition capability named in the chapter?",
+      "stem": "Which is an example of a more advanced Entity Recognition capability?",
       "options": [
         "Sorting rows alphabetically",
         "Distinguishing between two different people who share the same name",
@@ -110,7 +110,7 @@
       "explanation": "Mr. Ahmad is a Teacher (Person), Monday a Date, and Math a Subject — which then become columns in a simple school table."
     },
     {
-      "stem": "How does the chapter describe Entity Recognition from a data modeller's point of view?",
+      "stem": "From a data modeller's point of view, what is Entity Recognition?",
       "options": [
         "A replacement for stakeholder interviews",
         "A bridge between unstructured chaos and structured clarity",

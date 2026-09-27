@@ -34,6 +34,7 @@ export const COMMERCE_MESSAGES: Record<CommerceErrorCode, string> = {
   unlock_unavailable: "The result-document unlock is not available at the moment.",
   unlock_order_pending: "You already started this unlock payment. Finish it in the Stripe tab, or try again in 30 minutes when that hold expires.",
   unlock_not_finished: "Finish the Knowledge Check first — the unlock applies to a finished result.",
+  unlock_not_passed: "The result document is offered once you pass — retake the Knowledge Check as often as you like.",
   unlock_already_paid: "This result document is already unlocked.",
   unlock_fee_exempt: "No fee applies to you — the result document only needs your review of Free Learning.",
 };

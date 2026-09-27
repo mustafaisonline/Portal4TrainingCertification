@@ -119,7 +119,13 @@ test("a 50-question check: ten a page, answers kept across pages, finish → sco
   await expect(page.getByTestId("attempt-title")).toHaveText("Questions 41–50 of 50");
   const last = page.getByTestId("attempt-question");
   for (let i = 0; i < 5; i += 1) await last.nth(i).getByRole("radio").nth(0).check();
+  // UX review 2026-09-27 D2: five questions are unanswered, so Finish asks first.
   await page.getByTestId("attempt-finish").click();
+  await expect(page.getByTestId("attempt-finish-confirm")).toContainText("5 of 50 questions are unanswered");
+  await page.getByTestId("attempt-keep-answering").click();
+  await expect(page.getByTestId("attempt-finish-confirm")).toHaveCount(0);
+  await page.getByTestId("attempt-finish").click();
+  await page.getByTestId("attempt-finish-anyway").click();
 
   await expect(page).toHaveURL(/\/free-learning\/knowledge-check\/[0-9a-f-]{36}\/result$/);
   await expect(page.getByTestId("result-title")).toHaveText("Passed — 45 of 50 (90 %)");

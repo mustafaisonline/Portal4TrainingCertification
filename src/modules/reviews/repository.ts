@@ -22,6 +22,9 @@ import { isPubliclyVisible, publicWhere } from "./visibility";
  * and returns public-safe fields — no email, no user id.
  */
 
+/** UX review 2026-09-27 D4: the registration-free review borrows the flagship's programme row; it is shown under this title, not the training's. */
+export const FREE_LEARNING_REVIEW_TITLE = "Free Learning & the free diagnostic";
+
 export class ReviewConsentError extends Error {
   constructor(reviewId: string) {
     super(`Review ${reviewId} cannot be restored: the learner did not consent to public display.`);
@@ -86,7 +89,7 @@ function toRecord(r: RecordRow): ReviewRecord {
     userId: r.userId,
     registrationId: r.registrationId,
     programmeId: r.programmeId,
-    programmeTitle: r.programme.title,
+    programmeTitle: r.kind === "diagnostic" ? FREE_LEARNING_REVIEW_TITLE : r.programme.title,
     offeringId: r.offeringId,
     offeringStartsOn: r.offering?.startsOn ?? null,
     offeringEndsOn: r.offering?.endsOn ?? null,
@@ -301,6 +304,7 @@ export async function listPublicReviews(opts: { page?: number; pageSize?: number
       body: true,
       submittedAt: true,
       consentPhoto: true,
+      kind: true,
       programme: { select: { title: true } },
       user: { select: { profile: { select: { photoMime: true } } } },
     },
@@ -308,7 +312,7 @@ export async function listPublicReviews(opts: { page?: number; pageSize?: number
   const items = rows.slice(0, pageSize).map((r) => ({
     id: r.id,
     displayNameSnapshot: r.displayNameSnapshot,
-    programmeTitle: r.programme.title,
+    programmeTitle: r.kind === "diagnostic" ? FREE_LEARNING_REVIEW_TITLE : r.programme.title,
     rating: r.rating,
     body: r.body,
     submittedAt: r.submittedAt,

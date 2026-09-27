@@ -71,7 +71,7 @@ export async function getOwnReviews(userId: string): Promise<ReviewRecord[]> {
 export type RegistrationReviewStatus = "not_yet" | "required" | "awaiting_review" | "published" | "submitted";
 
 export const REGISTRATION_REVIEW_STATUS_LABEL: Record<RegistrationReviewStatus, string> = {
-  not_yet: "After the programme ends",
+  not_yet: "After the training ends",
   required: "Required",
   awaiting_review: "Awaiting review",
   published: "Published",

@@ -24,7 +24,7 @@ export default async function DocumentPage({ params }: { params: Promise<{ attem
   const attempt = await getAttemptForUser(attemptId, user.id);
   if (!attempt) notFound();
   if (!attempt.finishedAt || !attempt.publicId) redirect(`/free-learning/knowledge-check/${attempt.id}`);
-  const status = await unlockStatusForAttempt(attempt);
+  const status = await unlockStatusForAttempt(attempt); // false for a fail (U5)
   if (!status.unlocked) redirect(`/free-learning/knowledge-check/${attempt.id}/result`);
   let base = "";
   try {

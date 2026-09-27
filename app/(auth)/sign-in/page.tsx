@@ -36,7 +36,7 @@ export default async function SignInPage({
     <AuthScreen
       eyebrow="Your account"
       title="Sign in"
-      lead="Welcome back. Sign in to see your programmes, orders and profile."
+      lead="Welcome back. Sign in to see your trainings, orders and profile."
       footer={
         <>
           New to the Academy?{" "}

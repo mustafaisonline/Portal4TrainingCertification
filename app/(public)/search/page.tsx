@@ -54,7 +54,7 @@ function TrainingResult({ p }: { p: ProgrammeSummary }) {
           {p.certificateLabel ? ` · ${p.certificateLabel}` : ""}
         </p>
         <div className="mt-4 flex flex-wrap gap-3">
-          <Button href={`/programs/${p.slug}`}>Register or check course details</Button>
+          <Button href={`/programs/${p.slug}`}>See dates and register</Button>
           <Button variant="secondary" href={`/schedule?training=${p.slug}`}>
             See dates
           </Button>

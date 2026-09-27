@@ -2,7 +2,7 @@
   "topic": "primary-and-foreign-keys",
   "questions": [
     {
-      "stem": "What are the short names the chapter gives for Primary Key and Foreign Key?",
+      "stem": "What are the usual short names for Primary Key and Foreign Key?",
       "options": [
         "PK1 and FK1",
         "Pkey and Fkey",
@@ -14,7 +14,7 @@
       "explanation": "Primary Key is also known as Pkey and Foreign Key as Fkey."
     },
     {
-      "stem": "Why does the chapter say primary and foreign keys are so important?",
+      "stem": "Why are primary and foreign keys so important in a database?",
       "options": [
         "They make tables load faster",
         "A proper data model cannot be created without them",
@@ -50,7 +50,7 @@
       "explanation": "The Family table holds a code that refers to a row in the Birth_Location table, where the full name lives."
     },
     {
-      "stem": "In the chapter's example, which column is declared the PRIMARY key?",
+      "stem": "In the Family and Birth_Location tables example, which column is declared the PRIMARY key?",
       "options": [
         "Location_ID in the Family table",
         "ID in the Birth_Location table",

@@ -37,7 +37,7 @@ export default async function AttemptPage({ params, searchParams }: { params: Pr
           Page {page.page} of {page.pages} · {page.answered} of {attempt.size} answered so far. Your answers are saved when you move between pages;
           finish from any page.
         </p>
-        <AttemptForm attemptId={attempt.id} page={page} />
+        <AttemptForm attemptId={attempt.id} page={page} size={attempt.size} />
       </div>
     </section>
   );

@@ -32,6 +32,7 @@ export type CommerceErrorCode =
   | "unlock_unavailable"
   | "unlock_order_pending"
   | "unlock_not_finished"
+  | "unlock_not_passed"
   | "unlock_already_paid"
   | "unlock_fee_exempt";
 

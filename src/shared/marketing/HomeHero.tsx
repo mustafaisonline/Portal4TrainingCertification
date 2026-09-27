@@ -170,8 +170,8 @@ export function HomeHero({
      intent — an open policy commitment, not yet backed by terms. */
   const heroCards: { icon: ReactNode; tone: keyof typeof toneClasses; title: string; body: string; href?: string; badge?: string }[] = [
     { icon: <IconBriefcase />, tone: "blue", title: "Job Opportunities in Malaysia", body: "1–2 top candidates will be brought to Malaysia for job opportunities." },
-    { icon: <IconCheckCircle />, tone: "teal", title: "HRD Corp Accredited Trainer", body: accreditation ? `Verified — Trainer ID ${accreditation.trainerId}.` : "Trained by an HRD Corp Accredited Trainer.", href: "/hrd-corp", badge: accreditation?.badge },
-    { icon: <IconCheckCircle />, tone: "blue", title: "No Coding Experience Required", body: "Anyone with zero coding background can take this course." },
+    { icon: <IconCheckCircle />, tone: "teal", title: "HRD Corp Accredited Trainer", body: accreditation ? `Verified — Trainer ID ${accreditation.trainerId}. The Academy's own provider registration is in progress.` : "Trained by an HRD Corp Accredited Trainer.", href: "/hrd-corp", badge: accreditation?.badge },
+    { icon: <IconCheckCircle />, tone: "blue", title: "No Coding Experience Required", body: "Anyone with zero coding background can take this training." },
     { icon: <IconChat />, tone: "teal", title: "Prepare for Interviews", body: "Get ready for Data & AI Interview" },
     { icon: <IconCode />, tone: "blue", title: "Learn Vibe Coding", body: "Turn ideas into real products with AI." },
     { icon: <IconGlobe />, tone: "teal", title: "Start Freelance Right After Training", body: "Work From Anywhere" },
@@ -198,7 +198,7 @@ export function HomeHero({
             <p className="mb-4 text-xs font-bold tracking-[0.2em] text-[var(--color-cyan)]">
               PRACTICAL SKILLS FOR A BRIGHTER TOMORROW
             </p>
-            <h1 className="mb-5 text-5xl font-bold leading-[1.05] tracking-tight text-[var(--color-ink)]">
+            <h1 className="mb-5 text-4xl font-bold leading-[1.05] tracking-tight text-[var(--color-ink)] sm:text-5xl">
               Don&rsquo;t Just Learn.{" "}
               <span className="bg-gradient-to-r from-[#22d3ee] via-[#3b82f6] to-[#8b5cf6] bg-clip-text text-transparent">
                 Build a Future
@@ -215,7 +215,7 @@ export function HomeHero({
                 href={exploreHref}
                 className="inline-flex items-center gap-2 rounded-xl bg-[var(--color-action)] px-6 py-3.5 text-[15px] font-semibold text-[var(--color-action-ink)] shadow-[0_10px_28px_rgba(37,99,235,0.45)] transition-colors hover:bg-[var(--color-action-strong)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
               >
-                Explore Courses <IconArrow />
+                Explore trainings <IconArrow />
               </Link>
             </div>
             <div className="flex flex-wrap gap-x-8 gap-y-4">

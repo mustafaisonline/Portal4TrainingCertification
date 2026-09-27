@@ -100,7 +100,7 @@ export default async function HomePage() {
           The real, live diagnostic walkthrough, embedded directly here so a
           visitor can take it without navigating to /diagnostic. Rendered
           only when the question set exists. */}
-      {questions.length > 0 && <HomeDiagnostic questions={questions} />}
+      {questions.length > 0 && <HomeDiagnostic questions={questions} teaser />}
 
       {/* ============ H2 — Three pathways (light) ============
           mt-12 (48px): standardised inter-section gap between every
@@ -126,10 +126,10 @@ export default async function HomePage() {
               btn: "bg-[#2563eb] hover:bg-[#1d4ed8] shadow-[0_8px_20px_rgba(37,99,235,0.3)]",
               glyph: <GlyphRise />,
               label: "For individuals",
-              title: "Explore courses",
-              body: "Expert-led courses with stated capability outcomes, delivered live — and an assessed path to the credential.",
+              title: "Explore trainings",
+              body: "Expert-led trainings with stated capability outcomes, delivered live — each with its Certificate of Completion.",
               href: coursesHref,
-              cta: "See the courses",
+              cta: "See the trainings",
             },
             {
               accent: "#7c3aed",
@@ -209,7 +209,7 @@ export default async function HomePage() {
           {[
             {
               title: "Face-to-face",
-              body: "Instructor-led courses and workshops, delivered in person.",
+              body: "Instructor-led trainings and workshops, delivered in person.",
               shot: "A face-to-face session in progress — room, participants, practitioner teaching",
               note: "consent required",
               illustration: <FaceToFaceIllustration />,
@@ -229,7 +229,7 @@ export default async function HomePage() {
             },
             {
               title: "Private cohorts",
-              body: "Dedicated courses for one organisation, shaped to its context.",
+              body: "Dedicated trainings for one organisation, shaped to its context.",
               shot: "A single-organisation cohort working together",
               note: "client consent essential",
               illustration: <PrivateCohortIllustration />,

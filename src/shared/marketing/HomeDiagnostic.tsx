@@ -63,7 +63,10 @@ function IconArrowRight() {
   );
 }
 
-export function HomeDiagnostic({ questions }: { questions: DiagnosticQuestionRecord[] }) {
+/** `teaser` (UX review 2026-09-27 U3): the band keeps its pitch and trust card
+ *  but not the ten questions — those live on /free-learning/diagnostic, which
+ *  the button opens. The home page no longer carries a whole quiz mid-page. */
+export function HomeDiagnostic({ questions, teaser = false }: { questions: DiagnosticQuestionRecord[]; teaser?: boolean }) {
   const router = useRouter();
   const [stage, setStage] = useState<Stage>("question");
   const [index, setIndex] = useState(0);
@@ -219,7 +222,7 @@ export function HomeDiagnostic({ questions }: { questions: DiagnosticQuestionRec
       <div className="relative mx-auto max-w-[960px] px-6 py-16 sm:py-20">
         {/* Intro block (heading, description, trust points) — always
             visible; the section grows downward to reveal the form beneath. */}
-        <div className="relative mb-10 flex flex-col items-start gap-8 lg:flex-row lg:items-start lg:justify-between">
+        <div className={`relative flex flex-col items-start gap-8 lg:flex-row lg:items-start lg:justify-between ${teaser ? "" : "mb-10"}`}>
           <div className="flex max-w-[560px] items-start gap-5">
             <div className="hidden sm:block">
               <DiagnosticIllustration />
@@ -260,6 +263,8 @@ export function HomeDiagnostic({ questions }: { questions: DiagnosticQuestionRec
           <DiagnosticTrustCard className="sm:w-[320px]" />
         </div>
 
+        {!teaser && (
+          <>
         {/* Divider between the pitch and the live form. */}
         <div className="mb-8 border-t border-[var(--color-line)]" />
 
@@ -299,6 +304,8 @@ export function HomeDiagnostic({ questions }: { questions: DiagnosticQuestionRec
               cardStyle={{ borderRadius: "22px" }}
             />
           </div>
+        )}
+          </>
         )}
       </div>
     </section>

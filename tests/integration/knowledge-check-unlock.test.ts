@@ -11,7 +11,7 @@ import { createUnlockSetting, currentUnlockSetting, enabledUnlockSetting, listUn
 import { findUnlockOrderForUser, hasFreeLearningReview, startUnlockCheckout, unlockStatusForAttempt } from "@/modules/commerce/unlock.service";
 import { handleStripeWebhook } from "@/modules/commerce/webhook.service";
 import { replaceTopicFromImport } from "@/modules/free-learning/book.repository";
-import { finishAttempt, getAttemptForUser, startAttempt } from "@/modules/free-learning/knowledge-check.repository";
+import { finishAttempt, getAttemptForUser, saveAnswers, startAttempt } from "@/modules/free-learning/knowledge-check.repository";
 import { importDraftQuestions, setAllQuestionsStatus } from "@/modules/free-learning/quiz.repository";
 import { getUserForAdmin } from "@/modules/identity/admin-users.repository";
 import { buildDataExport } from "@/modules/identity/data-export";
@@ -42,6 +42,7 @@ let flagshipId = "";
 let topicId = "";
 let attemptId = "";
 let unfinishedAttemptId = "";
+let failedAttemptId = "";
 const createdOrderIds: string[] = [];
 const createdSettingIds: string[] = [];
 
@@ -95,6 +96,13 @@ function sessionCompletedEvent(order: { id: string; amountMinor: bigint; currenc
 }
 const sign = (payload: string) => stripeForSigning.webhooks.generateTestHeaderString({ payload, secret: WEBHOOK_SECRET });
 
+/** Every fixture question's correct option is A (position 1): answering all of them passes; answering none fails. */
+async function finishedAttempt(userId: string, pass: boolean) {
+  const a = await withTransaction((tx) => startAttempt(tx, { userId, size: 50 }));
+  if (pass) await withTransaction((tx) => saveAnswers(tx, { attemptId: a.id, userId, answers: Object.fromEntries(a.questionIds.map((id) => [id, 1])) }));
+  return withTransaction((tx) => finishAttempt(tx, { attemptId: a.id, userId }));
+}
+
 async function attemptOf(id: string, userId: string) {
   const a = await getAttemptForUser(id, userId);
   if (!a) throw new Error(`attempt ${id} missing`);
@@ -118,9 +126,10 @@ beforeAll(async () => {
     importDraftQuestions(tx, { topicId, replaceDrafts: false, questions: Array.from({ length: 50 }, (_, i) => ({ stem: `Unlock question ${i + 1}: choose option A?`, options: ["Alpha", "Bravo", "Charlie", "Delta", "Echo"], correct: 0, explanation: null })) }),
   );
   await withTransaction((tx) => setAllQuestionsStatus(tx, { topicId, status: "reviewed", actorUserId: admin.id }));
-  const finished = await withTransaction((tx) => startAttempt(tx, { userId: person.id, size: 50 }));
+  const finished = await finishedAttempt(person.id, true);
+  expect(finished.passed).toBe(true);
   attemptId = finished.id;
-  await withTransaction((tx) => finishAttempt(tx, { attemptId, userId: person.id }));
+  failedAttemptId = (await finishedAttempt(person.id, false)).id;
   unfinishedAttemptId = (await withTransaction((tx) => startAttempt(tx, { userId: person.id, size: 50 }))).id;
 });
 
@@ -184,8 +193,7 @@ describe("the gate", () => {
   });
 
   it("a Pakistan profile is exempt from the fee but still needs the review; the review alone then unlocks", async () => {
-    const pk = await withTransaction((tx) => startAttempt(tx, { userId: pakistani.id, size: 50 }));
-    await withTransaction((tx) => finishAttempt(tx, { attemptId: pk.id, userId: pakistani.id }));
+    const pk = await finishedAttempt(pakistani.id, true);
     const before = await unlockStatusForAttempt(await attemptOf(pk.id, pakistani.id));
     expect(before).toMatchObject({ reviewSatisfied: false, fee: "exempt", unlocked: false });
     await expect(startUnlockCheckout({ userId: pakistani.id, attemptId: pk.id, gateway: fakeGateway() })).rejects.toSatisfy((e: unknown) => e instanceof CommerceError && e.code === "unlock_fee_exempt");
@@ -198,6 +206,13 @@ describe("the gate", () => {
 });
 
 describe("the checkout", () => {
+  it("a failed attempt is never unlocked and its checkout is refused (UX review U5: the document is offered after a pass)", async () => {
+    const failed = await attemptOf(failedAttemptId, person.id);
+    expect(failed.passed).toBe(false);
+    expect((await unlockStatusForAttempt(failed)).unlocked).toBe(false);
+    await expect(startUnlockCheckout({ userId: person.id, attemptId: failedAttemptId, gateway: fakeGateway() })).rejects.toSatisfy((e: unknown) => e instanceof CommerceError && e.code === "unlock_not_passed");
+  });
+
   it("refuses without Stripe keys and no gateway, and refuses an unfinished attempt", async () => {
     const saved = process.env.STRIPE_SECRET_KEY;
     delete process.env.STRIPE_SECRET_KEY;

@@ -96,7 +96,7 @@ export default async function AboutPage() {
               a video reached its end.
             </p>
             <p className="text-body-lg text-[var(--color-ink-quiet)]">
-              We built this the other way round. Courses are taught live by
+              We built this the other way round. Trainings are taught live by
               someone who has done the work in real organisations, and the
               credential is earned through assessed applied work — judged by a
               qualified assessor against a published rubric, with written
@@ -161,7 +161,7 @@ export default async function AboutPage() {
               },
               {
                 t: "Taught by practitioners",
-                b: "Courses are delivered by people who have built these systems in real organisations — and who can be checked.",
+                b: "Trainings are delivered by people who have built these systems in real organisations — and who can be checked.",
               },
               {
                 t: "The credential is earned",
@@ -213,7 +213,7 @@ export default async function AboutPage() {
               </p>
             )}
             <p className="text-body-sm mb-8 text-[var(--color-ink-quiet)]">
-              Today he designs and delivers the courses himself. As the
+              Today he designs and delivers the trainings himself. As the
               practitioner network grows, trainers will be introduced on the
               trainers page — only ever real people, with records you can
               verify independently. There are no placeholder profiles.
@@ -236,7 +236,7 @@ export default async function AboutPage() {
 
       {/* ===== Where we are today — the honest close =====
           States what the Trainings pages (/programs)
-          actually presents today: one course, with real published pricing
+          actually presents today: one training, with real published pricing
           and an enquiry-based "Register your interest" flow — but still no
           scheduled dates. */}
       <section className="border-t border-[var(--color-line)] bg-[var(--color-ground-raised)]">
@@ -245,18 +245,18 @@ export default async function AboutPage() {
             Where we are today
           </p>
           <h2 className="text-display mb-5">
-            One course, built as a method. The first dates are being
+            One training, built as a method. The first dates are being
             prepared.
           </h2>
           <p className="text-body-lg mx-auto mb-9 max-w-[620px] text-[var(--color-ink-quiet)]">
             Pricing is published and registering interest is open, but
             public schedules are not — dates and invoicing are confirmed
             directly with you. When schedules do publish, they will be real
-            dates for this course, not a padded catalogue. Everything on
+            dates for this training, not a padded catalogue. Everything on
             this portal follows the same rule.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Button href="/programs">Explore courses</Button>
+            <Button href="/programs">Explore trainings</Button>
             <Button variant="secondary" href="/contact-us">
               Talk to us
             </Button>

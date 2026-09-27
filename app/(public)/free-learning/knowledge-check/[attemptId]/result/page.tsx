@@ -112,8 +112,11 @@ export default async function ResultPage({ params, searchParams }: { params: Pro
         </Card>
 
         {/* Phase 5: the result DOCUMENT behind two conditions — a review of
-            Free Learning, and the unlock fee (paid, or exempt for Pakistan). */}
+            Free Learning, and the unlock fee (paid, or exempt for Pakistan).
+            UX review 2026-09-27 U5: offered after a pass only; a fail keeps its
+            ID and verify page and is invited to retake. */}
         {orderBanner}
+        {attempt.passed ? (
         <Card variant="plate" className="mt-6 p-5 sm:p-6" data-testid="result-document">
           <p className="text-label mb-1 text-[var(--color-primary)]">Result document</p>
           {gate.unlocked ? (
@@ -163,9 +166,14 @@ export default async function ResultPage({ params, searchParams }: { params: Pro
             </div>
           )}
         </Card>
+        ) : (
+          <p className="text-body-sm mt-6 max-w-[70ch] text-[var(--color-ink-quiet)]" data-testid="result-retake-hint">
+            Your ID and its verification page are yours to keep. The printable result document is offered once you pass — there is no limit on retakes.
+          </p>
+        )}
 
         <div className="mt-8 flex flex-wrap gap-3">
-          <Button href="/free-learning/knowledge-check">Take another check</Button>
+          <Button href="/free-learning/knowledge-check">{attempt.passed ? "Take another check" : "Retake the Knowledge Check"}</Button>
           <Button variant="secondary" href="/free-learning/topics">
             Back to the topics
           </Button>

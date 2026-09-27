@@ -27,7 +27,7 @@ export type ReviewCategory = (typeof REVIEW_CATEGORIES)[number];
 
 export const REVIEW_CATEGORY_LABEL: Record<ReviewCategory, string> = {
   programme_experience: "Programme experience",
-  course_content: "Course content",
+  course_content: "Training content",
   certification_process: "Certification process",
   user_experience: "User experience",
   technical_issue: "Technical issue",

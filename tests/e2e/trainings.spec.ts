@@ -103,12 +103,18 @@ test("/programs lists exactly the published trainings in order, Learn Vibe Codin
   for (const [i, p] of published.entries()) {
     const item = items.nth(i);
     await expect(item.getByRole("heading", { level: 3 })).toHaveText(p.title);
-    await expect(item.getByRole("link", { name: /details/i })).toHaveAttribute("href", `/programs/${p.slug}`);
+    await expect(item.getByTestId("card-details")).toHaveAttribute("href", `/programs/${p.slug}`);
     // Every region named in full — never a code that could read as a currency.
     // "International" became "Rest of the world" (M12 L12, 2026-09-26).
-    for (const [card, label] of [["malaysia", "Malaysia"], ["pakistan", "Pakistan"], ["international", "Rest of the world"]] as const) {
+    // UX review 2026-09-27 U4: a visitor's card leads with Malaysia, open; the
+    // other two fold under "Price for … →" until opened.
+    await expect(item.getByTestId("card-price-malaysia").getByText("Malaysia", { exact: true })).toBeVisible();
+    for (const [card, label] of [["pakistan", "Pakistan"], ["international", "Rest of the world"]] as const) {
+      await expect(item.getByTestId(`card-price-${card}`).getByText(label, { exact: true })).toBeHidden();
+      await item.getByTestId(`card-price-toggle-${card}`).click();
       await expect(item.getByTestId(`card-price-${card}`).getByText(label, { exact: true })).toBeVisible();
     }
+    await expect(item.getByTestId("card-register")).toHaveAttribute("href", `/schedule?training=${p.slug}`);
     await expect(item).not.toContainText("(MY)");
     await expect(item).not.toContainText("(PK)");
     await expect(item).not.toContainText("(INT)");
@@ -218,7 +224,7 @@ test("/programs/learn-vibe-coding renders the training with its sections, the re
     "href",
     "/contact-us?kind=programme_interest&programme=learn-vibe-coding",
   );
-  await expect(hero.getByRole("link", { name: "See upcoming dates" })).toHaveAttribute("href", "/schedule?training=learn-vibe-coding"); // M13: the page lists no dates; the schedule filtered to this training does
+  await expect(hero.getByRole("link", { name: "See dates and register" })).toHaveAttribute("href", "/schedule?training=learn-vibe-coding"); // M13: the page lists no dates; the schedule filtered to this training does
   // The "Trainings" nav item is current on a training page too.
   await expect(page.getByRole("navigation", { name: "Primary", exact: true }).getByRole("link", { name: "Trainings & HRD Corp" })).toHaveAttribute(
     "aria-current",
@@ -314,7 +320,7 @@ test("/programs/data-blueprint-ai-vibe-coding renders the flagship on the shared
     "href",
     `/contact-us?kind=programme_interest&programme=${flagship!.slug}`,
   );
-  await expect(hero.getByRole("link", { name: "See upcoming dates" })).toHaveAttribute("href", `/schedule?training=${flagship!.slug}`); // M13: the page lists no dates; the schedule filtered to this training does
+  await expect(hero.getByRole("link", { name: "See dates and register" })).toHaveAttribute("href", `/schedule?training=${flagship!.slug}`); // M13: the page lists no dates; the schedule filtered to this training does
   await expect(hero.locator("dl")).toContainText("2 days");
   await expect(hero.locator("dl")).toContainText("Certificate of Completion");
   await expect(hero.locator("dl")).not.toContainText("4 weeks");
@@ -391,7 +397,7 @@ test("/programs/data-blueprint-ai-vibe-coding renders the flagship on the shared
   await expect(page.getByText(flagship!.experts[0]!.name, { exact: true }).first()).toBeVisible();
 
   // Certification note and FAQ (five questions, native <details>).
-  await expect(page.getByText(/This course awards a/)).toContainText("certificate of completion");
+  await expect(page.getByText(/This training awards a/)).toContainText("certificate of completion");
   const faq = page.locator("#faq");
   expect(flagship!.content.faq).toHaveLength(5);
   await expect(faq.locator("details")).toHaveCount(5);

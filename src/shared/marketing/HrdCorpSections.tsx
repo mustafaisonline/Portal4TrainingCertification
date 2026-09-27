@@ -25,7 +25,7 @@ export function HrdCorpSections() {
         <p className="text-label mb-4 text-[var(--color-primary)]">HRD Corp</p>
         <h2 className="text-display-lg mb-6 max-w-[760px]">A genuine HRD Corp accreditation — verified, not just claimed</h2>
         <p className="text-body-lg max-w-[640px] text-[var(--color-ink-quiet)]">
-          Courses here are designed and delivered by an HRD Corp Accredited Trainer — see{" "}
+          Trainings here are designed and delivered by an HRD Corp Accredited Trainer — see{" "}
           <Link
             href="/trainers#hrd-corp-accreditation"
             className="font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
@@ -33,7 +33,7 @@ export function HrdCorpSections() {
             Trainers
           </Link>{" "}
           for that accreditation and how to verify it. This section sets out what that does, and does not, mean for this
-          organisation and its courses.
+          organisation and its trainings.
         </p>
       </section>
 
@@ -78,7 +78,7 @@ export function HrdCorpSections() {
             <h3 className="text-display mb-5">Becoming an HRD Corp Registered Training Provider</h3>
             <p className="text-body-lg mb-4 text-[var(--color-ink-quiet)]">
               A trainer&rsquo;s own accreditation and an organisation&rsquo;s HRD Corp registration are two different things.{" "}
-              {hrdCorpOrg.legalEntityName} — the training practice behind these courses — does not hold Registered Training
+              {hrdCorpOrg.legalEntityName} — the training practice behind these trainings — does not hold Registered Training
               Provider status today.
             </p>
             <p className="text-body-sm text-[var(--color-ink-quiet)]">{hrdCorpOrg.claimableCourses.statement}</p>

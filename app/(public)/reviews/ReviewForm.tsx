@@ -177,7 +177,7 @@ export function ReviewForm({
           No, keep my review private
         </label>
         <p className="text-body-sm text-[var(--color-ink-faint)]">
-          Public reviews show your name as it appears above, the programme, your rating and your words — never your email. They are read by us
+          Public reviews show your name as it appears above, the training, your rating and your words — never your email. They are read by us
           before they appear.
         </p>
         {fieldErrors.consentPublic ? (

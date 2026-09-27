@@ -52,7 +52,7 @@ function statusSentence(view: PublicCertificateView, today: string): string {
     case "revoked":
       return "This certificate was revoked and is no longer valid.";
     case "expired":
-      return `This certificate expired on ${until}; the holder completed the programme on ${formatCalendarDate(view.completedOn)}.`;
+      return `This certificate expired on ${until}; the holder completed the training on ${formatCalendarDate(view.completedOn)}.`;
     case "renewal_due": {
       const days = daysBetween(today, view.expiresOn);
       return `This certificate is active until ${until} (renewal due in ${days} ${days === 1 ? "day" : "days"}).`;

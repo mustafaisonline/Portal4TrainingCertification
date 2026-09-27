@@ -72,7 +72,7 @@ export default async function ForOrganisationsPage() {
               The trainer is an HRD Corp Accredited Trainer. The Academy&rsquo;s
               organisational registration is in progress, and{" "}
               <strong className="font-medium text-[var(--color-ink)]">
-                no programme is currently registered as HRD Corp claimable
+                no training is currently registered as HRD Corp claimable
               </strong>
               . We will say plainly when that changes.
             </p>

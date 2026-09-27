@@ -79,8 +79,18 @@ jobs:
 
       - name: Create the test database
         # compose.yaml does this via prisma/compose-init/01-test-db.sql; the
-        # Actions service container has no init-script mount.
-        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c 'CREATE DATABASE p4tc_test;'
+        # Actions service container has no init-script mount. That script
+        # also sets the session timezone to UTC (2026-09-21 incident: every
+        # app-written timestamp landed 8h early on a non-UTC session zone;
+        # tests/integration/timestamps.test.ts guards it) — this step had
+        # only ever copied the CREATE DATABASE line, so CI's database fell
+        # back to the container's own default ('Etc/UTC', not the literal
+        # 'UTC' the test requires) and failed the very check meant to catch
+        # this. Found 2026-09-27 running the release workflow for the first
+        # time (v2026.09.27): 496/497 passed, this was the one failure.
+        run: |
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c 'CREATE DATABASE p4tc_test;'
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "ALTER DATABASE p4tc_test SET timezone TO 'UTC';"
 
       - name: Generate Prisma client
         run: npm run db:generate

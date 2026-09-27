@@ -91,7 +91,7 @@ test("/robots.txt allows the public surface and disallows the private areas", as
   expect(text).toMatch(/Sitemap:\s*https?:\/\/[^\s]+\/sitemap\.xml/);
 });
 
-test("/sitemap.xml lists the navigation pages and the published programmes only", async ({ request, baseURL }) => {
+test("/sitemap.xml lists the navigation pages, the published programmes and the published Free Learning topics only", async ({ request, baseURL }) => {
   const res = await request.get("/sitemap.xml");
   expect(res.status()).toBe(200);
   const xml = await res.text();
@@ -110,6 +110,12 @@ test("/sitemap.xml lists the navigation pages and the published programmes only"
   if (unlisted) expect(xml).not.toContain(`/programs/${unlisted.slug}<`);
   expect(xml).not.toContain("/courses/");
   expect(xml).not.toContain("/DataBlueprint-AIVibeCoding");
+  // Free Learning (M14): the topics index and every published topic; an unpublished topic never.
+  expect(xml).toContain(`<loc>${baseURL}/free-learning/topics</loc>`);
+  const { listPublishedTopics } = await import("../../src/modules/free-learning/book.repository");
+  for (const t of await listPublishedTopics()) expect(xml, t.slug).toContain(`<loc>${baseURL}/free-learning/topics/${t.slug}</loc>`);
+  const draftTopic = await getPrisma().bookTopic.findFirst({ where: { published: false }, select: { slug: true } });
+  if (draftTopic) expect(xml).not.toContain(`/free-learning/topics/${draftTopic.slug}<`);
   // Private areas never appear.
   for (const p of ["/account", "/admin", "/api", "/checkout", "/sign-in"]) expect(xml).not.toContain(`<loc>${baseURL}${p}`);
   await disconnectPrisma();

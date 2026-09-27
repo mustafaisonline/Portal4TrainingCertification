@@ -25,9 +25,9 @@ import type { LegalDocument } from "./types";
 export const refundPolicy: LegalDocument = {
   key: "refund",
   title: "Refund & cancellation policy",
-  version: "DRAFT-2026-09-21",
+  version: "DRAFT-2026-09-27",
   status: "draft",
-  lastUpdated: "2026-09-21",
+  lastUpdated: "2026-09-27",
   summary:
     "When a programme registration can be cancelled or moved to another date, how much is refunded, how to do it, and what happens if the Academy has to cancel or reschedule.",
   sections: [
@@ -139,7 +139,7 @@ export const refundPolicy: LegalDocument = {
       paragraphs: [
         "Your Partner Technologies (business registration number [SSM registration number]), [registered business address], Kuala Lumpur, Malaysia.",
         "Email: [contact email]. Telephone: [phone number].",
-        "Effective date of this version: [effective date]. Version: DRAFT-2026-09-21 (not yet in force).",
+        "Effective date of this version: [effective date]. Version: DRAFT-2026-09-27 (not yet in force).",
       ],
     },
   ],

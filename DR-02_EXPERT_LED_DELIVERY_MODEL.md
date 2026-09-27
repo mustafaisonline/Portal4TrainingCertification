@@ -3,6 +3,7 @@
 **Status:** **APPROVED — 2026-08-31.** Binding on all three root specifications.
 **Supersedes:** every prior statement positioning this product as a self-paced course platform, a browsable course catalogue, or a professional association / standards body.
 **Companion to:** `DR-01 — ONE CREDENTIAL`, which this record does not disturb.
+**Amended by:** [`DR-03_FREE_LEARNING_AND_KNOWLEDGE_CHECK.md`](DR-03_FREE_LEARNING_AND_KNOWLEDGE_CHECK.md), approved 2026-09-27 — §1 "We are not" is **narrowed** (see the marker there); everything about the *training* product is unchanged.
 **Triggered by:** founder vision clarification of 2026-08-30 / 2026-08-31, and the Vision Alignment Audit of 2026-08-31.
 **Location:** This record is deliberately **standalone at the repository root**. `DR-01` sits inside `DATA_AI_ACADEMY_MVP_BUILD_SPEC.md`; DR-02 does not, because it is cross-cutting — it affects organisation identity, product model, delivery model, portal role, certification relationship, corporate model, MVP scope and mockup direction. Binding a cross-cutting strategic decision to one downstream specification would misplace it. Downstream specifications reference and reconcile with this record; they do not contain it. *(Approved location, A-1. Changes only by an explicit documentation-governance decision.)*
 
@@ -83,6 +84,8 @@ Independent · focused on data and AI capability development · expert-led · pr
 ### We are not
 
 Another DAMA · a professional association replica · a standards body as our primary strategic destination · a chapter-first organisation · a mass online course marketplace · a Udemy / Coursera / Edureka-style business · a video-first learning platform · a generic LMS · a self-paced content consumption platform.
+
+*↻ NARROWED by DR-03, 2026-09-27 — "a generic LMS · a self-paced content consumption platform" excludes third-party or marketplace content, **not** the Academy's own free self-paced learning (the founder's book as Free Learning, and the free Knowledge Check whose result is not a credential). The training product stays expert-led as this record says.*
 
 ---
 

@@ -5,7 +5,7 @@
 **Date:** 2026-08-29
 **Owner:** Mustafa Qizilbash — Your Partner Technologies
 **Status:** Pre-design. Intended as the single input brief for a UI/UX design AI or an AI coding agent producing the first complete portal mockup.
-**Corrected by:** [`DR-02_EXPERT_LED_DELIVERY_MODEL.md`](DR-02_EXPERT_LED_DELIVERY_MODEL.md), approved 2026-08-31 — see the reconciliation notice below.
+**Corrected by:** [`DR-02_EXPERT_LED_DELIVERY_MODEL.md`](DR-02_EXPERT_LED_DELIVERY_MODEL.md), approved 2026-08-31 — see the reconciliation notice below. **Extended by:** [`DR-03_FREE_LEARNING_AND_KNOWLEDGE_CHECK.md`](DR-03_FREE_LEARNING_AND_KNOWLEDGE_CHECK.md), approved 2026-09-27 — the free diagnostic is no longer the only self-serve feature: Free Learning (the founder's book) and the free Knowledge Check join it; marked in place as `↻ EXTENDED (DR-03)`.
 
 ---
 
@@ -407,7 +407,7 @@ Navigation is organised by **user intent**, and the primary navigation deliberat
 
 | Nav item | Intent served | Contains |
 |---|---|---|
-| **Learn** | "I want to build skill" | Domains, learning paths, catalogue, modalities, free diagnostic |
+| **Learn** | "I want to build skill" | Domains, learning paths, catalogue, modalities, free diagnostic — *↻ EXTENDED (DR-03, 2026-09-27): the built header is Trainings & HRD Corp · Free Training & Certification (Free Learning from the founder's book + the free Knowledge Check) · Trainers · Reviews* |
 | **Get Certified** | "I want to prove skill" | Credential ladder, requirements, evidence model, exam logistics, verify-a-credential |
 | **For Organisations** | "I'm buying for a team" | Corporate programmes, academic partnerships, funding/levy support, case evidence, contact sales |
 | **Knowledge** | "I want to understand something now" | Body of Practice, glossary, articles, patterns, templates — the SEO and trust surface |
@@ -575,7 +575,7 @@ Roles are **capability sets**, assignable in combination. A person is routinely 
 
 | # | Role | Scope | Core capabilities | Key constraints |
 |---|---|---|---|---|
-| R1 | **Guest** | global | Browse public content, free diagnostic, read knowledge base, view credential verification | No progress persistence beyond an anonymous diagnostic result held for 30 days |
+| R1 | **Guest** | global | Browse public content, free diagnostic, read knowledge base, view credential verification — *↻ EXTENDED (DR-03): also reads every published Free Learning topic and its reviewed self-check questions; the Knowledge Check needs an account* | No progress persistence beyond an anonymous diagnostic result held for 30 days — *↻ (DR-03 / M14 P5): the diagnostic result is not stored server-side at all; a signed-in person's Knowledge Check attempts are stored* |
 | R2 | **Learner** | global | Enrol, learn, take assessments, submit assignments, hold credentials, post in community | Base authenticated role; everyone has it |
 | R3 | **Member** | global | Learner + full knowledge base, member pricing, directory listing, chapter membership, CPD ledger | Subscription state; degrades gracefully to Learner on lapse — never revoke earned credentials |
 | R4 | **Candidate** | credential | Registered against a specific credential; exam booking, evidence submission, defence scheduling | Time-boxed eligibility window; integrity undertaking signed |
@@ -612,7 +612,7 @@ Each journey is specified as: trigger → stages → the emotional state we must
 
 1. **Land** — arrives on a knowledge article or credential page, not the homepage. *Design implication: every deep page must be a valid entry point with its own orientation and CTA.*
 2. **Orient (under 30 seconds)** — a single question: "Is this for someone like me?" Answered by a three-door segmentation fork: *I'm building my own career* / *I'm training a team* / *I'm teaching or partnering*.
-3. **Diagnose (free, no payment)** — a 10–15 minute adaptive diagnostic. This is the most important conversion asset on the platform. It costs the visitor nothing and it produces something they cannot get elsewhere: a **map of what they don't know**, positioned against a target role.
+3. **Diagnose (free, no payment)** — a 10–15 minute adaptive diagnostic. This is the most important conversion asset on the platform. *↻ EXTENDED (DR-03, 2026-09-27): the free, self-serve top of the funnel is now the diagnostic **plus** Free Learning and the free Knowledge Check — a verifiable result ID that is not a credential (DR-01 unchanged).* It costs the visitor nothing and it produces something they cannot get elsewhere: a **map of what they don't know**, positioned against a target role.
 4. **Receive a personalised result** — skill profile, gaps, a recommended path, an honest time estimate, and the credential it leads to. Partial result shown anonymously; **the full report requires account creation.** This is the account-creation trade, and it is a fair one.
 5. **Commit** — free tier: first module, glossary, community read access. Paid: full path.
 

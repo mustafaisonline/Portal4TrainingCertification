@@ -30,9 +30,12 @@ function allText(doc: LegalDocument): string {
 describe("legal drafts (src/content/legal)", () => {
   it.each(documents)("$key is a clearly-labelled draft", (doc) => {
     expect(doc.status).toBe("draft");
-    expect(doc.version).toBe("DRAFT-2026-09-21");
-    expect(doc.version.startsWith("DRAFT-")).toBe(true);
-    expect(doc.lastUpdated).toBe("2026-09-21");
+    // Each draft carries its own date: the refund policy moved to 2026-09-27 when the
+    // Knowledge Check unlock sentence was added (M14 Phase 5), so a consent recorded
+    // after that day names the text it accepted.
+    expect(doc.version).toMatch(/^DRAFT-\d{4}-\d{2}-\d{2}$/);
+    expect(doc.lastUpdated).toBe(doc.version.slice("DRAFT-".length));
+    expect(doc.version).toBe(doc.key === "refund" ? "DRAFT-2026-09-27" : "DRAFT-2026-09-21");
     expect(doc.summary.trim().length).toBeGreaterThan(0);
   });
 

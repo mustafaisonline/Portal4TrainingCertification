@@ -100,7 +100,20 @@ disk_pct="$(ssh_capture "df -P / | awk 'NR==2{print \$5}' | tr -d '%'")"
 step "Recent application log (diagnostics)"
 ssh_capture "pm2 logs $PM2_APP_NAME --lines 40 --nostream 2>&1 | grep -v 'GET /api/health'" >>"$LOG_FILE" 2>&1 || true
 log_info "last 40 app log lines appended to $LOG_FILE"
-ssh_capture "pm2 logs $PM2_APP_NAME --lines 200 --nostream 2>&1 | grep -c '\[config\] refusing' " | grep -qv '^0$' && soft_fail "'[config] refusing to start' seen in the app log" "A required variable is missing or malformed." "Fix $REMOTE_ETC/$TARGET_ENV.env (names in .env.example); restart."
+# Only count "[config] refusing" lines with a timestamp AFTER the current
+# process's most recent start. pm2's combined log is NOT chronologically
+# interleaved — it prints the whole stdout tail as one block, then the whole
+# stderr tail as a separate block — so an old, already-resolved stderr error
+# always appears to come "after" a fresh stdout "Ready in" line by position,
+# even though its own embedded timestamp is older. Found live 2026-09-28,
+# the hard way: a position-based "reset on Ready in" fix still failed for
+# exactly this reason. Comparing the actual timestamp strings (ISO-ish,
+# sortable as plain text) is the only reliable fix.
+refusing_count="$(ssh_capture "
+  last_start=\$(pm2 logs $PM2_APP_NAME --lines 200 --nostream 2>&1 | grep 'Ready in' | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}' | sort | tail -1)
+  pm2 logs $PM2_APP_NAME --lines 200 --nostream 2>&1 | grep '\[config\] refusing' | grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}' | awk -v cutoff=\"\$last_start\" '\$0 > cutoff' | wc -l
+")"
+[ "${refusing_count:-0}" -eq 0 ] || soft_fail "'[config] refusing to start' seen in the app log since its last start" "A required variable is missing or malformed." "Fix $REMOTE_ETC/$TARGET_ENV.env (names in .env.example); restart."
 
 step "Verdict"
 if [ "$FAILED_STEPS" -gt 0 ]; then log_error "$FAILED_STEPS check(s) failed — if $TARGET_ENV is degraded: deploy/07-rollback.sh --env $TARGET_ENV${D_PREV:+ --tag $D_PREV}"; else log_ok "post-deployment validation PASSED for $TARGET_ENV ($D_TAG)"; fi

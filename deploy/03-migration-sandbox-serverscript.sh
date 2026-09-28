@@ -60,8 +60,20 @@ if ! psql "$SANDBOX_URL" -At -c 'SELECT 1' >/dev/null 2>&1; then
 fi
 psql "$SANDBOX_URL" -At -c "SET timezone TO 'UTC'" >/dev/null 2>&1 || true
 pg_restore --clean --if-exists --no-owner --no-privileges --dbname="$SANDBOX_URL" "$DUMP" >>"$LOG" 2>&1 || log "pg_restore reported warnings (expected on a fresh sandbox: nothing to clean)"
-psql "$SANDBOX_URL" -At -c 'SELECT count(*) FROM _prisma_migrations' >/dev/null 2>&1 || fail "restored sandbox has no _prisma_migrations table — dump is not a portal database"
-log "restored; applied migrations in sandbox: $(psql "$SANDBOX_URL" -At -c 'SELECT count(*) FROM _prisma_migrations WHERE finished_at IS NOT NULL')"
+if ! psql "$SANDBOX_URL" -At -c 'SELECT count(*) FROM _prisma_migrations' >/dev/null 2>&1; then
+  # No _prisma_migrations table isn't automatically wrong: the very first
+  # deploy's backup (gate 01, taken just before this sandbox runs) is a dump
+  # of a genuinely empty production database — nothing has ever been
+  # migrated yet, so of course it has no tables at all. Found running the
+  # actual first production deploy 2026-09-28: this check originally treated
+  # that legitimate case identically to "wrong database restored", which it
+  # is not. Only fail when the sandbox has OTHER tables but not this one —
+  # that combination is what would indicate a foreign or corrupt dump.
+  table_count="$(psql "$SANDBOX_URL" -At -c "SELECT count(*) FROM information_schema.tables WHERE table_schema='public'" 2>/dev/null || echo unknown)"
+  [ "$table_count" = "0" ] || fail "restored sandbox has $table_count table(s) but no _prisma_migrations table — dump is not a portal database"
+  log "sandbox has zero tables — legitimate first deploy for $ENV (no migrations applied yet); prisma migrate deploy will create everything"
+fi
+log "restored; applied migrations in sandbox: $(psql "$SANDBOX_URL" -At -c 'SELECT count(*) FROM _prisma_migrations WHERE finished_at IS NOT NULL' 2>/dev/null || echo 0)"
 
 run_prisma() { ( cd "$RELEASE_DIR" && DATABASE_URL="$SANDBOX_URL" node_modules/.bin/prisma "$@" ); }
 

@@ -10,6 +10,8 @@ import {
   updateOffering,
   type OfferingWriteInput,
 } from "@/modules/catalogue/offerings/repository";
+import { listDomains } from "@/modules/catalogue/domains/repository";
+import { createTraining, type TrainingDetailsInput } from "@/modules/catalogue/programmes/admin.repository";
 import { findProgrammeBySlug, listDeliveryFormatsForAdmin, listProgrammesForAdmin } from "@/modules/catalogue/programmes/repository";
 import type { ProgrammeRecord } from "@/modules/catalogue/programmes/types";
 import { listAuditForEntity } from "@/modules/platform/audit/repository";
@@ -23,10 +25,12 @@ import { courses } from "../../prisma/seed-data/courses";
  */
 const prisma = getPrisma();
 const actor = randomUUID(); // audit_log.actor_user_id is a plain uuid (no FK)
+const run = randomUUID().slice(0, 8);
 const created: string[] = [];
 
 let flagship: ProgrammeRecord;
 let unlisted: ProgrammeRecord;
+let unlistedFixtureId: string;
 
 function baseInput(overrides: Partial<OfferingWriteInput> = {}): OfferingWriteInput {
   return {
@@ -62,10 +66,34 @@ async function expectValidationError(fn: () => Promise<unknown>, field: keyof Of
 
 beforeAll(async () => {
   const flagshipSlug = courses.find((c) => c.flagship)!.slug;
-  const unlistedSlug = courses.find((c) => !c.flagship && c.status !== "published")!.slug;
   flagship = (await findProgrammeBySlug(flagshipSlug))!;
-  unlisted = (await findProgrammeBySlug(unlistedSlug))!;
   expect(flagship.deliveryFormats.length).toBeGreaterThan(0);
+
+  // "Unlisted" is a lifecycle state (disable, not delete), not a seed-content
+  // property — a dedicated fixture created via createTraining() (which always
+  // creates status:"unlisted") proves that state without depending on the
+  // seed file containing any particular non-published entry (M14: deleted
+  // seed entries must never resurrect, and must not be relied on by tests).
+  const domainId = (await listDomains())[0]!.id;
+  const details: TrainingDetailsInput = {
+    title: `Test Unlisted Programme ${run}`,
+    subtitle: "A subtitle",
+    slug: `test-unlisted-${run}`,
+    domainId,
+    level: "practitioner",
+    flagship: false,
+    durationLabel: "2 days",
+    prerequisites: "None",
+    formats: ["Live online"],
+    certificateLabel: "Certificate of Completion",
+    audienceSummary: "People who test",
+    summary: "A summary of the test training.",
+    valueProposition: "Learn to test.",
+    sortOrder: 99,
+  };
+  const fixture = await withTransaction((tx) => createTraining(tx, details, { userId: actor, expertId: null }));
+  unlistedFixtureId = fixture.id;
+  unlisted = (await findProgrammeBySlug(fixture.slug))!;
 });
 
 afterAll(async () => {
@@ -74,6 +102,10 @@ afterAll(async () => {
     await prisma.scheduledOffering.deleteMany({ where: { id: { in: created } } });
   }
   expect(await prisma.scheduledOffering.count({ where: { id: { in: created } } })).toBe(0);
+  if (unlistedFixtureId) {
+    await prisma.auditLog.deleteMany({ where: { entityType: "programme", entityId: unlistedFixtureId } });
+    await prisma.programme.deleteMany({ where: { id: unlistedFixtureId } });
+  }
   await disconnectPrisma();
 });
 

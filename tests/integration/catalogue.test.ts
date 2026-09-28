@@ -1,10 +1,13 @@
-import { afterAll, describe, expect, it } from "vitest";
-import { disconnectPrisma, getPrisma } from "@/db/prisma";
+import { randomUUID } from "node:crypto";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { disconnectPrisma, getPrisma, withTransaction } from "@/db/prisma";
 import { listDiagnosticQuestions } from "@/modules/catalogue/diagnostic/repository";
 import { createEnquiry, findEnquiriesByEmail } from "@/modules/catalogue/enquiries/repository";
 import { listPublishedExperts } from "@/modules/catalogue/experts/repository";
 import { listFaqGroups } from "@/modules/catalogue/faq/repository";
 import { listUpcomingPublicOfferings } from "@/modules/catalogue/offerings/repository";
+import { listDomains } from "@/modules/catalogue/domains/repository";
+import { createTraining, type TrainingDetailsInput } from "@/modules/catalogue/programmes/admin.repository";
 import {
   findFlagshipProgramme,
   findProgrammeBySlug,
@@ -26,13 +29,43 @@ import { uniqueEmail } from "../helpers/identity-db";
  * holds what the founder reviewed" (M3 plan §8 criteria 2, 4, 5).
  */
 const prisma = getPrisma();
+const run = randomUUID().slice(0, 8);
 const flagshipSeed = courses.find((c) => c.flagship)!;
 // Published = the flagship plus any entry that states `status: "published"`
 // (Learn Vibe Coding, 2026-09-26), in seed order; everything else is unlisted.
 const publishedSeeds = courses.filter((c) => c.flagship || c.status === "published");
-const unlistedSeed = courses.find((c) => !c.flagship && c.status !== "published")!;
+// "Unlisted" is a lifecycle state (disable, not delete), not a seed-content
+// property — a dedicated fixture created via createTraining() (which always
+// creates status:"unlisted") proves that state without depending on the seed
+// file containing any particular non-published entry (M14: deleted seed
+// entries must never resurrect, and must not be relied on by tests either).
+let unlistedFixture: { id: string; slug: string; title: string };
+
+beforeAll(async () => {
+  const domainId = (await listDomains())[0]!.id;
+  const details: TrainingDetailsInput = {
+    title: `Test Unlisted Programme ${run}`,
+    subtitle: "A subtitle",
+    slug: `test-unlisted-${run}`,
+    domainId,
+    level: "practitioner",
+    flagship: false,
+    durationLabel: "2 days",
+    prerequisites: "None",
+    formats: ["Live online"],
+    certificateLabel: "Certificate of Completion",
+    audienceSummary: "People who test",
+    summary: "A summary of the test training.",
+    valueProposition: "Learn to test.",
+    sortOrder: 99,
+  };
+  const created = await withTransaction((tx) => createTraining(tx, details, { userId: randomUUID(), expertId: null }));
+  unlistedFixture = { id: created.id, slug: created.slug, title: details.title };
+});
 
 afterAll(async () => {
+  await prisma.auditLog.deleteMany({ where: { entityType: "programme", entityId: unlistedFixture.id } });
+  await prisma.programme.deleteMany({ where: { id: unlistedFixture.id } });
   await disconnectPrisma();
 });
 
@@ -212,10 +245,10 @@ describe("programmes", () => {
   });
 
   it("an unlisted programme is invisible publicly but retained (disable, not delete)", async () => {
-    expect(await findPublishedProgrammeBySlug(unlistedSeed.slug)).toBeNull();
-    const any = await findProgrammeBySlug(unlistedSeed.slug);
+    expect(await findPublishedProgrammeBySlug(unlistedFixture.slug)).toBeNull();
+    const any = await findProgrammeBySlug(unlistedFixture.slug);
     expect(any?.status).toBe("unlisted");
-    expect(any?.title).toBe(unlistedSeed.title);
+    expect(any?.title).toBe(unlistedFixture.title);
   });
 
   it("the seed invents no dates (DR-02 §4.1): every offering in the database, if any, is a transient test fixture", async () => {

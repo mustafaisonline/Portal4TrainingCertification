@@ -59,7 +59,10 @@ export const footerExplore: readonly NavItem[] = [
   { href: "/free-trainings", label: "Knowledge Hub" },
   { href: "/free-certifications", label: "Free Certifications" },
   { href: "/programs", label: "Professional Trainings" },
-  { href: "/trainers", label: "Trainers" }, // footer only since 2026-09-28 morning — moved out of the header for For Organisations
+  // Founder, 2026-09-28 evening: the /trainers directory is retired — both
+  // pages were the one trainer's content, so the footer item goes straight
+  // to the dedicated page at the top-level slug (/trainers redirects there).
+  { href: "/mustafa-qizilbash", label: "Trainer" },
   { href: "/about-us", label: "About Us" }, // footer only since 2026-09-27 (P15)
   { href: "/schedule", label: "Schedule" },
   { href: "/faq", label: "FAQ" },
@@ -81,7 +84,7 @@ export const footerLegal: readonly NavItem[] = [
 export const verifyLink: NavItem = { href: "/verify", label: "Search completion certificates" };
 
 /** Active-page test for the nav. Trailing slashes are normalised; a nested
- *  path (`/programs/<slug>`, `/trainers/<slug>`) marks its parent item. */
+ *  path (`/programs/<slug>`) marks its parent item. */
 export function isActive(pathname: string, href: string): boolean {
   const path = pathname.replace(/\/+$/, "") || "/";
   if (href === "/") return path === "/";

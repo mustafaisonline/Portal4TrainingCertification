@@ -9,6 +9,9 @@ import { getPrisma } from "@/db/prisma";
 
 export type ExpertProfile = {
   about: string[];
+  /** The trainer's own one-sentence positioning, shown as a pull quote on
+   *  their dedicated page (founder-supplied wording, 2026-09-28). */
+  quote?: string;
   background: string[];
   specialisations: string[];
   careerAchievements?: { org: string; description: string }[];

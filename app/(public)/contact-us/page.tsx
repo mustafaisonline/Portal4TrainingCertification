@@ -59,7 +59,7 @@ const routes = [
     title: "Teaching with the Academy",
     body: "We add trainers slowly and only when they meet the standard. If you have built and led this work in real organisations, we would like to hear from you.",
     cta: "See the standard",
-    href: "/trainers",
+    href: "/mustafa-qizilbash",
   },
 ];
 

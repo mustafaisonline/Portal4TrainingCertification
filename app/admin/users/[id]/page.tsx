@@ -163,7 +163,7 @@ export default async function AdminUserDetailPage({ params }: { params: Promise<
             {user.trainerProfile ? (
               <>
                 {" "}
-                Trainer profile: <span className="text-mono">/trainers/{user.trainerProfile.slug}</span> ({user.trainerProfile.published ? "published" : "unpublished"}).
+                Trainer profile: <span className="text-mono">/{user.trainerProfile.slug}</span> ({user.trainerProfile.published ? "published" : "unpublished"}).
               </>
             ) : null}
           </p>

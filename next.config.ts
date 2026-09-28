@@ -75,6 +75,10 @@ const nextConfig: NextConfig = {
       { source: "/free-learning", destination: "/free-trainings", permanent: true },
       { source: "/free-learning/topics", destination: "/free-trainings", permanent: true },
       { source: "/free-learning/knowledge-check", destination: "/free-certifications", permanent: true },
+      // 2026-09-28 evening (founder): the /trainers directory is retired —
+      // the one trainer's page lives at the top-level slug.
+      { source: "/trainers", destination: "/mustafa-qizilbash", permanent: true },
+      { source: "/trainers/:slug", destination: "/:slug", permanent: true },
       { source: "/for-organisations", destination: "/programs#for-organisations", permanent: true },
     ];
   },

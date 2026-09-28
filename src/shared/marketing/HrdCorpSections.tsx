@@ -34,7 +34,7 @@ export function HrdCorpSections() {
         <p className="text-body-lg max-w-[640px] text-[var(--color-ink-quiet)]">
           Trainings here are designed and delivered by an HRD Corp Accredited Trainer — see{" "}
           <Link
-            href="/trainers#hrd-corp-accreditation"
+            href="/mustafa-qizilbash#hrd-corp-accreditation"
             className="font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
           >
             Trainers

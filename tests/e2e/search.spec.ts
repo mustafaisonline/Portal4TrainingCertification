@@ -156,10 +156,11 @@ test("Professional Trainings has HRD Corp merged, no registration-in-progress co
   await page.goto("/");
   await expect(page.getByTestId("diagnostic-not-saved")).toContainText("we do not save your diagnostic results");
 
-  // Founder, 2026-09-27: the books stay on Free Trainings; the trainer card no longer lists them, and no empty "position open" card sits beside the trainer.
-  // Founder, 2026-09-28: the trainer card states HRD authorisation explicitly, Yes or No.
+  // Founder, 2026-09-28 evening: the /trainers directory is retired — it
+  // redirects to the trainer's own top-level page, which states the HRD
+  // authorisation (the visible check plus the accessible "Yes").
   await page.goto("/trainers");
-  await expect(page.getByTestId("trainer-take-away")).toHaveCount(0);
-  await expect(page.getByRole("note", { name: /open trainer position/i })).toHaveCount(0);
-  await expect(page.locator("p", { hasText: "HRD Authorised Trainer:" }).first()).toContainText("Yes");
+  await expect(page).toHaveURL(/\/mustafa-qizilbash$/);
+  await expect(page.getByTestId("trainer-hrd-line")).toContainText("HRD Corp Authorised Trainer");
+  await expect(page.getByTestId("trainer-hrd-line")).toContainText("Yes");
 });

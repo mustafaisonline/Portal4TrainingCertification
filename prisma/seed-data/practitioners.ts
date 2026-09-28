@@ -71,6 +71,9 @@ export type Practitioner = {
   expertise: string[];
   /** Profile — introduction paragraphs. */
   about: string[];
+  /** Profile — the trainer's own one-sentence positioning, shown as a pull
+   *  quote on their dedicated page (founder-supplied wording, 2026-09-28). */
+  quote?: string;
   /** Profile — professional background, career-arc bullets. */
   background: string[];
   /** Profile — training specialisations. */
@@ -180,6 +183,9 @@ export const practitioners: Practitioner[] = [
       "Mustafa has spent more than 24 years at the working end of enterprise data — from traditional data warehousing through modern lakehouse architectures to today's AI-driven data ecosystems. His career has been international, hands-on and senior at the same time: leading platform modernisation courses while staying close to the architectures, pipelines and decisions underneath them.",
       "His teaching starts from a practitioner's problem, not a textbook's chapter: organisations do not lack data — they lack data they can trust, and people who can build that trust. The courses he delivers are built around that reality, using real enterprise scenarios and the judgement calls that come with them.",
     ],
+    // Founder-supplied wording (dedicated-page design, 2026-09-28).
+    quote:
+      "Real-world data experiences, practical frameworks and global perspectives to help practitioners build capability and create impact.",
     background: [
       "Led the modernisation of an enterprise data lake into a lakehouse platform supporting analytics, AI initiatives and self-service data capabilities at national-enterprise scale",
       "Directed an enterprise data-lake modernisation course in the banking sector, owning end-to-end technical delivery",

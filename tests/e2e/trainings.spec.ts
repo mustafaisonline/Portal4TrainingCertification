@@ -206,13 +206,13 @@ test("/programs lists exactly the published trainings in order, Learn Vibe Codin
   // (Learn Vibe Coding got one in beforeAll) and links the trainer's
   // dedicated page — followed and asserted below.
   await expect(lvc.locator("img[src^='/programs/images/']")).toBeVisible();
-  await expect(lvc.getByTestId("card-trainer")).toHaveAttribute("href", "/trainers/mustafa-qizilbash");
-  await page.goto("/trainers/mustafa-qizilbash");
+  await expect(lvc.getByTestId("card-trainer")).toHaveAttribute("href", "/mustafa-qizilbash");
+  await page.goto("/mustafa-qizilbash");
   await expect(page.getByTestId("trainer-name")).toHaveText("Mustafa Qizilbash");
   await expect(page.getByTestId("trainer-hrd-line")).toContainText("Yes");
   await expectNoAxeViolations(page);
   // An unknown trainer is a real 404.
-  expect((await page.goto("/trainers/nobody-here"))?.status()).toBe(404);
+  expect((await page.goto("/nobody-here"))?.status()).toBe(404);
   await page.goto("/programs");
 
   // No unlisted programme is offered.
@@ -241,11 +241,12 @@ test("/programs/learn-vibe-coding renders the training with its sections, the re
   expect(training, "seeded Learn Vibe Coding").not.toBeNull();
 
   const res = await page.goto("/programs/learn-vibe-coding");
-  // 200, WITH the photo set (beforeAll): guards the 2026-09-28 regression
-  // where next/image 500'd this page over the photo URL's `?v=` query
-  // until images.localPatterns allowed it.
+  // 200 with the photo set (beforeAll). Founder, 2026-09-28 evening: the
+  // detail page carries NO images any more — the photo lives on the
+  // /programs card alone (asserted in the listing test), and the two
+  // section illustrations are gone.
   expect(res?.status()).toBe(200);
-  await expect(page.locator("img[src*='programs%2Fimages'], img[src^='/programs/images/']").first()).toBeVisible();
+  await expect(page.locator("img[src*='programs%2Fimages'], img[src^='/programs/images/']")).toHaveCount(0);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(training!.title);
   await expect(page.getByRole("link", { name: "← All trainings" })).toHaveAttribute("href", "/programs");
   await expect(page.getByTestId("relationship-note")).toHaveText(training!.content.relationshipNote!);

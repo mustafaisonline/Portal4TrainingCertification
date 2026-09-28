@@ -299,7 +299,7 @@ export function CourseCard({
             <span key={e.slug}>
               {i > 0 ? ", " : ""}
               <Link
-                href={`/trainers/${e.slug}`}
+                href={`/${e.slug}`}
                 className="font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
                 data-testid="card-trainer"
               >

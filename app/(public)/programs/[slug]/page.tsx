@@ -9,12 +9,6 @@ import { listUpcomingPublicOfferings } from "@/modules/catalogue/offerings/repos
 import { levelLabel } from "@/modules/catalogue/programmes/types";
 import { isModulePointGroup } from "@/modules/catalogue/programmes/module-points";
 import { listPublishedExperts } from "@/modules/catalogue/experts/repository";
-import { ImageFrame } from "@/shared/marketing/ImageFrame";
-import {
-  BuilderDeskIllustration,
-  CourseInDeliveryIllustration,
-  WorkshopRoomIllustration,
-} from "@/shared/marketing/DeliveryIllustrations";
 import { CourseCard } from "@/shared/marketing/CourseCard";
 import { DeliveryFormats } from "@/shared/marketing/DeliveryFormats";
 import { TrainerCard } from "@/shared/marketing/TrainerCard";
@@ -185,22 +179,10 @@ export default async function CourseDetailPage({
         </div>
       </section>
 
-      {/* ===== Course header photograph (reserved) =====
-          One wide frame per course. Deliberately BELOW the hero rather
-          than inside it: the hero is a night section carrying the title and
-          the meta strip, and dropping an empty box into it would weaken the
-          page's one dominant moment. */}
-      <section className="mx-auto max-w-[1280px] px-6 pt-12">
-        <ImageFrame
-          subject={`${course.title} in delivery — the room, the participants, the work being done`}
-          ratio="21 / 9"
-          minWidth={2000}
-          note="reusable across pages"
-          illustration={<CourseInDeliveryIllustration />}
-          src={course.hasPhoto ? `/programs/images/${course.id}?v=${course.photoUpdatedAt ? new Date(course.photoUpdatedAt).getTime() : 0}` : undefined}
-          alt={course.hasPhoto ? "" : undefined}
-        />
-      </section>
+      {/* Founder, 2026-09-28 (evening): the images around "Why you need
+          this training" are gone — the wide course-header frame that stood
+          here (latterly showing the training photo) and the desk
+          illustration below. The photo still lives on the /programs cards. */}
 
       {/* ===== Overview + highlights ===== */}
       <section className="mx-auto max-w-[1280px] px-6 py-16">
@@ -227,16 +209,6 @@ export default async function CourseDetailPage({
                 ))}
               </ul>
             )}
-            {/* Founder, 2026-09-28: an original image for this section —
-                a hand-authored SVG scene (the established 2026-09-05
-                technique; drawn from no reference, never a fake photo). */}
-            <div className="mt-8">
-              <ImageFrame
-                subject="A builder's desk mid-build — laptop, AI chat, the running product"
-                ratio="16 / 9"
-                illustration={<BuilderDeskIllustration />}
-              />
-            </div>
           </div>
           <Card variant="panel" className="h-fit">
             <p className="text-label mb-4">Training highlights</p>
@@ -556,19 +528,8 @@ export default async function CourseDetailPage({
               <p className="text-body-lg mb-8 text-[var(--color-ink-quiet)]">
                 {content.pedagogy.intro}
               </p>
-              {/* Pedagogy is the most abstract writing on the page; a
-                  photograph of the teaching itself is what makes it
-                  concrete. Detail over wide shot. */}
-              {/* Founder, 2026-09-28: a richer original scene for the
-                  learning-experience section — same hand-authored SVG
-                  technique as everywhere else. */}
-              <ImageFrame
-                subject="The teaching itself — whiteboard, a worked exercise, or a group working through a case"
-                ratio="3 / 2"
-                minWidth={1400}
-                note="detail beats a wide shot"
-                illustration={<WorkshopRoomIllustration />}
-              />
+              {/* Founder, 2026-09-28 (evening): the image that stood here is
+                  removed — the section is the words alone. */}
             </div>
             <div>
               <ul className="grid gap-x-8 sm:grid-cols-2">

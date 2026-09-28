@@ -214,12 +214,12 @@ export default async function AboutPage() {
             )}
             <p className="text-body-sm mb-8 text-[var(--color-ink-quiet)]">
               Today he designs and delivers the trainings himself. As the
-              practitioner network grows, trainers will be introduced on the
-              trainers page — only ever real people, with records you can
+              practitioner network grows, each trainer is introduced with a
+              page of their own — only ever real people, with records you can
               verify independently. There are no placeholder profiles.
             </p>
-            <Button variant="secondary" href="/trainers">
-              Meet the trainers
+            <Button variant="secondary" href="/mustafa-qizilbash">
+              Meet the trainer
             </Button>
           </div>
           <ImageFrame

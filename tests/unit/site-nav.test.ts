@@ -48,7 +48,10 @@ describe("site navigation", () => {
     expect(footerExplore).toContainEqual({ href: "/free-trainings", label: "Knowledge Hub" });
     expect(footerExplore).toContainEqual({ href: "/free-certifications", label: "Free Certifications" });
     expect(footerExplore).toContainEqual({ href: "/programs", label: "Professional Trainings" });
-    expect(footerExplore).toContainEqual({ href: "/trainers", label: "Trainers" }); // moved here from the header
+    // Founder, 2026-09-28 evening: the /trainers directory is retired — the
+    // footer goes straight to the trainer's own top-level page.
+    expect(footerExplore).toContainEqual({ href: "/mustafa-qizilbash", label: "Trainer" });
+    expect(footerExplore.map((i) => i.href)).not.toContain("/trainers");
     expect(footerExplore.map((i) => i.href)).not.toContain("/for-organisations"); // merged into the trainings page, not a page any more
     expect(siteSearch.action).toBe("/search");
     expect(siteSearch.placeholder).toBe("Search Candidates or Training");

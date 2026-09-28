@@ -163,6 +163,15 @@ su - deploy -c "pm2 save" >/dev/null 2>&1 || true
 
 log "7/9 caddy"
 sed -e "s/{{DOMAIN}}/$DOMAIN/g" -e "s/{{PRODUCTION_PORT}}/$PRODUCTION_PORT/g" "$DEPLOY_DIR/Caddyfile.example" >/etc/caddy/Caddyfile
+# /var/log/caddy must be owned by the caddy user BEFORE `caddy validate`
+# touches the log file — found live 2026-09-28: `caddy validate` (run as
+# root) creates production.log as root:root 0600 if the directory doesn't
+# already exist with the right owner, then the caddy daemon (running as the
+# unprivileged `caddy` user) can never write to that root-owned file and
+# every reload fails with "permission denied". Idempotent: fixes it on a
+# re-run too, in case an earlier bootstrap attempt already hit this.
+install -d -m 755 -o caddy -g caddy /var/log/caddy
+[ -e /var/log/caddy/production.log ] && chown caddy:caddy /var/log/caddy/production.log
 caddy validate --config /etc/caddy/Caddyfile >/dev/null && systemctl enable --now caddy >/dev/null && systemctl reload caddy
 
 log "8/9 systemd timers + firewall + unattended upgrades"

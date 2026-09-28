@@ -44,16 +44,52 @@ test("programme page renders the flagship from the database", async ({ page }) =
 
 test("an unlisted programme is a real 404; the published one is served", async ({ page }) => {
   const { findFlagshipProgramme, listPublishedProgrammes } = await import("../../src/modules/catalogue/programmes/repository");
-  const { getPrisma } = await import("../../src/db/prisma");
-  const unlisted = await getPrisma().programme.findFirst({ where: { status: "unlisted" }, select: { slug: true } });
-  expect(unlisted).not.toBeNull();
-  expect((await page.goto(`/programs/${unlisted!.slug}`))?.status()).toBe(404);
+  const { getPrisma, withTransaction } = await import("../../src/db/prisma");
+  const { createTraining } = await import("../../src/modules/catalogue/programmes/admin.repository");
+  const { randomUUID } = await import("node:crypto");
+  const prisma = getPrisma();
 
-  const flagship = (await findFlagshipProgramme())!;
-  expect((await page.goto(`/programs/${flagship.slug}`))?.status()).toBe(200);
-  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-  // Two trainings are published since 2026-09-26 (Learn Vibe Coding + the flagship).
-  expect((await listPublishedProgrammes()).length).toBe(2);
+  // "Unlisted" is a lifecycle state (disable, not delete), not a seed-content
+  // property — a dedicated fixture created via createTraining() (which always
+  // creates status:"unlisted") proves the 404 without depending on the seed
+  // file containing any particular non-published entry (M14: deleted seed
+  // entries must never resurrect, and must not be relied on by tests either).
+  const domainId = (await prisma.domain.findFirst({ select: { id: true } }))!.id;
+  const run = randomUUID().slice(0, 8);
+  const unlisted = await withTransaction((tx) =>
+    createTraining(
+      tx,
+      {
+        title: `E2E Unlisted Programme ${run}`,
+        subtitle: "A subtitle",
+        slug: `e2e-unlisted-${run}`,
+        domainId,
+        level: "practitioner",
+        flagship: false,
+        durationLabel: "2 days",
+        prerequisites: "None",
+        formats: ["Live online"],
+        certificateLabel: "Certificate of Completion",
+        audienceSummary: "People who test",
+        summary: "A summary of the test training.",
+        valueProposition: "Learn to test.",
+        sortOrder: 99,
+      },
+      { userId: randomUUID(), expertId: null },
+    ),
+  );
+  try {
+    expect((await page.goto(`/programs/${unlisted.slug}`))?.status()).toBe(404);
+
+    const flagship = (await findFlagshipProgramme())!;
+    expect((await page.goto(`/programs/${flagship.slug}`))?.status()).toBe(200);
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    // Two trainings are published since 2026-09-26 (Learn Vibe Coding + the flagship).
+    expect((await listPublishedProgrammes()).length).toBe(2);
+  } finally {
+    await prisma.auditLog.deleteMany({ where: { entityType: "programme", entityId: unlisted.id } });
+    await prisma.programme.deleteMany({ where: { id: unlisted.id } });
+  }
 });
 
 test("schedule shows the honest no-dates state and a register-interest path", async ({ page }) => {

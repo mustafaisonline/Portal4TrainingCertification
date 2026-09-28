@@ -47,7 +47,7 @@ DB_URL="$(set -a; . "$ENV_FILE"; set +a; printf '%s' "${DATABASE_URL:-}")"
 # Same cluster, different database: swap the path segment, keep the query.
 SANDBOX_URL="$(printf '%s' "$DB_URL" | sed -E "s#(://[^/]+/)[^/?]+#\1${SANDBOX_DB_NAME}#")"
 [ "$SANDBOX_URL" != "$DB_URL" ] || fail "could not derive the sandbox URL from DATABASE_URL"
-ADMIN_URL="$(printf '%s' "$DB_URL" | sed -E "s#(://[^/]+/)[^/?]+#\1${ADMIN_DB_NAME:-defaultdb}#")"
+ADMIN_URL="$(printf '%s' "$DB_URL" | sed -E "s#(://[^/]+/)[^/?]+#\1${ADMIN_DB_NAME:-postgres}#")"
 
 DUMP="$(ls -t "$REMOTE_BACKUP_ROOT"/p4tc-"$ENV"-*.dump 2>/dev/null | head -1)"
 [ -n "$DUMP" ] || fail "no dump for $ENV in $REMOTE_BACKUP_ROOT (01 runs first)"

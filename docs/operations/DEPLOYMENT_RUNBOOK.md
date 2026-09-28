@@ -1,6 +1,6 @@
 # Deployment Runbook
 
-> **Status: UPDATED 2026-09-26 (Milestone 11). Nothing is provisioned.** Hosting and database were **decided 2026-09-26 (ADR-046, K2/K3): one DigitalOcean Droplet running the container image behind Caddy, with DigitalOcean Managed PostgreSQL** — that is **Option C (§4a)**, executed through the governed framework in [`deploy/`](../../deploy/README.md). Options A and B are retained below as the record of what was considered; they are no longer the plan. Domain (J4/K13) and email (J5/K14) remain the founder's.
+> **Status: UPDATED 2026-09-28 (Milestone 11). The Droplet is provisioned; database and Stripe secrets are not yet typed in.** Hosting and database were decided 2026-09-26 (ADR-046, K2/K3) as one DigitalOcean Droplet running a container image behind Caddy, with DigitalOcean Managed PostgreSQL — **since reversed**: K2/K6/K9 (2026-09-27, no Docker/registry, PM2 instead) and K3 (2026-09-28, PostgreSQL self-hosted on the Droplet, no Managed database) — see ADR-046's supersession notes. That is still **Option C (§4a)**, executed through the governed framework in [`deploy/`](../../deploy/README.md). Options A and B are retained below as the record of what was considered; they are no longer the plan. Domain (J4/K13) and email (J5/K14) remain the founder's.
 
 ## 0. What is being deployed
 
@@ -86,14 +86,14 @@ Notes on the image: Node 24 alpine, non-root user `portal`, `HEALTHCHECK` on `/a
 - **Railway:** New project → Deploy from GitHub → detected Dockerfile; Variables from §2; Settings → Healthcheck path `/api/health`; Cron: a second service or an external scheduler (§7).
 - **VPS:** Docker Engine + a reverse proxy that terminates TLS (Caddy gives automatic certificates); `docker run --restart unless-stopped --env-file … -p 127.0.0.1:3000:3000 p4tc-portal`; proxy `https://<domain>` → `127.0.0.1:3000`; crontab from §7. Keep the env file `chmod 600`, owned by the deploy user.
 
-## 4a. Option C — DigitalOcean Droplet + Managed PostgreSQL through `deploy/` (CHOSEN 2026-09-26, ADR-046; rsync + PM2 and NYC1 as of 2026-09-27 — see ADR-046's supersession notes)
+## 4a. Option C — DigitalOcean Droplet, self-hosted PostgreSQL, through `deploy/` (CHOSEN 2026-09-26, ADR-046; rsync + PM2, NYC1 and self-hosted PostgreSQL as of 2026-09-27/28 — see ADR-046's supersession notes)
 
-The whole procedure — provisioning checklist, server bootstrap, env files, every deploy, rollback and restore — is in [`deploy/README.md`](../../deploy/README.md). In one screen (updated 2026-09-27: no staging, no Docker/registry, NYC1 not SGP1 — founder's explicit choice, region does not affect the already-resolved J1 residency answer):
+The whole procedure — provisioning checklist, server bootstrap, env files, every deploy, rollback and restore — is in [`deploy/README.md`](../../deploy/README.md). In one screen (updated 2026-09-28: no staging, no Docker/registry, NYC1 not SGP1, PostgreSQL self-hosted on the Droplet not a separate Managed database — all founder's explicit choices):
 
 | Step | Command / action | Who |
 |---|---|---|
-| Provision | Droplet (Ubuntu 24.04, **NYC1**, $12/mo 2 GiB/1 vCPU) · Managed PostgreSQL 16 (same VPC; databases `p4tc_production`, `p4tc_migration`, each `SET timezone TO 'UTC'`) · DNS A records (apex, `www`) — **no Container Registry** | founder (RED) |
-| Bootstrap once | `rsync -az deploy/ root@<droplet>:/opt/p4tc/deploy/` → `ssh root@<droplet> 'bash /opt/p4tc/deploy/10-server-bootstrap-serverscript.sh --domain <apex>'` → copy `/etc/p4tc/governance-hmac.key` to `deploy/.governance-hmac.key` | founder |
+| Provision | Droplet (Ubuntu 24.04, **NYC1**, $12/mo 2 GiB/1 vCPU) · DNS A records (apex, `www`) — **no Container Registry, no Managed PostgreSQL** (PostgreSQL is installed on the Droplet itself by the bootstrap step, K3 reversed 2026-09-28) | founder (RED) |
+| Bootstrap once | `rsync -az deploy/ root@<droplet>:/opt/p4tc/deploy/` → `ssh root@<droplet> 'bash /opt/p4tc/deploy/10-server-bootstrap-serverscript.sh --domain <apex>'` (installs PostgreSQL 16, creates `p4tc_production` + the migration sandbox database, both UTC, pre-fills `DATABASE_URL`) → copy `/etc/p4tc/governance-hmac.key` to `deploy/.governance-hmac.key` | founder |
 | Secrets | Type `/etc/p4tc/production.env` **on the server** (names from §2; root:deploy 0640). Never through the framework, chat or a document | founder |
 | Build | `git tag vX && git push origin vX` → `.github/workflows/release.yml` verifies (ci.yml), runs `next build`, **proves** it (migrates a throwaway PostgreSQL, `next start` in production mode, `/api/health` 200) and uploads the release as a GitHub Actions artifact — no image, no registry | CI |
 | Deploy | `deploy/start.sh --audit --env production --tag vX` (GO) → `deploy/start.sh --env production --tag vX` (fetches the artifact, unpacks it, `npm ci`, PM2) | operator |

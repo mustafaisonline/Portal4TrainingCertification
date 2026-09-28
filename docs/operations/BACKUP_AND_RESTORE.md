@@ -1,6 +1,8 @@
 # Backup and Restore
 
 > **Status: DRAFT 2026-09-23 (Milestone 9 §2 item 6; ADR-031 "an unrehearsed backup is an assumption, not a control").** The scripts exist and were rehearsed against the **development** database on 2026-09-23 (PASS, 33 tables, row counts equal). No production backup exists because no production database exists.
+>
+> **⚠ 2026-09-28 — this draft's "managed host PITR" assumption no longer applies.** ADR-046's K3 was reversed: PostgreSQL runs self-hosted on the production Droplet, not a managed host — see `ARCHITECTURE_DECISION_REGISTER.md`'s ADR-046 supersession note. Below, wherever this document treats PITR as available or as "the real control," read that as **not true for this deployment** — the nightly `pg_dump` (§3.2/§4, run by `deploy/01-backup-serverscript.sh`) is the sole recovery mechanism, and RPO is bounded by how recently it last ran, not "≈0." This file otherwise predates Milestone 11 (it still names Neon/Supabase, never adopted) and has not been fully rewritten for the current `deploy/` framework — `deploy/README.md` §5 is the operative rollback/restore procedure.
 
 ## 1. What must be protected
 

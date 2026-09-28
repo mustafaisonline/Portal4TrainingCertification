@@ -3,18 +3,22 @@
 # 01-backup-serverscript.sh   (run on: SERVER — by the promote wrapper before
 # every promotion and restore, by the nightly timer, or by hand as deploy)
 #
-# Logical backup of one environment's database on the managed cluster:
+# Logical backup of one environment's self-hosted database (K3 reversed
+# 2026-09-28 — no Managed PostgreSQL, so this IS the sole recovery
+# mechanism, not a second layer beside managed PITR):
 #   $REMOTE_BACKUP_ROOT/p4tc-<env>-<UTC stamp>[-<label>].dump   (pg_dump -Fc)
 #   …dump.sha256   …dump.meta   (deployed tag/commit, newest migration, size)
 # Verified with `pg_restore --list` (the archive TOC parses); the full
 # restore proof is the migration sandbox (03), which restores the newest
 # dump on every promotion. Retention: newest $BACKUP_KEEP per environment.
+# RPO is therefore bounded by how often this runs (the nightly timer, plus
+# before every promotion/restore) — accepted explicitly when K3 was reversed.
 #
-# The dump stays on this server (or in DO's managed backups). It is never
-# copied to a laptop by this framework — "production data never leaves the
-# server". The connection string is read from the env file and never
-# printed. (eCard 01-production-backup-serverscript, adapted: no code/env
-# archive — the image tag IS the code and the env file is root-owned.)
+# The dump stays on this server. It is never copied to a laptop by this
+# framework — "production data never leaves the server". The connection
+# string is read from the env file and never printed. (eCard
+# 01-production-backup-serverscript, adapted: no code/env archive — the
+# release directory IS the code and the env file is root-owned.)
 # =============================================================================
 set -euo pipefail
 DEPLOY_DIR="$(cd "$(dirname "$0")" && pwd)"

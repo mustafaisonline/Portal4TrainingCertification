@@ -1,10 +1,13 @@
 # `deploy/` — the governed deployment framework
 
-> **Status: BUILT 2026-09-26 (Milestone 11, Phase A), REWRITTEN 2026-09-27 — rehearsed in `--dry-run` only. No server exists yet.** Phase B (provisioning the DigitalOcean Droplet and Managed PostgreSQL) is the founder's, step by step, per [`docs/execution/MILESTONE_11_EXECUTION_PLAN.md`](../docs/execution/MILESTONE_11_EXECUTION_PLAN.md) §2. Decisions K1–K16 were approved 2026-09-26 (ADR-046).
+> **Status: BUILT 2026-09-26 (Milestone 11, Phase A), REWRITTEN 2026-09-27/28 — rehearsed in `--dry-run` only. Droplet created 2026-09-27, not yet bootstrapped.** Phase B (provisioning) is the founder's, step by step, per [`docs/execution/MILESTONE_11_EXECUTION_PLAN.md`](../docs/execution/MILESTONE_11_EXECUTION_PLAN.md) §2. Decisions K1–K16 were approved 2026-09-26 (ADR-046); K2/K3/K6/K9 have since been reversed and K5 re-decided — see §1 below and the ADR's supersession notes.
 >
-> **⚠ 2026-09-27 — two decisions reversed, both on the founder's explicit instruction, both explained in full before being confirmed:**
-> 1. **Staging DROPPED** (ADR-029's supersession note). Only production is provisioned — no second container/process, no second database, no `staging.<domain>`.
-> 2. **Docker and the Container Registry DROPPED** (ADR-046's K2/K6/K9 supersession note). CI still builds and PROVES every release exactly as before; the built output ships to the server via rsync instead of a Docker image, and runs under **PM2** instead of a container. This document describes that design — the one that actually runs now, not the Docker-based Phase A.
+> **⚠ Three decisions reversed since Phase A, all on the founder's explicit instruction, all explained in full before being confirmed:**
+> 1. **2026-09-27 — Staging DROPPED** (ADR-029's supersession note). Only production is provisioned — no second container/process, no second database, no `staging.<domain>`.
+> 2. **2026-09-27 — Docker and the Container Registry DROPPED** (ADR-046's K2/K6/K9 supersession note). CI still builds and PROVES every release exactly as before; the built output ships to the server via rsync instead of a Docker image, and runs under **PM2** instead of a container.
+> 3. **2026-09-28 — Managed PostgreSQL DROPPED** (ADR-046's K3 supersession note, same file). PostgreSQL runs self-hosted on the Droplet itself, installed by the bootstrap step — no separate database resource, no VPC-matching, ~$15.15/mo cheaper. Trade-off accepted knowingly: no point-in-time recovery any more, so the nightly `pg_dump` (§5) is the **sole** recovery mechanism, and the Droplet is no longer disposable.
+>
+> This document describes that design — the one that actually runs now, not the Phase A original.
 
 This is the portal's equivalent of eCard's `Deployement-Steps/`: the same **controls** — clean-git gate, release gate, signed deployment token, root-owned server wrapper, backup before every promotion, migration sandbox, post-deploy validation, governed rollback, read-only audit, per-step reports, timeouts on every task, no bypass flags — and, since 2026-09-27, much closer to eCard's own **runtime model** too: the release is built and PROVEN by CI, then shipped by rsync and run under PM2, not packaged as a container image. Section 6 says what still differs from eCard and why.
 
@@ -37,8 +40,9 @@ GITHUB ACTIONS release.yml (on tag v*)                        │   rollback --t
                                                                 │ systemd: reminders 01:00 UTC · backup 02:00 │
                                                                 │ pm2 startup (survives reboot)                │
                                                                 └───────────────────────────────────────────┘
-                                                                DO Managed PostgreSQL (VPC): p4tc_production,
-                                                                p4tc_migration (sandbox), PITR on
+                                                                PostgreSQL 16, self-hosted on the same Droplet
+                                                                (K3 reversed 2026-09-28): p4tc_production,
+                                                                p4tc_migration (sandbox), localhost-only, UTC
 ```
 
 No registry, no Docker anywhere in this diagram. `../Dockerfile` stays in the repository (useful for local container testing) but is not part of this pipeline.
@@ -71,7 +75,7 @@ No registry, no Docker anywhere in this diagram. `../Dockerfile` stays in the re
 
 ## 3. First-time setup (Phase B — each step is a RED action the founder takes)
 
-1. **DigitalOcean**: Droplet (Ubuntu 24.04, ~~SGP1~~ **NYC1 — K5 re-decided 2026-09-27, founder's explicit choice while creating the Droplet**; **$12/mo, 2 GiB/1 vCPU — K4, re-decided 2026-09-27**), Managed PostgreSQL 16 (Basic, **same VPC/region as the Droplet — NYC1** — K3). **No Container Registry** (K6 reversed — nothing to push there any more). On the cluster create `p4tc_production` and `p4tc_migration`, both set to UTC: `ALTER DATABASE p4tc_production SET timezone TO 'UTC';` (and `p4tc_migration`). Add the Droplet to the cluster's trusted sources. **Done 2026-09-27:** Droplet created — `198.199.67.177` (public), `10.116.0.3` (private), hostname `p4tc-production`.
+1. **DigitalOcean**: Droplet (Ubuntu 24.04, ~~SGP1~~ **NYC1 — K5 re-decided 2026-09-27, founder's explicit choice while creating the Droplet**; **$12/mo, 2 GiB/1 vCPU — K4, re-decided 2026-09-27**). ~~Managed PostgreSQL 16 (Basic, same VPC/region as the Droplet)~~ — **no separate database resource: PostgreSQL 16 is installed on the Droplet itself (K3 reversed 2026-09-28) by the bootstrap step below**, which also creates `p4tc_production` and `p4tc_migration`, both UTC, and pre-fills `DATABASE_URL`. **No Container Registry either** (K6 reversed — nothing to push there any more). **Done 2026-09-27:** Droplet created — `198.199.67.177` (public), `10.116.0.3` (private), hostname `p4tc-production`.
 2. **DNS (K13)**: `A` records for the apex and `www` → the Droplet's IP.
 3. **Fill `deploy/config.env`** (`SERVER_HOST`, `DOMAIN`) — names only — commit it.
 4. **Bootstrap** (as root, once):
@@ -79,11 +83,11 @@ No registry, no Docker anywhere in this diagram. `../Dockerfile` stays in the re
    rsync -az deploy/ root@<droplet>:/opt/p4tc/deploy/
    ssh root@<droplet> 'bash /opt/p4tc/deploy/10-server-bootstrap-serverscript.sh --domain <apex>'
    ```
-   Installs Node, PM2 (with `pm2 startup` so it survives a reboot), Caddy, the `deploy` user and the governed layout — no registry login prompt any more. Then on the laptop:
+   Installs Node, PM2 (with `pm2 startup` so it survives a reboot), Caddy, **PostgreSQL 16** (creates the `p4tc` role and the `p4tc_production`/`p4tc_migration` databases, both UTC, localhost-only), the `deploy` user and the governed layout — no registry login prompt any more. Then on the laptop:
    ```bash
    ssh root@<droplet> cat /etc/p4tc/governance-hmac.key > deploy/.governance-hmac.key && chmod 600 deploy/.governance-hmac.key
    ```
-5. **Type the env file on the server** — `nano /etc/p4tc/production.env` (template was written with every name; see `.env.example` for each rule). Production gets the **live restricted key** with exactly the §1.2 permissions and the live endpoint's secret (`DEPLOYMENT_RUNBOOK.md` §6) — or, as the lighter substitute offered when staging was dropped, a test-mode key for the very first deploy's first registration + refund before switching to live. Values never travel through this framework.
+5. **Type the rest of the env file on the server** — `nano /etc/p4tc/production.env` (template was written with every name, `DATABASE_URL` already filled in by the bootstrap step; see `.env.example` for each rule). Production gets the **live restricted key** with exactly the §1.2 permissions and the live endpoint's secret (`DEPLOYMENT_RUNBOOK.md` §6) — or, as the lighter substitute offered when staging was dropped, a test-mode key for the very first deploy's first registration + refund before switching to live. Values never travel through this framework.
 6. **GitHub**: `gh auth login` on the laptop — this is now the *only* credential the framework needs from GitHub (no registry secret; the release artifact is fetched through `gh run download`, which uses the same login).
 7. **Seed reference data** once (idempotent; never test users), using the release already on the server after the first promotion:
    ```bash
@@ -124,14 +128,14 @@ deploy/07-rollback.sh --env production --restore-db p4tc-production-20261003T020
 
 Rolling back to one of the last `RELEASES_KEEP` (default 3) releases is instant — the directory is already on disk under `/opt/p4tc/releases/`, so it's just a symlink switch and a `pm2 reload`, no rebuild or reinstall. Rolling back further than that needs the tag redeployed first (`deploy/start.sh --env production --tag <old-tag>`, which re-fetches its GitHub Actions artifact) — a real trade-off of not keeping every release forever, stated here rather than discovered mid-incident.
 
-`--restore-db` is the only way to undo a migration. It takes a safety snapshot, stops the app, `pg_restore --clean`s the chosen dump into the live database, then switches the release. Every row written after that dump is lost — the script says so and asks. Dumps live in `/opt/p4tc/backups` on the server (and the managed cluster keeps its own daily backups + PITR — the primary control, K10).
+`--restore-db` is the only way to undo a migration. It takes a safety snapshot, stops the app, `pg_restore --clean`s the chosen dump into the live database, then switches the release. Every row written after that dump is lost — the script says so and asks. Dumps live in `/opt/p4tc/backups` on the server — this is the **only** backup layer since K3's 2026-09-28 reversal (no Managed PostgreSQL, no PITR); RPO is bounded by how recently `01-backup-serverscript.sh` last ran.
 
 ## 6. What differs from eCard's framework, and why
 
 | eCard | Here | Because |
 |---|---|---|
 | rsync the source to a staging tree; `npm install` on the server; PM2 restarts Node | **Same idea since 2026-09-27** — CI builds and PROVES the release first (eCard has no build step to prove; this app needs `next build`), then rsync ships the built output and the server runs `npm ci` + PM2, same as eCard | A Next.js build is heavier than eCard's plain Express/static stack, so it happens on CI's runners, never the Droplet; everything after that matches eCard directly |
-| PostgreSQL on the same box | DigitalOcean Managed PostgreSQL in the VPC | Backups + PITR are the real restore control (BACKUP_AND_RESTORE §3.1); the box is disposable (K3) |
+| PostgreSQL on the same box | **Same, since 2026-09-28** — PostgreSQL self-hosted on the Droplet (K3 reversed), matching eCard exactly here too | Originally: DigitalOcean Managed PostgreSQL, for PITR and a disposable box (BACKUP_AND_RESTORE §3.1). Reversed on the founder's explicit instruction once that trade-off was explained; the nightly dump is now the sole recovery mechanism |
 | nginx + certbot | Caddy | Automatic TLS, 25 lines of config (K8) |
 | python3 verifies the HMAC on the server | openssl on both sides | One fewer runtime on the box; same primitive |
 | `GOVERNED_MIGRATION_MAX` numeric ceiling | Prisma's own ledger + a sandbox that lists *pending* migrations, read straight from the unpacked release | The migrations travel with the release, so the sandbox is exact |

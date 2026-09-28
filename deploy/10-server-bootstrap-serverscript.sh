@@ -121,8 +121,14 @@ JOBS_SECRET=
 # LIVE restricted key (rk_live_) with exactly: Checkout Sessions write, Refunds write, PaymentIntents/Charges/Balance transactions read
 STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=
-# Set only when counsel has published the legal documents (registration stays closed otherwise):
-# LEGAL_DOCUMENT_VERSIONS={"terms":"<version>","privacy":"<version>"}
+# Set only when counsel has published the legal documents (registration stays closed otherwise).
+# MUST be single-quoted exactly like this — run.sh sources this file as a
+# shell script, and an unquoted {"a":"b"} loses its double quotes to bash's
+# own word-splitting before the app ever sees it, becoming invalid JSON.
+# Found live 2026-09-28: the app correctly refused to start on that malformed
+# value (fail-fast validation working as intended) rather than silently
+# misbehaving — but it's an easy mistake to repeat without this note.
+# LEGAL_DOCUMENT_VERSIONS='{"terms":"<version>","privacy":"<version>"}'
 # ENQUIRY_NOTIFY_EMAIL=
 EOF
   log "wrote names-only template $f — fill the values"

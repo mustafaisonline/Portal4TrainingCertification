@@ -86,19 +86,19 @@ Notes on the image: Node 24 alpine, non-root user `portal`, `HEALTHCHECK` on `/a
 - **Railway:** New project → Deploy from GitHub → detected Dockerfile; Variables from §2; Settings → Healthcheck path `/api/health`; Cron: a second service or an external scheduler (§7).
 - **VPS:** Docker Engine + a reverse proxy that terminates TLS (Caddy gives automatic certificates); `docker run --restart unless-stopped --env-file … -p 127.0.0.1:3000:3000 p4tc-portal`; proxy `https://<domain>` → `127.0.0.1:3000`; crontab from §7. Keep the env file `chmod 600`, owned by the deploy user.
 
-## 4a. Option C — DigitalOcean Droplet + Managed PostgreSQL through `deploy/` (CHOSEN 2026-09-26, ADR-046)
+## 4a. Option C — DigitalOcean Droplet + Managed PostgreSQL through `deploy/` (CHOSEN 2026-09-26, ADR-046; rsync + PM2 and NYC1 as of 2026-09-27 — see ADR-046's supersession notes)
 
-The whole procedure — provisioning checklist, server bootstrap, env files, every deploy, rollback and restore — is in [`deploy/README.md`](../../deploy/README.md). In one screen:
+The whole procedure — provisioning checklist, server bootstrap, env files, every deploy, rollback and restore — is in [`deploy/README.md`](../../deploy/README.md). In one screen (updated 2026-09-27: no staging, no Docker/registry, NYC1 not SGP1 — founder's explicit choice, region does not affect the already-resolved J1 residency answer):
 
 | Step | Command / action | Who |
 |---|---|---|
-| Provision | Droplet (Ubuntu 24.04, SGP1, 2 GiB/2 vCPU) · Managed PostgreSQL 16 (same VPC; databases `p4tc_production`, `p4tc_staging`, `p4tc_migration`, each `SET timezone TO 'UTC'`) · Container Registry · DNS A records (apex, `www`, `staging`) | founder (RED) |
+| Provision | Droplet (Ubuntu 24.04, **NYC1**, $12/mo 2 GiB/1 vCPU) · Managed PostgreSQL 16 (same VPC; databases `p4tc_production`, `p4tc_migration`, each `SET timezone TO 'UTC'`) · DNS A records (apex, `www`) — **no Container Registry** | founder (RED) |
 | Bootstrap once | `rsync -az deploy/ root@<droplet>:/opt/p4tc/deploy/` → `ssh root@<droplet> 'bash /opt/p4tc/deploy/10-server-bootstrap-serverscript.sh --domain <apex>'` → copy `/etc/p4tc/governance-hmac.key` to `deploy/.governance-hmac.key` | founder |
-| Secrets | Type `/etc/p4tc/staging.env` and `/etc/p4tc/production.env` **on the server** (names from §2; root:deploy 0640). Never through the framework, chat or a document | founder |
-| Build | `git tag vX && git push origin vX` → `.github/workflows/release.yml` verifies (ci.yml), builds `runtime` + `migrate` images, **proves** them (migrates a throwaway PostgreSQL, boots in production mode, `/api/health` 200) and pushes to the registry | CI |
-| Deploy | `deploy/start.sh --audit --env staging --tag vX` (GO) → `deploy/start.sh --env staging --tag vX` → exercise staging → `deploy/start.sh --env production --tag vX` | operator |
-| Migrations | Run by the server wrapper from the tag's `migrate` image, **after** a backup and a sandbox rehearsal on a copy of the database, **before** the code switch (ADR-029). Never by hand, never by the app container | wrapper |
-| Roll back | `deploy/07-rollback.sh --env production` (previous tag) · `--restore-db <dump>` for data (safety snapshot first, confirmed) | operator |
+| Secrets | Type `/etc/p4tc/production.env` **on the server** (names from §2; root:deploy 0640). Never through the framework, chat or a document | founder |
+| Build | `git tag vX && git push origin vX` → `.github/workflows/release.yml` verifies (ci.yml), runs `next build`, **proves** it (migrates a throwaway PostgreSQL, `next start` in production mode, `/api/health` 200) and uploads the release as a GitHub Actions artifact — no image, no registry | CI |
+| Deploy | `deploy/start.sh --audit --env production --tag vX` (GO) → `deploy/start.sh --env production --tag vX` (fetches the artifact, unpacks it, `npm ci`, PM2) | operator |
+| Migrations | Run by the server wrapper from the unpacked release's own `node_modules/.bin/prisma`, **after** a backup and a sandbox rehearsal on a copy of the database, **before** the PM2 switch (ADR-029). Never by hand | wrapper |
+| Roll back | `deploy/07-rollback.sh --env production` (previous tag — instant, a symlink switch) · `--restore-db <dump>` for data (safety snapshot first, confirmed) | operator |
 | Scheduler | `p4tc-reminders.timer` (01:00 UTC) installed by the bootstrap — §7's crontab is not needed | bootstrap |
 
 **Free Learning content (Milestone 14, 2026-09-27).** After the first promotion and `db:seed`, load the book and the questions from the same tools image — `deploy/README.md` §3 step 7 gives the two commands (the docx is copied to `/opt/p4tc/book/` once; the question JSON files ship in the image). Nothing in Free Learning is seeded by `db:seed`.

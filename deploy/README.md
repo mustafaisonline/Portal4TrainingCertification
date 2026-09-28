@@ -71,7 +71,7 @@ No registry, no Docker anywhere in this diagram. `../Dockerfile` stays in the re
 
 ## 3. First-time setup (Phase B — each step is a RED action the founder takes)
 
-1. **DigitalOcean**: Droplet (Ubuntu 24.04, SGP1 — K5; **$12/mo, 2 GiB/1 vCPU — K4, re-decided 2026-09-27**), Managed PostgreSQL 16 (Basic, same VPC — K3). **No Container Registry** (K6 reversed — nothing to push there any more). On the cluster create `p4tc_production` and `p4tc_migration`, both set to UTC: `ALTER DATABASE p4tc_production SET timezone TO 'UTC';` (and `p4tc_migration`). Add the Droplet to the cluster's trusted sources.
+1. **DigitalOcean**: Droplet (Ubuntu 24.04, ~~SGP1~~ **NYC1 — K5 re-decided 2026-09-27, founder's explicit choice while creating the Droplet**; **$12/mo, 2 GiB/1 vCPU — K4, re-decided 2026-09-27**), Managed PostgreSQL 16 (Basic, **same VPC/region as the Droplet — NYC1** — K3). **No Container Registry** (K6 reversed — nothing to push there any more). On the cluster create `p4tc_production` and `p4tc_migration`, both set to UTC: `ALTER DATABASE p4tc_production SET timezone TO 'UTC';` (and `p4tc_migration`). Add the Droplet to the cluster's trusted sources. **Done 2026-09-27:** Droplet created — `198.199.67.177` (public), `10.116.0.3` (private), hostname `p4tc-production`.
 2. **DNS (K13)**: `A` records for the apex and `www` → the Droplet's IP.
 3. **Fill `deploy/config.env`** (`SERVER_HOST`, `DOMAIN`) — names only — commit it.
 4. **Bootstrap** (as root, once):

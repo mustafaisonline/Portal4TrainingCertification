@@ -150,7 +150,7 @@ jobs:
           rm -rf release && mkdir -p release/prisma release/src
           cp -r .next release/.next && rm -rf release/.next/cache
           cp -r public release/public
-          cp package.json package-lock.json next.config.ts release/
+          cp package.json package-lock.json next.config.ts prisma.config.ts release/
           cp prisma/schema.prisma release/prisma/schema.prisma
           cp -r prisma/migrations release/prisma/migrations
           cp -r src/generated release/src/generated

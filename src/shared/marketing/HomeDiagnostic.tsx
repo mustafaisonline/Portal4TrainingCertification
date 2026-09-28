@@ -33,6 +33,7 @@ import {
 } from "@/shared/signature/diagnostic";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
+import { ConfirmDialog } from "@/shared/ui/ConfirmDialog";
 
 /**
  * P01 — Homepage "Not sure where you stand?" band: the real, live
@@ -74,6 +75,7 @@ export function HomeDiagnostic({ questions, teaser = false }: { questions: Diagn
     () => Array(questions.length).fill(null) as (string | null)[],
   );
   const [hydrated, setHydrated] = useState(false);
+  const [confirmingCancel, setConfirmingCancel] = useState(false);
 
   // Resume in-progress answers, if any — same key as /diagnostic, so a
   // walkthrough started there (or here) continues from either entry point.
@@ -171,14 +173,11 @@ export function HomeDiagnostic({ questions, teaser = false }: { questions: Diagn
     persist(nextIndex, answers);
   };
 
-  const handleCancel = () => {
-    if (
-      !window.confirm(
-        "Cancel this diagnostic? Your answers so far will be discarded.",
-      )
-    ) {
-      return;
-    }
+  // Confirmed through the portal's own dialog, never window.confirm
+  // (founder, 2026-09-28).
+  const handleCancel = () => setConfirmingCancel(true);
+  const confirmCancel = () => {
+    setConfirmingCancel(false);
     try {
       window.localStorage.removeItem(DIAGNOSTIC_PROGRESS_STORAGE_KEY);
     } catch {
@@ -200,6 +199,7 @@ export function HomeDiagnostic({ questions, teaser = false }: { questions: Diagn
     // `background` is unlayered and beats any bg-* utility). mt-12: the
     // standardised 48px inter-section gap.
     <section
+      id="free-skill-diagnostic"
       className="night relative mt-12 overflow-hidden"
       style={{
         background:
@@ -255,8 +255,8 @@ export function HomeDiagnostic({ questions, teaser = false }: { questions: Diagn
                   the Knowledge Check arrives with M14 Phase 4. */}
               <p className="mt-5 max-w-[480px] border-t border-[var(--color-line)] pt-4 text-body-sm text-[var(--color-ink-faint)]" data-testid="diagnostic-not-saved">
                 Always free, no account needed — and your answers stay in your browser: we do not save your diagnostic
-                results. For the book, the topic self-checks and the free Knowledge Check, see Free Training &amp;
-                Certification.
+                results. For the book and its topic self-checks, see the Knowledge Hub; for the free Knowledge
+                Check, see Free Certifications.
               </p>
             </div>
           </div>
@@ -308,6 +308,15 @@ export function HomeDiagnostic({ questions, teaser = false }: { questions: Diagn
           </>
         )}
       </div>
+      <ConfirmDialog
+        open={confirmingCancel}
+        title="Cancel this diagnostic?"
+        body="Your answers so far will be discarded."
+        confirmLabel="Cancel the test"
+        cancelLabel="Keep going"
+        onConfirm={confirmCancel}
+        onCancel={() => setConfirmingCancel(false)}
+      />
     </section>
   );
 }

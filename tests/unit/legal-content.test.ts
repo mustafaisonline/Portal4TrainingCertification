@@ -31,11 +31,13 @@ describe("legal drafts (src/content/legal)", () => {
   it.each(documents)("$key is a clearly-labelled draft", (doc) => {
     expect(doc.status).toBe("draft");
     // Each draft carries its own date: the refund policy moved to 2026-09-27 when the
-    // Knowledge Check unlock sentence was added (M14 Phase 5), so a consent recorded
-    // after that day names the text it accepted.
+    // Knowledge Check unlock sentence was added (M14 Phase 5); all three moved to
+    // 2026-09-28 when the founder had them synced with the portal's current state
+    // (Free Learning, the Knowledge Check, one-off payments, "Training" wording) —
+    // so a consent recorded after that day names the text it accepted.
     expect(doc.version).toMatch(/^DRAFT-\d{4}-\d{2}-\d{2}$/);
     expect(doc.lastUpdated).toBe(doc.version.slice("DRAFT-".length));
-    expect(doc.version).toBe(doc.key === "refund" ? "DRAFT-2026-09-27" : "DRAFT-2026-09-21");
+    expect(doc.version).toBe("DRAFT-2026-09-28");
     expect(doc.summary.trim().length).toBeGreaterThan(0);
   });
 

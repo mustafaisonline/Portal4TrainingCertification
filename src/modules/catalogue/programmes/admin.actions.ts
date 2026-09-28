@@ -7,10 +7,13 @@ import { trainingAccess, type TrainingAccess } from "./admin-access";
 import { CONTENT_FIELDS, FEE_REGIONS, PROGRAMME_LEVELS, PROGRAMME_STATUSES, type ContentFieldErrors, type ContentForm } from "./constants";
 import {
   createTraining,
+  deleteTraining,
   removeTrainingFee,
+  removeTrainingPhoto,
   replaceTrainingFormats,
   replaceTrainingModules,
   saveTrainingFee,
+  saveTrainingPhoto,
   setTrainingStatus,
   TrainingRefusedError,
   TrainingValidationError,
@@ -285,4 +288,70 @@ export async function setTrainingStatusAction(_prev: FormState<{ status?: string
   } catch (err) {
     return failure(err, "status");
   }
+}
+
+/* ------------------------------------------------------------------ photo */
+
+export type PhotoActionResult = { status: "idle" } | { status: "error"; message: string } | { status: "saved" };
+
+export async function uploadTrainingPhotoAction(formData: FormData): Promise<PhotoActionResult> {
+  const g = await gate();
+  if ("error" in g) return { status: "error", message: g.error.status === "error" ? g.error.message : "You do not have permission to manage trainings." };
+  const id = text(formData, "id");
+  if (!isUuid(id)) return { status: "error", message: "This training could not be found." };
+  const photo = formData.get("photo");
+  if (!(photo instanceof File) || photo.size === 0) return { status: "error", message: "Choose an image first." };
+  try {
+    const bytes = new Uint8Array(await photo.arrayBuffer());
+    await withTransaction((tx) => saveTrainingPhoto(tx, id, g.access.scope, bytes, photo.type, g.access.user.id));
+  } catch (err) {
+    if (err instanceof TrainingValidationError) return { status: "error", message: Object.values(err.fieldErrors)[0] ?? CHECK };
+    if (err instanceof TrainingRefusedError) return { status: "error", message: err.message };
+    console.error(`[catalogue] training photo upload failed for ${id}:`, err instanceof Error ? err.message : err);
+    return { status: "error", message: "We could not save the photo. Please try again." };
+  }
+  revalidate(id, text(formData, "slug") || undefined);
+  return { status: "saved" };
+}
+
+export async function removeTrainingPhotoAction(formData: FormData): Promise<PhotoActionResult> {
+  const g = await gate();
+  if ("error" in g) return { status: "error", message: g.error.status === "error" ? g.error.message : "You do not have permission to manage trainings." };
+  const id = text(formData, "id");
+  if (!isUuid(id)) return { status: "error", message: "This training could not be found." };
+  try {
+    await withTransaction((tx) => removeTrainingPhoto(tx, id, g.access.scope, g.access.user.id));
+  } catch (err) {
+    if (err instanceof TrainingRefusedError) return { status: "error", message: err.message };
+    console.error(`[catalogue] training photo removal failed for ${id}:`, err instanceof Error ? err.message : err);
+    return { status: "error", message: "We could not remove the photo. Please try again." };
+  }
+  revalidate(id, text(formData, "slug") || undefined);
+  return { status: "saved" };
+}
+
+export type DeleteTrainingResult = { status: "idle" } | { status: "deleted" } | { status: "error"; message: string };
+
+/** Founder, 2026-09-28: delete a training with no history — platform
+ *  administrators ONLY (a Trainer retires nothing; even their own draft
+ *  outlives them here). The repository refuses anything referenced. */
+export async function deleteTrainingAction(_prev: DeleteTrainingResult, formData: FormData): Promise<DeleteTrainingResult> {
+  const { authorise } = await import("@/modules/identity/session");
+  const adminGate = await authorise("platform_admin");
+  if (!adminGate.ok) return { status: "error", message: "Only a platform administrator can delete a training." };
+  const id = text(formData, "id");
+  if (!isUuid(id)) return { status: "error", message: "This training could not be found." };
+  let outcome: "deleted" | "not_found" | "in_use";
+  try {
+    outcome = await withTransaction((tx) => deleteTraining(tx, id, adminGate.user.id));
+  } catch (err) {
+    console.error(`[catalogue] training deletion failed for ${id}:`, err instanceof Error ? err.message : err);
+    return { status: "error", message: "The training could not be deleted. Please try again." };
+  }
+  if (outcome === "not_found") return { status: "error", message: "This training could not be found." };
+  if (outcome === "in_use") {
+    return { status: "error", message: "This training has dates, orders, certificates, coupons or reviews — those are records. Unlist it instead of deleting." };
+  }
+  revalidate();
+  return { status: "deleted" };
 }

@@ -1,4 +1,4 @@
-import { getPrisma, withTransaction } from "@/db/prisma";
+import { getPrisma, withTransaction, type Tx } from "@/db/prisma";
 import {
   findOfferingById,
   listUpcomingPublicOfferings,
@@ -399,4 +399,32 @@ export async function transferRegistration(input: TransferRegistrationInput): Pr
     }),
   );
   return { registrationId: row.id, from, to };
+}
+
+/** Founder, 2026-09-28: the person may delete an order of their own from
+ *  Orders & receipts — but ONLY one that never became money or a seat: not
+ *  paid, not refunded, no payment row, no registration, no live hold. A
+ *  paid order is a financial record (the same rule as used coupons and
+ *  unlocked results) and is refused. Audited; the audit row is the
+ *  surviving trace. */
+export async function deleteOrderForUser(tx: Tx, input: { orderId: string; userId: string; now?: Date }): Promise<"deleted" | "not_found" | "is_record" | "pending_live"> {
+  const now = input.now ?? new Date();
+  const order = await tx.order.findFirst({
+    where: { id: input.orderId, userId: input.userId },
+    select: { id: true, status: true, kind: true, amountMinor: true, currency: true, createdAt: true, expiresAt: true, couponId: true, payment: { select: { id: true } }, registration: { select: { id: true } }, renewal: { select: { id: true } } },
+  });
+  if (!order) return "not_found";
+  if (["paid", "refunded", "partially_refunded"].includes(order.status) || order.payment || order.registration || order.renewal) return "is_record";
+  // A live pending order still holds a seat — finish or let it expire first.
+  if (order.status === "pending" && order.expiresAt.getTime() > now.getTime()) return "pending_live";
+  await writeAudit(tx, {
+    actorUserId: input.userId,
+    action: "order.deleted",
+    entityType: "order",
+    entityId: order.id,
+    before: { status: order.status, kind: order.kind, amountMinor: Number(order.amountMinor), currency: order.currency, createdAt: order.createdAt.toISOString() },
+    after: null,
+  });
+  await tx.order.delete({ where: { id: order.id } });
+  return "deleted";
 }

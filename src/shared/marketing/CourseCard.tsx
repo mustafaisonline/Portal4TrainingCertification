@@ -19,6 +19,7 @@ import {
   priceCardMeta,
   priceRegionMeta,
   pricesForCard,
+  type DeliveryFormatRecord,
   type PriceCard,
   type PriceRegion,
   type ProgrammeContent,
@@ -26,10 +27,17 @@ import {
   type ProgrammeSummary,
 } from "@/modules/catalogue/programmes/types";
 
-/** A summary, optionally carrying the joined parts a full record has. */
+/** A summary, optionally carrying the joined parts a full record has.
+ *  `deliveryFormats`, when present, drives the per-format timeline row
+ *  (founder, 2026-09-28); without it the card falls back to the plain
+ *  format-name list it always showed. */
 export type CourseCardProgramme = ProgrammeSummary & {
   prices?: ProgrammePriceRecord[];
   content?: ProgrammeContent;
+  deliveryFormats?: DeliveryFormatRecord[];
+  /** The trainer(s), when the caller loaded them — the card then links each
+   *  dedicated page (founder, 2026-09-28). */
+  experts?: { slug: string; name: string }[];
 };
 
 /** The published price per region, or — for a mentorship programme, which
@@ -118,8 +126,21 @@ export function CourseCard({
   return (
     <Card
       variant="panel"
-      className="flex h-full flex-col border border-[var(--color-line)]"
+      className="flex h-full flex-col overflow-hidden border border-[var(--color-line)]"
     >
+      {/* Training photo (founder, 2026-09-28) — omitted, not a placeholder,
+          when the training has none (Rule: nothing invented). */}
+      {course.hasPhoto && (
+        <img
+          src={`/programs/images/${course.id}?v=${course.photoUpdatedAt ? new Date(course.photoUpdatedAt).getTime() : 0}`}
+          alt=""
+          // aspect-[3/2] + object-top (founder, 2026-09-28, from the /programs
+          // snapshot): the 16:9 centre crop clipped the top of the head on a
+          // portrait photo — a slightly taller frame anchored to the top keeps
+          // the head fully in view whatever the upload's own shape.
+          className="-mx-6 -mt-6 mb-5 aspect-[3/2] w-[calc(100%+3rem)] max-w-none object-cover object-top"
+        />
+      )}
       <div className="mb-4 flex flex-wrap items-center gap-2">
         <Chip tone="primary">{levelLabel(course.level)}</Chip>
         {course.flagship && <Chip>Flagship</Chip>}
@@ -155,9 +176,19 @@ export function CourseCard({
           {course.audienceSummary}
         </dd>
 
-        <dt className="text-label">Delivery</dt>
+        <dt className="text-label">{course.deliveryFormats && course.deliveryFormats.length > 0 ? "Timelines" : "Delivery"}</dt>
         <dd className="leading-snug text-[var(--color-ink-quiet)]">
-          {course.formats.join(" · ")}
+          {course.deliveryFormats && course.deliveryFormats.length > 0 ? (
+            <ul className="flex flex-col gap-0.5" data-testid="card-timelines">
+              {course.deliveryFormats.map((f) => (
+                <li key={f.code}>
+                  <span className="font-medium text-[var(--color-ink)]">{f.name}</span> — {f.durationLabel}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            course.formats.join(" · ")
+          )}
         </dd>
 
         {pricing && homeRegion && homePrice && !showAllRegions && (
@@ -258,6 +289,25 @@ export function CourseCard({
             })}
           </ul>
         </div>
+      )}
+      {/* Founder, 2026-09-28: the photo on the card is the trainer, so the
+          card says who that is and links their dedicated page. */}
+      {course.experts && course.experts.length > 0 && (
+        <p className="text-body-sm mb-3 text-[var(--color-ink-quiet)]">
+          Trainer:{" "}
+          {course.experts.map((e, i) => (
+            <span key={e.slug}>
+              {i > 0 ? ", " : ""}
+              <Link
+                href={`/trainers/${e.slug}`}
+                className="font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
+                data-testid="card-trainer"
+              >
+                {e.name} →
+              </Link>
+            </span>
+          ))}
+        </p>
       )}
       <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-2 pt-2">
         <Button href={`/schedule?training=${course.slug}`} data-testid="card-register">

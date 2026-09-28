@@ -4,6 +4,7 @@ import { notFound, redirect } from "next/navigation";
 import { attemptPage, getAttemptForUser } from "@/modules/free-learning/knowledge-check.repository";
 import { requireUser } from "@/modules/identity/session";
 import { AttemptForm } from "./AttemptForm";
+import { CancelAttempt } from "./CancelAttempt";
 
 /*
  * /free-learning/knowledge-check/[attemptId] — the check itself (Milestone
@@ -26,17 +27,21 @@ export default async function AttemptPage({ params, searchParams }: { params: Pr
   return (
     <section className="bg-[var(--color-ground-tint)]">
       <div className="mx-auto max-w-[860px] px-4 py-12 sm:px-6 sm:py-16">
-        <Link href="/free-learning/knowledge-check" className="text-body-sm mb-2 inline-block py-1 text-[var(--color-primary)] underline underline-offset-4">
+        <Link href="/free-certifications" className="text-body-sm mb-2 inline-block py-1 text-[var(--color-primary)] underline underline-offset-4">
           ← Knowledge Check
         </Link>
         <p className="text-label mb-3 text-[var(--color-primary)]">{attempt.size}-question Knowledge Check</p>
         <h1 className="text-display mb-2" data-testid="attempt-title">
           Questions {page.from}–{page.to} of {attempt.size}
         </h1>
-        <p className="text-body-sm mb-6 text-[var(--color-ink-quiet)]" data-testid="attempt-progress">
-          Page {page.page} of {page.pages} · {page.answered} of {attempt.size} answered so far. Your answers are saved when you move between pages;
-          finish from any page.
-        </p>
+        <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+          <p className="text-body-sm text-[var(--color-ink-quiet)]" data-testid="attempt-progress">
+            Page {page.page} of {page.pages} · {page.answered} of {attempt.size} answered so far. Your answers are saved when you move between pages;
+            finish from any page.
+          </p>
+          {/* Founder, 2026-09-28: a free test can be walked away from. */}
+          <CancelAttempt attemptId={attempt.id} />
+        </div>
         <AttemptForm attemptId={attempt.id} page={page} size={attempt.size} />
       </div>
     </section>

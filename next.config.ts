@@ -22,6 +22,26 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
 
   /*
+   * next/image local sources (Next 16 requires query-string sources to be
+   * allow-listed, and listing ANY pattern blocks every path not listed).
+   * Found 2026-09-28 when the training photo (served from the database at
+   * /programs/images/<id>?v=<upload time>) 500'd both training pages: the
+   * `?v=` cache-buster needs `search` left OPEN on that one pattern (the
+   * route serves only validated ≤600 KB JPEG/PNG/WebP from Postgres, so an
+   * arbitrary `v` only busts a cache). The four static folders keep
+   * `search: ""` — no query belongs on them.
+   */
+  images: {
+    localPatterns: [
+      { pathname: "/programs/images/**" },
+      { pathname: "/experts/**", search: "" },
+      { pathname: "/hrd-corp/**", search: "" },
+      { pathname: "/books/**", search: "" },
+      { pathname: "/delivery/**", search: "" },
+    ],
+  },
+
+  /*
    * Permanent redirects (308) from the routes retired 2026-09-26 when the
    * founder renamed the public catalogue to /programs ("Trainings"): the old
    * flagship URL and the generic /courses/<slug> detail path. Kept so any
@@ -42,8 +62,20 @@ const nextConfig: NextConfig = {
       // Milestone 14 Phase 1 (founder decisions P15–P17, 2026-09-27): HRD
       // Corp merged into Trainings; the diagnostic lives under Free Learning.
       { source: "/hrd-corp", destination: "/programs#hrd-corp", permanent: true },
-      { source: "/diagnostic", destination: "/free-learning", permanent: true },
+      // 2026-09-28 ("New change" item 2): the free page no longer hosts a
+      // diagnostic section, so the retired URL points at the page itself.
+      { source: "/diagnostic", destination: "/free-learning/diagnostic", permanent: true },
       { source: "/diagnostic/result", destination: "/free-learning/diagnostic/result", permanent: true },
+      // 2026-09-28 (founder): "Free Training & Certification" split into two
+      // pages (DR-04); the combined landing is retired. Later the same day
+      // the topics list merged into /free-trainings (the Knowledge Hub) and
+      // the Knowledge Check start screen into /free-certifications ("no need
+      // for two pages"), so those two list under their new homes too; a
+      // topic's own reading page and a running check's pages are unchanged.
+      { source: "/free-learning", destination: "/free-trainings", permanent: true },
+      { source: "/free-learning/topics", destination: "/free-trainings", permanent: true },
+      { source: "/free-learning/knowledge-check", destination: "/free-certifications", permanent: true },
+      { source: "/for-organisations", destination: "/programs#for-organisations", permanent: true },
     ];
   },
 

@@ -11,25 +11,25 @@ import {
   DIAGNOSTIC_RESULT_STORAGE_KEY,
   INSIGHT_CARD,
   type CompletedDiagnostic,
+  type DrawnDiagnosticQuestion,
   type SavedProgress,
 } from "@/shared/signature/diagnostic";
 import { Card } from "@/shared/ui/Card";
 import { Button } from "@/shared/ui/Button";
+import { ConfirmDialog } from "@/shared/ui/ConfirmDialog";
+import { drawDiagnosticQuestionsAction } from "./actions";
 
 /*
- * PORTED 2026-09-21 from project-artifacts/mockup/app/diagnostic/page.tsx (ADR-045)
- * Changed: the mockup page's client walkthrough (idle → question → insight →
- * finish), now fed `questions` by the server page instead of importing a
- * hardcoded list. Storage keys come from the shared `@/shared/signature/
- * diagnostic` contract (`p4tc:…`, formerly `mockup:…`). On finish the raw
- * answers are written to the shared completed-diagnostic record and the
- * visitor is sent to /diagnostic/result — the mockup's canned
- * `selectFixture(unsureCount)` routing is NOT ported. The mid-flow insight
- * card's canned copy (`INSIGHT_CARD.text`, "You're reading strongly on data
- * modelling…") asserted a reading of the visitor's answers that nothing
- * computes, so it is replaced by a factual line derived from the remaining
- * questions' capability areas; its position (`afterQuestionIndex`) is kept.
- * Own `<PublicShell>` wrapper dropped.
+ * PORTED 2026-09-21 from project-artifacts/mockup/app/diagnostic/page.tsx
+ * (ADR-045); REWIRED 2026-09-28 (founder's "New change" item 1): the
+ * walkthrough no longer receives a fixed question list from the server page.
+ * Pressing Start calls `drawDiagnosticQuestionsAction`, which draws a fresh
+ * random ten from the reviewed Free Learning question bank — so every start
+ * is a genuinely new set. The resumable per-browser record therefore carries
+ * its own drawn set (`SavedProgress.questions`); an old record without one
+ * cannot be matched to any set and is not resumed. On finish the raw answers
+ * still go to /free-learning/diagnostic/result through the shared
+ * per-browser record — nothing is saved server-side, unchanged.
  */
 
 /**
@@ -37,61 +37,76 @@ import { Button } from "@/shared/ui/Button";
  * direction 2026-09-07), with the progress indicator and "Save & exit" link
  * in their own slim bar beneath the main header, only while `stage !== "idle"`.
  *
- * localStorage boundary: temporary, resumable in-progress answers and the
- * completed hand-off to the result page, purely for UX continuity. Never
- * read as an authoritative source of truth anywhere else, and it holds no
- * business rule or computed result — only the raw answers. Clearing it
- * loses nothing but an unfinished attempt or an unviewed summary.
+ * localStorage boundary: temporary, resumable in-progress answers (with the
+ * drawn set they belong to) and the completed hand-off to the result page,
+ * purely for UX continuity. Never read as an authoritative source of truth
+ * anywhere else, and it holds no business rule or computed result — only
+ * public questions and the raw answers. Clearing it loses nothing but an
+ * unfinished attempt or an unviewed summary.
  */
 
-export type DiagnosticFlowQuestion = {
-  code: string;
-  scenario: string;
-  options: string[];
-  domainCode: string;
-  domainName: string;
-};
+export type DiagnosticFlowQuestion = DrawnDiagnosticQuestion;
 
 type Stage = "idle" | "question" | "insight";
 
-export function DiagnosticFlow({ questions }: { questions: DiagnosticFlowQuestion[] }) {
+function isDrawnSet(value: unknown): value is DrawnDiagnosticQuestion[] {
+  return (
+    Array.isArray(value) &&
+    value.length > 0 &&
+    value.every(
+      (q) =>
+        typeof q === "object" &&
+        q !== null &&
+        typeof (q as DrawnDiagnosticQuestion).code === "string" &&
+        typeof (q as DrawnDiagnosticQuestion).scenario === "string" &&
+        Array.isArray((q as DrawnDiagnosticQuestion).options) &&
+        typeof (q as DrawnDiagnosticQuestion).domainName === "string",
+    )
+  );
+}
+
+export function DiagnosticFlow() {
   const router = useRouter();
   const [stage, setStage] = useState<Stage>("idle");
+  const [questions, setQuestions] = useState<DiagnosticFlowQuestion[] | null>(null);
   const [index, setIndex] = useState(0);
-  const [answers, setAnswers] = useState<(string | null)[]>(
-    () => Array(questions.length).fill(null) as (string | null)[],
-  );
+  const [answers, setAnswers] = useState<(string | null)[]>([]);
   const [hydrated, setHydrated] = useState(false);
+  const [starting, setStarting] = useState(false);
+  const [startFailed, setStartFailed] = useState(false);
+  const [confirmingCancel, setConfirmingCancel] = useState(false);
 
-  // Resume in-progress answers, if any (spec: "resumed" state on P05).
-  // Only a genuine in-progress attempt (at least one real answer) skips the
-  // idle stage — a fresh visitor still sees it, even if a stale all-null
-  // record exists in storage.
+  // Resume an in-progress draw, if any (spec: "resumed" state on P05).
+  // Only a genuine in-progress attempt — its own drawn set plus at least one
+  // real answer — skips the idle stage; anything else starts fresh.
   useEffect(() => {
     try {
       const raw = window.localStorage.getItem(DIAGNOSTIC_PROGRESS_STORAGE_KEY);
       if (raw) {
         const saved: SavedProgress = JSON.parse(raw);
-        if (Array.isArray(saved.answers) && saved.answers.length === questions.length) {
-          const hasAnyAnswer = saved.answers.some((a) => a !== null);
-          if (hasAnyAnswer) {
-            setAnswers(saved.answers);
-            setIndex(Math.min(saved.index, questions.length - 1));
-            setStage("question");
-          }
+        if (
+          isDrawnSet(saved.questions) &&
+          Array.isArray(saved.answers) &&
+          saved.answers.length === saved.questions.length &&
+          saved.answers.some((a) => a !== null)
+        ) {
+          setQuestions(saved.questions);
+          setAnswers(saved.answers);
+          setIndex(Math.min(saved.index, saved.questions.length - 1));
+          setStage("question");
         }
       }
     } catch {
       // Corrupt or unavailable storage — start fresh. Never authoritative.
     }
     setHydrated(true);
-  }, [questions.length]);
+  }, []);
 
-  const persist = (nextIndex: number, nextAnswers: (string | null)[]) => {
+  const persist = (nextIndex: number, nextAnswers: (string | null)[], set: DiagnosticFlowQuestion[]) => {
     try {
       window.localStorage.setItem(
         DIAGNOSTIC_PROGRESS_STORAGE_KEY,
-        JSON.stringify({ index: nextIndex, answers: nextAnswers } satisfies SavedProgress),
+        JSON.stringify({ index: nextIndex, answers: nextAnswers, questions: set } satisfies SavedProgress),
       );
     } catch {
       // Best-effort only — the walkthrough still works without it.
@@ -100,29 +115,47 @@ export function DiagnosticFlow({ questions }: { questions: DiagnosticFlowQuestio
 
   if (!hydrated) return null;
 
-  const current = questions[index];
+  const current = questions?.[index];
   const selected = answers[index] ?? null;
 
-  const handleStart = () => {
-    setIndex(0);
-    setStage("question");
+  const handleStart = async () => {
+    if (starting) return;
+    setStarting(true);
+    setStartFailed(false);
+    try {
+      const result = await drawDiagnosticQuestionsAction();
+      if (!result.ok) {
+        setStartFailed(true);
+        return;
+      }
+      setQuestions(result.questions);
+      setAnswers(Array(result.questions.length).fill(null) as (string | null)[]);
+      setIndex(0);
+      setStage("question");
+    } catch {
+      setStartFailed(true);
+    } finally {
+      setStarting(false);
+    }
   };
 
   const handleSelect = (option: string) => {
+    if (!questions) return;
     const next = [...answers];
     next[index] = option;
     setAnswers(next);
-    persist(index, next);
+    persist(index, next, questions);
   };
 
   const handleBack = () => {
-    if (index === 0) return;
+    if (index === 0 || !questions) return;
     const prevIndex = index - 1;
     setIndex(prevIndex);
-    persist(prevIndex, answers);
+    persist(prevIndex, answers, questions);
   };
 
   const handleContinue = () => {
+    if (!questions) return;
     const questionNumber = index + 1;
     const isLast = questionNumber === questions.length;
 
@@ -154,40 +187,44 @@ export function DiagnosticFlow({ questions }: { questions: DiagnosticFlowQuestio
 
     const nextIndex = index + 1;
     setIndex(nextIndex);
-    persist(nextIndex, answers);
+    persist(nextIndex, answers, questions);
   };
 
   const dismissInsight = () => {
+    if (!questions) return;
     setStage("question");
     const nextIndex = index + 1;
     setIndex(nextIndex);
-    persist(nextIndex, answers);
+    persist(nextIndex, answers, questions);
   };
 
   // "Cancel test": distinct from "Save & exit" — this discards the
-  // in-progress answers rather than preserving them for resume, and lands
-  // back on this page's own idle stage.
-  const handleCancel = () => {
-    if (!window.confirm("Cancel this diagnostic? Your answers so far will be discarded.")) {
-      return;
-    }
+  // in-progress answers (and their drawn set) rather than preserving them
+  // for resume, and lands back on this page's own idle stage. The next
+  // start draws a brand-new set. Confirmed through the portal's own dialog,
+  // never window.confirm (founder, 2026-09-28).
+  const handleCancel = () => setConfirmingCancel(true);
+  const confirmCancel = () => {
+    setConfirmingCancel(false);
     try {
       window.localStorage.removeItem(DIAGNOSTIC_PROGRESS_STORAGE_KEY);
     } catch {
       // Best-effort only.
     }
-    setAnswers(Array(questions.length).fill(null) as (string | null)[]);
+    setQuestions(null);
+    setAnswers([]);
     setIndex(0);
     setStage("idle");
   };
 
-  // Factual mid-flow copy: the capability areas the remaining questions
-  // cover, read from the question set itself — no reading of the answers.
-  const remainingAreas = Array.from(new Set(questions.slice(index + 1).map((q) => q.domainName)));
-  const insightText =
-    remainingAreas.length > 0
-      ? `You've answered ${index + 1} of ${questions.length}. The remaining questions look at how you reason about ${formatList(remainingAreas)}.`
-      : `You've answered ${index + 1} of ${questions.length}.`;
+  // Factual mid-flow copy: the topics the remaining questions come from,
+  // read from the drawn set itself — no reading of the answers.
+  const remainingAreas = questions ? Array.from(new Set(questions.slice(index + 1).map((q) => q.domainName))) : [];
+  const insightText = questions
+    ? remainingAreas.length > 0
+      ? `You've answered ${index + 1} of ${questions.length}. The remaining questions come from ${formatList(remainingAreas)}.`
+      : `You've answered ${index + 1} of ${questions.length}.`
+    : "";
 
   return (
     <div
@@ -197,7 +234,7 @@ export function DiagnosticFlow({ questions }: { questions: DiagnosticFlowQuestio
           "radial-gradient(55% 90% at 12% 25%, rgba(37,99,235,0.26), transparent 70%), radial-gradient(40% 70% at 92% 80%, rgba(34,211,238,0.09), transparent 70%), linear-gradient(180deg, #071a35 0%, #061226 100%)",
       }}
     >
-      {stage !== "idle" && (
+      {stage !== "idle" && questions && (
         <div className="relative border-b border-[var(--color-line)] bg-[var(--color-ground-raised)]/70 px-6 py-2.5 backdrop-blur">
           <div className="mx-auto flex max-w-[900px] items-center justify-between">
             <p className="text-label">
@@ -222,18 +259,23 @@ export function DiagnosticFlow({ questions }: { questions: DiagnosticFlowQuestio
                   <p className="text-label mb-2 text-[var(--color-primary)]">Free skill diagnostic</p>
                   <h1 className="text-h1 mb-2">Not sure where you stand?</h1>
                   <p className="text-body-sm text-[var(--color-ink-quiet)]">
-                    The free diagnostic locates you across our capability areas and names your gaps in plain
-                    language — before you commit to anything.
+                    Ten questions, drawn fresh from the Knowledge Hub&rsquo;s question bank every time you
+                    start — a quick check of basic data and AI concepts before you commit to anything.
                   </p>
                   {/* Founder direction 2026-09-27 (M14 item C): nothing is saved. */}
                   <p className="text-body-sm mt-3 text-[var(--color-ink-faint)]" data-testid="diagnostic-not-saved">
                     Free, no account needed — and your answers stay in your browser: we do not save your diagnostic results.
                   </p>
+                  {startFailed && (
+                    <p className="text-body-sm mt-3 text-[var(--color-ink)]" data-testid="diagnostic-start-failed" role="alert">
+                      The questions could not be loaded just now. Please try again.
+                    </p>
+                  )}
                 </div>
               </div>
               <DiagnosticTrustCard className="sm:w-[280px]" />
             </div>
-            <DiagnosticStartCard onStart={handleStart} />
+            <DiagnosticStartCard onStart={() => void handleStart()} />
           </div>
         ) : stage === "insight" ? (
           <Card variant="feature" className="mx-auto max-w-[560px] text-center">
@@ -255,6 +297,15 @@ export function DiagnosticFlow({ questions }: { questions: DiagnosticFlowQuestio
           />
         ) : null}
       </div>
+      <ConfirmDialog
+        open={confirmingCancel}
+        title="Cancel this diagnostic?"
+        body="Your answers so far will be discarded. The next start draws a fresh set of questions."
+        confirmLabel="Cancel the test"
+        cancelLabel="Keep going"
+        onConfirm={confirmCancel}
+        onCancel={() => setConfirmingCancel(false)}
+      />
     </div>
   );
 }

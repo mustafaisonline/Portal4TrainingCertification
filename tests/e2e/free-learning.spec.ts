@@ -69,14 +69,14 @@ async function expectNoAxeViolations(page: Page) {
 }
 
 test("topics list and search; a topic page with its database-served image and neighbours; the landing links the topics", async ({ page, request }) => {
-  await page.goto("/free-learning/topics");
+  await page.goto("/free-trainings");
   await expect(page.getByTestId("topics-title")).toContainText("Topics from");
   await expect(page.locator(`[data-testid="topic-card"][data-slug="${PREFIX}-entity"]`)).toContainText("E2E What is an Entity?");
   await expectNoAxeViolations(page);
 
   await page.getByRole("searchbox", { name: "Search topics" }).fill("lakehouse");
   await page.getByTestId("topics-search").click();
-  await expect(page).toHaveURL(/\/free-learning\/topics\?q=lakehouse$/);
+  await expect(page).toHaveURL(/\/free-trainings\?tab=content&q=lakehouse$/); // the hidden `tab` field precedes `q` in the form
   await expect(page.locator(`[data-testid="topic-card"][data-slug="${PREFIX}-lakehouse"]`)).toHaveCount(1);
   await expect(page.locator(`[data-testid="topic-card"][data-slug="${PREFIX}-entity"]`)).toHaveCount(0);
   await expect(page.getByTestId("topics-count")).toContainText("lakehouse");
@@ -93,18 +93,27 @@ test("topics list and search; a topic page with its database-served image and ne
   await expect(page.getByTestId("topic-quiz-coming")).toBeVisible();
   await expectNoAxeViolations(page);
 
+  // The retired combined landing and the retired topics-list URL both land
+  // on the Knowledge Hub, which hosts the topics browser itself (founder,
+  // 2026-09-28: "no need for two pages").
   await page.goto("/free-learning");
-  await expect(page.getByTestId("browse-topics")).toContainText("topics");
+  await expect(page).toHaveURL(/\/free-trainings$/);
+  await expect(page.getByTestId("topics-title")).toBeVisible();
+  await page.goto("/free-learning/topics");
+  await expect(page).toHaveURL(/\/free-trainings$/);
 });
 
-test("the topics list paginates ten a page (founder, 2026-09-27)", async ({ page }) => {
-  // A dedicated set of 12 topics, isolated by a search word unique to this
-  // test, so the page count is exact regardless of other fixtures in the
-  // shared test database. Cleaned up by this file's afterAll (same PREFIX).
+test("the topics list paginates ten a page, with First/Previous/Next/Last (founder, 2026-09-27); a fresh search resets to page 1", async ({ page }) => {
+  // 23 topics = 3 pages (10, 10, 3) — isolated by a search word unique to
+  // this test, so the page count is exact regardless of other fixtures in
+  // the shared test database. Cleaned up by this file's afterAll (same
+  // PREFIX). Three pages is the minimum that actually distinguishes First
+  // from Previous and Last from Next: on page 1, Next → 2 but Last → 3; on
+  // the final page, Previous → 2 but First → 1.
   const { withTransaction } = await import("../../src/db/prisma");
   const { replaceTopicFromImport } = await import("../../src/modules/free-learning/book.repository");
   const word = "e2epagequertyzz";
-  for (let i = 1; i <= 12; i += 1) {
+  for (let i = 1; i <= 23; i += 1) {
     await withTransaction((tx) =>
       replaceTopicFromImport(
         tx,
@@ -114,28 +123,88 @@ test("the topics list paginates ten a page (founder, 2026-09-27)", async ({ page
     );
   }
 
-  await page.goto(`/free-learning/topics?q=${word}`);
-  await expect(page.getByTestId("topics-count")).toContainText("12 topics match");
-  await expect(page.getByTestId("topics-count")).toContainText("page 1 of 2");
+  await page.goto(`/free-trainings?q=${word}`);
+  await expect(page.getByTestId("topics-count")).toContainText("23 topics match");
+  await expect(page.getByTestId("topics-count")).toContainText("page 1 of 3");
   await expect(page.getByTestId("topic-card")).toHaveCount(10);
+  await expect(page.getByTestId("topics-page-first")).toHaveCount(0);
   await expect(page.getByTestId("topics-page-prev")).toHaveCount(0);
+  const nextHref = await page.getByTestId("topics-page-next").getAttribute("href");
+  const lastHref = await page.getByTestId("topics-page-last").getAttribute("href");
+  expect(nextHref).toContain("page=2");
+  expect(lastHref).toContain("page=3");
+  expect(nextHref).not.toBe(lastHref); // Last is not just an alias of Next on a page where they differ
   await expectNoAxeViolations(page);
 
-  await page.getByTestId("topics-page-next").click();
-  await expect(page).toHaveURL(new RegExp(`q=${word}.*page=2|page=2.*q=${word}`));
-  await expect(page.getByTestId("topic-card")).toHaveCount(2);
+  // Last jumps straight to the final (partial) page.
+  await page.getByTestId("topics-page-last").click();
+  await expect(page).toHaveURL(/page=3/);
+  await expect(page.getByTestId("topics-count")).toContainText("page 3 of 3");
+  await expect(page.getByTestId("topic-card")).toHaveCount(3);
   await expect(page.getByTestId("topics-page-next")).toHaveCount(0);
+  await expect(page.getByTestId("topics-page-last")).toHaveCount(0);
+  const firstHref = await page.getByTestId("topics-page-first").getAttribute("href");
+  const prevHref = await page.getByTestId("topics-page-prev").getAttribute("href");
+  expect(firstHref).toContain("page=1");
+  expect(prevHref).toContain("page=2");
+  expect(firstHref).not.toBe(prevHref); // First is not just an alias of Previous here either
   await expectNoAxeViolations(page);
 
-  await page.getByTestId("topics-page-prev").click();
+  // First jumps straight back to page 1.
+  await page.getByTestId("topics-page-first").click();
+  await expect(page).toHaveURL(/page=1/);
   await expect(page.getByTestId("topic-card")).toHaveCount(10);
 
   // A fresh search drops any earlier ?page and lands back on page 1.
-  await page.goto("/free-learning/topics?page=2");
+  await page.goto("/free-trainings?page=2");
   await page.getByRole("searchbox", { name: "Search topics" }).fill(word);
   await page.getByTestId("topics-search").click();
-  await expect(page).toHaveURL(new RegExp(`\\?q=${word}$`));
+  await expect(page).toHaveURL(/\?tab=content&q=e2epagequertyzz$/); // the hidden `tab` field precedes `q` in the form
   await expect(page.getByTestId("topic-card")).toHaveCount(10);
+});
+
+test("Content and Index views (founder, 2026-09-28): Content is the default on landing; Index lists names only, unpaginated, and a search stays on the active tab", async ({ page }) => {
+  const { withTransaction } = await import("../../src/db/prisma");
+  const { replaceTopicFromImport } = await import("../../src/modules/free-learning/book.repository");
+  const word = "e2etabqzxjk";
+  for (let i = 1; i <= 3; i += 1) {
+    await withTransaction((tx) =>
+      replaceTopicFromImport(
+        tx,
+        { position: 85000 + i, slug: `${PREFIX}-tab-${i}`, title: `E2E Tab Topic ${i} ${word}`, sourceHeading: `E2E Tab Topic ${i}`, bodyHtml: `<p>${word} body text</p>`, bodyText: `${word} body text`, wordCount: 3, images: [], publish: true, importedAt: new Date() },
+        (id) => id,
+      ),
+    );
+  }
+
+  // Landing bare defaults to Content, with the excerpt visible.
+  await page.goto(`/free-trainings?q=${word}`);
+  await expect(page.getByTestId("topics-tab-content")).toHaveAttribute("aria-current", "page");
+  await expect(page.getByTestId("topics-tab-index")).not.toHaveAttribute("aria-current", "page");
+  await expect(page.getByTestId("topics-list")).toContainText("body text");
+  await expect(page.getByTestId("topics-index-list")).toHaveCount(0);
+  await expectNoAxeViolations(page);
+
+  // Index: names only (no excerpt), the full matching list, no pagination controls.
+  await page.getByTestId("topics-tab-index").click();
+  await expect(page).toHaveURL(/tab=index/);
+  await expect(page.getByTestId("topics-tab-index")).toHaveAttribute("aria-current", "page");
+  await expect(page.getByTestId("index-item")).toHaveCount(3);
+  await expect(page.getByTestId("topics-index-list")).not.toContainText("body text");
+  await expect(page.getByTestId("topics-list")).toHaveCount(0);
+  await expect(page.getByTestId("topics-pagination")).toHaveCount(0);
+  await expectNoAxeViolations(page);
+
+  // A search submitted from Index stays on Index.
+  await page.getByRole("searchbox", { name: "Search topics" }).fill(word);
+  await page.getByTestId("topics-search").click();
+  await expect(page).toHaveURL(/tab=index/);
+  await expect(page.getByTestId("index-item")).toHaveCount(3);
+
+  // Switching back to Content restores the excerpt view.
+  await page.getByTestId("topics-tab-content").click();
+  await expect(page).toHaveURL(/(?:\?|&)q=e2etabqzxjk(?:&|$)/);
+  await expect(page.getByTestId("topics-list")).toContainText("body text");
 });
 
 test("the administrator unpublishes a topic — page and image become 404, the list hides it — and publishes it again; both audited", async ({ page, request }) => {
@@ -166,7 +235,7 @@ test("the administrator unpublishes a topic — page and image become 404, the l
 
   expect((await request.get(`/free-learning/topics/${PREFIX}-entity`)).status()).toBe(404);
   expect((await request.get(`/free-learning/images/${imageId}`)).status()).toBe(404);
-  await page.goto("/free-learning/topics");
+  await page.goto("/free-trainings");
   await expect(page.locator(`[data-testid="topic-card"][data-slug="${PREFIX}-entity"]`)).toHaveCount(0);
 
   await page.goto("/admin/free-learning");

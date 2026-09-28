@@ -1,7 +1,7 @@
 import type { Db } from "@/db/prisma";
 import { getPrisma } from "@/db/prisma";
 import { normaliseModulePoints } from "./module-points";
-import { PRICE_REGIONS, type PriceRegion, type ProgrammeContent, type ProgrammePriceRecord, type ProgrammeRecord, type ProgrammeSummary } from "./types";
+import { PRICE_REGIONS, type DeliveryFormatRecord, type PriceRegion, type ProgrammeContent, type ProgrammePriceRecord, type ProgrammeRecord, type ProgrammeSummary } from "./types";
 
 /*
  * Programme repository (module: catalogue). Pages read programmes ONLY
@@ -20,7 +20,7 @@ const include = {
 type Row = NonNullable<Awaited<ReturnType<typeof loadBySlug>>>;
 
 function loadBySlug(db: Db, slug: string) {
-  return db.programme.findUnique({ where: { slug }, include });
+  return db.programme.findUnique({ where: { slug }, include, omit: { photo: true } });
 }
 
 function toRecord(row: Row): ProgrammeRecord {
@@ -42,6 +42,8 @@ function toRecord(row: Row): ProgrammeRecord {
     valueProposition: row.valueProposition,
     content: row.content as ProgrammeContent,
     sortOrder: row.sortOrder,
+    hasPhoto: row.photoMime !== null,
+    photoUpdatedAt: row.photoUpdatedAt,
     modules: row.modules.map((m) => ({
       position: m.position,
       title: m.title,
@@ -117,16 +119,22 @@ export async function listPublishedProgrammes(db: Db = getPrisma()): Promise<Pro
     orderBy: { sortOrder: "asc" },
     select: {
       id: true, slug: true, title: true, subtitle: true, level: true, status: true, flagship: true,
-      durationLabel: true, formats: true, certificateLabel: true, audienceSummary: true, summary: true, sortOrder: true,
+      durationLabel: true, formats: true, certificateLabel: true, audienceSummary: true, summary: true, sortOrder: true, photoMime: true, photoUpdatedAt: true,
     },
   });
-  return rows.map((r) => ({ ...r, formats: r.formats as string[] }));
+  return rows.map((r) => ({ ...r, formats: r.formats as string[], hasPhoto: r.photoMime !== null, photoUpdatedAt: r.photoUpdatedAt }));
 }
 
 /** Listing card with its published prices and editorial content — the
  *  /programs hub (2026-09-26). `content` is carried for the mentorship
  *  programme's per-package entry price; fee notes are on the rows. */
-export type ProgrammeCard = ProgrammeSummary & { prices: ProgrammePriceRecord[]; content: ProgrammeContent };
+export type ProgrammeCard = ProgrammeSummary & {
+  prices: ProgrammePriceRecord[];
+  content: ProgrammeContent;
+  deliveryFormats: DeliveryFormatRecord[];
+  /** The training's trainer(s) — the card links to each dedicated page. */
+  experts: { slug: string; name: string }[];
+};
 
 /** Published trainings whose title, subtitle or summary contains the words
  *  typed (case-insensitive, every word must match) — the training half of the
@@ -145,10 +153,10 @@ export async function searchPublishedProgrammes(query: string, db: Db = getPrism
     take: 20,
     select: {
       id: true, slug: true, title: true, subtitle: true, level: true, status: true, flagship: true,
-      durationLabel: true, formats: true, certificateLabel: true, audienceSummary: true, summary: true, sortOrder: true,
+      durationLabel: true, formats: true, certificateLabel: true, audienceSummary: true, summary: true, sortOrder: true, photoMime: true, photoUpdatedAt: true,
     },
   });
-  return rows.map((r) => ({ ...r, formats: r.formats as string[] }));
+  return rows.map((r) => ({ ...r, formats: r.formats as string[], hasPhoto: r.photoMime !== null, photoUpdatedAt: r.photoUpdatedAt }));
 }
 
 export async function listPublishedProgrammesWithPrices(db: Db = getPrisma()): Promise<ProgrammeCard[]> {
@@ -157,16 +165,34 @@ export async function listPublishedProgrammesWithPrices(db: Db = getPrisma()): P
     orderBy: { sortOrder: "asc" },
     select: {
       id: true, slug: true, title: true, subtitle: true, level: true, status: true, flagship: true,
-      durationLabel: true, formats: true, certificateLabel: true, audienceSummary: true, summary: true, sortOrder: true,
+      durationLabel: true, formats: true, certificateLabel: true, audienceSummary: true, summary: true, sortOrder: true, photoMime: true, photoUpdatedAt: true,
       prices: true,
       content: true,
+      // Founder, 2026-09-28: each format's own timeline shown on the card, not just the name.
+      formatsDelivery: { orderBy: { position: "asc" } },
+      // Founder, 2026-09-28: the card links to the trainer's dedicated page.
+      experts: { include: { expert: { select: { slug: true, name: true } } } },
     },
   });
   return rows.map((r) => ({
     ...r,
     formats: r.formats as string[],
     content: r.content as ProgrammeContent,
+    hasPhoto: r.photoMime !== null,
+    photoUpdatedAt: r.photoUpdatedAt,
+    experts: r.experts.map((e) => ({ slug: e.expert.slug, name: e.expert.name })),
     prices: r.prices.map(toPriceRecord).sort((a, b) => order(a.region) - order(b.region)),
+    deliveryFormats: r.formatsDelivery.map((f) => ({
+      id: f.id,
+      code: f.code,
+      name: f.name,
+      badge: f.badge,
+      durationLabel: f.durationLabel,
+      scheduleLabel: f.scheduleLabel,
+      totalTimeLabel: f.totalTimeLabel,
+      bestFor: f.bestFor as string[],
+      position: f.position,
+    })),
   }));
 }
 
@@ -197,4 +223,14 @@ export async function listPublishedProgrammesBySlugs(slugs: string[], db: Db = g
   if (slugs.length === 0) return [];
   const all = await listPublishedProgrammes(db);
   return all.filter((p) => slugs.includes(p.slug));
+}
+
+/** The training photo's bytes, for /programs/images/<id> (founder,
+ *  2026-09-28). Keyed by programme id — a UUID, never a guessable slug —
+ *  so a draft training's photo can be previewed in the admin editor before
+ *  publish, the same as any other asset id-keyed route in this codebase. */
+export async function getProgrammePhoto(id: string, db: Db = getPrisma()): Promise<{ bytes: Uint8Array; mime: string; updatedAt: Date } | null> {
+  const row = await db.programme.findUnique({ where: { id }, select: { photo: true, photoMime: true, photoUpdatedAt: true } });
+  if (!row?.photo || !row.photoMime || !row.photoUpdatedAt) return null;
+  return { bytes: row.photo, mime: row.photoMime, updatedAt: row.photoUpdatedAt };
 }

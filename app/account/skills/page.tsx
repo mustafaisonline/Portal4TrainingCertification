@@ -25,7 +25,7 @@ export default async function SkillsProfilePage() {
       <Card variant="panel" className="p-6 sm:p-8">
         <p className="text-body-lg font-medium">Your skills profile is not available yet.</p>
         <Link
-          href="/free-learning"
+          href="/#free-skill-diagnostic"
           className="text-body-sm mt-3 inline-block py-2 text-[var(--color-primary)] underline underline-offset-4"
         >
           Take the free diagnostic

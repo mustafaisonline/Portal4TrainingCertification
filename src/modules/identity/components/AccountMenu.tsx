@@ -2,24 +2,28 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { accountNavItems } from "@/shared/chrome/account-nav";
 import { initialsOf } from "@/shared/util/initials";
 
 /*
  * PORTED 2026-09-21 from project-artifacts/mockup/components/account/
  * AccountMenu.tsx (ADR-045). Changed: no demo session and no `demoParticipant`
- * — the signed-in person's name, email and admin flag arrive as props from the
- * server component (AccountControls), which read them from OUR `users` and
- * `user_roles` rows; initials are computed from the name. The menu lists the
- * sidebar's screens (account-nav.ts, one source) and, for a platform_admin,
- * the one admin screen that exists (/admin). "Sign out" is a plain link to
- * /sign-out, which performs the real sign-out. The signed-out branch and
- * `MobileAccountActions` were not ported — AccountControls renders those.
- * The `hidden sm:block` wrapper is gone: PublicShell already hides the slot
- * below `sm`.
+ * — the signed-in person's name, email and role flags arrive as props from
+ * the server component (AccountControls), which read them from OUR `users`
+ * and `user_roles` rows; initials are computed from the name. "Sign out" is
+ * a plain link to /sign-out, which performs the real sign-out. The
+ * signed-out branch and `MobileAccountActions` were not ported —
+ * AccountControls renders those. The `hidden sm:block` wrapper is gone:
+ * PublicShell already hides the slot below `sm`.
+ *
+ * RESTRUCTURED 2026-09-28 (founder: "In burger menu, we need … Name … Email
+ * … Line … User Dashboard … Trainer Dashboard … Admin Dashboard … Line …
+ * Sign-Out"): the per-tab links from account-nav.ts (Profile, My Trainings,
+ * Certifications, …) are gone from this menu — they live inside /account
+ * itself, reached now through the single "User Dashboard" entry. Trainer
+ * Dashboard and Admin Dashboard both point at /admin, already scoped to
+ * what each role may see (Milestone 12); either, both or neither shows,
+ * depending on the signed-in person's roles.
  */
-
-const adminLinks = [{ href: "/admin", label: "Admin dashboard" }];
 
 const itemClass =
   "block rounded-[var(--radius-plate)] px-3 py-2 text-body-sm text-[var(--color-ink-quiet)] hover:bg-[var(--color-ground-tint)] hover:text-[var(--color-ink)]";
@@ -27,12 +31,14 @@ const itemClass =
 export function AccountMenu({
   name,
   email,
+  isTrainer,
   isAdmin,
   hasPhoto = false,
   photoVersion = 0,
 }: {
   name: string;
   email: string;
+  isTrainer: boolean;
   isAdmin: boolean;
   /** Milestone 5a: show the profile photo (from the session-gated route)
    *  instead of the initials. `photoVersion` busts the browser cache. */
@@ -93,25 +99,26 @@ export function AccountMenu({
             <span className="block truncate text-body-sm text-[var(--color-ink-quiet)]">{email}</span>
           </p>
           <ul className="border-t border-[var(--color-line)] pt-1">
-            {accountNavItems.map((l) => (
-              <li key={l.href}>
-                <Link href={l.href} onClick={() => setOpen(false)} className={itemClass}>
-                  {l.label}
+            <li>
+              <Link href="/account" onClick={() => setOpen(false)} className={itemClass}>
+                User Dashboard
+              </Link>
+            </li>
+            {isTrainer && (
+              <li>
+                <Link href="/admin" onClick={() => setOpen(false)} className={itemClass}>
+                  Trainer Dashboard
                 </Link>
               </li>
-            ))}
+            )}
+            {isAdmin && (
+              <li>
+                <Link href="/admin" onClick={() => setOpen(false)} className={itemClass}>
+                  Admin Dashboard
+                </Link>
+              </li>
+            )}
           </ul>
-          {isAdmin && (
-            <ul className="mt-1 border-t border-[var(--color-line)] pt-1">
-              {adminLinks.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} onClick={() => setOpen(false)} className={itemClass}>
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          )}
           <Link
             href="/sign-out"
             onClick={() => setOpen(false)}

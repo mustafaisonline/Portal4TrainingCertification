@@ -140,6 +140,11 @@ export type ProgrammeRecord = {
   valueProposition: string;
   content: ProgrammeContent;
   sortOrder: number;
+  /** Founder, 2026-09-28: the training photo shown on its card and detail
+   *  page. `photoUpdatedAt` is the cache-busting query param on its image
+   *  URL — the bytes themselves are served only through /programs/images/<id>. */
+  hasPhoto: boolean;
+  photoUpdatedAt: Date | null;
   modules: ProgrammeModuleRecord[];
   deliveryFormats: DeliveryFormatRecord[];
   prices: ProgrammePriceRecord[];
@@ -149,7 +154,21 @@ export type ProgrammeRecord = {
 /** Listing card shape — no editorial payload. */
 export type ProgrammeSummary = Pick<
   ProgrammeRecord,
-  "id" | "slug" | "title" | "subtitle" | "level" | "status" | "flagship" | "durationLabel" | "formats" | "certificateLabel" | "audienceSummary" | "summary" | "sortOrder"
+  | "id"
+  | "slug"
+  | "title"
+  | "subtitle"
+  | "level"
+  | "status"
+  | "flagship"
+  | "durationLabel"
+  | "formats"
+  | "certificateLabel"
+  | "audienceSummary"
+  | "summary"
+  | "sortOrder"
+  | "hasPhoto"
+  | "photoUpdatedAt"
 >;
 
 /** How a region pays. Founder rule 2026-09-26: Malaysia pays by card in

@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { withTransaction } from "@/db/prisma";
 import { getCurrentUser } from "@/modules/identity/session";
-import { finishAttempt, KnowledgeCheckError, saveAnswers, startAttempt } from "./knowledge-check.repository";
+import { cancelUnfinishedAttempt, deleteFinishedAttempts, finishAttempt, KnowledgeCheckError, saveAnswers, startAttempt } from "./knowledge-check.repository";
 
 /*
  * Knowledge Check actions (Milestone 14 Phase 4). Every action requires a
@@ -67,4 +67,47 @@ export async function saveKnowledgeCheckPageAction(_prev: KnowledgeCheckState, f
   if (intent === "finish") redirect(`/free-learning/knowledge-check/${attemptId}/result`);
   if (intent === "previous") redirect(`/free-learning/knowledge-check/${attemptId}?page=${Math.max(1, page - 1)}`);
   redirect(`/free-learning/knowledge-check/${attemptId}?page=${page + 1}`);
+}
+
+/** Founder, 2026-09-28: delete selected finished results from Free
+ *  Certifications. Ownership and the refusal rules live in the repository;
+ *  the confirmation dialog is the caller's. */
+export async function deleteKnowledgeCheckResultsAction(_prev: KnowledgeCheckState, formData: FormData): Promise<KnowledgeCheckState> {
+  const user = await getCurrentUser();
+  if (!user) return { status: "error", message: SESSION_ENDED };
+  const ids = formData.getAll("attempt").filter((v): v is string => typeof v === "string");
+  if (ids.length === 0) return { status: "error", message: "Tick at least one result to delete." };
+  try {
+    const { deleted, refused } = await withTransaction((tx) => deleteFinishedAttempts(tx, { userId: user.id, attemptIds: ids }));
+    revalidatePath("/free-certifications");
+    revalidatePath("/account", "layout");
+    if (deleted === 0) return { status: "error", message: "Nothing was deleted — a result with a document unlock is a record and stays." };
+    return {
+      status: "saved",
+      message: refused > 0 ? `${deleted} deleted; ${refused} kept (a result with a document unlock is a record and stays).` : `${deleted} ${deleted === 1 ? "result" : "results"} deleted.`,
+    };
+  } catch (err) {
+    console.error(`[knowledge-check] delete failed for user ${user.id}:`, err instanceof Error ? err.message : err);
+    return { status: "error", message: "The results could not be deleted. Please try again." };
+  }
+}
+
+/** Founder, 2026-09-28: "if user want to cancel it in the middle of the
+ *  test" — cancels (deletes) the person's own UNFINISHED attempt and
+ *  returns to Free Certifications. Confirmed client-side by the portal's
+ *  own dialog before this is called. */
+export async function cancelKnowledgeCheckAttemptAction(_prev: KnowledgeCheckState, formData: FormData): Promise<KnowledgeCheckState> {
+  const user = await getCurrentUser();
+  if (!user) return { status: "error", message: SESSION_ENDED };
+  const attemptId = String(formData.get("attemptId") ?? "").trim();
+  let cancelled = false;
+  try {
+    cancelled = await withTransaction((tx) => cancelUnfinishedAttempt(tx, { attemptId, userId: user.id }));
+  } catch (err) {
+    console.error(`[knowledge-check] cancel failed for attempt ${attemptId}:`, err instanceof Error ? err.message : err);
+    return { status: "error", message: "The check could not be cancelled. Please try again." };
+  }
+  if (!cancelled) return { status: "error", message: "This check could not be found, or it is already finished." };
+  revalidatePath("/free-certifications");
+  redirect("/free-certifications");
 }

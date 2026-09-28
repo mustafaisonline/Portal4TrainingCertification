@@ -377,3 +377,28 @@ function definedOnly<T extends object>(patch: T): Partial<T> {
   for (const [k, v] of Object.entries(patch)) if (v !== undefined) (out as Record<string, unknown>)[k] = v;
   return out;
 }
+
+/** Founder, 2026-09-28: delete a date from /admin/offerings — ONLY one that
+ *  nothing references: no orders, no registrations, no certificates (the
+ *  database Restricts them anyway; the pre-check gives an honest sentence).
+ *  A date people acted on is cancelled, never deleted. Audited. */
+export async function deleteOffering(tx: Tx, id: string, actorUserId: string): Promise<"deleted" | "not_found" | "in_use"> {
+  if (!isUuid(id)) return "not_found";
+  const offering = await tx.scheduledOffering.findUnique({
+    where: { id },
+    select: { programmeId: true, modality: true, startsOn: true, endsOn: true, status: true, _count: { select: { orders: true, registrations: true, certificates: true } } },
+  });
+  if (!offering) return "not_found";
+  const c = offering._count;
+  if (c.orders > 0 || c.registrations > 0 || c.certificates > 0) return "in_use";
+  await writeAudit(tx, {
+    actorUserId,
+    action: "offering.deleted",
+    entityType: "scheduled_offering",
+    entityId: id,
+    before: { programmeId: offering.programmeId, modality: offering.modality, startsOn: offering.startsOn.toISOString(), endsOn: offering.endsOn.toISOString(), status: offering.status },
+    after: null,
+  });
+  await tx.scheduledOffering.delete({ where: { id } });
+  return "deleted";
+}

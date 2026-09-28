@@ -9,8 +9,10 @@ import { EnquiryForm } from "./EnquiryForm";
  * Changed: the inert enquiry form is now the real `EnquiryForm` (server action);
  * the page reads `kind` and `programme` from the query string so other pages
  * can pre-set the enquiry type and the programme it concerns; the
- * "For organisations" route card now links to /for-organisations (the mockup
- * linked back to /contact-us itself, predating that page); the mockup's own
+ * "For organisations" route card links to /programs#for-organisations (the
+ * mockup linked back to /contact-us itself, predating that section; the
+ * dedicated /for-organisations page it linked to for a while was retired
+ * 2026-09-28, merged into /programs); the mockup's own
  * <PublicShell> wrapper dropped (app/(public)/layout.tsx provides it);
  * metadata title shortened. Copy otherwise unchanged.
  */
@@ -50,7 +52,7 @@ const routes = [
     title: "Capability for your team",
     body: "Private cohorts, tailored engagements and on-site delivery, in Malaysia or internationally. These start with a conversation about the gap, not a quote.",
     cta: "How we work with teams",
-    href: "/for-organisations",
+    href: "/programs#for-organisations",
   },
   {
     label: "For practitioners",

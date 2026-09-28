@@ -90,6 +90,21 @@ async function expectInvestmentCards(page: Page, slug: string, figures: Record<"
   await expect(investment.getByText(/no online payment yet/i)).toHaveCount(0);
 }
 
+// Founder, 2026-09-28: the training cards carry the trainer's photo, so one
+// training gets a real photo here — which also guards the regression where
+// next/image 500'd BOTH training pages over the photo route's `?v=` query
+// (images.localPatterns): the test database had no photos, so no test ever
+// rendered the filled state.
+test.beforeAll(async () => {
+  const { readFileSync } = await import("node:fs");
+  const { getPrisma } = await import("../../src/db/prisma");
+  const photo = readFileSync("public/experts/mustafa-qizilbash-v2.jpg");
+  await getPrisma().programme.update({
+    where: { slug: "learn-vibe-coding" },
+    data: { photo, photoMime: "image/jpeg", photoUpdatedAt: new Date() },
+  });
+});
+
 test("/programs lists exactly the published trainings in order, Learn Vibe Coding first, each linked, priced per region in full words at 75% off", async ({ page }) => {
   const { listPublishedProgrammes } = await import("../../src/modules/catalogue/programmes/repository");
   const published = await listPublishedProgrammes();
@@ -187,20 +202,35 @@ test("/programs lists exactly the published trainings in order, Learn Vibe Codin
   await expect(withoutHrdCorpRow.locator(".line-through")).toHaveText("RM 5,000");
   await expect(withoutHrdCorpRow).toContainText(/minimum 25 participants/i);
 
+  // Founder, 2026-09-28: the card shows the training photo when one is set
+  // (Learn Vibe Coding got one in beforeAll) and links the trainer's
+  // dedicated page — followed and asserted below.
+  await expect(lvc.locator("img[src^='/programs/images/']")).toBeVisible();
+  await expect(lvc.getByTestId("card-trainer")).toHaveAttribute("href", "/trainers/mustafa-qizilbash");
+  await page.goto("/trainers/mustafa-qizilbash");
+  await expect(page.getByTestId("trainer-name")).toHaveText("Mustafa Qizilbash");
+  await expect(page.getByTestId("trainer-hrd-line")).toContainText("Yes");
+  await expectNoAxeViolations(page);
+  // An unknown trainer is a real 404.
+  expect((await page.goto("/trainers/nobody-here"))?.status()).toBe(404);
+  await page.goto("/programs");
+
   // No unlisted programme is offered.
   const { getPrisma } = await import("../../src/db/prisma");
   const unlisted = await getPrisma().programme.findMany({ where: { status: "unlisted" }, select: { title: true } });
   const body = await page.locator("body").innerText();
   for (const u of unlisted) expect(body, u.title).not.toContain(u.title);
 
-  // Closing CTA row.
-  await expect(page.getByRole("link", { name: "Take the free diagnostic" })).toHaveAttribute("href", "/free-learning/diagnostic");
-  await expect(page.getByRole("link", { name: "Training for a team?" })).toHaveAttribute("href", "/for-organisations");
+  // Closing CTA row. Founder, 2026-09-28 ("New change" item 1): the free
+  // diagnostic's only entry point is the home page band, so the button that
+  // sat here is gone; the row now carries the team-delivery CTA alone.
+  await expect(page.getByRole("link", { name: "Take the free diagnostic" })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "See how team delivery works" })).toHaveAttribute("href", "#for-organisations");
 
-  // Header nav: "Trainings" is present and current here.
+  // Header nav: the trainings item is present and current here.
   const nav = page.getByRole("navigation", { name: "Primary", exact: true });
-  await expect(nav.getByRole("link", { name: "Trainings & HRD Corp" })).toHaveAttribute("href", "/programs");
-  await expect(nav.getByRole("link", { name: "Trainings & HRD Corp" })).toHaveAttribute("aria-current", "page");
+  await expect(nav.getByRole("link", { name: "Professional Trainings" })).toHaveAttribute("href", "/programs");
+  await expect(nav.getByRole("link", { name: "Professional Trainings" })).toHaveAttribute("aria-current", "page");
   await expect(nav.getByRole("link", { name: "Programme" })).toHaveCount(0);
   await expectNoAxeViolations(page);
 });
@@ -211,7 +241,11 @@ test("/programs/learn-vibe-coding renders the training with its sections, the re
   expect(training, "seeded Learn Vibe Coding").not.toBeNull();
 
   const res = await page.goto("/programs/learn-vibe-coding");
+  // 200, WITH the photo set (beforeAll): guards the 2026-09-28 regression
+  // where next/image 500'd this page over the photo URL's `?v=` query
+  // until images.localPatterns allowed it.
   expect(res?.status()).toBe(200);
+  await expect(page.locator("img[src*='programs%2Fimages'], img[src^='/programs/images/']").first()).toBeVisible();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(training!.title);
   await expect(page.getByRole("link", { name: "← All trainings" })).toHaveAttribute("href", "/programs");
   await expect(page.getByTestId("relationship-note")).toHaveText(training!.content.relationshipNote!);
@@ -226,7 +260,7 @@ test("/programs/learn-vibe-coding renders the training with its sections, the re
   );
   await expect(hero.getByRole("link", { name: "See dates and register" })).toHaveAttribute("href", "/schedule?training=learn-vibe-coding"); // M13: the page lists no dates; the schedule filtered to this training does
   // The "Trainings" nav item is current on a training page too.
-  await expect(page.getByRole("navigation", { name: "Primary", exact: true }).getByRole("link", { name: "Trainings & HRD Corp" })).toHaveAttribute(
+  await expect(page.getByRole("navigation", { name: "Primary", exact: true }).getByRole("link", { name: "Professional Trainings" })).toHaveAttribute(
     "aria-current",
     "page",
   );
@@ -502,6 +536,7 @@ test("the retired URLs redirect permanently to the /programs paths", async ({ re
 });
 
 test.afterAll(async () => {
-  const { disconnectPrisma } = await import("../../src/db/prisma");
+  const { getPrisma, disconnectPrisma } = await import("../../src/db/prisma");
+  await getPrisma().programme.update({ where: { slug: "learn-vibe-coding" }, data: { photo: null, photoMime: null, photoUpdatedAt: null } });
   await disconnectPrisma();
 });

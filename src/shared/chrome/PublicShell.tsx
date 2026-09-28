@@ -106,7 +106,10 @@ export function PublicShell({
               );
             })}
           </nav>
-          {/* M14 P17: the search bar replaces the "Search Candidate" item. */}
+          {/* M14 P17: the search bar replaces the "Search Candidate" item.
+              Tried as its own full-width second row 2026-09-28 (founder item 7),
+              reverted the same day — founder: "Its new location is not looking
+              good. Bring it back to the previous location", beside Reviews. */}
           {/* 1024–1279 px: the four items fit only without the input, so the search
               is a magnifier that opens /search (its own box); the input returns at 1280 px. */}
           <Link
@@ -128,7 +131,9 @@ export function PublicShell({
               placeholder={siteSearch.placeholder}
               autoComplete="off"
               maxLength={200}
-              className="text-body-sm w-56 rounded-[var(--radius-plate)] border border-[var(--color-line-strong)] bg-[var(--color-ground)] px-3 py-1.5 text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] xl:w-64"
+              // w-44/w-48 (founder, 2026-09-28: "Reduce the size of the Search
+              // Bar") — was w-56/w-64.
+              className="text-body-sm w-44 rounded-[var(--radius-plate)] border border-[var(--color-line-strong)] bg-[var(--color-ground)] px-3 py-1.5 text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] xl:w-48"
             />
           </form>
           <div className="flex shrink-0 items-center gap-3">

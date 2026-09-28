@@ -11,8 +11,9 @@ import { isModulePointGroup } from "@/modules/catalogue/programmes/module-points
 import { listPublishedExperts } from "@/modules/catalogue/experts/repository";
 import { ImageFrame } from "@/shared/marketing/ImageFrame";
 import {
+  BuilderDeskIllustration,
   CourseInDeliveryIllustration,
-  TeachingDetailIllustration,
+  WorkshopRoomIllustration,
 } from "@/shared/marketing/DeliveryIllustrations";
 import { CourseCard } from "@/shared/marketing/CourseCard";
 import { DeliveryFormats } from "@/shared/marketing/DeliveryFormats";
@@ -196,6 +197,8 @@ export default async function CourseDetailPage({
           minWidth={2000}
           note="reusable across pages"
           illustration={<CourseInDeliveryIllustration />}
+          src={course.hasPhoto ? `/programs/images/${course.id}?v=${course.photoUpdatedAt ? new Date(course.photoUpdatedAt).getTime() : 0}` : undefined}
+          alt={course.hasPhoto ? "" : undefined}
         />
       </section>
 
@@ -224,6 +227,16 @@ export default async function CourseDetailPage({
                 ))}
               </ul>
             )}
+            {/* Founder, 2026-09-28: an original image for this section —
+                a hand-authored SVG scene (the established 2026-09-05
+                technique; drawn from no reference, never a fake photo). */}
+            <div className="mt-8">
+              <ImageFrame
+                subject="A builder's desk mid-build — laptop, AI chat, the running product"
+                ratio="16 / 9"
+                illustration={<BuilderDeskIllustration />}
+              />
+            </div>
           </div>
           <Card variant="panel" className="h-fit">
             <p className="text-label mb-4">Training highlights</p>
@@ -546,12 +559,15 @@ export default async function CourseDetailPage({
               {/* Pedagogy is the most abstract writing on the page; a
                   photograph of the teaching itself is what makes it
                   concrete. Detail over wide shot. */}
+              {/* Founder, 2026-09-28: a richer original scene for the
+                  learning-experience section — same hand-authored SVG
+                  technique as everywhere else. */}
               <ImageFrame
                 subject="The teaching itself — whiteboard, a worked exercise, or a group working through a case"
                 ratio="3 / 2"
                 minWidth={1400}
                 note="detail beats a wide shot"
-                illustration={<TeachingDetailIllustration />}
+                illustration={<WorkshopRoomIllustration />}
               />
             </div>
             <div>

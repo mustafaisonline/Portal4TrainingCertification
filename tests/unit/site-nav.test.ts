@@ -32,18 +32,29 @@ describe("site navigation", () => {
     expect(isActive("/about-us", "/trainers")).toBe(false);
   });
 
-  it("the header is exactly the founder's five items (M14 Phase 1, 2026-09-27); About Us is footer-only; the search bar targets /search", () => {
-    expect(primaryNav.map((i) => i.label)).toEqual(["Home", "Trainings & HRD Corp", "Free Training & Certification", "Trainers", "Reviews"]);
-    expect(primaryNav).toContainEqual({ href: "/programs", label: "Trainings & HRD Corp" });
-    expect(primaryNav).toContainEqual({ href: "/free-learning", label: "Free Training & Certification" });
+  it("the header is exactly the founder's five items (2026-09-28: Knowledge Hub / Free Certifications / Professional Trainings, in that order); About Us is footer-only; the search bar targets /search", () => {
+    // Founder, 2026-09-28 (three renames the same day): "Free Trainings" →
+    // "Free Knowledge Hub" → "Knowledge Hub"; "Paid Trainings" →
+    // "Professional Trainings", moved next to Free Certifications. URLs
+    // unchanged.
+    expect(primaryNav.map((i) => i.label)).toEqual(["Home", "Knowledge Hub", "Free Certifications", "Professional Trainings", "Reviews"]);
+    expect(primaryNav).toContainEqual({ href: "/programs", label: "Professional Trainings" });
+    expect(primaryNav).toContainEqual({ href: "/free-trainings", label: "Knowledge Hub" });
+    expect(primaryNav).toContainEqual({ href: "/free-certifications", label: "Free Certifications" });
+    expect(primaryNav.map((i) => i.href)).not.toContain("/trainers");
+    expect(primaryNav.map((i) => i.href)).not.toContain("/for-organisations");
     expect(primaryNav.map((i) => i.href)).not.toContain("/about-us");
     expect(footerExplore).toContainEqual({ href: "/about-us", label: "About Us" });
-    expect(footerExplore).toContainEqual({ href: "/free-learning", label: "Free Training & Certification" });
+    expect(footerExplore).toContainEqual({ href: "/free-trainings", label: "Knowledge Hub" });
+    expect(footerExplore).toContainEqual({ href: "/free-certifications", label: "Free Certifications" });
+    expect(footerExplore).toContainEqual({ href: "/programs", label: "Professional Trainings" });
+    expect(footerExplore).toContainEqual({ href: "/trainers", label: "Trainers" }); // moved here from the header
+    expect(footerExplore.map((i) => i.href)).not.toContain("/for-organisations"); // merged into the trainings page, not a page any more
     expect(siteSearch.action).toBe("/search");
     expect(siteSearch.placeholder).toBe("Search Candidates or Training");
     for (const item of [...primaryNav, ...footerExplore]) {
       expect(item.label, item.href).not.toMatch(/^(Programme|Courses|HRD Corp|Free Diagnostic|Search Candidate)$/);
-      expect(item.href).not.toMatch(/DataBlueprint-AIVibeCoding|^\/courses|^\/hrd-corp|^\/diagnostic/);
+      expect(item.href).not.toMatch(/DataBlueprint-AIVibeCoding|^\/courses|^\/hrd-corp|^\/diagnostic|^\/free-learning$/);
     }
   });
 });

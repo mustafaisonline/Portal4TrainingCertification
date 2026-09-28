@@ -2,14 +2,15 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 import { accountNavItems } from "../../src/shared/chrome/account-nav";
 import { createAdminUser, createCertificateUser, createEndedOfferingFixture, createPaidRegistrationFixture, deleteTestOffering } from "../helpers/certificates-db";
-import { completeProfileByEmail, deleteTestUser, resetRateLimits, STRONG_PASSWORD, uniqueEmail } from "../helpers/identity-db";
+import { completeProfileByEmail, deleteTestUser, grantRoleByEmail, resetRateLimits, STRONG_PASSWORD, uniqueEmail } from "../helpers/identity-db";
 
 /*
  * Signed-in account shell — end to end through the real screens against the
  * test database. Milestone 13 (founder decisions 2026-09-27): the account
  * opens on Profile (first tab, Security folded in); every sidebar screen
- * resolves; the header menu lists the same screens in the same order with
- * no Dashboard item; the retired routes redirect; My Trainings splits paid
+ * resolves; the header menu (restructured 2026-09-28) shows name, email,
+ * User Dashboard, Trainer/Admin Dashboard by role, then Sign out; the
+ * retired routes redirect; My Trainings splits paid
  * registrations into "Yet to attend" (Cancel, no Transfer) and "Attended"
  * (the date has passed), whose detail page shows the certificate ID once
  * issued; the profile form persists a real change; no WCAG 2.2 AA
@@ -96,7 +97,7 @@ test("every sidebar screen is served with an h1; the retired routes redirect; Se
   await expect(page).toHaveURL(/\/programs$/);
 });
 
-test("the header menu opens and lists the account screens in the sidebar's order, no Dashboard item, then Sign out", async ({ page }) => {
+test("the header menu opens with name, email, User Dashboard, then Sign out — no Trainer/Admin Dashboard for a plain participant (founder, 2026-09-28)", async ({ page }) => {
   const email = newEmail("e2e-acct-menu");
   await registerViaUi(page, email, "Grace Hopper");
   await signInViaUi(page, email);
@@ -111,17 +112,56 @@ test("the header menu opens and lists the account screens in the sidebar's order
   await expect(menu).toContainText("Grace Hopper");
   await expect(menu).toContainText(email);
   const labels = await menu.getByRole("link").allTextContents();
-  expect(labels.map((l) => l.trim())).toEqual([...accountNavItems.map((i) => i.label), "Sign out"]);
-  expect(labels).not.toContain("Dashboard");
-  for (const item of accountNavItems) {
-    await expect(menu.getByRole("link", { name: item.label, exact: true })).toHaveAttribute("href", item.href);
-  }
+  expect(labels.map((l) => l.trim())).toEqual(["User Dashboard", "Sign out"]);
+  await expect(menu.getByRole("link", { name: "User Dashboard" })).toHaveAttribute("href", "/account");
   await expect(menu.getByRole("link", { name: "Sign out" })).toHaveAttribute("href", "/sign-out");
-  // A participant sees no admin entry.
-  await expect(menu.getByRole("link", { name: "Admin dashboard" })).toHaveCount(0);
+  // A plain participant sees neither role-scoped entry.
+  await expect(menu.getByRole("link", { name: "Trainer Dashboard" })).toHaveCount(0);
+  await expect(menu.getByRole("link", { name: "Admin Dashboard" })).toHaveCount(0);
 
   await page.keyboard.press("Escape");
   await expect(page.getByTestId("account-menu")).toHaveCount(0);
+});
+
+async function signInViaUiAnyLanding(page: Page, email: string, password = STRONG_PASSWORD) {
+  // A platform_admin lands on /admin, not /account/profile (landingPathFor) —
+  // this test grants roles, so it can't use the file's own signInViaUi,
+  // which asserts the participant landing. It then goes to a public page
+  // itself: /admin has no header account menu (AdminShell, not PublicShell).
+  await page.goto("/sign-in");
+  await page.getByLabel("Email", { exact: true }).fill(email);
+  await page.getByLabel("Password", { exact: true }).fill(password);
+  await page.getByRole("button", { name: "Sign in" }).click();
+  await page.waitForURL(/\/(account\/profile|admin)$/);
+}
+
+test("the header menu shows Admin Dashboard for a platform_admin, and Trainer Dashboard for an expert, each pointing at /admin", async ({ page }) => {
+  const adminEmail = newEmail("e2e-acct-menu-admin");
+  await registerViaUi(page, adminEmail, "Ada Admin");
+  await grantRoleByEmail(adminEmail, "platform_admin");
+  await signInViaUiAnyLanding(page, adminEmail);
+  await page.goto("/");
+  await page.getByTestId("header-account").click();
+  const adminMenu = page.getByTestId("account-menu");
+  await expect(adminMenu.getByRole("link", { name: "Admin Dashboard" })).toHaveAttribute("href", "/admin");
+  await expect(adminMenu.getByRole("link", { name: "Trainer Dashboard" })).toHaveCount(0);
+
+  // The register form pre-fills and locks the email field for a signed-in
+  // session; sign-out itself is async (SignOut.tsx signs out in a client
+  // effect after the page loads), so the established pattern also clears
+  // cookies directly rather than racing that effect.
+  await page.goto("/sign-out");
+  await page.context().clearCookies();
+  await resetRateLimits(); // beforeEach only resets once per test; this test registers twice
+  const trainerEmail = newEmail("e2e-acct-menu-trainer");
+  await registerViaUi(page, trainerEmail, "Tara Trainer");
+  await grantRoleByEmail(trainerEmail, "expert");
+  await signInViaUiAnyLanding(page, trainerEmail);
+  await page.goto("/");
+  await page.getByTestId("header-account").click();
+  const trainerMenu = page.getByTestId("account-menu");
+  await expect(trainerMenu.getByRole("link", { name: "Trainer Dashboard" })).toHaveAttribute("href", "/admin");
+  await expect(trainerMenu.getByRole("link", { name: "Admin Dashboard" })).toHaveCount(0);
 });
 
 test("My Trainings: honest empty state; Yet to attend with Cancel and no Transfer; Attended once the date has passed, with the detail page and the certificate ID", async ({ page }) => {

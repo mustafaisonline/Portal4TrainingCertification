@@ -93,7 +93,7 @@ test("contact form: validation errors leave no row; a valid message is persisted
 });
 
 test("public pages have no WCAG 2.2 AA violations", async ({ page }) => {
-  for (const href of ["/", "/trainers", "/programs", "/about-us", "/faq", "/for-organisations", "/free-learning", "/verify"]) {
+  for (const href of ["/", "/trainers", "/programs", "/about-us", "/faq", "/free-trainings", "/free-certifications", "/verify"]) {
     await page.goto(href);
     await expect(page.getByRole("heading", { level: 1 }), href).toBeVisible();
     await expectNoAxeViolations(page);

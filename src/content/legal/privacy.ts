@@ -9,19 +9,29 @@ import type { LegalDocument } from "./types";
  * Nothing here asserts compliance; the document is INTENDED to meet the Act
  * and must be reviewed before publication.
  *
+ * UPDATED 2026-09-28 (founder: "update content of all [footer legal] items
+ * as per our final changes on the portal") — "Programme" renamed to
+ * "Training" throughout, matching the site-wide wording adopted 2026-09-27;
+ * §2 and §6 extended for Free Learning and the Knowledge Check (Milestone
+ * 14, DR-03), which did not exist when this draft was first written.
+ *
  * Facts used: data held — name, email, country, registrations, orders,
- * consents, audit entries; Stripe as payment processor; hosting location NOT
- * yet decided (so the draft says data may be stored or processed outside
- * Malaysia, subject to confirmation); session cookie and theme preference
- * only, no advertising cookies. Providers not yet chosen are "[to be named]".
+ * consents, audit entries, Knowledge Check attempts (signed-in only: the
+ * questions served, the answers given, the score and result ID); Stripe as
+ * payment processor; Free Learning's topics and the free diagnostic collect
+ * nothing — the diagnostic's answers never leave the visitor's browser;
+ * hosting location NOT yet decided (so the draft says data may be stored or
+ * processed outside Malaysia, subject to confirmation); session cookie and
+ * theme preference only, no advertising cookies. Providers not yet chosen
+ * are "[to be named]".
  */
 
 export const privacyPolicy: LegalDocument = {
   key: "privacy",
   title: "Privacy policy",
-  version: "DRAFT-2026-09-21",
+  version: "DRAFT-2026-09-28",
   status: "draft",
-  lastUpdated: "2026-09-21",
+  lastUpdated: "2026-09-28",
   summary:
     "What personal data the Data & AI Academy collects, why, who it is shared with, where it may be stored, how long it is kept, and your rights under the Personal Data Protection Act 2010.",
   sections: [
@@ -56,14 +66,16 @@ export const privacyPolicy: LegalDocument = {
       heading: "2. What we collect",
       paragraphs: [
         "We collect only what the portal needs to run your account, your registrations and your certificate. Specifically:",
+        "Free Learning — reading the book's topics and taking the free skill diagnostic — is different: it needs no account, and we collect nothing. The diagnostic's questions and your answers are held only in your own browser and are never sent to us.",
       ],
       bullets: [
         "Account details — your name, email address and a password. The password is stored only as a one-way hash; we cannot read it.",
         "Profile details — the country you tell us you are in. This decides the currency you are charged in (see the Terms of service).",
         "Registrations — which offerings you have registered for, their status, and attendance and completion as recorded by the trainer.",
-        "Orders — what you paid, in which currency, when, by which method type (for example \"card\"), and the payment reference our payment processor gives us. We never receive or store your card number.",
+        "Orders — what you paid, in which currency, when, by which method type (for example \"card\"), and the payment reference our payment processor gives us, whether for a registration, a Knowledge Check result-document unlock or a support payment. We never receive or store your card number.",
+        "Knowledge Check attempts — if you take one, the questions served to you, the answers you gave, your score, whether you passed, and the result ID. This needs an account; it is not the diagnostic (see above).",
         "Consents — which version of the Terms of service and this policy you accepted, and when.",
-        "Certificates — if one is issued, your name as it appears on the certificate, the programme and format, the completion, issue and expiry dates, the certificate identifier, any renewal you pay for, and whether you have chosen to be listed in public name search (see section 6).",
+        "Certificates — if one is issued, your name as it appears on the certificate, the training and format, the completion, issue and expiry dates, the certificate identifier, any renewal you pay for, and whether you have chosen to be listed in public name search (see section 6).",
         "Audit entries — a record of significant actions on your account (such as sign-in, a change of password, a registration or a refund), with a time stamp, kept so we can investigate problems and show what happened.",
         "Messages — anything you send us through the contact form or by email, so we can reply.",
       ],
@@ -75,10 +87,11 @@ export const privacyPolicy: LegalDocument = {
       ],
       bullets: [
         "To create and run your account, and to let you sign in securely.",
-        "To take and confirm your registration for an offering, and to deliver the programme to you.",
+        "To take and confirm your registration for an offering, and to deliver the training to you.",
         "To take payment, issue receipts, process refunds and keep the financial records the law requires.",
         "To decide which currency and price apply to you, based on your profile country.",
         "To record completion and, where earned, to issue and verify your Certificate of Completion.",
+        "To run a Knowledge Check you take, score it, and give you a verifiable result — and, if you pay to unlock it, to show you the printable result document.",
         "To send you the messages the service needs — confirmations, reminders, changes to an offering, receipts and notices about your account. These are not marketing.",
         "To answer your questions and resolve complaints.",
         "To keep the portal secure, prevent misuse and investigate problems.",
@@ -106,12 +119,13 @@ export const privacyPolicy: LegalDocument = {
       ],
     },
     {
-      heading: "6. Public certificate verification",
+      heading: "6. Public verification",
       paragraphs: [
-        "If you are issued a Certificate of Completion, anyone who has its certificate identifier, or the link to it, can confirm on this portal that the certificate is genuine. Verification by identifier or link always works. The verification page shows the name on the certificate, the programme and its format, the completion date, the issue date, the expiry date and the certificate's current status. If a certificate has been revoked, the page says so.",
+        "If you are issued a Certificate of Completion, anyone who has its certificate identifier, or the link to it, can confirm on this portal that the certificate is genuine. Verification by identifier or link always works. The verification page shows the name on the certificate, the training and its format, the completion date, the issue date, the expiry date and the certificate's current status. If a certificate has been revoked, the page says so.",
         "The portal also offers a public search by name. That search returns only holders who have chosen to be listed in it. Being listed is optional and is off unless you turn it on from your account. When you turn it on we record that choice, with the wording you agreed to and the time. You can withdraw it at any time from your account, and the withdrawal takes effect immediately for name search; the identifier and link continue to work.",
-        "Whether reached by identifier, link or name search, the verification page never shows your email address, your country, your contact details or any identity-document details. Certificate dates are calendar dates in Malaysia time (Asia/Kuala_Lumpur).",
-        "If you have a concern about how your certificate can be verified, write to [contact email].",
+        "A Knowledge Check result has its own verification page, reached only by its own ID or its link — it is never returned by the name search above. It shows the name on the result, the score, whether it passed and the date, and says plainly that it is not a Certificate of Completion and not the Academy's earned credential.",
+        "Whether reached by identifier, link or name search, a verification page never shows your email address, your country, your contact details or any identity-document details. Dates on it are calendar dates in Malaysia time (Asia/Kuala_Lumpur).",
+        "If you have a concern about how your certificate or Knowledge Check result can be verified, write to [contact email].",
       ],
     },
     {
@@ -195,7 +209,7 @@ export const privacyPolicy: LegalDocument = {
     {
       heading: "15. Changes to this policy",
       paragraphs: [
-        "We may change this policy — for example, when we confirm our hosting provider, add a programme or need to reflect a change in the law. The current version, its version number and its effective date are shown on this page. If a change materially affects how we use your data, we will tell you by email or when you next sign in, and where the law requires it we will ask for your consent again.",
+        "We may change this policy — for example, when we confirm our hosting provider, add a training or need to reflect a change in the law. The current version, its version number and its effective date are shown on this page. If a change materially affects how we use your data, we will tell you by email or when you next sign in, and where the law requires it we will ask for your consent again.",
       ],
     },
     {
@@ -203,7 +217,7 @@ export const privacyPolicy: LegalDocument = {
       paragraphs: [
         "Your Partner Technologies (business registration number [SSM registration number]), [registered business address], Kuala Lumpur, Malaysia.",
         "Data protection: [data protection contact / officer]. Email: [contact email]. Telephone: [phone number].",
-        "Effective date of this version: [effective date]. Version: DRAFT-2026-09-21 (not yet in force).",
+        "Effective date of this version: [effective date]. Version: DRAFT-2026-09-28 (not yet in force).",
       ],
     },
   ],

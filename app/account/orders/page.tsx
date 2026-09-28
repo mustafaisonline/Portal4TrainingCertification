@@ -6,6 +6,7 @@ import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { Chip } from "@/shared/ui/Chip";
 import { formatDateRange, formatTimestamp } from "@/shared/util/dates";
+import { DeleteOrder } from "./DeleteOrder";
 
 /*
  * S07 — Orders & receipts, on REAL data (M4 plan §2 item 5).
@@ -84,6 +85,11 @@ export default async function OrdersPage() {
                       ) : o.status === "paid" ? (
                         <p className="text-body-sm text-[var(--color-ink-faint)]">Receipt link arrives from Stripe shortly.</p>
                       ) : null}
+                      {/* Founder, 2026-09-28: an order that never became money
+                          or a seat can be deleted; a paid/refunded one is a
+                          financial record and shows no such control (the
+                          server refuses regardless). */}
+                      {!["paid", "refunded", "partially_refunded"].includes(o.status) && !pendingLive ? <DeleteOrder orderId={o.id} /> : null}
                     </div>
                   </div>
                 </Card>

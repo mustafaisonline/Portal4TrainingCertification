@@ -44,8 +44,8 @@ import { Chip } from "@/shared/ui/Chip";
  * an "Expertise areas" label above the chips, and a "View full profile"
  * button with an arrow icon. "Selected delivery" (career achievements) and
  * "Published work" (books) are not rendered here (founder, 2026-09-27: the
- * books stay on Free Training & Certification only); the data is untouched
- * on the expert record.
+ * books stay on Free Trainings only); the data is untouched on the expert
+ * record.
  */
 
 /** Capitalises a lowercase data fragment for display — `location`'s second
@@ -231,7 +231,20 @@ export default async function TrainersPage() {
                 </div>
               </div>
 
-              <p className="mb-5 border-t border-[var(--color-line)] pt-5 text-body-sm text-[var(--color-ink-quiet)]">
+              {/* HRD Authorised Trainer — explicit either way (founder,
+                  2026-09-28: "mention that the trainer is HRD Authorised
+                  trainer or not"), not just the badge above, which only
+                  ever appears for a "yes". */}
+              <p className="mb-5 border-t border-[var(--color-line)] pt-5 text-body-sm">
+                <span className="font-medium text-[var(--color-ink)]">HRD Authorised Trainer:</span>{" "}
+                {accreditation ? (
+                  <span className="text-[var(--color-success)]">Yes — Trainer ID {accreditation.trainerId}</span>
+                ) : (
+                  <span className="text-[var(--color-ink-quiet)]">No</span>
+                )}
+              </p>
+
+              <p className="mb-5 text-body-sm text-[var(--color-ink-quiet)]">
                 {lead.summary}
               </p>
 

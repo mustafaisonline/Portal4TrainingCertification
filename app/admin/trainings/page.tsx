@@ -8,6 +8,7 @@ import { levelLabel } from "@/modules/catalogue/programmes/types";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { Chip } from "@/shared/ui/Chip";
+import { DeleteTrainingButton } from "./DeleteTrainingButton";
 import { formatTimestamp } from "@/shared/util/dates";
 
 /*
@@ -91,9 +92,14 @@ export default async function AdminTrainingsPage() {
                   <td className="px-4 py-3 align-top text-[var(--color-ink-quiet)]">{t.openDates}</td>
                   <td className="px-4 py-3 align-top whitespace-nowrap text-[var(--color-ink-quiet)]">{formatTimestamp(t.updatedAt)}</td>
                   <td className="px-4 py-3 align-top">
-                    <Link href={`/admin/trainings/${t.id}`} className="text-[var(--color-primary)] underline underline-offset-4" aria-label={`Edit ${t.title}`}>
-                      Edit
-                    </Link>
+                    <span className="flex items-center gap-3">
+                      <Link href={`/admin/trainings/${t.id}`} className="text-[var(--color-primary)] underline underline-offset-4" aria-label={`Edit ${t.title}`}>
+                        Edit
+                      </Link>
+                      {/* Founder, 2026-09-28: delete — administrators only,
+                          and only a training with no history. */}
+                      {access.isAdmin ? <DeleteTrainingButton id={t.id} title={t.title} /> : null}
+                    </span>
                   </td>
                 </tr>
               ))}

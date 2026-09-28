@@ -426,3 +426,86 @@ export function TeachingDetailIllustration() {
     </svg>
   );
 }
+
+/** 10. Why you need this training (founder, 2026-09-28: "plagiarism-free
+ *  images with original world items" for the two learn-vibe-coding
+ *  sections) — a builder's desk, mid-build: a laptop whose screen splits
+ *  into code and an AI chat, a phone showing the running product, coffee,
+ *  a notebook. Original, deterministic, drawn from no reference. */
+export function BuilderDeskIllustration() {
+  const accent = "var(--color-primary)";
+  return (
+    <svg viewBox="0 0 420 236" {...wrapperSvgProps}>
+      <Backdrop id="builder-desk" accent={accent} />
+      {/* Desk surface */}
+      <path d="M 24 176 H 396" stroke={INK} strokeWidth={2} strokeLinecap="round" opacity={0.5} />
+      {/* Laptop: base + screen */}
+      <path d="M 120 176 L 132 120 H 268 L 280 176 Z" fill={GROUND} stroke={INK} strokeWidth={1.5} opacity={0.9} />
+      <rect x={138} y={52} width={124} height={70} rx={5} fill="var(--color-ground)" stroke={accent} strokeWidth={2} />
+      {/* Screen, split: code lines | AI chat bubbles */}
+      <path d="M 200 58 V 116" stroke={INK} strokeWidth={1} opacity={0.35} />
+      <g stroke={accent} strokeWidth={1.6} strokeLinecap="round" opacity={0.65}>
+        <path d="M 146 66 H 178 M 150 76 H 190 M 146 86 H 172 M 150 96 H 184 M 146 106 H 176" />
+      </g>
+      <g fill="none" stroke={INK} strokeWidth={1.4} opacity={0.6}>
+        <rect x={208} y={62} width={40} height={14} rx={7} />
+        <rect x={216} y={82} width={38} height={14} rx={7} stroke={accent} />
+        <rect x={208} y={102} width={30} height={12} rx={6} />
+      </g>
+      {/* Phone propped beside it, product screen glowing */}
+      <rect x={300} y={112} width={34} height={62} rx={6} fill="var(--color-ground)" stroke={accent} strokeWidth={1.8} />
+      <rect x={306} y={122} width={22} height={10} rx={2} fill={accent} opacity={0.5} />
+      <path d="M 306 140 H 328 M 306 148 H 322 M 306 156 H 326" stroke={INK} strokeWidth={1.4} strokeLinecap="round" opacity={0.5} />
+      {/* Coffee mug, steam */}
+      <path d="M 74 176 V 152 a 4 4 0 0 1 4 -4 h 22 a 4 4 0 0 1 4 4 v 24" fill={GROUND} stroke={INK} strokeWidth={1.6} opacity={0.85} />
+      <path d="M 104 156 h 8 a 6 6 0 0 1 0 12 h -8" fill="none" stroke={INK} strokeWidth={1.6} opacity={0.85} />
+      <path d="M 84 140 q 3 -6 0 -12 M 94 140 q -3 -6 0 -12" stroke={INK} strokeWidth={1.3} strokeLinecap="round" fill="none" opacity={0.4} />
+      {/* Notebook + pen */}
+      <rect x={346} y={158} width={44} height={18} rx={2} fill="var(--color-ground)" stroke={INK} strokeWidth={1.4} opacity={0.8} />
+      <path d="M 352 164 H 380 M 352 170 H 372" stroke={INK} strokeWidth={1.2} strokeLinecap="round" opacity={0.45} />
+      <path d="M 344 152 L 366 148" stroke={accent} strokeWidth={2} strokeLinecap="round" opacity={0.7} />
+      {/* The idea → product arc above the laptop */}
+      <path d="M 96 44 Q 200 8 322 40" fill="none" stroke={accent} strokeWidth={1.5} strokeDasharray="2 6" strokeLinecap="round" opacity={0.55} />
+      <circle cx={96} cy={44} r={5} fill="none" stroke={accent} strokeWidth={1.6} opacity={0.7} />
+      <path d="M 322 40 l -8 -5 m 8 5 l -9 3" stroke={accent} strokeWidth={1.6} strokeLinecap="round" opacity={0.7} />
+    </svg>
+  );
+}
+
+/** 11. Learning experience (same founder request) — the room at work: a
+ *  whiteboard carrying a worked diagram and sticky notes, the trainer at
+ *  the board, two participants at a table with laptops and cups. Original,
+ *  deterministic, no likeness of any real person. */
+export function WorkshopRoomIllustration() {
+  const accent = "var(--color-primary)";
+  return (
+    <svg viewBox="0 0 300 200" {...wrapperSvgProps}>
+      <Backdrop id="workshop-room" accent={accent} />
+      {/* Whiteboard on its stand */}
+      <rect x={38} y={30} width={140} height={92} rx={4} fill="var(--color-ground)" stroke={accent} strokeWidth={2} />
+      <path d="M 66 122 L 56 152 M 150 122 L 160 152" stroke={INK} strokeWidth={1.6} strokeLinecap="round" opacity={0.6} />
+      {/* Worked diagram mid-sketch */}
+      <g stroke={accent} strokeWidth={1.6} fill="none">
+        <rect x={50} y={44} width={34} height={20} rx={3} />
+        <rect x={104} y={44} width={34} height={20} rx={3} opacity={0.7} />
+        <rect x={77} y={86} width={34} height={20} rx={3} opacity={0.55} />
+      </g>
+      <path d="M 84 54 H 104 M 121 64 Q 112 76 96 86" stroke={accent} strokeWidth={1.4} strokeLinecap="round" fill="none" opacity={0.6} />
+      {/* Sticky notes */}
+      <rect x={146} y={70} width={13} height={13} fill={accent} opacity={0.35} />
+      <rect x={160} y={82} width={13} height={13} fill={accent} opacity={0.55} />
+      <rect x={146} y={94} width={13} height={13} fill={INK} opacity={0.25} />
+      {/* Trainer at the board, marker raised */}
+      <Person x={196} y={96} scale={1.15} color={accent} />
+      <path d="M 186 78 L 172 62" stroke={accent} strokeWidth={2} strokeLinecap="round" opacity={0.8} />
+      {/* Participants' table with laptops and cups */}
+      <path d="M 200 166 H 288 M 210 166 L 206 184 M 278 166 L 282 184" stroke={INK} strokeWidth={1.8} strokeLinecap="round" opacity={0.6} />
+      <path d="M 214 166 L 220 150 H 246 L 252 166 Z" fill={GROUND} stroke={INK} strokeWidth={1.3} opacity={0.85} />
+      <rect x={222} y={132} width={22} height={16} rx={2} fill="var(--color-ground)" stroke={accent} strokeWidth={1.4} />
+      <path d="M 262 166 v -8 a 3 3 0 0 1 3 -3 h 8 a 3 3 0 0 1 3 3 v 8" fill="none" stroke={INK} strokeWidth={1.3} opacity={0.7} />
+      {/* Two participants, heads towards the board */}
+      <Person x={230} y={128} scale={0.85} color={INK} />
+      <Person x={268} y={140} scale={0.85} color={INK} />
+    </svg>
+  );
+}

@@ -1,3 +1,4 @@
+import { randomInt } from "node:crypto";
 import type { Db, Tx } from "@/db/prisma";
 import { getPrisma } from "@/db/prisma";
 import { isUuid } from "@/modules/catalogue/offerings/repository";
@@ -205,4 +206,34 @@ export async function setAllQuestionsStatus(tx: Tx, input: { topicId: string; st
   const rows = await tx.topicQuestion.findMany({ where: { topicId: input.topicId, status: from }, select: { id: true } });
   for (const r of rows) await setQuestionStatus(tx, { questionId: r.id, status: input.status, actorUserId: input.actorUserId });
   return rows.length;
+}
+
+export type DiagnosticDrawQuestion = { id: string; stem: string; topicSlug: string; topicTitle: string; options: string[] };
+
+/** `count` REVIEWED questions of PUBLISHED topics, drawn afresh at random on
+ *  every call (founder, 2026-09-28: the free diagnostic serves "a fresh
+ *  random set" from the question bank on every start — the same
+ *  crypto-shuffled draw the Knowledge Check uses, without an attempt row
+ *  because the diagnostic is anonymous and nothing is saved). Returns `null`
+ *  honestly while the bank is smaller than `count`. Correct answers and
+ *  explanations are deliberately not selected — the diagnostic records
+ *  answers, it does not grade them. */
+export async function drawDiagnosticQuestions(count: number, db: Db = getPrisma()): Promise<DiagnosticDrawQuestion[] | null> {
+  const pool = await db.topicQuestion.findMany({ where: { status: "reviewed", topic: { published: true } }, select: { id: true }, orderBy: { id: "asc" } });
+  if (pool.length < count) return null;
+  const ids = pool.map((q) => q.id);
+  for (let i = ids.length - 1; i > 0; i -= 1) {
+    const j = randomInt(i + 1);
+    [ids[i], ids[j]] = [ids[j]!, ids[i]!];
+  }
+  const picked = ids.slice(0, count);
+  const rows = await db.topicQuestion.findMany({
+    where: { id: { in: picked } },
+    select: { id: true, stem: true, topic: { select: { slug: true, title: true } }, options: { orderBy: { position: "asc" }, select: { text: true } } },
+  });
+  const byId = new Map(rows.map((r) => [r.id, r]));
+  return picked.map((id) => {
+    const r = byId.get(id)!;
+    return { id: r.id, stem: r.stem, topicSlug: r.topic.slug, topicTitle: r.topic.title, options: r.options.map((o) => o.text) };
+  });
 }

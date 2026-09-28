@@ -177,3 +177,70 @@ export async function findResultByPublicId(publicId: string, db: Db = getPrisma(
   if (!r || !r.finishedAt || r.score === null || r.passed === null) return null;
   return { publicId: id, holderName: r.holderName ?? "Account holder", size: r.size, score: r.score, percent: Math.round((r.score * 100) / r.size), passed: r.passed, finishedAt: r.finishedAt };
 }
+
+/** Founder, 2026-09-28: a person may delete their OWN finished results from
+ *  Free Certifications. Each deletion is audited with the result's facts
+ *  (the audit log is the surviving record); the verify page for its ID then
+ *  answers not-found, which is the point of deleting. A result whose
+ *  document unlock was ever ordered is a commercial record and is refused;
+ *  so is an unfinished attempt (it has its own Continue flow). */
+export async function deleteFinishedAttempts(
+  tx: Tx,
+  input: { userId: string; attemptIds: string[] },
+): Promise<{ deleted: number; refused: number }> {
+  let deleted = 0;
+  let refused = 0;
+  for (const id of input.attemptIds) {
+    if (!isUuid(id)) {
+      refused += 1;
+      continue;
+    }
+    const attempt = await tx.knowledgeCheckAttempt.findFirst({ where: { id, userId: input.userId }, select });
+    if (!attempt || !attempt.finishedAt) {
+      refused += 1;
+      continue;
+    }
+    const order = await tx.order.findFirst({ where: { knowledgeCheckAttemptId: id }, select: { id: true } });
+    if (order) {
+      refused += 1;
+      continue;
+    }
+    await writeAudit(tx, {
+      actorUserId: input.userId,
+      action: "knowledge_check.deleted",
+      entityType: "knowledge_check_attempt",
+      entityId: id,
+      before: {
+        publicId: attempt.publicId,
+        size: attempt.size,
+        score: attempt.score,
+        passed: attempt.passed,
+        finishedAt: attempt.finishedAt.toISOString(),
+      },
+      after: null,
+    });
+    await tx.knowledgeCheckAttempt.delete({ where: { id } });
+    deleted += 1;
+  }
+  return { deleted, refused };
+}
+
+/** Founder, 2026-09-28: a running (unfinished) check can be cancelled by its
+ *  own taker — the attempt row is deleted, audited. A finished attempt is
+ *  refused here (its deletion is `deleteFinishedAttempts`, with its own
+ *  rules); nothing else references an unfinished attempt. */
+export async function cancelUnfinishedAttempt(tx: Tx, input: { attemptId: string; userId: string }): Promise<boolean> {
+  if (!isUuid(input.attemptId)) return false;
+  const attempt = await tx.knowledgeCheckAttempt.findFirst({ where: { id: input.attemptId, userId: input.userId }, select });
+  if (!attempt || attempt.finishedAt) return false;
+  await writeAudit(tx, {
+    actorUserId: input.userId,
+    action: "knowledge_check.deleted",
+    entityType: "knowledge_check_attempt",
+    entityId: input.attemptId,
+    before: { cancelled: true, size: attempt.size, answered: Object.keys(toRecord(attempt).answers).length, startedAt: attempt.startedAt.toISOString() },
+    after: null,
+  });
+  await tx.knowledgeCheckAttempt.delete({ where: { id: input.attemptId } });
+  return true;
+}

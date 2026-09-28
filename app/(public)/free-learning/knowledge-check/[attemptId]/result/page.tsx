@@ -75,7 +75,7 @@ export default async function ResultPage({ params, searchParams }: { params: Pro
   return (
     <section className="bg-[var(--color-ground-tint)]">
       <div className="mx-auto max-w-[760px] px-4 py-12 sm:px-6 sm:py-16">
-        <Link href="/free-learning/knowledge-check" className="text-body-sm mb-2 inline-block py-1 text-[var(--color-primary)] underline underline-offset-4">
+        <Link href="/free-certifications" className="text-body-sm mb-2 inline-block py-1 text-[var(--color-primary)] underline underline-offset-4">
           ← Knowledge Check
         </Link>
         <p className="text-label mb-3 text-[var(--color-primary)]">Your result</p>
@@ -173,7 +173,7 @@ export default async function ResultPage({ params, searchParams }: { params: Pro
         )}
 
         <div className="mt-8 flex flex-wrap gap-3">
-          <Button href="/free-learning/knowledge-check">{attempt.passed ? "Take another check" : "Retake the Knowledge Check"}</Button>
+          <Button href="/free-certifications">{attempt.passed ? "Take another check" : "Retake the Knowledge Check"}</Button>
           <Button variant="secondary" href="/free-learning/topics">
             Back to the topics
           </Button>

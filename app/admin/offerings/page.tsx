@@ -10,6 +10,7 @@ import {
 } from "@/modules/catalogue/offerings/repository";
 import { trainingAccess } from "@/modules/catalogue/programmes/admin-access";
 import { listTrainings } from "@/modules/catalogue/programmes/admin.repository";
+import { DeleteOfferingButton } from "./DeleteOfferingButton";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { Chip } from "@/shared/ui/Chip";
@@ -100,13 +101,18 @@ export default async function AdminOfferingsPage() {
                     <StatusChip status={o.status} />
                   </td>
                   <td className="px-4 py-3 align-top">
-                    <Link
-                      href={`/admin/offerings/${o.id}`}
-                      className="text-[var(--color-primary)] underline underline-offset-4"
-                      aria-label={`Edit ${o.programmeTitle}, ${formatCalendarDate(o.startsOn)}`}
-                    >
-                      Edit
-                    </Link>
+                    <span className="flex items-center gap-3">
+                      <Link
+                        href={`/admin/offerings/${o.id}`}
+                        className="text-[var(--color-primary)] underline underline-offset-4"
+                        aria-label={`Edit ${o.programmeTitle}, ${formatCalendarDate(o.startsOn)}`}
+                      >
+                        Edit
+                      </Link>
+                      {/* Founder, 2026-09-28: delete — administrators only,
+                          and only a date nothing references. */}
+                      {access.isAdmin ? <DeleteOfferingButton id={o.id} label={`${o.programmeTitle} · ${formatCalendarDate(o.startsOn)}`} /> : null}
+                    </span>
                   </td>
                 </tr>
               ))}

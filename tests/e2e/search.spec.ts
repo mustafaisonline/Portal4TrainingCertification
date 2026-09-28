@@ -15,10 +15,27 @@ let issued: IssuedCertificateFixture;
 let admin: { id: string; email: string };
 let holder: { id: string; email: string; name: string };
 
+// A topic with ten reviewed questions, so the free diagnostic's fresh
+// random draw (founder, 2026-09-28) has a bank to serve from in the test
+// database, whose baseline holds no reviewed questions.
+const DIAG_SLUG = `e2e-diag-${Date.now().toString(36)}`;
+let diagTopicId = "";
+
 test.beforeAll(async () => {
   admin = await createAdminUser("e2e-search-admin");
   holder = await createCertificateUser({ prefix: "e2e-search-holder", legalName: "Selina Searchable" });
   issued = await issueTestCertificate({ adminUserId: admin.id, userId: holder.id, listed: true });
+  const { withTransaction } = await import("../../src/db/prisma");
+  const { replaceTopicFromImport } = await import("../../src/modules/free-learning/book.repository");
+  const { importDraftQuestions, setAllQuestionsStatus } = await import("../../src/modules/free-learning/quiz.repository");
+  const r = await withTransaction((tx) =>
+    replaceTopicFromImport(tx, { position: 83001, slug: DIAG_SLUG, title: "E2E Diagnostic Topic", sourceHeading: "E2E Diagnostic Topic", bodyHtml: "<p>x</p>", bodyText: "x", wordCount: 1, images: [], publish: true, importedAt: new Date() }, (id) => id),
+  );
+  diagTopicId = r.id;
+  await withTransaction((tx) =>
+    importDraftQuestions(tx, { topicId: diagTopicId, replaceDrafts: false, questions: Array.from({ length: 10 }, (_, i) => ({ stem: `E2E diagnostic question ${i + 1}: pick option A?`, options: ["Alpha", "Bravo", "Charlie", "Delta", "Echo"], correct: 0, explanation: null })) }),
+  );
+  await withTransaction((tx) => setAllQuestionsStatus(tx, { topicId: diagTopicId, status: "reviewed", actorUserId: admin.id }));
 });
 
 test.beforeEach(async () => {
@@ -30,7 +47,11 @@ test.afterAll(async () => {
   await deleteTestOffering(issued.offeringId);
   await deleteTestUser(holder.email);
   await deleteTestUser(admin.email);
-  const { disconnectPrisma } = await import("../../src/db/prisma");
+  const { getPrisma, disconnectPrisma } = await import("../../src/db/prisma");
+  const prisma = getPrisma();
+  const qIds = (await prisma.topicQuestion.findMany({ where: { topicId: diagTopicId }, select: { id: true } })).map((x) => x.id);
+  await prisma.auditLog.deleteMany({ where: { entityType: "topic_question", entityId: { in: qIds } } });
+  await prisma.bookTopic.deleteMany({ where: { slug: DIAG_SLUG } });
   await disconnectPrisma();
 });
 
@@ -43,7 +64,8 @@ test("the header has the four items beside the logo (which is Home) and a search
   await page.goto("/");
   const nav = page.getByRole("navigation", { name: "Primary", exact: true });
   // UX review 2026-09-27 D1: "Home" is the logo on the desktop bar; the phone menu keeps the item.
-  expect(await nav.getByRole("link").allTextContents()).toEqual(["Trainings & HRD Corp", "Free Training & Certification", "Trainers", "Reviews"]);
+  // Founder, 2026-09-28: Knowledge Hub / Free Certifications / Professional Trainings (in that order) replace the earlier set; For Organisations was merged into the trainings page and no longer has its own item. (The search bar was briefly a full-width second row the same day; reverted on founder feedback to its place beside Reviews, then reduced in width.)
+  expect(await nav.getByRole("link").allTextContents()).toEqual(["Knowledge Hub", "Free Certifications", "Professional Trainings", "Reviews"]);
   const search = page.getByTestId("site-search").getByRole("searchbox");
   await expect(search).toHaveAttribute("placeholder", "Search Candidates or Training");
   await search.fill("vibe");
@@ -52,8 +74,12 @@ test("the header has the four items beside the logo (which is Home) and a search
 
   for (const [from, to] of [
     ["/hrd-corp", /\/programs(#hrd-corp)?$/],
-    ["/diagnostic", /\/free-learning$/],
+    ["/diagnostic", /\/free-learning\/diagnostic$/],
     ["/diagnostic/result", /\/free-learning\/diagnostic\/result$/],
+    ["/free-learning", /\/free-trainings$/],
+    ["/free-learning/topics", /\/free-trainings$/],
+    ["/free-learning/knowledge-check", /\/free-certifications$/],
+    ["/for-organisations", /\/programs(#for-organisations)?$/],
   ] as const) {
     await page.goto(from);
     await expect(page).toHaveURL(to);
@@ -85,28 +111,55 @@ test("/search: a training by a word in its title; a certificate by ID and by lis
   await expect(page.getByTestId("search-hint")).toBeVisible();
 });
 
-test("Trainings & HRD Corp is one page; Free Training & Certification lists its two items; the diagnostic says nothing is saved", async ({ page }) => {
+test("Professional Trainings has HRD Corp merged, no registration-in-progress copy; the Knowledge Hub hosts the topics browser; Free Certifications hosts the Knowledge Check; the diagnostic draws ten from the bank and saves nothing", async ({ page }) => {
   await page.goto("/programs");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Trainings");
   await expect(page.getByTestId("hrd-corp-sections")).toContainText("What HRD Corp is");
+  // Founder, 2026-09-28: the "getting registered with HRD Corp" copy is gone.
+  await expect(page.getByTestId("hrd-corp-sections")).not.toContainText("Registered Training Provider");
+  await expect(page.getByTestId("who-this-is-for")).toContainText("Individuals");
+  await expect(page.getByTestId("who-this-is-for")).toContainText("Organisations");
+  await expect(page.getByTestId("who-this-is-for")).toContainText("Education");
   await expectNoAxeViolations(page);
 
-  await page.goto("/free-learning");
-  await expect(page.getByTestId("free-learning-title")).toBeVisible();
+  // Founder, 2026-09-28: the free page is the Knowledge Hub and hosts the
+  // topics browser itself (the separate topics page merged in); it no longer
+  // offers the diagnostic — that entry point is the home page's band alone.
+  await page.goto("/free-trainings");
+  await expect(page.getByTestId("free-trainings-title")).toBeVisible();
+  await expect(page.getByText("Knowledge Hub").first()).toBeVisible();
   await expect(page.getByTestId("learn-free")).toContainText("I Am Datapedia!");
+  // Founder, 2026-09-28: the card shows the book's own cover.
+  await expect(page.getByTestId("datapedia-cover")).toBeVisible();
   await expect(page.getByTestId("datapedia-amazon")).toHaveAttribute("href", /amazon\.com\/dp\/B0F1NT87CL/);
-  await expect(page.getByTestId("free-test")).toContainText("50, 100 or 200 questions");
-  // Founder, 2026-09-27: "Take away" removed from this page — the trainer's other books stay off it.
-  await expect(page.getByTestId("free-learning-take-away")).toHaveCount(0);
+  await expect(page.getByTestId("topics-title")).toBeVisible();
+  await expect(page.getByTestId("topics-count")).toContainText("topics");
+  await expect(page.getByTestId("free-diagnostic-card")).toHaveCount(0);
   await expectNoAxeViolations(page);
 
+  // Free Certifications hosts the Knowledge Check start screen (signed out:
+  // the pitch, the bank and a sign-in button).
+  await page.goto("/free-certifications");
+  await expect(page.getByTestId("free-certifications-title")).toBeVisible();
+  await expect(page.getByTestId("free-test")).toContainText("50, 100 or 200 questions");
+  await expect(page.getByTestId("kc-signed-out")).toBeVisible();
+  await expectNoAxeViolations(page);
+
+  // The diagnostic (founder, 2026-09-28): Start draws a fresh random ten
+  // from the reviewed question bank; nothing is saved.
   await page.goto("/free-learning/diagnostic");
   await expect(page.getByTestId("diagnostic-not-saved")).toContainText("we do not save your diagnostic results");
+  await page.getByRole("button", { name: /Start free diagnostic/ }).click();
+  await expect(page.getByText("Question 1 of ~10")).toBeVisible();
+  await expect(page.getByRole("radiogroup")).toBeVisible();
+  expect(await page.getByRole("radio").count()).toBeGreaterThanOrEqual(5);
   await page.goto("/");
   await expect(page.getByTestId("diagnostic-not-saved")).toContainText("we do not save your diagnostic results");
 
-  // Founder, 2026-09-27: the books stay on Free Training & Certification; the trainer card no longer lists them, and no empty "position open" card sits beside the trainer.
+  // Founder, 2026-09-27: the books stay on Free Trainings; the trainer card no longer lists them, and no empty "position open" card sits beside the trainer.
+  // Founder, 2026-09-28: the trainer card states HRD authorisation explicitly, Yes or No.
   await page.goto("/trainers");
   await expect(page.getByTestId("trainer-take-away")).toHaveCount(0);
   await expect(page.getByRole("note", { name: /open trainer position/i })).toHaveCount(0);
+  await expect(page.locator("p", { hasText: "HRD Authorised Trainer:" }).first()).toContainText("Yes");
 });

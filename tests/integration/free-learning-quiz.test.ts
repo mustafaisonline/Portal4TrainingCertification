@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { disconnectPrisma, getPrisma, withTransaction } from "@/db/prisma";
 import { replaceTopicFromImport } from "@/modules/free-learning/book.repository";
-import { checkAnswers, importDraftQuestions, listQuestionsForAdmin, listReviewedQuestionPage, questionCountsByTopic, setAllQuestionsStatus, setQuestionStatus } from "@/modules/free-learning/quiz.repository";
+import { checkAnswers, drawDiagnosticQuestions, importDraftQuestions, listQuestionsForAdmin, listReviewedQuestionPage, questionCountsByTopic, setAllQuestionsStatus, setQuestionStatus } from "@/modules/free-learning/quiz.repository";
 import { listAuditForEntity } from "@/modules/platform/audit/repository";
 import { createAdminUser } from "../helpers/certificates-db";
 import { deleteTestUser } from "../helpers/identity-db";
@@ -105,5 +105,25 @@ describe("topic quiz", () => {
     // Same status again: nothing written.
     await withTransaction((tx) => setQuestionStatus(tx, { questionId: one.id, status: "reviewed", actorUserId: admin.id }));
     expect((await listAuditForEntity(prisma, "topic_question", one.id)).length).toBe(1);
+  });
+
+  // Founder, 2026-09-28 ("New change" item 1): the free diagnostic draws a
+  // fresh random set from the reviewed bank on every start.
+  it("drawDiagnosticQuestions: distinct reviewed questions of published topics, without answers; an oversized draw is refused honestly", async () => {
+    const drawn = await drawDiagnosticQuestions(3);
+    expect(drawn).not.toBeNull();
+    expect(drawn!.length).toBe(3);
+    expect(new Set(drawn!.map((d) => d.id)).size).toBe(3);
+    for (const d of drawn!) {
+      expect(d.options.length).toBe(5);
+      expect(d.stem.length).toBeGreaterThan(0);
+      expect(d.topicTitle.length).toBeGreaterThan(0);
+      // The drawn shape never carries the correct option or the explanation.
+      expect(Object.keys(d).sort()).toEqual(["id", "options", "stem", "topicSlug", "topicTitle"]);
+      const row = await prisma.topicQuestion.findUnique({ where: { id: d.id }, select: { status: true, topic: { select: { published: true } } } });
+      expect(row).toMatchObject({ status: "reviewed", topic: { published: true } });
+    }
+    const bank = await prisma.topicQuestion.count({ where: { status: "reviewed", topic: { published: true } } });
+    expect(await drawDiagnosticQuestions(bank + 1000)).toBeNull();
   });
 });

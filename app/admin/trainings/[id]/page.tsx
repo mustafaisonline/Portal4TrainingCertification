@@ -6,6 +6,7 @@ import { FEE_REGIONS } from "@/modules/catalogue/programmes/constants";
 import { getTrainingForAdmin } from "@/modules/catalogue/programmes/admin.repository";
 import { Card } from "@/shared/ui/Card";
 import { TrainingDetailsForm } from "../TrainingDetailsForm";
+import { TrainingPhotoUploader } from "../TrainingPhotoUploader";
 import { TrainingStatusForm } from "../TrainingStatusForm";
 
 /* Details tab (M12 WP2): the typed columns, and — for administrators — the
@@ -54,6 +55,10 @@ export default async function TrainingDetailsPage({ params }: { params: Promise<
         />
       </Card>
       <div className="flex flex-col gap-6">
+        <Card variant="panel" className="p-6">
+          <h2 className="text-h2 mb-2">Photo</h2>
+          <TrainingPhotoUploader id={training.id} hasPhoto={training.hasPhoto} photoVersion={training.photoUpdatedAt?.getTime() ?? 0} />
+        </Card>
         <Card variant="panel" className="p-6" data-testid="training-visibility">
           <h2 className="text-h2 mb-1">Visibility</h2>
           {access.isAdmin ? (

@@ -154,3 +154,28 @@ export async function updateOfferingAction(_prev: OfferingFormState, formData: F
     return { status: "error", message: "We could not save your changes. Please try again.", fieldErrors: {} };
   }
 }
+
+export type DeleteOfferingResult = { status: "idle" } | { status: "deleted" } | { status: "error"; message: string };
+
+/** Founder, 2026-09-28: delete a date nothing references — platform
+ *  administrators only. A date with orders, registrations or certificates
+ *  is a record; cancel it instead. */
+export async function deleteOfferingAction(_prev: DeleteOfferingResult, formData: FormData): Promise<DeleteOfferingResult> {
+  const { authorise } = await import("@/modules/identity/session");
+  const adminGate = await authorise("platform_admin");
+  if (!adminGate.ok) return { status: "error", message: "Only a platform administrator can delete a date." };
+  const id = text(formData, "id");
+  if (!isUuid(id)) return { status: "error", message: "This offering could not be found." };
+  let outcome: "deleted" | "not_found" | "in_use";
+  try {
+    const { deleteOffering } = await import("./repository");
+    outcome = await withTransaction((tx) => deleteOffering(tx, id, adminGate.user.id));
+  } catch (err) {
+    console.error(`[offerings] deletion failed for ${id}:`, err instanceof Error ? err.message : err);
+    return { status: "error", message: "The date could not be deleted. Please try again." };
+  }
+  if (outcome === "not_found") return { status: "error", message: "This offering could not be found." };
+  if (outcome === "in_use") return { status: "error", message: "This date has orders, registrations or certificates — those are records. Cancel the date instead of deleting it." };
+  revalidate();
+  return { status: "deleted" };
+}

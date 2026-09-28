@@ -5,7 +5,7 @@ import { formatMoney } from "@/modules/catalogue/programmes/types";
 import { getCurrentUser } from "@/modules/identity/session";
 import { CommerceError, PaymentsNotConfiguredError } from "./errors";
 import { COMMERCE_MESSAGES, PAYMENTS_NOT_CONFIGURED_MESSAGE } from "./messages";
-import { cancelRegistration, transferRegistration } from "./registrations.service";
+import { cancelRegistration, deleteOrderForUser, transferRegistration } from "./registrations.service";
 
 /*
  * My registrations — "Cancel registration" and "Transfer to another date"
@@ -62,5 +62,26 @@ export async function transferRegistrationAction(_prev: RegistrationActionState,
     if (err instanceof CommerceError) return { status: "error", message: COMMERCE_MESSAGES[err.code] };
     console.error(`[commerce] transfer failed for registration ${registrationId}, user ${user.id}`, err);
     return { status: "error", message: "We could not transfer the registration. Please try again." };
+  }
+}
+
+/** Founder, 2026-09-28: delete an unpaid order from Orders & receipts. The
+ *  service refuses anything that became money or a seat; the custom dialog
+ *  confirmed before this ran. */
+export async function deleteOrderAction(_prev: RegistrationActionState, formData: FormData): Promise<RegistrationActionState> {
+  const orderId = String(formData.get("orderId") ?? "").trim();
+  const user = await getCurrentUser();
+  if (!user) return { status: "error", message: "Your session has ended. Please sign in again." };
+  try {
+    const { withTransaction } = await import("@/db/prisma");
+    const outcome = await withTransaction((tx) => deleteOrderForUser(tx, { orderId, userId: user.id }));
+    if (outcome === "not_found") return { status: "error", message: "We could not find that order." };
+    if (outcome === "is_record") return { status: "error", message: "A paid or refunded order is a financial record and cannot be deleted." };
+    if (outcome === "pending_live") return { status: "error", message: "This payment is still in progress — finish it in the Stripe tab, or try again once its 30-minute hold expires." };
+    revalidatePath("/account/orders");
+    return { status: "done", message: "The order was deleted." };
+  } catch (err) {
+    console.error(`[commerce] order ${orderId} deletion failed for user ${user.id}`, err);
+    return { status: "error", message: "The order could not be deleted. Please try again." };
   }
 }

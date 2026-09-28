@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { disconnectPrisma, getPrisma, withTransaction } from "@/db/prisma";
 import { replaceTopicFromImport } from "@/modules/free-learning/book.repository";
-import { attemptPage, bankSize, findResultByPublicId, finishAttempt, getAttemptForUser, KnowledgeCheckError, listAttemptsForUser, saveAnswers, startAttempt } from "@/modules/free-learning/knowledge-check.repository";
+import { attemptPage, bankSize, cancelUnfinishedAttempt, deleteFinishedAttempts, findResultByPublicId, finishAttempt, getAttemptForUser, KnowledgeCheckError, listAttemptsForUser, saveAnswers, startAttempt } from "@/modules/free-learning/knowledge-check.repository";
 import { importDraftQuestions, setAllQuestionsStatus } from "@/modules/free-learning/quiz.repository";
 import { listAuditForEntity } from "@/modules/platform/audit/repository";
 import { createAdminUser, createCertificateUser } from "../helpers/certificates-db";
@@ -115,5 +115,41 @@ describe("knowledge check", () => {
     expect(finished.passed).toBe(false);
     expect(finished.publicId).toBeTruthy();
     expect((await findResultByPublicId(finished.publicId!))?.passed).toBe(false);
+  });
+
+  // Founder, 2026-09-28: the person deletes their OWN finished results.
+  it("deleteFinishedAttempts: own finished result deleted with an audit record; unfinished, someone else's and a non-uuid are refused", async () => {
+    const finished = await withTransaction(async (tx) => {
+      const a = await startAttempt(tx, { userId: holder.id, size: 50 });
+      return finishAttempt(tx, { attemptId: a.id, userId: holder.id });
+    });
+    const unfinished = await withTransaction((tx) => startAttempt(tx, { userId: holder.id, size: 50 }));
+
+    // Someone else cannot delete it; an unfinished one and junk are refused.
+    const wrong = await withTransaction((tx) => deleteFinishedAttempts(tx, { userId: admin.id, attemptIds: [finished.id] }));
+    expect(wrong).toEqual({ deleted: 0, refused: 1 });
+    const mixed = await withTransaction((tx) => deleteFinishedAttempts(tx, { userId: holder.id, attemptIds: [unfinished.id, "not-a-uuid", finished.id] }));
+    expect(mixed).toEqual({ deleted: 1, refused: 2 });
+    expect(await getAttemptForUser(finished.id, holder.id)).toBeNull();
+    expect(await getAttemptForUser(unfinished.id, holder.id)).not.toBeNull();
+    expect(await findResultByPublicId(finished.publicId!)).toBeNull(); // the verify link stops working — the point of deleting
+    const audit = await listAuditForEntity(prisma, "knowledge_check_attempt", finished.id);
+    expect(audit.map((a) => a.action)).toContain("knowledge_check.deleted");
+    expect(audit.find((a) => a.action === "knowledge_check.deleted")?.before).toMatchObject({ publicId: finished.publicId, size: 50 });
+  });
+
+  // Founder, 2026-09-28: a running check can be cancelled by its own taker.
+  it("cancelUnfinishedAttempt: own running check deleted and audited; a finished one and someone else's are refused", async () => {
+    const running = await withTransaction((tx) => startAttempt(tx, { userId: holder.id, size: 50 }));
+    expect(await withTransaction((tx) => cancelUnfinishedAttempt(tx, { attemptId: running.id, userId: admin.id }))).toBe(false); // not theirs
+    expect(await withTransaction((tx) => cancelUnfinishedAttempt(tx, { attemptId: running.id, userId: holder.id }))).toBe(true);
+    expect(await getAttemptForUser(running.id, holder.id)).toBeNull();
+    expect((await listAuditForEntity(prisma, "knowledge_check_attempt", running.id)).map((a) => a.action)).toContain("knowledge_check.deleted");
+
+    const done = await withTransaction(async (tx) => {
+      const a = await startAttempt(tx, { userId: holder.id, size: 50 });
+      return finishAttempt(tx, { attemptId: a.id, userId: holder.id });
+    });
+    expect(await withTransaction((tx) => cancelUnfinishedAttempt(tx, { attemptId: done.id, userId: holder.id }))).toBe(false); // finished → its own rules
   });
 });

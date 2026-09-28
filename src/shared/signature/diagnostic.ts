@@ -18,6 +18,25 @@ import type { DiagnosticQuestionRecord } from "@/modules/catalogue/diagnostic/re
  *  record satisfies it structurally. */
 export type DiagnosticQuestion = Pick<DiagnosticQuestionRecord, "scenario" | "options">;
 
+/** How many questions a diagnostic run draws (founder, 2026-09-27: "ten
+ *  questions, full stop"; 2026-09-28: drawn afresh at random from the
+ *  reviewed question bank on every start). */
+export const DIAGNOSTIC_QUESTION_COUNT = 10;
+
+/** One question of a drawn set, in the shape the walkthrough renders:
+ *  `scenario`/`options` feed the question canvas, `domainCode`/`domainName`
+ *  carry the source topic (slug/title) into the insight line and the
+ *  completed record. Since 2026-09-28 these come from the Free Learning
+ *  question bank (a fresh random draw per start), not the fixed seeded
+ *  scenario set. */
+export type DrawnDiagnosticQuestion = {
+  code: string;
+  scenario: string;
+  options: string[];
+  domainCode: string;
+  domainName: string;
+};
+
 /** Appended by the UI as an equal, unpenalised option — never stored. */
 export const UNSURE_OPTION = "I'm not sure";
 
@@ -80,6 +99,11 @@ export const DIAGNOSTIC_RESULT_STORAGE_KEY = "p4tc:diagnostic:completed";
 export type SavedProgress = {
   index: number;
   answers: (string | null)[];
+  /** The drawn set the answers belong to (2026-09-28): each run's questions
+   *  are a fresh random draw, so a resumable record must carry its own set —
+   *  answers alone can no longer be matched to a fixed list by index. A
+   *  record without them (pre-draw era) is simply not resumed. */
+  questions?: DrawnDiagnosticQuestion[];
 };
 
 export type CompletedAnswer = {

@@ -57,6 +57,7 @@ Use the existing approved project documentation as the source of product require
 
 | Record | Status |
 |---|---|
+| **`DR-04_FREE_CERTIFICATIONS_PAGE_NAMING.md`** (repository root) | **Approved 2026-09-28. Narrows DR-03 §3.** Permits "Free Certifications" as the free Knowledge Check product line's own page/menu name. Does **not** permit calling any individual result "a certificate" — DR-03 §3's wording on the result itself, the result page, the printable document and the credential-integrity policy is unchanged; DR-01 unchanged |
 | **`DR-03_FREE_LEARNING_AND_KNOWLEDGE_CHECK.md`** (repository root) | **Approved 2026-09-27. Amends DR-02 §1 partially.** Adds a second product line beside expert-led training: **free, self-paced learning** from the founder's own book (*I Am Datapedia!*) and a free **Knowledge Check** whose result is a verifiable ID **but not a credential** — DR-01 unchanged. Its §5 lists the superseded statements |
 | **`DR-02_EXPERT_LED_DELIVERY_MODEL.md`** (repository root) | **Approved 2026-08-31. Binding on all three specifications.** Establishes an independent professional **training and certification organisation** built on **expert-led delivery** — face-to-face, live online and corporate/private — with the portal *supporting* that ecosystem rather than being where learning happens. Its §12 lists every superseded statement, by document and location |
 | **`DR-01`** (inside `DATA_AI_ACADEMY_MVP_BUILD_SPEC.md`) | Approved. One credential, no ladder, no bands |
@@ -84,7 +85,7 @@ founder direction, and never write to it.
 **Read `docs/REFERENCE_MATERIAL_ACCESS.md` before using it.** Reference
 material ranks below approved specifications in the hierarchy below.
 
-**Authority hierarchy:** 1) Explicit current human instruction → 2) **Approved decision records (`DR-03`, `DR-02`, `DR-01`)** → 3) Approved project specification documents → 4) Approved architecture and technical documentation → 5) Existing working implementation → 6) Other approved reference materials → 7) Previous AI assumptions → 8) General AI knowledge.
+**Authority hierarchy:** 1) Explicit current human instruction → 2) **Approved decision records (`DR-04`, `DR-03`, `DR-02`, `DR-01`)** → 3) Approved project specification documents → 4) Approved architecture and technical documentation → 5) Existing working implementation → 6) Other approved reference materials → 7) Previous AI assumptions → 8) General AI knowledge.
 
 ---
 

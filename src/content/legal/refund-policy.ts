@@ -9,7 +9,7 @@ import type { LegalDocument } from "./types";
  *   ≥ 14 calendar days before the start date  → 100% refund
  *   7–13 calendar days before                  →  50% refund
  *   < 7 days before, or after the start        →  no refund
- *   One free transfer to a later scheduled date of the same programme is
+ *   One free transfer to a later scheduled date of the same training is
  *   always allowed before the start date. If the Academy cancels or
  *   reschedules, the participant chooses a full refund or a transfer.
  *   Refunds go back to the original payment method via Stripe (typically
@@ -20,16 +20,23 @@ import type { LegalDocument } from "./types";
  * service §8; tests/unit/legal-content.test.ts checks the numbers are present.
  * Nothing here asserts compliance with the Consumer Protection Act 1999; the
  * draft is intended to meet it and must be reviewed before publication.
+ *
+ * UPDATED 2026-09-28 (founder: "update content of all [footer legal] items
+ * as per our final changes on the portal") — "Programme" renamed to
+ * "Training" throughout, matching the site-wide wording adopted 2026-09-27;
+ * §1 gained a paragraph on "Support the Academy" one-off payments (ADR-048),
+ * which have no refund tier and were not covered when this draft was first
+ * written.
  */
 
 export const refundPolicy: LegalDocument = {
   key: "refund",
   title: "Refund & cancellation policy",
-  version: "DRAFT-2026-09-27",
+  version: "DRAFT-2026-09-28",
   status: "draft",
-  lastUpdated: "2026-09-27",
+  lastUpdated: "2026-09-28",
   summary:
-    "When a programme registration can be cancelled or moved to another date, how much is refunded, how to do it, and what happens if the Academy has to cancel or reschedule.",
+    "When a training registration can be cancelled or moved to another date, how much is refunded, how to do it, and what happens if the Academy has to cancel or reschedule.",
   sections: [
     {
       heading: "About this draft",
@@ -50,10 +57,11 @@ export const refundPolicy: LegalDocument = {
     {
       heading: "1. What this policy covers",
       paragraphs: [
-        "This policy applies to registrations for the scheduled public offerings of Data & AI Academy programmes that you register and pay for on this portal, operated by Your Partner Technologies (business registration number [SSM registration number]). It forms part of the Terms of service.",
+        "This policy applies to registrations for the scheduled public offerings of Data & AI Academy trainings that you register and pay for on this portal, operated by Your Partner Technologies (business registration number [SSM registration number]). It forms part of the Terms of service.",
         "It does not apply to private or corporate cohorts, which are governed by the written agreement for that cohort (see section 8).",
         "Certificate of Completion renewal fee: the fee you pay to renew a certificate is not refundable once the renewal has been applied, because the extension to the certificate's expiry date is delivered immediately when the payment is confirmed. If you believe a renewal was charged in error — for example, you were charged twice — raise it through Contact us or by emailing [contact email], and we will look into it and handle it manually.",
         "Knowledge Check result document unlock: the one-time fee you may pay to unlock the printable document for a free Knowledge Check result is not refundable once the document has been shown, because the document is delivered immediately when the payment is confirmed. The result itself, its ID and its public verification page are free and are never withheld. If you believe an unlock was charged in error, raise it through Contact us or by emailing [contact email].",
+        "Support the Academy: this is a one-off payment that grants no service or benefit in return, so the day-based schedule in section 2 does not apply to it. If you paid by mistake, or want to ask for a refund for another reason, raise it through Contact us or by emailing [contact email] and we will consider it.",
         "\"Start date\" means the first scheduled session of the offering you registered for, in the time zone shown on the offering. Days are counted as calendar days before that date, not business days.",
       ],
     },
@@ -85,9 +93,9 @@ export const refundPolicy: LegalDocument = {
     {
       heading: "4. Transferring to a later date instead",
       paragraphs: [
-        "Rather than cancel, you may transfer your registration once, free of charge, to a later scheduled date of the same programme, provided you ask before the start date of the offering you are leaving and the later offering has a place available. Ask from your account area or by emailing [contact email].",
+        "Rather than cancel, you may transfer your registration once, free of charge, to a later scheduled date of the same training, provided you ask before the start date of the offering you are leaving and the later offering has a place available. Ask from your account area or by emailing [contact email].",
         "After a transfer, the refund schedule in section 2 is counted from the start date of the new offering — but the transfer itself is not a cancellation, and no refund is made for it.",
-        "A second transfer is not available under this policy; if you cannot attend the new date, section 2 applies. A transfer to a different programme, or to another person, is not available under this policy; if you need either, write to [contact email] and we will tell you what is possible.",
+        "A second transfer is not available under this policy; if you cannot attend the new date, section 2 applies. A transfer to a different training, or to another person, is not available under this policy; if you need either, write to [contact email] and we will tell you what is possible.",
       ],
     },
     {
@@ -97,7 +105,7 @@ export const refundPolicy: LegalDocument = {
       ],
       bullets: [
         "A full refund — 100% of the amount you paid for that registration, or",
-        "A transfer to another scheduled date of the same programme, at no extra charge. This does not use up the free transfer described in section 4.",
+        "A transfer to another scheduled date of the same training, at no extra charge. This does not use up the free transfer described in section 4.",
       ],
     },
     {
@@ -118,13 +126,13 @@ export const refundPolicy: LegalDocument = {
     {
       heading: "8. Private and corporate cohorts",
       paragraphs: [
-        "Programmes delivered privately for an organisation are arranged under a separate written agreement between the Academy and that organisation, which sets out its own dates, fees, cancellation and rescheduling terms. This policy does not apply to them, and an individual employee's place on such a cohort is a matter between the employee and the organisation.",
+        "Trainings delivered privately for an organisation are arranged under a separate written agreement between the Academy and that organisation, which sets out its own dates, fees, cancellation and rescheduling terms. This policy does not apply to them, and an individual employee's place on such a cohort is a matter between the employee and the organisation.",
       ],
     },
     {
       heading: "9. Your rights under consumer law",
       paragraphs: [
-        "Nothing in this policy removes or limits any guarantee, right or remedy you have under the Consumer Protection Act 1999 or any other Malaysian law that cannot be excluded by agreement. In particular, if a programme is not delivered with reasonable care and skill, or is materially not as described, you may have remedies under that Act in addition to this policy.",
+        "Nothing in this policy removes or limits any guarantee, right or remedy you have under the Consumer Protection Act 1999 or any other Malaysian law that cannot be excluded by agreement. In particular, if a training is not delivered with reasonable care and skill, or is materially not as described, you may have remedies under that Act in addition to this policy.",
         "If we cannot resolve a refund dispute with you directly, you may be able to bring a claim before the Tribunal for Consumer Claims Malaysia.",
       ],
     },
@@ -139,7 +147,7 @@ export const refundPolicy: LegalDocument = {
       paragraphs: [
         "Your Partner Technologies (business registration number [SSM registration number]), [registered business address], Kuala Lumpur, Malaysia.",
         "Email: [contact email]. Telephone: [phone number].",
-        "Effective date of this version: [effective date]. Version: DRAFT-2026-09-27 (not yet in force).",
+        "Effective date of this version: [effective date]. Version: DRAFT-2026-09-28 (not yet in force).",
       ],
     },
   ],

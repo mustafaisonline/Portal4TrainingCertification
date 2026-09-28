@@ -39,7 +39,7 @@ export default async function TopicPage({ params, searchParams }: { params: Prom
   return (
     <section className="bg-[var(--color-ground-tint)]">
       <div className="mx-auto max-w-[860px] px-4 py-12 sm:px-6 sm:py-16">
-        <Link href="/free-learning/topics" className="text-body-sm mb-2 inline-block py-1 text-[var(--color-primary)] underline underline-offset-4">
+        <Link href="/free-trainings" className="text-body-sm mb-2 inline-block py-1 text-[var(--color-primary)] underline underline-offset-4">
           ← All topics
         </Link>
         <p className="text-label mb-3 text-[var(--color-primary)]">

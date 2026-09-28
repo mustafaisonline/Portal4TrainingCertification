@@ -562,3 +562,62 @@ export async function setTrainingStatus(tx: Tx, id: string, status: ProgrammeSta
   await tx.programme.update({ where: { id }, data: { status } });
   await writeAudit(tx, { actorUserId, action: "programme.status_changed", entityType: "programme", entityId: id, before: { status: existing.status }, after: { status } });
 }
+
+/* ----------------------------------------------------------------- photo */
+
+const PHOTO_MAX_BYTES = 600 * 1024;
+const PHOTO_MIMES = new Set(["image/jpeg", "image/png", "image/webp"]);
+
+/** The training photo shown on its card and detail page (founder,
+ *  2026-09-28). Same interim-storage pattern as the participant avatar
+ *  (ADR-008): browser-resized bytes in Postgres, no object storage. */
+export async function saveTrainingPhoto(tx: Tx, id: string, scope: TrainingScope, input: Uint8Array, mime: string, actorUserId: string): Promise<void> {
+  if (!(await canManageTraining(tx, scope, id))) throw new TrainingRefusedError("not_found", "This training could not be found.");
+  if (!PHOTO_MIMES.has(mime)) throw new TrainingValidationError<"photo">({ photo: "Use a JPEG, PNG or WebP file." });
+  if (input.byteLength === 0 || input.byteLength > PHOTO_MAX_BYTES) throw new TrainingValidationError<"photo">({ photo: "The photo must be between 1 byte and 600 KB." });
+  // Copy into a plain ArrayBuffer-backed view (Prisma's Bytes type excludes SharedArrayBuffer-backed views).
+  const bytes = new Uint8Array(new ArrayBuffer(input.byteLength));
+  bytes.set(input);
+  await tx.programme.update({ where: { id }, data: { photo: bytes, photoMime: mime, photoUpdatedAt: new Date() } });
+  await writeAudit(tx, { actorUserId, action: "programme.updated", entityType: "programme", entityId: id, before: null, after: { changed: ["photo"] } });
+}
+
+export async function removeTrainingPhoto(tx: Tx, id: string, scope: TrainingScope, actorUserId: string): Promise<void> {
+  if (!(await canManageTraining(tx, scope, id))) throw new TrainingRefusedError("not_found", "This training could not be found.");
+  const existing = await tx.programme.findUnique({ where: { id }, select: { photoMime: true } });
+  if (!existing?.photoMime) return;
+  await tx.programme.update({ where: { id }, data: { photo: null, photoMime: null, photoUpdatedAt: null } });
+  await writeAudit(tx, { actorUserId, action: "programme.updated", entityType: "programme", entityId: id, before: null, after: { changed: ["photo"], photo: "removed" } });
+}
+
+/** Founder, 2026-09-28: delete a training from /admin/trainings — platform
+ *  administrators only, and ONLY a training nothing hangs off: no scheduled
+ *  dates, no orders, no certificates, no coupons, no reviews (each is a
+ *  record; the database Restricts them anyway — this pre-check exists for
+ *  an honest sentence instead of a constraint error). A training with
+ *  history is retired by unlisting, never deleted. Its own configuration
+ *  (prices, formats, modules, content, expert links) cascades. Audited. */
+export async function deleteTraining(tx: Tx, id: string, actorUserId: string): Promise<"deleted" | "not_found" | "in_use"> {
+  const programme = await tx.programme.findUnique({
+    where: { id },
+    select: {
+      slug: true,
+      title: true,
+      status: true,
+      _count: { select: { offerings: true, orders: true, certificates: true, coupons: true, reviews: true } },
+    },
+  });
+  if (!programme) return "not_found";
+  const c = programme._count;
+  if (c.offerings > 0 || c.orders > 0 || c.certificates > 0 || c.coupons > 0 || c.reviews > 0) return "in_use";
+  await writeAudit(tx, {
+    actorUserId,
+    action: "programme.deleted",
+    entityType: "programme",
+    entityId: id,
+    before: { slug: programme.slug, title: programme.title, status: programme.status },
+    after: null,
+  });
+  await tx.programme.delete({ where: { id } });
+  return "deleted";
+}

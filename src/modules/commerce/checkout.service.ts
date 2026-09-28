@@ -8,6 +8,7 @@ import { findUserById } from "@/modules/identity/users.repository";
 import { writeAudit } from "@/modules/platform/audit/repository";
 import { formatDateRange } from "@/shared/util/dates";
 import { countSeatsTaken, lockOfferingForSeat, ORDER_HOLD_MINUTES, startsInFuture } from "./capacity";
+import { priceWithCoupon, validateCoupon, type CouponRecord } from "./coupons.repository";
 import { CommerceError, PaymentsNotConfiguredError } from "./errors";
 import { priceForUser, regionForCountry } from "./pricing";
 import { paymentsConfigured, stripeGateway, type PaymentGateway } from "./stripe";
@@ -27,6 +28,9 @@ export type StartCheckoutInput = {
   /** The person ticked the consent box. Not stored as a field: what is stored
    *  is the `consents` rows for the published document versions. */
   consent: boolean;
+  /** A coupon code the person applied (N1–N8, 2026-09-28). Validated and
+   *  priced HERE, server-side — the browser only ever sends the code. */
+  couponCode?: string;
   gateway?: PaymentGateway;
   /** Injectable clock for tests. */
   now?: Date;
@@ -99,6 +103,18 @@ export async function startCheckout(input: StartCheckoutInput): Promise<StartChe
     if (!programme) throw new Error(`programme ${offering.programmeSlug} not found`);
     const price = priceForUser(programme, { country: pricingCountry });
 
+    // Coupon (N1–N8): the seven checks run inside this transaction against
+    // the signed-in account's email and THIS training; the discount and the
+    // 2.00-per-currency floor are computed here and nowhere else (spec §15).
+    let coupon: CouponRecord | null = null;
+    let chargeMinor = price.offerAmountMinor;
+    if (input.couponCode?.trim()) {
+      const validation = await validateCoupon({ code: input.couponCode, userEmail: user.email, programmeId: programme.id, now }, tx);
+      if (!validation.ok) throw new CommerceError(validation.reason, `Coupon refused at checkout: ${validation.reason}.`);
+      coupon = validation.coupon;
+      chargeMinor = priceWithCoupon(price.offerAmountMinor, coupon.discountPercent).finalMinor;
+    }
+
     const expiresAt = new Date(now.getTime() + ORDER_HOLD_MINUTES * 60_000);
     const order = await tx.order.create({
       data: {
@@ -108,7 +124,10 @@ export async function startCheckout(input: StartCheckoutInput): Promise<StartChe
         status: "pending",
         region: price.region,
         currency: price.currency,
-        amountMinor: BigInt(price.offerAmountMinor),
+        amountMinor: BigInt(chargeMinor),
+        couponId: coupon?.id ?? null,
+        couponDiscountPercent: coupon?.discountPercent ?? null,
+        amountBeforeCouponMinor: coupon ? BigInt(price.offerAmountMinor) : null,
         expiresAt,
       },
     });
@@ -132,7 +151,8 @@ export async function startCheckout(input: StartCheckoutInput): Promise<StartChe
         programmeId: offering.programmeId,
         region: price.region,
         currency: price.currency,
-        amountMinor: price.offerAmountMinor,
+        amountMinor: chargeMinor,
+        ...(coupon ? { couponCode: coupon.code, couponDiscountPercent: coupon.discountPercent, amountBeforeCouponMinor: price.offerAmountMinor } : {}),
         expiresAt: expiresAt.toISOString(),
         consented: { terms: documents.terms, privacy: documents.privacy, refund: refundDocumentVersion(documents) },
       },

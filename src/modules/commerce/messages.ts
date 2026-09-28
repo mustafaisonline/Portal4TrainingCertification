@@ -37,6 +37,14 @@ export const COMMERCE_MESSAGES: Record<CommerceErrorCode, string> = {
   unlock_not_passed: "The result document is offered once you pass — retake the Knowledge Check as often as you like.",
   unlock_already_paid: "This result document is already unlocked.",
   unlock_fee_exempt: "No fee applies to you — the result document only needs your review of Free Learning.",
+  // Coupons — the founder's §14 wording, verbatim where given.
+  coupon_not_found: "Invalid coupon code. Please check the code and try again.",
+  coupon_disabled: "This coupon is currently inactive.",
+  coupon_expired: "This coupon has expired.",
+  coupon_used: "This coupon has already been used.",
+  coupon_email_mismatch: "This coupon is not assigned to the registered email address.",
+  coupon_wrong_training: "This coupon is not valid for this training.",
+  coupon_payment_in_progress: "A payment with this coupon is already in progress. Finish it, or try again in 30 minutes when that hold expires.",
 };
 
 export const PAYMENTS_NOT_CONFIGURED_MESSAGE =

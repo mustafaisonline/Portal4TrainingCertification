@@ -24,6 +24,11 @@ export type AuditAction =
   | "offering.updated"
   | "order.created"
   | "order.expired"
+  // 2026-09-28: the person deleted an unpaid order of their own; an
+  // administrator deleted a never-scheduled training or an empty date.
+  | "order.deleted"
+  | "programme.deleted"
+  | "offering.deleted"
   | "payment.succeeded"
   | "registration.confirmed"
   | "registration.cancelled"
@@ -69,8 +74,18 @@ export type AuditAction =
   | "topic_question.status_changed"
   // Milestone 14 Phase 4: a Knowledge Check attempt finished (score, pass, public ID).
   | "knowledge_check.finished"
+  // 2026-09-28: the person deleted their own finished result (the audit row
+  // carries the result's facts and is the surviving record).
+  | "knowledge_check.deleted"
   // Milestone 14 Phase 5: the unlock fee setting appended.
-  | "knowledge_check_unlock.changed";
+  | "knowledge_check_unlock.changed"
+  // Coupons (N1–N8 approved 2026-09-28): created/edited/status/deleted by an
+  // administrator; redeemed by the webhook when Stripe confirms the payment.
+  | "coupon.created"
+  | "coupon.updated"
+  | "coupon.status_changed"
+  | "coupon.deleted"
+  | "coupon.redeemed";
 
 export type AuditEntry = {
   /** Our `users.id`; null when the system acted on its own. */

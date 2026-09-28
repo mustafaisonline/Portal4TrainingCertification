@@ -6,6 +6,7 @@ import { sendEmail, type EmailMessage } from "@/modules/notifications/email";
 import { writeAudit } from "@/modules/platform/audit/repository";
 import { formatDateRange } from "@/shared/util/dates";
 import { appBaseUrl } from "./checkout.service";
+import { redeemCoupon } from "./coupons.repository";
 import { knowledgeCheckUnlockedMessage, registrationConfirmedMessage, supportPaymentReceivedMessage } from "./emails";
 import { recomputePaymentStatus } from "./payments";
 import { mapRefundStatus, stripeGateway, type PaymentGateway, type Stripe } from "./stripe";
@@ -205,6 +206,12 @@ async function sessionPaid(tx: Tx, event: Stripe.Event, session: Stripe.Checkout
       stripeCheckoutSessionId: order.stripeCheckoutSessionId ?? session.id,
     },
   });
+
+  // Coupon (N3, 2026-09-28): the coupon becomes Used the moment Stripe
+  // confirms the payment — in this same transaction, audited, idempotent.
+  if (order.couponId) {
+    await redeemCoupon(tx, { couponId: order.couponId, orderId: order.id, userId: order.userId, now, reason: `stripe:${event.id}` });
+  }
 
   // `charge.succeeded` often arrives BEFORE the session event; if its row is
   // already stored, the receipt URL is taken from it rather than lost.

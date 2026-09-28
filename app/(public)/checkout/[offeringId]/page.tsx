@@ -5,7 +5,9 @@ import { countryName } from "@/content/countries";
 import { MODALITY_LABEL } from "@/modules/catalogue/offerings/repository";
 import { formatMoney } from "@/modules/catalogue/programmes/types";
 import { previewCheckout, type CheckoutPreview } from "@/modules/commerce/checkout.service";
-import { LOCAL_PARTNER_PAYMENT_MESSAGE, PAYMENTS_NOT_CONFIGURED_MESSAGE } from "@/modules/commerce/messages";
+import { CouponField, type CouponFieldResult } from "@/modules/commerce/components/CouponField";
+import { priceWithCoupon, validateCoupon, type CouponPricing } from "@/modules/commerce/coupons.repository";
+import { COMMERCE_MESSAGES, LOCAL_PARTNER_PAYMENT_MESSAGE, PAYMENTS_NOT_CONFIGURED_MESSAGE } from "@/modules/commerce/messages";
 import { regionForCountry, regionLabel } from "@/modules/commerce/pricing";
 import { describeRefundTiers } from "@/modules/commerce/refund-policy";
 import { paymentsConfigured } from "@/modules/commerce/stripe";
@@ -92,6 +94,23 @@ export default async function CheckoutPage({
   const preview = await previewCheckout(offeringId, pricing);
   const cancelled = sp["cancelled"] === "1";
 
+  // Coupon (N1–N8, 2026-09-28): `?coupon=` is only ever the CODE — it is
+  // validated and priced here on the server, against the signed-in account's
+  // email and this training, on every render (spec §15). `startCheckout`
+  // repeats the same checks when Pay is pressed.
+  const couponCode = typeof sp["coupon"] === "string" ? sp["coupon"].trim() : "";
+  let coupon: { result: CouponFieldResult; validCode: string | null; pricing: CouponPricing | null } | null = null;
+  if (couponCode && preview.ok) {
+    const validation = await validateCoupon({ code: couponCode, userEmail: user.email, programmeId: preview.programme.id });
+    coupon = validation.ok
+      ? {
+          result: { ok: true, code: validation.coupon.code, discountPercent: validation.coupon.discountPercent },
+          validCode: validation.coupon.code,
+          pricing: priceWithCoupon(preview.price.offerAmountMinor, validation.coupon.discountPercent),
+        }
+      : { result: { ok: false, message: COMMERCE_MESSAGES[validation.reason] }, validCode: null, pricing: null };
+  }
+
   return (
     <section className="bg-[var(--color-ground-tint)]">
       <div className="mx-auto max-w-[1080px] px-4 py-12 sm:px-6 sm:py-16">
@@ -110,7 +129,7 @@ export default async function CheckoutPage({
           </p>
         ) : null}
 
-        {preview.ok ? <Available preview={preview} user={pricing} /> : <Unavailable preview={preview} />}
+        {preview.ok ? <Available preview={preview} user={pricing} coupon={coupon} /> : <Unavailable preview={preview} />}
       </div>
     </section>
   );
@@ -168,12 +187,23 @@ function Unavailable({ preview }: { preview: Exclude<CheckoutPreview, { ok: true
   );
 }
 
-function Available({ preview, user }: { preview: Extract<CheckoutPreview, { ok: true }>; user: { country: string | null } }) {
+function Available({
+  preview,
+  user,
+  coupon,
+}: {
+  preview: Extract<CheckoutPreview, { ok: true }>;
+  user: { country: string | null };
+  coupon: { result: CouponFieldResult; validCode: string | null; pricing: CouponPricing | null } | null;
+}) {
   const { offering, price, seatsLeft } = preview;
   const f = offering.format;
   const region = regionForCountry(user.country);
   const countryLabel = countryName(user.country) ?? user.country;
-  const amount = formatMoney(price.offerAmountMinor, price.currency);
+  // With a valid coupon the payable amount is the floored discounted price
+  // (N2); everything on this screen and the pay label follows it.
+  const payableMinor = coupon?.pricing ? coupon.pricing.finalMinor : price.offerAmountMinor;
+  const amount = formatMoney(payableMinor, price.currency);
   const discounted = price.offerAmountMinor !== price.listAmountMinor;
   const tiers = describeRefundTiers();
   const notConfigured = paymentsConfigured() ? null : PAYMENTS_NOT_CONFIGURED_MESSAGE;
@@ -209,11 +239,22 @@ function Available({ preview, user }: { preview: Extract<CheckoutPreview, { ok: 
           <p className="text-display text-[var(--color-primary)]" data-testid="checkout-price">
             {amount}
           </p>
-          {discounted && (
-            <p className="text-body-sm text-[var(--color-ink-quiet)]">
-              <span className="line-through">{formatMoney(price.listAmountMinor, price.currency)}</span> · {price.offerLabel} · {price.offerName}
+          {coupon?.pricing ? (
+            <p className="text-body-sm text-[var(--color-ink-quiet)]" data-testid="checkout-coupon-line">
+              <span className="line-through">{formatMoney(coupon.pricing.listMinor, price.currency)}</span> · Coupon {coupon.validCode} ·{" "}
+              −{formatMoney(coupon.pricing.discountMinor, price.currency)}
+              {coupon.pricing.floorApplied ? ` (adjusted to the ${formatMoney(200, price.currency)} minimum card charge)` : ""}
             </p>
+          ) : (
+            discounted && (
+              <p className="text-body-sm text-[var(--color-ink-quiet)]">
+                <span className="line-through">{formatMoney(price.listAmountMinor, price.currency)}</span> · {price.offerLabel} · {price.offerName}
+              </p>
+            )
           )}
+          <div className="mt-5 border-t border-[var(--color-line)] pt-5">
+            <CouponField action={`/checkout/${offering.id}`} result={coupon?.result ?? null} />
+          </div>
           <p className="text-body-sm mt-4 text-[var(--color-ink-faint)]" data-testid="checkout-region-note">
             Prices are set by the country on your profile ({countryLabel ? countryLabel : "not set"} → {regionLabel(region)}
             {region === "international" && !countryLabel ? "; without a country the rest-of-the-world price applies" : ""}). If that is wrong,{" "}
@@ -245,7 +286,7 @@ function Available({ preview, user }: { preview: Extract<CheckoutPreview, { ok: 
 
         <Card variant="panel" className="p-6 sm:p-8">
           <Step n={4} title="Agree and pay" />
-          <CheckoutForm offeringId={offering.id} payLabel={`Pay ${amount} with Stripe`} notConfiguredMessage={notConfigured} />
+          <CheckoutForm offeringId={offering.id} couponCode={coupon?.validCode ?? null} payLabel={`Pay ${amount} with Stripe`} notConfiguredMessage={notConfigured} />
         </Card>
       </div>
 
@@ -255,13 +296,25 @@ function Available({ preview, user }: { preview: Extract<CheckoutPreview, { ok: 
         <p className="text-body-sm mb-5 text-[var(--color-ink-quiet)]">
           {f?.name ?? MODALITY_LABEL[offering.modality]} · {formatDateRange(offering.startsOn, offering.endsOn)}
         </p>
-        <dl className="text-body-sm grid gap-3 border-t border-[var(--color-line)] pt-5">
+        <dl className="text-body-sm grid gap-3 border-t border-[var(--color-line)] pt-5" data-testid="checkout-summary">
           <div className="flex items-baseline justify-between gap-4">
             <dt className="text-[var(--color-ink-quiet)]">Region</dt>
             <dd>{regionLabel(region)}</dd>
           </div>
+          {coupon?.pricing ? (
+            <>
+              <div className="flex items-baseline justify-between gap-4">
+                <dt className="text-[var(--color-ink-quiet)]">Training fee</dt>
+                <dd>{formatMoney(coupon.pricing.listMinor, price.currency)}</dd>
+              </div>
+              <div className="flex items-baseline justify-between gap-4">
+                <dt className="text-[var(--color-ink-quiet)]">Coupon {coupon.validCode}</dt>
+                <dd data-testid="summary-coupon-discount">−{formatMoney(coupon.pricing.discountMinor, price.currency)}</dd>
+              </div>
+            </>
+          ) : null}
           <div className="flex items-baseline justify-between gap-4">
-            <dt className="text-[var(--color-ink-quiet)]">Total</dt>
+            <dt className="text-[var(--color-ink-quiet)]">{coupon?.pricing ? "Amount payable" : "Total"}</dt>
             <dd className="text-h2">{amount}</dd>
           </div>
         </dl>

@@ -21,13 +21,16 @@ export type CheckoutFormState =
 export async function beginCheckoutAction(_prev: CheckoutFormState, formData: FormData): Promise<CheckoutFormState> {
   const offeringId = String(formData.get("offeringId") ?? "").trim();
   const consent = formData.get("consent") === "on";
+  // The coupon CODE only (N1–N8): validation, the discount and the floor are
+  // all decided in startCheckout, server-side (spec §15).
+  const couponCode = String(formData.get("coupon") ?? "").trim();
 
   const user = await getCurrentUser();
   if (!user) return { status: "error", code: "signed_out", message: "Your session has ended. Please sign in again." };
 
   let url: string;
   try {
-    ({ url } = await startCheckout({ userId: user.id, offeringId, consent }));
+    ({ url } = await startCheckout({ userId: user.id, offeringId, consent, couponCode: couponCode || undefined }));
   } catch (err) {
     if (err instanceof CommerceError) {
       return { status: "error", code: err.code, message: COMMERCE_MESSAGES[err.code] };

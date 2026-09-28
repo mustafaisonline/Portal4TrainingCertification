@@ -218,9 +218,19 @@ describe("programmes", () => {
     expect(any?.title).toBe(unlistedSeed.title);
   });
 
-  it("no scheduled offering exists (DR-02 §4.1 — no invented dates)", async () => {
-    expect(await listUpcomingPublicOfferings()).toEqual([]);
-    expect(await prisma.scheduledOffering.count()).toBe(0);
+  it("the seed invents no dates (DR-02 §4.1): every offering in the database, if any, is a transient test fixture", async () => {
+    // Other integration/e2e files (commerce, coupons) create short-lived
+    // offerings in PARALLEL workers against this same database, so "the
+    // table is empty" is a race, not a truth. The DR-02 claim under test is
+    // that the SEED creates no dates — so anything long-lived here fails,
+    // while a fixture created moments ago by a sibling file does not.
+    const cutoff = new Date(Date.now() - 5 * 60_000);
+    expect(await prisma.scheduledOffering.count({ where: { createdAt: { lt: cutoff } } })).toBe(0);
+    const listed = await listUpcomingPublicOfferings();
+    for (const o of listed) {
+      const row = await prisma.scheduledOffering.findUnique({ where: { id: o.id }, select: { createdAt: true } });
+      expect(row === null || row.createdAt >= cutoff, `offering ${o.id} looks seeded, not a test fixture`).toBe(true);
+    }
   });
 });
 

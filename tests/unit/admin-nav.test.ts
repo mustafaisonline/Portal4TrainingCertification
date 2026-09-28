@@ -30,8 +30,9 @@ describe("admin navigation", () => {
 
   it("lists every screen the milestone delivers, overview first", () => {
     // "Trainings" added by Milestone 12 (trainings managed in the portal);
-    // "Attendance" by Milestone 13 (founder decision 9).
-    expect(adminNavItems.map((i) => i.label)).toEqual(["Overview", "Trainings", "Offerings", "Attendance", "Orders", "Enquiries", "Reviews", "Certificates", "Free Learning", "Users", "Audit log", "Reports"]);
+    // "Attendance" by Milestone 13 (founder decision 9); "Coupons" by the
+    // coupon feature (N1–N8 approved 2026-09-28).
+    expect(adminNavItems.map((i) => i.label)).toEqual(["Overview", "Trainings", "Offerings", "Attendance", "Orders", "Coupons", "Enquiries", "Reviews", "Certificates", "Free Learning", "Users", "Audit log", "Reports"]);
     expect(adminNavItems[0]!.href).toBe("/admin");
   });
 

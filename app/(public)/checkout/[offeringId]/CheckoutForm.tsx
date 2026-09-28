@@ -25,7 +25,19 @@ const DOCUMENTS = [
   { href: "/refund-policy", label: "Refund & cancellation policy" },
 ] as const;
 
-export function CheckoutForm({ offeringId, payLabel, notConfiguredMessage }: { offeringId: string; payLabel: string; notConfiguredMessage: string | null }) {
+export function CheckoutForm({
+  offeringId,
+  couponCode,
+  payLabel,
+  notConfiguredMessage,
+}: {
+  offeringId: string;
+  /** A VALIDATED coupon code from the page (N1–N8) — only the code travels;
+   *  the discount is recomputed server-side in startCheckout. */
+  couponCode: string | null;
+  payLabel: string;
+  notConfiguredMessage: string | null;
+}) {
   const [state, action, pending] = useActionState(beginCheckoutAction, initial);
   const consentId = useId();
   const statusId = useId();
@@ -33,6 +45,7 @@ export function CheckoutForm({ offeringId, payLabel, notConfiguredMessage }: { o
   return (
     <form action={action} aria-label="Agree and pay" aria-describedby={statusId} className="flex flex-col gap-5" noValidate>
       <input type="hidden" name="offeringId" value={offeringId} />
+      {couponCode ? <input type="hidden" name="coupon" value={couponCode} /> : null}
       <div className="flex items-start gap-3">
         <input
           id={consentId}

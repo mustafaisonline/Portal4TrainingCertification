@@ -18,6 +18,8 @@ export const adminNavItems: readonly AdminNavItem[] = [
   // Milestone 13 (founder decision 9): attendance recorded per date.
   { href: "/admin/attendance", label: "Attendance" },
   { href: "/admin/orders", label: "Orders" },
+  // Coupons (N1–N8 approved 2026-09-28): per-person percentage discounts.
+  { href: "/admin/coupons", label: "Coupons" },
   { href: "/admin/enquiries", label: "Enquiries" },
   { href: "/admin/reviews", label: "Reviews" },
   { href: "/admin/certificates", label: "Certificates" },

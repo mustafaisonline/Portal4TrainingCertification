@@ -34,7 +34,15 @@ export type CommerceErrorCode =
   | "unlock_not_finished"
   | "unlock_not_passed"
   | "unlock_already_paid"
-  | "unlock_fee_exempt";
+  | "unlock_fee_exempt"
+  // Coupons (N1–N8 approved 2026-09-28) — the spec §6/§14 refusals.
+  | "coupon_not_found"
+  | "coupon_disabled"
+  | "coupon_expired"
+  | "coupon_used"
+  | "coupon_email_mismatch"
+  | "coupon_wrong_training"
+  | "coupon_payment_in_progress";
 
 export class CommerceError extends Error {
   readonly code: CommerceErrorCode;

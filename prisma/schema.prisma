@@ -179,6 +179,9 @@ model User {
   /// Topic questions this administrator marked reviewed (M14 Phase 3).
   topicQuestionsReviewed TopicQuestion[]         @relation("topic_question_reviewed_by")
   knowledgeCheckAttempts KnowledgeCheckAttempt[]
+  /// Coupons this administrator created / this participant redeemed (N1, 2026-09-28).
+  couponsCreated         Coupon[]                @relation("coupon_created_by")
+  couponsRedeemed        Coupon[]                @relation("coupon_redeemed_by")
 
   @@map("users")
 }
@@ -473,6 +476,13 @@ model Programme {
   audienceSummary  String          @map("audience_summary")
   summary          String
   valueProposition String          @map("value_proposition")
+  /// Training photo (founder, 2026-09-28): browser-resized landscape image,
+  /// same interim-storage pattern as the participant avatar (ADR-008) —
+  /// bytes in Postgres, no object storage. Nullable/additive; the reserved
+  /// illustration placeholder shows while none is uploaded.
+  photo            Bytes?
+  photoMime        String?         @map("photo_mime")
+  photoUpdatedAt   DateTime?       @map("photo_updated_at") @db.Timestamptz(6)
   /// Editorial sections: highlights, whoShouldAttend, rationale, outcomes,
   /// outcomeGroups, included, pedagogy, benefits, careerPaths, methodology,
   /// valueStack, valueStackTotal, related, externalResources,
@@ -492,6 +502,7 @@ model Programme {
   orders          Order[]
   reviews         Review[]
   certificates    Certificate[]
+  coupons         Coupon[]
 
   @@index([domainId])
   @@index([status, sortOrder])
@@ -785,6 +796,14 @@ model Order {
   region                  PriceRegion
   currency                String                 @db.Char(3)
   amountMinor             BigInt                 @map("amount_minor")
+  /// Coupon feature (N1–N8 approved 2026-09-28). Set only when a coupon was
+  /// applied at checkout: the coupon, the percent applied, and the price
+  /// BEFORE the discount — `amountMinor` stays what Stripe actually charges
+  /// (after the discount and the 2.00-per-currency floor, N2).
+  couponId                String?                @map("coupon_id") @db.Uuid
+  coupon                  Coupon?                @relation("order_coupon", fields: [couponId], references: [id], onDelete: Restrict)
+  couponDiscountPercent   Int?                   @map("coupon_discount_percent")
+  amountBeforeCouponMinor BigInt?                @map("amount_before_coupon_minor")
   stripeCheckoutSessionId String?                @unique @map("stripe_checkout_session_id")
   stripePaymentIntentId   String?                @map("stripe_payment_intent_id")
   expiresAt               DateTime               @map("expires_at") @db.Timestamptz(6)
@@ -795,10 +814,60 @@ model Order {
   payment      Payment?
   registration Registration?
   renewal      CertificateRenewal?
+  /// The coupon whose redemption THIS order is (set by the webhook when the
+  /// order is paid — distinct from `coupon`, which any pending attempt carries).
+  couponRedemption Coupon? @relation("coupon_redeemed_order")
 
   @@index([userId, createdAt])
   @@index([offeringId, status, expiresAt])
+  @@index([couponId])
   @@map("orders")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Coupons (founder specification + decisions N1–N8, approved 2026-09-28).
+// A coupon is created by an administrator for ONE email address and ONE
+// training, single-use, percentage-off, with the charge floored at 2.00 of
+// the order currency (N2). "Used" and "Expired" are DERIVED — from
+// `redeemedAt` and `expiresAt` — never stored, so the shown status cannot
+// drift from reality; only active/disabled is a stored state.
+// ─────────────────────────────────────────────────────────────────────────────
+
+enum CouponStatus {
+  active
+  disabled
+}
+
+model Coupon {
+  id               String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  /// Uppercase, unique, crypto-random (N8: TRN- + 6 from an unambiguous alphabet).
+  code             String       @unique
+  /// The entitled account email, stored lower-cased; matched against the
+  /// signed-in account at checkout (N5).
+  email            String
+  programmeId      String       @map("programme_id") @db.Uuid
+  programme        Programme    @relation(fields: [programmeId], references: [id], onDelete: Restrict)
+  /// 1–100. A 100% coupon still pays the floor (N4).
+  discountPercent  Int          @map("discount_percent")
+  status           CouponStatus @default(active)
+  expiresAt        DateTime?    @map("expires_at") @db.Timestamptz(6)
+  redeemedAt       DateTime?    @map("redeemed_at") @db.Timestamptz(6)
+  redeemedByUserId String?      @map("redeemed_by_user_id") @db.Uuid
+  redeemedByUser   User?        @relation("coupon_redeemed_by", fields: [redeemedByUserId], references: [id], onDelete: Restrict)
+  redeemedOrderId  String?      @unique @map("redeemed_order_id") @db.Uuid
+  redeemedOrder    Order?       @relation("coupon_redeemed_order", fields: [redeemedOrderId], references: [id], onDelete: Restrict)
+  createdByUserId  String       @map("created_by_user_id") @db.Uuid
+  createdByUser    User         @relation("coupon_created_by", fields: [createdByUserId], references: [id], onDelete: Restrict)
+  createdAt        DateTime     @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime     @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  /// Every order that carried this coupon (pending attempts included; the
+  /// one that paid is `redeemedOrder`).
+  orders Order[] @relation("order_coupon")
+
+  @@index([email])
+  @@index([programmeId])
+  @@map("coupons")
 }
 
 enum PaymentStatus {

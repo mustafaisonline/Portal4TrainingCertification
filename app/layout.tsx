@@ -1,41 +1,47 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { Caveat, IBM_Plex_Mono, Plus_Jakarta_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import Script from "next/script";
 import { themeInitScript } from "@/shared/chrome/theme";
 import "./globals.css";
 
 /*
  * Root layout. Fonts and theme bootstrap PORTED 2026-09-21 from
- * project-artifacts/mockup/app/layout.tsx (ADR-045). Fonts are self-hosted at
- * build time via next/font — built into Next.js, no new package, no runtime
- * font service. They expose the CSS variables that --font-body / --font-mono
- * in globals.css consume. The mockup's third face (Caveat, homepage hero
- * annotations only) is ported with that hero in M3, not here.
+ * project-artifacts/mockup/app/layout.tsx (ADR-045). Fonts are self-hosted:
+ * the actual woff2 files live in the repository (src/fonts/, latin subset
+ * only, matching the original next/font/google config) and are loaded via
+ * next/font/local — no fetch to Google's servers at build time or runtime.
+ * Switched 2026-09-28 (ADR-0XX) from next/font/google, which builds fine
+ * but depends on reaching fonts.gstatic.com at every build; that dependency
+ * caused real, intermittent CI failures. They still expose the same CSS
+ * variables --font-jakarta / --font-plex-mono / --font-hand that globals.css
+ * consumes — nothing downstream of this file changed.
  */
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  style: ["normal", "italic"],
+const jakarta = localFont({
+  src: [
+    { path: "../src/fonts/plus-jakarta-sans/PlusJakartaSans-Variable.woff2", weight: "400 800", style: "normal" },
+    { path: "../src/fonts/plus-jakarta-sans/PlusJakartaSans-Variable-Italic.woff2", weight: "400 800", style: "italic" },
+  ],
   variable: "--font-jakarta",
   display: "swap",
 });
-const plexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  // 600 is needed because `text-mono text-display` inherits the display
-  // role's weight; without it the browser synthesises a faux bold.
-  weight: ["400", "500", "600"],
+const plexMono = localFont({
+  src: [
+    { path: "../src/fonts/ibm-plex-mono/IBMPlexMono-400.woff2", weight: "400", style: "normal" },
+    { path: "../src/fonts/ibm-plex-mono/IBMPlexMono-500.woff2", weight: "500", style: "normal" },
+    // 600 is needed because `text-mono text-display` inherits the display
+    // role's weight; without it the browser synthesises a faux bold.
+    { path: "../src/fonts/ibm-plex-mono/IBMPlexMono-600.woff2", weight: "600", style: "normal" },
+  ],
   variable: "--font-plex-mono",
   display: "swap",
 });
-/* Handwriting accent — same mechanism as the two faces above (self-hosted
-   via next/font/google, no new package, no runtime font service). Ported
-   2026-09-21 with the homepage hero (M3); scoped to the hero's handwritten-
-   style annotations via `var(--font-hand)`, not adopted anywhere else in
-   the type system. */
-const caveat = Caveat({
-  subsets: ["latin"],
-  weight: ["500", "600"],
+/* Handwriting accent — same mechanism as the two faces above (self-hosted,
+   no fetch to any font service). Ported 2026-09-21 with the homepage hero
+   (M3); scoped to the hero's handwritten-style annotations via
+   `var(--font-hand)`, not adopted anywhere else in the type system. */
+const caveat = localFont({
+  src: [{ path: "../src/fonts/caveat/Caveat-Variable.woff2", weight: "500 600", style: "normal" }],
   variable: "--font-hand",
   display: "swap",
 });

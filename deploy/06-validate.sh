@@ -78,9 +78,16 @@ case "$wc" in
 esac
 
 step "PM2 process state"
-ps_out="$(ssh_capture "pm2 jlist 2>/dev/null | grep -o '\"name\":\"$PM2_APP_NAME\"[^}]*\"status\":\"[a-z]*\"' | head -1")"
+# `pm2 describe` gives flat, reliable text — `pm2 jlist`'s JSON nests
+# "status" deep inside each process's pm2_env object (with many closing
+# braces in between), so a `[^}]*` grep between "name" and "status" never
+# bridges the gap and always reports "not online" even when the process is
+# healthy. Found live on the first real deploy 2026-09-28: the deploy itself
+# succeeded (server-promote.sh's own health check is a plain curl, unaffected
+# by this), but this read-only validation script wrongly flagged it as failed.
+ps_out="$(ssh_capture "pm2 describe $PM2_APP_NAME 2>/dev/null | grep -i 'status'")"
 printf '%s\n' "$ps_out" >>"$LOG_FILE"
-if printf '%s' "$ps_out" | grep -q '"status":"online"'; then log_ok "pm2: $PM2_APP_NAME online"; else soft_fail "$PM2_APP_NAME not online" "The promote did not switch or the process exited." "pm2 logs $PM2_APP_NAME --lines 60 --nostream"; fi
+if printf '%s' "$ps_out" | grep -qi 'online'; then log_ok "pm2: $PM2_APP_NAME online"; else soft_fail "$PM2_APP_NAME not online" "The promote did not switch or the process exited." "pm2 logs $PM2_APP_NAME --lines 60 --nostream"; fi
 current_release="$(ssh_capture "readlink '$REMOTE_RELEASES_ROOT/current' 2>/dev/null | xargs -r basename")"
 [ "$current_release" = "$D_TAG" ] || log_warn "current release ($current_release) does not match marker $D_TAG"
 

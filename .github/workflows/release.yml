@@ -65,6 +65,19 @@ jobs:
           node-version-file: .node-version
           cache: npm
 
+      - name: Restore the Next.js build cache
+        # Incremental deployment (2026-09-29): same cache as ci.yml — a tag's
+        # build restores the cache the CI runs on main already saved for this
+        # commit's lockfile, so `next build` here is incremental, not from
+        # scratch. The packaging step below still deletes .next/cache, so the
+        # cache never ships in a release artifact.
+        uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: nextjs-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('src/**/*.ts', 'src/**/*.tsx', 'next.config.ts') }}
+          restore-keys: |
+            nextjs-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-
+
       - name: Resolve the release tag
         # A tag push → the tag itself. A manual run on a branch → "branch-<name>"
         # with "/" replaced (a valid artifact name) — proven, never fetchable

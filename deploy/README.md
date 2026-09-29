@@ -117,6 +117,19 @@ What the pipeline refuses, by design: a dirty tree · a tag not at HEAD or not o
 
 If the new tag does not become healthy within `HEALTH_WAIT_TIMEOUT_SEC`, the wrapper switches the `current` symlink back to the previous release and reloads PM2 on its own, then exits non-zero. Migrations already applied stay applied (ADR-029: forward-only, written to be compatible with the previous code).
 
+### Incremental deployment (2026-09-29)
+
+Every stage now skips work whose inputs have not changed, without weakening any gate (the founder approved this scope 2026-09-29; the release gate itself is untouched — full tsc/Vitest/build/Playwright on every deploy):
+
+| Stage | Skip condition | Mechanism |
+|---|---|---|
+| CI / release build | unchanged modules since the last build | `actions/cache` on `.next/cache` (ci.yml + release.yml) — `next build` becomes incremental; the cache is still deleted before packaging, so it never ships |
+| Payload upload (05) | file byte-identical to the deployed release | `rsync --copy-dest=releases/current` — unchanged files are copied server-side instead of crossing the network; first deploy falls back to a full upload |
+| Server `npm ci` | `package-lock.json` byte-identical (sha256) to the deployed release's | `unpack_release()` hardlinks the previous release's `node_modules` (`rsync --link-dest`); any doubt falls back to a full `npm ci` |
+| Migration sandbox (03) | `prisma migrate status` against the **real** database reports up to date (read-only check) | dump restore + sandbox deploy only run when the release actually carries pending migrations |
+
+Unchanged on every deploy, deliberately: the clean-git gate, release gate, CI build+PROVE, signed token, **backup**, `prisma migrate deploy`, health wait, auto-rollback, validation. The deployable unit is still a whole proven release directory — "incremental" means unchanged work is reused, never that unproven pieces ship.
+
 ## 5. Rollback and restore
 
 ```bash

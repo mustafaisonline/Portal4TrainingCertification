@@ -74,6 +74,20 @@ jobs:
           node-version-file: .node-version
           cache: npm
 
+      - name: Restore the Next.js build cache
+        # Incremental deployment (2026-09-29): `.next/cache` is Next's own
+        # incremental-build cache. Restoring the last run's copy turns a
+        # from-scratch `next build` into an incremental one. The key includes
+        # a source hash so an exact match is preferred, and restore-keys fall
+        # back to the newest cache for the same lockfile. Never packaged into
+        # a release (release.yml deletes .next/cache before packaging).
+        uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: nextjs-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ hashFiles('src/**/*.ts', 'src/**/*.tsx', 'next.config.ts') }}
+          restore-keys: |
+            nextjs-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-
+
       - name: Install dependencies (exact lockfile)
         run: npm ci
 

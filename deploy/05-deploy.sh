@@ -104,9 +104,23 @@ upload_governance_bundle
 
 step "Uploading the release payload"
 if [ "$DRY_RUN" -eq 1 ]; then
-  log_dry "would rsync the extracted release to $GOVERNANCE_REMOTE_DIR/release/"
+  log_dry "would rsync the extracted release to $GOVERNANCE_REMOTE_DIR/release/ (--copy-dest against releases/current when it exists)"
 else
-  rsync -az -e "ssh $SSH_OPTS" "$RELEASE_STAGE/release/" "$(ssh_target):$GOVERNANCE_REMOTE_DIR/release/" >>"$LOG_FILE" 2>&1 \
+  # Incremental deployment (2026-09-29): each governance bundle directory is
+  # fresh, so a plain rsync re-uploads the whole release every time. With
+  # --copy-dest pointing at the currently deployed release, any file that is
+  # byte-identical to what the server already has (most of public/, prisma/,
+  # src/, unchanged .next chunks) is copied locally on the server instead of
+  # crossing the network. First deploy (no `current` yet) falls back to a
+  # full upload. --copy-dest, not --link-dest: the deploy user cannot
+  # hardlink root-owned files, a local copy it can always make.
+  COPY_DEST_OPT=""
+  if [ "$(ssh_capture "test -d '$REMOTE_RELEASES_ROOT/current/' && echo yes || echo no")" = "yes" ]; then
+    COPY_DEST_OPT="--copy-dest=$REMOTE_RELEASES_ROOT/current/"
+    log_info "delta upload against the deployed release ($REMOTE_RELEASES_ROOT/current)"
+  fi
+  # shellcheck disable=SC2086
+  rsync -az $COPY_DEST_OPT -e "ssh $SSH_OPTS" "$RELEASE_STAGE/release/" "$(ssh_target):$GOVERNANCE_REMOTE_DIR/release/" >>"$LOG_FILE" 2>&1 \
     || die "release payload upload failed" "rsync error." "See $LOG_FILE."
   log_ok "release payload uploaded"
 fi

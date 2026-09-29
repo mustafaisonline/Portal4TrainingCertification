@@ -146,11 +146,39 @@ switch_to() {
 # write to at runtime (next/image's on-disk optimisation cache) — everything
 # else in the release is read-only to the deploy group, same separation
 # eCard's server-apply-release.sh uses for its live tree.
+#
+# 2026-09-29 incremental deployment: when the new release's package-lock.json
+# is byte-identical to the currently deployed release's, npm ci is skipped and
+# the previous node_modules is reused via rsync --link-dest (hardlinks — near
+# instant, and pruning the old release later cannot break them). Safe because
+# npm ci from an identical lockfile is deterministic, the project defines no
+# install lifecycle scripts, and the Prisma client is pre-generated into
+# src/generated inside the artifact — nothing in node_modules is release-
+# specific. Any doubt (no previous release, hash mismatch, rsync failure)
+# falls back to a full npm ci.
 unpack_release() {
-  local tag="$1" commit="$2"
+  local tag="$1" commit="$2" prev_dir="" reused=0 prev_hash new_hash
   mkdir -p "$RELEASE_DIR"
   rsync -a --delete "$GOV_DIR/release/" "$RELEASE_DIR/" >>"$LOG" 2>&1 || fail "release unpack failed" "rsync from the uploaded bundle." "Re-run the laptop deploy."
-  ( cd "$RELEASE_DIR" && npm ci >>"$LOG" 2>&1 ) || fail "npm ci failed in $RELEASE_DIR" "package-lock.json mismatch or a registry problem." "See $LOG."
+  if [ -n "${PREVIOUS:-}" ] && [ -d "$RELEASES_ROOT/$PREVIOUS/node_modules" ] && [ -f "$RELEASES_ROOT/$PREVIOUS/package-lock.json" ]; then
+    prev_dir="$RELEASES_ROOT/$PREVIOUS"
+    prev_hash="$(sha256sum "$prev_dir/package-lock.json" | cut -d' ' -f1)"
+    new_hash="$(sha256sum "$RELEASE_DIR/package-lock.json" | cut -d' ' -f1)"
+    if [ "$prev_hash" = "$new_hash" ]; then
+      log "package-lock.json unchanged since $PREVIOUS — reusing node_modules (hardlinks), npm ci skipped"
+      if rsync -a --delete --link-dest="$prev_dir/node_modules/" "$prev_dir/node_modules/" "$RELEASE_DIR/node_modules/" >>"$LOG" 2>&1; then
+        reused=1
+      else
+        log "node_modules reuse failed — falling back to a full npm ci"
+        rm -rf "$RELEASE_DIR/node_modules"
+      fi
+    else
+      log "package-lock.json changed since $PREVIOUS — full npm ci"
+    fi
+  fi
+  if [ "$reused" -ne 1 ]; then
+    ( cd "$RELEASE_DIR" && npm ci >>"$LOG" 2>&1 ) || fail "npm ci failed in $RELEASE_DIR" "package-lock.json mismatch or a registry problem." "See $LOG."
+  fi
   sed -e "s#{{ENV_FILE}}#$ENV_FILE#g" -e "s#{{PORT}}#$PORT#g" "$DEPLOY_DIR/run.sh.template" >"$RELEASE_DIR/run.sh"
   chmod 750 "$RELEASE_DIR/run.sh"
   printf '%s\n' "$commit" >"$RELEASE_DIR/.release-commit"

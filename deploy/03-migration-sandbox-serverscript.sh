@@ -6,6 +6,8 @@
 # Proves the tag's pending migrations against a COPY of the environment's
 # database before they touch the real one (eCard 03-data-migration-server-
 # script, adapted to Prisma):
+#   0. (2026-09-29) read-only `prisma migrate status` against the REAL
+#      database first — up to date means nothing to prove: sandbox skipped
 #   1. restore the newest dump of <env> into $SANDBOX_DB_NAME on the same
 #      cluster (pg_restore --clean, so the sandbox is rebuilt every time)
 #   2. `prisma migrate status` from the release's own node_modules → list of
@@ -52,7 +54,20 @@ ADMIN_URL="$(printf '%s' "$DB_URL" | sed -E "s#(://[^/]+/)[^/?]+#\1${ADMIN_DB_NA
 DUMP="$(ls -t "$REMOTE_BACKUP_ROOT"/p4tc-"$ENV"-*.dump 2>/dev/null | head -1)"
 [ -n "$DUMP" ] || fail "no dump for $ENV in $REMOTE_BACKUP_ROOT (01 runs first)"
 log "sandbox for $ENV @ $TAG: restore $(basename "$DUMP") → $SANDBOX_DB_NAME"
-[ "$DRY" -eq 1 ] && { log "(dry-run) would restore, status, scan, deploy, status"; exit 0; }
+[ "$DRY" -eq 1 ] && { log "(dry-run) would check pending, and if any: restore, status, scan, deploy, status"; exit 0; }
+
+# 0. incremental deployment (2026-09-29): a release with no pending migrations
+# has nothing for the sandbox to prove — ask the REAL database first, read-only
+# (`prisma migrate status` only reads _prisma_migrations and the migrations
+# directory; it never writes). Only a release that actually carries pending
+# migrations pays for the dump restore and sandbox deploy below. Anything
+# other than an explicit "up to date" falls through to the full sandbox.
+REAL_STATUS="$( (cd "$RELEASE_DIR" && DATABASE_URL="$DB_URL" node_modules/.bin/prisma migrate status) 2>&1 || true)"
+printf '%s\n' "$REAL_STATUS" >>"$LOG"
+if printf '%s' "$REAL_STATUS" | grep -q 'Database schema is up to date'; then
+  log "no pending migrations for $TAG against the real $ENV database — sandbox skipped (nothing to prove)"
+  exit 0
+fi
 
 # 1. rebuild the sandbox database
 if ! psql "$SANDBOX_URL" -At -c 'SELECT 1' >/dev/null 2>&1; then

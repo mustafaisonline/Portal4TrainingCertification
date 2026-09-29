@@ -11,6 +11,7 @@ The **operator's manual** for the portal: how to deploy it, keep it up, back it 
 | Document | Read it when |
 |---|---|
 | [`DEPLOYMENT_RUNBOOK.md`](DEPLOYMENT_RUNBOOK.md) | Standing up staging or production for the first time; every subsequent deploy; adding an environment variable; running a migration; wiring Stripe's production webhook and the reminders scheduler |
+| [`STRIPE_GO_LIVE_CHECKLIST.md`](STRIPE_GO_LIVE_CHECKLIST.md) | Switching Stripe to live: the founder's steps in order, `npm run stripe:check`, rollback, and the test that proves each payment behaviour |
 | [`BACKUP_AND_RESTORE.md`](BACKUP_AND_RESTORE.md) | Setting the backup schedule; running the restore rehearsal (`scripts/backup.sh`, `scripts/restore-rehearsal.sh`); an actual restore |
 | [`MONITORING_AND_INCIDENTS.md`](MONITORING_AND_INCIDENTS.md) | Configuring uptime checks on `/api/health` and `/verify`; what log lines mean an alert; step-by-step incident runbooks (webhook failing, database unreachable, Stripe degraded, key rotation) |
 | [`SECURITY_CHECKLIST.md`](SECURITY_CHECKLIST.md) | Before the first production deploy and after any security-relevant change; mapped section by section to `SECURITY_ARCHITECTURE.md` |

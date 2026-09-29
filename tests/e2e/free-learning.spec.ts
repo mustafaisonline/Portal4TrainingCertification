@@ -90,6 +90,10 @@ test("topics list and search; a topic page with its database-served image and ne
   expect(res.status()).toBe(200);
   expect(res.headers()["content-type"]).toBe("image/png");
   await expect(page.getByTestId("topic-next")).toContainText("E2E Lakehouse Layers");
+  // No questions yet: the Topic tab offers no jump, and the Questions tab says they are being prepared.
+  await expect(page.getByTestId("topic-tab-questions")).toHaveText("Questions");
+  await expect(page.getByTestId("topic-to-questions")).toHaveCount(0);
+  await page.getByTestId("topic-tab-questions").click();
   await expect(page.getByTestId("topic-quiz-coming")).toBeVisible();
   await expectNoAxeViolations(page);
 

@@ -201,12 +201,13 @@ test("/verify/<ID> shows the verification layout with status in words and the de
   await expect(page).toHaveTitle(`Certificate ${listed.certificate.certificateId} · Data & AI Academy`);
   await expect(page.getByTestId("verify-holder")).toHaveText(LISTED_NAME);
   await expect(page.getByTestId("certificate-status")).toHaveAttribute("data-status", "active");
-  await expect(page.getByTestId("certificate-status")).toContainText("Active");
-  await expect(page.getByTestId("verify-status-sentence")).toHaveText(`This certificate is active until ${formatCalendarDate(listed.certificate.expiresOn)}.`);
+  await expect(page.getByTestId("certificate-status")).toHaveText("Valid");
+  await expect(page.getByTestId("verify-status-sentence")).toHaveText(`This certificate is valid until ${formatCalendarDate(listed.certificate.expiresOn)}.`);
   const dl = page.getByTestId("verify-details");
-  for (const term of ["Holder", "Programme", "Format", "Completed", "Issued", "Active until", "Certificate ID"]) {
+  for (const term of ["Type", "Holder", "Programme", "Format", "Completed", "Issued", "Valid until", "Certificate ID", "Issued by"]) {
     await expect(dl.getByRole("term").filter({ hasText: new RegExp(`^${term}$`, "i") })).toHaveCount(1);
   }
+  await expect(page.getByTestId("verify-issuer")).toHaveText("Your Partner Technologies");
   await expect(dl).toContainText(listed.certificate.programmeTitle);
   await expect(dl).toContainText(formatCalendarDate(listed.certificate.completedOn));
   await expect(page.getByTestId("verify-certificate-id")).toHaveText(listed.certificate.certificateId);
@@ -231,7 +232,18 @@ test("/verify/<ID> shows the verification layout with status in words and the de
   expect(malformed?.status()).toBe(404);
 });
 
-test("a signed-in holder without a review sees the gate and no document; after sharing a review the document renders; the dashboard shows the status", async ({ page }) => {
+test("/verify-certificate and /verify-certificate/<ID> are permanent aliases of the one verification system", async ({ request }) => {
+  const root = await request.get("/verify-certificate", { maxRedirects: 0 });
+  expect(root.status()).toBe(308);
+  expect(new URL(root.headers()["location"]!, "http://x").pathname).toBe("/verify");
+  const one = await request.get(`/verify-certificate/${listed.certificate.certificateId}`, { maxRedirects: 0 });
+  expect(one.status()).toBe(308);
+  expect(new URL(one.headers()["location"]!, "http://x").pathname).toBe(`/verify/${listed.certificate.certificateId}`);
+  const followed = await request.get(`/verify-certificate/${listed.certificate.certificateId}`);
+  expect(followed.status()).toBe(200);
+});
+
+test("a signed-in holder without a review sees the gate and no document; after sharing a review the document renders; the dashboard shows the status", async ({ page, request }) => {
   await registerViaUi(page, holderEmail, HOLDER_NAME);
   await completeProfileByEmail(holderEmail, { legalName: HOLDER_NAME });
   holder = await issueTestCertificate({ adminUserId, userEmail: holderEmail });
@@ -261,6 +273,11 @@ test("a signed-in holder without a review sees the gate and no document; after s
   const copied = await page.evaluate(() => navigator.clipboard.readText());
   expect(copied).toMatch(new RegExp(`/verify/${holder.certificate.certificateId}$`));
 
+  // Requirement 6: the PDF is behind the same gate — refused until the review exists; never public.
+  const pdfUrl = `/api/certificates/${holder.certificate.certificateId}/pdf`;
+  expect((await page.request.get(pdfUrl)).status()).toBe(403);
+  expect((await request.get(pdfUrl, { headers: { cookie: "" } })).status()).toBe(401);
+
   // Any review row — private included — unlocks the document.
   await shareReview(holder);
   await page.reload();
@@ -268,14 +285,43 @@ test("a signed-in holder without a review sees the gate and no document; after s
   const doc = page.getByTestId("certificate-document");
   await expect(doc).toBeVisible();
   await expect(doc).toContainText("Certificate of Completion");
-  await expect(doc.getByTestId("document-holder")).toHaveText(HOLDER_NAME);
-  await expect(doc).toContainText(holder.certificate.programmeTitle);
-  await expect(doc).toContainText(holder.certificate.certificateId);
-  await expect(doc).toContainText("Your Partner Technologies");
+  await expect(doc.getByTestId("certificate-title")).toHaveText("Certificate of Completion");
+  await expect(doc.getByTestId("certificate-holder")).toHaveText(HOLDER_NAME);
+  await expect(doc.getByTestId("certificate-subject")).toHaveText(holder.certificate.programmeTitle);
+  await expect(doc.getByTestId("certificate-id")).toHaveText(holder.certificate.certificateId);
+  await expect(doc.getByTestId("certificate-logo")).toHaveAttribute("alt", "Your Partner Technologies");
+  await expect(doc.getByTestId("certificate-details")).toContainText(formatCalendarDate(holder.certificate.completedOn));
+  await expect(doc.getByTestId("certificate-details")).toContainText(formatCalendarDate(holder.certificate.expiresOn));
+  await expect(doc.getByTestId("certificate-qr").locator("svg")).toHaveCount(1);
   await expect(doc).toContainText("It is not the Academy’s earned credential.");
-  await expect(doc).toContainText(`/verify/${holder.certificate.certificateId}`);
+  await expect(doc.getByTestId("certificate-verify-url")).toContainText(`/verify/${holder.certificate.certificateId}`);
+  await expect(doc).not.toContainText("HRD Corp certified");
+  // … and the PDF: a real vector PDF, one A4-landscape page, as an attachment, never cached.
+  await expect(page.getByTestId("download-certificate-pdf")).toHaveAttribute("href", pdfUrl);
+  const pdf = await page.request.get(pdfUrl);
+  expect(pdf.status()).toBe(200);
+  expect(pdf.headers()["content-type"]).toContain("application/pdf");
+  expect(pdf.headers()["content-disposition"]).toContain(`${holder.certificate.certificateId}.pdf`);
+  expect(pdf.headers()["cache-control"]).toContain("no-store");
+  const bytes = await pdf.body();
+  expect(bytes.subarray(0, 5).toString("latin1")).toBe("%PDF-");
+  expect(bytes.toString("latin1")).toMatch(/\/Count 1\b/);
+  // Someone else's certificate is a plain 404, indistinguishable from an unknown ID.
+  expect((await page.request.get("/api/certificates/DAA-2026-2222-2222/pdf")).status()).toBe(404);
   await expect(page.getByTestId("print-certificate")).toBeVisible();
   await expectNoAxeViolations(page);
+
+  // A revoked certificate is not shown or printed; the page says so.
+  const { getPrisma } = await import("../../src/db/prisma");
+  await getPrisma().certificate.update({ where: { id: holder.certificate.id }, data: { revokedAt: new Date(), revocationReason: "e2e revoke" } });
+  try {
+    await page.reload();
+    await expect(page.getByTestId("certificate-revoked")).toContainText("revoked");
+    await expect(page.getByTestId("certificate-document")).toHaveCount(0);
+    await expect(page.getByTestId("print-certificate")).toHaveCount(0);
+  } finally {
+    await getPrisma().certificate.update({ where: { id: holder.certificate.id }, data: { revokedAt: null, revocationReason: null } });
+  }
 });
 
 test("the listing toggle: on → found by name in public search (consent row written); off → not found", async ({ page }) => {

@@ -3,6 +3,8 @@ import type { Db, Tx } from "@/db/prisma";
 import { getPrisma } from "@/db/prisma";
 import { isUuid } from "@/modules/catalogue/offerings/repository";
 import { ID_ALPHABET } from "@/modules/certificates/constants";
+import { todayIso } from "@/modules/certificates/dates";
+import { initialExpiry } from "@/modules/certificates/rules";
 import { writeAudit } from "@/modules/platform/audit/repository";
 import { QUIZ_PAGE_SIZE } from "./quiz.repository";
 
@@ -39,7 +41,7 @@ export function passed(score: number, size: number): boolean {
 
 export class KnowledgeCheckError extends Error {
   constructor(
-    readonly reason: "bank_too_small" | "invalid_size" | "not_found" | "already_finished" | "not_finished",
+    readonly reason: "bank_too_small" | "invalid_size" | "not_found" | "already_finished" | "not_finished" | "invalid_reason" | "not_passed" | "already_revoked",
     message: string,
   ) {
     super(message);
@@ -167,15 +169,124 @@ export async function listAttemptsForUser(userId: string, db: Db = getPrisma()):
   return rows.map(toRecord);
 }
 
-export type PublicKnowledgeCheckView = { publicId: string; holderName: string; size: number; score: number; percent: number; passed: boolean; finishedAt: Date };
+/** What a verifier is told about a Knowledge Check. `not_passed` has no
+ *  validity at all; a pass is valid for one year from the day it was earned
+ *  (Milestone 15, Q8b), unless an administrator revoked it. */
+export type KnowledgeCheckStatus = "valid" | "expired" | "revoked" | "not_passed";
+
+/** Pure. `today` is the MYT calendar date (`todayIso`); the pass date is the
+ *  MYT calendar date of `finishedAt`. Revoked wins over expired (as for the
+ *  Professional certificate); the last valid day is inclusive. */
+export function knowledgeCheckStatus(input: { passed: boolean; finishedAt: Date; revokedAt: Date | null }, today: string): { status: KnowledgeCheckStatus; expiresOn: string | null } {
+  if (!input.passed) return { status: "not_passed", expiresOn: null };
+  const expiresOn = initialExpiry(todayIso(input.finishedAt));
+  if (input.revokedAt) return { status: "revoked", expiresOn };
+  return { status: today > expiresOn ? "expired" : "valid", expiresOn };
+}
+
+export type PublicKnowledgeCheckView = {
+  publicId: string;
+  holderName: string;
+  size: number;
+  score: number;
+  percent: number;
+  passed: boolean;
+  finishedAt: Date;
+  /** Finish − start, in milliseconds — measured by the server (Milestone 15). */
+  timeTakenMs: number;
+  status: KnowledgeCheckStatus;
+  /** Last valid day (YYYY-MM-DD, MYT); null for a result that did not pass. */
+  expiresOn: string | null;
+};
 
 /** What /verify shows for a Knowledge Check ID: the result, never the answers. */
-export async function findResultByPublicId(publicId: string, db: Db = getPrisma()): Promise<PublicKnowledgeCheckView | null> {
+export async function findResultByPublicId(publicId: string, db: Db = getPrisma(), now: Date = new Date()): Promise<PublicKnowledgeCheckView | null> {
   const id = publicId.trim().toUpperCase();
   if (!KNOWLEDGE_CHECK_ID_RE.test(id)) return null;
-  const r = await db.knowledgeCheckAttempt.findUnique({ where: { publicId: id }, select });
+  const r = await db.knowledgeCheckAttempt.findUnique({ where: { publicId: id }, select: { ...select, revokedAt: true } });
   if (!r || !r.finishedAt || r.score === null || r.passed === null) return null;
-  return { publicId: id, holderName: r.holderName ?? "Account holder", size: r.size, score: r.score, percent: Math.round((r.score * 100) / r.size), passed: r.passed, finishedAt: r.finishedAt };
+  const { status, expiresOn } = knowledgeCheckStatus({ passed: r.passed, finishedAt: r.finishedAt, revokedAt: r.revokedAt }, todayIso(now));
+  return {
+    publicId: id,
+    holderName: r.holderName ?? "Account holder",
+    size: r.size,
+    score: r.score,
+    percent: Math.round((r.score * 100) / r.size),
+    passed: r.passed,
+    finishedAt: r.finishedAt,
+    timeTakenMs: Math.max(0, r.finishedAt.getTime() - r.startedAt.getTime()),
+    status,
+    expiresOn,
+  };
+}
+
+/* ------------------------------------------------------- administration */
+
+const REVOKE_REASON_MIN = 3;
+const REVOKE_REASON_MAX = 500;
+// eslint-disable-next-line no-control-regex -- refuses control characters in a typed reason
+const CONTROL_CHARS = /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/;
+
+/** Milestone 15 Req 3 (founder, 2026-09-29): an administrator revokes a passed
+ *  result's Certificate of Achievement. Mirrors the Professional certificate:
+ *  a reason (3–500 characters) is required, it is audited, it is permanent
+ *  here, and the verification page then says Revoked. A result that did not
+ *  pass has no certificate to revoke. */
+export async function revokeKnowledgeCheck(tx: Tx, input: { publicId: string; adminUserId: string; reason: string; now?: Date }): Promise<{ attemptId: string; publicId: string }> {
+  const reason = input.reason.replace(/\s+/g, " ").trim();
+  if (reason.length < REVOKE_REASON_MIN || reason.length > REVOKE_REASON_MAX || CONTROL_CHARS.test(reason)) {
+    throw new KnowledgeCheckError("invalid_reason", `Give a reason of ${REVOKE_REASON_MIN} to ${REVOKE_REASON_MAX} characters.`);
+  }
+  const id = input.publicId.trim().toUpperCase();
+  const row = KNOWLEDGE_CHECK_ID_RE.test(id) ? await tx.knowledgeCheckAttempt.findUnique({ where: { publicId: id }, select: { id: true, publicId: true, passed: true, finishedAt: true, revokedAt: true } }) : null;
+  if (!row || !row.finishedAt) throw new KnowledgeCheckError("not_found", `No Knowledge Check result ${input.publicId}.`);
+  if (!row.passed) throw new KnowledgeCheckError("not_passed", `Result ${id} did not pass, so it has no certificate.`);
+  if (row.revokedAt) throw new KnowledgeCheckError("already_revoked", `Result ${id} was revoked on ${row.revokedAt.toISOString()}.`);
+  const now = input.now ?? new Date();
+  await tx.knowledgeCheckAttempt.update({ where: { id: row.id }, data: { revokedAt: now, revokedByUserId: input.adminUserId, revocationReason: reason } });
+  await writeAudit(tx, {
+    actorUserId: input.adminUserId,
+    action: "knowledge_check.revoked",
+    entityType: "knowledge_check_attempt",
+    entityId: row.id,
+    before: { revokedAt: null },
+    after: { revokedAt: now.toISOString(), publicId: id },
+    reason,
+  });
+  return { attemptId: row.id, publicId: id };
+}
+
+export type AdminKnowledgeCheckRow = {
+  attemptId: string;
+  publicId: string;
+  holderName: string;
+  email: string;
+  size: number;
+  score: number;
+  percent: number;
+  finishedAt: Date;
+  status: KnowledgeCheckStatus;
+  expiresOn: string | null;
+  revocationReason: string | null;
+};
+
+/** Passed results for the administrator: by exact Knowledge Check ID, or the
+ *  latest. Email is shown here and never publicly. */
+export async function listPassedResultsForAdmin(input: { publicId?: string; limit?: number }, db: Db = getPrisma(), now: Date = new Date()): Promise<AdminKnowledgeCheckRow[]> {
+  const id = input.publicId?.trim().toUpperCase();
+  if (input.publicId && !(id && KNOWLEDGE_CHECK_ID_RE.test(id))) return [];
+  const rows = await db.knowledgeCheckAttempt.findMany({
+    where: { passed: true, finishedAt: { not: null }, publicId: id ?? { not: null } },
+    orderBy: { finishedAt: "desc" },
+    take: input.limit ?? 25,
+    select: { id: true, publicId: true, holderName: true, size: true, score: true, finishedAt: true, revokedAt: true, revocationReason: true, user: { select: { email: true } } },
+  });
+  const today = todayIso(now);
+  return rows.flatMap((r) => {
+    if (!r.publicId || !r.finishedAt || r.score === null) return [];
+    const { status, expiresOn } = knowledgeCheckStatus({ passed: true, finishedAt: r.finishedAt, revokedAt: r.revokedAt }, today);
+    return [{ attemptId: r.id, publicId: r.publicId, holderName: r.holderName ?? "Account holder", email: r.user.email, size: r.size, score: r.score, percent: Math.round((r.score * 100) / r.size), finishedAt: r.finishedAt, status, expiresOn, revocationReason: r.revocationReason }];
+  });
 }
 
 /** Founder, 2026-09-28: a person may delete their OWN finished results from

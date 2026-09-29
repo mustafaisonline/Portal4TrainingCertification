@@ -53,6 +53,12 @@ export default async function AdminFreeLearningPage({ searchParams }: { searchPa
           <code className="text-mono">npm run learning:import</code>; a topic you unpublish here stays unpublished across re-imports. Load draft questions
           with <code className="text-mono">npm run learning:import-questions</code>; readers see reviewed questions only.
         </p>
+        <p className="text-body-sm mt-2">
+          <Link href="/admin/free-learning/results" className="text-[var(--color-primary)] underline underline-offset-4" data-testid="kc-results-link">
+            Knowledge Check certificates
+          </Link>{" "}
+          — passed results, and revoking a certificate.
+        </p>
       </header>
 
       {allTopics.length === 0 ? (

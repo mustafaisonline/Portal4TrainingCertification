@@ -59,7 +59,7 @@ export const faqGroups: { title: string; items: Faq[] }[] = [
       { q: "What personal data do you keep, and how is it used?", a: "The Privacy policy will set this out under the Personal Data Protection Act. It is not published yet.", href: "/privacy", hrefLabel: "Privacy policy", tbc: true },
       { q: "Can my name be found publicly?", a: "Only if you turn on \"Show my name in public search\" for your certificate. Otherwise it can be verified only by its ID or link, which you choose whom to share with." },
       { q: "I forgot my password.", a: "Use the Forgot password link on the sign-in page.", href: "/forgot-password", hrefLabel: "Reset password" },
-      { q: "How do I contact you?", a: "Use the enquiry form on the Contact page.", href: "/contact-us", hrefLabel: "Contact us" },
+      { q: "How do I contact you?", a: "Email our team at sales@yourpartnertechnologies.com — the Contact page has the details.", href: "/contact-us", hrefLabel: "Contact us" },
     ],
   },
 ];

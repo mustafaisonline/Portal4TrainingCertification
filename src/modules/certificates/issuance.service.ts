@@ -120,6 +120,15 @@ export type RecordCompletionResult = { certificate: CertificateRecord; created: 
 
 const ID_ATTEMPTS = 5;
 
+/** Linked trainers as one string: the lead first, then by name. Null when none
+ *  is linked (nothing to snapshot — never a made-up name). */
+export function trainerSnapshot(experts: { role: string; expert: { name: string } }[]): string | null {
+  const names = [...experts]
+    .sort((a, b) => Number(b.role === "lead") - Number(a.role === "lead") || a.expert.name.localeCompare(b.expert.name))
+    .map((e) => e.expert.name);
+  return names.length > 0 ? names.join(", ") : null;
+}
+
 /** P2002 on the named column. Prisma reports the target as a column list,
  *  a constraint name (`certificates_certificate_id_key`) or only in the
  *  message depending on the engine, so all three are checked. */
@@ -133,7 +142,12 @@ function uniqueViolationOn(err: unknown, column: string): boolean {
 
 const registrationInclude = {
   user: { select: { id: true, name: true, email: true, profile: { select: { legalName: true } } } },
-  offering: { include: { programme: { select: { title: true } }, deliveryFormat: { select: { name: true } } } },
+  offering: {
+    include: {
+      programme: { select: { title: true, durationLabel: true, experts: { select: { role: true, expert: { select: { name: true } } } } } },
+      deliveryFormat: { select: { name: true } },
+    },
+  },
   certificate: true,
   attendance: { select: { attended: true } },
 } as const;
@@ -188,6 +202,10 @@ export async function recordCompletion(input: RecordCompletionInput): Promise<Re
       holderNameSearch: normaliseName(legalName),
       programmeTitle: reg.offering.programme.title,
       formatName: reg.offering.deliveryFormat?.name ?? MODALITY_LABEL[reg.offering.modality],
+      // Milestone 15 (Q3): what the certificate says about the training's length and
+      // who taught it is fixed HERE, at issue — a later catalogue edit never rewrites it.
+      trainingDurationLabel: reg.offering.programme.durationLabel || null,
+      trainerName: trainerSnapshot(reg.offering.programme.experts),
       completedOn: isoToDateColumn(input.completedOn),
       issuedOn: isoToDateColumn(issuedOn),
       expiresOn: isoToDateColumn(expiresOn),

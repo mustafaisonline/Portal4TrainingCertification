@@ -12,8 +12,13 @@ import Link from "next/link";
 import { findFlagshipProgramme } from "@/modules/catalogue/programmes/repository";
 import { listPublishedExperts } from "@/modules/catalogue/experts/repository";
 import { listDiagnosticQuestions } from "@/modules/catalogue/diagnostic/repository";
+import { countPublishedTopics } from "@/modules/free-learning/book.repository";
+import { bankSize } from "@/modules/free-learning/knowledge-check.repository";
+import { enabledUnlockSetting } from "@/modules/commerce/unlock.repository";
+import { formatMoney } from "@/modules/catalogue/programmes/types";
 import { HomeHero } from "@/shared/marketing/HomeHero";
 import { HomeDiagnostic } from "@/shared/marketing/HomeDiagnostic";
+import { HowPortalWorks } from "@/shared/marketing/HowPortalWorks";
 import { ImageFrame } from "@/shared/marketing/ImageFrame";
 import {
   FaceToFaceIllustration,
@@ -79,10 +84,13 @@ function GlyphTarget() {
 }
 
 export default async function HomePage() {
-  const [flagship, experts, questions] = await Promise.all([
+  const [flagship, experts, questions, topicCount, questionCount, unlockFee] = await Promise.all([
     findFlagshipProgramme(),
     listPublishedExperts(),
     listDiagnosticQuestions(),
+    countPublishedTopics(),
+    bankSize(),
+    enabledUnlockSetting(),
   ]);
 
   // 2026-09-26 (founder): the public catalogue is the /programs hub
@@ -90,11 +98,25 @@ export default async function HomePage() {
   // page is /programs/<slug>. The hero CTA points at the hub either way.
   const coursesHref = "/programs";
   const founder = experts[0] ?? null;
+  // The Amazon link for *I Am Datapedia!* is the one already on the trainer's
+  // record — never typed here (Milestone 15, Req 1). Null hides the link.
+  const bookUrl =
+    experts.flatMap((e) => e.profile.books ?? []).find((b) => /datapedia/i.test(b.title))?.url ?? null;
 
   return (
     <>
       {/* ============ H1 — Hero (includes the learning-journey strip) ============ */}
       <HomeHero founder={founder} exploreHref={coursesHref} />
+
+      {/* ============ How this portal works (Milestone 15, Req 1) ============
+          Directly below YOUR LEARNING JOURNEY (the strip that closes the
+          hero): Knowledge Hub → Free Certification → Professional Training. */}
+      <HowPortalWorks
+        topicCount={topicCount}
+        questionCount={questionCount}
+        bookUrl={bookUrl}
+        certificateFee={unlockFee ? formatMoney(unlockFee.amountMinor, unlockFee.currency) : null}
+      />
 
       {/* ============ Diagnostic band ============
           The real, live diagnostic walkthrough, embedded directly here so a

@@ -77,6 +77,7 @@ export type AuditAction =
   // 2026-09-28: the person deleted their own finished result (the audit row
   // carries the result's facts and is the surviving record).
   | "knowledge_check.deleted"
+  | "knowledge_check.revoked"
   // Milestone 14 Phase 5: the unlock fee setting appended.
   | "knowledge_check_unlock.changed"
   // Coupons (N1–N8 approved 2026-09-28): created/edited/status/deleted by an

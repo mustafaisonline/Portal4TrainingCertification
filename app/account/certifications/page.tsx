@@ -6,6 +6,7 @@ import { CertificateDocument } from "@/modules/certificates/components/Certifica
 import { CopyLinkButton } from "@/modules/certificates/components/CopyLinkButton";
 import { ListingToggle } from "@/modules/certificates/components/ListingToggle";
 import { PrintButton } from "@/modules/certificates/components/PrintButton";
+import { DownloadPdfButton } from "@/shared/certificate/DownloadPdfButton";
 import { RenewForm } from "@/modules/certificates/components/RenewForm";
 import { StatusChip } from "@/modules/certificates/components/StatusChip";
 import { RENEWAL_WINDOW_DAYS, VALIDITY_MONTHS } from "@/modules/certificates/constants";
@@ -192,11 +193,18 @@ async function CertificateSection({ certificate, userId, today }: { certificate:
       </Card>
 
       {/* (b) the document — behind the reviews gate (E9) */}
-      {access.unlocked ? (
+      {status === "revoked" ? (
+        <Card variant="panel" className="p-5 sm:p-6" data-testid="certificate-revoked">
+          <p className="text-body-sm text-[var(--color-ink-quiet)]">
+            This certificate was revoked and is no longer valid, so it cannot be shown or printed. Its public verification page says so.
+          </p>
+        </Card>
+      ) : access.unlocked ? (
         <div className="flex flex-col gap-4">
           <CertificateDocument certificate={certificate} verifyUrl={href} />
           <div className="flex flex-wrap gap-3 print:hidden">
             <PrintButton />
+            <DownloadPdfButton href={`/api/certificates/${certificate.certificateId}/pdf`} />
           </div>
         </div>
       ) : (

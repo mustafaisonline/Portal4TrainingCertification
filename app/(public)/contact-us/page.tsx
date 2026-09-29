@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
+import { CONTACT_EMAIL, contactMailto, interestSubject } from "@/content/contact";
 import { findPublishedProgrammeBySlug } from "@/modules/catalogue/programmes/repository";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
-import { EnquiryForm } from "./EnquiryForm";
 
 /*
  * PORTED 2026-09-21 from project-artifacts/mockup/app/contact-us/page.tsx (ADR-045)
@@ -18,19 +18,17 @@ import { EnquiryForm } from "./EnquiryForm";
  */
 
 /**
- * Contact — added 2026-09-02 by founder direction.
- *
- * ⚠ NO CONTACT DETAILS ARE INVENTED. There is no business email address,
+ * Contact — added 2026-09-02 by founder direction; REDUCED 2026-09-29
+ * (Milestone 15, Requirement 8): the enquiry form is gone and the page is the
+ * three routes plus ONE contact option, the sales email — supplied by the
+ * founder and shared from `@/content/contact`. WhatsApp was considered and
+ * dropped by the founder the same day. Nothing else is invented: still no
  * telephone number, office address, company registration or response-time
- * commitment anywhere on this page, because none of those is established
- * in any approved source. Inventing a single one of them would be the
- * most damaging kind of fabrication on a portal that asks people to trust
- * it with training budgets.
+ * commitment on this page, because none is established in an approved source.
  *
- * The founder's published channels and location ("Reach us directly") were
- * shown here until 2026-09-20, when the founder asked for that section to be
- * removed. A real business email remains an OPEN ITEM. The page has the
- * three routes and the enquiry form only.
+ * Old links of the form /contact-us?kind=…&programme=<slug> still resolve:
+ * the page reads `programme` only to name the training in a line and in the
+ * email's subject, so a shared link keeps its context.
  */
 
 export const metadata: Metadata = {
@@ -63,8 +61,6 @@ const routes = [
   },
 ];
 
-type EnquiryKind = "general" | "organisation" | "programme_interest";
-
 function first(value: string | string[] | undefined): string | undefined {
   return Array.isArray(value) ? value[0] : value;
 }
@@ -75,16 +71,9 @@ export default async function ContactPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const params = await searchParams;
-  const kindRaw = first(params["kind"]);
-  const kind: EnquiryKind =
-    kindRaw === "organisation" || kindRaw === "programme_interest" ? kindRaw : "general";
   const programmeSlug = first(params["programme"]);
   const programme = programmeSlug ? await findPublishedProgrammeBySlug(programmeSlug) : null;
-
-  const query = new URLSearchParams();
-  if (kindRaw) query.set("kind", kindRaw);
-  if (programmeSlug) query.set("programme", programmeSlug);
-  const sourcePath = query.size ? `/contact-us?${query.toString()}` : "/contact-us";
+  const subject = programme ? interestSubject(programme.title) : undefined;
 
   return (
     <>
@@ -99,7 +88,7 @@ export default async function ContactPage({
           </h1>
           <p className="text-body-lg max-w-[640px] text-[var(--color-ink-quiet)]">
             Whether that is your own capability, your team&rsquo;s, or a
-            training you want delivered at your location — start here and a
+            training you want delivered at your location — write to us and a
             practitioner will answer, not a sales sequence.
           </p>
         </div>
@@ -133,24 +122,41 @@ export default async function ContactPage({
         </div>
       </section>
 
-      {/* ===== Enquiry form ===== */}
-      <section className="border-t border-[var(--color-line)] bg-[var(--color-ground-raised)]">
+      {/* ===== Get in touch — the one contact option (founder, 2026-09-29) ===== */}
+      <section className="border-t border-[var(--color-line)] bg-[var(--color-ground-raised)]" data-testid="contact-section">
         <div className="mx-auto max-w-[1280px] px-6 py-16">
           <div className="max-w-[720px]">
-            <div>
-              <h2 className="text-display mb-4">Send an enquiry</h2>
-              <p className="text-body-lg mb-8 max-w-[52ch] text-[var(--color-ink-quiet)]">
-                The more specific you are about the capability gap, the more
-                useful the reply will be.
+            <h2 className="text-display mb-4">Get in touch</h2>
+            <p className="text-body-lg mb-8 max-w-[56ch] text-[var(--color-ink-quiet)]">
+              Have a question about our training, certification or enterprise programs? Get in touch with our team.
+            </p>
+            {programme ? (
+              <p className="text-body-sm mb-6 text-[var(--color-ink-quiet)]" data-testid="contact-about">
+                About: <span className="font-medium text-[var(--color-ink)]">{programme.title}</span>
               </p>
-              {programme ? (
-                <p className="text-body-sm mb-6 text-[var(--color-ink-quiet)]">
-                  About: <span className="font-medium text-[var(--color-ink)]">{programme.title}</span>
-                </p>
-              ) : null}
+            ) : null}
 
-              <EnquiryForm kind={kind} programmeId={programme?.id} sourcePath={sourcePath} />
-            </div>
+            <Card variant="panel" className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:gap-6 sm:p-8" data-testid="contact-email-card">
+              <span
+                aria-hidden="true"
+                className="grid h-12 w-12 shrink-0 place-items-center rounded-[var(--radius-plate)] bg-[var(--color-primary)]/12 text-[var(--color-primary)]"
+              >
+                <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
+                  <rect x={3.5} y={5.5} width={17} height={13} rx={2.2} />
+                  <path d="M4.5 7.5l7.5 5.5 7.5-5.5" />
+                </svg>
+              </span>
+              <div className="min-w-0">
+                <p className="text-label mb-1">Email</p>
+                <a
+                  href={contactMailto(subject)}
+                  className="text-h2 break-all text-[var(--color-primary)] underline underline-offset-4"
+                  data-testid="contact-email"
+                >
+                  {CONTACT_EMAIL}
+                </a>
+              </div>
+            </Card>
           </div>
         </div>
       </section>

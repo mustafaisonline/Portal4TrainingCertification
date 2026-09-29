@@ -80,6 +80,10 @@ const nextConfig: NextConfig = {
       { source: "/trainers", destination: "/mustafa-qizilbash", permanent: true },
       { source: "/trainers/:slug", destination: "/:slug", permanent: true },
       { source: "/for-organisations", destination: "/programs#for-organisations", permanent: true },
+      // Milestone 15 Req 5 (founder Q4, 2026-09-29): the verification address
+      // named in the requirements is an alias of the one verification system.
+      { source: "/verify-certificate", destination: "/verify", permanent: true },
+      { source: "/verify-certificate/:id", destination: "/verify/:id", permanent: true },
     ];
   },
 

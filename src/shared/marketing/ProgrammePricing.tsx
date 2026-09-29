@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { interestMailto } from "@/content/contact";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { Chip } from "@/shared/ui/Chip";
@@ -211,19 +212,22 @@ export function ProgrammePricing({
   prices,
   packages,
   programmeSlug,
+  programmeTitle,
 }: {
   prices: ProgrammePriceRecord[];
   packages?: MentorshipPackage[];
-  /** Carried into the enquiry link so the contact form knows which
-   *  programme the interest is for. */
+  /** Used for the "see dates" link. */
   programmeSlug: string;
+  /** Carried into the enquiry email's subject so the sales team knows which
+   *  training the interest is for (founder, 2026-09-29: no contact form). */
+  programmeTitle: string;
 }) {
   // Mentorship packages only: the three checkout regions that actually have
   // a published figure get a tab (packages are not priced via HRD Corp).
   const regions = PRICE_CARD_ORDER.map(priceCardMeta).filter((r) => packages?.some((pkg) => Boolean(pkg.pricing[r.key as CheckoutRegion])) ?? false);
   const [region, setRegion] = useState<CheckoutRegion>((regions[0]?.key as CheckoutRegion | undefined) ?? "malaysia");
   const activeRegion = regions.find((r) => r.key === region) ?? regions[0];
-  const enquiryHref = `/contact-us?kind=programme_interest&programme=${programmeSlug}`;
+  const enquiryHref = interestMailto(programmeTitle);
 
   // Training cards, in the founder's order, only for cards with a fee row.
   const cards = PRICE_CARD_ORDER.flatMap((card) => {

@@ -7,6 +7,7 @@ import { formatMoney } from "@/modules/catalogue/programmes/types";
 import { CertificateDocument } from "@/modules/certificates/components/CertificateDocument";
 import { CopyLinkButton } from "@/modules/certificates/components/CopyLinkButton";
 import { PrintButton } from "@/modules/certificates/components/PrintButton";
+import { DownloadPdfButton } from "@/shared/certificate/DownloadPdfButton";
 import { StatusChip } from "@/modules/certificates/components/StatusChip";
 import { formatCalendarDate, todayIso } from "@/modules/certificates/dates";
 import { certificateDocumentAccess } from "@/modules/certificates/gate";
@@ -163,11 +164,18 @@ export default async function TrainingDetailPage({ params }: { params: Promise<{
             </div>
           </Card>
 
-          {access.unlocked ? (
+          {statusOf(certificate, today).status === "revoked" ? (
+            <Card variant="panel" className="p-5 sm:p-6" data-testid="certificate-revoked">
+              <p className="text-body-sm text-[var(--color-ink-quiet)]">
+                This certificate was revoked and is no longer valid, so it cannot be shown or printed. Its public verification page says so.
+              </p>
+            </Card>
+          ) : access.unlocked ? (
             <div className="flex flex-col gap-4">
               <CertificateDocument certificate={certificate} verifyUrl={href} />
               <div className="flex flex-wrap gap-3 print:hidden">
                 <PrintButton />
+                <DownloadPdfButton href={`/api/certificates/${certificate.certificateId}/pdf`} />
               </div>
             </div>
           ) : (

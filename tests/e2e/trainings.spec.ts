@@ -1,5 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
+import { interestMailto } from "../../src/content/contact";
 
 /*
  * Trainings hub and training pages — end to end (founder request 2026-09-26:
@@ -29,7 +30,9 @@ const NO_CARD_ANYWHERE =
  *  fourth "Can't pay by card?" card. */
 async function expectInvestmentCards(page: Page, slug: string, figures: Record<"international" | "malaysia" | "pakistan", { today: string; original: string }>) {
   const investment = page.locator("#investment");
-  const enquiry = `/contact-us?kind=programme_interest&programme=${slug}`;
+  // Founder, 2026-09-29: no contact form — the price cards' "Contact us" is an email with the training in the subject.
+  const { findPublishedProgrammeBySlug } = await import("../../src/modules/catalogue/programmes/repository");
+  const enquiry = interestMailto((await findPublishedProgrammeBySlug(slug))!.title);
   await expect(investment.getByRole("heading", { name: "Course investment" })).toBeVisible();
   await expect(investment.getByRole("tab")).toHaveCount(0);
   const cards = investment.getByTestId("price-cards").locator("> *");
@@ -257,7 +260,7 @@ test("/programs/learn-vibe-coding renders the training with its sections, the re
   const hero = page.locator("section").first();
   await expect(hero.getByRole("link", { name: "Register your interest" })).toHaveAttribute(
     "href",
-    "/contact-us?kind=programme_interest&programme=learn-vibe-coding",
+    interestMailto(training!.title),
   );
   await expect(hero.getByRole("link", { name: "See dates and register" })).toHaveAttribute("href", "/schedule?training=learn-vibe-coding"); // M13: the page lists no dates; the schedule filtered to this training does
   // The "Trainings" nav item is current on a training page too.
@@ -353,7 +356,7 @@ test("/programs/data-blueprint-ai-vibe-coding renders the flagship on the shared
   const hero = page.locator("section").first();
   await expect(hero.getByRole("link", { name: "Register your interest" })).toHaveAttribute(
     "href",
-    `/contact-us?kind=programme_interest&programme=${flagship!.slug}`,
+    interestMailto(flagship!.title),
   );
   await expect(hero.getByRole("link", { name: "See dates and register" })).toHaveAttribute("href", `/schedule?training=${flagship!.slug}`); // M13: the page lists no dates; the schedule filtered to this training does
   await expect(hero.locator("dl")).toContainText("2 days");
@@ -450,7 +453,7 @@ test("/programs/data-blueprint-ai-vibe-coding renders the flagship on the shared
   // flat "75% OFF" and the simple today/original layout everywhere) no
   // longer fits this card set — asserted directly instead.
   const investment = page.locator("#investment");
-  const enquiry = `/contact-us?kind=programme_interest&programme=${flagship!.slug}`;
+  const enquiry = interestMailto(flagship!.title);
   await expect(investment.getByRole("heading", { name: "Course investment" })).toBeVisible();
   await expect(investment.getByRole("tab")).toHaveCount(0);
   const cards = investment.getByTestId("price-cards").locator("> *");

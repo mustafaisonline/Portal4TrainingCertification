@@ -5,6 +5,7 @@ import { regionForCountry } from "@/modules/commerce/pricing";
 import { enabledSupportSetting } from "@/modules/commerce/support.repository";
 import { getProfile } from "@/modules/identity/profile.repository";
 import { getCurrentUser } from "@/modules/identity/session";
+import { organisationMailto } from "@/content/contact";
 import { CourseCard } from "@/shared/marketing/CourseCard";
 import { HrdCorpSections } from "@/shared/marketing/HrdCorpSections";
 import { Button } from "@/shared/ui/Button";
@@ -155,9 +156,9 @@ export default async function TrainingsPage() {
           </div>
           <div>
             <h2 className="text-h1 mb-3">Team or education enquiry</h2>
-            {/* The mockup's inert form is replaced by the real enquiry form on
-                /contact-us, pre-set to an organisation enquiry. */}
-            <Button href="/contact-us?kind=organisation">Send enquiry</Button>
+            {/* Founder, 2026-09-29: no contact form — the enquiry is an email
+                with the subject pre-set. */}
+            <Button href={organisationMailto()}>Email our team</Button>
           </div>
         </div>
       </section>

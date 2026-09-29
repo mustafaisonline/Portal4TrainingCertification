@@ -1,4 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
+import { CONTACT_EMAIL, contactMailto, interestSubject } from "../../src/content/contact";
 import { expect, test, type Page } from "@playwright/test";
 import { footerExplore, footerLegal, primaryNav, verifyLink } from "../../src/shared/chrome/site-nav";
 
@@ -97,35 +98,32 @@ test("schedule shows the honest no-dates state and a register-interest path", as
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   const interest = page.getByRole("link", { name: /register interest/i }).first();
   await expect(interest).toBeVisible();
-  await expect(interest).toHaveAttribute("href", /\/contact-us\?kind=programme_interest/);
+  await expect(interest).toHaveAttribute("href", /^mailto:sales@yourpartnertechnologies\.com\?subject=Interest/);
   await expectNoAxeViolations(page);
 });
 
-test("contact form: validation errors leave no row; a valid message is persisted", async ({ page }) => {
-  const { findEnquiriesByEmail } = await import("../../src/modules/catalogue/enquiries/repository");
-  const { uniqueEmail } = await import("../helpers/identity-db");
-  const email = uniqueEmail("e2e-enquiry");
-
+// Founder, 2026-09-29 (Milestone 15, Req 8): the contact form is gone; the page
+// carries the founder-supplied sales email as its one contact option (WhatsApp
+// was dropped). Every "register interest"-style button is an email with the
+// training in the subject.
+test("contact page: no form, one email option, no WhatsApp; an old context link keeps its subject; no accessibility violations", async ({ page }) => {
   await page.goto("/contact-us");
+  await expect(page.getByTestId("contact-section")).toBeVisible();
+  // No form inside the page body (the header's search form sits outside <main>).
+  await expect(page.locator("main form")).toHaveCount(0);
+  await expect(page.getByLabel("Your name")).toHaveCount(0);
+
+  const email = page.getByTestId("contact-email");
+  await expect(email).toHaveText(CONTACT_EMAIL);
+  await expect(email).toHaveAttribute("href", `mailto:${CONTACT_EMAIL}`);
+  await expect(page.locator("a[href*='wa.me'], a[href*='whatsapp']")).toHaveCount(0);
+  await expect(page.locator("body")).not.toContainText(/whatsapp/i);
   await expectNoAxeViolations(page);
-  await page.getByLabel("Your name").fill("E2E Person");
-  await page.getByLabel("Email").fill(email);
-  await page.getByLabel("What do you need?").fill("short");
-  await page.getByRole("button", { name: /send/i }).click();
-  await expect(page.getByText(/at least 10 characters/i)).toBeVisible();
-  expect(await findEnquiriesByEmail(email)).toEqual([]);
 
-  await page.getByLabel("What do you need?").fill("Hello — this is an end-to-end test enquiry, please ignore it.");
-  await page.getByRole("button", { name: /send/i }).click();
-  // The confirmation replaces the form; wait for its reference line, not a
-  // phrase that page copy might already contain.
-  await expect(page.getByText("Your reference is")).toBeVisible();
-  const rows = await findEnquiriesByEmail(email);
-  expect(rows).toHaveLength(1);
-  expect(rows[0]!.message).toContain("end-to-end test enquiry");
-
-  const { getPrisma } = await import("../../src/db/prisma");
-  await getPrisma().enquiry.deleteMany({ where: { email: email.toLowerCase() } });
+  // A link shared before the form was removed still resolves, and the email keeps the training.
+  await page.goto("/contact-us?kind=programme_interest&programme=learn-vibe-coding");
+  await expect(page.getByTestId("contact-about")).toContainText("Learn Vibe Coding");
+  await expect(page.getByTestId("contact-email")).toHaveAttribute("href", contactMailto(interestSubject("Learn Vibe Coding")));
 });
 
 test("public pages have no WCAG 2.2 AA violations", async ({ page }) => {

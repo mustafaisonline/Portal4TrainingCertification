@@ -29,9 +29,9 @@ import type { LegalDocument } from "./types";
 export const privacyPolicy: LegalDocument = {
   key: "privacy",
   title: "Privacy policy",
-  version: "DRAFT-2026-09-28",
+  version: "DRAFT-2026-09-29",
   status: "draft",
-  lastUpdated: "2026-09-28",
+  lastUpdated: "2026-09-29",
   summary:
     "What personal data the Data & AI Academy collects, why, who it is shared with, where it may be stored, how long it is kept, and your rights under the Personal Data Protection Act 2010.",
   sections: [
@@ -43,8 +43,6 @@ export const privacyPolicy: LegalDocument = {
         "The following details are not yet known and appear as placeholders in square brackets. They must be completed before publication:",
       ],
       bullets: [
-        "[SSM registration number]",
-        "[registered business address]",
         "[contact email]",
         "[data protection contact / officer]",
         "[phone number]",
@@ -58,7 +56,7 @@ export const privacyPolicy: LegalDocument = {
     {
       heading: "1. Who is responsible for your data",
       paragraphs: [
-        "The Data & AI Academy portal is operated by Your Partner Technologies, a training practice in Kuala Lumpur, Malaysia (business registration number [SSM registration number]; registered address [registered business address]). Your Partner Technologies decides how and why your personal data is processed, and is the data user for the purposes of the Personal Data Protection Act 2010.",
+        "The Data & AI Academy portal is operated by Your Partner Technologies, a training practice in Kuala Lumpur, Malaysia (business registration number 202401023226 (1569075-K); registered address 15-03A, One Jelatek Condominium, Jalan Jelatek, Kementah, 54200 Kuala Lumpur W.P. Kuala Lumpur, Malaysia). Your Partner Technologies decides how and why your personal data is processed, and is the data user for the purposes of the Personal Data Protection Act 2010.",
         "Questions about this policy, or about your data, go to [data protection contact / officer] at [contact email].",
       ],
     },
@@ -77,7 +75,7 @@ export const privacyPolicy: LegalDocument = {
         "Consents — which version of the Terms of service and this policy you accepted, and when.",
         "Certificates — if one is issued, your name as it appears on the certificate, the training and format, the completion, issue and expiry dates, the certificate identifier, any renewal you pay for, and whether you have chosen to be listed in public name search (see section 6).",
         "Audit entries — a record of significant actions on your account (such as sign-in, a change of password, a registration or a refund), with a time stamp, kept so we can investigate problems and show what happened.",
-        "Messages — anything you send us through the contact form or by email, so we can reply.",
+        "Messages — anything you send us by email, so we can reply.",
       ],
     },
     {
@@ -91,7 +89,7 @@ export const privacyPolicy: LegalDocument = {
         "To take payment, issue receipts, process refunds and keep the financial records the law requires.",
         "To decide which currency and price apply to you, based on your profile country.",
         "To record completion and, where earned, to issue and verify your Certificate of Completion.",
-        "To run a Knowledge Check you take, score it, and give you a verifiable result — and, if you pay to unlock it, to show you the printable result document.",
+        "To run a Knowledge Check you take, score it, and give you a verifiable result — and, if you pay to unlock it, to show you the printable Certificate of Achievement.",
         "To send you the messages the service needs — confirmations, reminders, changes to an offering, receipts and notices about your account. These are not marketing.",
         "To answer your questions and resolve complaints.",
         "To keep the portal secure, prevent misuse and investigate problems.",
@@ -215,7 +213,7 @@ export const privacyPolicy: LegalDocument = {
     {
       heading: "16. Contact",
       paragraphs: [
-        "Your Partner Technologies (business registration number [SSM registration number]), [registered business address], Kuala Lumpur, Malaysia.",
+        "Your Partner Technologies (business registration number 202401023226 (1569075-K)), 15-03A, One Jelatek Condominium, Jalan Jelatek, Kementah, 54200 Kuala Lumpur W.P. Kuala Lumpur, Malaysia.",
         "Data protection: [data protection contact / officer]. Email: [contact email]. Telephone: [phone number].",
         "Effective date of this version: [effective date]. Version: DRAFT-2026-09-28 (not yet in force).",
       ],

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { interestMailto } from "@/content/contact";
 import { listUpcomingPublicOfferings, type OfferingRecord } from "@/modules/catalogue/offerings/repository";
 import { findPublishedProgrammeBySlug } from "@/modules/catalogue/programmes/repository";
 import { OfferingDateCard } from "@/shared/marketing/ProgrammeDates";
@@ -83,7 +84,7 @@ export default async function SchedulePage({ searchParams }: { searchParams: Pro
               Register your interest and we will tell you the moment a date opens.
             </p>
             <div className="mt-5 flex flex-wrap gap-3">
-              <Button href={`/contact-us?kind=programme_interest&programme=${only.slug}`}>Register interest</Button>
+              <Button href={interestMailto(only.title)}>Register interest</Button>
               <Button variant="secondary" href={`/programs/${only.slug}`}>
                 About this training
               </Button>
@@ -99,13 +100,13 @@ export default async function SchedulePage({ searchParams }: { searchParams: Pro
               dates, not a padded catalogue.
             </p>
             <div className="mt-5">
-              <Button href="/contact-us?kind=programme_interest">Register interest</Button>
+              <Button href={interestMailto()}>Register interest</Button>
             </div>
           </Card>
         ) : (
           <div className="flex flex-col gap-10">
             {groups.map((g) => {
-              const enquiryHref = `/contact-us?kind=programme_interest&programme=${g.slug}`;
+              const enquiryHref = interestMailto(g.title);
               return (
                 <section key={g.slug} aria-labelledby={`schedule-${g.slug}`} data-testid="schedule-group" data-slug={g.slug}>
                   <h2 id={`schedule-${g.slug}`} className="text-h1 mb-1">

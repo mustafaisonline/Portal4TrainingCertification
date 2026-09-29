@@ -35,9 +35,9 @@ import type { LegalDocument } from "./types";
 export const termsOfService: LegalDocument = {
   key: "terms",
   title: "Terms of service",
-  version: "DRAFT-2026-09-28",
+  version: "DRAFT-2026-09-29",
   status: "draft",
-  lastUpdated: "2026-09-28",
+  lastUpdated: "2026-09-29",
   summary:
     "The agreement between Your Partner Technologies and anyone who creates an account, registers for a Data & AI Academy training, uses Free Learning or the Knowledge Check, or makes a one-off payment: registering, paying, cancelling, taking part, and the Certificate of Completion.",
   sections: [
@@ -49,8 +49,6 @@ export const termsOfService: LegalDocument = {
         "The following details are not yet known and appear as placeholders in square brackets. They must be completed before publication:",
       ],
       bullets: [
-        "[SSM registration number]",
-        "[registered business address]",
         "[contact email]",
         "[phone number]",
         "[effective date]",
@@ -61,7 +59,7 @@ export const termsOfService: LegalDocument = {
     {
       heading: "1. Who we are and what these terms cover",
       paragraphs: [
-        "The Data & AI Academy is operated by Your Partner Technologies, a training practice in Kuala Lumpur, Malaysia (business registration number [SSM registration number]; registered address [registered business address]). In these terms, \"the Academy\", \"we\" and \"us\" mean Your Partner Technologies.",
+        "The Data & AI Academy is operated by Your Partner Technologies, a training practice in Kuala Lumpur, Malaysia (business registration number 202401023226 (1569075-K); registered address 15-03A, One Jelatek Condominium, Jalan Jelatek, Kementah, 54200 Kuala Lumpur W.P. Kuala Lumpur, Malaysia). In these terms, \"the Academy\", \"we\" and \"us\" mean Your Partner Technologies.",
         "These terms apply when you create an account on this portal, register for a training, pay for a registration, attend a training, hold a Certificate of Completion, take a Knowledge Check, or make a one-off payment such as the Knowledge Check result-document fee or a support payment. Reading Free Learning and taking the free diagnostic need no account and are not registrations, but the general rules in these terms — such as section 10's conduct expectations — still apply to your use of the portal. By doing any of these things you agree to these terms. If you do not agree, please do not use the portal.",
         "The Privacy policy and the Refund & cancellation policy form part of these terms. Where a private or corporate cohort is delivered under a separate written agreement, that agreement governs and these terms apply only where it is silent.",
       ],
@@ -202,7 +200,7 @@ export const termsOfService: LegalDocument = {
     {
       heading: "18. Contact",
       paragraphs: [
-        "Your Partner Technologies (business registration number [SSM registration number]), [registered business address], Kuala Lumpur, Malaysia.",
+        "Your Partner Technologies (business registration number 202401023226 (1569075-K)), 15-03A, One Jelatek Condominium, Jalan Jelatek, Kementah, 54200 Kuala Lumpur W.P. Kuala Lumpur, Malaysia.",
         "Email: [contact email]. Telephone: [phone number].",
         "Effective date of this version: [effective date]. Version: DRAFT-2026-09-28 (not yet in force).",
       ],

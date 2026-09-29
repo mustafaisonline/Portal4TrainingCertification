@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cache } from "react";
-import { StatusChip } from "@/modules/certificates/components/StatusChip";
 import { daysBetween, formatCalendarDate, todayIso } from "@/modules/certificates/dates";
 import type { PublicCertificateView } from "@/modules/certificates/repository";
 import { publicCertificateById } from "@/modules/certificates/search.service";
-import { findResultByPublicId, KNOWLEDGE_CHECK_ID_RE, type PublicKnowledgeCheckView } from "@/modules/free-learning/knowledge-check.repository";
+import { findResultByPublicId, KNOWLEDGE_CHECK_ID_RE, type KnowledgeCheckStatus, type PublicKnowledgeCheckView } from "@/modules/free-learning/knowledge-check.repository";
+import { certificateBrand } from "@/content/certificate-brand";
+import { formatTimeTaken } from "@/shared/certificate/format";
 import { Card } from "@/shared/ui/Card";
 import { Chip } from "@/shared/ui/Chip";
 import { formatTimestamp } from "@/shared/util/dates";
@@ -25,6 +26,14 @@ import { formatTimestamp } from "@/shared/util/dates";
  * public link). Nothing outside `PublicCertificateView` is rendered — no
  * email, country, order or ID-document field. Not indexed: the page is
  * reached from a link the holder chose to share.
+ *
+ * Milestone 15, Requirement 5 (founder, 2026-09-29): this is the page a
+ * certificate's QR code and printed URL lead to. It states, for both kinds of
+ * ID, the status in words (Valid / Expired / Revoked), the type, the holder,
+ * the dates, the issuing organisation, and — for the Professional
+ * certificate — the training duration and trainer(s) as snapshotted at issue.
+ * `/verify-certificate[/:id]` redirect here (next.config.ts). A Knowledge
+ * Check keeps its "result, not a credential" wording until DR-05 is adopted.
  */
 export const dynamic = "force-dynamic";
 
@@ -55,15 +64,77 @@ function statusSentence(view: PublicCertificateView, today: string): string {
       return `This certificate expired on ${until}; the holder completed the training on ${formatCalendarDate(view.completedOn)}.`;
     case "renewal_due": {
       const days = daysBetween(today, view.expiresOn);
-      return `This certificate is active until ${until} (renewal due in ${days} ${days === 1 ? "day" : "days"}).`;
+      return `This certificate is valid until ${until} (renewal due in ${days} ${days === 1 ? "day" : "days"}).`;
     }
     case "active":
-      return `This certificate is active until ${until}.`;
+      return `This certificate is valid until ${until}.`;
   }
+}
+
+type VerifyState = "valid" | "expired" | "revoked" | "neutral";
+
+const VERIFY_LABEL: Record<VerifyState, string> = { valid: "Valid", expired: "Expired", revoked: "Revoked", neutral: "Not passed" };
+const VERIFY_ICON: Record<VerifyState, string> = {
+  valid: "M5 12.5 10 17.5 19 7.5",
+  expired: "M7 7l10 10M17 7 7 17",
+  revoked: "M7 7l10 10M17 7 7 17",
+  neutral: "M6 12h12",
+};
+
+/** The status in words AND an icon — never colour alone. `data-status` carries
+ *  the underlying state for tests. */
+function VerifyStatus({ state, raw }: { state: VerifyState; raw: string }) {
+  return (
+    <span className="inline-flex" data-testid="certificate-status" data-status={raw}>
+      <Chip tone={state === "valid" ? "primary" : "neutral"}>
+        <svg viewBox="0 0 24 24" className="mr-1.5 h-3.5 w-3.5 shrink-0" fill="none" aria-hidden="true" focusable="false">
+          <path d={VERIFY_ICON[state]} stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        {VERIFY_LABEL[state]}
+      </Chip>
+    </span>
+  );
+}
+
+function professionalState(status: PublicCertificateView["status"]): VerifyState {
+  return status === "revoked" ? "revoked" : status === "expired" ? "expired" : "valid";
+}
+
+const KC_STATE: Record<KnowledgeCheckStatus, VerifyState> = { valid: "valid", expired: "expired", revoked: "revoked", not_passed: "neutral" };
+
+function kcSentence(view: PublicKnowledgeCheckView): string {
+  const result = `${view.holderName} answered ${view.score} of ${view.size} questions correctly (${view.percent} %) on the free Knowledge Check on ${formatTimestamp(view.finishedAt)}`;
+  switch (view.status) {
+    case "not_passed":
+      return `${result} — below the 70 % pass mark.`;
+    case "revoked":
+      return `${result}. This result was revoked and is no longer valid.`;
+    case "expired":
+      return `${result} — a pass at the 70 % mark. It expired on ${formatCalendarDate(view.expiresOn!)}.`;
+    case "valid":
+      return `${result} — a pass at the 70 % mark. It is valid until ${formatCalendarDate(view.expiresOn!)}.`;
+  }
+}
+
+function IssuedBy() {
+  return (
+    <div className="sm:col-span-2">
+      <dt className="text-label mb-1">Issued by</dt>
+      <dd data-testid="verify-issuer">{certificateBrand.legalName}</dd>
+    </div>
+  );
 }
 
 /** A Knowledge Check ID (M14 Phase 4): the result, plainly NOT a credential. */
 function KnowledgeCheckResult({ view }: { view: PublicKnowledgeCheckView }) {
+  const rows: Array<[string, string]> = [
+    ["Type", view.passed ? "Certificate of Achievement — Free Knowledge Check" : "Free Knowledge Check (not passed)"],
+    ["Questions", `${view.size}, drawn from the reviewed topics of I Am Datapedia!`],
+    ["Score", `${view.score} of ${view.size} (${view.percent} %)`],
+    ["Time taken", formatTimeTaken(view.timeTakenMs)],
+    ["Taken on", formatTimestamp(view.finishedAt)],
+  ];
+  if (view.expiresOn) rows.push([view.status === "expired" ? "Expired on" : "Valid until", formatCalendarDate(view.expiresOn)]);
   return (
     <section className="bg-[var(--color-ground-tint)]">
       <div className="mx-auto max-w-[760px] px-4 py-10 sm:px-6 sm:py-14">
@@ -74,33 +145,30 @@ function KnowledgeCheckResult({ view }: { view: PublicKnowledgeCheckView }) {
               {view.holderName}
             </h1>
             <div className="mb-3">
-              <Chip tone={view.passed ? "primary" : "neutral"}>{view.passed ? "Passed" : "Not passed"}</Chip>
+              <VerifyStatus state={KC_STATE[view.status]} raw={view.status} />
             </div>
             <p className="text-body-lg max-w-[62ch] text-[var(--color-ink-quiet)]" data-testid="verify-status-sentence">
-              {view.holderName} answered {view.score} of {view.size} questions correctly ({view.percent} %) on the free Knowledge Check on{" "}
-              {formatTimestamp(view.finishedAt)} — {view.passed ? "a pass at the 70 % mark" : "below the 70 % pass mark"}.
+              {kcSentence(view)}
             </p>
           </header>
           <Card variant="panel" className="p-5 sm:p-6">
             <dl className="text-body-sm grid gap-x-8 gap-y-4 sm:grid-cols-2" data-testid="verify-details">
-              <div>
-                <dt className="text-label mb-1">Questions</dt>
-                <dd>{view.size}, drawn from the reviewed topics of I Am Datapedia!</dd>
-              </div>
-              <div>
-                <dt className="text-label mb-1">Score</dt>
-                <dd>
-                  {view.score} of {view.size} ({view.percent} %)
-                </dd>
-              </div>
+              {rows.map(([k, v]) => (
+                <div key={k}>
+                  <dt className="text-label mb-1">{k}</dt>
+                  <dd>{v}</dd>
+                </div>
+              ))}
               <div className="sm:col-span-2">
                 <dt className="text-label mb-1">Knowledge Check ID</dt>
                 <dd className="text-mono break-all" data-testid="verify-certificate-id">
                   {view.publicId}
                 </dd>
               </div>
+              <IssuedBy />
             </dl>
-            <p className="text-body-sm mt-4 text-[var(--color-ink-faint)]" data-testid="verify-not-credential">
+            <p className="text-body-sm mt-4 text-[var(--color-ink-faint)]">Dates are calendar dates in Malaysia (MYT).</p>
+            <p className="text-body-sm mt-2 text-[var(--color-ink-faint)]" data-testid="verify-not-credential">
               A Knowledge Check is a free, self-paced test of reading. It is not a Certificate of Completion and not the Academy&rsquo;s credential, which is
               earned by attending an expert-led training.
             </p>
@@ -126,14 +194,16 @@ export default async function VerifyCertificatePage({ params }: { params: Promis
   const today = todayIso(new Date());
 
   const rows: Array<[string, string]> = [
+    ["Type", "Certificate of Completion — Professional Training"],
     ["Holder", view.holderName],
     ["Programme", view.programmeTitle],
     ["Format", view.formatName],
-    ["Completed", formatCalendarDate(view.completedOn)],
-    ["Issued", formatCalendarDate(view.issuedOn)],
   ];
+  if (view.trainingDurationLabel) rows.push(["Training duration", view.trainingDurationLabel]);
+  if (view.trainerName) rows.push(["Trainer(s)", view.trainerName]);
+  rows.push(["Completed", formatCalendarDate(view.completedOn)], ["Issued", formatCalendarDate(view.issuedOn)]);
   if (view.status === "expired") rows.push(["Expired on", formatCalendarDate(view.expiresOn)]);
-  else if (view.status !== "revoked") rows.push(["Active until", formatCalendarDate(view.expiresOn)]);
+  else if (view.status !== "revoked") rows.push(["Valid until", formatCalendarDate(view.expiresOn)]);
 
   return (
     <section className="bg-[var(--color-ground-tint)]">
@@ -145,7 +215,7 @@ export default async function VerifyCertificatePage({ params }: { params: Promis
               {view.holderName}
             </h1>
             <div className="mb-3">
-              <StatusChip status={view.status} />
+              <VerifyStatus state={professionalState(view.status)} raw={view.status} />
             </div>
             <p className="text-body-lg max-w-[62ch] text-[var(--color-ink-quiet)]" data-testid="verify-status-sentence">
               {statusSentence(view, today)}
@@ -170,6 +240,7 @@ export default async function VerifyCertificatePage({ params }: { params: Promis
                   {view.certificateId}
                 </dd>
               </div>
+              <IssuedBy />
             </dl>
             <p className="text-body-sm mt-4 text-[var(--color-ink-faint)]">Dates are calendar dates in Malaysia (MYT).</p>
             <p className="text-body-sm mt-2 text-[var(--color-ink-faint)]">{NOT_EARNED}</p>

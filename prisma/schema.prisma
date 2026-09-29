@@ -179,6 +179,8 @@ model User {
   /// Topic questions this administrator marked reviewed (M14 Phase 3).
   topicQuestionsReviewed TopicQuestion[]         @relation("topic_question_reviewed_by")
   knowledgeCheckAttempts KnowledgeCheckAttempt[]
+  /// Knowledge Check certificates this administrator revoked (M15).
+  knowledgeChecksRevoked KnowledgeCheckAttempt[] @relation("kc_revoked_by")
   /// Coupons this administrator created / this participant redeemed (N1, 2026-09-28).
   couponsCreated         Coupon[]                @relation("coupon_created_by")
   couponsRedeemed        Coupon[]                @relation("coupon_redeemed_by")
@@ -1044,6 +1046,13 @@ model Certificate {
   holderNameSearch String            @map("holder_name_search")
   programmeTitle   String            @map("programme_title")
   formatName       String            @map("format_name")
+  /// Milestone 15 (Q3, approved 2026-09-29): snapshots taken at issue so a later
+  /// catalogue edit never rewrites a printed certificate. Null only for a row
+  /// with no linked trainer / no duration to snapshot; existing rows were
+  /// backfilled from their programme by the migration.
+  trainingDurationLabel String?       @map("training_duration_label")
+  /// All linked trainers, lead first, comma-separated.
+  trainerName      String?           @map("trainer_name")
   completedOn      DateTime          @map("completed_on") @db.Date
   issuedOn         DateTime          @map("issued_on") @db.Date
   /// Last day the certificate is active (inclusive), MYT calendar date.
@@ -1243,6 +1252,15 @@ model KnowledgeCheckAttempt {
   holderName  String?   @map("holder_name")
   startedAt   DateTime  @default(now()) @map("started_at") @db.Timestamptz(6)
   finishedAt  DateTime? @map("finished_at") @db.Timestamptz(6)
+  /// Milestone 15 (Q3, approved 2026-09-29): a passed check's certificate can be
+  /// revoked, mirroring `certificates`. Time taken, percentage, issue date,
+  /// certificate ID/type and expiry are DERIVED (finished_at − started_at,
+  /// score/size, finished_at, public_id, finished_at + 12 months) — deliberately
+  /// not stored, so they cannot drift.
+  revokedAt        DateTime? @map("revoked_at") @db.Timestamptz(6)
+  revokedByUserId  String?   @map("revoked_by_user_id") @db.Uuid
+  revokedByUser    User?     @relation("kc_revoked_by", fields: [revokedByUserId], references: [id], onDelete: Restrict)
+  revocationReason String?   @map("revocation_reason")
   createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
 

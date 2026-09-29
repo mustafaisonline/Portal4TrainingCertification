@@ -436,6 +436,25 @@ describe("webhook — stored first, verified, idempotent (plan §6.1, §6.2, §6
   });
 });
 
+describe("webhook — a payment that fails or is left unpaid confirms nothing (Milestone 15 Req 7 matrix)", () => {
+  it("checkout.session.async_payment_failed → order failed with no payment and no registration; a second delivery is a duplicate", async () => {
+    const offering = await createOffering({ startInDays: 30, capacity: 3 });
+    const user = await createUser("Malaysia");
+    const { orderId } = await startCheckout({ userId: user.id, offeringId: offering.id, consent: true, gateway: fakeGateway() });
+    const pending = await prisma.order.findUniqueOrThrow({ where: { id: orderId } });
+    const failed = JSON.parse(sessionCompletedEvent(pending)) as { type: string; data: { object: { payment_status: string } } };
+    failed.type = "checkout.session.async_payment_failed";
+    failed.data.object.payment_status = "unpaid";
+    const payload = JSON.stringify(failed);
+    expect(await handleStripeWebhook(payload, sign(payload), fakeGateway())).toMatchObject({ status: "processed" });
+    expect((await prisma.order.findUniqueOrThrow({ where: { id: orderId } })).status).toBe("failed");
+    expect(await prisma.payment.count({ where: { orderId } })).toBe(0);
+    expect(await prisma.registration.count({ where: { orderId } })).toBe(0);
+    // Delivered twice: nothing changes.
+    expect(await handleStripeWebhook(payload, sign(payload), fakeGateway())).toMatchObject({ duplicate: true });
+  });
+});
+
 /* ================================================================== refunds */
 
 describe("cancellation — refund tier enforced (plan §3 D2, §7 criterion 7)", () => {

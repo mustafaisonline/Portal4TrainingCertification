@@ -37,7 +37,7 @@ describe("legal drafts (src/content/legal)", () => {
     // so a consent recorded after that day names the text it accepted.
     expect(doc.version).toMatch(/^DRAFT-\d{4}-\d{2}-\d{2}$/);
     expect(doc.lastUpdated).toBe(doc.version.slice("DRAFT-".length));
-    expect(doc.version).toBe("DRAFT-2026-09-28");
+    expect(doc.version).toBe("DRAFT-2026-09-29");
     expect(doc.summary.trim().length).toBeGreaterThan(0);
   });
 

@@ -1,5 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
+import { localPartnerMailto } from "../../src/content/contact";
 import { completeProfileByEmail, deleteTestUser, resetRateLimits, STRONG_PASSWORD, uniqueEmail } from "../helpers/identity-db";
 
 /*
@@ -182,10 +183,8 @@ test("a Pakistan-profile participant sees the local-partner message and no pay b
   await expect(block.getByTestId("checkout-unavailable")).toHaveText("Card payment is not available in Pakistan");
   await expect(block).toContainText(flagshipTitle);
   await expect(block).toContainText("Please contact us — our local partner will contact you to arrange payment through local banks or in cash.");
-  await expect(block.getByRole("link", { name: "Contact us" })).toHaveAttribute(
-    "href",
-    "/contact-us?kind=programme_interest&programme=data-blueprint-ai-vibe-coding",
-  );
+  // Founder, 2026-09-29: no contact form — the button is an email naming the training.
+  await expect(block.getByRole("link", { name: "Email us" })).toHaveAttribute("href", localPartnerMailto(flagshipTitle));
   await expect(page.getByTestId("pay")).toHaveCount(0);
   await expect(page.getByTestId("checkout-consent")).toHaveCount(0);
   await expect(page.getByTestId("checkout-price")).toHaveCount(0);

@@ -2,9 +2,9 @@ import { randomInt } from "node:crypto";
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import { disconnectPrisma, getPrisma, withTransaction } from "@/db/prisma";
 import { ID_ALPHABET, LISTING_CONSENT_KEY, LISTING_CONSENT_VERSION } from "@/modules/certificates/constants";
-import { addDays, addMonths, todayIso } from "@/modules/certificates/dates";
+import { addDays, addMonths, formatCalendarDate, todayIso } from "@/modules/certificates/dates";
 import { createFeeSetting, currentFeeSetting, listFeeHistory } from "@/modules/certificates/fee.repository";
-import { listRoster, recordCompletion } from "@/modules/certificates/issuance.service";
+import { listRoster, recordCompletion, trainerSnapshot } from "@/modules/certificates/issuance.service";
 import {
   CertificateNotFoundError,
   CertificateStateError,
@@ -22,6 +22,8 @@ import {
   setListed,
   toPublicView,
 } from "@/modules/certificates/repository";
+import { completionCertificateData, trainerNames } from "@/modules/certificates/professional-certificate";
+import { listPublishedExperts } from "@/modules/catalogue/experts/repository";
 import { publicCertificateById, searchCertificates } from "@/modules/certificates/search.service";
 import { listAuditForEntity } from "@/modules/platform/audit/repository";
 import {
@@ -337,6 +339,59 @@ describe("public search (§5; plan §6 criteria 7, 8)", () => {
     expect(toPublicView(revoked.certificate, todayIso(new Date()))).toMatchObject({ revoked: false });
     const revokedNow = await findByCertificateId(revoked.certificate.certificateId);
     expect(toPublicView(revokedNow!, todayIso(new Date()))).toMatchObject({ revoked: true, status: "revoked" });
+  });
+
+  it("issue snapshots the training duration and the linked trainer(s), lead first; the public view carries them (Milestone 15)", async () => {
+    const programme = await prisma.programme.findUniqueOrThrow({ where: { id: unlisted.certificate.programmeId }, select: { durationLabel: true, experts: { select: { role: true, expert: { select: { name: true } } } } } });
+    const expected = trainerSnapshot(programme.experts);
+    const stored = await prisma.certificate.findUniqueOrThrow({ where: { id: unlisted.certificate.id }, select: { trainingDurationLabel: true, trainerName: true } });
+    expect(stored).toEqual({ trainingDurationLabel: programme.durationLabel || null, trainerName: expected });
+    const view = toPublicView((await findByCertificateId(unlisted.certificate.certificateId))!, todayIso(new Date()));
+    expect(view).toMatchObject({ trainingDurationLabel: stored.trainingDurationLabel, trainerName: stored.trainerName });
+  });
+
+  it("the Certificate of Completion data comes from the stored record: snapshots, dates, QR; accreditation only beside the matched trainer (Milestone 15 Req 4)", async () => {
+    const experts = await listPublishedExperts();
+    const known = experts[0]!;
+    await prisma.certificate.update({ where: { id: unlisted.certificate.id }, data: { trainerName: `${known.name}, Zed Unmatched`, trainingDurationLabel: "2 Days" } });
+    const record = (await findByCertificateId(unlisted.certificate.certificateId))!;
+    const data = await completionCertificateData(record, `https://example.test/verify/${record.certificateId}`);
+    expect(data).toMatchObject({
+      kind: "completion",
+      certificateId: record.certificateId,
+      holderName: "Ayesha Unlistedperson",
+      subjectTitle: record.programmeTitle,
+      durationLabel: "2 Days",
+      completedOn: formatCalendarDate(record.completedOn),
+      validUntil: formatCalendarDate(record.expiresOn),
+      verifyUrl: `https://example.test/verify/${record.certificateId}`,
+    });
+    expect(data.trainers).toEqual([
+      { name: known.name, hrdAccredited: !!known.hrdCorpAccreditation, hrdTrainerId: known.hrdCorpAccreditation?.trainerId ?? null },
+      { name: "Zed Unmatched", hrdAccredited: false, hrdTrainerId: null }, // never guessed
+    ]);
+    expect(data.qrSvg.startsWith("<svg")).toBe(true);
+    expect(JSON.stringify(data)).not.toContain("@example.test\"");
+    // No trainer snapshot -> no trainers, and no expert lookup is needed.
+    await prisma.certificate.update({ where: { id: unlisted.certificate.id }, data: { trainerName: null, trainingDurationLabel: null } });
+    const bare = await completionCertificateData((await findByCertificateId(unlisted.certificate.certificateId))!, "https://example.test/verify/x");
+    expect(bare).toMatchObject({ durationLabel: null, trainers: [] });
+  });
+
+  it("trainerNames splits the snapshot and ignores blanks", () => {
+    expect(trainerNames(null)).toEqual([]);
+    expect(trainerNames("Mia, Abe ,, Zed")).toEqual(["Mia", "Abe", "Zed"]);
+  });
+
+  it("trainerSnapshot: lead first, then by name; none linked is null, never invented", () => {
+    expect(trainerSnapshot([])).toBeNull();
+    expect(
+      trainerSnapshot([
+        { role: "assistant", expert: { name: "Zed" } },
+        { role: "assistant", expert: { name: "Abe" } },
+        { role: "lead", expert: { name: "Mia" } },
+      ]),
+    ).toBe("Mia, Abe, Zed");
   });
 
   it("the search service routes by input shape and returns public views only", async () => {

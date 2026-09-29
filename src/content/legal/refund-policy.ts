@@ -32,9 +32,9 @@ import type { LegalDocument } from "./types";
 export const refundPolicy: LegalDocument = {
   key: "refund",
   title: "Refund & cancellation policy",
-  version: "DRAFT-2026-09-28",
+  version: "DRAFT-2026-09-29",
   status: "draft",
-  lastUpdated: "2026-09-28",
+  lastUpdated: "2026-09-29",
   summary:
     "When a training registration can be cancelled or moved to another date, how much is refunded, how to do it, and what happens if the Academy has to cancel or reschedule.",
   sections: [
@@ -46,8 +46,6 @@ export const refundPolicy: LegalDocument = {
         "The following details are not yet known and appear as placeholders in square brackets. They must be completed before publication:",
       ],
       bullets: [
-        "[SSM registration number]",
-        "[registered business address]",
         "[contact email]",
         "[phone number]",
         "[effective date]",
@@ -57,10 +55,10 @@ export const refundPolicy: LegalDocument = {
     {
       heading: "1. What this policy covers",
       paragraphs: [
-        "This policy applies to registrations for the scheduled public offerings of Data & AI Academy trainings that you register and pay for on this portal, operated by Your Partner Technologies (business registration number [SSM registration number]). It forms part of the Terms of service.",
+        "This policy applies to registrations for the scheduled public offerings of Data & AI Academy trainings that you register and pay for on this portal, operated by Your Partner Technologies (business registration number 202401023226 (1569075-K)). It forms part of the Terms of service.",
         "It does not apply to private or corporate cohorts, which are governed by the written agreement for that cohort (see section 8).",
         "Certificate of Completion renewal fee: the fee you pay to renew a certificate is not refundable once the renewal has been applied, because the extension to the certificate's expiry date is delivered immediately when the payment is confirmed. If you believe a renewal was charged in error — for example, you were charged twice — raise it through Contact us or by emailing [contact email], and we will look into it and handle it manually.",
-        "Knowledge Check result document unlock: the one-time fee you may pay to unlock the printable document for a free Knowledge Check result is not refundable once the document has been shown, because the document is delivered immediately when the payment is confirmed. The result itself, its ID and its public verification page are free and are never withheld. If you believe an unlock was charged in error, raise it through Contact us or by emailing [contact email].",
+        "Knowledge Check certificate unlock: the one-time fee you may pay to unlock the printable Certificate of Achievement for a passed free Knowledge Check is not refundable once the certificate has been shown, because the certificate is delivered immediately when the payment is confirmed. The result itself, its ID and its public verification page are free and are never withheld. If you believe an unlock was charged in error, raise it through Contact us or by emailing [contact email].",
         "Support the Academy: this is a one-off payment that grants no service or benefit in return, so the day-based schedule in section 2 does not apply to it. If you paid by mistake, or want to ask for a refund for another reason, raise it through Contact us or by emailing [contact email] and we will consider it.",
         "\"Start date\" means the first scheduled session of the offering you registered for, in the time zone shown on the offering. Days are counted as calendar days before that date, not business days.",
       ],
@@ -145,7 +143,7 @@ export const refundPolicy: LegalDocument = {
     {
       heading: "11. Contact",
       paragraphs: [
-        "Your Partner Technologies (business registration number [SSM registration number]), [registered business address], Kuala Lumpur, Malaysia.",
+        "Your Partner Technologies (business registration number 202401023226 (1569075-K)), 15-03A, One Jelatek Condominium, Jalan Jelatek, Kementah, 54200 Kuala Lumpur W.P. Kuala Lumpur, Malaysia.",
         "Email: [contact email]. Telephone: [phone number].",
         "Effective date of this version: [effective date]. Version: DRAFT-2026-09-28 (not yet in force).",
       ],

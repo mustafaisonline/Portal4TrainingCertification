@@ -49,8 +49,6 @@ export interface LegalDocument {
  *  three drafts can be published. Shared so each "About this draft" section
  *  and the test refer to the same list. */
 export const LEGAL_PLACEHOLDERS = [
-  "[SSM registration number]",
-  "[registered business address]",
   "[contact email]",
   "[data protection contact / officer]",
   "[phone number]",

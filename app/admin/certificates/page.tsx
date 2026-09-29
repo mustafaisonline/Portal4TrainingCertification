@@ -11,6 +11,10 @@ import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { inputClass } from "@/shared/ui/forms";
 import { CertificateStatusLabel } from "./StatusLabel";
+import { appBaseUrl } from "@/modules/commerce/checkout.service";
+import { PrintButton } from "@/modules/certificates/components/PrintButton";
+import { Certificate } from "@/shared/certificate/Certificate";
+import { isSampleKind, sampleCertificate } from "@/shared/certificate/sample";
 
 /*
  * /admin/certificates — every Certificate of Completion (M6 plan §5
@@ -37,6 +41,16 @@ export default async function AdminCertificatesPage({ searchParams }: { searchPa
     page: Math.max(1, Number.parseInt(param("page") ?? "1", 10) || 1),
   };
   const [page, lastRun] = await Promise.all([listCertificatesForAdmin(filters), lastReminderRun()]);
+  // The sample certificate shown on this tab (`?sample=achievement|completion`).
+  const sampleParam = param("sample");
+  const sampleKind = isSampleKind(sampleParam) ? sampleParam : "achievement";
+  let sampleBase: string | undefined;
+  try {
+    sampleBase = appBaseUrl();
+  } catch {
+    sampleBase = undefined; // local only
+  }
+  const sample = await sampleCertificate(sampleKind, { baseUrl: sampleBase });
 
   const query = (n: number) => {
     const q = new URLSearchParams();
@@ -69,10 +83,45 @@ export default async function AdminCertificatesPage({ searchParams }: { searchPa
               : "Reminders have not run yet."}
           </p>
         </div>
-        <Button variant="secondary" href="/admin/certificates/fee" data-testid="admin-certificates-fee-link">
-          Renewal fee
-        </Button>
+        <div className="flex flex-wrap gap-3">
+          <Button variant="secondary" href="/admin/certificates/preview" data-testid="admin-certificates-preview-link">
+            Design preview
+          </Button>
+          <Button variant="secondary" href="/admin/certificates/fee" data-testid="admin-certificates-fee-link">
+            Renewal fee
+          </Button>
+        </div>
       </header>
+
+      {/* A SAMPLE of each certificate, so the design and the download can be tested here. */}
+      <details open className="group" data-testid="admin-sample-certificate">
+        <summary className="text-h2 cursor-pointer py-1">Sample certificate</summary>
+        <Card variant="panel" className="mt-3 flex flex-col gap-4 p-5">
+          <p className="text-body-sm max-w-[70ch] text-[var(--color-ink-quiet)]">
+            This is a <strong>sample</strong> — a made-up name and an ID that does not verify — so you can look at the certificates, print one and test the PDF download without touching a real holder&apos;s data.
+          </p>
+          <div className="flex flex-wrap items-center gap-3 print:hidden">
+            <Button variant={sampleKind === "achievement" ? "primary" : "secondary"} href="/admin/certificates?sample=achievement" data-testid="sample-kind-achievement" aria-current={sampleKind === "achievement" ? "true" : undefined}>
+              Free Certification
+            </Button>
+            <Button variant={sampleKind === "completion" ? "primary" : "secondary"} href="/admin/certificates?sample=completion" data-testid="sample-kind-completion" aria-current={sampleKind === "completion" ? "true" : undefined}>
+              Professional Training
+            </Button>
+            <PrintButton />
+            <Button variant="secondary" href={`/api/admin/certificates/sample-pdf?kind=${sampleKind}`} download prefetch={false} data-testid="sample-download-pdf">
+              Download sample PDF
+            </Button>
+            <Button variant="text" href="/admin/certificates/preview">
+              Full design preview
+            </Button>
+          </div>
+          <div className="overflow-x-auto">
+            <div className="mx-auto min-w-[760px] max-w-[1123px]" data-testid="sample-certificate-sheet" data-kind={sampleKind}>
+              <Certificate {...sample} />
+            </div>
+          </div>
+        </Card>
+      </details>
 
       <Card variant="panel" className="p-5">
         <form method="get" action="/admin/certificates" className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4" aria-label="Filter certificates">

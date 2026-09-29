@@ -151,7 +151,21 @@ test("a 50-question check: ten a page, answers kept across pages, finish → sco
   await expect(page.getByTestId("verify-holder")).toHaveText("Kay Checker");
   await expect(page.getByTestId("verify-status-sentence")).toContainText("45 of 50");
   await expect(page.getByTestId("verify-not-credential")).toContainText("not a Certificate of Completion");
+  await expect(page.getByTestId("certificate-status")).toHaveText("Valid");
+  await expect(page.getByTestId("certificate-status")).toHaveAttribute("data-status", "valid");
+  await expect(page.getByTestId("verify-issuer")).toHaveText("Your Partner Technologies");
+  const kcDetails = page.getByTestId("verify-details");
+  for (const term of ["Type", "Questions", "Score", "Time taken", "Taken on", "Valid until", "Knowledge Check ID", "Issued by"]) {
+    await expect(kcDetails.getByRole("term").filter({ hasText: new RegExp(`^${term}$`, "i") })).toHaveCount(1);
+  }
   await expectNoAxeViolations(page);
+  // An administrator's revocation shows on the very next look, in words.
+  const { getPrisma } = await import("../../src/db/prisma");
+  await getPrisma().knowledgeCheckAttempt.update({ where: { publicId }, data: { revokedAt: new Date(), revocationReason: "e2e revocation" } });
+  await page.goto(`/verify/${publicId}`);
+  await expect(page.getByTestId("certificate-status")).toHaveText("Revoked");
+  await expect(page.getByTestId("verify-status-sentence")).toContainText("revoked");
+  await expect(page.locator("body")).not.toContainText("e2e revocation");
   await page.goto(`/search?q=${publicId.toLowerCase()}`);
   await expect(page).toHaveURL(new RegExp(`/verify/${publicId}$`));
   await page.goto(`/verify?q=${publicId}`);

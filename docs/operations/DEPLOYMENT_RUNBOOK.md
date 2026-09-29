@@ -44,7 +44,7 @@ Names come from `.env.example`; **values live only in the host's secret store** 
 | `STRIPE_SECRET_KEY` | yes | `rk_live_…` (restricted, **recommended**) or `sk_live_…` (standard) | Stripe → Developers → API keys → **Create restricted key** with exactly: **Checkout Sessions — Write · Refunds — Write · PaymentIntents — Read · Charges — Read · Balance transactions — Read** (what `src/modules/commerce/stripe.ts` calls; nothing else). Accepted since M11 decision K1 (2026-09-26) | A `*_test_` key in production starts with a **warning** and every payment fails at Stripe — treat it as a defect. Publishable keys (`pk_`) are refused at start-up |
 | `STRIPE_WEBHOOK_SECRET` | yes | `whsec_…` | the production endpoint's signing secret (§6) | Both Stripe values together or neither |
 | `LEGAL_DOCUMENT_VERSIONS` | **no — warning only** | JSON `{"terms":"<v>","privacy":"<v>"[,"refund":"<v>"]}` | set the day counsel publishes | Unset = **registration closed** (consent gate shut) — a supported launch state (M10 §2). Set-but-malformed **is** fatal |
-| `ENQUIRY_NOTIFY_EMAIL` | no | email address | founder's inbox | Where contact-form enquiries are announced through the outbox; without a real email transport the row is written but nothing is delivered |
+| ~~`ENQUIRY_NOTIFY_EMAIL`~~ | — | — | — | **Retired 2026-09-29** (Milestone 15, Req 8): the contact form was removed, so nothing reads this any more; enquiries arrive by email at the sales mailbox. Harmless if still set in an env file. |
 | `NEXT_TELEMETRY_DISABLED` | no | `1` | — | Set in the Dockerfile; set it on Vercel too if desired |
 
 Never set `DATABASE_URL_TEST` in production.
@@ -114,6 +114,8 @@ The whole procedure — provisioning checklist, server bootstrap, env files, eve
 5. Roll back = redeploy the previous build (Vercel: "Promote" the earlier deployment; container: the previous image tag). Database migrations are **not** rolled back — that is a RED-gate destructive operation; design forward (ADR-029).
 
 ## 6. Stripe production webhook (J9)
+
+> **Milestone 15 (2026-09-29): production is declared production — no more UAT.** The go-live steps in order, the read-only `npm run stripe:check`, and the test that proves each payment behaviour are in [`STRIPE_GO_LIVE_CHECKLIST.md`](STRIPE_GO_LIVE_CHECKLIST.md). `STRIPE_PUBLISHABLE_KEY` is intentionally not used (hosted Checkout).
 
 Stripe Dashboard (live mode) → Developers → Webhooks → **Add endpoint**:
 

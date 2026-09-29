@@ -52,7 +52,7 @@ async function expectNoAxeViolations(page: Page) {
 }
 
 test("drafts are invisible to readers; the administrator reviews one question, then all", async ({ page }) => {
-  await page.goto(`/free-learning/topics/${SLUG}`);
+  await page.goto(`/free-learning/topics/${SLUG}?tab=questions`);
   await expect(page.getByTestId("topic-quiz-coming")).toBeVisible();
   await expect(page.getByTestId("topic-quiz")).toHaveCount(0);
 
@@ -93,8 +93,40 @@ test("drafts are invisible to readers; the administrator reviews one question, t
   await expect(page.locator('[data-testid="review-question"][data-status="draft"]')).toHaveCount(0);
 });
 
-test("the reader answers ten questions, submits, sees right and wrong with the correct answers, and moves to the next page", async ({ page }) => {
+test("a topic has two tabs — Topic and Questions — and the questions are one click from the top (founder, 2026-09-29)", async ({ page }) => {
   await page.goto(`/free-learning/topics/${SLUG}`);
+  const tabs = page.getByTestId("topic-tabs");
+  await expect(tabs.getByTestId("topic-tab-topic")).toHaveAttribute("aria-current", "page");
+  await expect(tabs.getByTestId("topic-tab-questions")).toHaveText("Questions (12)");
+  await expect(tabs.getByTestId("topic-tab-questions")).not.toHaveAttribute("aria-current", /.+/);
+  // The Topic tab is the reading; the questions are not below it.
+  await expect(page.getByTestId("topic-body")).toBeVisible();
+  await expect(page.getByTestId("topic-quiz")).toHaveCount(0);
+  await expect(page.getByTestId("topic-to-questions-link")).toHaveAttribute("href", `/free-learning/topics/${SLUG}?tab=questions`);
+  await expectNoAxeViolations(page);
+
+  // One click to the questions — and the reading is out of the way.
+  await tabs.getByTestId("topic-tab-questions").click();
+  await expect(page).toHaveURL(new RegExp(`/free-learning/topics/${SLUG}\\?tab=questions$`));
+  await expect(page.getByTestId("topic-tab-questions")).toHaveAttribute("aria-current", "page");
+  await expect(page.getByTestId("topic-quiz")).toBeVisible();
+  await expect(page.getByTestId("topic-body")).toHaveCount(0);
+  // The questions start right under the tabs (no scrolling past the topic).
+  const tabsBox = (await tabs.boundingBox())!;
+  const quizBox = (await page.getByTestId("topic-quiz").boundingBox())!;
+  expect(quizBox.y - (tabsBox.y + tabsBox.height)).toBeLessThan(120);
+  await expectNoAxeViolations(page);
+
+  // A quiz pagination link (?page=N) always lands on the Questions tab, and back to the Topic tab reads the topic.
+  await page.goto(`/free-learning/topics/${SLUG}?page=2`);
+  await expect(page.getByTestId("topic-tab-questions")).toHaveAttribute("aria-current", "page");
+  await page.getByTestId("topic-tab-topic").click();
+  await expect(page.getByTestId("topic-body")).toBeVisible();
+  await expect(page.getByTestId("topic-quiz")).toHaveCount(0);
+});
+
+test("the reader answers ten questions, submits, sees right and wrong with the correct answers, and moves to the next page", async ({ page }) => {
+  await page.goto(`/free-learning/topics/${SLUG}?tab=questions`);
   const quiz = page.getByTestId("topic-quiz");
   await expect(quiz).toBeVisible();
   await expect(page.getByTestId("quiz-range")).toHaveText("Questions 1–10 of 12");

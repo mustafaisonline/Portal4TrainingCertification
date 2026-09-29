@@ -1,14 +1,17 @@
+import type { CSSProperties } from "react";
+
 /*
  * PORTED 2026-09-21 from project-artifacts/mockup/components/PublicShell.tsx
  * (ADR-045 PORT list, row 3). An ORIGINAL inline SVG — a capability line
  * rising through data nodes; nothing copied from any reference material.
  * Its own file so pages with a stripped-back shell can reuse the exact mark.
  */
-export function LogoMark() {
+export function LogoMark({ style }: { style?: CSSProperties } = {}) {
   return (
     <svg
       width="30"
       height="30"
+      style={style}
       viewBox="0 0 30 30"
       fill="none"
       aria-hidden="true"

@@ -80,6 +80,9 @@ export type CertificateRecord = {
   holderNameSearch: string;
   programmeTitle: string;
   formatName: string;
+  /** Snapshots taken at issue (Milestone 15, Q3) — null on a row with nothing to snapshot. */
+  trainingDurationLabel: string | null;
+  trainerName: string | null;
   completedOn: string;
   issuedOn: string;
   expiresOn: string;
@@ -123,6 +126,8 @@ export function toRecord(r: Row): CertificateRecord {
     holderNameSearch: r.holderNameSearch,
     programmeTitle: r.programmeTitle,
     formatName: r.formatName,
+    trainingDurationLabel: r.trainingDurationLabel,
+    trainerName: r.trainerName,
     completedOn: dateColumnToIso(r.completedOn),
     issuedOn: dateColumnToIso(r.issuedOn),
     expiresOn: dateColumnToIso(r.expiresOn),
@@ -201,6 +206,9 @@ export type PublicCertificateView = {
   holderName: string;
   programmeTitle: string;
   formatName: string;
+  /** Training duration and trainer(s) as snapshotted at issue (Milestone 15). */
+  trainingDurationLabel: string | null;
+  trainerName: string | null;
   completedOn: string;
   issuedOn: string;
   expiresOn: string;
@@ -208,7 +216,7 @@ export type PublicCertificateView = {
   status: CertificateStatus;
 };
 
-export const PUBLIC_VIEW_KEYS = ["certificateId", "holderName", "programmeTitle", "formatName", "completedOn", "issuedOn", "expiresOn", "revoked", "status"] as const;
+export const PUBLIC_VIEW_KEYS = ["certificateId", "holderName", "programmeTitle", "formatName", "trainingDurationLabel", "trainerName", "completedOn", "issuedOn", "expiresOn", "revoked", "status"] as const;
 
 export function toPublicView(record: CertificateRecord, today: string): PublicCertificateView {
   return {
@@ -216,6 +224,8 @@ export function toPublicView(record: CertificateRecord, today: string): PublicCe
     holderName: record.holderName,
     programmeTitle: record.programmeTitle,
     formatName: record.formatName,
+    trainingDurationLabel: record.trainingDurationLabel,
+    trainerName: record.trainerName,
     completedOn: record.completedOn,
     issuedOn: record.issuedOn,
     expiresOn: record.expiresOn,

@@ -1,7 +1,8 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { disconnectPrisma, getPrisma, withTransaction } from "@/db/prisma";
 import { replaceTopicFromImport } from "@/modules/free-learning/book.repository";
-import { attemptPage, bankSize, cancelUnfinishedAttempt, deleteFinishedAttempts, findResultByPublicId, finishAttempt, getAttemptForUser, KnowledgeCheckError, listAttemptsForUser, saveAnswers, startAttempt } from "@/modules/free-learning/knowledge-check.repository";
+import { achievementCertificateData } from "@/modules/free-learning/achievement-certificate";
+import { attemptPage, bankSize, cancelUnfinishedAttempt, deleteFinishedAttempts, findResultByPublicId, finishAttempt, getAttemptForUser, KnowledgeCheckError, listAttemptsForUser, listPassedResultsForAdmin, revokeKnowledgeCheck, saveAnswers, startAttempt } from "@/modules/free-learning/knowledge-check.repository";
 import { importDraftQuestions, setAllQuestionsStatus } from "@/modules/free-learning/quiz.repository";
 import { listAuditForEntity } from "@/modules/platform/audit/repository";
 import { createAdminUser, createCertificateUser } from "../helpers/certificates-db";
@@ -108,13 +109,108 @@ describe("knowledge check", () => {
     expect(mine[0]!.id).toBe(attempt.id); // newest first
   });
 
+  it("the public view carries the status and the server-measured time; expiry and revocation follow the stored columns (Q8b)", async () => {
+    const attempt = await withTransaction((tx) => startAttempt(tx, { userId: holder.id, size: 50 }));
+    const correct = await prisma.topicQuestionOption.findMany({ where: { questionId: { in: attempt.questionIds }, isCorrect: true }, select: { questionId: true, position: true } });
+    await withTransaction((tx) => saveAnswers(tx, { attemptId: attempt.id, userId: holder.id, answers: Object.fromEntries(correct.map((c) => [c.questionId, c.position])) }));
+    const finished = await withTransaction((tx) => finishAttempt(tx, { attemptId: attempt.id, userId: holder.id }));
+    const id = finished.publicId!;
+
+    const fresh = await findResultByPublicId(id);
+    expect(fresh).toMatchObject({ status: "valid", passed: true });
+    expect(fresh!.timeTakenMs).toBe(finished.finishedAt!.getTime() - finished.startedAt.getTime());
+    expect(fresh!.expiresOn).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    expect(Object.keys(fresh!).sort()).toEqual(["expiresOn", "finishedAt", "holderName", "passed", "percent", "publicId", "score", "size", "status", "timeTakenMs"]);
+
+    // Thirteen months on, the same row reads expired — nothing is stored for it.
+    expect((await findResultByPublicId(id, prisma, new Date(finished.finishedAt!.getTime() + 400 * 86_400_000)))?.status).toBe("expired");
+
+    // An administrator's revocation (columns approved 2026-09-29) wins.
+    await prisma.knowledgeCheckAttempt.update({ where: { id: attempt.id }, data: { revokedAt: new Date(), revokedByUserId: admin.id, revocationReason: "Test revocation" } });
+    expect((await findResultByPublicId(id))?.status).toBe("revoked");
+    // The reason is internal: it never reaches the public view.
+    expect(JSON.stringify(await findResultByPublicId(id))).not.toContain("Test revocation");
+  });
+
+  // Milestone 15 Req 3: the server measures the time; the certificate is derived from the stored attempt.
+  it("time taken is finished − started, both server instants; the Certificate of Achievement is derived, pass-only, and carries the ID and a QR", async () => {
+    const attempt = await withTransaction((tx) => startAttempt(tx, { userId: holder.id, size: 50 }));
+    const started = new Date("2026-05-04T03:00:00.000Z");
+    await prisma.knowledgeCheckAttempt.update({ where: { id: attempt.id }, data: { startedAt: started } });
+    const correct = await prisma.topicQuestionOption.findMany({ where: { questionId: { in: attempt.questionIds }, isCorrect: true }, select: { questionId: true, position: true } });
+    const answers: Record<string, number> = {};
+    correct.forEach((c, i) => {
+      answers[c.questionId] = i < 42 ? c.position : (c.position % 5) + 1;
+    });
+    await withTransaction((tx) => saveAnswers(tx, { attemptId: attempt.id, userId: holder.id, answers }));
+    const finishedAt = new Date(started.getTime() + (24 * 60 + 31) * 1000); // 24 min 31 s later
+    const finished = await withTransaction((tx) => finishAttempt(tx, { attemptId: attempt.id, userId: holder.id, now: finishedAt }));
+
+    const view = (await findResultByPublicId(finished.publicId!, prisma, new Date("2026-06-01T00:00:00Z")))!;
+    expect(view.timeTakenMs).toBe(1_471_000);
+    const cert = await achievementCertificateData(view, `https://example.test/verify/${view.publicId}`);
+    expect(cert).toMatchObject({
+      kind: "achievement",
+      certificateId: view.publicId,
+      holderName: "Kay Checker",
+      subjectTitle: "Data & AI Knowledge Check — 50 questions",
+      scoreLabel: "42 of 50 · 84%",
+      timeTaken: "00:24:31",
+      issuedOn: "4 May 2026",
+      validUntil: "4 May 2027",
+      verifyUrl: `https://example.test/verify/${view.publicId}`,
+    });
+    expect(cert.qrSvg.startsWith("<svg")).toBe(true);
+    expect(JSON.stringify(cert)).not.toMatch(/@example\.test\b(?!\/verify)/); // no email anywhere in the certificate data
+
+    // A failed result has no certificate.
+    const failedAttempt = await withTransaction((tx) => startAttempt(tx, { userId: holder.id, size: 50 }));
+    const failed = await withTransaction((tx) => finishAttempt(tx, { attemptId: failedAttempt.id, userId: holder.id }));
+    await expect(achievementCertificateData((await findResultByPublicId(failed.publicId!))!, "https://example.test/verify/x")).rejects.toThrow(/did not pass/);
+  });
+
+  it("revokeKnowledgeCheck: reason required, pass-only, audited with the reason, permanent; the admin list shows the state and the email", async () => {
+    const attempt = await withTransaction((tx) => startAttempt(tx, { userId: holder.id, size: 50 }));
+    const correct = await prisma.topicQuestionOption.findMany({ where: { questionId: { in: attempt.questionIds }, isCorrect: true }, select: { questionId: true, position: true } });
+    await withTransaction((tx) => saveAnswers(tx, { attemptId: attempt.id, userId: holder.id, answers: Object.fromEntries(correct.map((c) => [c.questionId, c.position])) }));
+    const finished = await withTransaction((tx) => finishAttempt(tx, { attemptId: attempt.id, userId: holder.id }));
+    const publicId = finished.publicId!;
+
+    for (const bad of ["", "  ", "ab", "x".repeat(501), "bad\u0000reason"]) {
+      await expect(withTransaction((tx) => revokeKnowledgeCheck(tx, { publicId, adminUserId: admin.id, reason: bad }))).rejects.toMatchObject({ reason: "invalid_reason" });
+    }
+    await expect(withTransaction((tx) => revokeKnowledgeCheck(tx, { publicId: "KC-2026-2222-2222", adminUserId: admin.id, reason: "Issued in error" }))).rejects.toMatchObject({ reason: "not_found" });
+    expect((await findResultByPublicId(publicId))?.status).toBe("valid"); // nothing changed by the refusals
+
+    const done = await withTransaction((tx) => revokeKnowledgeCheck(tx, { publicId: publicId.toLowerCase(), adminUserId: admin.id, reason: "  Issued   in error " }));
+    expect(done).toEqual({ attemptId: attempt.id, publicId });
+    const row = await prisma.knowledgeCheckAttempt.findUniqueOrThrow({ where: { id: attempt.id }, select: { revokedAt: true, revokedByUserId: true, revocationReason: true } });
+    expect(row).toMatchObject({ revokedByUserId: admin.id, revocationReason: "Issued in error" });
+    expect(row.revokedAt).toBeInstanceOf(Date);
+    expect((await findResultByPublicId(publicId))?.status).toBe("revoked");
+    await expect(withTransaction((tx) => revokeKnowledgeCheck(tx, { publicId, adminUserId: admin.id, reason: "Again" }))).rejects.toMatchObject({ reason: "already_revoked" });
+
+    const audit = await listAuditForEntity(prisma, "knowledge_check_attempt", attempt.id);
+    expect(audit.map((a) => a.action)).toContain("knowledge_check.revoked");
+    expect(audit.find((a) => a.action === "knowledge_check.revoked")).toMatchObject({ actorUserId: admin.id, reason: "Issued in error" });
+
+    const [listed] = await listPassedResultsForAdmin({ publicId });
+    expect(listed).toMatchObject({ publicId, status: "revoked", email: holder.email, revocationReason: "Issued in error" });
+    expect(await listPassedResultsForAdmin({ publicId: "not-an-id" })).toEqual([]);
+
+    // A result that did not pass has nothing to revoke.
+    const failedAttempt = await withTransaction((tx) => startAttempt(tx, { userId: holder.id, size: 50 }));
+    const failed = await withTransaction((tx) => finishAttempt(tx, { attemptId: failedAttempt.id, userId: holder.id }));
+    await expect(withTransaction((tx) => revokeKnowledgeCheck(tx, { publicId: failed.publicId!, adminUserId: admin.id, reason: "Nothing to revoke" }))).rejects.toMatchObject({ reason: "not_passed" });
+  });
+
   it("a failing score is not a pass and still gets an ID", async () => {
     const attempt = await withTransaction((tx) => startAttempt(tx, { userId: holder.id, size: 50 }));
     const finished = await withTransaction((tx) => finishAttempt(tx, { attemptId: attempt.id, userId: holder.id }));
     expect(finished.score).toBe(0);
     expect(finished.passed).toBe(false);
     expect(finished.publicId).toBeTruthy();
-    expect((await findResultByPublicId(finished.publicId!))?.passed).toBe(false);
+    expect(await findResultByPublicId(finished.publicId!)).toMatchObject({ passed: false, status: "not_passed", expiresOn: null });
   });
 
   // Founder, 2026-09-28: the person deletes their OWN finished results.

@@ -1,0 +1,10 @@
+Noto Sans Regular and Bold (NotoSans-Regular.ttf, NotoSans-Bold.ttf)
+Copyright 2022 The Noto Project Authors (https://github.com/notofonts/latin-greek-cyrillic)
+Source: https://github.com/notofonts/notofonts.github.io (fonts/NotoSans/full/ttf)
+
+Licensed under the SIL Open Font License, Version 1.1.
+The licence text: https://scripts.sil.org/OFL  (also https://openfontlicense.org)
+
+Used only to draw text in the certificate PDF (src/shared/certificate/pdf.tsx).
+Added 2026-09-29 (Milestone 15, Requirement 6) with the founder's permission.
+The fonts are unmodified.

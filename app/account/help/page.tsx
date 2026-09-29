@@ -14,7 +14,7 @@ export const metadata: Metadata = { title: "Help" };
 
 const links = [
   { href: "/faq", title: "Frequently asked questions", body: "The trainings, paying, the certificate, your data." },
-  { href: "/contact-us", title: "Contact us", body: "Send an enquiry." },
+  { href: "/contact-us", title: "Contact us", body: "Email our team." },
   { href: "/refund-policy", title: "Refund & cancellation policy", body: "Not yet published." },
   { href: "/privacy", title: "Privacy policy", body: "Not yet published." },
   { href: "/account/profile", title: "Profile & security", body: "Change your details or password." },

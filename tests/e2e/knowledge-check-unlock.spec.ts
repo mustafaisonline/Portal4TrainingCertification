@@ -122,7 +122,18 @@ test("a finished result shows both gate conditions; a Free Learning review satis
   await expect(page.getByTestId("result-gate-fee")).toHaveAttribute("data-fee", "required");
   await expect(page.getByTestId("result-gate-fee")).toContainText("USD 10");
   await expect(page.getByTestId("result-gate-review-link")).toHaveAttribute("href", "/reviews#free-learning");
+  // Locked: a SAMPLE of the certificate is shown — never this person's own (no name, ID, score, time or QR of the real one).
+  const sample = page.getByTestId("result-sample");
+  await expect(sample.getByTestId("certificate-sample")).toBeVisible();
+  await expect(sample.getByTestId("certificate-id")).toContainText("KC-2026-SAMP-PLE2");
+  await expect(sample.getByTestId("certificate-holder")).not.toHaveText("Uma Unlock");
+  const realId = (await page.getByTestId("result-public-id").textContent())!.trim();
+  await expect(sample).not.toContainText(realId);
+  await expect(sample).not.toContainText("50 of 50");
+  await expect(sample.getByRole("button", { name: /print|download/i })).toHaveCount(0);
   await expectNoAxeViolations(page);
+  // The PDF route refuses until the gate holds — and is never public.
+  expect((await page.request.get(`/api/knowledge-checks/${attemptId}/pdf`)).status()).toBe(403);
   // The document route refuses until the gate holds.
   await page.goto(`/free-learning/knowledge-check/${attemptId}/document`);
   await expect(page).toHaveURL(new RegExp(`/free-learning/knowledge-check/${attemptId}/result$`));
@@ -157,12 +168,51 @@ test("a finished result shows both gate conditions; a Free Learning review satis
   await completeProfileByEmail(email, { legalName: "Uma Unlock", countryCode: "PK", nationalityCode: "PK" });
   await page.reload();
   await expect(page.getByTestId("result-document-unlocked")).toContainText("no fee applies to you");
+  await expect(page.getByTestId("result-sample")).toHaveCount(0);
   await page.getByTestId("result-document-link").click();
   await expect(page).toHaveURL(new RegExp(`/free-learning/knowledge-check/${attemptId}/document$`));
-  await expect(page.getByTestId("kc-document")).toContainText("Knowledge Check result");
-  await expect(page.getByTestId("kc-document-name")).toHaveText("Uma Unlock");
-  await expect(page.getByTestId("kc-document")).toContainText("not a Certificate of Completion");
+  // Milestone 15 Req 3 (DR-05): the document IS the Certificate of Achievement.
+  await expect(page.getByTestId("certificate-title")).toHaveText("Certificate of Achievement");
+  await expect(page.getByTestId("certificate-holder")).toHaveText("Uma Unlock");
+  await expect(page.getByTestId("certificate-subject")).toContainText("Data & AI Knowledge Check — 50 questions");
+  await expect(page.getByTestId("certificate-result")).toContainText("PASSED");
+  const details = page.getByTestId("certificate-details");
+  await expect(details).toContainText("50 of 50 · 100%");
+  await expect(details).toContainText(/\d{2}:\d{2}:\d{2}/);
+  await expect(page.getByTestId("certificate-id")).toContainText(/^KC-\d{4}-/);
+  await expect(page.getByTestId("certificate-qr").locator("svg")).toHaveCount(1);
+  await expect(page.getByTestId("kc-document")).toContainText("not the Academy’s Certificate of Completion");
+  await expect(page.getByTestId("kc-document")).not.toContainText("HRD Corp certified");
   await expectNoAxeViolations(page);
+
+  // The PDF: a real vector PDF, one page, an attachment named by the KC ID, never cached.
+  await page.goto(`/free-learning/knowledge-check/${attemptId}/document`);
+  const pdfHref = await page.getByTestId("download-certificate-pdf").getAttribute("href");
+  expect(pdfHref).toBe(`/api/knowledge-checks/${attemptId}/pdf`);
+  const pdf = await page.request.get(pdfHref!);
+  expect(pdf.status()).toBe(200);
+  expect(pdf.headers()["content-type"]).toContain("application/pdf");
+  expect(pdf.headers()["content-disposition"]).toMatch(/filename="KC-\d{4}-[A-Z0-9]{4}-[A-Z0-9]{4}\.pdf"/);
+  expect(pdf.headers()["cache-control"]).toContain("no-store");
+  const pdfBytes = await pdf.body();
+  expect(pdfBytes.subarray(0, 5).toString("latin1")).toBe("%PDF-");
+  expect(pdfBytes.toString("latin1")).toMatch(/\/Count 1\b/);
+  expect((await page.request.get("/api/knowledge-checks/00000000-0000-4000-8000-000000000000/pdf")).status()).toBe(404);
+
+  // The result page shows the derived time and validity.
+  await page.goto(`/free-learning/knowledge-check/${attemptId}/result`);
+  await expect(page.getByTestId("result-time-taken")).toHaveText(/^\d{2}:\d{2}:\d{2}$/);
+  await expect(page.getByTestId("result-valid-until")).toBeVisible();
+
+  // A revoked certificate is no longer shown or printable; the result page says so.
+  const { getPrisma } = await import("../../src/db/prisma");
+  await getPrisma().knowledgeCheckAttempt.update({ where: { id: attemptId }, data: { revokedAt: new Date(), revocationReason: "e2e revoke" } });
+  await page.goto(`/free-learning/knowledge-check/${attemptId}/document`);
+  await expect(page).toHaveURL(new RegExp(`/free-learning/knowledge-check/${attemptId}/result$`));
+  await expect(page.getByTestId("result-revoked")).toContainText("revoked");
+  await expect(page.getByTestId("result-document-link")).toHaveCount(0);
+  expect((await page.request.get(`/api/knowledge-checks/${attemptId}/pdf`)).status()).toBe(403); // revoked: never rendered
+  await getPrisma().knowledgeCheckAttempt.update({ where: { id: attemptId }, data: { revokedAt: null, revocationReason: null } });
 });
 
 test("the administrator sees the unlock fee setting from Orders and can switch it off and on, audited", async ({ page }) => {
@@ -192,3 +242,34 @@ test("the administrator sees the unlock fee setting from Orders and can switch i
   const rows = await getPrisma().auditLog.findMany({ where: { action: "knowledge_check_unlock.changed", reason: { contains: "e2e-unlock" } }, orderBy: { createdAt: "asc" } });
   expect(rows.map((r) => (r.after as { enabled: boolean }).enabled)).toEqual([false, true]);
 });
+
+test("the administrator finds a passed result by its ID and revokes its certificate with a reason; verify then says Revoked; a second revoke is impossible", async ({ page }) => {
+  const { getPrisma } = await import("../../src/db/prisma");
+  const row = await getPrisma().knowledgeCheckAttempt.findUniqueOrThrow({ where: { id: attemptId }, select: { publicId: true } });
+  const publicId = row.publicId!;
+  // The administrator account was registered and granted by the previous test in this file.
+  await signInViaUi(page, adminEmail);
+  await page.goto("/admin/free-learning");
+  await page.getByTestId("kc-results-link").click();
+  await expect(page).toHaveURL(/\/admin\/free-learning\/results$/);
+  await page.getByTestId("kc-results-search").fill(publicId.toLowerCase());
+  await page.getByRole("button", { name: "Find" }).click();
+  const rowEl = page.getByTestId("kc-results-row");
+  await expect(rowEl).toHaveCount(1);
+  await expect(rowEl.getByTestId("kc-results-status")).toHaveAttribute("data-status", "valid");
+  await expectNoAxeViolations(page);
+  // A reason and the confirmation are both required.
+  await expect(page.getByTestId("kc-revoke-submit")).toBeDisabled();
+  await page.getByLabel(/Reason for revoking/).fill("Issued in error — e2e");
+  await page.getByTestId("kc-revoke-confirm").check();
+  await page.getByTestId("kc-revoke-submit").click();
+  // The list re-renders from the database: the row now reads Revoked, with the reason, and offers no second revoke.
+  await expect(rowEl.getByTestId("kc-results-status")).toHaveAttribute("data-status", "revoked");
+  await expect(rowEl).toContainText("Issued in error — e2e");
+  await page.goto(`/verify/${publicId}`);
+  await expect(page.getByTestId("certificate-status")).toHaveText("Revoked");
+  await page.goto(`/admin/free-learning/results?q=${publicId}`);
+  await expect(page.getByTestId("kc-results-status")).toHaveAttribute("data-status", "revoked");
+  await expect(page.getByTestId("kc-revoke-form")).toHaveCount(0);
+});
+

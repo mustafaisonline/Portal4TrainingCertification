@@ -9,6 +9,7 @@ import { listUpcomingPublicOfferings } from "@/modules/catalogue/offerings/repos
 import { levelLabel } from "@/modules/catalogue/programmes/types";
 import { isModulePointGroup } from "@/modules/catalogue/programmes/module-points";
 import { listPublishedExperts } from "@/modules/catalogue/experts/repository";
+import { interestMailto } from "@/content/contact";
 import { CourseCard } from "@/shared/marketing/CourseCard";
 import { DeliveryFormats } from "@/shared/marketing/DeliveryFormats";
 import { TrainerCard } from "@/shared/marketing/TrainerCard";
@@ -101,7 +102,7 @@ export default async function CourseDetailPage({
   const founder =
     experts.find((e) => course.experts.some((x) => x.id === e.id)) ??
     experts[0];
-  const enquiryHref = `/contact-us?kind=programme_interest&programme=${course.slug}`;
+  const enquiryHref = interestMailto(course.title);
 
   const meta: [string, string][] = [
     ["Level", levelLabel(course.level)],
@@ -607,6 +608,7 @@ export default async function CourseDetailPage({
         prices={course.prices}
         packages={content.mentorshipPackages}
         programmeSlug={course.slug}
+        programmeTitle={course.title}
       />
 
       {/* ===== Trainer ===== */}

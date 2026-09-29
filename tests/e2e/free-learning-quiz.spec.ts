@@ -111,6 +111,7 @@ test("a topic has two tabs — Topic and Questions — and the questions are one
   await expect(page.getByTestId("topic-tab-questions")).toHaveAttribute("aria-current", "page");
   await expect(page.getByTestId("topic-quiz")).toBeVisible();
   await expect(page.getByTestId("topic-body")).toHaveCount(0);
+  await expect(page).toHaveTitle(/.+/); // metadata streams in after a client-side switch
   // The questions start right under the tabs (no scrolling past the topic).
   const tabsBox = (await tabs.boundingBox())!;
   const quizBox = (await page.getByTestId("topic-quiz").boundingBox())!;

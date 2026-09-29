@@ -265,6 +265,7 @@ test("the detail screen corrects the holder's name (reflected on /verify) and re
   await expect(page.getByTestId("revocation-block")).toContainText(`Issued to the wrong registration — e2e ${run}`);
   await expect(page.getByTestId("certificate-status")).toHaveText("Revoked");
   await expect(page.getByTestId("revoke-form")).toHaveCount(0);
+  await expect(page).toHaveTitle(/.+/); // the page re-rendered after a server action: the title streams in last
   await expectNoAxeViolations(page);
 
   // Now the revoked filter finds it; the public page says revoked.

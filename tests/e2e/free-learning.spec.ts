@@ -95,6 +95,7 @@ test("topics list and search; a topic page with its database-served image and ne
   await expect(page.getByTestId("topic-to-questions")).toHaveCount(0);
   await page.getByTestId("topic-tab-questions").click();
   await expect(page.getByTestId("topic-quiz-coming")).toBeVisible();
+  await expect(page).toHaveTitle(/.+/); // a client-side switch: metadata streams in after the body
   await expectNoAxeViolations(page);
 
   // The retired combined landing and the retired topics-list URL both land

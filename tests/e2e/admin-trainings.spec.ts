@@ -134,8 +134,10 @@ test("an administrator launches a training from the portal: draft → sections �
   await expect(content.getByText("Your changes have been saved.")).toBeVisible();
 
   // 3. Curriculum — one module with a grouped point list.
-  await page.getByTestId("training-tab-curriculum").click();
-  await expect(page).toHaveURL(/\/modules$/);
+  await expect(async () => {
+    await page.getByTestId("training-tab-curriculum").click();
+    await expect(page).toHaveURL(/\/modules$/, { timeout: 3000 });
+  }).toPass({ timeout: 20_000 }); // a click during hydration can be swallowed; retry until it lands
   await expectNoAxeViolations(page);
   const modules = page.getByRole("form", { name: "Edit curriculum" });
   await modules.getByLabel("Title", { exact: true }).first().fill("Module 1: Launch");

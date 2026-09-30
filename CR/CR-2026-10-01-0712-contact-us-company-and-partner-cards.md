@@ -1,6 +1,6 @@
 # CR-2026-10-01-0712 — Contact Us: head-office card and partner-location cards
 
-**Received:** 2026-10-01 07:12 MYT · **Status:** BUILT and VERIFIED in dev — awaiting the founder's word to commit, tag and deploy · **Requested by:** founder
+**Received:** 2026-10-01 07:12 MYT · **Status:** DEPLOYED to production as `v2026.10.01` (commit `1ccff56`) · **Requested by:** founder
 
 ## 1. Request (verbatim)
 
@@ -88,7 +88,7 @@ Content lives in typed modules, not the database (`src/content/contact.ts`); the
 | 3 | `/contact-us` "Our locations" section (Head office on top, "Partner locations" under it) | **VERIFIED** | 2026-10-01 |
 | 4 | Logo asset `public/brand/partners/infocentric-logo.png` (5,167 bytes) added | **DONE** | 2026-10-01 |
 | 5 | e2e `tests/e2e/contact-locations.spec.ts` (4 tests: content + placement + links, logos load, no overflow at 375/768/1280, axe light + dark) | **VERIFIED** | 2026-10-01 |
-| 6 | Commit, release, deploy | **AWAITING THE FOUNDER'S WORD** | 2026-10-01 |
+| 6 | Commit, release, deploy | **DEPLOYED** (`v2026.10.01`; CI + release gate green; incremental deploy, no migration; validation PASSED) | 2026-10-01 |
 
 ## 6. Progress log
 
@@ -96,3 +96,4 @@ Content lives in typed modules, not the database (`src/content/contact.ts`); the
 |---|---|
 | 2026-10-01 07:12 | CR folder created with `README.md` (naming, template, index; earlier `modification.md` and the M15 plan are indexed as history). This CR written: Infocentric details read from both pages of their site (they agree); logo downloaded and inspected (156×36 px wordmark, white-on-transparent → needs a dark tile); our own details gathered from approved records; company website checked live. **No code changed.** Waiting for the founder's answers to Q1 and the assumptions A1–A5, and a "go". |
 | 2026-10-01 07:40 | **Built on "go ahead with your suggestions".** `src/content/locations.ts` (head office from `certificate-brand.ts`/`contact.ts`; Infocentric exactly as published), `LocationCard`, the Contact page section; logo copied to `public/brand/partners/`. **Verified:** tsc clean · Vitest (full) · Playwright `contact-locations` + `public` 13/13 (content, order, links incl. `tel:+92518890717`, logos load, no overflow 375/768/1280, axe light + dark) · screenshots reviewed (desktop). No schema, no dependency, no server step. **Not built:** Q2 (partner contact on the Pakistan price card / checkout step). **Open for the founder:** a head-office phone number (the card has none until supplied; the legal drafts' `[phone number]` placeholder could be filled at the same time); a higher-resolution Infocentric logo (the published one is 156×36 px). Uncommitted. |
+| 2026-10-01 07:45 | **Committed, pushed, tagged `v2026.10.01`, deployed to production.** CI green (13 m 50 s), audit GO, pipeline validation PASSED (health 200, db up, migration `20260929131017…`). Verified live: `/contact-us` contains the `locations-section`, the Head Office card and the Infocentric card with `(+92-51) 8890717`, `info@infocentric.pk`, `Plaza 241`; `/brand/partners/infocentric-logo.png` → 200. No server steps were needed. Rollback target: `v2026.09.30-4`. |

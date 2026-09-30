@@ -24,7 +24,7 @@ deploy only on the founder's word; report honestly what was and was not tested.
 
 | CR file | Title | Status |
 |---|---|---|
-| [CR-2026-10-01-0712-contact-us-company-and-partner-cards.md](CR-2026-10-01-0712-contact-us-company-and-partner-cards.md) | Contact Us: head-office card + partner-location cards (Infocentric, Pakistan) | BUILT + VERIFIED in dev — awaiting deploy word |
+| [CR-2026-10-01-0712-contact-us-company-and-partner-cards.md](CR-2026-10-01-0712-contact-us-company-and-partner-cards.md) | Contact Us: head-office card + partner-location cards (Infocentric, Pakistan) | DEPLOYED (`v2026.10.01`) |
 | [../modification.md](../modification.md) *(predates this folder — "M16", 2026-09-30)* | Free Assessment Check, graded certificates, cards redesign, trainer pages removed, HRD wording | DEPLOYED (`v2026.09.30-4`) |
 | [../docs/execution/MILESTONE_15_EXECUTION_PLAN.md](../docs/execution/MILESTONE_15_EXECUTION_PLAN.md) *(predates this folder — "M15")* | Certificates, verification, PDF, Contact email-only, Stripe-live readiness | DEPLOYED (`v2026.09.30-2`) |
 

@@ -109,6 +109,8 @@ test("/sitemap.xml lists the navigation pages, the published programmes and the 
   const unlisted = await getPrisma().programme.findFirst({ where: { status: "unlisted" }, select: { slug: true } });
   if (unlisted) expect(xml).not.toContain(`/programs/${unlisted.slug}<`);
   expect(xml).not.toContain("/courses/");
+  expect(xml).not.toContain("mustafa-qizilbash"); // M7: no trainer dedicated page, so no trainer URL
+  expect(xml).not.toContain("/trainers");
   expect(xml).not.toContain("/DataBlueprint-AIVibeCoding");
   // Free Learning (M14): the topics index and every published topic; an unpublished topic never.
   expect(xml).toContain(`<loc>${baseURL}/free-learning/topics</loc>`);

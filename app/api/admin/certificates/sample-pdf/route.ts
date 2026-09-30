@@ -2,10 +2,10 @@ import { appBaseUrl } from "@/modules/commerce/checkout.service";
 import { authorise } from "@/modules/identity/session";
 import { renderCertificatePdf } from "@/shared/certificate/pdf";
 import { pdfResponse } from "@/shared/certificate/pdf-response";
-import { isSampleKind, sampleCertificate } from "@/shared/certificate/sample";
+import { isSampleGrade, isSampleKind, sampleCertificate } from "@/shared/certificate/sample";
 
 /*
- * GET /api/admin/certificates/sample-pdf?kind=achievement|completion — the
+ * GET /api/admin/certificates/sample-pdf?kind=achievement|completion[&grade=alpha|bravo|charlie] — the
  * SAMPLE certificate as a PDF, so an administrator can test the download and
  * look at the file. Platform administrators only (401 signed out, 403
  * otherwise). The sheet carries the SAMPLE watermark and an ID that verifies
@@ -25,6 +25,10 @@ export async function GET(req: Request): Promise<Response> {
   } catch {
     baseUrl = undefined; // local only — a sample URL is fine
   }
-  const data = await sampleCertificate(kind, { baseUrl });
-  return pdfResponse(await renderCertificatePdf(data), `SAMPLE-${kind}-certificate`);
+  // The Free Certification sample has one sheet per grade (default Alpha); an unknown grade is a 400.
+  const gradeParam = new URL(req.url).searchParams.get("grade");
+  if (gradeParam !== null && !isSampleGrade(gradeParam)) return new Response("grade must be alpha, bravo or charlie", { status: 400 });
+  const grade = kind === "achievement" && gradeParam !== null && isSampleGrade(gradeParam) ? gradeParam : undefined;
+  const data = await sampleCertificate(kind, { baseUrl, grade });
+  return pdfResponse(await renderCertificatePdf(data), `SAMPLE-${kind}${grade ? `-${grade}` : ""}-certificate`);
 }

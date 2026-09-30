@@ -252,10 +252,10 @@ export function HomeDiagnostic({ questions, teaser = false }: { questions: Diagn
                   stay free and NOTHING is saved — say so here. The mockup's
                   "Certificate of Attempt … USD 10 … 50/100/200 diagnostics"
                   sentence described things that did not exist and is gone;
-                  the Knowledge Check arrives with M14 Phase 4. */}
+                  the Free Assessment Check arrives with M14 Phase 4. */}
               <p className="mt-5 max-w-[480px] border-t border-[var(--color-line)] pt-4 text-body-sm text-[var(--color-ink-faint)]" data-testid="diagnostic-not-saved">
                 Always free, no account needed — and your answers stay in your browser: we do not save your diagnostic
-                results. For the book and its topic self-checks, see the Knowledge Hub; for the free Knowledge
+                results. For the book and its topic self-checks, see the Knowledge Hub; for The Free Assessment
                 Check, see Free Certifications.
               </p>
             </div>

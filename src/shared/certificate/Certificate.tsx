@@ -7,7 +7,7 @@ import { fitStep } from "./format";
  * THE CERTIFICATE — one reusable design for both certificate types
  * (Milestone 15, Requirement 2; founder, 2026-09-29).
  *
- *   kind "achievement" — Free Certification: a passed Knowledge Check
+ *   kind "achievement" — Free Certification: a passed Free Assessment Check
  *   kind "completion"  — Professional Training: Certificate of Completion
  *
  * A4 LANDSCAPE, 297 × 210 mm, and it scales as one piece: the sheet is a CSS
@@ -39,7 +39,15 @@ const ACCENT = "#2563eb";
 const MUTED = "#4b5563";
 const HAIRLINE = "#c9d3e6";
 
-export type CertificateTrainer = { name: string; hrdAccredited: boolean; hrdTrainerId?: string | null };
+export type CertificateTrainer = {
+  name: string;
+  hrdAccredited: boolean;
+  hrdTrainerId?: string | null;
+  /** The trainer's external profile (Medium, else LinkedIn; https only —
+   *  `trainerProfileUrl`). The on-screen name links to it when present; absent
+   *  = plain text. The PDF and the print sheet never link. */
+  profileUrl?: string | null;
+};
 
 type Common = {
   certificateId: string;
@@ -62,6 +70,10 @@ export type AchievementCertificate = Common & {
   scoreLabel: string;
   timeTaken: string;
   issuedOn: string;
+  /** Charlie / Bravo / Alpha with its percentage band, e.g. { name: "Alpha", band: "81–100 %" } —
+   *  printed as a prominent "Grade: ALPHA · 81–100 %" line under the title (founder, 2026-09-30).
+   *  Absent for a result issued before grades existed, which prints exactly as issued. */
+  grade?: { name: string; band: string };
 };
 
 export type CompletionCertificate = Common & {
@@ -78,7 +90,7 @@ export const CERTIFICATE_COPY = {
     title: "Certificate of Achievement",
     verb: "for successfully completing",
     disclosure:
-      "This certificate recognises a passed online Knowledge Check. It is not the Academy’s Certificate of Completion, which is earned by attending an expert-led training.",
+      "This certificate recognises a passed online Free Assessment Check. It is not the Academy’s Certificate of Completion, which is earned by attending an expert-led training.",
   },
   completion: {
     title: "Certificate of Completion",
@@ -252,11 +264,22 @@ export function Certificate(data: CertificateData) {
             <h2 style={font(4.4, { fontWeight: 800, letterSpacing: "-0.02em", color: NAVY })} data-testid="certificate-title">
               {copy.title}
             </h2>
-            <div aria-hidden="true" style={{ display: "flex", alignItems: "center", gap: cq(0.8), width: cq(24) }}>
-              <span style={{ flex: 1, height: cq(0.1), background: `linear-gradient(90deg, transparent, ${ACCENT})` }} />
-              <span style={{ width: cq(0.7), height: cq(0.7), background: ACCENT, transform: "rotate(45deg)" }} />
-              <span style={{ flex: 1, height: cq(0.1), background: `linear-gradient(270deg, transparent, ${ACCENT})` }} />
-            </div>
+            {data.kind === "achievement" && data.grade ? (
+              // The grade takes the place of the ornament: "Grade: ALPHA · 81–100 %" between the same hairlines.
+              <div style={{ display: "flex", alignItems: "center", gap: cq(1.2), width: cq(44), margin: `${cq(-0.25)} 0` }}>
+                <span aria-hidden="true" style={{ flex: 1, height: cq(0.1), background: `linear-gradient(90deg, transparent, ${ACCENT})` }} />
+                <p data-testid="certificate-grade" style={font(1.7, { fontWeight: 800, letterSpacing: "0.08em", color: BLUE, whiteSpace: "nowrap" })}>
+                  Grade: {data.grade.name.toUpperCase()} · {data.grade.band}
+                </p>
+                <span aria-hidden="true" style={{ flex: 1, height: cq(0.1), background: `linear-gradient(270deg, transparent, ${ACCENT})` }} />
+              </div>
+            ) : (
+              <div aria-hidden="true" style={{ display: "flex", alignItems: "center", gap: cq(0.8), width: cq(24) }}>
+                <span style={{ flex: 1, height: cq(0.1), background: `linear-gradient(90deg, transparent, ${ACCENT})` }} />
+                <span style={{ width: cq(0.7), height: cq(0.7), background: ACCENT, transform: "rotate(45deg)" }} />
+                <span style={{ flex: 1, height: cq(0.1), background: `linear-gradient(270deg, transparent, ${ACCENT})` }} />
+              </div>
+            )}
             <p style={font(1.55, { color: MUTED })}>{CERTIFICATE_COPY.presentedTo}</p>
             <p
               data-testid="certificate-holder"
@@ -314,7 +337,22 @@ export function Certificate(data: CertificateData) {
                         <img src="/hrd-corp/accredited-trainer-badge.png" alt="HRD Corp Accredited Trainer badge" style={{ width: cq(3.2), height: cq(3.2), borderRadius: "50%" }} />
                       ) : null}
                       <span>
-                        <span style={font(1.35, { fontWeight: 700, display: "block" })}>{t.name}</span>
+                        <span style={font(1.35, { fontWeight: 700, display: "block" })}>
+                          {t.profileUrl ? (
+                            <a
+                              href={t.profileUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              data-testid="certificate-trainer-link"
+                              style={{ color: "inherit", textDecoration: "underline", textUnderlineOffset: "0.15em" }}
+                            >
+                              <span>{t.name}</span>
+                              <span style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)", whiteSpace: "nowrap" }}> (opens external site)</span>
+                            </a>
+                          ) : (
+                            t.name
+                          )}
+                        </span>
                         {t.hrdAccredited ? (
                           <span style={font(0.9, { color: MUTED, display: "block" })}>
                             HRD Corp Accredited Trainer{t.hrdTrainerId ? ` · ID ${t.hrdTrainerId}` : ""}

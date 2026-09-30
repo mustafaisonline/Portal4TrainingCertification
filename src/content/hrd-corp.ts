@@ -51,3 +51,13 @@ export const hrdCorpAbout = {
     },
   ],
 };
+
+/**
+ * The founder's wording (2026-09-30, modification.md M8 / D10) for EVERY place
+ * the portal mentions HRD Corp: HRD Corp claims are for Malaysian citizens and
+ * are made through an employer registered with HRD Corp. One constant so the
+ * sentence cannot drift; tests/unit/hrd-note.test.ts scans the copy. It says
+ * nothing about any course being "HRD Corp Claimable" — that status rule above
+ * is unchanged.
+ */
+export const HRD_CLAIM_NOTE = "HRD Corp claims are for Malaysian citizens and are normally made through an employer registered with HRD Corp.";

@@ -55,7 +55,7 @@ export default async function AdminFreeLearningPage({ searchParams }: { searchPa
         </p>
         <p className="text-body-sm mt-2">
           <Link href="/admin/free-learning/results" className="text-[var(--color-primary)] underline underline-offset-4" data-testid="kc-results-link">
-            Knowledge Check certificates
+            Free Assessment Check certificates
           </Link>{" "}
           — passed results, and revoking a certificate.
         </p>

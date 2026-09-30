@@ -111,7 +111,7 @@ test("/search: a training by a word in its title; a certificate by ID and by lis
   await expect(page.getByTestId("search-hint")).toBeVisible();
 });
 
-test("Professional Trainings has HRD Corp merged, no registration-in-progress copy; the Knowledge Hub hosts the topics browser; Free Certifications hosts the Knowledge Check; the diagnostic draws ten from the bank and saves nothing", async ({ page }) => {
+test("Professional Trainings has HRD Corp merged, no registration-in-progress copy; the Knowledge Hub hosts the topics browser; Free Certifications hosts the Free Assessment Check; the diagnostic draws ten from the bank and saves nothing", async ({ page }) => {
   await page.goto("/programs");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Trainings");
   await expect(page.getByTestId("hrd-corp-sections")).toContainText("What HRD Corp is");
@@ -137,11 +137,12 @@ test("Professional Trainings has HRD Corp merged, no registration-in-progress co
   await expect(page.getByTestId("free-diagnostic-card")).toHaveCount(0);
   await expectNoAxeViolations(page);
 
-  // Free Certifications hosts the Knowledge Check start screen (signed out:
+  // Free Certifications hosts the Free Assessment Check start screen (signed out:
   // the pitch, the bank and a sign-in button).
   await page.goto("/free-certifications");
   await expect(page.getByTestId("free-certifications-title")).toBeVisible();
-  await expect(page.getByTestId("free-test")).toContainText("50, 100 or 200 questions");
+  await expect(page.getByTestId("free-test")).toContainText("200 questions");
+  await expect(page.getByTestId("free-test")).not.toContainText("50, 100 or 200");
   await expect(page.getByTestId("kc-signed-out")).toBeVisible();
   await expectNoAxeViolations(page);
 
@@ -156,11 +157,10 @@ test("Professional Trainings has HRD Corp merged, no registration-in-progress co
   await page.goto("/");
   await expect(page.getByTestId("diagnostic-not-saved")).toContainText("we do not save your diagnostic results");
 
-  // Founder, 2026-09-28 evening: the /trainers directory is retired — it
-  // redirects to the trainer's own top-level page, which states the HRD
-  // authorisation (the visible check plus the accessible "Yes").
-  await page.goto("/trainers");
-  await expect(page).toHaveURL(/\/mustafa-qizilbash$/);
-  await expect(page.getByTestId("trainer-hrd-line")).toContainText("HRD Corp Authorised Trainer");
-  await expect(page.getByTestId("trainer-hrd-line")).toContainText("Yes");
+  // Founder, 2026-09-30 (M7): the trainer's dedicated page is gone. The old
+  // /trainers address still moves permanently (one hop, not followed — the
+  // chain's next hop is the external profile, which a test must not visit).
+  const trainersHop = await page.request.get("/trainers", { maxRedirects: 0 });
+  expect(trainersHop.status()).toBe(308);
+  expect(trainersHop.headers()["location"]).toMatch(/\/mustafa-qizilbash$/);
 });

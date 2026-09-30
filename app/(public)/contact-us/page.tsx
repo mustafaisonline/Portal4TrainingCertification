@@ -56,8 +56,8 @@ const routes = [
     label: "For practitioners",
     title: "Teaching with the Academy",
     body: "We add trainers slowly and only when they meet the standard. If you have built and led this work in real organisations, we would like to hear from you.",
-    cta: "See the standard",
-    href: "/mustafa-qizilbash",
+    cta: "About the Academy",
+    href: "/about-us",
   },
 ];
 

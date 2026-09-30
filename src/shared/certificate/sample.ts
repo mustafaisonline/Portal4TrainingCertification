@@ -1,4 +1,5 @@
 import { certificateBrand } from "@/content/certificate-brand";
+import { ASSESSMENT_GRADE_BANDS, ASSESSMENT_GRADES, ASSESSMENT_SIZE, type AssessmentGrade, isAssessmentGrade } from "@/modules/free-learning/assessment-rules";
 import type { CertificateData, CertificateTrainer } from "./Certificate";
 import { formatTimeTaken } from "./format";
 import { certificateQrSvg } from "./qr";
@@ -21,13 +22,18 @@ export const SAMPLE_IDS: Record<SampleKind, string> = { achievement: "KC-2026-SA
 
 const dateFmt = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "Asia/Kuala_Lumpur" });
 
+/** The sample of each grade (Free Assessment Check): a made-up score inside the grade's band. Of 200 questions. */
+export const SAMPLE_GRADE_SCORES: Record<AssessmentGrade, number> = { charlie: 130, bravo: 150, alpha: 180 };
+
+export { ASSESSMENT_GRADES as SAMPLE_GRADES, isAssessmentGrade as isSampleGrade };
+
 export function isSampleKind(value: unknown): value is SampleKind {
   return value === "achievement" || value === "completion";
 }
 
 export async function sampleCertificate(
   kind: SampleKind,
-  opts: { baseUrl?: string; long?: boolean; trainers?: CertificateTrainer[]; now?: Date } = {},
+  opts: { baseUrl?: string; long?: boolean; trainers?: CertificateTrainer[]; now?: Date; grade?: AssessmentGrade } = {},
 ): Promise<CertificateData> {
   const now = opts.now ?? new Date();
   const nextYear = new Date(now);
@@ -45,14 +51,17 @@ export async function sampleCertificate(
     sample: true,
   } as const;
   if (kind === "achievement") {
+    const grade = opts.grade ?? "alpha";
+    const score = SAMPLE_GRADE_SCORES[grade];
     return {
       ...common,
       kind,
       subjectTitle: opts.long
-        ? "Data & AI Knowledge Check — 200 questions drawn from the Knowledge Hub topics on data governance, architecture and AI"
-        : "Data & AI Knowledge Check — 50 questions",
-      scoreLabel: "42 of 50 · 84%",
-      timeTaken: formatTimeTaken(24 * 60_000 + 31_000),
+        ? `Data & AI Free Assessment Check — ${ASSESSMENT_SIZE} questions drawn from the Knowledge Hub topics on data governance, architecture and AI`
+        : `Data & AI Free Assessment Check — ${ASSESSMENT_SIZE} questions`,
+      scoreLabel: `${score} of ${ASSESSMENT_SIZE} · ${Math.floor((score * 100) / ASSESSMENT_SIZE)}%`,
+      grade: { name: ASSESSMENT_GRADE_BANDS[grade].name, band: ASSESSMENT_GRADE_BANDS[grade].band },
+      timeTaken: formatTimeTaken((2 * 60 + 14) * 60_000 + 31_000),
       issuedOn: dateFmt.format(now),
     };
   }

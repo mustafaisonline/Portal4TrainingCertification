@@ -35,11 +35,11 @@ import type { LegalDocument } from "./types";
 export const termsOfService: LegalDocument = {
   key: "terms",
   title: "Terms of service",
-  version: "DRAFT-2026-09-29",
+  version: "DRAFT-2026-09-30",
   status: "draft",
-  lastUpdated: "2026-09-29",
+  lastUpdated: "2026-09-30",
   summary:
-    "The agreement between Your Partner Technologies and anyone who creates an account, registers for a Data & AI Academy training, uses Free Learning or the Knowledge Check, or makes a one-off payment: registering, paying, cancelling, taking part, and the Certificate of Completion.",
+    "The agreement between Your Partner Technologies and anyone who creates an account, registers for a Data & AI Academy training, uses Free Learning or the Free Assessment Check, or makes a one-off payment: registering, paying, cancelling, taking part, and the Certificate of Completion.",
   sections: [
     {
       heading: "About this draft",
@@ -60,7 +60,7 @@ export const termsOfService: LegalDocument = {
       heading: "1. Who we are and what these terms cover",
       paragraphs: [
         "The Data & AI Academy is operated by Your Partner Technologies, a training practice in Kuala Lumpur, Malaysia (business registration number 202401023226 (1569075-K); registered address 15-03A, One Jelatek Condominium, Jalan Jelatek, Kementah, 54200 Kuala Lumpur W.P. Kuala Lumpur, Malaysia). In these terms, \"the Academy\", \"we\" and \"us\" mean Your Partner Technologies.",
-        "These terms apply when you create an account on this portal, register for a training, pay for a registration, attend a training, hold a Certificate of Completion, take a Knowledge Check, or make a one-off payment such as the Knowledge Check result-document fee or a support payment. Reading Free Learning and taking the free diagnostic need no account and are not registrations, but the general rules in these terms — such as section 10's conduct expectations — still apply to your use of the portal. By doing any of these things you agree to these terms. If you do not agree, please do not use the portal.",
+        "These terms apply when you create an account on this portal, register for a training, pay for a registration, attend a training, hold a Certificate of Completion, take a Free Assessment Check, or make a one-off payment such as the certificate unlock fee or a support payment. Reading Free Learning and taking the free diagnostic need no account and are not registrations, but the general rules in these terms — such as section 10's conduct expectations — still apply to your use of the portal. By doing any of these things you agree to these terms. If you do not agree, please do not use the portal.",
         "The Privacy policy and the Refund & cancellation policy form part of these terms. Where a private or corporate cohort is delivered under a separate written agreement, that agreement governs and these terms apply only where it is silent.",
       ],
     },
@@ -144,11 +144,11 @@ export const termsOfService: LegalDocument = {
       ],
     },
     {
-      heading: "11. Free Learning, the Knowledge Check and one-off payments",
+      heading: "11. Free Learning, the Free Assessment Check and one-off payments",
       paragraphs: [
         "Alongside the paid trainings, the Academy publishes Free Learning: the trainer's own book, readable here topic by topic, and a free skill diagnostic. Both are open to anyone, need no account, and nothing you do there is stored on our servers — the diagnostic's answers stay in your browser and are never sent to us.",
-        "The Knowledge Check is a free self-test drawn from the Free Learning topics, available once you have an account. It gives a score, a pass or fail against a published mark, and a unique result ID that anyone can verify — but a Knowledge Check result is not a Certificate of Completion and not the Academy's earned credential; the verification page says so.",
-        "You may pay a one-time fee to unlock a printable copy of your Knowledge Check result. That fee is optional — the result, its ID and its verification page are always free — and, once the printable document has been shown to you, it is not refundable; see the Refund & cancellation policy.",
+        "The Free Assessment Check is a free attempt, available once you have an account: 200 questions drawn at random from the Free Learning question bank, a time limit of three hours after which it is scored as it stands, and a score. A score of 60 % or more passes and earns a graded Certificate of Achievement — Charlie (60–70 %), Bravo (71–80 %) or Alpha (81–100 %) — with a unique ID that anyone can verify. A Free Assessment Check result and its certificate are not a Certificate of Completion and not the Academy's earned credential; the verification page says so.",
+        "You may pay a one-time fee to unlock a printable copy of your Certificate of Achievement. That fee is optional — the result, its ID and its verification page are always free — and, once the printable certificate has been shown to you, it is not refundable; see the Refund & cancellation policy.",
         "You may also make a one-off payment to support the Academy. It grants no service, benefit or credential in return; it exists only so you can make a payment if you choose to. It is not a registration and is not covered by the cancellation schedule in section 8.",
       ],
     },

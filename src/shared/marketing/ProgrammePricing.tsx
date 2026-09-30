@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { interestMailto } from "@/content/contact";
+import { HRD_CLAIM_NOTE } from "@/content/hrd-corp";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { Chip } from "@/shared/ui/Chip";
@@ -178,6 +179,11 @@ function RegionCard({
       <p className="text-body-sm mt-4 border-t border-[var(--color-line)] pt-4">
         <span className="text-label">How you pay</span>
         <span className="mt-1 block text-[var(--color-ink)]">{region.subtitle}</span>
+        {region.payment === "hrd_corp" ? (
+          <span className="mt-1 block text-[var(--color-ink-quiet)]" data-testid="hrd-claim-note-price">
+            {HRD_CLAIM_NOTE}
+          </span>
+        ) : null}
       </p>
       {notes.map((note) => (
         <p key={note} className="text-body-sm mt-3 text-[var(--color-ink-quiet)]" data-testid={`price-note-${card}`}>
@@ -265,6 +271,7 @@ export function ProgrammePricing({
             <p className="text-body-lg mb-8 max-w-[620px] text-[var(--color-ink-quiet)]">
               Pricing is shown by region. {activeRegion.subtitle} —{" "}
               <span className="text-[var(--color-ink)]">{activeRegion.badge}</span>.
+              {activeRegion.payment === "hrd_corp" ? <> {HRD_CLAIM_NOTE}</> : null}
             </p>
 
             {/* Region tabs */}

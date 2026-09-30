@@ -7,16 +7,17 @@ import { FormStatus } from "@/shared/ui/forms";
 
 const initial: KnowledgeCheckState = { status: "idle" };
 
-export function StartForm({ sizes }: { sizes: { size: number; available: boolean }[] }) {
+/** ONE button: there is a single test (200 questions, 3 hours). While a test is running, the button
+ *  returns to it — the server allows one running test per person. */
+export function StartForm({ available, running }: { available: boolean; running: boolean }) {
   const [state, action, pending] = useActionState(startKnowledgeCheckAction, initial);
   return (
-    <form action={action} className="flex flex-col gap-4" aria-label="Start a Knowledge Check">
-      <div className="flex flex-wrap gap-3">
-        {sizes.map((s) => (
-          <Button key={s.size} type="submit" name="size" value={String(s.size)} variant={s.available ? "primary" : "secondary"} disabled={pending || !s.available} data-testid={`kc-start-${s.size}`}>
-            {s.size} questions{s.available ? "" : " — not enough reviewed yet"}
-          </Button>
-        ))}
+    <form action={action} className="flex flex-col gap-4" aria-label="Start the Free Assessment Check">
+      <div>
+        <Button type="submit" variant={available ? "primary" : "secondary"} disabled={pending || !available} data-testid="kc-start">
+          {running ? "Return to my running test" : "Start the Free Assessment Check"}
+          {available ? "" : " — not enough reviewed questions yet"}
+        </Button>
       </div>
       {state.status === "error" ? <FormStatus tone="error">{state.message}</FormStatus> : null}
     </form>

@@ -11,6 +11,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { ReactNode } from "react";
+import { HRD_CLAIM_NOTE } from "@/content/hrd-corp";
 import type { ExpertRecord } from "@/modules/catalogue/experts/repository";
 import { NeuralNetworkBackground } from "./NeuralNetworkBackground";
 
@@ -170,7 +171,7 @@ export function HomeHero({
      intent — an open policy commitment, not yet backed by terms. */
   const heroCards: { icon: ReactNode; tone: keyof typeof toneClasses; title: string; body: string; href?: string; badge?: string }[] = [
     { icon: <IconBriefcase />, tone: "blue", title: "Job Opportunities in Malaysia", body: "After every batch of 100 students, the top 1–5 candidates will be brought to Malaysia for job opportunities, for a minimum of one year." }, // founder, 2026-09-28
-    { icon: <IconCheckCircle />, tone: "teal", title: "HRD Corp Accredited Trainer", body: accreditation ? `Verified — Trainer ID ${accreditation.trainerId}.` : "Trained by an HRD Corp Accredited Trainer.", href: "/hrd-corp", badge: accreditation?.badge }, // founder, 2026-09-28: registration-in-progress sentence removed
+    { icon: <IconCheckCircle />, tone: "teal", title: "HRD Corp Accredited Trainer", body: `${accreditation ? `Verified — Trainer ID ${accreditation.trainerId}.` : "Trained by an HRD Corp Accredited Trainer."} ${HRD_CLAIM_NOTE}`, href: "/hrd-corp", badge: accreditation?.badge }, // founder, 2026-09-28: registration-in-progress sentence removed
     { icon: <IconCheckCircle />, tone: "blue", title: "No Coding Experience Required", body: "Anyone with zero coding background can take this training." },
     { icon: <IconChat />, tone: "teal", title: "Prepare for Interviews", body: "Get ready for Data & AI Interview" },
     { icon: <IconCode />, tone: "blue", title: "Learn Vibe Coding", body: "Turn ideas into real products with AI." },

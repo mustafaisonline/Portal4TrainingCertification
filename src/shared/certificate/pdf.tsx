@@ -204,6 +204,18 @@ function OrnamentPdf() {
   );
 }
 
+/** "Grade: ALPHA · 81–100 %" between two hairlines, in the ornament's place (Certificate.tsx). The
+ *  hairlines are flat accent lines here (the screen fades them out). */
+function GradeLinePdf({ text }: { text: string }) {
+  return (
+    <View style={{ flexDirection: "row", alignItems: "center", columnGap: cq(1.2), width: cq(44) }}>
+      <View style={{ flex: 1, height: cq(0.1), backgroundColor: ACCENT, opacity: 0.5 }} />
+      <Text style={type(2.1, { bold: true, color: BLUE, tracking: 0.08 })}>{text}</Text>
+      <View style={{ flex: 1, height: cq(0.1), backgroundColor: ACCENT, opacity: 0.5 }} />
+    </View>
+  );
+}
+
 function QrPdf({ svg, size }: { svg: string; size: number }) {
   const qr = qrSvgToPath(svg, { bleed: 0.015 });
   return (
@@ -310,7 +322,7 @@ function CertificatePage({ data, assets }: { data: CertificateData; assets: Asse
         <View style={{ alignItems: "center", rowGap: cq(0.7) }}>
           <Text style={{ ...type(1.1, { bold: true, color: ACCENT, tracking: 0.42, upper: true }), paddingLeft: 0.42 * cq(1.1) }}>Data &amp; AI Academy</Text>
           <Text style={type(4.4, { bold: true, tracking: -0.02 })}>{copy.title}</Text>
-          <OrnamentPdf />
+          {data.kind === "achievement" && data.grade ? <GradeLinePdf text={`Grade: ${data.grade.name.toUpperCase()} · ${data.grade.band}`} /> : <OrnamentPdf />}
           <Text style={type(1.55, { color: MUTED })}>{CERTIFICATE_COPY.presentedTo}</Text>
           <Text style={{ ...type(nameSize, { bold: true, tracking: -0.015, center: true }), maxWidth: cq(76) }}>{data.holderName}</Text>
           <View style={{ width: cq(40), height: cq(0.12), backgroundColor: HAIRLINE }} />

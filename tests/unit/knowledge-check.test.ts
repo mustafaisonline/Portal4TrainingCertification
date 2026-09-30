@@ -2,9 +2,11 @@ import { describe, expect, it } from "vitest";
 import { generateKnowledgeCheckId, isKnowledgeCheckSize, KNOWLEDGE_CHECK_ID_RE, knowledgeCheckStatus, passed } from "@/modules/free-learning/knowledge-check.repository";
 
 /*
- * Knowledge Check rules (Milestone 14 Phase 4; P12): the ID shape (the
- * certificate alphabet, a KC prefix so it can never be mistaken for a
- * Certificate of Completion), the sizes, and the 70 % pass mark.
+ * Free Assessment Check rules (Milestone 14 Phase 4; P12; reshaped 2026-09-30):
+ * the ID shape (the certificate alphabet, a KC prefix so it can never be
+ * mistaken for a Certificate of Completion), the one size (200) and the pass
+ * marks — 60 % for the current 200-question rules, 70 % for results of the
+ * earlier sizes (D7). The grades are tested in assessment-rules.test.ts.
  */
 describe("knowledge check", () => {
   it("IDs are KC-YYYY-XXXX-XXXX from the 31-symbol alphabet; deterministic with an injected source", () => {
@@ -17,18 +19,24 @@ describe("knowledge check", () => {
     expect(KNOWLEDGE_CHECK_ID_RE.test(random)).toBe(true);
   });
 
-  it("sizes are exactly 50, 100 and 200", () => {
-    expect([50, 100, 200].every(isKnowledgeCheckSize)).toBe(true);
-    expect([0, 10, 49, 51, 150, 201].some(isKnowledgeCheckSize)).toBe(false);
+  it("the only size is 200", () => {
+    expect(isKnowledgeCheckSize(200)).toBe(true);
+    expect([0, 10, 49, 50, 51, 100, 150, 201].some(isKnowledgeCheckSize)).toBe(false);
   });
 
-  it("passes at 70 % and above, never below, never on an empty check", () => {
+  it("a 200-question check passes at 60 % and above, never below, never on an empty check", () => {
+    expect(passed(120, 200)).toBe(true);
+    expect(passed(119, 200)).toBe(false);
+    expect(passed(200, 200)).toBe(true);
+    expect(passed(0, 200)).toBe(false);
+    expect(passed(0, 0)).toBe(false);
+  });
+
+  it("results of the earlier sizes keep their old 70 % pass mark (D7)", () => {
     expect(passed(35, 50)).toBe(true);
-    expect(passed(34, 50)).toBe(false);
+    expect(passed(34, 50)).toBe(false); // 68 % would pass the new mark but was decided at 70 %
     expect(passed(70, 100)).toBe(true);
     expect(passed(69, 100)).toBe(false);
-    expect(passed(140, 200)).toBe(true);
-    expect(passed(0, 0)).toBe(false);
   });
 });
 

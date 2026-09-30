@@ -1,3 +1,4 @@
+import { HRD_CLAIM_NOTE } from "@/content/hrd-corp";
 import type { Metadata } from "next";
 import { forbidden, notFound, redirect } from "next/navigation";
 import { trainingAccess } from "@/modules/catalogue/programmes/admin-access";
@@ -30,6 +31,9 @@ export default async function TrainingFeesPage({ params }: { params: Promise<{ i
     <div className="flex flex-col gap-6">
       <p className="text-body-sm max-w-[80ch] text-[var(--color-ink-quiet)]" data-testid="fees-summary">
         {training.feeRows.length} of {FEE_REGIONS.length} fee rows set. A Malaysian participant paying by card is charged the <strong className="text-[var(--color-ink)]">Malaysia</strong> row; the <strong className="text-[var(--color-ink)]">via HRD Corp</strong> figure is shown for employers claiming under HRD Corp and is never charged here. Pakistan pays through the local partner; everyone else pays by card in USD.
+      </p>
+      <p className="text-body-sm max-w-[80ch] text-[var(--color-ink-quiet)]" data-testid="fees-hrd-note">
+        {HRD_CLAIM_NOTE}
       </p>
       {FEE_REGIONS.map((region) => {
         const meta = priceRegionMeta(region);

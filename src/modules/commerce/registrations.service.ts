@@ -71,8 +71,8 @@ export type OrderView = {
 
 /** What a support order is called in every order list. */
 export const SUPPORT_ORDER_TITLE = "Support the Academy";
-/** What a Knowledge Check unlock order is called in every order list (M14 Phase 5). */
-export const UNLOCK_ORDER_TITLE = "Knowledge Check result document";
+/** What a Free Assessment Check unlock order is called in every order list (M14 Phase 5). */
+export const UNLOCK_ORDER_TITLE = "Free Assessment Check result document";
 
 /** The title of an order with no offering: the two one-off kinds. */
 export function offeringlessOrderTitle(kind: OrderKind): string {

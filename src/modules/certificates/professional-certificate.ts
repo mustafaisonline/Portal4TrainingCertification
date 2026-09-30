@@ -1,5 +1,6 @@
 import { certificateBrand } from "@/content/certificate-brand";
 import { listPublishedExperts } from "@/modules/catalogue/experts/repository";
+import { trainerProfileUrl } from "@/modules/catalogue/experts/profile-url";
 import { certificateQrSvg } from "@/shared/certificate/qr";
 import type { CertificateTrainer, CompletionCertificate } from "@/shared/certificate/Certificate";
 import { formatCalendarDate } from "./dates";
@@ -14,7 +15,9 @@ import type { CertificateRecord } from "./repository";
  * A trainer's HRD Corp accreditation is the only accreditation ever printed,
  * and only beside that trainer: it is read from the trainer's current profile
  * by exact name and is omitted when the trainer cannot be matched — never
- * guessed. The certificate never says it is "HRD Corp certified".
+ * guessed. The certificate never says it is "HRD Corp certified". The same
+ * exact-name match supplies the trainer's external profile URL (M7 link rule),
+ * used only by the on-screen certificate.
  */
 
 /** The snapshot string back to names (it was written joined by ", "). */
@@ -30,7 +33,10 @@ export async function completionCertificateData(certificate: CertificateRecord, 
   const experts = names.length > 0 ? await listPublishedExperts() : [];
   const trainers: CertificateTrainer[] = names.map((name) => {
     const expert = experts.find((e) => e.name.trim().toLowerCase() === name.toLowerCase());
-    return { name, hrdAccredited: !!expert?.hrdCorpAccreditation, hrdTrainerId: expert?.hrdCorpAccreditation?.trainerId ?? null };
+    // profileUrl: the on-screen name links to the trainer's EXTERNAL profile
+    // only (M7 link rule); matched by exact name like the accreditation, and
+    // null — plain text — when unmatched or the trainer has no URL.
+    return { name, hrdAccredited: !!expert?.hrdCorpAccreditation, hrdTrainerId: expert?.hrdCorpAccreditation?.trainerId ?? null, profileUrl: expert ? trainerProfileUrl(expert) : null };
   });
   return {
     kind: "completion",

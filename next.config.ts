@@ -76,7 +76,11 @@ const nextConfig: NextConfig = {
       { source: "/free-learning/topics", destination: "/free-trainings", permanent: true },
       { source: "/free-learning/knowledge-check", destination: "/free-certifications", permanent: true },
       // 2026-09-28 evening (founder): the /trainers directory is retired —
-      // the one trainer's page lives at the top-level slug.
+      // the one trainer's page lived at the top-level slug. 2026-09-30 (M7):
+      // that page is gone too; the top-level slug is now a content-less route
+      // (app/(public)/[slug]/page.tsx) that 308s a published trainer to their
+      // EXTERNAL profile URL, or 404s when there is none — so these two still
+      // chain into it. (`/trainers` lands on the founder's slug.)
       { source: "/trainers", destination: "/mustafa-qizilbash", permanent: true },
       { source: "/trainers/:slug", destination: "/:slug", permanent: true },
       { source: "/for-organisations", destination: "/programs#for-organisations", permanent: true },

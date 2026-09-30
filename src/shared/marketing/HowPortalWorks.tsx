@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { ASSESSMENT_SIZE, ASSESSMENT_TIME_LIMIT_MS } from "@/modules/free-learning/assessment-rules";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { Chip } from "@/shared/ui/Chip";
@@ -16,7 +17,7 @@ import { plusCount } from "./plus-count";
  *    as the book and the bank grow (and are simply omitted if a count is 0);
  *  - no passing percentage is written anywhere — the copy says "the required
  *    passing score", and the real threshold lives in one constant
- *    (`KNOWLEDGE_CHECK_PASS_PERCENT`).
+ *    (`ASSESSMENT_PASS_PERCENT`, `src/modules/free-learning/assessment-rules.ts`).
  * The Amazon link is the URL already on the trainer's record (never typed
  * here); it is omitted if no such book is on file.
  *
@@ -119,8 +120,8 @@ export function HowPortalWorks({
       icon: <IconCertificate />,
       title: "Free Certification",
       free: true,
-      description: `Test your Data & AI knowledge using our growing question bank of ${questions ? `${questions} ` : ""}questions. Take certification tests free of charge and earn a certificate when you achieve the required passing score.`,
-      highlights: [questions ? `${questions} Questions` : "A growing question bank", "Free Assessment", "Certificate on Passing"],
+      description: `Test your Data & AI knowledge with The Free Assessment Check — ${ASSESSMENT_SIZE} questions in ${ASSESSMENT_TIME_LIMIT_MS / 3_600_000} hours, drawn from our growing question bank of ${questions ? `${questions} ` : ""}questions. Take it free of charge and earn a graded certificate when you achieve the required passing score.`,
+      highlights: [questions ? `${questions} Questions` : "A growing question bank", "The Free Assessment Check", "Graded Certificate on Passing"],
       // Founder, 2026-09-29: "add this line as well" — the attempt is free but the
       // certificate document is paid (Q1), so say so up front. Read from the
       // admin-managed setting, never typed: change or switch off the fee and this follows.

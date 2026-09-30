@@ -287,8 +287,8 @@ export default async function CertificatePage({ searchParams }: { searchParams: 
       {/* Knowledge Checks (M14 Phase 4) — visibly separate: results, not credentials (DR-03 §3). */}
       {checks.length > 0 ? (
         <Card variant="panel" className="p-5 sm:p-6" data-testid="knowledge-checks">
-          <p className="text-label mb-1 text-[var(--color-primary)]">Free Knowledge Checks</p>
-          <h2 className="text-h1 mb-3">Your Knowledge Check results</h2>
+          <p className="text-label mb-1 text-[var(--color-primary)]">The Free Assessment Check</p>
+          <h2 className="text-h1 mb-3">Your Free Assessment Check results</h2>
           <ul className="flex flex-col gap-2">
             {checks.map((a) => (
               <li key={a.id} className="flex flex-wrap items-center justify-between gap-3 text-body-sm" data-testid="knowledge-check-row">
@@ -305,7 +305,7 @@ export default async function CertificatePage({ searchParams }: { searchParams: 
               </li>
             ))}
           </ul>
-          <p className="text-body-sm mt-3 text-[var(--color-ink-faint)]">A Knowledge Check result is not a Certificate of Completion.</p>
+          <p className="text-body-sm mt-3 text-[var(--color-ink-faint)]">A Free Assessment Check result is not a Certificate of Completion.</p>
         </Card>
       ) : null}
 

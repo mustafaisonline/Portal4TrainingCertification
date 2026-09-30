@@ -59,10 +59,9 @@ export const footerExplore: readonly NavItem[] = [
   { href: "/free-trainings", label: "Knowledge Hub" },
   { href: "/free-certifications", label: "Free Certifications" },
   { href: "/programs", label: "Professional Trainings" },
-  // Founder, 2026-09-28 evening: the /trainers directory is retired — both
-  // pages were the one trainer's content, so the footer item goes straight
-  // to the dedicated page at the top-level slug (/trainers redirects there).
-  { href: "/mustafa-qizilbash", label: "Trainer" },
+  // Founder, 2026-09-30 (M7): the trainer's dedicated page is removed, so the
+  // footer "Trainer" item is gone (the old address redirects to the trainer's
+  // external profile — app/(public)/[slug]/page.tsx).
   { href: "/about-us", label: "About Us" }, // footer only since 2026-09-27 (P15)
   { href: "/schedule", label: "Schedule" },
   { href: "/faq", label: "FAQ" },

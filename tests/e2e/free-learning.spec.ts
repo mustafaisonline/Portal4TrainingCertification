@@ -70,8 +70,18 @@ async function expectNoAxeViolations(page: Page) {
 
 test("topics list and search; a topic page with its database-served image and neighbours; the landing links the topics", async ({ page, request }) => {
   await page.goto("/free-trainings");
-  await expect(page.getByTestId("topics-title")).toContainText("Topics from");
+  // Founder, 2026-09-30: the visible "Topics from I Am Datapedia! Read any topic …" text is gone (an invisible
+  // heading keeps the outline) and the "Learn free" section is the LAST thing on the page, before the footer.
+  await expect(page.getByTestId("topics-title")).toHaveText("Topics");
+  await expect(page.getByTestId("topics-title")).toHaveClass(/sr-only/);
+  await expect(page.getByText("Read any topic, in the book’s order")).toHaveCount(0);
   await expect(page.locator(`[data-testid="topic-card"][data-slug="${PREFIX}-entity"]`)).toContainText("E2E What is an Entity?");
+  const listBox = (await page.getByTestId("topics-list").boundingBox())!;
+  const learnBox = (await page.getByTestId("learn-free").boundingBox())!;
+  expect(learnBox.y, "Learn free sits below the topics list").toBeGreaterThan(listBox.y + listBox.height - 1);
+  const footerBox = (await page.locator("footer").first().boundingBox())!;
+  expect(footerBox.y, "the footer follows the Learn free section").toBeGreaterThan(learnBox.y);
+  expect(await page.locator("main section").last().locator('[data-testid="learn-free"]').count(), "Learn free is in the last section").toBe(1);
   await expectNoAxeViolations(page);
 
   await page.getByRole("searchbox", { name: "Search topics" }).fill("lakehouse");

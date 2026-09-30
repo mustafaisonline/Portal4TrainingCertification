@@ -11,6 +11,7 @@ import Link from "next/link";
 import { Card } from "@/shared/ui/Card";
 import { Chip } from "@/shared/ui/Chip";
 import type { ExpertRecord } from "@/modules/catalogue/experts/repository";
+import { trainerProfileUrl } from "@/modules/catalogue/experts/profile-url";
 
 /**
  * Reusable trainer card — used on the course detail pages' "Who delivers
@@ -21,13 +22,16 @@ import type { ExpertRecord } from "@/modules/catalogue/experts/repository";
  *
  * The card links OUTWARD to the trainer's own published profile — external,
  * new tab, with the usual rel and an explicit aria-label, matching how every
- * other outbound link in this portal behaves.
+ * other outbound link in this portal behaves. There is no trainer dedicated
+ * page on this portal (founder, 2026-09-30, M7): the name is a link ONLY when
+ * `trainerProfileUrl` finds an external profile (Medium, else LinkedIn,
+ * https only), and plain text otherwise.
  *
  * HRD Corp badge: conditional on `person.hrdCorpAccreditation`, so a trainer
  * without one renders exactly as before.
  */
 export function TrainerCard({ person }: { person: ExpertRecord }) {
-  const profileUrl = person.profile.mediumProfile ?? person.profile.linkedin;
+  const profileUrl = trainerProfileUrl(person);
   const accreditation = person.hrdCorpAccreditation;
 
   return (
@@ -58,7 +62,22 @@ export function TrainerCard({ person }: { person: ExpertRecord }) {
         )}
       </div>
       <div className="min-w-0">
-        <p className="text-h2">{person.name}</p>
+        <p className="text-h2" data-testid="trainer-card-name">
+          {profileUrl ? (
+            <a
+              href={profileUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
+              data-testid="trainer-card-name-link"
+            >
+              <span>{person.name}</span>
+              <span className="sr-only"> (opens external site)</span>
+            </a>
+          ) : (
+            person.name
+          )}
+        </p>
         <p className="text-body-sm mb-1 text-[var(--color-ink-quiet)]">
           {person.roleTitle}
         </p>

@@ -4,7 +4,7 @@ import { writeAudit } from "@/modules/platform/audit/repository";
 import { SUPPORT_AMOUNT_MAX_MINOR, validateSupportSettingInput, type CreateSupportSettingInput, SupportSettingValidationError } from "./support.repository";
 
 /*
- * The Knowledge Check result-document unlock fee (Milestone 14 Phase 5;
+ * The Free Assessment Check result-document unlock fee (Milestone 14 Phase 5;
  * DR-03 §3; founder decisions P13 — Pakistan exempt — and P14 —
  * non-refundable). The SAME discipline as the support payment: an
  * admin-managed, effective-dated, insert-only setting; the row in force is
@@ -24,7 +24,7 @@ export type UnlockSettingRecord = {
   createdAt: Date;
 };
 
-export const UNLOCK_DEFAULT_LABEL = "Knowledge Check result document";
+export const UNLOCK_DEFAULT_LABEL = "Free Assessment Check result document";
 export const UNLOCK_DEFAULT_CURRENCY = "USD";
 /** US$10.00 (founder, 2026-09-27). */
 export const UNLOCK_DEFAULT_AMOUNT_MINOR = 1000;

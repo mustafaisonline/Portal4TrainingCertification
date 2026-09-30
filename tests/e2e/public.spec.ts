@@ -127,14 +127,92 @@ test("contact page: no form, one email option, no WhatsApp; an old context link 
 });
 
 test("public pages have no WCAG 2.2 AA violations", async ({ page }) => {
-  for (const href of ["/", "/mustafa-qizilbash", "/programs", "/about-us", "/faq", "/free-trainings", "/free-certifications", "/verify"]) {
+  for (const href of ["/", "/programs", "/about-us", "/faq", "/free-trainings", "/free-certifications", "/verify"]) {
     await page.goto(href);
     await expect(page.getByRole("heading", { level: 1 }), href).toBeVisible();
     await expectNoAxeViolations(page);
   }
 });
 
+// Founder, 2026-09-30 (M7): no trainer dedicated pages. The top-level slug is a
+// content-less, data-driven redirect: a PUBLISHED trainer with an external
+// profile (Medium, else LinkedIn; https only) -> 308 to it; anything else -> 404.
+test("the old trainer address 308s to the trainer's external profile (data-driven); unknown, unpublished and URL-less trainers are 404", async ({ request }) => {
+  const { findPublishedExpertBySlug } = await import("../../src/modules/catalogue/experts/repository");
+  const { trainerProfileUrl } = await import("../../src/modules/catalogue/experts/profile-url");
+
+  // Mustafa Qizilbash -> the Medium profile stored on his record (seed data).
+  const founder = await findPublishedExpertBySlug("mustafa-qizilbash");
+  expect(founder).not.toBeNull();
+  expect(trainerProfileUrl(founder)).toBe("https://medium.com/@mustafaisonline/profile-mustafa-qizilbash-2fb7a294f40f");
+  const res = await request.get("/mustafa-qizilbash", { maxRedirects: 0 });
+  expect(res.status()).toBe(308);
+  expect(res.headers()["location"]).toBe("https://medium.com/@mustafaisonline/profile-mustafa-qizilbash-2fb7a294f40f");
+
+  // The retired directory addresses chain into it (one hop each; not followed).
+  const dir = await request.get("/trainers", { maxRedirects: 0 });
+  expect(dir.status()).toBe(308);
+  expect(dir.headers()["location"]).toMatch(/\/mustafa-qizilbash$/);
+  const dirSlug = await request.get("/trainers/mustafa-qizilbash", { maxRedirects: 0 });
+  expect(dirSlug.status()).toBe(308);
+  expect(dirSlug.headers()["location"]).toMatch(/\/mustafa-qizilbash$/);
+
+  // Unknown slug: an ordinary 404.
+  expect((await request.get("/nobody-here", { maxRedirects: 0 })).status()).toBe(404);
+
+  // Data-driven: LinkedIn is the fallback; a trainer with no usable URL, an
+  // unsafe (non-https) one, or an unpublished one is a 404 — nothing is invented.
+  const { getPrisma } = await import("../../src/db/prisma");
+  const prisma = getPrisma();
+  const run = `${Date.now().toString(36)}`;
+  const base = { name: "E2E Redirect Trainer", roleTitle: "Trainer", location: "Nowhere", headline: "h", experienceLine: "e", summary: "s", photoPath: "/experts/mustafa-qizilbash-v2.jpg", expertise: [] as string[] };
+  const profileWith = (extra: Record<string, unknown>) => ({ about: [], background: [], specialisations: [], technologies: [], certifications: [], education: [], ...extra });
+  const linkedin = "https://www.linkedin.com/in/e2e-redirect-trainer/";
+  const slugs = { linkedin: `e2e-li-${run}`, none: `e2e-none-${run}`, unsafe: `e2e-unsafe-${run}`, unpublished: `e2e-unpub-${run}` };
+  try {
+    await prisma.expert.create({ data: { ...base, slug: slugs.linkedin, published: true, profile: profileWith({ linkedin }) } });
+    await prisma.expert.create({ data: { ...base, slug: slugs.none, published: true, profile: profileWith({}) } });
+    await prisma.expert.create({ data: { ...base, slug: slugs.unsafe, published: true, profile: profileWith({ mediumProfile: "javascript:alert(1)", linkedin: "http://www.linkedin.com/in/x" }) } });
+    await prisma.expert.create({ data: { ...base, slug: slugs.unpublished, published: false, profile: profileWith({ mediumProfile: "https://medium.com/@hidden" }) } });
+
+    const li = await request.get(`/${slugs.linkedin}`, { maxRedirects: 0 });
+    expect(li.status()).toBe(308);
+    expect(li.headers()["location"]).toBe(linkedin);
+    for (const slug of [slugs.none, slugs.unsafe, slugs.unpublished]) {
+      expect((await request.get(`/${slug}`, { maxRedirects: 0 })).status(), slug).toBe(404);
+    }
+  } finally {
+    await prisma.expert.deleteMany({ where: { slug: { in: Object.values(slugs) } } });
+  }
+});
+
+test("no public page links to a trainer page, and the sitemap lists none (founder, 2026-09-30, M7)", async ({ page, request }) => {
+  for (const href of ["/", "/programs", "/programs/learn-vibe-coding", "/programs/data-blueprint-ai-vibe-coding", "/about-us", "/contact-us", "/free-trainings", "/free-certifications", "/faq", "/schedule", "/reviews", "/verify"]) {
+    await page.goto(href);
+    const links = await page.locator("a[href]").evaluateAll((els) => els.map((e) => e.getAttribute("href") ?? ""));
+    expect(links.filter((h) => /^\/(mustafa-qizilbash|trainers)(\/|#|\?|$)/.test(h)), href).toEqual([]);
+  }
+  const xml = await (await request.get("/sitemap.xml")).text();
+  expect(xml).not.toContain("mustafa-qizilbash");
+  expect(xml).not.toContain("/trainers");
+  // The footer has no "Trainer" item any more.
+  await page.goto("/");
+  await expect(page.getByRole("contentinfo").getByRole("link", { name: "Trainer", exact: true })).toHaveCount(0);
+});
+
 test.afterAll(async () => {
   const { disconnectPrisma } = await import("../../src/db/prisma");
   await disconnectPrisma();
+});
+
+test("the site has a favicon: an icon link in the page head, the SVG and the Apple touch icon are served (founder, 2026-09-30)", async ({ page, request }) => {
+  await page.goto("/");
+  await expect(page.locator('head link[rel="icon"]').first()).toHaveAttribute("href", /\/icon\.svg/);
+  await expect(page.locator('head link[rel="apple-touch-icon"]').first()).toHaveAttribute("href", /\/apple-icon\.png/);
+  const svg = await request.get("/icon.svg");
+  expect(svg.status()).toBe(200);
+  expect(svg.headers()["content-type"]).toContain("image/svg+xml");
+  const apple = await request.get("/apple-icon.png");
+  expect(apple.status()).toBe(200);
+  expect(apple.headers()["content-type"]).toContain("image/png");
 });

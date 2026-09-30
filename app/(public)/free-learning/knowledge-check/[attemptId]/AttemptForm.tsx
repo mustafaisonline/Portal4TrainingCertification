@@ -6,17 +6,18 @@ import type { AttemptPage } from "@/modules/free-learning/knowledge-check.reposi
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { FormStatus } from "@/shared/ui/forms";
+import { AttemptTimer } from "./AttemptTimer";
 
 const LETTERS = ["A", "B", "C", "D", "E"];
 const initial: KnowledgeCheckState = { status: "idle" };
 
 /*
- * One page of a Knowledge Check. Answers are saved by the server action on
+ * One page of the Free Assessment Check. Answers are saved by the server action on
  * every page change. UX review 2026-09-27 D2: "Finish" first counts what is
  * still unanswered — the answers saved on other pages plus what is ticked on
  * this one — and asks before minting a permanent result when any remain.
  */
-export function AttemptForm({ attemptId, page, size }: { attemptId: string; page: AttemptPage; size: number }) {
+export function AttemptForm({ attemptId, page, size, remainingMs }: { attemptId: string; page: AttemptPage; size: number; remainingMs: number }) {
   const [state, action, pending] = useActionState(saveKnowledgeCheckPageAction, initial);
   const [unanswered, setUnanswered] = useState<number | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -36,7 +37,9 @@ export function AttemptForm({ attemptId, page, size }: { attemptId: string; page
   };
 
   return (
-    <form ref={formRef} action={action} className="flex flex-col gap-4" aria-label="Knowledge Check questions" data-testid="attempt-form">
+    <form ref={formRef} action={action} className="flex flex-col gap-4" aria-label="Free Assessment Check questions" data-testid="attempt-form">
+      {/* When the server's time reaches zero the form submits with the finish intent; the server refuses the save and scores the test as it stands. */}
+      <AttemptTimer remainingMs={remainingMs} onExpire={() => finishRef.current?.click()} />
       <input type="hidden" name="attemptId" value={attemptId} />
       <input type="hidden" name="page" value={page.page} />
       <ol className="flex list-none flex-col gap-4 p-0">

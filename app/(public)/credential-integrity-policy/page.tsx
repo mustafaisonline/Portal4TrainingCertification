@@ -26,10 +26,10 @@ export default function CredentialIntegrityPolicyPage() {
   return (
     <PolicyPlaceholder
       title="Credential integrity policy"
-      governs="It will set out how the Academy protects the worth of what it issues — the Certificate of Completion and the Knowledge Check result — including the conditions under which a certificate can be suspended or revoked, how appeals are handled, and how misconduct is dealt with."
+      governs="It will set out how the Academy protects the worth of what it issues — the Certificate of Completion and the Free Assessment Check certificate — including the conditions under which a certificate can be suspended or revoked, how appeals are handled, and how misconduct is dealt with."
       needs={[
         "The Academy's decisions on revocation, appeals and misconduct",
-        "The distinction between the Certificate of Completion, the Knowledge Check result and the earned credential",
+        "The distinction between the Certificate of Completion, the Free Assessment Check certificate and the earned credential",
         "Review by legal counsel",
       ]}
     />

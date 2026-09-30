@@ -255,6 +255,23 @@ describe("renderCertificatePdf", () => {
     expect(pdf.text).toContain("NOT A REAL CERTIFICATE");
   });
 
+  // Founder, 2026-09-30: a graded Free Assessment Check certificate prints "Grade: ALPHA · 81–100 %" under the (unchanged) title;
+  // a result issued before grades existed has no such line.
+  it("achievement with a grade: the grade line is drawn (title unchanged); without one nothing is drawn; still one page", async () => {
+    for (const [name, band] of [["Charlie", "60–70 %"], ["Bravo", "71–80 %"], ["Alpha", "81–100 %"]] as const) {
+      const pdf = inspect(await renderCertificatePdf(await achievement({ subjectTitle: "Data & AI Free Assessment Check — 200 questions", scoreLabel: "180 of 200 · 90%", grade: { name, band } })));
+      expect(pdf.count).toBe(1);
+      expect(pdf.pages).toBe(1);
+      expect(pdf.text).toContain(`Grade: ${name.toUpperCase()} · ${band}`);
+      expect(pdf.text).toContain("Certificate of Achievement");
+      expect(pdf.text).toContain("180 of 200 · 90%");
+      expect(pdf.text).toContain("passed online Free Assessment Check");
+    }
+    const plain = inspect(await renderCertificatePdf(await achievement()));
+    expect(plain.text).not.toContain("Grade:");
+    expect(plain.text).toContain("Certificate of Achievement");
+  });
+
   it("missing brand fields are omitted, never placeholders (no logo, no registration, no address)", async () => {
     const bare: CertificateBrand = { ...certificateBrand, logoPath: null, registrationNumber: null, address: null, contactLine: null };
     const pdf = inspect(await renderCertificatePdf(await achievement({ brand: bare })));

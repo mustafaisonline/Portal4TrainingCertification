@@ -82,14 +82,15 @@ test("card copy and links: the Knowledge Hub, Free Certification and Professiona
 
   // Card 2 — Free Certification. No passing percentage is written anywhere (it is one configurable constant).
   const cert = page.getByTestId("portal-card-certification");
-  await expect(cert).toContainText("Test your Data & AI knowledge using our growing question bank of");
-  await expect(cert).toContainText("earn a certificate when you achieve the required passing score.");
+  // Founder, 2026-09-30: the card names "The Free Assessment Check" (200 questions, 3 hours) and a graded certificate.
+  await expect(cert).toContainText("Test your Data & AI knowledge with The Free Assessment Check — 200 questions in 3 hours, drawn from our growing question bank of");
+  await expect(cert).toContainText("earn a graded certificate when you achieve the required passing score.");
   await expect(cert).not.toContainText(/\d\s?%/);
   const certHighlights = page.getByTestId("portal-highlights-certification");
   await expect(certHighlights.locator("li")).toHaveCount(3);
   if (questions) await expect(certHighlights).toContainText(`${questions} Questions`);
-  await expect(certHighlights).toContainText("Free Assessment");
-  await expect(certHighlights).toContainText("Certificate on Passing");
+  await expect(certHighlights).toContainText("The Free Assessment Check");
+  await expect(certHighlights).toContainText("Graded Certificate on Passing");
   // Founder, 2026-09-29: the free attempt, but a paid certificate document — the fee line is read from the admin setting.
   if (fee) await expect(page.getByTestId("portal-note-certification")).toHaveText(`Certificate document: ${formatMoney(fee.amountMinor, fee.currency)}`);
   else await expect(page.getByTestId("portal-note-certification")).toHaveCount(0);

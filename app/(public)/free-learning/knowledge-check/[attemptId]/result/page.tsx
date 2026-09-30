@@ -7,7 +7,8 @@ import { appBaseUrl } from "@/modules/commerce/checkout.service";
 import { PAYMENTS_NOT_CONFIGURED_MESSAGE } from "@/modules/commerce/messages";
 import { paymentsConfigured } from "@/modules/commerce/stripe";
 import { findUnlockOrderForUser, unlockStatusForAttempt } from "@/modules/commerce/unlock.service";
-import { findResultByPublicId, getAttemptForUser, KNOWLEDGE_CHECK_PASS_PERCENT } from "@/modules/free-learning/knowledge-check.repository";
+import { ASSESSMENT_GRADE_BANDS, gradeOfResult, passMarkPercent, percentOf } from "@/modules/free-learning/assessment-rules";
+import { findResultByPublicId, getAttemptForUser } from "@/modules/free-learning/knowledge-check.repository";
 import { requireUser } from "@/modules/identity/session";
 import { REVIEW_BODY_MIN } from "@/modules/reviews/constants";
 import { UnlockForm } from "./UnlockForm";
@@ -22,14 +23,16 @@ import { formatTimestamp } from "@/shared/util/dates";
 
 /*
  * /free-learning/knowledge-check/[attemptId]/result — the outcome
- * (Milestone 14 Phase 4): score, pass at 70 %, the public ID (copyable) and
- * its verification link. A PASS also has a printable Certificate of
+ * (Milestone 14 Phase 4): score, pass at 60 % (the Free Assessment Check's
+ * mark since 2026-09-30; a result of an earlier size keeps its 70 %) with its
+ * GRADE — Charlie / Bravo / Alpha, derived from the score, a 200-question
+ * result only — the public ID (copyable) and its verification link. A PASS also has a printable Certificate of
  * Achievement (Milestone 15 Requirement 3; DR-05), shown once a review of Free
  * Learning and the US$10 unlock (Pakistan exempt) are done — Phase 5's gate,
  * unchanged. A revoked one is not shown at all. Time taken and the validity
  * date are derived from the stored attempt.
  */
-export const metadata: Metadata = { title: "Knowledge Check result", robots: { index: false, follow: false } };
+export const metadata: Metadata = { title: "Free Assessment Check result", robots: { index: false, follow: false } };
 export const dynamic = "force-dynamic";
 
 export default async function ResultPage({ params, searchParams }: { params: Promise<{ attemptId: string }>; searchParams: Promise<Record<string, string | string[] | undefined>> }) {
@@ -39,7 +42,9 @@ export default async function ResultPage({ params, searchParams }: { params: Pro
   const attempt = await getAttemptForUser(attemptId, user.id);
   if (!attempt) notFound();
   if (!attempt.finishedAt || attempt.score === null || !attempt.publicId) redirect(`/free-learning/knowledge-check/${attempt.id}`);
-  const percent = Math.round((attempt.score * 100) / attempt.size);
+  const percent = percentOf(attempt.score, attempt.size); // rounded DOWN, so it always agrees with the grade band
+  const passMark = passMarkPercent(attempt.size);
+  const grade = gradeOfResult({ score: attempt.score, size: attempt.size, passed: attempt.passed });
   const now = new Date();
   const orderParam = typeof sp["order"] === "string" ? sp["order"] : null;
   const [gate, order, view] = await Promise.all([
@@ -85,20 +90,27 @@ export default async function ResultPage({ params, searchParams }: { params: Pro
   // Until the gate is met the person sees a SAMPLE of the certificate — never their own
   // (no name, score, time, ID or QR of the real one), so nothing can be lifted from this page.
   const showSample = attempt.passed && !revoked && !gate.unlocked;
-  const sample = showSample ? await sampleCertificate("achievement", { baseUrl: base || undefined }) : null;
+  const sample = showSample ? await sampleCertificate("achievement", { baseUrl: base || undefined, grade: grade ?? undefined }) : null;
 
   return (
     <section className="bg-[var(--color-ground-tint)]">
       <div className="mx-auto max-w-[760px] px-4 py-12 sm:px-6 sm:py-16">
         <Link href="/free-certifications" className="text-body-sm mb-2 inline-block py-1 text-[var(--color-primary)] underline underline-offset-4">
-          ← Knowledge Check
+          ← Free Assessment Check
         </Link>
         <p className="text-label mb-3 text-[var(--color-primary)]">Your result</p>
         <h1 className="text-display mb-4" data-testid="result-title">
           {attempt.passed ? "Passed" : "Not passed"} — {attempt.score} of {attempt.size} ({percent} %)
         </h1>
-        <div className="mb-6">
-          <Chip tone={attempt.passed ? "primary" : "neutral"}>{attempt.passed ? `Pass mark ${KNOWLEDGE_CHECK_PASS_PERCENT} % reached` : `Below the ${KNOWLEDGE_CHECK_PASS_PERCENT} % pass mark`}</Chip>
+        <div className="mb-6 flex flex-wrap items-center gap-2">
+          <Chip tone={attempt.passed ? "primary" : "neutral"}>{attempt.passed ? `Pass mark ${passMark} % reached` : `Below the ${passMark} % pass mark`}</Chip>
+          {grade ? (
+            <span data-testid="result-grade" data-grade={grade}>
+              <Chip tone="primary">
+                Grade {ASSESSMENT_GRADE_BANDS[grade].name} · {ASSESSMENT_GRADE_BANDS[grade].band}
+              </Chip>
+            </span>
+          ) : null}
         </div>
 
         <Card variant="panel" className="p-5 sm:p-6">
@@ -122,7 +134,7 @@ export default async function ResultPage({ params, searchParams }: { params: Pro
               </div>
             ) : null}
             <div className="sm:col-span-2">
-              <dt className="text-label mb-1">Knowledge Check ID</dt>
+              <dt className="text-label mb-1">Free Assessment Check ID</dt>
               <dd className="text-mono break-all">
                 <Link href={`/verify/${attempt.publicId}`} className="text-[var(--color-primary)] underline underline-offset-4" data-testid="result-public-id">
                   {attempt.publicId}
@@ -131,7 +143,7 @@ export default async function ResultPage({ params, searchParams }: { params: Pro
             </div>
           </dl>
           <div className="mt-5 flex flex-col gap-3">
-            <CopyLinkButton href={attempt.publicId} label="Copy Knowledge Check ID" testId="copy-kc-id" literal />
+            <CopyLinkButton href={attempt.publicId} label="Copy Assessment Check ID" testId="copy-kc-id" literal />
             <CopyLinkButton href={verifyHref} label="Copy verification link" testId="copy-kc-link" />
           </div>
         </Card>
@@ -145,7 +157,7 @@ export default async function ResultPage({ params, searchParams }: { params: Pro
           <Card variant="plate" className="mt-6 p-5 sm:p-6" data-testid="result-document">
             <p className="text-label mb-1 text-[var(--color-primary)]">Certificate of Achievement</p>
             <p className="text-body-sm text-[var(--color-ink-quiet)]" data-testid="result-revoked">
-              This certificate was revoked and is no longer valid, so it cannot be shown or printed. Your ID&rsquo;s verification page says so. You can retake the Knowledge Check as often as you like.
+              This certificate was revoked and is no longer valid, so it cannot be shown or printed. Your ID&rsquo;s verification page says so. You can retake the Free Assessment Check as often as you like.
             </p>
           </Card>
         ) : attempt.passed ? (
@@ -218,13 +230,13 @@ export default async function ResultPage({ params, searchParams }: { params: Pro
         )}
 
         <div className="mt-8 flex flex-wrap gap-3">
-          <Button href="/free-certifications">{attempt.passed ? "Take another check" : "Retake the Knowledge Check"}</Button>
+          <Button href="/free-certifications">{attempt.passed ? "Take another check" : "Retake the Free Assessment Check"}</Button>
           <Button variant="secondary" href="/free-learning/topics">
             Back to the topics
           </Button>
         </div>
         <p className="text-body-sm mt-6 max-w-[70ch] text-[var(--color-ink-faint)]">
-          A Knowledge Check result is not the Academy&rsquo;s credential. The Certificate of Completion is earned by attending an expert-led training.
+          A Free Assessment Check result is not the Academy&rsquo;s credential. The Certificate of Completion is earned by attending an expert-led training.
         </p>
       </div>
     </section>

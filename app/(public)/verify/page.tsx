@@ -80,7 +80,7 @@ function Results({ outcome, limited }: { outcome: CertificateSearchOutcome | nul
   if (!outcome || outcome.kind === "empty") {
     return (
       <p className="text-body-sm text-[var(--color-ink-faint)]" data-testid="verify-hint">
-        Enter a certificate ID (for example DAA-2026-XXXX-XXXX), a Knowledge Check ID (KC-…) or a holder&rsquo;s name to begin.
+        Enter a certificate ID (for example DAA-2026-XXXX-XXXX), a Free Assessment Check ID (KC-…) or a holder&rsquo;s name to begin.
       </p>
     );
   }
@@ -136,7 +136,7 @@ export default async function VerifyPage({ searchParams }: { searchParams: Promi
   const sp = await searchParams;
   const q = typeof sp["q"] === "string" ? sp["q"] : "";
   const trimmed = q.trim();
-  // A Knowledge Check ID (M14 Phase 4) has its own page.
+  // A Free Assessment Check ID (M14 Phase 4) has its own page.
   if (KNOWLEDGE_CHECK_ID_RE.test(trimmed.toUpperCase())) redirect(`/verify/${trimmed.toUpperCase()}`);
 
   // Only a submission that would reach the database counts against the
@@ -159,7 +159,7 @@ export default async function VerifyPage({ searchParams }: { searchParams: Promi
         </h1>
         <p className="text-body-lg mb-2 max-w-[60ch] text-[var(--color-ink-quiet)]">
           Check that someone completed a training and whether their Certificate of Completion is active. Search by the certificate ID
-          printed on it, or by the holder&rsquo;s name where they have chosen to be listed. A Knowledge Check ID (KC-…) shows that free result here too.
+          printed on it, or by the holder&rsquo;s name where they have chosen to be listed. A Free Assessment Check ID (KC-…) shows that free result here too.
         </p>
         <p className="text-body-sm mb-8 max-w-[60ch] text-[var(--color-ink-faint)]">{NOT_EARNED}</p>
 
@@ -168,7 +168,7 @@ export default async function VerifyPage({ searchParams }: { searchParams: Promi
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
               <div className="sm:flex-1">
                 <Field
-                  label="Certificate ID, Knowledge Check ID or holder's name"
+                  label="Certificate ID, Free Assessment Check ID or holder's name"
                   name="q"
                   type="search"
                   defaultValue={q}

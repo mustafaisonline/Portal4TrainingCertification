@@ -6,11 +6,11 @@ import { authorise } from "@/modules/identity/session";
 import { KnowledgeCheckError, revokeKnowledgeCheck } from "./knowledge-check.repository";
 
 /*
- * Administrator action on a Knowledge Check certificate (Milestone 15,
+ * Administrator action on a Free Assessment Check certificate (Milestone 15,
  * Requirement 3). Authorises `platform_admin` FIRST — the admin layout gates
  * the page, but an action is its own HTTP endpoint and must gate itself
  * (ADR-020) — then revokes in one transaction with its audit row. The
- * Knowledge Check ID and the reason are the only values a form supplies.
+ * Assessment Check ID and the reason are the only values a form supplies.
  */
 
 export type RevokeKnowledgeCheckState =
@@ -36,7 +36,7 @@ export async function revokeKnowledgeCheckAction(_prev: RevokeKnowledgeCheckStat
       if (err.reason === "invalid_reason") return { status: "error", message: "Please check the highlighted field.", fieldErrors: { reason: "Give a reason of 3 to 500 characters." } };
       if (err.reason === "already_revoked") return { status: "error", message: "This certificate is already revoked." };
       if (err.reason === "not_passed") return { status: "error", message: "This result did not pass, so there is no certificate to revoke." };
-      if (err.reason === "not_found") return { status: "error", message: "This Knowledge Check result could not be found." };
+      if (err.reason === "not_found") return { status: "error", message: "This Free Assessment Check result could not be found." };
     }
     console.error(`[knowledge-check] revoke failed for ${publicId}`, err);
     return { status: "error", message: "We could not revoke the certificate. Please try again." };

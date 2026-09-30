@@ -17,24 +17,12 @@ test.describe.configure({ mode: "serial" });
 const SLUG = `e2e-unlock-${Date.now().toString(36)}`;
 const email = uniqueEmail("e2e-unlock");
 const adminEmail = uniqueEmail("e2e-unlock-admin");
-let topicId = "";
 let attemptId = "";
 
 test.beforeAll(async () => {
-  const { withTransaction } = await import("../../src/db/prisma");
-  const { replaceTopicFromImport } = await import("../../src/modules/free-learning/book.repository");
-  const { importDraftQuestions, setAllQuestionsStatus } = await import("../../src/modules/free-learning/quiz.repository");
-  const { createAdminUser } = await import("../helpers/certificates-db");
-  const reviewer = await createAdminUser("e2e-unlock-reviewer");
-  const r = await withTransaction((tx) =>
-    replaceTopicFromImport(tx, { position: 83001, slug: SLUG, title: "E2E Unlock Topic", sourceHeading: "E2E Unlock Topic", bodyHtml: "<p>x</p>", bodyText: "x", wordCount: 1, images: [], publish: true, importedAt: new Date() }, (id) => id),
-  );
-  topicId = r.id;
-  await withTransaction((tx) =>
-    importDraftQuestions(tx, { topicId, replaceDrafts: false, questions: Array.from({ length: 50 }, (_, i) => ({ stem: `E2E unlock question ${i + 1}: choose option A?`, options: ["Alpha", "Bravo", "Charlie", "Delta", "Echo"], correct: 0, explanation: null })) }),
-  );
-  await withTransaction((tx) => setAllQuestionsStatus(tx, { topicId, status: "reviewed", actorUserId: reviewer.id }));
-  await deleteTestUser(reviewer.email);
+  // The Free Assessment Check is 200 questions and is refused below that: a 260-question reviewed fixture bank.
+  const { createAssessmentBank } = await import("../helpers/assessment-bank");
+  await createAssessmentBank({ slug: SLUG, position: 83001, title: "E2E Unlock Topic" });
 });
 
 test.beforeEach(async () => {
@@ -57,9 +45,7 @@ test.afterAll(async () => {
     await prisma.auditLog.deleteMany({ where: { entityType: "review", entityId: { in: reviews.map((x) => x.id) } } });
     await prisma.review.deleteMany({ where: { userId: user.id } });
   }
-  const ids = (await prisma.topicQuestion.findMany({ where: { topicId }, select: { id: true } })).map((x) => x.id);
-  await prisma.auditLog.deleteMany({ where: { entityType: "topic_question", entityId: { in: ids } } });
-  await prisma.bookTopic.deleteMany({ where: { slug: SLUG } });
+  await prisma.bookTopic.deleteMany({ where: { slug: SLUG } }); // the fixture bank (questions and options cascade)
   const settings = await prisma.knowledgeCheckUnlockSetting.findMany({ where: { note: { contains: "e2e-unlock" } }, select: { id: true } });
   await prisma.auditLog.deleteMany({ where: { entityType: "knowledge_check_unlock_setting", entityId: { in: settings.map((s) => s.id) } } });
   await prisma.knowledgeCheckUnlockSetting.deleteMany({ where: { id: { in: settings.map((s) => s.id) } } });
@@ -102,22 +88,25 @@ test("a finished result shows both gate conditions; a Free Learning review satis
   const { startAttempt, finishAttempt, saveAnswers } = await import("../../src/modules/free-learning/knowledge-check.repository");
   const user = (await findUserByEmail(email))!;
   // UX review 2026-09-27 U5: the document is offered after a pass only — a fail shows the retake hint and no gate.
-  const failed = await withTransaction((tx) => startAttempt(tx, { userId: user.id, size: 50 }));
+  const failed = await withTransaction((tx) => startAttempt(tx, { userId: user.id, size: 200 }));
   await withTransaction((tx) => finishAttempt(tx, { attemptId: failed.id, userId: user.id }));
   await page.goto(`/free-learning/knowledge-check/${failed.id}/result`);
-  await expect(page.getByTestId("result-title")).toContainText("Not passed — 0 of 50");
+  await expect(page.getByTestId("result-title")).toContainText("Not passed — 0 of 200");
+  await expect(page.getByTestId("result-grade")).toHaveCount(0); // below 60 %: no grade
   await expect(page.getByTestId("result-document")).toHaveCount(0);
   await expect(page.getByTestId("result-retake-hint")).toContainText("offered once you pass");
   await page.goto(`/free-learning/knowledge-check/${failed.id}/document`);
   await expect(page).toHaveURL(new RegExp(`/free-learning/knowledge-check/${failed.id}/result$`));
 
-  const attempt = await withTransaction((tx) => startAttempt(tx, { userId: user.id, size: 50 }));
+  const attempt = await withTransaction((tx) => startAttempt(tx, { userId: user.id, size: 200 }));
   attemptId = attempt.id;
   await withTransaction((tx) => saveAnswers(tx, { attemptId, userId: user.id, answers: Object.fromEntries(attempt.questionIds.map((id) => [id, 1])) }));
   await withTransaction((tx) => finishAttempt(tx, { attemptId, userId: user.id }));
 
   await page.goto(`/free-learning/knowledge-check/${attemptId}/result`);
-  await expect(page.getByTestId("result-title")).toContainText("Passed — 50 of 50");
+  await expect(page.getByTestId("result-title")).toContainText("Passed — 200 of 200");
+  await expect(page.getByTestId("result-grade")).toHaveAttribute("data-grade", "alpha");
+  await expect(page.getByTestId("result-grade")).toContainText("Grade Alpha · 81–100 %");
   await expect(page.getByTestId("result-gate-review")).toHaveAttribute("data-satisfied", "no");
   await expect(page.getByTestId("result-gate-fee")).toHaveAttribute("data-fee", "required");
   await expect(page.getByTestId("result-gate-fee")).toContainText("USD 10");
@@ -129,7 +118,7 @@ test("a finished result shows both gate conditions; a Free Learning review satis
   await expect(sample.getByTestId("certificate-holder")).not.toHaveText("Uma Unlock");
   const realId = (await page.getByTestId("result-public-id").textContent())!.trim();
   await expect(sample).not.toContainText(realId);
-  await expect(sample).not.toContainText("50 of 50");
+  await expect(sample).not.toContainText("200 of 200");
   await expect(sample.getByRole("button", { name: /print|download/i })).toHaveCount(0);
   await expectNoAxeViolations(page);
   // The PDF route refuses until the gate holds — and is never public.
@@ -174,10 +163,12 @@ test("a finished result shows both gate conditions; a Free Learning review satis
   // Milestone 15 Req 3 (DR-05): the document IS the Certificate of Achievement.
   await expect(page.getByTestId("certificate-title")).toHaveText("Certificate of Achievement");
   await expect(page.getByTestId("certificate-holder")).toHaveText("Uma Unlock");
-  await expect(page.getByTestId("certificate-subject")).toContainText("Data & AI Knowledge Check — 50 questions");
+  await expect(page.getByTestId("certificate-subject")).toContainText("Data & AI Free Assessment Check — 200 questions");
   await expect(page.getByTestId("certificate-result")).toContainText("PASSED");
+  // The certificate title stays "Certificate of Achievement"; the grade is a prominent line under it (founder, 2026-09-30).
+  await expect(page.getByTestId("certificate-grade")).toHaveText("Grade: ALPHA · 81–100 %");
   const details = page.getByTestId("certificate-details");
-  await expect(details).toContainText("50 of 50 · 100%");
+  await expect(details).toContainText("200 of 200 · 100%");
   await expect(details).toContainText(/\d{2}:\d{2}:\d{2}/);
   await expect(page.getByTestId("certificate-id")).toContainText(/^KC-\d{4}-/);
   await expect(page.getByTestId("certificate-qr").locator("svg")).toHaveCount(1);
@@ -257,6 +248,15 @@ test("the administrator finds a passed result by its ID and revokes its certific
   const rowEl = page.getByTestId("kc-results-row");
   await expect(rowEl).toHaveCount(1);
   await expect(rowEl.getByTestId("kc-results-status")).toHaveAttribute("data-status", "valid");
+  // The Grade column (derived from the score) and the grade filter.
+  await expect(rowEl.getByTestId("kc-results-grade")).toHaveAttribute("data-grade", "alpha");
+  await expect(rowEl.getByTestId("kc-results-grade")).toHaveText("Alpha");
+  await page.getByTestId("kc-results-grade-filter").selectOption("charlie");
+  await page.getByRole("button", { name: "Find" }).click();
+  await expect(page.getByTestId("kc-results-row")).toHaveCount(0); // this Alpha result is not a Charlie
+  await page.getByTestId("kc-results-grade-filter").selectOption("alpha");
+  await page.getByRole("button", { name: "Find" }).click();
+  await expect(rowEl).toHaveCount(1);
   await expectNoAxeViolations(page);
   // A reason and the confirmation are both required.
   await expect(page.getByTestId("kc-revoke-submit")).toBeDisabled();

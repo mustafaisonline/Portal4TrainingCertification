@@ -14,7 +14,8 @@ import { CertificateStatusLabel } from "./StatusLabel";
 import { appBaseUrl } from "@/modules/commerce/checkout.service";
 import { PrintButton } from "@/modules/certificates/components/PrintButton";
 import { Certificate } from "@/shared/certificate/Certificate";
-import { isSampleKind, sampleCertificate } from "@/shared/certificate/sample";
+import { ASSESSMENT_GRADE_BANDS } from "@/modules/free-learning/assessment-rules";
+import { isSampleGrade, isSampleKind, SAMPLE_GRADES, sampleCertificate } from "@/shared/certificate/sample";
 
 /*
  * /admin/certificates — every Certificate of Completion (M6 plan §5
@@ -41,16 +42,19 @@ export default async function AdminCertificatesPage({ searchParams }: { searchPa
     page: Math.max(1, Number.parseInt(param("page") ?? "1", 10) || 1),
   };
   const [page, lastRun] = await Promise.all([listCertificatesForAdmin(filters), lastReminderRun()]);
-  // The sample certificate shown on this tab (`?sample=achievement|completion`).
+  // The sample certificate shown on this tab (`?sample=achievement|completion`; for the
+  // Free Certification also `&grade=alpha|bravo|charlie`, one sheet per grade — default Alpha).
   const sampleParam = param("sample");
   const sampleKind = isSampleKind(sampleParam) ? sampleParam : "achievement";
+  const gradeParam = param("grade");
+  const sampleGrade = isSampleGrade(gradeParam) ? gradeParam : "alpha";
   let sampleBase: string | undefined;
   try {
     sampleBase = appBaseUrl();
   } catch {
     sampleBase = undefined; // local only
   }
-  const sample = await sampleCertificate(sampleKind, { baseUrl: sampleBase });
+  const sample = await sampleCertificate(sampleKind, { baseUrl: sampleBase, grade: sampleGrade });
 
   const query = (n: number) => {
     const q = new URLSearchParams();
@@ -108,15 +112,25 @@ export default async function AdminCertificatesPage({ searchParams }: { searchPa
               Professional Training
             </Button>
             <PrintButton />
-            <Button variant="secondary" href={`/api/admin/certificates/sample-pdf?kind=${sampleKind}`} download prefetch={false} data-testid="sample-download-pdf">
+            <Button variant="secondary" href={`/api/admin/certificates/sample-pdf?kind=${sampleKind}${sampleKind === "achievement" ? `&grade=${sampleGrade}` : ""}`} download prefetch={false} data-testid="sample-download-pdf">
               Download sample PDF
             </Button>
             <Button variant="text" href="/admin/certificates/preview">
               Full design preview
             </Button>
           </div>
+          {sampleKind === "achievement" ? (
+            <div className="flex flex-wrap items-center gap-3 print:hidden" role="group" aria-label="Sample grade">
+              <span className="text-label">Grade</span>
+              {SAMPLE_GRADES.map((g) => (
+                <Button key={g} variant={sampleGrade === g ? "primary" : "secondary"} href={`/admin/certificates?sample=achievement&grade=${g}`} data-testid={`sample-grade-${g}`} aria-current={sampleGrade === g ? "true" : undefined}>
+                  {ASSESSMENT_GRADE_BANDS[g].name} · {ASSESSMENT_GRADE_BANDS[g].band}
+                </Button>
+              ))}
+            </div>
+          ) : null}
           <div className="overflow-x-auto">
-            <div className="mx-auto min-w-[760px] max-w-[1123px]" data-testid="sample-certificate-sheet" data-kind={sampleKind}>
+            <div className="mx-auto min-w-[760px] max-w-[1123px]" data-testid="sample-certificate-sheet" data-kind={sampleKind} data-grade={sampleKind === "achievement" ? sampleGrade : undefined}>
               <Certificate {...sample} />
             </div>
           </div>

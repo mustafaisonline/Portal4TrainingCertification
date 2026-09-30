@@ -23,6 +23,7 @@
     "admin:grant": "node --experimental-transform-types --import ./scripts/register-alias.mjs scripts/grant-admin.ts",
     "learning:import": "node --experimental-transform-types --import ./scripts/register-alias.mjs scripts/ingest-datapedia.ts",
     "learning:import-questions": "node --experimental-transform-types --import ./scripts/register-alias.mjs scripts/import-questions.ts",
+    "unlock:relabel": "node --experimental-transform-types --import ./scripts/register-alias.mjs scripts/relabel-unlock-setting.ts",
     "stripe:check": "node --experimental-transform-types --import ./scripts/register-alias.mjs scripts/stripe-check.ts",
     "knowledge-check:approve-all": "node --experimental-transform-types --import ./scripts/register-alias.mjs scripts/bulk-review-questions.ts"
   },

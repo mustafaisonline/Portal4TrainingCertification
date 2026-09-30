@@ -75,51 +75,11 @@ export default async function KnowledgeHubPage({ searchParams }: { searchParams:
       </section>
 
       <section className="mx-auto max-w-[1080px] px-4 py-12 sm:px-6 sm:py-16">
-        <Card variant="panel" className="mb-10 p-6 sm:p-8" data-testid="learn-free">
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
-            {/* The book's own cover (founder, 2026-09-28: "the book image …
-                picked up from the book's Amazon page") — the same cover file
-                the Amazon listing shows, already in /public/books. */}
-            {datapedia?.cover ? (
-              <Image
-                src={datapedia.cover}
-                alt={`Cover of ${datapedia.title}`}
-                width={144}
-                height={192}
-                className="h-48 w-36 shrink-0 rounded-[var(--radius-plate)] border border-[var(--color-line)] object-cover shadow-sm"
-                data-testid="datapedia-cover"
-              />
-            ) : null}
-            <div className="flex min-w-0 flex-col">
-              <p className="text-label mb-2 text-[var(--color-primary)]">Learn free</p>
-              <h2 className="text-h1 mb-3">Learn from <em>I Am Datapedia!</em></h2>
-              <p className="text-body-sm mb-4 text-[var(--color-ink-quiet)]">
-                Every topic of the book, readable below, with a search box to find the one you need —{" "}
-                {selfCheckTopics > 0 ? `${selfCheckTopics} of them with a self-check at the end` : "self-checks are being added topic by topic"}.
-              </p>
-              <div className="flex flex-wrap items-center gap-3">
-                <Chip data-testid="self-check-count">{selfCheckTopics > 0 ? `Self-checks on ${selfCheckTopics} topics` : "Self-checks coming"}</Chip>
-                {datapedia && author ? (
-                  <Button variant="secondary" href={datapedia.url} target="_blank" rel="noopener noreferrer" data-testid="datapedia-amazon">
-                    The book on Amazon ↗
-                  </Button>
-                ) : null}
-              </div>
-              {datapedia && author ? (
-                <p className="text-body-sm mt-4 border-t border-[var(--color-line)] pt-4 text-[var(--color-ink-quiet)]">
-                  The source: <span className="font-medium text-[var(--color-ink)]">{datapedia.title}</span> — {datapedia.subtitle}. By {author.name}.
-                </p>
-              ) : null}
-            </div>
-          </div>
-        </Card>
-
-        <h2 className="text-display mb-3" data-testid="topics-title">
-          Topics from <em>I Am Datapedia!</em>
+        {/* Founder, 2026-09-30: the visible "Topics from I Am Datapedia! Read any topic …" heading and
+            sentence are removed; an invisible heading keeps the page outline for screen readers. */}
+        <h2 className="sr-only" data-testid="topics-title">
+          Topics
         </h2>
-        <p className="text-body-lg mb-8 max-w-[60ch] text-[var(--color-ink-quiet)]">
-          Read any topic, in the book&rsquo;s order or by searching for the one you need. Free, no account, nothing saved.
-        </p>
 
         <Card variant="panel" className="mb-8 p-5 sm:p-6">
           <form method="get" action="/free-trainings" role="search" aria-label="Search topics" className="flex flex-col gap-3 sm:flex-row sm:items-end">
@@ -262,6 +222,46 @@ export default async function KnowledgeHubPage({ searchParams }: { searchParams:
             ) : null}
           </>
         )}
+
+        {/* Founder, 2026-09-30: the "Learn free" section sits at the end of the page, just before the footer. */}
+        <Card variant="panel" className="mt-12 p-6 sm:p-8" data-testid="learn-free">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
+            {/* The book's own cover (founder, 2026-09-28: "the book image …
+                picked up from the book's Amazon page") — the same cover file
+                the Amazon listing shows, already in /public/books. */}
+            {datapedia?.cover ? (
+              <Image
+                src={datapedia.cover}
+                alt={`Cover of ${datapedia.title}`}
+                width={144}
+                height={192}
+                className="h-48 w-36 shrink-0 rounded-[var(--radius-plate)] border border-[var(--color-line)] object-cover shadow-sm"
+                data-testid="datapedia-cover"
+              />
+            ) : null}
+            <div className="flex min-w-0 flex-col">
+              <p className="text-label mb-2 text-[var(--color-primary)]">Learn free</p>
+              <h2 className="text-h1 mb-3">Learn from <em>I Am Datapedia!</em></h2>
+              <p className="text-body-sm mb-4 text-[var(--color-ink-quiet)]">
+                Every topic of the book, readable below, with a search box to find the one you need —{" "}
+                {selfCheckTopics > 0 ? `${selfCheckTopics} of them with a self-check at the end` : "self-checks are being added topic by topic"}.
+              </p>
+              <div className="flex flex-wrap items-center gap-3">
+                <Chip data-testid="self-check-count">{selfCheckTopics > 0 ? `Self-checks on ${selfCheckTopics} topics` : "Self-checks coming"}</Chip>
+                {datapedia && author ? (
+                  <Button variant="secondary" href={datapedia.url} target="_blank" rel="noopener noreferrer" data-testid="datapedia-amazon">
+                    The book on Amazon ↗
+                  </Button>
+                ) : null}
+              </div>
+              {datapedia && author ? (
+                <p className="text-body-sm mt-4 border-t border-[var(--color-line)] pt-4 text-[var(--color-ink-quiet)]">
+                  The source: <span className="font-medium text-[var(--color-ink)]">{datapedia.title}</span> — {datapedia.subtitle}. By {author.name}.
+                </p>
+              ) : null}
+            </div>
+          </div>
+        </Card>
       </section>
     </>
   );

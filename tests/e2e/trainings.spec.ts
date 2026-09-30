@@ -93,11 +93,10 @@ async function expectInvestmentCards(page: Page, slug: string, figures: Record<"
   await expect(investment.getByText(/no online payment yet/i)).toHaveCount(0);
 }
 
-// Founder, 2026-09-28: the training cards carry the trainer's photo, so one
-// training gets a real photo here — which also guards the regression where
-// next/image 500'd BOTH training pages over the photo route's `?v=` query
-// (images.localPatterns): the test database had no photos, so no test ever
-// rendered the filled state.
+// Founder, 2026-09-28: the training cards carried the trainer's photo; since
+// 2026-09-30 (M6) they do not. One training still gets a real photo here, so the
+// /programs test proves a card with a stored photo renders NO image (and the
+// photo route/upload keep working for the admin).
 test.beforeAll(async () => {
   const { readFileSync } = await import("node:fs");
   const { getPrisma } = await import("../../src/db/prisma");
@@ -205,16 +204,44 @@ test("/programs lists exactly the published trainings in order, Learn Vibe Codin
   await expect(withoutHrdCorpRow.locator(".line-through")).toHaveText("RM 5,000");
   await expect(withoutHrdCorpRow).toContainText(/minimum 25 participants/i);
 
-  // Founder, 2026-09-28: the card shows the training photo when one is set
-  // (Learn Vibe Coding got one in beforeAll) and links the trainer's
-  // dedicated page — followed and asserted below.
-  await expect(lvc.locator("img[src^='/programs/images/']")).toBeVisible();
-  await expect(lvc.getByTestId("card-trainer")).toHaveAttribute("href", "/mustafa-qizilbash");
-  await page.goto("/mustafa-qizilbash");
-  await expect(page.getByTestId("trainer-name")).toHaveText("Mustafa Qizilbash");
-  await expect(page.getByTestId("trainer-hrd-line")).toContainText("Yes");
+  // Founder, 2026-09-30 (M6/M7, design direction only): the card carries NO
+  // trainer photo and NO trainer link — Learn Vibe Coding has a photo (set in
+  // beforeAll) and its card still shows no image; nothing on any card links to
+  // a trainer page. Redesigned to the reference: pill badges, a two-tone title
+  // (still ONE heading with the exact title), a one-line description, four icon
+  // feature chips (the first four highlights), DURATION / FOR / FORMAT rows and
+  // a filled "View Details →" button; no trailer button, no hero art.
+  await expect(lvc.locator("img")).toHaveCount(0);
+  await expect(lvc.getByTestId("card-trainer")).toHaveCount(0);
+  await expect(lvc.locator('a[href^="/mustafa-qizilbash"], a[href^="/trainers"]')).toHaveCount(0);
+  await expect(page.locator('[data-testid="trainings-list"] a[href^="/mustafa-qizilbash"]')).toHaveCount(0);
+  const { findPublishedProgrammeBySlug } = await import("../../src/modules/catalogue/programmes/repository");
+  const lvcRecord = await findPublishedProgrammeBySlug("learn-vibe-coding");
+  expect(lvcRecord!.content.highlights.length).toBeGreaterThanOrEqual(4);
+  const chips = lvc.getByTestId("card-features").getByRole("listitem");
+  await expect(chips).toHaveCount(4);
+  for (const [i, text] of lvcRecord!.content.highlights.slice(0, 4).entries()) {
+    await expect(chips.nth(i)).toHaveText(text);
+    await expect(chips.nth(i).locator("svg[aria-hidden='true']")).toHaveCount(1);
+  }
+  for (const label of ["Duration", "For", "Format"]) await expect(lvc.locator("dt", { hasText: new RegExp(`^${label}$`) })).toHaveCount(1);
+  await expect(lvc.getByTestId("card-details")).toContainText("View Details");
+  await expect(lvc.getByRole("link", { name: /trailer/i })).toHaveCount(0);
+  await expect(lvc.getByRole("button", { name: /trailer/i })).toHaveCount(0);
+  // The Malaysia HRD Corp fee row is on the flagship card: the founder's sentence follows the prices.
+  const { HRD_CLAIM_NOTE } = await import("../../src/content/hrd-corp");
+  await expect(flagship.getByTestId("card-hrd-note")).toHaveText(HRD_CLAIM_NOTE);
+  // WCAG 2.2 AA on the redesigned cards, in the light and the dark theme.
+  await page.emulateMedia({ colorScheme: "light" });
   await expectNoAxeViolations(page);
-  // An unknown trainer is a real 404.
+  // Switching theme animates colours (`transition-colors`); axe would sample a blended mid-transition value, so
+  // transitions are switched off for the check — the same trap documented in free-trainings/page.tsx.
+  await page.addStyleTag({ content: "*, *::before, *::after { transition: none !important; animation: none !important; }" });
+  await page.emulateMedia({ colorScheme: "dark" });
+  const darkCards = await new AxeBuilder({ page }).include('[data-testid="trainings-list"]').withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]).analyze();
+  expect(darkCards.violations, JSON.stringify(darkCards.violations, null, 2)).toEqual([]);
+  await page.emulateMedia({ colorScheme: "light" });
+  // An unknown address is a real 404 (there is no trainer page to fall through to).
   expect((await page.goto("/nobody-here"))?.status()).toBe(404);
   await page.goto("/programs");
 
@@ -433,6 +460,27 @@ test("/programs/data-blueprint-ai-vibe-coding renders the flagship on the shared
   await expect(page.getByRole("heading", { name: "Taught by a practitioner" })).toBeVisible();
   expect(flagship!.experts.length).toBeGreaterThan(0);
   await expect(page.getByText(flagship!.experts[0]!.name, { exact: true }).first()).toBeVisible();
+  // M7 link rule (founder, 2026-09-30): the trainer's name links ONLY to their
+  // external profile (Medium, else LinkedIn), safely in a new tab — and is plain
+  // text when there is none. Never a link to a dedicated portal page.
+  {
+    const { listPublishedExperts } = await import("../../src/modules/catalogue/experts/repository");
+    const { trainerProfileUrl } = await import("../../src/modules/catalogue/experts/profile-url");
+    const shown = (await listPublishedExperts()).find((e) => e.name === flagship!.experts[0]!.name)!;
+    const expectedUrl = trainerProfileUrl(shown);
+    const nameLink = page.getByTestId("trainer-card-name-link");
+    if (expectedUrl) {
+      await expect(nameLink).toHaveAttribute("href", expectedUrl);
+      await expect(nameLink).toHaveAttribute("target", "_blank");
+      await expect(nameLink).toHaveAttribute("rel", /noopener/);
+      await expect(nameLink).toHaveAttribute("rel", /noreferrer/);
+      await expect(nameLink).toContainText("(opens external site)");
+    } else {
+      await expect(nameLink).toHaveCount(0);
+      await expect(page.getByTestId("trainer-card-name")).toHaveText(shown.name);
+    }
+    await expect(page.locator('a[href^="/mustafa-qizilbash"]')).toHaveCount(0);
+  }
 
   // Certification note and FAQ (five questions, native <details>).
   await expect(page.getByText(/This training awards a/)).toContainText("certificate of completion");

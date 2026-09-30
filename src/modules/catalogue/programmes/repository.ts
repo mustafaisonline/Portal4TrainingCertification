@@ -132,8 +132,6 @@ export type ProgrammeCard = ProgrammeSummary & {
   prices: ProgrammePriceRecord[];
   content: ProgrammeContent;
   deliveryFormats: DeliveryFormatRecord[];
-  /** The training's trainer(s) — the card links to each dedicated page. */
-  experts: { slug: string; name: string }[];
 };
 
 /** Published trainings whose title, subtitle or summary contains the words
@@ -170,8 +168,6 @@ export async function listPublishedProgrammesWithPrices(db: Db = getPrisma()): P
       content: true,
       // Founder, 2026-09-28: each format's own timeline shown on the card, not just the name.
       formatsDelivery: { orderBy: { position: "asc" } },
-      // Founder, 2026-09-28: the card links to the trainer's dedicated page.
-      experts: { include: { expert: { select: { slug: true, name: true } } } },
     },
   });
   return rows.map((r) => ({
@@ -180,7 +176,6 @@ export async function listPublishedProgrammesWithPrices(db: Db = getPrisma()): P
     content: r.content as ProgrammeContent,
     hasPhoto: r.photoMime !== null,
     photoUpdatedAt: r.photoUpdatedAt,
-    experts: r.experts.map((e) => ({ slug: e.expert.slug, name: e.expert.name })),
     prices: r.prices.map(toPriceRecord).sort((a, b) => order(a.region) - order(b.region)),
     deliveryFormats: r.formatsDelivery.map((f) => ({
       id: f.id,

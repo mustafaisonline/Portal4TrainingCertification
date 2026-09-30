@@ -6,6 +6,7 @@ import { enabledSupportSetting } from "@/modules/commerce/support.repository";
 import { getProfile } from "@/modules/identity/profile.repository";
 import { getCurrentUser } from "@/modules/identity/session";
 import { organisationMailto } from "@/content/contact";
+import { HRD_CLAIM_NOTE } from "@/content/hrd-corp";
 import { CourseCard } from "@/shared/marketing/CourseCard";
 import { HrdCorpSections } from "@/shared/marketing/HrdCorpSections";
 import { Button } from "@/shared/ui/Button";
@@ -48,7 +49,7 @@ export const dynamic = "force-dynamic";
 const teamSteps = [
   { n: "01", title: "Tell us about the team", body: "Who they are, what they need to be able to do, and where they are." },
   { n: "02", title: "We shape the engagement", body: "Format, dates and location for your team — a private cohort, online or on-site." },
-  { n: "03", title: "Invoice and paperwork", body: "Corporate invoicing and the documentation your finance or HRD Corp claim needs." },
+  { n: "03", title: "Invoice and paperwork", body: `Corporate invoicing and the documentation your finance or HRD Corp claim needs. ${HRD_CLAIM_NOTE}` },
   { n: "04", title: "Delivery and evidence", body: "Live sessions with the trainer, attendance records and completion certificates for each participant." },
 ];
 
@@ -85,6 +86,10 @@ export default async function TrainingsPage() {
             <a href="#hrd-corp" className="font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]">
               About HRD Corp ↓
             </a>
+          </p>
+          {/* Founder, 2026-09-30 (M8): the sentence wherever HRD Corp is mentioned. */}
+          <p className="text-body-sm mt-3 max-w-[640px] text-[var(--color-ink-quiet)]" data-testid="programs-hrd-note">
+            {HRD_CLAIM_NOTE}
           </p>
         </div>
       </section>

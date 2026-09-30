@@ -26,7 +26,7 @@ export const ORDER_STATUS_LABEL: Record<OrderStatus, string> = {
   partially_refunded: "Partially refunded",
 };
 export const ORDER_KINDS = ["registration", "certificate_renewal", "support", "knowledge_check_unlock"] as const satisfies readonly OrderKind[];
-export const ORDER_KIND_LABEL: Record<OrderKind, string> = { registration: "Registration", certificate_renewal: "Certificate renewal", support: "Support payment", knowledge_check_unlock: "Knowledge Check unlock" };
+export const ORDER_KIND_LABEL: Record<OrderKind, string> = { registration: "Registration", certificate_renewal: "Certificate renewal", support: "Support payment", knowledge_check_unlock: "Free Assessment Check unlock" };
 export const REFUND_REASON_LABEL: Record<"participant_cancellation" | "academy_cancellation" | "manual", string> = {
   participant_cancellation: "Participant cancellation",
   academy_cancellation: "Academy cancellation",

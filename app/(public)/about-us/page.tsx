@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { listPublishedExperts } from "@/modules/catalogue/experts/repository";
+import { trainerProfileUrl } from "@/modules/catalogue/experts/profile-url";
 import { FounderTeachingIllustration } from "@/shared/marketing/DeliveryIllustrations";
 import { ImageFrame } from "@/shared/marketing/ImageFrame";
 import { Button } from "@/shared/ui/Button";
@@ -58,6 +59,9 @@ const weAreNot = [
 
 export default async function AboutPage() {
   const [founder] = await listPublishedExperts();
+  // M7 (founder, 2026-09-30): no trainer dedicated pages — the founder links
+  // only to their own external profile, and to nothing when there is none.
+  const founderProfileUrl = founder ? trainerProfileUrl(founder) : null;
 
   return (
     <>
@@ -214,13 +218,17 @@ export default async function AboutPage() {
             )}
             <p className="text-body-sm mb-8 text-[var(--color-ink-quiet)]">
               Today he designs and delivers the trainings himself. As the
-              practitioner network grows, each trainer is introduced with a
-              page of their own — only ever real people, with records you can
-              verify independently. There are no placeholder profiles.
+              practitioner network grows, each trainer is introduced by name — only
+              ever real people, with records you can verify independently. There
+              are no placeholder profiles.
             </p>
-            <Button variant="secondary" href="/mustafa-qizilbash">
-              Meet the trainer
-            </Button>
+            {founderProfileUrl && (
+              <Button variant="secondary" href={founderProfileUrl} target="_blank" rel="noopener noreferrer" data-testid="about-trainer-profile">
+                Meet the trainer
+                <span className="sr-only"> (opens external site)</span>
+                <span aria-hidden="true">↗</span>
+              </Button>
+            )}
           </div>
           <ImageFrame
             subject="The founder teaching — a real session, not a portrait"

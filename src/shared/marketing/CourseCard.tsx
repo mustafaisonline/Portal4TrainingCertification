@@ -7,12 +7,23 @@
  * `prices` (minor units via `formatMoney`) or, for a mentorship programme,
  * its entry package in `content.mentorshipPackages`. A bare summary (no
  * `prices`/`content`) simply omits the price row — nothing is invented.
+ *
+ * REDESIGNED 2026-09-30 (founder change round M16, modification.md M6/M7,
+ * design direction only): pill badges (level, Flagship) on a tinted band, a
+ * large two-tone title, a one-line description, four icon feature chips (the
+ * training's first four `content.highlights`; the row is omitted when there
+ * are none), DURATION / FOR / FORMAT rows and a filled "View Details →"
+ * button. NO trainer photo, NO trainer link (the trainer's dedicated page is
+ * removed; the trainer is introduced on the training's own page), NO trailer
+ * button and NO hero art. The price/timeline information and every test id
+ * the tests use are unchanged.
  */
 
-import Link from "next/link";
+import type { ReactNode } from "react";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { Chip } from "@/shared/ui/Chip";
+import { HRD_CLAIM_NOTE } from "@/content/hrd-corp";
 import {
   formatMoney,
   levelLabel,
@@ -35,9 +46,6 @@ export type CourseCardProgramme = ProgrammeSummary & {
   prices?: ProgrammePriceRecord[];
   content?: ProgrammeContent;
   deliveryFormats?: DeliveryFormatRecord[];
-  /** The trainer(s), when the caller loaded them — the card then links each
-   *  dedicated page (founder, 2026-09-28). */
-  experts?: { slug: string; name: string }[];
 };
 
 /** The published price per region, or — for a mentorship programme, which
@@ -82,6 +90,45 @@ const LISTING_CARD_ORDER: PriceCard[] = ["malaysia", "pakistan", "international"
 /** The "From" figure: the Malaysian card price (the checkout row). */
 const HOME_REGION: PriceRegion = "malaysia";
 
+/** The title in two tones: the leading words in ink, the closing words in
+ *  the primary colour. One word stays a single tone. The text content is the
+ *  title exactly (a heading's accessible name is unchanged). */
+function splitTitle(title: string): [string, string] {
+  const words = title.trim().split(/\s+/);
+  if (words.length < 2) return [title, ""];
+  const lead = Math.floor(words.length / 2);
+  return [words.slice(0, lead).join(" "), words.slice(lead).join(" ")];
+}
+
+/** Four neutral glyphs, cycled — they decorate the feature chips and carry no
+ *  meaning of their own (each chip's text does). aria-hidden. */
+const FEATURE_ICONS: ReactNode[] = [
+  <path key="a" d="M4 12l5 5L20 6" />,
+  <path key="b" d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9L12 3z" />,
+  <path key="c" d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5" />,
+  <path key="d" d="M13 3L5 14h6l-1 7 8-11h-6l1-7z" />,
+];
+
+function FeatureIcon({ index }: { index: number }) {
+  return (
+    <svg
+      aria-hidden="true"
+      focusable="false"
+      viewBox="0 0 24 24"
+      width="18"
+      height="18"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="mt-0.5 shrink-0 text-[var(--color-primary)]"
+    >
+      {FEATURE_ICONS[index % FEATURE_ICONS.length]}
+    </svg>
+  );
+}
+
 /**
  * Reusable course card — used on the /programs hub ("Trainings",
  * 2026-09-26) and the "related courses" rail on detail pages. Token-driven,
@@ -123,45 +170,52 @@ export function CourseCard({
   const homeRegion = priceRegionMeta(HOME_REGION);
   const homePrice = pricing?.[HOME_REGION];
 
+  const [titleLead, titleTail] = splitTitle(course.title);
+  const features = (course.content?.highlights ?? []).slice(0, 4);
+  // The HRD Corp fee row is published for this training only when its prices
+  // include the `malaysia_hrdcorp` row — then the founder's sentence follows.
+  const showsHrdCorp = !!course.prices?.some((p) => p.region === "malaysia_hrdcorp");
+  const formatRows = course.deliveryFormats && course.deliveryFormats.length > 0 ? course.deliveryFormats : null;
+
   return (
     <Card
       variant="panel"
       className="flex h-full flex-col overflow-hidden border border-[var(--color-line)]"
     >
-      {/* Training photo (founder, 2026-09-28) — omitted, not a placeholder,
-          when the training has none (Rule: nothing invented). */}
-      {course.hasPhoto && (
-        <img
-          src={`/programs/images/${course.id}?v=${course.photoUpdatedAt ? new Date(course.photoUpdatedAt).getTime() : 0}`}
-          alt=""
-          // aspect-[3/2] + object-top (founder, 2026-09-28, from the /programs
-          // snapshot): the 16:9 centre crop clipped the top of the head on a
-          // portrait photo — a slightly taller frame anchored to the top keeps
-          // the head fully in view whatever the upload's own shape.
-          className="-mx-6 -mt-6 mb-5 aspect-[3/2] w-[calc(100%+3rem)] max-w-none object-cover object-top"
-        />
-      )}
-      <div className="mb-4 flex flex-wrap items-center gap-2">
-        <Chip tone="primary">{levelLabel(course.level)}</Chip>
-        {course.flagship && <Chip>Flagship</Chip>}
+      {/* Tinted band with the badges (no photo, no art — founder, 2026-09-30).
+          The pills sit on the raised surface so they keep their contrast. */}
+      <div className="-mx-6 -mt-6 mb-5 flex flex-wrap items-center gap-2 border-b border-[var(--color-line)] bg-[var(--color-ground-tint)] px-6 py-3.5">
+        <span className="rounded-full bg-[var(--color-ground-raised)]">
+          <Chip tone="primary">{levelLabel(course.level)}</Chip>
+        </span>
+        {course.flagship && (
+          <span className="rounded-full bg-[var(--color-ground-raised)]">
+            <Chip>Flagship</Chip>
+          </span>
+        )}
       </div>
-      <h3 className="text-h2 mb-2">{course.title}</h3>
-      {/* Subtitle shown on the hub (2026-09-26); absent on older rows. */}
-      {course.subtitle && (
-        <p className="text-body-sm mb-3 font-medium text-[var(--color-ink)]">
-          {course.subtitle}
-        </p>
-      )}
-      {/* No `flex-1` here (removed 2026-09-26, founder-reported: "why so
-          much gap before Duration?"). Cards in one /programs grid row are
-          stretched to equal height, and `flex-1` on THIS paragraph made the
-          shorter card's summary box swallow all the surplus — a blank area
-          under one sentence. The surplus now collapses at the bottom via
-          `mt-auto` on the CTA link below, so every card's content stacks
-          naturally and only the link is pinned to the bottom edge. */}
-      <p className="text-body-sm mb-5 text-[var(--color-ink-quiet)]">
-        {course.summary}
+      <h3 className="text-h1 mb-2 leading-tight">
+        <span className="text-[var(--color-ink)]">{titleLead}</span>
+        {titleTail && <span className="text-[var(--color-primary)]">{" "}{titleTail}</span>}
+      </h3>
+      {/* One-line description: the subtitle (a single sentence), else the
+          summary. */}
+      <p className="text-body-sm mb-5 text-[var(--color-ink-quiet)]" data-testid="card-description">
+        {course.subtitle || course.summary}
       </p>
+      {features.length > 0 && (
+        <ul className="mb-5 grid list-none gap-2 p-0 sm:grid-cols-2" data-testid="card-features">
+          {features.map((f, i) => (
+            <li
+              key={f}
+              className="text-body-sm flex items-start gap-2 rounded-[var(--radius-plate)] border border-[var(--color-line)] bg-[var(--color-ground-tint)] px-3 py-2 leading-snug text-[var(--color-ink)]"
+            >
+              <FeatureIcon index={i} />
+              <span>{f}</span>
+            </li>
+          ))}
+        </ul>
+      )}
       {/* Specification grid: `items-baseline` puts label and value on one
           line; a uniform minimum row height keeps row 1 of every card at the
           same height as row 1 of every other card even when a value wraps. */}
@@ -176,11 +230,11 @@ export function CourseCard({
           {course.audienceSummary}
         </dd>
 
-        <dt className="text-label">{course.deliveryFormats && course.deliveryFormats.length > 0 ? "Timelines" : "Delivery"}</dt>
+        <dt className="text-label">Format</dt>
         <dd className="leading-snug text-[var(--color-ink-quiet)]">
-          {course.deliveryFormats && course.deliveryFormats.length > 0 ? (
-            <ul className="flex flex-col gap-0.5" data-testid="card-timelines">
-              {course.deliveryFormats.map((f) => (
+          {formatRows ? (
+            <ul className="flex list-none flex-col gap-0.5 p-0" data-testid="card-timelines">
+              {formatRows.map((f) => (
                 <li key={f.code}>
                   <span className="font-medium text-[var(--color-ink)]">{f.name}</span> — {f.durationLabel}
                 </li>
@@ -288,38 +342,20 @@ export function CourseCard({
               );
             })}
           </ul>
+          {showsHrdCorp && (
+            <p className="text-body-sm mt-3 leading-snug text-[var(--color-ink-quiet)]" data-testid="card-hrd-note">
+              {HRD_CLAIM_NOTE}
+            </p>
+          )}
         </div>
       )}
-      {/* Founder, 2026-09-28: the photo on the card is the trainer, so the
-          card says who that is and links their dedicated page. */}
-      {course.experts && course.experts.length > 0 && (
-        <p className="text-body-sm mb-3 text-[var(--color-ink-quiet)]">
-          Trainer:{" "}
-          {course.experts.map((e, i) => (
-            <span key={e.slug}>
-              {i > 0 ? ", " : ""}
-              <Link
-                href={`/${e.slug}`}
-                className="font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
-                data-testid="card-trainer"
-              >
-                {e.name} →
-              </Link>
-            </span>
-          ))}
-        </p>
-      )}
-      <div className="mt-auto flex flex-wrap items-center gap-x-4 gap-y-2 pt-2">
-        <Button href={`/schedule?training=${course.slug}`} data-testid="card-register">
+      <div className="mt-auto flex flex-wrap items-center gap-3 pt-2">
+        <Button href={`/programs/${course.slug}`} data-testid="card-details">
+          View Details<span className="sr-only">: {course.title}</span> <span aria-hidden="true">→</span>
+        </Button>
+        <Button variant="secondary" href={`/schedule?training=${course.slug}`} data-testid="card-register">
           See dates and register
         </Button>
-        <Link
-          href={`/programs/${course.slug}`}
-          className="text-body-sm py-2 font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
-          data-testid="card-details"
-        >
-          About this training →
-        </Link>
       </div>
     </Card>
   );

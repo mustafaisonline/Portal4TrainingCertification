@@ -29,9 +29,9 @@ import type { LegalDocument } from "./types";
 export const privacyPolicy: LegalDocument = {
   key: "privacy",
   title: "Privacy policy",
-  version: "DRAFT-2026-09-29",
+  version: "DRAFT-2026-09-30",
   status: "draft",
-  lastUpdated: "2026-09-29",
+  lastUpdated: "2026-09-30",
   summary:
     "What personal data the Data & AI Academy collects, why, who it is shared with, where it may be stored, how long it is kept, and your rights under the Personal Data Protection Act 2010.",
   sections: [
@@ -71,7 +71,7 @@ export const privacyPolicy: LegalDocument = {
         "Profile details — the country you tell us you are in. This decides the currency you are charged in (see the Terms of service).",
         "Registrations — which offerings you have registered for, their status, and attendance and completion as recorded by the trainer.",
         "Orders — what you paid, in which currency, when, by which method type (for example \"card\"), and the payment reference our payment processor gives us, whether for a registration, a Knowledge Check result-document unlock or a support payment. We never receive or store your card number.",
-        "Knowledge Check attempts — if you take one, the questions served to you, the answers you gave, your score, whether you passed, and the result ID. This needs an account; it is not the diagnostic (see above).",
+        "Free Assessment Check attempts — if you take one, the 200 questions served to you, the answers you gave, when you started and finished, your score, whether you passed and your grade, and the result ID. This needs an account; it is not the diagnostic (see above).",
         "Consents — which version of the Terms of service and this policy you accepted, and when.",
         "Certificates — if one is issued, your name as it appears on the certificate, the training and format, the completion, issue and expiry dates, the certificate identifier, any renewal you pay for, and whether you have chosen to be listed in public name search (see section 6).",
         "Audit entries — a record of significant actions on your account (such as sign-in, a change of password, a registration or a refund), with a time stamp, kept so we can investigate problems and show what happened.",
@@ -89,7 +89,7 @@ export const privacyPolicy: LegalDocument = {
         "To take payment, issue receipts, process refunds and keep the financial records the law requires.",
         "To decide which currency and price apply to you, based on your profile country.",
         "To record completion and, where earned, to issue and verify your Certificate of Completion.",
-        "To run a Knowledge Check you take, score it, and give you a verifiable result — and, if you pay to unlock it, to show you the printable Certificate of Achievement.",
+        "To run a Free Assessment Check you take, score it, give you a verifiable result and — if you passed — a graded certificate, and, if you pay to unlock it, to show you the printable Certificate of Achievement.",
         "To send you the messages the service needs — confirmations, reminders, changes to an offering, receipts and notices about your account. These are not marketing.",
         "To answer your questions and resolve complaints.",
         "To keep the portal secure, prevent misuse and investigate problems.",
@@ -112,7 +112,7 @@ export const privacyPolicy: LegalDocument = {
         "Hosting provider [to be named] — the servers and database on which the portal and its data run.",
         "Email provider [to be named] — used to deliver the service messages described in section 3.",
         "The trainer of an offering you registered for — your name and email address, so that attendance and completion can be recorded and you can be admitted to the sessions.",
-        "HRD Corp or your employer — only where you ask us to provide evidence of your attendance or completion, for example to support a training claim, and only what is needed for that purpose.",
+        "HRD Corp or your employer — only where you ask us to provide evidence of your attendance or completion, for example to support a training claim, and only what is needed for that purpose. HRD Corp claims are for Malaysian citizens and are normally made through an employer registered with HRD Corp.",
         "Authorities — where the law requires us to disclose, for example to a court, a regulator or a law-enforcement agency acting within its powers.",
       ],
     },
@@ -121,9 +121,9 @@ export const privacyPolicy: LegalDocument = {
       paragraphs: [
         "If you are issued a Certificate of Completion, anyone who has its certificate identifier, or the link to it, can confirm on this portal that the certificate is genuine. Verification by identifier or link always works. The verification page shows the name on the certificate, the training and its format, the completion date, the issue date, the expiry date and the certificate's current status. If a certificate has been revoked, the page says so.",
         "The portal also offers a public search by name. That search returns only holders who have chosen to be listed in it. Being listed is optional and is off unless you turn it on from your account. When you turn it on we record that choice, with the wording you agreed to and the time. You can withdraw it at any time from your account, and the withdrawal takes effect immediately for name search; the identifier and link continue to work.",
-        "A Knowledge Check result has its own verification page, reached only by its own ID or its link — it is never returned by the name search above. It shows the name on the result, the score, whether it passed and the date, and says plainly that it is not a Certificate of Completion and not the Academy's earned credential.",
+        "A Free Assessment Check result has its own verification page, reached only by its own ID or its link — it is never returned by the name search above. It shows the name on the result, the score, whether it passed, the grade and the date, and says plainly that it is not a Certificate of Completion and not the Academy's earned credential.",
         "Whether reached by identifier, link or name search, a verification page never shows your email address, your country, your contact details or any identity-document details. Dates on it are calendar dates in Malaysia time (Asia/Kuala_Lumpur).",
-        "If you have a concern about how your certificate or Knowledge Check result can be verified, write to [contact email].",
+        "If you have a concern about how your certificate or Free Assessment Check result can be verified, write to [contact email].",
       ],
     },
     {

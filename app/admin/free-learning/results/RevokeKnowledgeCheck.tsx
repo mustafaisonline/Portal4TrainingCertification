@@ -6,7 +6,7 @@ import { Button } from "@/shared/ui/Button";
 import { FormStatus, inputClass } from "@/shared/ui/forms";
 
 /*
- * Revoke one Knowledge Check certificate: a reason (kept in the audit log) and
+ * Revoke one Free Assessment Check certificate: a reason (kept in the audit log) and
  * a confirmation that it cannot be undone here — the same shape as the
  * Professional certificate's revoke form. The public verification page then
  * says Revoked.

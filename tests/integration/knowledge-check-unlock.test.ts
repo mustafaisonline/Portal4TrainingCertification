@@ -10,13 +10,12 @@ import { verifyStripeSignature } from "@/modules/commerce/stripe";
 import { createUnlockSetting, currentUnlockSetting, enabledUnlockSetting, listUnlockHistory, UnlockSettingValidationError } from "@/modules/commerce/unlock.repository";
 import { findUnlockOrderForUser, hasFreeLearningReview, startUnlockCheckout, unlockStatusForAttempt } from "@/modules/commerce/unlock.service";
 import { handleStripeWebhook } from "@/modules/commerce/webhook.service";
-import { replaceTopicFromImport } from "@/modules/free-learning/book.repository";
 import { finishAttempt, getAttemptForUser, saveAnswers, startAttempt } from "@/modules/free-learning/knowledge-check.repository";
-import { importDraftQuestions, setAllQuestionsStatus } from "@/modules/free-learning/quiz.repository";
 import { getUserForAdmin } from "@/modules/identity/admin-users.repository";
 import { buildDataExport } from "@/modules/identity/data-export";
 import { listAuditForEntity } from "@/modules/platform/audit/repository";
 import { createReview } from "@/modules/reviews/repository";
+import { createAssessmentBank, deleteAssessmentBank } from "../helpers/assessment-bank";
 import { createAdminUser, createCertificateUser, flagshipProgramme } from "../helpers/certificates-db";
 import { completeProfile, deleteTestUser, latestEmail } from "../helpers/identity-db";
 
@@ -39,7 +38,6 @@ let admin: { id: string; email: string };
 let person: { id: string; email: string; name: string };
 let pakistani: { id: string; email: string; name: string };
 let flagshipId = "";
-let topicId = "";
 let attemptId = "";
 let unfinishedAttemptId = "";
 let failedAttemptId = "";
@@ -96,9 +94,10 @@ function sessionCompletedEvent(order: { id: string; amountMinor: bigint; currenc
 }
 const sign = (payload: string) => stripeForSigning.webhooks.generateTestHeaderString({ payload, secret: WEBHOOK_SECRET });
 
-/** Every fixture question's correct option is A (position 1): answering all of them passes; answering none fails. */
+/** Every fixture question's correct option is A (position 1): answering all of them passes; answering none fails.
+ *  One running test per person: any earlier running attempt is finished first (it is the same person's test). */
 async function finishedAttempt(userId: string, pass: boolean) {
-  const a = await withTransaction((tx) => startAttempt(tx, { userId, size: 50 }));
+  const a = await withTransaction((tx) => startAttempt(tx, { userId, size: 200 }));
   if (pass) await withTransaction((tx) => saveAnswers(tx, { attemptId: a.id, userId, answers: Object.fromEntries(a.questionIds.map((id) => [id, 1])) }));
   return withTransaction((tx) => finishAttempt(tx, { attemptId: a.id, userId }));
 }
@@ -117,20 +116,13 @@ beforeAll(async () => {
   pakistani = await createCertificateUser({ prefix: "unlock-pk", legalName: `Parveen Exempt ${run}` });
   await completeProfile(pakistani.id, { legalName: `Parveen Exempt ${run}`, countryCode: "PK", nationalityCode: "PK" });
   flagshipId = (await flagshipProgramme()).id;
-  // A fixture topic with 50 reviewed questions so a 50-question attempt can be started and finished.
-  const topic = await withTransaction((tx) =>
-    replaceTopicFromImport(tx, { position: 84001, slug: SLUG, title: `Unlock Topic ${run}`, sourceHeading: "Unlock Topic", bodyHtml: "<p>x</p>", bodyText: "x", wordCount: 1, images: [], publish: true, importedAt: new Date() }, (id) => id),
-  );
-  topicId = topic.id;
-  await withTransaction((tx) =>
-    importDraftQuestions(tx, { topicId, replaceDrafts: false, questions: Array.from({ length: 50 }, (_, i) => ({ stem: `Unlock question ${i + 1}: choose option A?`, options: ["Alpha", "Bravo", "Charlie", "Delta", "Echo"], correct: 0, explanation: null })) }),
-  );
-  await withTransaction((tx) => setAllQuestionsStatus(tx, { topicId, status: "reviewed", actorUserId: admin.id }));
+  // A fixture bank of 260 reviewed questions (the check is 200 questions and is refused below that).
+  await createAssessmentBank({ slug: SLUG, position: 84001, title: `Unlock Topic ${run}` });
   const finished = await finishedAttempt(person.id, true);
   expect(finished.passed).toBe(true);
   attemptId = finished.id;
   failedAttemptId = (await finishedAttempt(person.id, false)).id;
-  unfinishedAttemptId = (await withTransaction((tx) => startAttempt(tx, { userId: person.id, size: 50 }))).id;
+  unfinishedAttemptId = (await withTransaction((tx) => startAttempt(tx, { userId: person.id, size: 200 }))).id;
 });
 
 beforeEach(() => {
@@ -156,10 +148,8 @@ afterAll(async () => {
     await prisma.review.deleteMany({ where: { userId: u.id } });
     await prisma.outboundEmail.deleteMany({ where: { toEmail: u.email } }).catch(() => undefined);
   }
-  const ids = (await prisma.topicQuestion.findMany({ where: { topicId }, select: { id: true } })).map((x) => x.id);
-  await prisma.auditLog.deleteMany({ where: { entityType: "topic_question", entityId: { in: ids } } });
   for (const u of [person, pakistani, admin]) await deleteTestUser(u.email);
-  await prisma.bookTopic.deleteMany({ where: { slug: SLUG } });
+  await deleteAssessmentBank(SLUG);
   await disconnectPrisma();
 });
 
@@ -290,12 +280,12 @@ describe("the checkout", () => {
   it("the person's return banner, their orders, the admin list, the admin user detail and the data export all show the unlock order", async () => {
     expect(await findUnlockOrderForUser(orderId, person.id)).toMatchObject({ id: orderId, effectiveStatus: "paid", amountMinor: 1000, currency: "USD" });
     const mine = await listOrdersForUser(person.id);
-    expect(mine[0]).toMatchObject({ id: orderId, kind: "knowledge_check_unlock", programmeTitle: "Knowledge Check result document", formatName: "One-time unlock", startsOn: null, endsOn: null });
+    expect(mine[0]).toMatchObject({ id: orderId, kind: "knowledge_check_unlock", programmeTitle: "Free Assessment Check result document", formatName: "One-time unlock", startsOn: null, endsOn: null });
     const adminList = await listOrdersForAdmin({ kind: "knowledge_check_unlock", q: person.email });
     expect(adminList.items.map((o) => o.id)).toEqual([orderId]);
-    expect(adminList.items[0]).toMatchObject({ programmeTitle: "Knowledge Check result document", formatName: "One-time unlock", startsOn: null });
+    expect(adminList.items[0]).toMatchObject({ programmeTitle: "Free Assessment Check result document", formatName: "One-time unlock", startsOn: null });
     const detail = await getUserForAdmin(person.id);
-    expect(detail?.orders.map((o) => [o.kind, o.programmeTitle])).toEqual([["knowledge_check_unlock", "Knowledge Check result document"]]);
+    expect(detail?.orders.map((o) => [o.kind, o.programmeTitle])).toEqual([["knowledge_check_unlock", "Free Assessment Check result document"]]);
     const exported = await buildDataExport(person.id);
     expect((exported!.orders[0] as { programmeTitle: string; kind: string }).kind).toBe("knowledge_check_unlock");
   });

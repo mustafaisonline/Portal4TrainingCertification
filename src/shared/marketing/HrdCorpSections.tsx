@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { hrdCorpAbout, hrdCorpOrg } from "@/content/hrd-corp";
+import { HRD_CLAIM_NOTE, hrdCorpAbout, hrdCorpOrg } from "@/content/hrd-corp";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 
@@ -32,15 +32,12 @@ export function HrdCorpSections() {
         <p className="text-label mb-4 text-[var(--color-primary)]">HRD Corp</p>
         <h2 className="text-display-lg mb-6 max-w-[760px]">A genuine HRD Corp accreditation — verified, not just claimed</h2>
         <p className="text-body-lg max-w-[640px] text-[var(--color-ink-quiet)]">
-          Trainings here are designed and delivered by an HRD Corp Accredited Trainer — see{" "}
-          <Link
-            href="/mustafa-qizilbash#hrd-corp-accreditation"
-            className="font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
-          >
-            Trainers
-          </Link>{" "}
-          for that accreditation and how to verify it. This section sets out what that does, and does not, mean for this
-          organisation and its trainings.
+          Trainings here are designed and delivered by an HRD Corp Accredited Trainer. This section sets out what that does,
+          and does not, mean for this organisation and its trainings.
+        </p>
+        {/* Founder, 2026-09-30: wherever HRD Corp is mentioned, say who can claim. */}
+        <p className="text-body-sm mt-4 max-w-[640px] font-medium text-[var(--color-ink)]" data-testid="hrd-claim-note">
+          {HRD_CLAIM_NOTE}
         </p>
       </section>
 
@@ -83,6 +80,9 @@ export function HrdCorpSections() {
           <div className="max-w-[640px]">
             <p className="text-label mb-3 text-[var(--color-primary)]">For organisations</p>
             <h3 className="text-display mb-5">Planning around HRD Corp funding</h3>
+            <p className="text-body-sm mb-4 font-medium text-[var(--color-ink)]" data-testid="hrd-claim-note-funding">
+              {HRD_CLAIM_NOTE}
+            </p>
             <p className="text-body-lg mb-4 text-[var(--color-ink-quiet)]">
               Malaysian employers registered with HRD Corp can claim back the cost of approved training under schemes such as HRD
               Corp Claimable Course. {hrdCorpOrg.claimableCourses.statement} Talk to us and we will give you a straight answer for

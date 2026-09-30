@@ -48,10 +48,15 @@ describe("site navigation", () => {
     expect(footerExplore).toContainEqual({ href: "/free-trainings", label: "Knowledge Hub" });
     expect(footerExplore).toContainEqual({ href: "/free-certifications", label: "Free Certifications" });
     expect(footerExplore).toContainEqual({ href: "/programs", label: "Professional Trainings" });
-    // Founder, 2026-09-28 evening: the /trainers directory is retired — the
-    // footer goes straight to the trainer's own top-level page.
-    expect(footerExplore).toContainEqual({ href: "/mustafa-qizilbash", label: "Trainer" });
+    // Founder, 2026-09-30 (M7): the trainer's dedicated page is removed, so the
+    // footer has no "Trainer" item and nothing in the navigation (or therefore
+    // the sitemap, which is built from it) points at a trainer page.
+    expect(footerExplore.map((i) => i.label)).not.toContain("Trainer");
+    expect(footerExplore.map((i) => i.href)).not.toContain("/mustafa-qizilbash");
     expect(footerExplore.map((i) => i.href)).not.toContain("/trainers");
+    for (const item of [...primaryNav, ...footerExplore, ...footerLegal]) {
+      expect(item.href, item.label).not.toMatch(/^\/(mustafa-qizilbash|trainers)/);
+    }
     expect(footerExplore.map((i) => i.href)).not.toContain("/for-organisations"); // merged into the trainings page, not a page any more
     expect(siteSearch.action).toBe("/search");
     expect(siteSearch.placeholder).toBe("Search Candidates or Training");

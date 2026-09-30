@@ -15,7 +15,7 @@ import { UnlockSettingForm } from "./UnlockSettingForm";
  * effective-dated one. The amount charged is read from this table at the
  * moment an order starts — never from a form.
  */
-export const metadata: Metadata = { title: "Knowledge Check unlock fee" };
+export const metadata: Metadata = { title: "Free Assessment Check unlock fee" };
 export const dynamic = "force-dynamic";
 
 const money = (minor: number, currency: string) => `${currency} ${(minor / 100).toFixed(2)}`;
@@ -33,10 +33,10 @@ export default async function AdminUnlockSettingPage() {
         </Link>
         <p className="text-label mb-2 text-[var(--color-primary)]">Payments</p>
         <h1 className="text-display" data-testid="unlock-setting-title">
-          Knowledge Check unlock fee
+          Free Assessment Check unlock fee
         </h1>
         <p className="text-body-sm mt-2 max-w-[70ch] text-[var(--color-ink-quiet)]">
-          The one-time fee that unlocks the printable result document of a free Knowledge Check. Participants whose profile country is Pakistan
+          The one-time fee that unlocks the printable result document of a Free Assessment Check. Participants whose profile country is Pakistan
           are exempt (the card-payment rule); the result, its ID and its verification page are free for everyone. Off refuses new unlock payments
           — documents already unlocked stay unlocked.
         </p>

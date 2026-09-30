@@ -23,6 +23,7 @@ import {
   toPublicView,
 } from "@/modules/certificates/repository";
 import { completionCertificateData, trainerNames } from "@/modules/certificates/professional-certificate";
+import { trainerProfileUrl } from "@/modules/catalogue/experts/profile-url";
 import { listPublishedExperts } from "@/modules/catalogue/experts/repository";
 import { publicCertificateById, searchCertificates } from "@/modules/certificates/search.service";
 import { listAuditForEntity } from "@/modules/platform/audit/repository";
@@ -367,8 +368,9 @@ describe("public search (§5; plan §6 criteria 7, 8)", () => {
       verifyUrl: `https://example.test/verify/${record.certificateId}`,
     });
     expect(data.trainers).toEqual([
-      { name: known.name, hrdAccredited: !!known.hrdCorpAccreditation, hrdTrainerId: known.hrdCorpAccreditation?.trainerId ?? null },
-      { name: "Zed Unmatched", hrdAccredited: false, hrdTrainerId: null }, // never guessed
+      // profileUrl: the trainer's external profile (M7 link rule); null = plain text.
+      { name: known.name, hrdAccredited: !!known.hrdCorpAccreditation, hrdTrainerId: known.hrdCorpAccreditation?.trainerId ?? null, profileUrl: trainerProfileUrl(known) },
+      { name: "Zed Unmatched", hrdAccredited: false, hrdTrainerId: null, profileUrl: null }, // never guessed
     ]);
     expect(data.qrSvg.startsWith("<svg")).toBe(true);
     expect(JSON.stringify(data)).not.toContain("@example.test\"");

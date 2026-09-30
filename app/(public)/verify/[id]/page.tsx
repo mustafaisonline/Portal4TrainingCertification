@@ -5,7 +5,8 @@ import { cache } from "react";
 import { daysBetween, formatCalendarDate, todayIso } from "@/modules/certificates/dates";
 import type { PublicCertificateView } from "@/modules/certificates/repository";
 import { publicCertificateById } from "@/modules/certificates/search.service";
-import { findResultByPublicId, KNOWLEDGE_CHECK_ID_RE, type KnowledgeCheckStatus, type PublicKnowledgeCheckView } from "@/modules/free-learning/knowledge-check.repository";
+import { ASSESSMENT_GRADE_BANDS } from "@/modules/free-learning/assessment-rules";
+import { findResultByPublicId, KNOWLEDGE_CHECK_ID_RE, type KnowledgeCheckStatus, passMarkPercent, type PublicKnowledgeCheckView } from "@/modules/free-learning/knowledge-check.repository";
 import { certificateBrand } from "@/content/certificate-brand";
 import { formatTimeTaken } from "@/shared/certificate/format";
 import { Card } from "@/shared/ui/Card";
@@ -33,7 +34,10 @@ import { formatTimestamp } from "@/shared/util/dates";
  * the dates, the issuing organisation, and — for the Professional
  * certificate — the training duration and trainer(s) as snapshotted at issue.
  * `/verify-certificate[/:id]` redirect here (next.config.ts). A Knowledge
- * Check keeps its "result, not a credential" wording until DR-05 is adopted.
+ * Check (now the Free Assessment Check, 2026-09-30) keeps its "result, not a
+ * credential" wording; a passed 200-question result also states its grade
+ * (Charlie / Bravo / Alpha, derived from the score), an older result shows
+ * exactly what it was issued with — its size and its 70 % mark, no grade.
  */
 export const dynamic = "force-dynamic";
 
@@ -45,7 +49,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const { id } = await params;
   if (KNOWLEDGE_CHECK_ID_RE.test(id.trim().toUpperCase())) {
     const kc = await findResultByPublicId(id);
-    return { title: kc ? `Knowledge Check ${kc.publicId}` : "Result not found", description: "A free Knowledge Check result — not a credential.", robots: { index: false, follow: false } };
+    return { title: kc ? `Free Assessment Check ${kc.publicId}` : "Result not found", description: "A Free Assessment Check result — not a credential.", robots: { index: false, follow: false } };
   }
   const view = await load(id);
   return {
@@ -103,16 +107,18 @@ function professionalState(status: PublicCertificateView["status"]): VerifyState
 const KC_STATE: Record<KnowledgeCheckStatus, VerifyState> = { valid: "valid", expired: "expired", revoked: "revoked", not_passed: "neutral" };
 
 function kcSentence(view: PublicKnowledgeCheckView): string {
-  const result = `${view.holderName} answered ${view.score} of ${view.size} questions correctly (${view.percent} %) on the free Knowledge Check on ${formatTimestamp(view.finishedAt)}`;
+  const mark = passMarkPercent(view.size);
+  const result = `${view.holderName} answered ${view.score} of ${view.size} questions correctly (${view.percent} %) on the Free Assessment Check on ${formatTimestamp(view.finishedAt)}`;
+  const grade = view.grade ? ` — Grade ${ASSESSMENT_GRADE_BANDS[view.grade].name} (${ASSESSMENT_GRADE_BANDS[view.grade].band})` : "";
   switch (view.status) {
     case "not_passed":
-      return `${result} — below the 70 % pass mark.`;
+      return `${result} — below the ${mark} % pass mark.`;
     case "revoked":
       return `${result}. This result was revoked and is no longer valid.`;
     case "expired":
-      return `${result} — a pass at the 70 % mark. It expired on ${formatCalendarDate(view.expiresOn!)}.`;
+      return `${result} — a pass at the ${mark} % mark${grade}. It expired on ${formatCalendarDate(view.expiresOn!)}.`;
     case "valid":
-      return `${result} — a pass at the 70 % mark. It is valid until ${formatCalendarDate(view.expiresOn!)}.`;
+      return `${result} — a pass at the ${mark} % mark${grade}. It is valid until ${formatCalendarDate(view.expiresOn!)}.`;
   }
 }
 
@@ -125,22 +131,23 @@ function IssuedBy() {
   );
 }
 
-/** A Knowledge Check ID (M14 Phase 4): the result, plainly NOT a credential. */
+/** A Free Assessment Check ID (`KC-`; M14 Phase 4): the result, plainly NOT a credential. */
 function KnowledgeCheckResult({ view }: { view: PublicKnowledgeCheckView }) {
   const rows: Array<[string, string]> = [
-    ["Type", view.passed ? "Certificate of Achievement — Free Knowledge Check" : "Free Knowledge Check (not passed)"],
+    ["Type", view.passed ? "Certificate of Achievement — Free Assessment Check" : "Free Assessment Check (not passed)"],
     ["Questions", `${view.size}, drawn from the reviewed topics of I Am Datapedia!`],
     ["Score", `${view.score} of ${view.size} (${view.percent} %)`],
     ["Time taken", formatTimeTaken(view.timeTakenMs)],
     ["Taken on", formatTimestamp(view.finishedAt)],
   ];
+  if (view.grade) rows.splice(3, 0, ["Grade", `${ASSESSMENT_GRADE_BANDS[view.grade].name} (${ASSESSMENT_GRADE_BANDS[view.grade].band})`]);
   if (view.expiresOn) rows.push([view.status === "expired" ? "Expired on" : "Valid until", formatCalendarDate(view.expiresOn)]);
   return (
     <section className="bg-[var(--color-ground-tint)]">
       <div className="mx-auto max-w-[760px] px-4 py-10 sm:px-6 sm:py-14">
         <div className="flex flex-col gap-8">
           <header>
-            <p className="text-label mb-2 text-[var(--color-primary)]">Knowledge Check result</p>
+            <p className="text-label mb-2 text-[var(--color-primary)]">Free Assessment Check result</p>
             <h1 className="text-display mb-4" data-testid="verify-holder">
               {view.holderName}
             </h1>
@@ -160,7 +167,7 @@ function KnowledgeCheckResult({ view }: { view: PublicKnowledgeCheckView }) {
                 </div>
               ))}
               <div className="sm:col-span-2">
-                <dt className="text-label mb-1">Knowledge Check ID</dt>
+                <dt className="text-label mb-1">Free Assessment Check ID</dt>
                 <dd className="text-mono break-all" data-testid="verify-certificate-id">
                   {view.publicId}
                 </dd>
@@ -169,7 +176,7 @@ function KnowledgeCheckResult({ view }: { view: PublicKnowledgeCheckView }) {
             </dl>
             <p className="text-body-sm mt-4 text-[var(--color-ink-faint)]">Dates are calendar dates in Malaysia (MYT).</p>
             <p className="text-body-sm mt-2 text-[var(--color-ink-faint)]" data-testid="verify-not-credential">
-              A Knowledge Check is a free, self-paced test of reading. It is not a Certificate of Completion and not the Academy&rsquo;s credential, which is
+              The Free Assessment Check is a free online test. Its certificate is not a Certificate of Completion and not the Academy&rsquo;s credential, which is
               earned by attending an expert-led training.
             </p>
           </Card>

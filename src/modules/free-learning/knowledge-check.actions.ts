@@ -4,28 +4,32 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { withTransaction } from "@/db/prisma";
 import { getCurrentUser } from "@/modules/identity/session";
-import { cancelUnfinishedAttempt, deleteFinishedAttempts, finishAttempt, KnowledgeCheckError, saveAnswers, startAttempt } from "./knowledge-check.repository";
+import { ASSESSMENT_SIZE } from "./assessment-rules";
+import { deleteFinishedAttempts, finishAttempt, KnowledgeCheckError, saveAnswers, startAttempt } from "./knowledge-check.repository";
 
 /*
- * Knowledge Check actions (Milestone 14 Phase 4). Every action requires a
- * signed-in user (P12) and acts only on that user's own attempt.
+ * Free Assessment Check actions (Milestone 14 Phase 4; reshaped 2026-09-30:
+ * one 200-question test, 3 hours, no "unfinished" list or cancel). Every action
+ * requires a signed-in user (P12) and acts only on that user's own attempt. The
+ * server decides when time is up — a save after the deadline is refused and the
+ * attempt is scored as it stands.
  */
 
 export type KnowledgeCheckState = { status: "idle" } | { status: "error"; message: string } | { status: "saved"; message: string };
 
 const SESSION_ENDED = "Your session has ended. Please sign in again.";
 
-export async function startKnowledgeCheckAction(_prev: KnowledgeCheckState, formData: FormData): Promise<KnowledgeCheckState> {
+export async function startKnowledgeCheckAction(_prev: KnowledgeCheckState, _formData: FormData): Promise<KnowledgeCheckState> {
   const user = await getCurrentUser();
   if (!user) return { status: "error", message: SESSION_ENDED };
-  const size = Number.parseInt(String(formData.get("size") ?? ""), 10);
   let attemptId = "";
   try {
-    const attempt = await withTransaction((tx) => startAttempt(tx, { userId: user.id, size }));
+    // One running test per person: starting again returns the running one.
+    const attempt = await withTransaction((tx) => startAttempt(tx, { userId: user.id, size: ASSESSMENT_SIZE }));
     attemptId = attempt.id;
   } catch (err) {
     if (err instanceof KnowledgeCheckError) {
-      return { status: "error", message: err.reason === "bank_too_small" ? `Not enough reviewed questions yet for a ${size}-question check — ${err.message.replace(/^Only /, "only ").replace(/;.*$/, "")}. Try a smaller size.` : "Choose 50, 100 or 200 questions." };
+      return { status: "error", message: err.reason === "bank_too_small" ? `The Free Assessment Check is not available yet — it needs ${ASSESSMENT_SIZE} reviewed questions and ${err.message.replace(/^Only /, "only ").replace(/;.*$/, "")}.` : "The check could not be started. Please try again." };
     }
     console.error(`[knowledge-check] start failed for user ${user.id}:`, err instanceof Error ? err.message : err);
     return { status: "error", message: "The check could not be started. Please try again." };
@@ -44,16 +48,26 @@ function answersFrom(formData: FormData): Record<string, number> {
   return answers;
 }
 
-/** Save this page's answers; then continue to the next page, or finish. */
+/** Save this page's answers; then continue to the next page, or finish. When the 3 hours are up the
+ *  save is refused, the attempt is scored as it stands (unanswered = wrong) and the person sees the result. */
 export async function saveKnowledgeCheckPageAction(_prev: KnowledgeCheckState, formData: FormData): Promise<KnowledgeCheckState> {
   const user = await getCurrentUser();
   if (!user) return { status: "error", message: SESSION_ENDED };
   const attemptId = String(formData.get("attemptId") ?? "").trim();
   const intent = String(formData.get("intent") ?? "next");
   const page = Number.parseInt(String(formData.get("page") ?? "1"), 10) || 1;
+  let timeUp = false;
   try {
-    await withTransaction((tx) => saveAnswers(tx, { attemptId, userId: user.id, answers: answersFrom(formData) }));
-    if (intent === "finish") {
+    try {
+      await withTransaction((tx) => saveAnswers(tx, { attemptId, userId: user.id, answers: answersFrom(formData) }));
+    } catch (err) {
+      if (!(err instanceof KnowledgeCheckError && err.reason === "time_expired")) throw err;
+      timeUp = true;
+      // Nothing was written by the refused save; score what was saved earlier (finish instant capped at the deadline).
+      await withTransaction((tx) => finishAttempt(tx, { attemptId, userId: user.id }));
+      revalidatePath("/account", "layout");
+    }
+    if (intent === "finish" && !timeUp) {
       await withTransaction((tx) => finishAttempt(tx, { attemptId, userId: user.id }));
       revalidatePath("/account", "layout");
     }
@@ -64,7 +78,7 @@ export async function saveKnowledgeCheckPageAction(_prev: KnowledgeCheckState, f
     console.error(`[knowledge-check] save failed for attempt ${attemptId}:`, err instanceof Error ? err.message : err);
     return { status: "error", message: "Your answers could not be saved. Please try again." };
   }
-  if (intent === "finish") redirect(`/free-learning/knowledge-check/${attemptId}/result`);
+  if (intent === "finish" || timeUp) redirect(`/free-learning/knowledge-check/${attemptId}/result`);
   if (intent === "previous") redirect(`/free-learning/knowledge-check/${attemptId}?page=${Math.max(1, page - 1)}`);
   redirect(`/free-learning/knowledge-check/${attemptId}?page=${page + 1}`);
 }
@@ -90,24 +104,4 @@ export async function deleteKnowledgeCheckResultsAction(_prev: KnowledgeCheckSta
     console.error(`[knowledge-check] delete failed for user ${user.id}:`, err instanceof Error ? err.message : err);
     return { status: "error", message: "The results could not be deleted. Please try again." };
   }
-}
-
-/** Founder, 2026-09-28: "if user want to cancel it in the middle of the
- *  test" — cancels (deletes) the person's own UNFINISHED attempt and
- *  returns to Free Certifications. Confirmed client-side by the portal's
- *  own dialog before this is called. */
-export async function cancelKnowledgeCheckAttemptAction(_prev: KnowledgeCheckState, formData: FormData): Promise<KnowledgeCheckState> {
-  const user = await getCurrentUser();
-  if (!user) return { status: "error", message: SESSION_ENDED };
-  const attemptId = String(formData.get("attemptId") ?? "").trim();
-  let cancelled = false;
-  try {
-    cancelled = await withTransaction((tx) => cancelUnfinishedAttempt(tx, { attemptId, userId: user.id }));
-  } catch (err) {
-    console.error(`[knowledge-check] cancel failed for attempt ${attemptId}:`, err instanceof Error ? err.message : err);
-    return { status: "error", message: "The check could not be cancelled. Please try again." };
-  }
-  if (!cancelled) return { status: "error", message: "This check could not be found, or it is already finished." };
-  revalidatePath("/free-certifications");
-  redirect("/free-certifications");
 }

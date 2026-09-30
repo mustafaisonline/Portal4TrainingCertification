@@ -131,8 +131,8 @@ export function DiagnosticResultView({
         </h2>
         <p className="text-body-sm max-w-[560px] text-[var(--color-ink-quiet)]">
           This free diagnostic is a quick check of basic data and AI concepts — not a score, not a certificate and not
-          the Academy&rsquo;s credential. Nothing is saved. For a longer free test with a verifiable result, take the
-          Knowledge Check once you have an account.
+          the Academy&rsquo;s credential. Nothing is saved. For a longer free test with a verifiable result, take The
+          Free Assessment Check once you have an account.
         </p>
       </section>
 

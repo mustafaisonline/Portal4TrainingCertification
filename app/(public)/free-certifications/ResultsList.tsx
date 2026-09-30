@@ -9,8 +9,8 @@ import { ConfirmDialog } from "@/shared/ui/ConfirmDialog";
 import { FormStatus } from "@/shared/ui/forms";
 
 /*
- * "Your results" on /free-certifications (founder, 2026-09-28): every
- * finished check with its full stats — questions, answered, correct, wrong,
+ * "Your results" on /free-certifications (founder, 2026-09-28; kept on
+ * 2026-09-30): every finished check with its full stats — questions, answered, correct, wrong,
  * unanswered — a checkbox per row, and Delete selected behind a
  * confirmation dialog. Deletion is the server action's: ownership, the
  * finished-only rule and the unlock-order refusal are all checked there.
@@ -19,6 +19,8 @@ import { FormStatus } from "@/shared/ui/forms";
 export type ResultRow = {
   id: string;
   passed: boolean;
+  /** Charlie / Bravo / Alpha for a passed 200-question result; null otherwise (an older result shows none). */
+  gradeName: string | null;
   size: number;
   answered: number;
   correct: number;
@@ -41,7 +43,7 @@ export function ResultsList({ rows }: { rows: ResultRow[] }) {
     // lands here, and "1 result deleted." must survive the re-render.
     return (
       <div>
-        <p className="text-body-sm text-[var(--color-ink-quiet)]">No finished check yet.</p>
+        <p className="text-body-sm text-[var(--color-ink-quiet)]">No finished test yet.</p>
         <span data-testid="kc-delete-status">
           {state.status === "saved" ? <FormStatus tone="success">{state.message}</FormStatus> : null}
         </span>
@@ -81,6 +83,11 @@ export function ResultsList({ rows }: { rows: ResultRow[] }) {
             <span className="flex min-w-0 flex-1 flex-col gap-1">
               <span className="flex flex-wrap items-center gap-2">
                 <Chip tone={r.passed ? "primary" : "neutral"}>{r.passed ? "Passed" : "Not passed"}</Chip>
+                {r.gradeName ? (
+                  <span data-testid="kc-result-grade">
+                    <Chip tone="primary">Grade {r.gradeName}</Chip>
+                  </span>
+                ) : null}
                 {r.correct} of {r.size} · {r.finishedAtLabel} ·{" "}
                 <Link href={`/verify/${r.publicId}`} className="text-mono text-[var(--color-primary)] underline underline-offset-4">
                   {r.publicId}

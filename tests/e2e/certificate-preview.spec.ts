@@ -94,13 +94,15 @@ test("both certificate types render on sample data: every required field, the QR
   await expect(a).toContainText("This certificate is proudly presented to");
   await expect(a.getByTestId("certificate-holder")).toHaveText("Aisha Binti Rahman");
   await expect(a).toContainText("for successfully completing");
-  await expect(a.getByTestId("certificate-subject")).toHaveText("Data & AI Knowledge Check — 50 questions");
+  await expect(a.getByTestId("certificate-subject")).toHaveText("Data & AI Free Assessment Check — 200 questions");
+  // Founder, 2026-09-30: the title stays "Certificate of Achievement"; a prominent grade line sits under it (sample default: Alpha).
+  await expect(a.getByTestId("certificate-grade")).toHaveText("Grade: ALPHA · 81–100 %");
   const details = a.getByTestId("certificate-details");
   await expect(details).toContainText("Score");
-  await expect(details).toContainText("42 of 50 · 84%");
+  await expect(details).toContainText("180 of 200 · 90%");
   await expect(a.getByTestId("certificate-result")).toHaveText("PASSED");
   await expect(details).toContainText("Time Taken");
-  await expect(details).toContainText("00:24:31");
+  await expect(details).toContainText("02:14:31");
   await expect(details).toContainText("Date Issued");
   await expect(details).toContainText("Valid Until");
   await expect(a.getByTestId("certificate-id")).toHaveText("KC-2026-SAMP-PLE2");
@@ -162,6 +164,33 @@ test("both certificate types render on sample data: every required field, the QR
   const gaps = page.getByTestId("brand-gaps-list");
   await expect(gaps.locator("li")).toHaveCount(1);
   await expect(gaps).toContainText("HRD Corp organisation logo");
+});
+
+test("the Free Certification sample has one sheet per grade: Alpha (default), Bravo, Charlie, or all three", async ({ page }) => {
+  await signIn(page, adminEmail);
+  await page.setViewportSize({ width: 1280, height: 1000 });
+  const expected = { alpha: ["Grade: ALPHA · 81–100 %", "180 of 200 · 90%"], bravo: ["Grade: BRAVO · 71–80 %", "150 of 200 · 75%"], charlie: ["Grade: CHARLIE · 60–70 %", "130 of 200 · 65%"] } as const;
+  for (const grade of ["alpha", "bravo", "charlie"] as const) {
+    await page.goto(`/admin/certificates/preview?kind=achievement&grade=${grade}`);
+    const sheet = page.getByTestId("certificate");
+    await expect(sheet).toHaveCount(1);
+    await expect(sheet.getByTestId("certificate-title")).toHaveText("Certificate of Achievement");
+    await expect(sheet.getByTestId("certificate-grade")).toHaveText(expected[grade][0]);
+    await expect(sheet.getByTestId("certificate-details")).toContainText(expected[grade][1]);
+  }
+  await page.goto("/admin/certificates/preview?kind=achievement&grade=all");
+  const sheets = page.getByTestId("certificate");
+  await expect(sheets).toHaveCount(3);
+  await expect(page.getByTestId("certificate-grade")).toHaveText(["Grade: CHARLIE · 60–70 %", "Grade: BRAVO · 71–80 %", "Grade: ALPHA · 81–100 %"]);
+  // The very long variant of each grade still fits the sheet.
+  await page.goto("/admin/certificates/preview?kind=achievement&grade=all&long=1");
+  for (let i = 0; i < 3; i += 1) {
+    const fits = await page.getByTestId("certificate").nth(i).evaluate((sheet) => {
+      const column = sheet.querySelector(":scope > div:last-of-type") as HTMLElement;
+      return column.scrollHeight - column.clientHeight;
+    });
+    expect(fits, `grade sheet ${i} content column overflows`).toBeLessThanOrEqual(1);
+  }
 });
 
 test("A4 landscape proportions; very long names and titles shrink and never overflow the sheet", async ({ page }) => {
@@ -245,6 +274,23 @@ test("the Certificates tab shows a sample of each certificate, and the sample PD
   await expect(sheet.getByTestId("certificate-title")).toHaveText("Certificate of Achievement");
   await expect(sheet.getByTestId("certificate-sample")).toBeVisible(); // the SAMPLE watermark
   await expect(sheet.getByTestId("certificate-id")).toContainText("KC-2026-SAMP-PLE2");
+  // One sample sheet per grade (default Alpha), with its own PDF.
+  await expect(sheet).toHaveAttribute("data-grade", "alpha");
+  await expect(sheet.getByTestId("certificate-grade")).toHaveText("Grade: ALPHA · 81–100 %");
+  await page.getByTestId("sample-grade-bravo").click();
+  await expect(page).toHaveURL(/sample=achievement&grade=bravo/);
+  await expect(page.getByTestId("sample-certificate-sheet")).toHaveAttribute("data-grade", "bravo");
+  await expect(page.getByTestId("sample-certificate-sheet").getByTestId("certificate-grade")).toHaveText("Grade: BRAVO · 71–80 %");
+  await expect(page.getByTestId("sample-download-pdf")).toHaveAttribute("href", "/api/admin/certificates/sample-pdf?kind=achievement&grade=bravo");
+  await page.getByTestId("sample-grade-charlie").click();
+  await expect(page.getByTestId("sample-certificate-sheet").getByTestId("certificate-grade")).toHaveText("Grade: CHARLIE · 60–70 %");
+  for (const grade of ["alpha", "bravo", "charlie"]) {
+    const gradePdf = await page.request.get(`/api/admin/certificates/sample-pdf?kind=achievement&grade=${grade}`);
+    expect(gradePdf.status()).toBe(200);
+    expect(gradePdf.headers()["content-disposition"]).toContain(`SAMPLE-achievement-${grade}-certificate.pdf`);
+    expect((await gradePdf.body()).subarray(0, 5).toString("latin1")).toBe("%PDF-");
+  }
+  expect((await page.request.get("/api/admin/certificates/sample-pdf?kind=achievement&grade=delta")).status()).toBe(400);
 
   await page.getByTestId("sample-kind-completion").click();
   await expect(page).toHaveURL(/sample=completion/);

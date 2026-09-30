@@ -1,27 +1,49 @@
 import { randomInt } from "node:crypto";
 import type { Db, Tx } from "@/db/prisma";
-import { getPrisma } from "@/db/prisma";
+import { getPrisma, withTransaction } from "@/db/prisma";
 import { isUuid } from "@/modules/catalogue/offerings/repository";
 import { ID_ALPHABET } from "@/modules/certificates/constants";
 import { todayIso } from "@/modules/certificates/dates";
 import { initialExpiry } from "@/modules/certificates/rules";
 import { writeAudit } from "@/modules/platform/audit/repository";
+import { ASSESSMENT_PASS_PERCENT, ASSESSMENT_SIZE, ASSESSMENT_SIZES, ASSESSMENT_TIME_LIMIT_MS, type AssessmentGrade, attemptDeadline, gradeOfResult, gradeScoreRange, isAttemptExpired, passMarkPercent, percentOf } from "./assessment-rules";
 import { QUIZ_PAGE_SIZE } from "./quiz.repository";
 
 /*
- * The free Knowledge Check — Milestone 14 Phase 4 (DR-03 §2.4 and §3; founder
- * decisions P2, P12). A signed-in account holder chooses 50, 100 or 200
- * questions, drawn at random from the REVIEWED questions of PUBLISHED
- * topics; answers are saved page by page; finishing scores the attempt,
- * passes it at 70 % and gives it a public ID (`KC-YYYY-XXXX-XXXX`, the
- * certificate alphabet) that /verify resolves. It is a result, NOT a
- * credential (DR-01 unchanged): it is never called a Certificate of
- * Completion and never listed as one. Unlimited retakes, no time limit.
+ * The Free Assessment Check (internally still "knowledge check": tables,
+ * modules and the `KC-` ID prefix are not renamed — modification.md A7).
+ * Milestone 14 Phase 4 (DR-03 §2.4 and §3), reshaped by the founder on
+ * 2026-09-30 (D4–D7): a signed-in account holder takes ONE fixed test of 200
+ * questions drawn at random from the REVIEWED questions of PUBLISHED topics
+ * (a fresh draw of the whole bank for every person and every attempt), within
+ * 3 hours. The time limit is enforced HERE, on the server: the deadline is
+ * `started_at + 3 h` (derived — no column), saving after it is refused, and an
+ * attempt read after its deadline is scored as it stands (unanswered = wrong)
+ * lazily by `settleExpiredAttempts` / `startAttempt` / `finishAttempt` — no
+ * scheduled job. One running test per person: starting again returns it.
+ * Answers are saved page by page; finishing scores the attempt, passes it at
+ * 60 % (grades Charlie/Bravo/Alpha — see `assessment-rules.ts`) and gives it
+ * a public ID (`KC-YYYY-XXXX-XXXX`, the certificate alphabet) that /verify
+ * resolves. It is a result, NOT a credential (DR-01 unchanged): it is never
+ * called a Certificate of Completion. Unlimited retakes. Results issued before
+ * this change keep their old size and 70 % mark (see `assessment-rules.ts`).
  */
 
-export const KNOWLEDGE_CHECK_SIZES = [50, 100, 200] as const;
+export {
+  ASSESSMENT_TIME_LIMIT_MS as KNOWLEDGE_CHECK_TIME_LIMIT_MS,
+  assessmentGrade,
+  attemptDeadline,
+  gradeOfResult,
+  isAttemptExpired,
+  passMarkPercent,
+  percentOf,
+  type AssessmentGrade,
+} from "./assessment-rules";
+
+export const KNOWLEDGE_CHECK_SIZES = ASSESSMENT_SIZES;
 export type KnowledgeCheckSize = (typeof KNOWLEDGE_CHECK_SIZES)[number];
-export const KNOWLEDGE_CHECK_PASS_PERCENT = 70;
+/** The pass mark of the current (200-question) rules; results of the older sizes were decided at 70 % (`LEGACY_PASS_PERCENT`). */
+export const KNOWLEDGE_CHECK_PASS_PERCENT = ASSESSMENT_PASS_PERCENT;
 export const KNOWLEDGE_CHECK_ID_RE = /^KC-\d{4}-[23456789ABCDEFGHJKMNPQRSTUVWXYZ]{4}-[23456789ABCDEFGHJKMNPQRSTUVWXYZ]{4}$/;
 
 export function isKnowledgeCheckSize(n: number): n is KnowledgeCheckSize {
@@ -35,13 +57,14 @@ export function generateKnowledgeCheckId(year: number, random: (max: number) => 
   return `KC-${year}-${symbols.slice(0, 4)}-${symbols.slice(4)}`;
 }
 
+/** Pass decision at finish: 60 % for the current size (200), 70 % for the earlier sizes (D7). */
 export function passed(score: number, size: number): boolean {
-  return size > 0 && (score * 100) / size >= KNOWLEDGE_CHECK_PASS_PERCENT;
+  return size > 0 && (score * 100) / size >= passMarkPercent(size);
 }
 
 export class KnowledgeCheckError extends Error {
   constructor(
-    readonly reason: "bank_too_small" | "invalid_size" | "not_found" | "already_finished" | "not_finished" | "invalid_reason" | "not_passed" | "already_revoked",
+    readonly reason: "bank_too_small" | "invalid_size" | "time_expired" | "not_found" | "already_finished" | "not_finished" | "invalid_reason" | "not_passed" | "already_revoked",
     message: string,
   ) {
     super(message);
@@ -78,10 +101,52 @@ function toRecord(r: { id: string; userId: string; size: number; questionIds: un
   };
 }
 
-/** A fresh attempt: `size` reviewed questions of published topics, shuffled
- *  with a cryptographic source. Refused honestly while the bank is smaller. */
-export async function startAttempt(tx: Tx, input: { userId: string; size: number }): Promise<AttemptRecord> {
-  if (!isKnowledgeCheckSize(input.size)) throw new KnowledgeCheckError("invalid_size", `Size ${input.size} is not 50, 100 or 200.`);
+/** Serialises one person's start/settle work so two tabs can never open two running tests
+ *  (a transaction-scoped advisory lock on the user id — released at commit; no table or column). */
+async function lockUserAttempts(tx: Tx, userId: string): Promise<void> {
+  await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${`kc-attempts:${userId}`}))`;
+}
+
+/** Finishes, as it stands, every unfinished attempt of `userId` whose deadline has passed;
+ *  returns the still-running (unexpired) attempt, if any (the newest one). */
+async function settleAndFindRunning(tx: Tx, userId: string, now: Date): Promise<AttemptRecord | null> {
+  const open = await tx.knowledgeCheckAttempt.findMany({ where: { userId, finishedAt: null }, orderBy: { startedAt: "asc" }, select });
+  let running: AttemptRecord | null = null;
+  for (const row of open) {
+    const a = toRecord(row);
+    if (isAttemptExpired(a.startedAt, now)) await finishAttempt(tx, { attemptId: a.id, userId, now });
+    else running = a;
+  }
+  return running;
+}
+
+/** Lazy expiry: scores, as it stands, every unfinished attempt of the person whose 3 hours are up.
+ *  Called wherever attempts are read (the Free Certifications page, the running-test page) — there is
+ *  no scheduled job. Idempotent; returns how many were finished. */
+export async function settleExpiredAttempts(userId: string, now: Date = new Date()): Promise<number> {
+  const cutoff = new Date(now.getTime() - ASSESSMENT_TIME_LIMIT_MS);
+  const due = await getPrisma().knowledgeCheckAttempt.findMany({ where: { userId, finishedAt: null, startedAt: { lte: cutoff } }, select: { id: true } });
+  for (const { id } of due) await withTransaction((tx) => finishAttempt(tx, { attemptId: id, userId, now }));
+  return due.length;
+}
+
+/** The person's one RUNNING test, if any (after settling expired ones). */
+export async function runningAttemptForUser(userId: string, now: Date = new Date()): Promise<AttemptRecord | null> {
+  await settleExpiredAttempts(userId, now);
+  const row = await getPrisma().knowledgeCheckAttempt.findFirst({ where: { userId, finishedAt: null }, orderBy: { startedAt: "desc" }, select });
+  return row ? toRecord(row) : null;
+}
+
+/** The person's running test if there is one (one at a time); otherwise a fresh attempt: 200
+ *  reviewed questions of published topics, shuffled from the WHOLE bank with a cryptographic
+ *  source — a new random set for every person and every attempt. Refused honestly while the
+ *  bank holds fewer than 200. `now` is injectable for tests. */
+export async function startAttempt(tx: Tx, input: { userId: string; size: number; now?: Date }): Promise<AttemptRecord> {
+  if (!isKnowledgeCheckSize(input.size)) throw new KnowledgeCheckError("invalid_size", `Size ${input.size} is not ${ASSESSMENT_SIZES.join(", ")}.`);
+  const now = input.now ?? new Date();
+  await lockUserAttempts(tx, input.userId);
+  const running = await settleAndFindRunning(tx, input.userId, now);
+  if (running) return running;
   const pool = await tx.topicQuestion.findMany({ where: { status: "reviewed", topic: { published: true } }, select: { id: true }, orderBy: { id: "asc" } });
   if (pool.length < input.size) throw new KnowledgeCheckError("bank_too_small", `Only ${pool.length} reviewed questions exist; ${input.size} are needed.`);
   const ids = pool.map((q) => q.id);
@@ -120,11 +185,15 @@ export async function attemptPage(attempt: AttemptRecord, page: number, db: Db =
   return { page: current, pages, from: (current - 1) * QUIZ_PAGE_SIZE + 1, to: Math.min(attempt.questionIds.length, current * QUIZ_PAGE_SIZE), answered: Object.keys(attempt.answers).length, questions };
 }
 
-/** Merge a page's answers into the attempt (only questions the attempt serves; only positions 1–5). */
-export async function saveAnswers(tx: Tx, input: { attemptId: string; userId: string; answers: Record<string, number> }): Promise<AttemptRecord> {
+/** Merge a page's answers into the attempt (only questions the attempt serves; only positions 1–5).
+ *  REFUSED once the 3 hours are up (`time_expired`) — the server, not the browser's clock, decides.
+ *  This function writes nothing on refusal; the caller then settles the attempt
+ *  (`finishAttempt` scores it as it stands, capped at the deadline). */
+export async function saveAnswers(tx: Tx, input: { attemptId: string; userId: string; answers: Record<string, number>; now?: Date }): Promise<AttemptRecord> {
   const attempt = await getAttemptForUser(input.attemptId, input.userId, tx);
   if (!attempt) throw new KnowledgeCheckError("not_found", `Attempt ${input.attemptId} not found for user.`);
   if (attempt.finishedAt) throw new KnowledgeCheckError("already_finished", `Attempt ${attempt.id} is finished.`);
+  if (isAttemptExpired(attempt.startedAt, input.now ?? new Date())) throw new KnowledgeCheckError("time_expired", `The time for attempt ${attempt.id} is up.`);
   const served = new Set(attempt.questionIds);
   const merged: Record<string, number> = { ...attempt.answers };
   for (const [id, pos] of Object.entries(input.answers)) {
@@ -134,12 +203,16 @@ export async function saveAnswers(tx: Tx, input: { attemptId: string; userId: st
   return toRecord(row);
 }
 
-/** Score the attempt, decide the pass, snapshot the holder's name, mint the public ID, audit. Idempotent. */
+/** Score the attempt, decide the pass, snapshot the holder's name, mint the public ID, audit. Idempotent.
+ *  The finish instant is CAPPED at the deadline (`started_at + 3 h`), so a test scored after its time
+ *  ran out reads as taking exactly 3 hours, never more; `now` is injectable for tests. */
 export async function finishAttempt(tx: Tx, input: { attemptId: string; userId: string; now?: Date }): Promise<AttemptRecord> {
   const attempt = await getAttemptForUser(input.attemptId, input.userId, tx);
   if (!attempt) throw new KnowledgeCheckError("not_found", `Attempt ${input.attemptId} not found for user.`);
   if (attempt.finishedAt) return attempt;
-  const now = input.now ?? new Date();
+  const requested = input.now ?? new Date();
+  const deadline = attemptDeadline(attempt.startedAt);
+  const now = requested.getTime() > deadline.getTime() ? deadline : requested;
   const correct = await tx.topicQuestionOption.findMany({ where: { questionId: { in: attempt.questionIds }, isCorrect: true }, select: { questionId: true, position: true } });
   const correctBy = new Map(correct.map((c) => [c.questionId, c.position]));
   const score = attempt.questionIds.filter((id) => attempt.answers[id] !== undefined && attempt.answers[id] === correctBy.get(id)).length;
@@ -151,7 +224,7 @@ export async function finishAttempt(tx: Tx, input: { attemptId: string; userId: 
     if (!(await tx.knowledgeCheckAttempt.findUnique({ where: { publicId }, select: { id: true } }))) break;
     publicId = "";
   }
-  if (!publicId) throw new Error("A unique Knowledge Check ID could not be generated.");
+  if (!publicId) throw new Error("A unique Free Assessment Check ID could not be generated.");
   const isPass = passed(score, attempt.size);
   const row = await tx.knowledgeCheckAttempt.update({ where: { id: attempt.id }, data: { score, passed: isPass, publicId, holderName, finishedAt: now }, select });
   await writeAudit(tx, {
@@ -169,7 +242,7 @@ export async function listAttemptsForUser(userId: string, db: Db = getPrisma()):
   return rows.map(toRecord);
 }
 
-/** What a verifier is told about a Knowledge Check. `not_passed` has no
+/** What a verifier is told about a Free Assessment Check result. `not_passed` has no
  *  validity at all; a pass is valid for one year from the day it was earned
  *  (Milestone 15, Q8b), unless an administrator revoked it. */
 export type KnowledgeCheckStatus = "valid" | "expired" | "revoked" | "not_passed";
@@ -189,8 +262,11 @@ export type PublicKnowledgeCheckView = {
   holderName: string;
   size: number;
   score: number;
+  /** Whole-number percentage, rounded DOWN (so it always agrees with the grade band). */
   percent: number;
   passed: boolean;
+  /** Charlie / Bravo / Alpha for a passed 200-question result; null for a result of an earlier size or one that did not pass. DERIVED, never stored. */
+  grade: AssessmentGrade | null;
   finishedAt: Date;
   /** Finish − start, in milliseconds — measured by the server (Milestone 15). */
   timeTakenMs: number;
@@ -199,7 +275,7 @@ export type PublicKnowledgeCheckView = {
   expiresOn: string | null;
 };
 
-/** What /verify shows for a Knowledge Check ID: the result, never the answers. */
+/** What /verify shows for a Free Assessment Check ID (`KC-` prefix): the result, never the answers. */
 export async function findResultByPublicId(publicId: string, db: Db = getPrisma(), now: Date = new Date()): Promise<PublicKnowledgeCheckView | null> {
   const id = publicId.trim().toUpperCase();
   if (!KNOWLEDGE_CHECK_ID_RE.test(id)) return null;
@@ -211,8 +287,9 @@ export async function findResultByPublicId(publicId: string, db: Db = getPrisma(
     holderName: r.holderName ?? "Account holder",
     size: r.size,
     score: r.score,
-    percent: Math.round((r.score * 100) / r.size),
+    percent: percentOf(r.score, r.size),
     passed: r.passed,
+    grade: gradeOfResult({ score: r.score, size: r.size, passed: r.passed }),
     finishedAt: r.finishedAt,
     timeTakenMs: Math.max(0, r.finishedAt.getTime() - r.startedAt.getTime()),
     status,
@@ -239,7 +316,7 @@ export async function revokeKnowledgeCheck(tx: Tx, input: { publicId: string; ad
   }
   const id = input.publicId.trim().toUpperCase();
   const row = KNOWLEDGE_CHECK_ID_RE.test(id) ? await tx.knowledgeCheckAttempt.findUnique({ where: { publicId: id }, select: { id: true, publicId: true, passed: true, finishedAt: true, revokedAt: true } }) : null;
-  if (!row || !row.finishedAt) throw new KnowledgeCheckError("not_found", `No Knowledge Check result ${input.publicId}.`);
+  if (!row || !row.finishedAt) throw new KnowledgeCheckError("not_found", `No Free Assessment Check result ${input.publicId}.`);
   if (!row.passed) throw new KnowledgeCheckError("not_passed", `Result ${id} did not pass, so it has no certificate.`);
   if (row.revokedAt) throw new KnowledgeCheckError("already_revoked", `Result ${id} was revoked on ${row.revokedAt.toISOString()}.`);
   const now = input.now ?? new Date();
@@ -264,19 +341,28 @@ export type AdminKnowledgeCheckRow = {
   size: number;
   score: number;
   percent: number;
+  /** Derived (see `gradeOfResult`); null for a result of an earlier size. */
+  grade: AssessmentGrade | null;
   finishedAt: Date;
   status: KnowledgeCheckStatus;
   expiresOn: string | null;
   revocationReason: string | null;
 };
 
-/** Passed results for the administrator: by exact Knowledge Check ID, or the
- *  latest. Email is shown here and never publicly. */
-export async function listPassedResultsForAdmin(input: { publicId?: string; limit?: number }, db: Db = getPrisma(), now: Date = new Date()): Promise<AdminKnowledgeCheckRow[]> {
+/** Passed results for the administrator: by exact Free Assessment Check ID, or the
+ *  latest; optionally only one grade (the grade is derived, so the filter is the score
+ *  range of that grade on a 200-question result). Email is shown here and never publicly. */
+export async function listPassedResultsForAdmin(input: { publicId?: string; grade?: AssessmentGrade; limit?: number }, db: Db = getPrisma(), now: Date = new Date()): Promise<AdminKnowledgeCheckRow[]> {
   const id = input.publicId?.trim().toUpperCase();
   if (input.publicId && !(id && KNOWLEDGE_CHECK_ID_RE.test(id))) return [];
+  const range = input.grade ? gradeScoreRange(input.grade, ASSESSMENT_SIZE) : null;
   const rows = await db.knowledgeCheckAttempt.findMany({
-    where: { passed: true, finishedAt: { not: null }, publicId: id ?? { not: null } },
+    where: {
+      passed: true,
+      finishedAt: { not: null },
+      publicId: id ?? { not: null },
+      ...(range ? { size: ASSESSMENT_SIZE, score: { gte: range.min, lte: range.max } } : {}),
+    },
     orderBy: { finishedAt: "desc" },
     take: input.limit ?? 25,
     select: { id: true, publicId: true, holderName: true, size: true, score: true, finishedAt: true, revokedAt: true, revocationReason: true, user: { select: { email: true } } },
@@ -285,7 +371,7 @@ export async function listPassedResultsForAdmin(input: { publicId?: string; limi
   return rows.flatMap((r) => {
     if (!r.publicId || !r.finishedAt || r.score === null) return [];
     const { status, expiresOn } = knowledgeCheckStatus({ passed: true, finishedAt: r.finishedAt, revokedAt: r.revokedAt }, today);
-    return [{ attemptId: r.id, publicId: r.publicId, holderName: r.holderName ?? "Account holder", email: r.user.email, size: r.size, score: r.score, percent: Math.round((r.score * 100) / r.size), finishedAt: r.finishedAt, status, expiresOn, revocationReason: r.revocationReason }];
+    return [{ attemptId: r.id, publicId: r.publicId, holderName: r.holderName ?? "Account holder", email: r.user.email, size: r.size, score: r.score, percent: percentOf(r.score, r.size), grade: gradeOfResult({ score: r.score, size: r.size, passed: true }), finishedAt: r.finishedAt, status, expiresOn, revocationReason: r.revocationReason }];
   });
 }
 
@@ -294,7 +380,7 @@ export async function listPassedResultsForAdmin(input: { publicId?: string; limi
  *  (the audit log is the surviving record); the verify page for its ID then
  *  answers not-found, which is the point of deleting. A result whose
  *  document unlock was ever ordered is a commercial record and is refused;
- *  so is an unfinished attempt (it has its own Continue flow). */
+ *  so is a running (unfinished) attempt, which a person cannot delete. */
 export async function deleteFinishedAttempts(
   tx: Tx,
   input: { userId: string; attemptIds: string[] },
@@ -334,24 +420,4 @@ export async function deleteFinishedAttempts(
     deleted += 1;
   }
   return { deleted, refused };
-}
-
-/** Founder, 2026-09-28: a running (unfinished) check can be cancelled by its
- *  own taker — the attempt row is deleted, audited. A finished attempt is
- *  refused here (its deletion is `deleteFinishedAttempts`, with its own
- *  rules); nothing else references an unfinished attempt. */
-export async function cancelUnfinishedAttempt(tx: Tx, input: { attemptId: string; userId: string }): Promise<boolean> {
-  if (!isUuid(input.attemptId)) return false;
-  const attempt = await tx.knowledgeCheckAttempt.findFirst({ where: { id: input.attemptId, userId: input.userId }, select });
-  if (!attempt || attempt.finishedAt) return false;
-  await writeAudit(tx, {
-    actorUserId: input.userId,
-    action: "knowledge_check.deleted",
-    entityType: "knowledge_check_attempt",
-    entityId: input.attemptId,
-    before: { cancelled: true, size: attempt.size, answered: Object.keys(toRecord(attempt).answers).length, startedAt: attempt.startedAt.toISOString() },
-    after: null,
-  });
-  await tx.knowledgeCheckAttempt.delete({ where: { id: input.attemptId } });
-  return true;
 }

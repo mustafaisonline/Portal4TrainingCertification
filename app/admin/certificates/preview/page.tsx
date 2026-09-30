@@ -7,7 +7,8 @@ import { appBaseUrl } from "@/modules/commerce/checkout.service";
 import { authorise } from "@/modules/identity/session";
 import { PrintButton } from "@/modules/certificates/components/PrintButton";
 import { Certificate } from "@/shared/certificate/Certificate";
-import { sampleCertificate } from "@/shared/certificate/sample";
+import { ASSESSMENT_GRADE_BANDS } from "@/modules/free-learning/assessment-rules";
+import { isSampleGrade, SAMPLE_GRADES, sampleCertificate } from "@/shared/certificate/sample";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 
@@ -20,6 +21,8 @@ import { Card } from "@/shared/ui/Card";
  *
  * `?kind=achievement|completion` shows one sheet (so Print gives one A4 page);
  * `?long=1` swaps in a very long name and title to prove nothing overflows.
+ * `?grade=alpha|bravo|charlie` picks the Free Certification sample's grade
+ * (default Alpha); `?grade=all` shows one sheet per grade (founder, 2026-09-30).
  */
 export const metadata: Metadata = { title: "Certificate design preview" };
 export const dynamic = "force-dynamic";
@@ -30,6 +33,9 @@ export default async function CertificatePreviewPage({ searchParams }: { searchP
   const sp = await searchParams;
   const only = sp["kind"] === "achievement" || sp["kind"] === "completion" ? (sp["kind"] as "achievement" | "completion") : null;
   const long = sp["long"] === "1";
+  const gradeParam = typeof sp["grade"] === "string" ? sp["grade"] : null;
+  const allGrades = gradeParam === "all";
+  const grade = isSampleGrade(gradeParam) ? gradeParam : "alpha";
 
   let base = "https://example.test";
   try {
@@ -42,7 +48,11 @@ export default async function CertificatePreviewPage({ searchParams }: { searchP
   const trainers = trainer
     ? [{ name: trainer.name, hrdAccredited: trainer.hrdCorpAccreditation !== null, hrdTrainerId: trainer.hrdCorpAccreditation?.trainerId ?? null }]
     : undefined;
-  const [achievement, completion] = await Promise.all([sampleCertificate("achievement", { baseUrl: base, long, trainers }), sampleCertificate("completion", { baseUrl: base, long, trainers })]);
+  const shownGrades = allGrades ? SAMPLE_GRADES : [grade];
+  const [achievements, completion] = await Promise.all([
+    Promise.all(shownGrades.map((g) => sampleCertificate("achievement", { baseUrl: base, long, trainers, grade: g }))),
+    sampleCertificate("completion", { baseUrl: base, long, trainers }),
+  ]);
   const gaps = certificateBrandGaps(certificateBrand);
 
   return (
@@ -69,10 +79,21 @@ export default async function CertificatePreviewPage({ searchParams }: { searchP
           <Button variant="secondary" href="/admin/certificates/preview?kind=completion" data-testid="preview-completion">
             Professional Training only
           </Button>
-          <Button variant="secondary" href={`/admin/certificates/preview${only ? `?kind=${only}&long=1` : "?long=1"}`} data-testid="preview-long">
+          <Button variant="secondary" href={`/admin/certificates/preview${only ? `?kind=${only}&long=1` : "?long=1"}${only !== "completion" && gradeParam ? `&grade=${gradeParam}` : ""}`} data-testid="preview-long">
             Very long name and title
           </Button>
           <PrintButton />
+        </div>
+        <div className="mt-3 flex flex-wrap items-center gap-3" role="group" aria-label="Free Certification grade">
+          <span className="text-label">Free Certification grade</span>
+          {SAMPLE_GRADES.map((g) => (
+            <Button key={g} variant="secondary" href={`/admin/certificates/preview?grade=${g}${only ? `&kind=${only}` : ""}${long ? "&long=1" : ""}`} data-testid={`preview-grade-${g}`}>
+              {ASSESSMENT_GRADE_BANDS[g].name}
+            </Button>
+          ))}
+          <Button variant="secondary" href={`/admin/certificates/preview?grade=all&kind=achievement${long ? "&long=1" : ""}`} data-testid="preview-grade-all">
+            All three grades
+          </Button>
         </div>
       </header>
 
@@ -97,14 +118,18 @@ export default async function CertificatePreviewPage({ searchParams }: { searchP
 
       {/* On a phone the sheet keeps its proportions and scrolls sideways rather than shrinking to unreadable type. */}
       <div className="flex flex-col gap-10">
-        {only !== "completion" ? (
-          <div className="overflow-x-auto">
-            <div className="mx-auto min-w-[760px] max-w-[1123px]">
-              <p className="text-label mb-2 print:hidden">Free Certification — Certificate of Achievement</p>
-              <Certificate {...achievement} />
-            </div>
-          </div>
-        ) : null}
+        {only !== "completion"
+          ? achievements.map((achievement, i) => (
+              <div key={shownGrades[i]} className="overflow-x-auto">
+                <div className="mx-auto min-w-[760px] max-w-[1123px]">
+                  <p className="text-label mb-2 print:hidden">
+                    Free Certification — Certificate of Achievement · {ASSESSMENT_GRADE_BANDS[shownGrades[i]!].name} ({ASSESSMENT_GRADE_BANDS[shownGrades[i]!].band})
+                  </p>
+                  <Certificate {...achievement} />
+                </div>
+              </div>
+            ))
+          : null}
         {only !== "achievement" ? (
           <div className="overflow-x-auto">
             <div className="mx-auto min-w-[760px] max-w-[1123px]">

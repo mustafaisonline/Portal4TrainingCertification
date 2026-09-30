@@ -32,9 +32,9 @@ import type { LegalDocument } from "./types";
 export const refundPolicy: LegalDocument = {
   key: "refund",
   title: "Refund & cancellation policy",
-  version: "DRAFT-2026-09-29",
+  version: "DRAFT-2026-09-30",
   status: "draft",
-  lastUpdated: "2026-09-29",
+  lastUpdated: "2026-09-30",
   summary:
     "When a training registration can be cancelled or moved to another date, how much is refunded, how to do it, and what happens if the Academy has to cancel or reschedule.",
   sections: [
@@ -58,7 +58,7 @@ export const refundPolicy: LegalDocument = {
         "This policy applies to registrations for the scheduled public offerings of Data & AI Academy trainings that you register and pay for on this portal, operated by Your Partner Technologies (business registration number 202401023226 (1569075-K)). It forms part of the Terms of service.",
         "It does not apply to private or corporate cohorts, which are governed by the written agreement for that cohort (see section 8).",
         "Certificate of Completion renewal fee: the fee you pay to renew a certificate is not refundable once the renewal has been applied, because the extension to the certificate's expiry date is delivered immediately when the payment is confirmed. If you believe a renewal was charged in error — for example, you were charged twice — raise it through Contact us or by emailing [contact email], and we will look into it and handle it manually.",
-        "Knowledge Check certificate unlock: the one-time fee you may pay to unlock the printable Certificate of Achievement for a passed free Knowledge Check is not refundable once the certificate has been shown, because the certificate is delivered immediately when the payment is confirmed. The result itself, its ID and its public verification page are free and are never withheld. If you believe an unlock was charged in error, raise it through Contact us or by emailing [contact email].",
+        "Free Assessment Check certificate unlock: the one-time fee you may pay to unlock the printable Certificate of Achievement for a passed Free Assessment Check is not refundable once the certificate has been shown, because the certificate is delivered immediately when the payment is confirmed. The result itself, its ID and its public verification page are free and are never withheld. If you believe an unlock was charged in error, raise it through Contact us or by emailing [contact email].",
         "Support the Academy: this is a one-off payment that grants no service or benefit in return, so the day-based schedule in section 2 does not apply to it. If you paid by mistake, or want to ask for a refund for another reason, raise it through Contact us or by emailing [contact email] and we will consider it.",
         "\"Start date\" means the first scheduled session of the offering you registered for, in the time zone shown on the offering. Days are counted as calendar days before that date, not business days.",
       ],

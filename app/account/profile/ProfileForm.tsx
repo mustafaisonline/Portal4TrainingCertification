@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect, useId, useState } from "react";
 import { COUNTRIES, countryName, DIAL_CODES } from "@/content/countries";
+import { HRD_CLAIM_NOTE } from "@/content/hrd-corp";
 import { updateProfileAction, type ProfileFormState } from "@/modules/identity/profile.actions";
 import type { ProfileView } from "@/modules/identity/profile.repository";
 import { dobBounds, LIMITS, splitE164, type ProfileLists } from "@/modules/identity/profile-validation";
@@ -237,7 +238,7 @@ export function ProfileForm({
             label="Organisation"
             autoComplete="organization"
             maxLength={LIMITS.organisationMax}
-            hint="Your employer — needed for invoices and any HRD Corp claim."
+            hint={`Your employer — needed for invoices and any HRD Corp claim. ${HRD_CLAIM_NOTE}`}
             error={fieldErrors.organisation}
             {...bind("organisation")}
           />
@@ -276,7 +277,7 @@ export function ProfileForm({
       </Card>
 
       <Card variant="panel" className="p-6 sm:p-8">
-        <SectionTitle hint="Needed for your Certificate of Completion and, where applicable, HRD Corp attendance records. Stored encrypted; only the last four digits are ever shown.">
+        <SectionTitle hint={`Needed for your Certificate of Completion and, where applicable, HRD Corp attendance records. ${HRD_CLAIM_NOTE} Stored encrypted; only the last four digits are ever shown.`}>
           Identity document
         </SectionTitle>
         <div className="flex flex-col gap-5">

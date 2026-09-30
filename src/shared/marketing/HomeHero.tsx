@@ -218,6 +218,14 @@ export function HomeHero({
               >
                 Explore trainings <IconArrow />
               </Link>
+              {/* Founder, 2026-09-30: the free diagnostic sits beside the primary action. */}
+              <Link
+                href="/free-learning/diagnostic"
+                data-testid="hero-free-diagnostic"
+                className="inline-flex items-center gap-2 rounded-xl border border-[var(--color-line-strong)] px-6 py-3.5 text-[15px] font-semibold text-[var(--color-ink)] hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
+              >
+                Free Diagnostic
+              </Link>
             </div>
             <div className="flex flex-wrap gap-x-8 gap-y-4">
               {benefits.map((b) => (

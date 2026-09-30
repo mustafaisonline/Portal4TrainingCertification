@@ -160,3 +160,25 @@ test("the home page has no WCAG 2.2 AA violations with the new section (light an
   await page.goto("/");
   await expectNoAxeViolations(page, "[data-testid=how-portal-works]");
 });
+
+test("hero: a Free Diagnostic button sits next to Explore trainings and opens the diagnostic (founder, 2026-09-30)", async ({ page }) => {
+  await page.goto("/");
+  const explore = page.getByRole("link", { name: /^Explore trainings/ }).first();
+  const diagnostic = page.getByTestId("hero-free-diagnostic");
+  await expect(diagnostic).toHaveText("Free Diagnostic");
+  await expect(diagnostic).toHaveAttribute("href", "/free-learning/diagnostic");
+  // Next to it: the same row, the diagnostic to the right of the primary button.
+  const a = (await explore.boundingBox())!;
+  const b = (await diagnostic.boundingBox())!;
+  expect(Math.abs(a.y - b.y), "same row").toBeLessThan(6);
+  expect(b.x, "to the right of Explore trainings").toBeGreaterThan(a.x + a.width - 1);
+  await diagnostic.click();
+  await expect(page).toHaveURL(/\/free-learning\/diagnostic$/);
+  // Contrast in both themes (transitions off: axe would sample a blended colour).
+  await page.goto("/");
+  await page.addStyleTag({ content: "*, *::before, *::after { transition: none !important; }" });
+  for (const scheme of ["light", "dark"] as const) {
+    await page.emulateMedia({ colorScheme: scheme });
+    await expectNoAxeViolations(page, '[data-testid="hero-free-diagnostic"]');
+  }
+});

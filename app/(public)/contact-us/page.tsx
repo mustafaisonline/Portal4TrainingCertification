@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { CONTACT_EMAIL, contactMailto, interestSubject } from "@/content/contact";
+import { headOffice, partnerLocations } from "@/content/locations";
 import { findPublishedProgrammeBySlug } from "@/modules/catalogue/programmes/repository";
 import { Button } from "@/shared/ui/Button";
+import { LocationCard } from "@/shared/marketing/LocationCard";
 import { Card } from "@/shared/ui/Card";
 
 /*
@@ -29,6 +31,12 @@ import { Card } from "@/shared/ui/Card";
  * Old links of the form /contact-us?kind=…&programme=<slug> still resolve:
  * the page reads `programme` only to name the training in a line and in the
  * email's subject, so a shared link keeps its context.
+ *
+ * ADDED 2026-10-01 (CR-2026-10-01-0712, founder): an "Our locations" section —
+ * the head office card on top, the local training partners under it
+ * (`src/content/locations.ts`). The head office carries the company number and
+ * registered address the founder supplied on 2026-09-29; it still shows no
+ * telephone because none has been supplied.
  */
 
 export const metadata: Metadata = {
@@ -158,6 +166,34 @@ export default async function ContactPage({
               </div>
             </Card>
           </div>
+        </div>
+      </section>
+
+      {/* ===== Our locations — head office on top, partner locations under it (founder, 2026-10-01) ===== */}
+      <section className="border-t border-[var(--color-line)]" data-testid="locations-section" aria-labelledby="locations-heading">
+        <div className="mx-auto max-w-[1280px] px-6 py-16">
+          <p className="text-label mb-3 text-[var(--color-primary)]">Where to find us</p>
+          <h2 id="locations-heading" className="text-display mb-8">
+            Our locations
+          </h2>
+
+          <div className="mb-12" data-testid="head-office">
+            <LocationCard location={headOffice} />
+          </div>
+
+          {partnerLocations.length > 0 ? (
+            <div data-testid="partner-locations">
+              <h3 className="text-h1 mb-2">Partner locations</h3>
+              <p className="text-body-sm mb-6 max-w-[62ch] text-[var(--color-ink-quiet)]">
+                Where a training is delivered through a local partner, you can reach the partner directly.
+              </p>
+              <div className="grid gap-6 md:grid-cols-2">
+                {partnerLocations.map((l) => (
+                  <LocationCard key={l.id} location={l} />
+                ))}
+              </div>
+            </div>
+          ) : null}
         </div>
       </section>
     </>

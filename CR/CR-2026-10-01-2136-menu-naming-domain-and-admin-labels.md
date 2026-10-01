@@ -57,7 +57,7 @@
 | 0 | CR written; DNS facts gathered; `docs/operations/DOMAIN_SETUP.md` written | **DONE** | 2026-10-01 |
 | 1–4 | Build | **BUILT, VERIFIED, COMMITTED and DEPLOYED** (`401f642`, live in `v2026.10.02-1`) | 2026-10-02 |
 | 5a | DNS (HostGator A records → Droplet) · Caddy · `APP_BASE_URL` | **DONE** — live and verified from outside | 2026-10-02 |
-| 5b | Stripe webhook URL → `https://dataainexus.com/api/stripe/webhook` | **FOUNDER** — Dashboard step, not verifiable from here | — |
+| 5b | Stripe webhook URL → `https://dataainexus.com/api/stripe/webhook` | **DONE** — founder: Stripe Send test webhook returned 200 | 2026-10-02 |
 | 5c | `deploy/config.env` DOMAIN + `Caddyfile.example` legacy redirect | **DONE**, committed with this entry; proven by the next governed deploy | 2026-10-02 |
 
 ## 6. Progress log

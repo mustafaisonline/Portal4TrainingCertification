@@ -18,15 +18,14 @@ for c in git ssh scp rsync curl openssl node npm; do
   if command -v "$c" >/dev/null 2>&1; then log_ok "command '$c' available ($(command -v "$c"))"; else soft_fail "Missing local command: $c" "Framework scripts need it." "Install it (Homebrew) and re-run."; fi
 done
 log_info "bash $BASH_VERSION · node $(node --version 2>/dev/null || echo n/a) · npm $(npm --version 2>/dev/null || echo n/a)"
-if gh_ready; then log_ok "gh CLI authenticated (release-workflow status checks available)"; else log_warn "gh CLI absent or not signed in — the audit cannot confirm the release workflow built the tag (gh auth login)"; fi
 [ "$(node --version 2>/dev/null | cut -c2-3)" = "24" ] || log_warn "Node 24 expected on PATH (export PATH=\"/opt/homebrew/opt/node@24/bin:\$PATH\")"
 
 step "Configuration (deploy/config.env + config.local.env)"
 log_info "FRAMEWORK:   $FRAMEWORK_VERSION"
 log_info "SERVER:      $SERVER_USER@$SERVER_HOST"
 log_info "DOMAIN:      $DOMAIN  → $PRODUCTION_URL"
-log_info "RELEASE:     GitHub Actions artifact of $RELEASE_WORKFLOW (no registry — K6 supersession)"
-log_info "GIT SOURCE:  $DEPLOY_GIT_REMOTE/$DEPLOY_GIT_REMOTE_BRANCH"
+log_info "RELEASE:     built and proved on this laptop from the tag (lib/local-release.sh); GitHub not in the path"
+log_info "GIT SOURCE:  local tag at HEAD, clean tree (push to $DEPLOY_GIT_REMOTE is offered after a deploy)"
 if config_has_placeholders; then
   soft_fail "config.env still has <placeholders> (SERVER_HOST or DOMAIN)" "Phase B values (K5, K13) are not filled in." "Fill deploy/config.env (names only) or deploy/config.local.env, then re-run."
 else
@@ -42,7 +41,7 @@ step "Repository"
 capture_release_metadata
 log_info "branch $DEPLOY_BRANCH · commit $DEPLOY_COMMIT_SHORT · dirty files: $DEPLOY_DIRTY_COUNT"
 git_working_tree_clean && log_ok "working tree clean" || log_warn "working tree has $DEPLOY_DIRTY_COUNT uncommitted change(s) — a deploy will refuse"
-[ -f "$PROJECT_ROOT/.github/workflows/$RELEASE_WORKFLOW" ] && log_ok "release workflow present" || soft_fail "release workflow missing" "The release is built and PROVEN only by CI (K6)." "Restore .github/workflows/$RELEASE_WORKFLOW."
+[ -f "$DEPLOY_DIR/lib/local-release.sh" ] && [ -f "$DEPLOY_DIR/lib/proof-db.mjs" ] && log_ok "local release builder present" || soft_fail "local release builder missing" "The release is built and PROVEN by deploy/lib/local-release.sh." "Restore deploy/lib/local-release.sh and deploy/lib/proof-db.mjs."
 NEWEST_MIG="$(ls -1 "$PROJECT_ROOT/prisma/migrations" 2>/dev/null | grep -E '^[0-9]{14}_' | sort | tail -1)"
 log_info "newest migration in repo: ${NEWEST_MIG:-none}"
 

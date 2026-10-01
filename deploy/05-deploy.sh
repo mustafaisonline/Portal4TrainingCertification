@@ -3,17 +3,17 @@
 # 05-deploy.sh   (run on: LAPTOP — ONLY via start.sh)
 # Governed promotion of an already-built, already-PROVEN release to
 # production:
-#   verify the orchestrator token → fetch the tag's release artifact from
-#   the release workflow run (gh run download) → verify server bootstrap →
+#   verify the orchestrator token → take the release start.sh built and
+#   proved locally from the tag (P4TC_RELEASE_STAGE) → verify server bootstrap →
 #   sync the framework to the server → upload the bundle (governance +
 #   release) → `p4tc-deploy promote` (root wrapper: backup gate → unpack +
 #   npm ci → migration sandbox → migrate → switch `current` → pm2 reload →
 #   health wait, auto-rollback on failure) → confirm health from outside.
 #
-# 2026-09-27: nothing is built here, on the server, or in Docker — the
-# release was built and PROVEN by release.yml on GitHub's runners; this
-# script only fetches that exact artifact and ships it (ADR-046 K2/K6/K9
-# supersession).
+# 2026-10-02 (CR-2026-10-02-0030): nothing is built here, on the server, or in
+# Docker, and GitHub is no longer involved — start.sh built the release from
+# the tagged commit on the laptop and PROVED it (lib/local-release.sh); this
+# script only ships that exact directory (ADR-046 supersession).
 # =============================================================================
 SCRIPT_NAME="05-deploy"
 # shellcheck disable=SC1091
@@ -31,40 +31,18 @@ banner "Deploy $TAG_ARG → $TARGET_ENV"
 capture_release_metadata
 
 step "Local requirements"
-for c in ssh scp rsync curl gh tar; do require_cmd "$c"; done
+for c in ssh scp rsync curl tar; do require_cmd "$c"; done
 require_file "$CANONICAL_MANIFEST"
 [ "$DRY_RUN" -eq 1 ] || require_governance_hmac_key
 check_ssh
 
-step "Fetching the tag's proven release artifact"
-RELEASE_STAGE="$(mktemp -d "${TMPDIR:-/tmp}/p4tc-release-$TAG_ARG.XXXXXX")"
-mkdir -p "$RELEASE_STAGE/release"
-cleanup_release_stage() { rm -rf "$RELEASE_STAGE"; }
-trap cleanup_release_stage EXIT
-# Every failure here is a log_dry, not a die, under --dry-run: rehearsing the
-# pipeline (V2) must work with no tag ever pushed and no run to download.
-fetch_fail() { if [ "$DRY_RUN" -eq 1 ]; then log_dry "would fail here for real: $1"; else die "$1" "${2:-}" "${3:-}"; fi; }
-if [ "$DRY_RUN" -eq 1 ] && ! gh_ready; then
-  log_dry "would download the release.yml artifact p4tc-release-$TAG_ARG for $TAG_ARG into $RELEASE_STAGE"
-elif ! gh_ready; then
-  fetch_fail "gh CLI not authenticated" "The release artifact is fetched through gh, not a registry." "gh auth login"
-else
-  RUN_ID="$(gh run list --repo "$GITHUB_REPO" --workflow "$RELEASE_WORKFLOW" --branch "$TAG_ARG" --limit 1 --json databaseId --jq '.[0].databaseId' 2>>"$LOG_FILE" || true)"
-  if [ -z "$RUN_ID" ]; then
-    fetch_fail "no $RELEASE_WORKFLOW run found for $TAG_ARG" "The tag was not pushed, or the workflow has not run." "git push origin $TAG_ARG; wait for it to finish."
-    [ "$DRY_RUN" -eq 1 ] && log_dry "would download the release.yml artifact p4tc-release-$TAG_ARG for $TAG_ARG into $RELEASE_STAGE"
-  elif ! gh run download "$RUN_ID" --repo "$GITHUB_REPO" --name "p4tc-release-$TAG_ARG" --dir "$RELEASE_STAGE" >>"$LOG_FILE" 2>&1; then
-    fetch_fail "artifact download failed" "run $RUN_ID may not have uploaded p4tc-release-$TAG_ARG (check it succeeded)." "Open the run in GitHub Actions."
-  else
-    RELEASE_TARBALL="$(find "$RELEASE_STAGE" -maxdepth 1 -name '*.tar.gz' | head -1)"
-    if [ -z "$RELEASE_TARBALL" ]; then
-      fetch_fail "no .tar.gz found in the downloaded artifact" "" ""
-    else
-      tar -xzf "$RELEASE_TARBALL" -C "$RELEASE_STAGE/release" && rm -f "$RELEASE_TARBALL"
-      log_ok "release artifact for $TAG_ARG extracted: $(du -sh "$RELEASE_STAGE/release" 2>/dev/null | cut -f1)"
-    fi
-  fi
-fi
+step "Release payload (built and proved locally from $TAG_ARG)"
+# start.sh built the release from the tagged commit and proved it, then exported
+# the directory. start.sh owns its cleanup, so this script removes nothing.
+RELEASE_STAGE="${P4TC_RELEASE_STAGE:-}"
+[ -n "$RELEASE_STAGE" ] && [ -f "$RELEASE_STAGE/release/package.json" ] && [ -d "$RELEASE_STAGE/release/.next" ] \
+  || die "No locally built release to ship" "start.sh builds and proves the release before calling this script; P4TC_RELEASE_STAGE is empty or incomplete." "Run deploy/start.sh (never 05-deploy.sh directly)."
+log_ok "release payload ready: $(du -sh "$RELEASE_STAGE/release" 2>/dev/null | cut -f1)"
 
 step "Server governance state"
 if [ "$REMOTE_AVAILABLE" -ne 1 ]; then

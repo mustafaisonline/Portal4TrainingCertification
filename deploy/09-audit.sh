@@ -17,8 +17,10 @@ banner "Deployment audit — $TARGET_ENV${TAG_ARG:+ · $TAG_ARG}"
 log_info "Read-only. No deployment, no production change."
 
 step "A. Laptop"
-for c in git ssh scp rsync curl openssl gh tar; do command -v "$c" >/dev/null 2>&1 && log_ok "$c" || nogo "missing $c" "Required by the framework." "Install it."; done
-gh_ready && log_ok "gh authenticated" || nogo "gh not authenticated" "The audit must confirm CI built and PROVED the tag, and the deploy fetches the release artifact through gh (K6)." "gh auth login"
+for c in git ssh scp rsync curl openssl tar node npm lsof; do command -v "$c" >/dev/null 2>&1 && log_ok "$c" || nogo "missing $c" "Required by the framework." "Install it."; done
+[ "$(node --version 2>/dev/null | cut -c2-3)" = "$NODE_MAJOR" ] && log_ok "node $NODE_MAJOR (the release is built here)" || nogo "node $NODE_MAJOR required" "The release is built on this laptop and must match the server's Node major." "export PATH=\"/opt/homebrew/opt/node@${NODE_MAJOR}/bin:\$PATH\""
+{ [ -n "${DATABASE_URL_TEST:-}" ] || grep -q '^DATABASE_URL_TEST=' "$PROJECT_ROOT/.env.local" 2>/dev/null; } && log_ok "DATABASE_URL_TEST available (throwaway database for the release proof)" || nogo "DATABASE_URL_TEST not set" "The release proof runs against a throwaway local database." "Set it in .env.local."
+[ -f "$DEPLOY_DIR/lib/local-release.sh" ] && [ -f "$DEPLOY_DIR/lib/proof-db.mjs" ] && log_ok "local release builder present" || nogo "local release builder missing" "deploy/lib/local-release.sh builds and proves the release." "Restore it."
 [ -s "$GOVERNANCE_HMAC_KEY_FILE" ] && log_ok "HMAC key present" || nogo "HMAC key absent ($GOVERNANCE_HMAC_KEY_FILE)" "Deploys are signed." "Copy /etc/p4tc/governance-hmac.key from the server once (chmod 600)."
 config_has_placeholders && nogo "config.env has placeholders" "SERVER_HOST / DOMAIN unset." "Fill deploy/config.env or config.local.env." || log_ok "config complete"
 
@@ -27,23 +29,15 @@ capture_release_metadata
 git_working_tree_clean && log_ok "working tree clean" || nogo "working tree dirty ($DEPLOY_DIRTY_COUNT)" "Deploys are reproducible commits." "Commit or stash."
 if [ -n "$TAG_ARG" ]; then
   tc="$(git -C "$PROJECT_ROOT" rev-list -n 1 "$TAG_ARG" 2>/dev/null || true)"
-  [ -n "$tc" ] && log_ok "tag $TAG_ARG exists (${tc:0:12})" || nogo "tag $TAG_ARG not found" "A deploy is a tag." "git tag $TAG_ARG && git push origin $TAG_ARG"
-  [ "$tc" = "$DEPLOY_COMMIT" ] && log_ok "tag is at HEAD" || nogo "tag not at HEAD" "Gate runs on HEAD; image built from the tag." "git checkout $TAG_ARG"
-  if gh_ready; then
-    concl="$(release_workflow_conclusion "$TAG_ARG")"
-    case "$concl" in
-      success) log_ok "release workflow for $TAG_ARG: success (release artifact uploaded)" ;;
-      in_progress) nogo "release workflow for $TAG_ARG still running" "Release artifact not yet uploaded." "Wait, then re-audit." ;;
-      none) nogo "no release workflow run for $TAG_ARG" "The tag was not pushed or does not match v*." "git push origin $TAG_ARG" ;;
-      *) nogo "release workflow for $TAG_ARG: $concl" "The gate failed in CI." "Open the run; fix; re-tag." ;;
-    esac
-  fi
+  [ -n "$tc" ] && log_ok "tag $TAG_ARG exists (${tc:0:12})" || nogo "tag $TAG_ARG not found" "A deploy is a tag on the commit at HEAD." "git tag $TAG_ARG"
+  [ "$tc" = "$DEPLOY_COMMIT" ] && log_ok "tag is at HEAD" || nogo "tag not at HEAD" "Gate runs on HEAD; the release is built from the tag." "git checkout $TAG_ARG"
 else
-  log_warn "no --tag given: the tag-specific checks (existence, at HEAD, CI build) were not run"
+  log_warn "no --tag given: the tag-specific checks (existence, at HEAD) were not run"
 fi
-if ! config_has_placeholders && [ "$DRY_RUN" -eq 0 ]; then
-  git -C "$PROJECT_ROOT" fetch --quiet "$DEPLOY_GIT_REMOTE" "$DEPLOY_GIT_REMOTE_BRANCH" >>"$LOG_FILE" 2>&1 || true
-  git -C "$PROJECT_ROOT" merge-base --is-ancestor "$DEPLOY_COMMIT" "$DEPLOY_GIT_REMOTE/$DEPLOY_GIT_REMOTE_BRANCH" 2>/dev/null && log_ok "HEAD is on $DEPLOY_GIT_REMOTE/$DEPLOY_GIT_REMOTE_BRANCH" || nogo "HEAD not on $DEPLOY_GIT_REMOTE/$DEPLOY_GIT_REMOTE_BRANCH" "Only the production branch deploys." "Merge first."
+# GitHub is not consulted (CR-2026-10-02-0030). Whether this commit has been pushed is informational only.
+if git -C "$PROJECT_ROOT" rev-parse --verify --quiet "$DEPLOY_GIT_REMOTE/$DEPLOY_GIT_REMOTE_BRANCH" >/dev/null 2>&1 \
+   && ! git -C "$PROJECT_ROOT" merge-base --is-ancestor "$DEPLOY_COMMIT" "$DEPLOY_GIT_REMOTE/$DEPLOY_GIT_REMOTE_BRANCH" 2>/dev/null; then
+  log_info "HEAD is not on the last-fetched $DEPLOY_GIT_REMOTE/$DEPLOY_GIT_REMOTE_BRANCH — it will be offered for pushing after the deploy"
 fi
 
 step "C. Server"

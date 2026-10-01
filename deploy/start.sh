@@ -13,11 +13,15 @@
 # framework but only ever takes "production".
 #
 # Pipeline (K9 full governance, K11 blocking gate):
-#   00 discovery → git source gate (clean tree, tag at HEAD, on origin/main)
-#   → 04 release gate on HEAD → CI built AND PROVED the tag (release.yml
-#   success) → issue signed token + manifest → 05 deploy (fetch the release
-#   artifact, server: backup → unpack + npm ci → sandbox → migrate → switch
-#   `current` → pm2 reload → health, auto-rollback) → 06 validate → summary.
+#   00 discovery → git source gate (clean tree, tag at HEAD)
+#   → 04 release gate on HEAD → BUILD + PROVE the release from the tag, here
+#   on the laptop (lib/local-release.sh) → issue signed token + manifest
+#   → 05 deploy (ship the local build, server: backup → unpack + npm ci →
+#   sandbox → migrate → switch `current` → pm2 reload → health, auto-rollback)
+#   → 06 validate → summary → asks whether to push to GitHub.
+# GitHub is NOT in the deploy path (CR-2026-10-02-0030, founder instruction
+# 2026-10-02): no `gh`, no CI artifact, no origin check. Pushing the deployed
+# commit and tag is offered AFTER a successful deploy.
 # There are no bypass flags. --no-gate is accepted ONLY with --dry-run, for
 # rehearsing the framework itself (V2) without a ten-minute test run.
 # =============================================================================
@@ -26,6 +30,10 @@ SCRIPT_NAME="start"
 . "$(dirname "$0")/lib/common.sh"
 # shellcheck disable=SC1091
 . "$(dirname "$0")/lib/governance.sh"
+# shellcheck disable=SC1091
+. "$(dirname "$0")/lib/local-release.sh"
+# Always remove the proof's temp build, temp database and proof server, however this exits.
+trap 'local_release_cleanup; rm -f "$RUN_OK" "$RUN_WARN" "$RUN_ERR" "$RUN_STEPS"' EXIT
 
 print_help() {
   cat >&2 <<EOF
@@ -35,7 +43,7 @@ Usage: deploy/start.sh [--audit] [--dry-run] [--auto-approve] --env production [
   --dry-run        run every step in dry-run mode: nothing is changed anywhere
   --auto-approve   no confirmation prompts (live deploy)
   --env            production (the only environment provisioned)
-  --tag            the git tag (v*) the release workflow has built and PROVED
+  --tag            the git tag (v*) at HEAD; the release is built and PROVED from it, locally
   --no-gate        skip 04 — accepted only together with --dry-run
 
 Reports: deploy/reports/*.md   Logs: deploy/logs/*.log
@@ -91,7 +99,7 @@ if [ "$AUDIT" -eq 1 ]; then
   if "$DEPLOY_DIR/09-audit.sh" --env "$TARGET_ENV" ${TAG_ARG:+--tag "$TAG_ARG"} $([ "$DRY_RUN" -eq 1 ] && echo --dry-run); then _footer "AUDIT: GO"; exit 0; else _footer "AUDIT: NO-GO — $REPORTS_DIR/09-audit-report.md"; exit 2; fi
 fi
 
-[ -n "$TAG_ARG" ] || die "--tag is required for a deploy" "A deploy promotes an image the release workflow built from a tag." "git tag vX && git push origin vX; wait for release.yml; re-run with --tag vX."
+[ -n "$TAG_ARG" ] || die "--tag is required for a deploy" "A deploy is a tag on the commit at HEAD; the release is built from it." "git tag vX; re-run with --tag vX."
 
 # ── 00 discovery ──────────────────────────────────────────────────────────────
 run_child "00-discovery" "00-discovery.sh" || fail_out "ABORTED: discovery failed"
@@ -114,15 +122,12 @@ else
   if "$DEPLOY_DIR/04-release-gate.sh"; then record "04-release-gate" "PASS" "$REPORTS_DIR/04-release-gate-report.md"; else record "04-release-gate" "FAIL" "$REPORTS_DIR/04-release-gate-report.md"; fail_out "ABORTED: release gate failed"; fi
 fi
 
-# ── CI built the tag ──────────────────────────────────────────────────────────
-step "GATE: release workflow built $TAG_ARG"
-if gh_ready; then
-  concl="$(release_workflow_conclusion "$TAG_ARG")"
-  if [ "$concl" = "success" ]; then log_ok "release.yml: success for $TAG_ARG (release artifact uploaded)"; record "ci-release-gate" "PASS" "-"
-  elif [ "$DRY_RUN" -eq 1 ]; then log_warn "(dry-run) release.yml for $TAG_ARG: $concl"; record "ci-release-gate" "WARN ($concl)" "-"
-  else record "ci-release-gate" "FAIL ($concl)" "-"; fail_out "ABORTED: no successful release build for $TAG_ARG ($concl)"; fi
-elif [ "$DRY_RUN" -eq 1 ]; then log_warn "(dry-run) gh not authenticated — cannot confirm the release artifact exists"; record "ci-release-gate" "WARN (gh)" "-"
-else record "ci-release-gate" "FAIL (gh)" "-"; fail_out "ABORTED: gh CLI must be authenticated to confirm the release build (gh auth login)"; fi
+# ── Build + prove the release from the tag, locally ───────────────────────────
+# Replaces the former "release.yml succeeded" gate. Runs for real even under
+# --dry-run (nothing touches the server); the result is a directory handed to
+# 05-deploy.sh through P4TC_RELEASE_STAGE. A failure here dies with what/why/fix.
+build_and_prove_local_release "$TAG_ARG"
+record "local-release-build-and-proof" "PASS" "-"
 
 # ── Credentials + 05 ──────────────────────────────────────────────────────────
 step "Issuing governed deployment credentials"
@@ -139,4 +144,22 @@ run_child "06-validate" "06-validate.sh" --env "$TARGET_ENV" --tag "$TAG_ARG" ||
 
 write_summary "$([ "$DRY_RUN" -eq 1 ] && echo 'DRY RUN COMPLETE' || echo "DEPLOYED $TAG_ARG → $TARGET_ENV")"
 _footer "$([ "$DRY_RUN" -eq 1 ] && echo 'DRY RUN COMPLETE' || echo 'DEPLOYMENT COMPLETE')"
+
+# ── After a real, validated deploy: offer to push the deployed commit + tag ───
+# Nothing above needed GitHub. Pushing is the founder's choice, asked here.
+if [ "$DRY_RUN" -eq 0 ]; then
+  push_cmd="git push $DEPLOY_GIT_REMOTE $DEPLOY_BRANCH refs/tags/$TAG_ARG"
+  if git -C "$PROJECT_ROOT" merge-base --is-ancestor "$DEPLOY_COMMIT" "$DEPLOY_GIT_REMOTE/$DEPLOY_BRANCH" 2>/dev/null \
+     && git -C "$PROJECT_ROOT" ls-remote --exit-code --tags "$DEPLOY_GIT_REMOTE" "refs/tags/$TAG_ARG" >/dev/null 2>&1; then
+    log_info "GitHub already has $DEPLOY_COMMIT_SHORT and tag $TAG_ARG — nothing to push."
+  elif [ "$ASSUME_YES" -eq 0 ] && [ -t 0 ]; then
+    if confirm "Push $DEPLOY_BRANCH and tag $TAG_ARG to GitHub now?"; then
+      git -C "$PROJECT_ROOT" push "$DEPLOY_GIT_REMOTE" "$DEPLOY_BRANCH" "refs/tags/$TAG_ARG" && log_ok "pushed to $DEPLOY_GIT_REMOTE" || log_warn "push failed — run it yourself: $push_cmd"
+    else
+      log_info "Not pushed. When you want to: $push_cmd"
+    fi
+  else
+    log_info "Production now runs $DEPLOY_COMMIT_SHORT, which GitHub may not have yet. To push: $push_cmd"
+  fi
+fi
 exit 0

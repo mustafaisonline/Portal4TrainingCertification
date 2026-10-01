@@ -7,7 +7,9 @@
 > 2. **2026-09-27 — Docker and the Container Registry DROPPED** (ADR-046's K2/K6/K9 supersession note). CI still builds and PROVES every release exactly as before; the built output ships to the server via rsync instead of a Docker image, and runs under **PM2** instead of a container.
 > 3. **2026-09-28 — Managed PostgreSQL DROPPED** (ADR-046's K3 supersession note, same file). PostgreSQL runs self-hosted on the Droplet itself, installed by the bootstrap step — no separate database resource, no VPC-matching, ~$15.15/mo cheaper. Trade-off accepted knowingly: no point-in-time recovery any more, so the nightly `pg_dump` (§5) is the **sole** recovery mechanism, and the Droplet is no longer disposable.
 >
-> This document describes that design — the one that actually runs now, not the Phase A original.
+> 4. **2026-10-02 — GitHub removed from the deploy path** (CR-2026-10-02-0030, founder instruction: *"remove the dependencies of GitHub and deploy directly from laptop … post deployment you can ask to push to github or not"*). The release is now **built and PROVEN on the laptop from the tagged commit** (`lib/local-release.sh`: `git archive` of the tag → `npm ci` → `prisma generate` → `next build` → migrations + `next start` proven against a throwaway local database → packaged in the same layout) and shipped by `rsync` exactly as before. No `gh`, no CI artifact, no origin check; `start.sh` asks whether to push the deployed commit and tag **after** a successful deploy. Trade-off accepted: the clean-room Linux runner is replaced by a clean-room *export* of the tag on the laptop, and production can briefly run a commit GitHub has not seen yet (the commit SHA is recorded in the manifest and server markers). `.github/workflows/release.yml` stays in the repository but nothing requires it. Everything on the server (backup, sandbox, migrate, switch, health, auto-rollback) is unchanged.
+>
+> This document describes that design — the one that actually runs now, not the Phase A original. Where older sections below still say "GitHub Actions artifact" or `gh`, they describe the design before 2026-10-02.
 
 This is the portal's equivalent of eCard's `Deployement-Steps/`: the same **controls** — clean-git gate, release gate, signed deployment token, root-owned server wrapper, backup before every promotion, migration sandbox, post-deploy validation, governed rollback, read-only audit, per-step reports, timeouts on every task, no bypass flags — and, since 2026-09-27, much closer to eCard's own **runtime model** too: the release is built and PROVEN by CI, then shipped by rsync and run under PM2, not packaged as a container image. Section 6 says what still differs from eCard and why.
 
@@ -18,8 +20,8 @@ LAPTOP (deploy/start.sh)                                    SERVER (one Droplet,
 ┌─────────────────────────────────────────────┐             ┌───────────────────────────────────────────┐
 │ 00 discovery · git gate · 04 release gate    │             │ /usr/local/bin/p4tc-deploy (root, sudo-only)│
 │ CI gate: release.yml built+proved the tag    │             │   promote --tag T --governance-dir D        │
-│ fetch the tag's proven build artifact from   │  gh run     │     ├ verify HMAC token + manifest          │
-│   the GitHub Actions run (gh run download)   │  download   │     ├ 01 backup (pg_dump, retention)        │
+│ BUILD + PROVE the release from the tag, here │  (2026-10-02)│     ├ verify HMAC token + manifest          │
+│   (lib/local-release.sh) — no GitHub         │             │     ├ 01 backup (pg_dump, retention)        │
 │ issue signed token + manifest ──────────────────scp──────▶ │     ├ rsync release → /opt/p4tc/releases/T  │
 │ 05 deploy: sync deploy/, upload bundle +     │  ssh sudo   │     ├ npm ci (root, in releases/T)          │
 │   release tarball, p4tc-deploy promote ──────────────────▶ │     ├ 03 sandbox (restore dump → migrate)   │
@@ -51,7 +53,7 @@ No registry, no Docker anywhere in this diagram. `../Dockerfile` stays in the re
 
 | File | Runs on | Purpose |
 |---|---|---|
-| `config.env` | — | Names and addresses only (host, domain, release workflow name, paths, timeouts, retention, approved destructive migrations). `<placeholders>` until Phase B. **Never a secret.** |
+| `config.env` | — | Names and addresses only (host, domain, paths, timeouts, retention, approved destructive migrations). `<placeholders>` until Phase B. **Never a secret.** |
 | `config.local.env` | — | *gitignored* per-machine overrides (same names). A throwaway one makes `--dry-run` possible with no server |
 | `lib/common.sh` | both | Logging with captured PASS/WARN/FAIL, three-line errors, `die`/`soft_fail`, `run_blocking`/`run_advisory` with a watchdog timeout (Bash 3.2-safe — no `timeout`(1)), lock, SSH helpers, git gates, reports |
 | `lib/governance.sh` | laptop | Bypass rejection, deployment id, HMAC-signed token (openssl) with TTL, manifest, bundle upload, the one privileged call |
@@ -61,7 +63,7 @@ No registry, no Docker anywhere in this diagram. `../Dockerfile` stays in the re
 | `01-backup-serverscript.sh` | server | `pg_dump -Fc` + sha256 + meta, `pg_restore --list` check, retention `BACKUP_KEEP`; nightly via systemd; **always** before a promotion or restore |
 | `03-migration-sandbox-serverscript.sh` | server | Restore the newest dump into `p4tc_migration`, list pending migrations and read their SQL directly from the unpacked release, refuse unapproved destructive DDL, `migrate deploy` there, confirm up to date |
 | `04-release-gate.sh` | laptop | `RELEASE_GATE.md` as code (K11): tsc, Vitest, build, Playwright **against the production build**, `npm audit` advisory |
-| `05-deploy.sh` | laptop | Only under `start.sh`: fetch the tag's proven release artifact (`gh run download`), verify server governance state, sync `deploy/`, upload the governance bundle + release payload, `p4tc-deploy promote`, external health |
+| `05-deploy.sh` | laptop | Only under `start.sh`: take the release `start.sh` built and proved locally from the tag, verify server governance state, sync `deploy/`, upload the governance bundle + release payload, `p4tc-deploy promote`, external health |
 | `06-validate.sh` | laptop | Traceability markers, `/api/health` (200 · db up · newest migration), `/`, `/verify`, `/programs`, security headers, webhook refuses unsigned POST, PM2 process state, disk/memory, app log scan |
 | `07-rollback.sh` | laptop | Governed rollback to the previous tag (marker) or `--tag`; `--restore-db <dump>` after a safety snapshot and an explicit confirmation |
 | `09-audit.sh` | laptop | Read-only GO/NO-GO across laptop, source, server and framework; exit 0/2 |
@@ -88,7 +90,7 @@ No registry, no Docker anywhere in this diagram. `../Dockerfile` stays in the re
    ssh root@<droplet> cat /etc/p4tc/governance-hmac.key > deploy/.governance-hmac.key && chmod 600 deploy/.governance-hmac.key
    ```
 5. **Type the rest of the env file on the server** — `nano /etc/p4tc/production.env` (template was written with every name, `DATABASE_URL` already filled in by the bootstrap step; see `.env.example` for each rule). Production gets the **live restricted key** with exactly the §1.2 permissions and the live endpoint's secret (`DEPLOYMENT_RUNBOOK.md` §6) — or, as the lighter substitute offered when staging was dropped, a test-mode key for the very first deploy's first registration + refund before switching to live. Values never travel through this framework.
-6. **GitHub**: `gh auth login` on the laptop — this is now the *only* credential the framework needs from GitHub (no registry secret; the release artifact is fetched through `gh run download`, which uses the same login).
+6. ~~**GitHub**: `gh auth login` on the laptop~~ **No longer needed (2026-10-02)** — the release is built on the laptop. It does need Node 24 on `PATH` and `DATABASE_URL_TEST` in `.env.local` (the proof runs against a throwaway database on your local PostgreSQL).
 7. **Seed reference data** once (idempotent; never test users), using the release already on the server after the first promotion:
    ```bash
    ssh deploy@<droplet> 'cd /opt/p4tc/releases/current && set -a; . /etc/p4tc/production.env; set +a; npm run db:seed'
@@ -107,13 +109,12 @@ No registry, no Docker anywhere in this diagram. `../Dockerfile` stays in the re
 ## 4. Every deploy
 
 ```bash
-git checkout main && git pull                       # only main deploys (config DEPLOY_GIT_REMOTE_BRANCH)
-git tag v2026.10.03 && git push origin v2026.10.03  # release.yml builds, PROVES and uploads the release artifact
+git tag v2026.10.03                                 # on the commit at HEAD; the tree must be clean
 deploy/start.sh --audit --env production --tag v2026.10.03      # GO?
-deploy/start.sh --env production --tag v2026.10.03
+deploy/start.sh --env production --tag v2026.10.03              # builds + proves locally, deploys, then asks: push to GitHub?
 ```
 
-What the pipeline refuses, by design: a dirty tree · a tag not at HEAD or not on `origin/main` · a tag the release workflow has not built and proven · a failing gate · a failing backup · a sandbox that cannot apply the pending migrations · destructive DDL not listed in `DESTRUCTIVE_MIGRATIONS_APPROVED` · `05-deploy.sh` called directly · any `FORCE_DEPLOY`/`SKIP_*`-style variable or flag. Every refusal prints what / why / fix.
+What the pipeline refuses, by design: a dirty tree · a tag not at HEAD · a release that fails the local proof (migrations on an empty database, production boot, health, webhook, headers) · a failing gate · a failing backup · a sandbox that cannot apply the pending migrations · destructive DDL not listed in `DESTRUCTIVE_MIGRATIONS_APPROVED` · `05-deploy.sh` called directly · any `FORCE_DEPLOY`/`SKIP_*`-style variable or flag. Every refusal prints what / why / fix.
 
 If the new tag does not become healthy within `HEALTH_WAIT_TIMEOUT_SEC`, the wrapper switches the `current` symlink back to the previous release and reloads PM2 on its own, then exits non-zero. Migrations already applied stay applied (ADR-029: forward-only, written to be compatible with the previous code).
 
@@ -184,6 +185,6 @@ Under `--dry-run` an unreachable server is a warning and every remote step is li
 
 - **Bash 3.2 (macOS) on the laptop, Bash 5 on the server.** No `timeout`, `flock` (laptop) or arrays-of-arrays are used on the laptop side; the server side uses `flock` and `sha256sum`, which Ubuntu has.
 - **Reports never contain a value** from an env file: scripts compare variable *names* against `.env.example`'s required list, nothing more.
-- **`gh` must be signed in** for a real deploy: it confirms the release workflow built and proved the tag, and it is how the laptop downloads the release artifact (`gh run download`) — there is no other way the built output leaves GitHub. Without it the audit is NO-GO and `start.sh` refuses (dry-run: a warning).
+- **`gh` is not used** (2026-10-02). A real deploy needs Node 24 on `PATH`, `DATABASE_URL_TEST` (a throwaway database is created and dropped for the proof), port 3102 free, and a clean tree with the tag at HEAD.
 - **Trust model:** as in eCard, `lib/server-promote.sh` is synced from the laptop and executed by root. The wrapper protects against *ungoverned* paths (no token, expired token, wrong environment/tag, altered manifest, direct calls), not against a hostile deploy user — the deploy user is the founder. The app process itself always runs as `deploy` (root drops privilege with `sudo -u deploy -H pm2 ...`), never as root.
 - The framework never runs `git add .`, never pushes, never touches `project-artifacts/`.

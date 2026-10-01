@@ -250,32 +250,19 @@ capture_release_metadata() {
   export DEPLOY_COMMIT DEPLOY_COMMIT_SHORT DEPLOY_BRANCH DEPLOY_DIRTY_COUNT
 }
 
-# validate_git_deploy_source TAG — the tag exists, points at HEAD, HEAD is on
-# the configured remote branch, and the tree is clean. Hard stop otherwise.
+# validate_git_deploy_source TAG — the tag exists, points at HEAD, and the tree
+# is clean. Hard stop otherwise. GitHub is not consulted (CR-2026-10-02-0030):
+# the release is built from this exact local commit by lib/local-release.sh,
+# and whether the commit has been pushed is asked about AFTER the deploy.
 validate_git_deploy_source() {
   local tag="$1"
   capture_release_metadata
   git_working_tree_clean || die "Working tree is not clean (${DEPLOY_DIRTY_COUNT} changed files)" "A deploy must be reproducible from a commit." "Commit or stash every change; never deploy from a dirty tree."
   local tag_commit
   tag_commit="$(git -C "$PROJECT_ROOT" rev-list -n 1 "$tag" 2>/dev/null || true)"
-  [ -n "$tag_commit" ] || die "Tag '$tag' does not exist locally" "A deploy is a tag the release workflow has built." "git tag $tag && git push origin $tag — then wait for release.yml to finish."
-  [ "$tag_commit" = "$DEPLOY_COMMIT" ] || die "Tag '$tag' is not at HEAD (${tag_commit:0:12} ≠ $DEPLOY_COMMIT_SHORT)" "The gate runs on HEAD; the image was built from the tag. They must be the same commit." "git checkout $tag (detached) or move the tag, then re-run."
-  if [ "$DRY_RUN" -eq 1 ] && config_has_placeholders; then log_dry "would verify $tag is on $DEPLOY_GIT_REMOTE/$DEPLOY_GIT_REMOTE_BRANCH"; return 0; fi
-  git -C "$PROJECT_ROOT" fetch --quiet "$DEPLOY_GIT_REMOTE" "$DEPLOY_GIT_REMOTE_BRANCH" "refs/tags/$tag:refs/tags/$tag" >>"$LOG_FILE" 2>&1 \
-    || die "Could not fetch $DEPLOY_GIT_REMOTE" "The remote or the tag is unreachable." "Check network and that the tag was pushed."
-  git -C "$PROJECT_ROOT" merge-base --is-ancestor "$DEPLOY_COMMIT" "$DEPLOY_GIT_REMOTE/$DEPLOY_GIT_REMOTE_BRANCH" \
-    || die "HEAD is not on $DEPLOY_GIT_REMOTE/$DEPLOY_GIT_REMOTE_BRANCH" "Only commits merged to the production branch are deployable." "Merge to $DEPLOY_GIT_REMOTE_BRANCH, tag there, push the tag."
-  log_ok "git source valid: $tag @ $DEPLOY_COMMIT_SHORT on $DEPLOY_GIT_REMOTE/$DEPLOY_GIT_REMOTE_BRANCH, tree clean"
-}
-
-# --- GitHub (release workflow status for a tag) --------------------------------
-gh_ready() { command -v gh >/dev/null 2>&1 && gh auth status >/dev/null 2>&1; }
-
-# release_workflow_conclusion TAG → success|failure|in_progress|none
-release_workflow_conclusion() {
-  local tag="$1"
-  gh run list --repo "$GITHUB_REPO" --workflow "$RELEASE_WORKFLOW" --branch "$tag" --limit 1 \
-    --json status,conclusion --jq 'if length==0 then "none" elif .[0].status!="completed" then "in_progress" else .[0].conclusion end' 2>>"$LOG_FILE" || printf 'none'
+  [ -n "$tag_commit" ] || die "Tag '$tag' does not exist locally" "A deploy is a tag on the commit at HEAD; the release is built from it." "git tag $tag"
+  [ "$tag_commit" = "$DEPLOY_COMMIT" ] || die "Tag '$tag' is not at HEAD (${tag_commit:0:12} ≠ $DEPLOY_COMMIT_SHORT)" "The gate runs on HEAD and the release is built from the tag. They must be the same commit." "git checkout $tag (detached) or move the tag, then re-run."
+  log_ok "git source valid: $tag @ $DEPLOY_COMMIT_SHORT, tree clean (local; GitHub not consulted)"
 }
 
 # --- Environment selection -------------------------------------------------------

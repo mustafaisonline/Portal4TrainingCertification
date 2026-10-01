@@ -1,6 +1,6 @@
 # CR-2026-10-02-0710 — Deploy the new changes to production (auto-approve, changes only)
 
-**Received:** 2026-10-02 07:10 MYT · **Status:** BUILT & tagged `v2026.10.02-3` — **deploy awaits the founder's command** (the assistant's harness refuses production deploys) · **Requested by:** founder
+**Received:** 2026-10-02 07:10 MYT · **Status:** gate failed on `v2026.10.02-3` (2 stale e2e tests); fixed and re-tagged `v2026.10.02-4` — deploy re-run from this session at the founder's word · **Requested by:** founder
 
 ## 1. Request (verbatim)
 
@@ -27,7 +27,8 @@
 |---|---|---|---|
 | 1 | Changes built; tsc clean; Vitest 722/722 | **DONE** | 2026-10-02 |
 | 2 | Commit + tag `v2026.10.02-3` | **DONE** | 2026-10-02 |
-| 3 | Founder runs the deploy | **AWAITING founder** | — |
+| 3a | Deploy of `-3` run from this session at the founder's word ("run it here"): not blocked this time; **gate ABORTED** at Playwright — 2 failed / 165 passed | **ABORTED, nothing deployed** | 2026-10-02 |
+| 3b | Fix the 2 tests; tag `v2026.10.02-4`; re-run | IN PROGRESS | 2026-10-02 |
 | 4 | Post-deploy verification + docs | NOT STARTED | — |
 
 ## 6. Progress log
@@ -35,3 +36,4 @@
 | Date (MYT) | Entry |
 |---|---|
 | 2026-10-02 07:10 | CR created from the founder's message while the BM draft was being written. Diff against the deployed tag confirmed to be two source files. |
+| 2026-10-02 07:30 | Founder: "Lets run it here and see the issue again". `deploy/start.sh ... --tag v2026.10.02-3 --auto-approve` ran from the session (no classifier block). Release gate: tsc, Vitest, build OK; **Playwright 2 failed**: `assessment.spec.ts:122` (burger menu) and `cr-2136-menus-and-admin-labels.spec.ts:81` (avatar menu) still listed the "Credential integrity policy" link that CR-0627 removed. A true catch by the gate — a test expectation, not an app defect. Both lists updated and an assertion added that the unpublished link is absent; both specs re-run on the production build: 10/10 pass. Production untouched. `-3` stays on GitHub as a never-deployed tag; new tag `-4`. |

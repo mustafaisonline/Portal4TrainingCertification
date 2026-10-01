@@ -130,7 +130,9 @@ test("the burger menu carries every footer link (P1), and each one closes the me
   // Every footer link is reachable from the burger menu: either in the primary list above it or in "More".
   const primary = await page.getByRole("navigation", { name: "Primary, mobile" }).getByRole("link").evaluateAll((els) => els.map((e) => e.getAttribute("href")));
   for (const href of expected) expect([...primary, ...hrefs], href).toContain(href);
-  for (const label of ["About Us", "Schedule", "FAQ", "Contact Us", "Terms of service", "Privacy policy", "Refund & cancellation policy", "Credential integrity policy", "Search completion certificates"]) {
+  // An unpublished policy is not linked (CR-2026-10-02-0627).
+  expect([...primary, ...hrefs]).not.toContain("/credential-integrity-policy");
+  for (const label of ["About Us", "Schedule", "FAQ", "Contact Us", "Terms of service", "Privacy policy", "Refund & cancellation policy", "Search completion certificates"]) {
     await expect(more.getByRole("link", { name: label })).toBeVisible();
   }
   await expectNoAxeViolations(page, "#mobile-nav");

@@ -1,6 +1,6 @@
 # CR-2026-10-02-0627 — Footer links to an unpublished policy
 
-**Received:** 2026-10-02 06:27 MYT · **Status:** BUILT & unit-tested — in the next deploy · **Requested by:** founder
+**Received:** 2026-10-02 06:27 MYT · **Status:** DEPLOYED (`v2026.10.02-4`); the policy itself still BLOCKED on the founder · **Requested by:** founder
 
 ## 1. Request (verbatim)
 
@@ -26,7 +26,7 @@ Remove one list item; comment explains how to restore it. Tests derive from the 
 | # | Step | Status | Updated |
 |---|---|---|---|
 | 1 | Remove the item; tsc clean; `site-nav` unit tests 4/4 | **DONE** | 2026-10-02 |
-| 2 | Full gate + deploy | AWAITING founder's deploy | — |
+| 2 | Full gate + deploy | **DONE** — live in `v2026.10.02-4`; two e2e menu tests that listed the link were updated | 2026-10-02 |
 | 3 | Write the credential-integrity policy, then re-add the link | **BLOCKED on the founder's policy** | — |
 
 ## 6. Progress log

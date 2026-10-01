@@ -25,11 +25,12 @@ Founder runs the command in the CR's progress log as root, then the assistant re
 | # | Step | Status | Updated |
 |---|---|---|---|
 | 1 | Root command given | **DONE** | 2026-10-02 |
-| 2 | Founder runs it | **AWAITING founder** | — |
-| 3 | Verify: one `STRIPE_SECRET_KEY` (rk_live_), one `STRIPE_WEBHOOK_SECRET`, `stripe:check` LIVE, health OK | NOT STARTED | — |
+| 2 | Founder runs it | **DONE** — backup `production.env.bak-*` on the server | 2026-10-02 |
+| 3 | Verify: one `STRIPE_SECRET_KEY` (rk_live_), one `STRIPE_WEBHOOK_SECRET`, `stripe:check` LIVE, health OK | **DONE** | 2026-10-02 |
 
 ## 6. Progress log
 
 | Date (MYT) | Entry |
 |---|---|
 | 2026-10-02 06:29 | CR created. Command: `cp -p /etc/p4tc/production.env /etc/p4tc/production.env.bak-$(date +%Y%m%d%H%M) && sed -i -e '/^STRIPE_SECRET_KEY=sk_test_/d' -e '/^STRIPE_WEBHOOK_SECRET=whsec_U9i/d' /etc/p4tc/production.env && grep -nE '^STRIPE_' /etc/p4tc/production.env \| cut -c1-24 && sudo -u deploy -H pm2 reload p4tc-production` — expected: exactly two lines remain (`rk_live_`, `whsec_hGN`). |
+| 2026-10-02 06:45 | Founder ran the command as root. Verified from the laptop: env now has exactly `STRIPE_SECRET_KEY=rk_live_…` (line 16) and `STRIPE_WEBHOOK_SECRET=whsec_hGN…` (line 17); `/api/health` ok after the PM2 reload; unsigned webhook POST → 400; `stripe:check` → "Key mode: LIVE (restricted key)", no blocking problem (the account/endpoint reads still WARN: a restricted key cannot read them — same as before the clean-up). |

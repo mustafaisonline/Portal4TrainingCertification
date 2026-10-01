@@ -27,7 +27,7 @@ deploy only on the founder's word; report honestly what was and was not tested.
 | CR file | Title | Status |
 |---|---|---|
 | [CR-2026-10-02-0630-cr-process-binding.md](CR-2026-10-02-0630-cr-process-binding.md) | CR process made binding (CLAUDE.md, resume steps) — folder already existed |
-| [CR-2026-10-02-0629-remove-inert-stripe-test-lines.md](CR-2026-10-02-0629-remove-inert-stripe-test-lines.md) | Remove the inert Stripe test pair from the server env file — root command ready |
+| [CR-2026-10-02-0629-remove-inert-stripe-test-lines.md](CR-2026-10-02-0629-remove-inert-stripe-test-lines.md) | Remove the inert Stripe test pair from the server env file — **DONE** |
 | [CR-2026-10-02-0628-bahasa-malaysia-privacy-notice.md](CR-2026-10-02-0628-bahasa-malaysia-privacy-notice.md) | Bahasa Malaysia Privacy notice — PLANNED, needs the founder's authorship decision |
 | [CR-2026-10-02-0627-footer-credential-integrity-link.md](CR-2026-10-02-0627-footer-credential-integrity-link.md) | Unpublished credential-integrity policy removed from footer/sitemap |
 | [CR-2026-10-02-0626-email-provider-deferred.md](CR-2026-10-02-0626-email-provider-deferred.md) | Email provider — **DEFERRED, remind the founder** |

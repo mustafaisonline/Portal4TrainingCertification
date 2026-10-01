@@ -26,8 +26,7 @@ The server refuses to start in production unless both are present and well-forme
    ```
    It prints the key **mode** (must say LIVE), whether the account can take charges, and whether the endpoint for `APP_BASE_URL` is enabled and subscribed to all nine events. A restricted key often cannot read the account or endpoints — that is a `[WARN]` telling you to confirm the same thing in the Dashboard, not a failure. It cannot prove the signing secret matches: step 5 does.
 5. **Send test webhook** from the Stripe endpoint page → expect **200**; the event appears in Admin → Orders' stored events as *ignored*.
-6. **RM 2.00 smoke test** (`/support`, a real card): the order shows *Paid* under Orders & receipts and in Admin → Orders (kind "Support payment"). **Then refund it in the Stripe Dashboard** (Payments → the payment → Refund).
-   - *Known behaviour:* a refund made in the Dashboard is recorded by the application as an **ignored** event; the app's order stays "Paid". The app's own refund flow only covers cancellations made inside the product. Treat the Dashboard as the record for this test payment. (An admin-initiated refund screen was scoped to a later milestone; it has not been built and this milestone did not add one.)
+6. **RM 2.00 smoke test** (`/support`, a real card): the order shows *Paid* under Orders & receipts and in Admin → Orders (kind "Support payment"). **No refund** — founder decision 2026-10-02 (CR-2026-10-02-0625): the RM 2.00 stays as a real Support payment, which is also what the published Refund policy says of Support payments (no service or benefit is granted in return).
 7. Only after steps 4–6 are clean, start selling.
 
 ## Rollback

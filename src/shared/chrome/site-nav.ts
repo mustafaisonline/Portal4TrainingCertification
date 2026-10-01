@@ -71,13 +71,15 @@ export const footerExplore: readonly NavItem[] = [
 
 /* Legal instruments — named because the product requires them; the
  * documents themselves are drafted by the founder and counsel, never by an
- * agent (plan §5 G0-12/G0-13). The pages state "not yet published" until
- * then. */
+ * agent (plan §5 G0-12/G0-13). Only PUBLISHED documents are linked here, and
+ * so listed in the sitemap: the credential-integrity policy is not published,
+ * so its link was removed 2026-10-02 (CR-2026-10-02-0627). Its route still
+ * exists (noindex, "not yet published"). Add the item back, in this list,
+ * the day the policy is published. Terms §12 says what applies meanwhile. */
 export const footerLegal: readonly NavItem[] = [
   { href: "/terms", label: "Terms of service" },
   { href: "/privacy", label: "Privacy policy" },
   { href: "/refund-policy", label: "Refund & cancellation policy" },
-  { href: "/credential-integrity-policy", label: "Credential integrity policy" },
 ];
 
 export const verifyLink: NavItem = { href: "/verify", label: "Search completion certificates" };

@@ -55,8 +55,10 @@
 | # | Step | Status | Updated |
 |---|---|---|---|
 | 0 | CR written; DNS facts gathered; `docs/operations/DOMAIN_SETUP.md` written | **DONE** | 2026-10-01 |
-| 1–4 | Build | **BUILT & VERIFIED, uncommitted** (founder: "go ahead with CR 1") | 2026-10-01 |
-| 5 | Domain cut-over | AWAITING the founder's DNS/Caddy/Stripe steps (guide ready) | 2026-10-01 |
+| 1–4 | Build | **BUILT, VERIFIED, COMMITTED and DEPLOYED** (`401f642`, live in `v2026.10.02-1`) | 2026-10-02 |
+| 5a | DNS (HostGator A records → Droplet) · Caddy · `APP_BASE_URL` | **DONE** — live and verified from outside | 2026-10-02 |
+| 5b | Stripe webhook URL → `https://dataainexus.com/api/stripe/webhook` | **FOUNDER** — Dashboard step, not verifiable from here | — |
+| 5c | `deploy/config.env` DOMAIN + `Caddyfile.example` legacy redirect | **DONE**, committed with this entry; proven by the next governed deploy | 2026-10-02 |
 
 ## 6. Progress log
 
@@ -64,3 +66,4 @@
 |---|---|
 | 2026-10-01 21:36 | CR created from the founder's message. DNS investigated read-only: registrar Network Solutions, HostGator nameservers, A → 208.91.197.15 (parking), no MX. `docs/operations/DOMAIN_SETUP.md` written (two DNS routes, Caddy file incl. the permanent legacy redirect, `APP_BASE_URL`, Stripe webhook, deploy-config switch). **No code changed.** |
 | 2026-10-01 21:50 | Steps 1–4 built on the founder's "go ahead with CR 1". **1** `/assessment` section = "Assess your Data Foundation" with "Your results" nested; header/footer/Home card/eyebrow say "Free Assessment". **2** the avatar dropdown carries Menu + More + Legal (every header and footer item) under the dashboards. **3** Users and Orders lists: "Open" → "Edit". **4** `/admin/interview`: Edit link, publish toggle and Delete (portal confirmation; refused when the role has test attempts — unpublish instead; audit `assessment_role.deleted`); the role page's add-question form can add on an organisation's behalf (pending/approved, the organisation's own question, not the shared bank). No schema change. Tests: new `tests/e2e/cr-2136-menus-and-admin-labels.spec.ts` (5 passed, axe light+dark), `deleteRole` integration test; Vitest 701 passed; `next build` clean. |
+| 2026-10-02 22:00 (MYT) | Cut-over executed. Founder had pointed `@`/`www` at `198.199.67.177` (Route B, HostGator zone); ran the Caddy and `APP_BASE_URL` steps as root (backups `Caddyfile.bak-*`, `production.env.bak-*` on the server). Verified externally: `https://dataainexus.com` 200 with a Let's Encrypt certificate; `www.dataainexus.com` and `198-199-67-177.sslip.io` (+www) → 301 to the apex preserving the path; `/sitemap.xml` and `/robots.txt` use `https://dataainexus.com`; `/api/health` db up; pages still `noindex, nofollow`. Rollback: restore the two `.bak-*` files, `systemctl reload caddy`, `pm2 reload p4tc-production`. |

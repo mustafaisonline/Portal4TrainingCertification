@@ -23,3 +23,9 @@
 www.{{DOMAIN}} {
 	redir https://{{DOMAIN}}{uri} permanent
 }
+
+# Legacy interim host (CR-2026-10-01-2136, cut over 2026-10-02): permanent redirect,
+# so certificate QR codes and links issued against the old address keep working.
+198-199-67-177.sslip.io, www.198-199-67-177.sslip.io {
+	redir https://{{DOMAIN}}{uri} permanent
+}

@@ -1,6 +1,6 @@
 # Connecting a domain to the portal (DigitalOcean) — dataainexus.com
 
-**Status:** guide written 2026-10-01 (CR-2026-10-01-2136). **Nothing here has been done on the server or at the registrar** — these are the steps, in order. The code does not hard-code the host name: every link, QR code, sitemap and email address is built from `APP_BASE_URL`, so the cut-over is configuration, not a code change.
+**Status:** guide written 2026-10-01 (CR-2026-10-01-2136). **Steps 1–3 EXECUTED 2026-10-02** (Route B at HostGator; Caddy and `APP_BASE_URL` on the Droplet; verified live). **Step 4 (Stripe webhook URL) is the founder's, outstanding.** Step 5 repo changes are committed; the next governed deploy proves them. The steps below are kept as the record and as the rebuild procedure. The code does not hard-code the host name: every link, QR code, sitemap and email address is built from `APP_BASE_URL`, so the cut-over is configuration, not a code change.
 
 ## What was found on 2026-10-01 (read-only DNS lookups)
 

@@ -38,6 +38,6 @@
 | 1 | Stripe live-key check | **DONE** (already live) |
 | 2 | Legal content + pages + tests | **DONE** — Vitest 717/717, tsc clean |
 | 3 | `noindex` lifted in code | **DONE** (in code) |
-| 4 | Governed deploy of the new tag | AWAITING founder |
-| 5 | `LEGAL_DOCUMENT_VERSIONS` on the server | AWAITING founder |
+| 4 | Governed deploy of `v2026.10.02-2` (`bfb358e`) | **DONE** — 06-validate PASSED; legal pages, `index, follow`, no draft text verified live |
+| 5 | `LEGAL_DOCUMENT_VERSIONS` on the server | **DONE** — set to 2026-10-02 (terms/privacy/refund), PM2 reloaded; running process confirmed; backup `production.env.bak-*` on the server |
 | 6 | RM 2.00 live smoke payment + refund | AWAITING founder |

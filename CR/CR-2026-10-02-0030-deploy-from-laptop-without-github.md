@@ -51,8 +51,8 @@ The refusals seen this session come from Claude Code's auto-mode classifier, not
 | 1 | Founder's "go" | **DONE** — "go ahead with the rewrite" | 2026-10-02 |
 | 2a | New files `deploy/lib/local-release.sh` + `deploy/lib/proof-db.mjs` | **WRITTEN** (in the repo, not yet wired in, never executed) | 2026-10-02 |
 | 2b | Edits to `start.sh`, `05-deploy.sh`, `common.sh`, `00-discovery.sh`, `09-audit.sh`, `governance.sh`, `config.env`, `README.md` | **PATCH WRITTEN** (`deploy-from-laptop.patch`, 8 files, +93/−114, `git apply --check` clean). Not applied: the assistant's harness refused to edit the governed deploy scripts directly | 2026-10-02 |
-| 3 | Founder applies the patch and commits it | AWAITING | — |
-| 4 | `--dry-run` rehearsal of the new pipeline, then the first real deploy | NOT STARTED | — |
+| 3 | Founder applies the patch and commits it | **DONE** — `4724599` | 2026-10-02 |
+| 4 | `--dry-run` rehearsal of the new pipeline, then the first real deploy | **DONE** — dry run clean; real deploy of `v2026.10.02-1` succeeded, 06-validate PASSED | 2026-10-02 |
 
 ## 7. Progress log
 
@@ -60,3 +60,4 @@ The refusals seen this session come from Claude Code's auto-mode classifier, not
 |---|---|
 | 2026-10-02 00:30 | CR created from the founder's request; GitHub dependencies mapped (4 places); plan and trade-offs written. No code changed. |
 | 2026-10-02 00:50 | Founder: "go ahead with the rewrite". Wrote `deploy/lib/local-release.sh` (git archive of the tag → npm ci → prisma generate → next build → migrations + production boot proven on a throwaway local database → same package layout as release.yml) and `deploy/lib/proof-db.mjs`. The harness refused the script edit to `deploy/start.sh`, so the edits to the eight governed files were produced as a patch from scratchpad copies and verified with `git apply --check`; nothing under `deploy/` other than the two new files was changed. **Never executed yet** — its first run is the dry run. |
+| 2026-10-02 (UTC 21:40) | First real deploy from the laptop: `v2026.10.02-1` (`4724599`) built and proved locally, promoted on the Droplet, 06-validate PASSED; both new migrations live. Not yet pushed to GitHub; question banks not yet seeded. |

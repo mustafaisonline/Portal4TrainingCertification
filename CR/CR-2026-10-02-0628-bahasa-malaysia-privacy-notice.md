@@ -25,9 +25,9 @@ After the decision: add `src/content/legal/privacy-ms.ts`, route `app/(public)/p
 
 | # | Step | Status | Updated |
 |---|---|---|---|
-| 1 | Founder chooses (a) or (b) | **AWAITING founder** | — |
-| 2 | Draft/receive BM text | NOT STARTED | — |
-| 3 | Build route + tests | NOT STARTED | — |
+| 1 | Founder chooses (a) or (b) | **DONE** — (a) chosen ("Open items (Recommended)") | 2026-10-02 |
+| 2 | Draft BM text (`privacy-ms.ts`, DRAFT, unpublished) + parity test (5 tests) | **DONE** — assistant-written, NOT reviewed | 2026-10-02 |
+| 3 | Translator/counsel corrects the text; then build route `/privacy/ms`, language link, sitemap entry | **AWAITING founder** | — |
 | 4 | Founder confirms reviewed → publish/deploy | NOT STARTED | — |
 
 ## 6. Progress log
@@ -35,3 +35,5 @@ After the decision: add `src/content/legal/privacy-ms.ts`, route `app/(public)/p
 | Date (MYT) | Entry |
 |---|---|
 | 2026-10-02 06:28 | CR created; planned; blocked on the authorship decision. |
+| 2026-10-02 07:00 | Founder chose option (a). Drafting `src/content/legal/privacy-ms.ts` (status `draft`, version `DRAFT-MS-2026-10-02`) mirroring the 16 English sections one-to-one, with a unit test for structural parity. NOT routed, NOT linked, NOT in the sitemap — so nothing public changes. Publication needs: a Malaysian translator/counsel's correction, the founder's "reviewed", then the route `/privacy/ms`, a language link on `/privacy`, a sitemap entry and the `LEGAL_DOCUMENT_VERSIONS` question (the consent version stays the English one). |
+| 2026-10-02 07:08 | Draft written: 16 sections mirroring the English notice; `tests/unit/privacy-ms-draft.test.ts` checks draft status, that nothing imports it, section/paragraph/bullet parity, figures and no placeholders. Observation: English §15 still says "when we confirm our hosting provider" — stale now that hosting is DigitalOcean; fix it (and the Malay mirror) in the next version of the notice. The draft's last line says the effective date is "(draf — belum diterbitkan)". |

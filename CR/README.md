@@ -26,9 +26,10 @@ deploy only on the founder's word; report honestly what was and was not tested.
 
 | CR file | Title | Status |
 |---|---|---|
+| [CR-2026-10-02-0710-deploy-changes-only-auto-approve.md](CR-2026-10-02-0710-deploy-changes-only-auto-approve.md) | Deploy footer fix + inert BM draft as a delta, `--auto-approve` — awaits the founder's command |
 | [CR-2026-10-02-0630-cr-process-binding.md](CR-2026-10-02-0630-cr-process-binding.md) | CR process made binding (CLAUDE.md, resume steps) — folder already existed |
 | [CR-2026-10-02-0629-remove-inert-stripe-test-lines.md](CR-2026-10-02-0629-remove-inert-stripe-test-lines.md) | Remove the inert Stripe test pair from the server env file — **DONE** |
-| [CR-2026-10-02-0628-bahasa-malaysia-privacy-notice.md](CR-2026-10-02-0628-bahasa-malaysia-privacy-notice.md) | Bahasa Malaysia Privacy notice — PLANNED, needs the founder's authorship decision |
+| [CR-2026-10-02-0628-bahasa-malaysia-privacy-notice.md](CR-2026-10-02-0628-bahasa-malaysia-privacy-notice.md) | Bahasa Malaysia Privacy notice — DRAFT written (unpublished); needs translator/counsel review + founder's "reviewed" |
 | [CR-2026-10-02-0627-footer-credential-integrity-link.md](CR-2026-10-02-0627-footer-credential-integrity-link.md) | Unpublished credential-integrity policy removed from footer/sitemap |
 | [CR-2026-10-02-0626-email-provider-deferred.md](CR-2026-10-02-0626-email-provider-deferred.md) | Email provider — **DEFERRED, remind the founder** |
 | [CR-2026-10-02-0625-rm2-live-test-no-refund.md](CR-2026-10-02-0625-rm2-live-test-no-refund.md) | RM 2.00 live payment test is not refunded |

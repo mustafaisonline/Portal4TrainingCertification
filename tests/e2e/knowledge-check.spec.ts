@@ -273,6 +273,7 @@ test("one running test per person: starting again returns to it; a late save (af
   await expect(page.getByTestId("result-grade")).toHaveAttribute("data-grade", "charlie");
   await expect(page.getByTestId("result-grade")).toContainText("Grade Charlie · 60–70 %");
   await expect(page.getByTestId("result-time-taken")).toHaveText("03:00:00"); // exactly three hours, never more
+  await expect(page).toHaveTitle(/.+/); // reached by client-side navigation: the title streams in last (same race as b7d3584; flaked once in the v2026.10.01-3 gate)
   await expectNoAxeViolations(page);
 
   // The test is over, so Assessment offers a fresh start again.

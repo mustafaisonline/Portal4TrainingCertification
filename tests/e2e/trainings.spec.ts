@@ -285,9 +285,10 @@ test("/programs/learn-vibe-coding renders the training with its sections, the re
 
   // Header CTAs.
   const hero = page.locator("section").first();
+  // CR-2026-10-02-0721: the hero button leads into the interest flow (sign in, returning to the formats) — the mailto is only the fallback when that flow is off.
   await expect(hero.getByRole("link", { name: "Register your interest" })).toHaveAttribute(
     "href",
-    interestMailto(training!.title),
+    new RegExp(`^/sign-in\\?return-to=.*${training!.slug}.*formats$`),
   );
   await expect(hero.getByRole("link", { name: "See dates and register" })).toHaveAttribute("href", "/schedule?training=learn-vibe-coding"); // M13: the page lists no dates; the schedule filtered to this training does
   // The "Trainings" nav item is current on a training page too.
@@ -383,7 +384,7 @@ test("/programs/data-blueprint-ai-vibe-coding renders the flagship on the shared
   const hero = page.locator("section").first();
   await expect(hero.getByRole("link", { name: "Register your interest" })).toHaveAttribute(
     "href",
-    interestMailto(flagship!.title),
+    new RegExp(`^/sign-in\\?return-to=.*${flagship!.slug}.*formats$`),
   );
   await expect(hero.getByRole("link", { name: "See dates and register" })).toHaveAttribute("href", `/schedule?training=${flagship!.slug}`); // M13: the page lists no dates; the schedule filtered to this training does
   await expect(hero.locator("dl")).toContainText("2 days");

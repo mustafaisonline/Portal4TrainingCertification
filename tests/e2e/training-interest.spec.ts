@@ -117,6 +117,27 @@ test("signed out: the format says no date is scheduled and offers to sign in; th
   await expect(signin.getByTestId("interest-signin")).toHaveAttribute("href", new RegExp(`/sign-in\\?return-to=.*${slug}`));
 });
 
+test("the hero \"Register your interest\" button leads where the format's \"Sign in to register your interest\" link does; signed in, it lands on the formats (CR-2026-10-02-0721)", async ({ page }) => {
+  await page.goto(`/programs/${slug}`);
+  const hero = page.getByTestId("hero-interest");
+  await expect(hero).toContainText("Register your interest");
+  // Same destination as the link under the format — not the old mailto.
+  const formatLink = await page.getByTestId(`interest-signin-${formatCode}`).getByTestId("interest-signin").getAttribute("href");
+  await expect(hero).toHaveAttribute("href", formatLink!);
+  await expect(hero).not.toHaveAttribute("href", /^mailto:/);
+
+  await hero.click();
+  await expect(page).toHaveURL(new RegExp(`/sign-in\\?return-to=.*${slug}`));
+  await page.getByLabel("Email", { exact: true }).fill(cardEmail);
+  await page.getByLabel("Password", { exact: true }).fill(STRONG_PASSWORD);
+  await page.getByRole("button", { name: "Sign in" }).click();
+  // After signing in the person is back on the training, at the formats, where the form is.
+  await expect(page).toHaveURL(new RegExp(`/programs/${slug}#formats$`), { timeout: 30_000 });
+  await expect(formatCard(page).getByTestId("interest-open")).toBeVisible();
+  // Signed in, the button goes straight to the formats on the same page.
+  await expect(page.getByTestId("hero-interest")).toHaveAttribute("href", "#formats");
+});
+
 test("a card payer: the form states the fee is non-refundable, validates, and with Stripe not configured charges and records nothing", async ({ page }) => {
   await signIn(page, cardEmail);
   await page.goto(`/programs/${slug}`);

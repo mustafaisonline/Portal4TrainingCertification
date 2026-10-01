@@ -25,13 +25,22 @@ import { InterestForm } from "./InterestForm";
 
 const noteClass = "text-body-sm text-[var(--color-ink-quiet)]";
 
-export type InterestSlots = { slots: Record<string, ReactNode>; banner: ReactNode | null };
+/** `heroHref`: where a training page's own "Register your interest" button goes — the sign-in
+ *  page (returning to the formats) when signed out, the formats section when signed in. `null`
+ *  when no format offers the flow (feature off, or every format has an open date): the page
+ *  then keeps its enquiry link, so the button never leads nowhere. */
+export type InterestSlots = { slots: Record<string, ReactNode>; banner: ReactNode | null; heroHref: string | null };
+
+/** The one sign-in link for registering interest, shared by the format slot and the hero button. */
+function interestSignInHref(programmeSlug: string): string {
+  return `/sign-in?return-to=${encodeURIComponent(`/programs/${programmeSlug}#formats`)}`;
+}
 
 export async function buildInterestSlots(input: { programmeSlug: string; formats: DeliveryFormatRecord[]; interestParam?: string; datesHref: string }): Promise<InterestSlots> {
   const now = new Date();
   const [user, setting] = await Promise.all([getCurrentUser(), enabledInterestSetting(now)]);
   const banner = user && input.interestParam ? await interestBanner(input.interestParam, user.id, now) : input.interestParam === "cancelled" ? cancelledBanner() : null;
-  if (!setting || input.formats.length === 0) return { slots: {}, banner };
+  if (!setting || input.formats.length === 0) return { slots: {}, banner, heroHref: null };
 
   const ids = input.formats.map((f) => f.id);
   const noDate = await formatIdsWithoutOpenDate(ids, now);
@@ -51,7 +60,7 @@ export async function buildInterestSlots(input: { programmeSlug: string; formats
       slots[f.id] = (
         <p className={noteClass} data-testid={`interest-signin-${f.code}`}>
           No date is scheduled yet.{" "}
-          <Link href={`/sign-in?return-to=${encodeURIComponent(`/programs/${input.programmeSlug}#formats`)}`} className="font-medium text-[var(--color-primary)] underline underline-offset-4" data-testid="interest-signin">
+          <Link href={interestSignInHref(input.programmeSlug)} className="font-medium text-[var(--color-primary)] underline underline-offset-4" data-testid="interest-signin">
             Sign in to register your interest — {feeLabel ? `${feeLabel}, non-refundable` : "free for you"}
           </Link>
           .
@@ -79,7 +88,9 @@ export async function buildInterestSlots(input: { programmeSlug: string; formats
       );
     }
   }
-  return { slots, banner };
+  const offersInterest = input.formats.some((f) => noDate.has(f.id));
+  const heroHref = offersInterest ? (user ? "#formats" : interestSignInHref(input.programmeSlug)) : null;
+  return { slots, banner, heroHref };
 }
 
 function cancelledBanner(): ReactNode {

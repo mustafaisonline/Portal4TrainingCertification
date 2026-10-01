@@ -26,6 +26,7 @@ deploy only on the founder's word; report honestly what was and was not tested.
 
 | CR file | Title | Status |
 |---|---|---|
+| [CR-2026-10-02-0721-interest-button-leads-to-signin-flow.md](CR-2026-10-02-0721-interest-button-leads-to-signin-flow.md) | Hero "Register your interest" button → the sign-in/interest flow (was a mailto) — BUILT, awaiting deploy |
 | [CR-2026-10-02-0710-deploy-changes-only-auto-approve.md](CR-2026-10-02-0710-deploy-changes-only-auto-approve.md) | Deploy footer fix + inert BM draft as a delta, `--auto-approve` — **DEPLOYED `v2026.10.02-4`** |
 | [CR-2026-10-02-0630-cr-process-binding.md](CR-2026-10-02-0630-cr-process-binding.md) | CR process made binding (CLAUDE.md, resume steps) — folder already existed |
 | [CR-2026-10-02-0629-remove-inert-stripe-test-lines.md](CR-2026-10-02-0629-remove-inert-stripe-test-lines.md) | Remove the inert Stripe test pair from the server env file — **DONE** |

@@ -165,7 +165,8 @@ export default async function CourseDetailPage({
             {/* UX review 2026-09-27 F4: ONE schedule button. With an open date it
                 is the primary action; with none, the enquiry leads and the
                 schedule button stays as the secondary. */}
-            {openDates === 0 && <Button href={enquiryHref}>Register your interest</Button>}
+            {/* CR-2026-10-02-0721: the same path as "Sign in to register your interest" under each format; the old mailto only when that flow is off. */}
+            {openDates === 0 && <Button href={interestSlots.heroHref ?? enquiryHref} data-testid="hero-interest">Register your interest</Button>}
             <Button variant={openDates > 0 ? "primary" : "secondary"} href={datesHref} data-testid="hero-dates">
               See dates and register
             </Button>

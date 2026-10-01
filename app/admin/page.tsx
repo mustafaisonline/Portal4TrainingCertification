@@ -7,6 +7,7 @@ import { FEE_REGIONS } from "@/modules/catalogue/programmes/constants";
 import { listTrainings, type TrainingListItem } from "@/modules/catalogue/programmes/admin.repository";
 import { formatMoney } from "@/modules/catalogue/programmes/types";
 import { countCertificates } from "@/modules/certificates/repository";
+import { listFormatsOverview, summariseFormats } from "@/modules/commerce/formats-overview";
 import { currentMonthKey, monthLabel } from "@/modules/reports/months";
 import { certificatesSummary, confirmedUpcomingRegistrations, lastJobRun, revenueByMonth } from "@/modules/reports/queries";
 import { countPendingReviews } from "@/modules/reviews/repository";
@@ -48,7 +49,7 @@ function Stat({ label, value, testId, children }: { label: string; value: ReactN
 
 /** The three launch cards (M12 WP4) — shown to administrators and Trainers
  *  alike, over the caller's scope. */
-function LaunchCards({ trainings, isAdmin }: { trainings: TrainingListItem[]; isAdmin: boolean }) {
+function LaunchCards({ trainings, isAdmin, formats }: { trainings: TrainingListItem[]; isAdmin: boolean; formats: ReturnType<typeof summariseFormats> }) {
   const published = trainings.filter((t) => t.status === "published").length;
   const drafts = trainings.filter((t) => t.status === "unlisted").length;
   const openDates = trainings.reduce((n, t) => n + t.openDates, 0);
@@ -91,6 +92,30 @@ function LaunchCards({ trainings, isAdmin }: { trainings: TrainingListItem[]; is
         </div>
       </Card>
 
+      <Card variant="panel" data-testid="admin-card-formats">
+        <p className="text-label mb-2">Pace formats</p>
+        <h2 className="text-h2">Formats</h2>
+        <p className="text-body-sm mt-2 text-[var(--color-ink-quiet)]">
+          <span data-testid="admin-formats-counts">
+            {formats.formats === 0
+              ? "No formats declared yet."
+              : `${plural(formats.formats, "format", "formats")} · ${formats.formatsWithoutDate} without an open date.`}
+          </span>
+          <span data-testid="admin-formats-interest">
+            {" "}
+            {formats.interested === 0 ? "No one has registered interest yet." : `${plural(formats.interested, "person is", "people are")} interested (${formats.awaitingNotice} not yet told).`}
+          </span>
+        </p>
+        <div className="mt-5 flex flex-wrap gap-3">
+          <Button href="/admin/formats" data-testid="admin-formats-link">
+            Manage formats
+          </Button>
+          <Button variant="secondary" href="/admin/interest" data-testid="admin-interest-link">
+            Users Interest
+          </Button>
+        </div>
+      </Card>
+
       <Card variant="panel" data-testid="admin-card-fees">
         <p className="text-label mb-2">Fee structure</p>
         <h2 className="text-h2">Fees</h2>
@@ -120,7 +145,8 @@ export default async function AdminPage() {
     if (access.reason === "signed-out") redirect(`/sign-in?return-to=${encodeURIComponent("/admin")}`);
     forbidden();
   }
-  const trainings = await listTrainings(access.scope);
+  const [trainings, formatsOverview] = await Promise.all([listTrainings(access.scope), listFormatsOverview(access.scope)]);
+  const formats = summariseFormats(formatsOverview);
 
   if (!access.isAdmin) {
     return (
@@ -135,7 +161,7 @@ export default async function AdminPage() {
           </p>
         </header>
         <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          <LaunchCards trainings={trainings} isAdmin={false} />
+          <LaunchCards trainings={trainings} isAdmin={false} formats={formats} />
         </div>
       </div>
     );
@@ -167,7 +193,7 @@ export default async function AdminPage() {
       </header>
 
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-        <LaunchCards trainings={trainings} isAdmin />
+        <LaunchCards trainings={trainings} isAdmin formats={formats} />
 
         <Card variant="panel" data-testid="admin-card-registrations">
           <p className="text-label mb-2">Upcoming</p>

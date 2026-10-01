@@ -29,7 +29,7 @@ import { Field } from "@/shared/ui/forms";
  */
 export const metadata: Metadata = {
   title: "Verify a certificate",
-  description: "Confirm a Data & AI Academy Certificate of Completion by certificate ID or, for listed holders, by name.",
+  description: "Confirm a DataAI Nexus Certificate of Completion by certificate ID or, for listed holders, by name.",
 };
 
 export const dynamic = "force-dynamic";

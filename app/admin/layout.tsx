@@ -19,7 +19,7 @@ import { PublicShell } from "@/shared/chrome/PublicShell";
  * (The MFA requirement was removed for MVP 1 — founder, 2026-09-21.)
  * The wireframe's `AdminFrame` label-gate is replaced, not ported.
  */
-export const metadata: Metadata = { title: { default: "Admin", template: "%s · Admin · Data & AI Academy" } };
+export const metadata: Metadata = { title: { default: "Admin", template: "%s · Admin · DataAI Nexus" } };
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
   const access = await trainingAccess();

@@ -32,23 +32,6 @@ const s = {
   fill: "none",
 };
 
-function IconBolt() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
-      <path d="M13 3L5 13.5h5.5L11 21l8-10.5h-5.5L13 3z" {...s} />
-    </svg>
-  );
-}
-function IconRobot() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
-      <rect x="5" y="9" width="14" height="10" rx="2.5" {...s} />
-      <path d="M12 9V5.5M9.5 5.5h5" {...s} />
-      <circle cx="9.5" cy="14" r="1.2" fill="currentColor" />
-      <circle cx="14.5" cy="14" r="1.2" fill="currentColor" />
-    </svg>
-  );
-}
 function IconBriefcase() {
   return (
     <svg viewBox="0 0 24 24" className="h-5 w-5" aria-hidden="true">
@@ -126,11 +109,14 @@ function IconArrow() {
   );
 }
 
+/* CR-2026-10-01-2345 (Q2 approved): chips restated for the workspace
+   positioning. Icons are reused from this file's existing hand-authored
+   set — no new SVG. */
 const benefits = [
-  { tone: "blue", icon: <IconBolt />, label: "Learn by Building" },
-  { tone: "purple", icon: <IconRobot />, label: "AI-Powered Skills" },
-  { tone: "orange", icon: <IconBriefcase />, label: "Freelance Ready" },
-  { tone: "teal", icon: <IconGlobe />, label: "Work From Anywhere" },
+  { tone: "blue", icon: <IconBook />, label: "Free Knowledge Hub" },
+  { tone: "purple", icon: <IconChat />, label: "Interview Prep" },
+  { tone: "orange", icon: <IconCheckCircle />, label: "Assess & Certify" },
+  { tone: "teal", icon: <IconPerson />, label: "Expert-Led Training" },
 ] as const;
 
 const journey = [
@@ -196,20 +182,24 @@ export function HomeHero({
         </div>
         <div className="relative mx-auto grid max-w-[1280px] gap-12 px-6 py-16 lg:grid-cols-[1.05fr_1fr] lg:items-center">
           <div>
+            {/* CR-2026-10-01-2345: repositioned from training portal to Data
+                & AI workspace (founder approved: Headline A, Description A,
+                honest wording — no "multiple roles"/live-screening claim
+                while CR-1711 P2–P4 are unbuilt). */}
             <p className="mb-4 text-xs font-bold tracking-[0.2em] text-[var(--color-cyan)]">
-              PRACTICAL SKILLS FOR A BRIGHTER TOMORROW
+              A WORKSPACE FOR DATA &amp; AI PROFESSIONALS
             </p>
             <h1 className="mb-5 text-4xl font-bold leading-[1.05] tracking-tight text-[var(--color-ink)] sm:text-5xl">
-              Don&rsquo;t Just Learn.{" "}
+              More Than Training.{" "}
               <span className="bg-gradient-to-r from-[#22d3ee] via-[#3b82f6] to-[#8b5cf6] bg-clip-text text-transparent">
-                Build a Future
-              </span>{" "}
-              You&rsquo;re Excited About.
+                Your Data &amp; AI Workspace.
+              </span>
             </h1>
             <p className="mb-8 max-w-[560px] text-[17px] leading-relaxed text-[var(--color-ink-quiet)]">
-              Learn Vibe Coding and modern digital skills, build real projects,
-              create a portfolio, and explore freelance and remote
-              opportunities — all from anywhere in the world.
+              Expert-led training is just the beginning. Learn free from the
+              Knowledge Hub, practise with thousands of questions, prepare for
+              Data &amp; AI interviews, earn verifiable results — and, for
+              organisations, screen candidates on the same platform.
             </p>
             <div className="mb-8 flex flex-wrap gap-3">
               <Link

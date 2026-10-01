@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { forbidden, notFound } from "next/navigation";
+import { listOrganisationsForAdmin } from "@/modules/assessment/organisations.repository";
 import { formatMoney } from "@/modules/catalogue/programmes/types";
 import { CERTIFICATE_STATUS_LABEL } from "@/modules/certificates/constants";
 import { dateColumnToIso, todayIso } from "@/modules/certificates/dates";
@@ -11,7 +12,7 @@ import { REVIEW_MODERATION_LABEL, REVIEW_VISIBILITY_LABEL } from "@/modules/revi
 import { Card } from "@/shared/ui/Card";
 import { Chip } from "@/shared/ui/Chip";
 import { formatCalendarDate, formatDateRange, formatTimestamp } from "@/shared/util/dates";
-import { GrantAdmin, GrantTrainer, RevokeAdmin, RevokeTrainer } from "./RoleActions";
+import { GrantAdmin, GrantOrganisation, GrantTrainer, RevokeAdmin, RevokeOrganisation, RevokeTrainer } from "./RoleActions";
 
 /*
  * /admin/users/[id] — one person in full (M8 plan §2 item 4): identity
@@ -34,6 +35,11 @@ export default async function AdminUserDetailPage({ params }: { params: Promise<
   if (!user) notFound();
   const today = todayIso(new Date());
   const isSelf = user.id === result.user.id;
+  // CR-2026-10-01-1711: Organisation access is per organisation — the ones this person holds, and the ones that can still be granted.
+  const organisations = await listOrganisationsForAdmin();
+  const heldIds = new Set(user.roles.filter((r) => r.active && r.role === "org_admin" && r.scopeType === "organisation" && r.scopeId).map((r) => r.scopeId as string));
+  const heldOrganisations = organisations.filter((o) => heldIds.has(o.id));
+  const grantable = organisations.filter((o) => !heldIds.has(o.id)).map((o) => ({ id: o.id, name: o.name }));
   const th = "text-label px-6 py-3 font-semibold";
   const td = "px-6 py-3 align-top";
 
@@ -170,6 +176,22 @@ export default async function AdminUserDetailPage({ params }: { params: Promise<
           {user.isTrainer ? <RevokeTrainer userId={user.id} name={user.name} /> : <GrantTrainer userId={user.id} name={user.name} />}
         </Card>
       </div>
+
+      <Card variant="panel" className="p-6" data-testid="admin-user-organisation-actions">
+        <h2 className="text-h2 mb-1">Organisation access</h2>
+        <p className="text-body-sm mb-4 text-[var(--color-ink-faint)]">
+          The Organisation dashboard of a registered company or education body — its roles, questions and candidate results. Granted per organisation (CR-2026-10-01-1711).
+        </p>
+        <div className="grid gap-6 lg:grid-cols-2">
+          <div className="flex flex-col gap-4" data-testid="admin-user-organisations">
+            {heldOrganisations.length === 0 ? <p className="text-body-sm text-[var(--color-ink-quiet)]">No organisation access yet.</p> : null}
+            {heldOrganisations.map((o) => (
+              <RevokeOrganisation key={o.id} userId={user.id} name={user.name} organisationId={o.id} organisationName={o.name} />
+            ))}
+          </div>
+          <GrantOrganisation userId={user.id} name={user.name} organisations={grantable} />
+        </div>
+      </Card>
 
       <Card variant="panel" className="overflow-x-auto p-0">
         <h2 className="text-h2 px-6 pt-6">Roles</h2>

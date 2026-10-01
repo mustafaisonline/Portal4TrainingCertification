@@ -20,7 +20,7 @@ export default defineConfig({
     // Seed files, never migrations (ADR-023/029). Node 24 runs TypeScript
     // directly; --experimental-transform-types covers the enums the generated
     // client uses.
-    seed: "node --experimental-transform-types prisma/seed.ts",
+    seed: "node --experimental-transform-types --import ./scripts/register-alias.mjs prisma/seed.ts",
   },
   datasource: {
     url: process.env["DATABASE_URL"],

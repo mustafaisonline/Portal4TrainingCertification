@@ -45,6 +45,11 @@ export const COMMERCE_MESSAGES: Record<CommerceErrorCode, string> = {
   coupon_email_mismatch: "This coupon is not assigned to the registered email address.",
   coupon_wrong_training: "This coupon is not valid for this training.",
   coupon_payment_in_progress: "A payment with this coupon is already in progress. Finish it, or try again in 30 minutes when that hold expires.",
+  // CR-2026-10-01-2138
+  interest_unavailable: "Registering interest is not open for this format — a date may already be scheduled, so you can register for the training itself.",
+  interest_fee_off: "Registering interest is not available at the moment.",
+  interest_already_registered: "You have already registered your interest in this format — see My interests.",
+  interest_order_pending: "You already started this payment. Finish it in the Stripe tab, or try again in 30 minutes when that hold expires.",
 };
 
 export const PAYMENTS_NOT_CONFIGURED_MESSAGE =

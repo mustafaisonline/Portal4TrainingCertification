@@ -97,7 +97,7 @@ test("every sidebar screen is served with an h1; the retired routes redirect; Se
   await expect(page).toHaveURL(/\/programs$/);
 });
 
-test("the header menu opens with name, email, User Dashboard, then Sign out — no Trainer/Admin Dashboard for a plain participant (founder, 2026-09-28)", async ({ page }) => {
+test("the header menu opens with name, email, User Dashboard, the site menu, then Sign out — no Trainer/Admin Dashboard for a plain participant (founder, 2026-09-28)", async ({ page }) => {
   const email = newEmail("e2e-acct-menu");
   await registerViaUi(page, email, "Grace Hopper");
   await signInViaUi(page, email);
@@ -111,8 +111,12 @@ test("the header menu opens with name, email, User Dashboard, then Sign out — 
   const menu = page.getByTestId("account-menu");
   await expect(menu).toContainText("Grace Hopper");
   await expect(menu).toContainText(email);
-  const labels = await menu.getByRole("link").allTextContents();
-  expect(labels.map((l) => l.trim())).toEqual(["User Dashboard", "Sign out"]);
+  // The dashboards come first and Sign out last; between them sit every header and
+  // footer item (founder, 2026-10-01 — see cr-2136-menus-and-admin-labels.spec.ts).
+  const labels = (await menu.getByRole("link").allTextContents()).map((l) => l.trim());
+  expect(labels[0]).toBe("User Dashboard");
+  expect(labels[labels.length - 1]).toBe("Sign out");
+  expect(labels.slice(1, 3)).toEqual(["Home", "Knowledge Hub"]);
   await expect(menu.getByRole("link", { name: "User Dashboard" })).toHaveAttribute("href", "/account");
   await expect(menu.getByRole("link", { name: "Sign out" })).toHaveAttribute("href", "/sign-out");
   // A plain participant sees neither role-scoped entry.

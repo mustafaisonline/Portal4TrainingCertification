@@ -46,6 +46,13 @@ export function holdsRole(roles: readonly ActiveRole[], role: Role, scope: RoleS
   );
 }
 
+/** An Organisation user (CR-2026-10-01-1711, founder): holds the `org_admin` role —
+ *  shown as "Organisation" — in ANY scope. An organisation-scoped grant does not satisfy
+ *  `holdsRole`'s default platform scope, so this asks the question directly. Pure. */
+export function isOrganisationUser(roles: readonly ActiveRole[]): boolean {
+  return roles.some((r) => r.role === "org_admin");
+}
+
 /** Where a sign-in lands when no `return-to` was asked for (founder
  *  direction 2026-09-27): a platform administrator on the admin dashboard,
  *  everyone else — participants and Trainers alike — on their account. Pure;

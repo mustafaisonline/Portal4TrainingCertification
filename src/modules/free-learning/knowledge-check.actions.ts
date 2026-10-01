@@ -93,7 +93,7 @@ export async function deleteKnowledgeCheckResultsAction(_prev: KnowledgeCheckSta
   if (ids.length === 0) return { status: "error", message: "Tick at least one result to delete." };
   try {
     const { deleted, refused } = await withTransaction((tx) => deleteFinishedAttempts(tx, { userId: user.id, attemptIds: ids }));
-    revalidatePath("/free-certifications");
+    revalidatePath("/assessment");
     revalidatePath("/account", "layout");
     if (deleted === 0) return { status: "error", message: "Nothing was deleted — a result with a document unlock is a record and stays." };
     return {

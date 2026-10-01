@@ -43,7 +43,7 @@ export default async function AdminCertificatesPage({ searchParams }: { searchPa
   };
   const [page, lastRun] = await Promise.all([listCertificatesForAdmin(filters), lastReminderRun()]);
   // The sample certificate shown on this tab (`?sample=achievement|completion`; for the
-  // Free Certification also `&grade=alpha|bravo|charlie`, one sheet per grade — default Alpha).
+  // Assessment also `&grade=alpha|bravo|charlie`, one sheet per grade — default Alpha).
   const sampleParam = param("sample");
   const sampleKind = isSampleKind(sampleParam) ? sampleParam : "achievement";
   const gradeParam = param("grade");
@@ -106,7 +106,7 @@ export default async function AdminCertificatesPage({ searchParams }: { searchPa
           </p>
           <div className="flex flex-wrap items-center gap-3 print:hidden">
             <Button variant={sampleKind === "achievement" ? "primary" : "secondary"} href="/admin/certificates?sample=achievement" data-testid="sample-kind-achievement" aria-current={sampleKind === "achievement" ? "true" : undefined}>
-              Free Certification
+              Assessment
             </Button>
             <Button variant={sampleKind === "completion" ? "primary" : "secondary"} href="/admin/certificates?sample=completion" data-testid="sample-kind-completion" aria-current={sampleKind === "completion" ? "true" : undefined}>
               Professional Training

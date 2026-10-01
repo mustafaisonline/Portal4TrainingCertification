@@ -21,7 +21,7 @@ import { Card } from "@/shared/ui/Card";
  *
  * `?kind=achievement|completion` shows one sheet (so Print gives one A4 page);
  * `?long=1` swaps in a very long name and title to prove nothing overflows.
- * `?grade=alpha|bravo|charlie` picks the Free Certification sample's grade
+ * `?grade=alpha|bravo|charlie` picks the Assessment sample's grade
  * (default Alpha); `?grade=all` shows one sheet per grade (founder, 2026-09-30).
  */
 export const metadata: Metadata = { title: "Certificate design preview" };
@@ -74,7 +74,7 @@ export default async function CertificatePreviewPage({ searchParams }: { searchP
             Both
           </Button>
           <Button variant="secondary" href="/admin/certificates/preview?kind=achievement" data-testid="preview-achievement">
-            Free Certification only
+            Assessment only
           </Button>
           <Button variant="secondary" href="/admin/certificates/preview?kind=completion" data-testid="preview-completion">
             Professional Training only
@@ -84,8 +84,8 @@ export default async function CertificatePreviewPage({ searchParams }: { searchP
           </Button>
           <PrintButton />
         </div>
-        <div className="mt-3 flex flex-wrap items-center gap-3" role="group" aria-label="Free Certification grade">
-          <span className="text-label">Free Certification grade</span>
+        <div className="mt-3 flex flex-wrap items-center gap-3" role="group" aria-label="Assessment grade">
+          <span className="text-label">Assessment grade</span>
           {SAMPLE_GRADES.map((g) => (
             <Button key={g} variant="secondary" href={`/admin/certificates/preview?grade=${g}${only ? `&kind=${only}` : ""}${long ? "&long=1" : ""}`} data-testid={`preview-grade-${g}`}>
               {ASSESSMENT_GRADE_BANDS[g].name}
@@ -123,7 +123,7 @@ export default async function CertificatePreviewPage({ searchParams }: { searchP
               <div key={shownGrades[i]} className="overflow-x-auto">
                 <div className="mx-auto min-w-[760px] max-w-[1123px]">
                   <p className="text-label mb-2 print:hidden">
-                    Free Certification — Certificate of Achievement · {ASSESSMENT_GRADE_BANDS[shownGrades[i]!].name} ({ASSESSMENT_GRADE_BANDS[shownGrades[i]!].band})
+                    Assessment — Certificate of Achievement · {ASSESSMENT_GRADE_BANDS[shownGrades[i]!].name} ({ASSESSMENT_GRADE_BANDS[shownGrades[i]!].band})
                   </p>
                   <Certificate {...achievement} />
                 </div>

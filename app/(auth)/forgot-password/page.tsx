@@ -11,7 +11,7 @@ import { ForgotPasswordForm } from "./ForgotPasswordForm";
  */
 export const metadata: Metadata = {
   title: "Forgot password",
-  description: "Request a link to reset your Data & AI Academy password.",
+  description: "Request a link to reset your DataAI Nexus password.",
 };
 
 export default function ForgotPasswordPage() {

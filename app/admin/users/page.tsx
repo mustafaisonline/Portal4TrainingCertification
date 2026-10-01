@@ -54,7 +54,7 @@ export default async function AdminUsersPage({ searchParams }: { searchParams: P
           Users
         </h1>
         <p className="text-body-sm mt-2 max-w-[70ch] text-[var(--color-ink-quiet)]">
-          Everyone with an account. Open a person to see their registrations, orders, certificates and roles, and to grant or revoke administrator access.
+          Everyone with an account. Edit a person to see their registrations, orders, certificates and roles, and to grant or revoke administrator access.
         </p>
       </header>
 
@@ -105,7 +105,7 @@ export default async function AdminUsersPage({ searchParams }: { searchParams: P
               <tr className="border-b border-[var(--color-line)] text-left">
                 {columns.map((c, i) => (
                   <th key={i} scope="col" className="text-label px-4 py-3 font-semibold">
-                    {c || <span className="sr-only">Open</span>}
+                    {c || <span className="sr-only">Edit</span>}
                   </th>
                 ))}
               </tr>
@@ -131,8 +131,8 @@ export default async function AdminUsersPage({ searchParams }: { searchParams: P
                   <td className="px-4 py-3 text-[var(--color-ink)]">{u.certificateCount}</td>
                   <td className="px-4 py-3 whitespace-nowrap text-[var(--color-ink-quiet)]">{formatCalendarDate(u.createdAt)}</td>
                   <td className="px-4 py-3">
-                    <Link href={`/admin/users/${u.id}`} className="text-[var(--color-primary)] underline underline-offset-4" aria-label={`Open ${u.name}`}>
-                      Open
+                    <Link href={`/admin/users/${u.id}`} className="text-[var(--color-primary)] underline underline-offset-4" aria-label={`Edit ${u.name}`}>
+                      Edit
                     </Link>
                   </td>
                 </tr>

@@ -35,9 +35,9 @@ import type { LegalDocument } from "./types";
 export const termsOfService: LegalDocument = {
   key: "terms",
   title: "Terms of service",
-  version: "DRAFT-2026-09-30",
+  version: "DRAFT-2026-10-01",
   status: "draft",
-  lastUpdated: "2026-09-30",
+  lastUpdated: "2026-10-01",
   summary:
     "The agreement between Your Partner Technologies and anyone who creates an account, registers for a Data & AI Academy training, uses Free Learning or the Free Assessment Check, or makes a one-off payment: registering, paying, cancelling, taking part, and the Certificate of Completion.",
   sections: [
@@ -144,11 +144,13 @@ export const termsOfService: LegalDocument = {
       ],
     },
     {
-      heading: "11. Free Learning, the Free Assessment Check and one-off payments",
+      heading: "11. Free Learning, assessments and one-off payments",
       paragraphs: [
         "Alongside the paid trainings, the Academy publishes Free Learning: the trainer's own book, readable here topic by topic, and a free skill diagnostic. Both are open to anyone, need no account, and nothing you do there is stored on our servers — the diagnostic's answers stay in your browser and are never sent to us.",
         "The Free Assessment Check is a free attempt, available once you have an account: 200 questions drawn at random from the Free Learning question bank, a time limit of three hours after which it is scored as it stands, and a score. A score of 60 % or more passes and earns a graded Certificate of Achievement — Charlie (60–70 %), Bravo (71–80 %) or Alpha (81–100 %) — with a unique ID that anyone can verify. A Free Assessment Check result and its certificate are not a Certificate of Completion and not the Academy's earned credential; the verification page says so.",
+        "Interview assessments are free practice and screening tests, available once you have an account: up to 100 multiple-choice questions for a role, a time limit of 90 minutes, a score, and a model answer for every question. They are not a certificate and have no pass mark. An organisation may also offer a screening test for a role; it includes that organisation's own questions, you are asked to confirm before you start that your result (name, email address, role, score and time taken) is shared with that organisation, and the organisation — not the Academy — decides what to do with it. Questions written by an organisation are that organisation's responsibility; model answers are educational guidance, not a promise of any interview outcome.",
         "You may pay a one-time fee to unlock a printable copy of your Certificate of Achievement. That fee is optional — the result, its ID and its verification page are always free — and, once the printable certificate has been shown to you, it is not refundable; see the Refund & cancellation policy.",
+        "You may register your interest in a format of a training that has no scheduled date yet, by paying a small fee shown before you pay (currently USD 2; no fee for participants in Pakistan). The fee is not refundable and is not credited against the training fee; it does not reserve a seat and does not oblige the Academy to schedule that format. If the trainer schedules the format, you may be contacted by email about the date and invited to register for the training in the usual way, under section 8.",
         "You may also make a one-off payment to support the Academy. It grants no service, benefit or credential in return; it exists only so you can make a payment if you choose to. It is not a registration and is not covered by the cancellation schedule in section 8.",
       ],
     },

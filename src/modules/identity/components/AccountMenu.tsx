@@ -2,7 +2,12 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { footerExplore, footerLegal, primaryNav, verifyLink } from "@/shared/chrome/site-nav";
 import { initialsOf } from "@/shared/util/initials";
+
+/** The header items, then the footer items the header does not already list, then the legal links — the menu carries ALL of them (founder, 2026-10-01). */
+const MENU_LINKS = primaryNav;
+const MORE_LINKS = [...footerExplore.filter((l) => !primaryNav.some((p) => p.href === l.href)), verifyLink];
 
 /*
  * PORTED 2026-09-21 from project-artifacts/mockup/components/account/
@@ -32,6 +37,7 @@ export function AccountMenu({
   name,
   email,
   isTrainer,
+  isOrganisation = false,
   isAdmin,
   hasPhoto = false,
   photoVersion = 0,
@@ -39,6 +45,8 @@ export function AccountMenu({
   name: string;
   email: string;
   isTrainer: boolean;
+  /** Holds the Organisation role (CR-2026-10-01-1711). */
+  isOrganisation?: boolean;
   isAdmin: boolean;
   /** Milestone 5a: show the profile photo (from the session-gated route)
    *  instead of the initials. `photoVersion` busts the browser cache. */
@@ -92,7 +100,7 @@ export function AccountMenu({
       {open && (
         <div
           data-testid="account-menu"
-          className="absolute right-0 top-full z-20 mt-2 w-60 rounded-[var(--radius-panel)] border border-[var(--color-line)] bg-[var(--color-ground-raised)] p-2 shadow-[0_10px_30px_rgba(16,24,40,0.18)]"
+          className="absolute right-0 top-full z-20 mt-2 max-h-[80vh] w-64 overflow-y-auto rounded-[var(--radius-panel)] border border-[var(--color-line)] bg-[var(--color-ground-raised)] p-2 shadow-[0_10px_30px_rgba(16,24,40,0.18)]"
         >
           <p className="px-3 pb-2 pt-1">
             <span className="block text-body-sm font-medium text-[var(--color-ink)]">{name}</span>
@@ -111,6 +119,13 @@ export function AccountMenu({
                 </Link>
               </li>
             )}
+            {isOrganisation && (
+              <li>
+                <Link href="/organisation" onClick={() => setOpen(false)} className={itemClass} data-testid="menu-organisation-dashboard">
+                  Organisation Dashboard
+                </Link>
+              </li>
+            )}
             {isAdmin && (
               <li>
                 <Link href="/admin" onClick={() => setOpen(false)} className={itemClass}>
@@ -119,6 +134,39 @@ export function AccountMenu({
               </li>
             )}
           </ul>
+          {/* Every header and footer item, so this menu is complete on its own (founder, 2026-10-01). */}
+          <nav aria-label="Site menu" className="mt-1 border-t border-[var(--color-line)] pt-1" data-testid="account-menu-links">
+            <p className="text-label px-3 pb-1 pt-2">Menu</p>
+            <ul>
+              {MENU_LINKS.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} onClick={() => setOpen(false)} className={itemClass}>
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <p className="text-label px-3 pb-1 pt-3">More</p>
+            <ul>
+              {MORE_LINKS.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} onClick={() => setOpen(false)} className={itemClass}>
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <p className="text-label px-3 pb-1 pt-3">Legal</p>
+            <ul>
+              {footerLegal.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} onClick={() => setOpen(false)} className={itemClass}>
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
           <Link
             href="/sign-out"
             onClick={() => setOpen(false)}

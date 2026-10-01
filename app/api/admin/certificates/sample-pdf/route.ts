@@ -25,7 +25,7 @@ export async function GET(req: Request): Promise<Response> {
   } catch {
     baseUrl = undefined; // local only — a sample URL is fine
   }
-  // The Free Certification sample has one sheet per grade (default Alpha); an unknown grade is a 400.
+  // The Assessment sample has one sheet per grade (default Alpha); an unknown grade is a 400.
   const gradeParam = new URL(req.url).searchParams.get("grade");
   if (gradeParam !== null && !isSampleGrade(gradeParam)) return new Response("grade must be alpha, bravo or charlie", { status: 400 });
   const grade = kind === "achievement" && gradeParam !== null && isSampleGrade(gradeParam) ? gradeParam : undefined;

@@ -1,0 +1,1514 @@
+{
+  "role": {
+    "slug": "data-engineer",
+    "name": "Data Engineer",
+    "description": "Designs, builds and operates the pipelines and platforms that move, store and prepare data for analytics and machine learning, with a focus on reliability, quality, security and cost."
+  },
+  "researchNote": "Web search was available and used to survey current public data-engineer role descriptions and skills lists, plus vendor and open-source documentation and guidance (Apache Spark, Kafka, Airflow, dbt, Iceberg, Delta Lake, BigQuery) and the DAMA data-quality dimensions. Mostly search-result summaries were read; only one page (dbt microbatch) was fetched in full. Sources were used solely to decide which topics matter and to confirm facts; all questions, options and model answers are original wording and no interview-question list was consulted or copied. Topic weights are the author's judgement from that survey, not a measured statistic. Vendor behaviour changes quickly, so version-specific details (for example default settings and feature names) should be rechecked by a reviewer.",
+  "blueprint": [
+    {
+      "category": "SQL & data modelling",
+      "weightPercent": 14
+    },
+    {
+      "category": "Batch processing & distributed compute",
+      "weightPercent": 11
+    },
+    {
+      "category": "Streaming & messaging",
+      "weightPercent": 11
+    },
+    {
+      "category": "Orchestration & pipelines",
+      "weightPercent": 10
+    },
+    {
+      "category": "Storage, lakehouse & warehouse",
+      "weightPercent": 10
+    },
+    {
+      "category": "Data quality, testing & observability",
+      "weightPercent": 9
+    },
+    {
+      "category": "ELT & transformation",
+      "weightPercent": 8
+    },
+    {
+      "category": "Cloud, security & governance",
+      "weightPercent": 9
+    },
+    {
+      "category": "Performance & cost optimisation",
+      "weightPercent": 9
+    },
+    {
+      "category": "Software engineering for data",
+      "weightPercent": 9
+    }
+  ],
+  "sources": [
+    {
+      "title": "Data Engineer Roles and Responsibilities [2026]: JD, Skills (Taggd)",
+      "url": "https://taggd.in/blogs/data-engineer-roles-and-responsibilties/"
+    },
+    {
+      "title": "Top Data Engineer Resume Skills for 2026 (Jobscan)",
+      "url": "https://www.jobscan.co/skills/data-engineer"
+    },
+    {
+      "title": "Data Engineer Job Description Template [2026] (X0PA)",
+      "url": "https://x0pa.com/hiring/data-engineer-job-description/"
+    },
+    {
+      "title": "Partitioning - Apache Iceberg",
+      "url": "https://iceberg.apache.org/docs/latest/partitioning/"
+    },
+    {
+      "title": "Schema evolution - Apache Iceberg",
+      "url": "https://iceberg.apache.org/docs/latest/evolution/"
+    },
+    {
+      "title": "Incremental models in-depth - dbt documentation",
+      "url": "https://docs.getdbt.com/best-practices/materializations/4-incremental-models"
+    },
+    {
+      "title": "About microbatch incremental models - dbt documentation",
+      "url": "https://docs.getdbt.com/docs/build/incremental-microbatch"
+    },
+    {
+      "title": "Exactly-once Semantics is Possible: Here's How Apache Kafka Does it - Confluent",
+      "url": "https://www.confluent.io/blog/exactly-once-semantics-are-possible-heres-how-apache-kafka-does-it/"
+    },
+    {
+      "title": "Performance Tuning - Apache Spark documentation",
+      "url": "https://spark.apache.org/docs/latest/sql-performance-tuning.html"
+    },
+    {
+      "title": "Structured Streaming Programming Guide - Apache Spark 3.5",
+      "url": "https://spark.apache.org/docs/3.5.6/structured-streaming-programming-guide.html"
+    },
+    {
+      "title": "DAG writing best practices in Apache Airflow - Astronomer",
+      "url": "https://www.astronomer.io/docs/learn/dag-best-practices"
+    },
+    {
+      "title": "Use liquid clustering for Delta tables - Delta Lake documentation",
+      "url": "https://docs.delta.io/latest/delta-clustering.html"
+    },
+    {
+      "title": "Optimize storage for query performance - BigQuery documentation",
+      "url": "https://docs.cloud.google.com/bigquery/docs/best-practices-storage"
+    },
+    {
+      "title": "Dimensions of Data Quality research paper - DAMA Netherlands",
+      "url": "https://dama-nl.org/wp-content/uploads/2020/09/DDQ-Dimensions-of-Data-Quality-Research-Paper-version-1.2-d.d.-3-Sept-2020.pdf"
+    },
+    {
+      "title": "How to Implement the Right to be Forgotten With Time Travel in Delta Lake - Databricks",
+      "url": "https://www.databricks.com/blog/2022/03/23/implementing-the-gdpr-right-to-be-forgotten-in-delta-lake.html"
+    }
+  ],
+  "questions": [
+    {
+      "category": "SQL & data modelling",
+      "level": "junior",
+      "stem": "What is the essential difference between the WHERE clause and the HAVING clause in SQL?",
+      "options": [
+        "WHERE can use indexes, while HAVING can never reference columns from the select list",
+        "WHERE filters individual rows before grouping, while HAVING filters groups after aggregation",
+        "WHERE filters groups after aggregation, while HAVING filters individual rows before grouping",
+        "They are interchangeable synonyms and differ only in which database vendors accept them",
+        "WHERE works only on numeric columns, while HAVING works only on text columns"
+      ],
+      "correct": 1,
+      "modelAnswer": "The logical order of a query matters here. Rows are filtered by WHERE first, then grouped and aggregated, and only then can HAVING filter the resulting groups. That is why a condition on an aggregate, such as total sales above one million, belongs in HAVING, while a condition on a raw column, such as order status, belongs in WHERE. Putting row-level conditions in WHERE is also more efficient because fewer rows reach the aggregation step. A common pitfall is writing a row filter in HAVING because it happens to work; it forces the engine to aggregate data that could have been discarded earlier. The other options confuse the order of evaluation or invent restrictions that do not exist."
+    },
+    {
+      "category": "SQL & data modelling",
+      "level": "junior",
+      "stem": "A query is SELECT c.id, o.total FROM customers c LEFT JOIN orders o ON o.customer_id = c.id WHERE o.status = 'PAID'. Customers with no orders vanish from the result. Why?",
+      "options": [
+        "For unmatched customers o.status is NULL, so the WHERE test is not true and the row is discarded",
+        "The ON clause runs after WHERE, so the join key is already lost by the time rows are filtered",
+        "Unmatched rows receive an empty string in status, which then fails the comparison with PAID",
+        "LEFT JOIN keeps unmatched rows only when the right-hand join column carries an index",
+        "LEFT JOIN quietly becomes a CROSS JOIN whenever the right table has a filterable status column"
+      ],
+      "correct": 0,
+      "modelAnswer": "A LEFT JOIN keeps unmatched left rows by filling the right-hand columns with NULL. The WHERE clause is applied after the join, and NULL = 'PAID' evaluates to unknown, so those rows are thrown away. The query has effectively become an inner join. The fix depends on intent: if you want all customers with only their paid orders, move the condition into the ON clause so it limits which orders match; if you truly want only customers with paid orders, an inner join states that honestly. Interviewers like this one because the symptom looks like a missing data bug when it is really a logical evaluation-order issue. Always check where filters on the optional side of an outer join are placed."
+    },
+    {
+      "category": "SQL & data modelling",
+      "level": "junior",
+      "stem": "In dimensional modelling, what does it mean to declare the grain of a fact table?",
+      "options": [
+        "Picking the primary key data type and index strategy that the fact table will use",
+        "Choosing the physical file size of each partition so that scans stay efficient",
+        "Listing which dimension attributes will be treated as slowly changing over time",
+        "Deciding how many years of history the fact table will retain before archiving older rows",
+        "Stating exactly what one row represents, such as one order line or one account per day"
+      ],
+      "correct": 4,
+      "modelAnswer": "The grain is the precise business definition of a single fact row, for example one line item on one order, or one account per day. It is the first design decision because every dimension you attach and every measure you store must be true at that grain. If you mix grains in one table, for instance order-level shipping cost repeated on every order line, sums double count and users lose trust in the numbers. A good answer also mentions writing the grain in plain words and testing it with a uniqueness check on the grain columns. Retention, file sizing and key types are real concerns, but they come after the grain is settled."
+    },
+    {
+      "category": "SQL & data modelling",
+      "level": "junior",
+      "stem": "Why do dimension tables in a warehouse usually carry a surrogate key instead of relying only on the source system's business key?",
+      "options": [
+        "A meaningless warehouse-generated key that stays stable if source keys change and separates history rows",
+        "It removes the need to load dimensions before the fact rows that refer to them",
+        "It always takes less storage than any natural key, which is why warehouses insist on it for large tables",
+        "It is required by every columnar warehouse in order to compress the table properly",
+        "It guarantees that the dimension can never contain duplicate business keys for any entity"
+      ],
+      "correct": 0,
+      "modelAnswer": "A surrogate key decouples the warehouse from the source. Source keys can be reused, reformatted, merged after an acquisition, or collide across several systems, and none of that should break fact tables. A surrogate key also allows several versions of the same business entity to exist, which is how slowly changing dimension type 2 works: each version gets its own key and facts point to the version that was valid at the time. It does not prevent duplicate business keys by itself, so you still test uniqueness on the business key plus validity range. Loading order still matters, because facts need the dimension keys to exist, and compression has nothing to do with it."
+    },
+    {
+      "category": "SQL & data modelling",
+      "level": "junior",
+      "stem": "A customers table contains several rows per customer_id, and you must keep only the most recent row per customer based on updated_at. Which approach is most appropriate?",
+      "options": [
+        "Use RANK() ordered by updated_at ascending and keep rank 1 to get the newest row",
+        "Sort the entire table by updated_at and apply LIMIT 1 to the result set",
+        "Number rows with ROW_NUMBER() over customer_id ordered by updated_at DESC, then keep number 1",
+        "Use SELECT DISTINCT on customer_id and updated_at and trust it to keep the newest row per customer",
+        "Use GROUP BY customer_id and select all other columns without any aggregate function"
+      ],
+      "correct": 2,
+      "modelAnswer": "The standard pattern is a window function that numbers rows within each customer from newest to oldest, then a filter that keeps the first. ROW_NUMBER is the right choice because it returns exactly one row per partition even when two rows tie on updated_at, whereas RANK would keep both tied rows. Add a deterministic tiebreaker, such as an ingestion id, so reruns give the same result. DISTINCT only removes exact duplicate rows, GROUP BY with unaggregated columns is invalid or arbitrary in most engines, and ordering ascending would keep the oldest row. LIMIT 1 applies to the whole result, not to each customer."
+    },
+    {
+      "category": "SQL & data modelling",
+      "level": "mid",
+      "stem": "Customers move between regions, and finance wants each historical sale reported under the region the customer belonged to on the sale date. Which dimension design satisfies this?",
+      "options": [
+        "A type 2 dimension: one new row and key per change, with validity dates, linked to facts by sale date",
+        "A dimension holding only the current region, with old regions kept in a side spreadsheet",
+        "A type 1 dimension that overwrites the region, so every report uses the latest value",
+        "A single wide fact table with no dimension, recomputing regions at query time from today's data each time",
+        "A type 0 dimension that is loaded once and never updated for any of its attributes"
+      ],
+      "correct": 0,
+      "modelAnswer": "The requirement is point-in-time correctness, which is exactly what type 2 gives you. When the region changes, close the current row by setting its end date, insert a new row with a fresh surrogate key and a new start date, and make sure the fact load looks up the key whose validity range contains the event date. Type 1 overwrites history and would reassign old sales to the new region, which silently changes past reports. Type 0 would keep stale data forever. The trade-offs are larger dimensions and more complex loads, so apply type 2 only to attributes where history matters, and test that validity ranges never overlap or leave gaps."
+    },
+    {
+      "category": "SQL & data modelling",
+      "level": "mid",
+      "stem": "A bank account can have several owners, and analysts want to report balances by owner without losing the account grain. What is the standard dimensional solution?",
+      "options": [
+        "Storing all the owner names as a comma-separated string in the account dimension",
+        "Duplicating each fact row once per owner with the full balance and summing as usual in all reports",
+        "Choosing one owner at random as the primary owner and discarding all the others",
+        "Moving the balance measure into the owner dimension instead of the fact table",
+        "A bridge table between account and owner, optionally carrying an allocation weight per owner"
+      ],
+      "correct": 4,
+      "modelAnswer": "A many-to-many relationship between a fact (or its dimension) and another dimension is resolved with a bridge table that lists each account and owner pair. If totals must still add up to the real balance, store an allocation weight, for example fifty percent each for two owners, and multiply measures by it when reporting by owner. Duplicating the full balance per owner overstates totals, a delimited string cannot be joined or filtered reliably, and dropping owners loses information. The honest caveat is that bridge tables make queries harder and invite double counting, so document the weighting rule and provide a ready-made view for common reports."
+    },
+    {
+      "category": "SQL & data modelling",
+      "level": "mid",
+      "stem": "After joining orders to a customer history table on customer_id only, total revenue is far higher than in the source system. The history table has one row per customer version. What is the most likely cause?",
+      "options": [
+        "Columnar storage multiplies numeric values when they are joined to other tables",
+        "Window functions are required for summing revenue in any join, and none were used",
+        "The orders table was loaded twice and the customer history table is irrelevant",
+        "The join ignores the version validity range, so each order matches every historical version",
+        "The customer_id column uses a different collation, which doubles the number of matches in the join"
+      ],
+      "correct": 3,
+      "modelAnswer": "This is classic row fan-out. A customer with three versions matches each of their orders three times when the join uses only the business key. The fix is a point-in-time join that also requires the order date to fall inside the version's validity range, using a half-open interval such as valid_from <= order_date and order_date < valid_to so boundaries do not match twice. Better still, store the surrogate key of the correct version on the fact row at load time, so reporting needs no range join. Always sanity check by comparing row counts before and after a join and reconciling totals to the source; a changed row count after joining to a dimension is the red flag."
+    },
+    {
+      "category": "SQL & data modelling",
+      "level": "mid",
+      "stem": "A report computes SUM(amount) OVER (ORDER BY order_date) as a running total, but on days with several orders every one of those rows shows the same total including all that day's orders. Why?",
+      "options": [
+        "Running totals require a PARTITION BY clause, otherwise each row is summed alone",
+        "The engine rounds the amounts to the nearest day boundary before it adds them up",
+        "The default frame is RANGE up to the current row, so rows with equal order_date are peers",
+        "Window functions cannot be applied to dates, so the engine groups them by day automatically",
+        "The ORDER BY inside OVER sorts the final result but has no influence on the sum"
+      ],
+      "correct": 2,
+      "modelAnswer": "When a window has an ORDER BY and no explicit frame, the SQL standard default is RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW. RANGE treats all rows with the same ordering value as peers of the current row, so every order on the same date gets the same cumulative figure. If you want a true row-by-row running total, specify ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW and add a unique tiebreaker such as order_id to the ordering so the result is deterministic. Many people only discover this when a finance reconciliation fails on busy days, so state the frame explicitly rather than relying on defaults."
+    },
+    {
+      "category": "SQL & data modelling",
+      "level": "mid",
+      "stem": "The query SELECT id FROM customers WHERE id NOT IN (SELECT customer_id FROM blocked_customers) unexpectedly returns zero rows, although blocked_customers is small. What is the most probable reason?",
+      "options": [
+        "NOT IN compares text values only, so it fails silently on numeric identifiers",
+        "NOT IN works only when the subquery returns exactly one row, otherwise it returns nothing",
+        "The subquery must be rewritten as a correlated join before it is allowed to run",
+        "blocked_customers.customer_id contains a NULL, which makes NOT IN unknown for every row",
+        "The customers table has no primary key, so no row is able to satisfy the predicate"
+      ],
+      "correct": 3,
+      "modelAnswer": "With NOT IN, comparing a value to a list that contains NULL yields unknown rather than true, because x <> NULL is unknown. One NULL in the subquery therefore eliminates every row. The robust fix is NOT EXISTS with a correlated subquery, or an anti-join using LEFT JOIN with a null check, both of which handle NULLs predictably. Alternatively filter NULLs out of the subquery, though that depends on someone remembering to do so. In pipelines this is a favourite hidden bug because the data looks fine until one bad row appears, which is another reason to add not-null checks on key columns upstream."
+    },
+    {
+      "category": "SQL & data modelling",
+      "level": "mid",
+      "stem": "Your source application is in third normal form. What is the usual best practice for the layer that analysts query for reporting?",
+      "options": [
+        "Merge every table into one giant text column to avoid having to write joins",
+        "Avoid modelling altogether and let each analyst join the raw tables as they prefer, for maximum flexibility",
+        "Model a star schema with denormalised dimensions around fact tables, accepting controlled redundancy",
+        "Replace all keys with free-text names so that analysts can read them easily",
+        "Expose the third normal form tables unchanged, so that no redundancy ever exists"
+      ],
+      "correct": 2,
+      "modelAnswer": "Normalisation protects write integrity in transactional systems, but analytical queries scan large volumes and join many tables, which is slow and error-prone for business users. A star schema denormalises descriptive attributes into dimensions and keeps measures in facts at a declared grain, so queries have a few predictable joins, definitions are shared, and columnar engines prune well. The redundancy is acceptable because the pipeline, not users, writes the data and can keep it consistent. The caution is not to over-denormalise into one huge table for everything, since conformed dimensions keep metrics consistent across subject areas. Letting each analyst join raw tables produces conflicting definitions of the same metric."
+    },
+    {
+      "category": "SQL & data modelling",
+      "level": "mid",
+      "stem": "In several cloud warehouses such as Snowflake and BigQuery, primary key and foreign key constraints can be declared. What should an engineer remember about them?",
+      "options": [
+        "They are enforced only during bulk loads from files, not for single inserts",
+        "They are generally informational and not enforced, so integrity must be tested in the pipeline",
+        "They are always enforced and reject duplicate inserts automatically at load time",
+        "They are removed automatically whenever the table is cloned or copied elsewhere",
+        "Only foreign keys are enforced, while primary keys are treated purely as metadata for the query planner"
+      ],
+      "correct": 1,
+      "modelAnswer": "These columnar warehouses accept key declarations mainly as metadata for documentation, modelling tools and sometimes optimiser hints, but do not reject duplicates or orphan rows. That means a retried load can silently insert duplicates, and nothing in the database will stop it. The engineer therefore enforces integrity in the pipeline, for example with MERGE on the business key, and verifies it with scheduled tests for uniqueness, not-null and relationships. Treating declared constraints as guarantees is a common cause of double counting. Always check the specific platform documentation, since behaviour differs for transactional databases, where constraints are enforced, and for other warehouse products."
+    },
+    {
+      "category": "SQL & data modelling",
+      "level": "senior",
+      "stem": "An orders fact load receives a record for customer C-9 before the customer has reached the dimension table, which updates only once a day. The load must not fail or drop revenue. What is the best-practice handling?",
+      "options": [
+        "Delay every other fact in the batch until all of the dimensions are complete",
+        "Copy the order into a quarantine table and delete it from the warehouse facts",
+        "Reject the order and wait for the next day's file so that it can be reloaded",
+        "Assign the fact to a shared unknown key permanently and never revisit the link once the customer arrives",
+        "Insert a placeholder dimension row for C-9, link the fact to it, and fill the attributes in later"
+      ],
+      "correct": 4,
+      "modelAnswer": "Early-arriving facts are normal in distributed systems. The pragmatic pattern is an inferred member: create a minimal dimension row carrying the business key, flagged as inferred, and give the fact its surrogate key straight away so revenue is not lost. When the full dimension record arrives, update that row in place for the first load, or close and version it for a type 2 attribute, and clear the flag. A permanent unknown key loses the link, and rejecting data harms completeness and timeliness. Monitor how many inferred members stay unresolved after a set period, because a growing number signals an upstream problem and should raise an alert."
+    },
+    {
+      "category": "SQL & data modelling",
+      "level": "senior",
+      "stem": "A company integrates twelve source systems whose schemas change often, and auditors require full history and traceability to the source. Which modelling approach is the most defensible?",
+      "options": [
+        "Apply type 1 overwrites everywhere to keep the model simple and the storage small",
+        "Model each source system's schema one-to-one and let analysts join across all of them",
+        "An insert-only business-key integration layer (data vault style), then star-schema marts for consumption",
+        "Adopt a strictly normalised combined model and forbid any new attributes from sources",
+        "Load everything straight into one wide denormalised table per report and overwrite it nightly for every source system"
+      ],
+      "correct": 2,
+      "modelAnswer": "The need is resilience to change plus auditability. An insert-only integration layer organised around business keys, relationships and descriptive history tolerates new sources and attributes without redesign, loads in parallel, and preserves who said what and when. Consumers should not query it directly, so build dimensional marts on top where grain and metrics are explicit and performant. The trade-off is more tables, more joins and a steeper learning curve, so it is justified for many volatile sources and strict audit demands but heavy for a single stable source, where Kimball-style modelling alone is enough. Overwriting history or one wide table per report fails the audit requirement and creates inconsistent definitions."
+    },
+    {
+      "category": "Batch processing & distributed compute",
+      "level": "junior",
+      "stem": "In Apache Spark, what does it mean that transformations are lazily evaluated?",
+      "options": [
+        "Spark postpones every job until the cluster has no other work waiting to be scheduled",
+        "Spark only builds a plan of transformations and executes it when an action such as count is called",
+        "Spark executes each transformation immediately but keeps the results only in memory until needed",
+        "Spark skips any transformation whose output appears unused by the code that follows it",
+        "Spark evaluates transformations only on the driver and never ships any work to executors"
+      ],
+      "correct": 1,
+      "modelAnswer": "Transformations such as filter, select, join and groupBy do not process data when they are called. They only add steps to a logical plan. Execution starts when an action is triggered, for example count, collect or writing to storage. This laziness lets the optimiser see the whole plan, push filters down, prune columns, reorder joins and pipeline narrow steps into a single stage, which is far more efficient than running each step separately. A practical consequence is that an error in an early step may only appear when the action runs, and that calling several actions on the same unpersisted result recomputes the plan each time, which is where caching becomes relevant."
+    },
+    {
+      "category": "Batch processing & distributed compute",
+      "level": "junior",
+      "stem": "What is a shuffle in a distributed engine such as Spark, and why does it matter for performance?",
+      "options": [
+        "It moves rows across the network so equal keys meet, and is costly in network, disk and serialisation",
+        "It randomly reorders rows within one partition so that memory use is spread evenly across tasks",
+        "It is a compression step that Spark applies to Parquet files just before they are written out",
+        "It is a driver-side sorting step that orders the final results before they are shown to the user",
+        "It copies the complete dataset to every executor so that tasks can recover from failures"
+      ],
+      "correct": 0,
+      "modelAnswer": "A shuffle happens when an operation needs data grouped differently from how it is currently laid out, for example a join, groupBy, distinct or repartition. Each task writes its output partitioned by the target key, and the next stage fetches those pieces over the network. That involves disk writes, network transfer and serialisation, so shuffles are usually the most expensive part of a job and a common source of spills and out-of-memory errors. Good engineers reduce shuffles by filtering and projecting early, using broadcast joins for small tables, and avoiding unnecessary repartitions. Reading the stage boundaries in the Spark UI is the quickest way to see where shuffles occur."
+    },
+    {
+      "category": "Batch processing & distributed compute",
+      "level": "junior",
+      "stem": "A teammate calls collect() on a 300 GB DataFrame to inspect the results, and the Spark driver fails with an out-of-memory error. What is the main lesson?",
+      "options": [
+        "The driver keeps a compressed copy of results, so memory errors indicate a cluster bug",
+        "DataFrames larger than 100 GB can never be processed by Spark on any cluster size",
+        "Executors must always be given more memory than the driver for collect() to succeed",
+        "collect() should be replaced by repartition(1), which avoids memory problems on the driver machine itself",
+        "collect() pulls every row into the single driver process, so limit, aggregate or write to storage"
+      ],
+      "correct": 4,
+      "modelAnswer": "Spark's scalability comes from keeping data distributed across executors. collect() reverses that by sending all rows to one machine, the driver, which usually has far less memory than the cluster. For inspection use take or limit with a small number of rows, show, or sample, and for large results write to storage or aggregate first. The same reasoning applies to converting a big Spark DataFrame to a pandas object. Repartitioning to one partition does not help, because it squeezes the whole dataset through a single task and is itself a bottleneck. The driver coordinates the job; it is not where the heavy data work should happen."
+    },
+    {
+      "category": "Batch processing & distributed compute",
+      "level": "mid",
+      "stem": "Why are built-in DataFrame functions or SQL expressions generally preferred over Python UDFs in Spark transformations?",
+      "options": [
+        "Python UDFs cannot return numeric values, so they are limited to string transformations only",
+        "UDFs are disabled on any cluster that has adaptive query execution switched on",
+        "Only built-in functions support null handling, so UDFs always fail when they meet missing values in the input columns",
+        "Built-ins are visible to the optimiser and stay in the JVM, whereas Python UDFs are opaque and add serialisation",
+        "Built-in functions guarantee exactly-once execution, whereas UDFs may be run twice on retries"
+      ],
+      "correct": 3,
+      "modelAnswer": "Built-in expressions are part of the query plan, so Catalyst can push them down, combine them, and generate efficient code that stays inside the JVM. A classic Python UDF is a black box: rows must be serialised, shipped to a Python worker, processed, and sent back, which is slow, and the optimiser cannot reason about it, so it may lose predicate pushdown. If logic truly cannot be expressed with built-ins, consider pandas or Arrow-based vectorised UDFs, which cut the overhead. The honest trade-off is readability: a short UDF may be acceptable for a small dataset, but at billions of rows the difference is often hours."
+    },
+    {
+      "category": "Batch processing & distributed compute",
+      "level": "mid",
+      "stem": "One task in a join stage runs for 40 minutes while the other 199 finish in under a minute. The Spark UI shows that task read most of the shuffle data because a single customer key holds roughly 40 percent of the rows. What is the most appropriate response?",
+      "options": [
+        "Cache the larger table in memory so that the skewed join finishes much faster",
+        "Increase the number of executors uniformly and keep the physical plan exactly the same",
+        "Raise only the shuffle partition count, because one key is then split across tasks automatically",
+        "Enable adaptive skew-join handling or salt the hot key so its rows spread across several tasks",
+        "Rewrite the DataFrames as RDDs to gain finer control over how keys are distributed"
+      ],
+      "correct": 3,
+      "modelAnswer": "This is data skew: hash partitioning sends every row of one key to the same task, so the job is as slow as its slowest task. Adaptive query execution can split skewed partitions at runtime for sort-merge joins, which is the first thing to try. If that is not enough, salt the hot key by adding a random suffix on the large side and replicating the matching rows on the other side, or handle the hot key separately, for example with a broadcast join for that value. More executors or more shuffle partitions do not help because identical keys still hash to one partition, and caching does not change the distribution."
+    },
+    {
+      "category": "Batch processing & distributed compute",
+      "level": "mid",
+      "stem": "You join a 2 TB fact table with a 40 MB dimension table in Spark. What is the best join strategy, and what should you watch for?",
+      "options": [
+        "Use a sort-merge join with both sides fully shuffled, because it is always the fastest option for joins",
+        "Broadcast the 2 TB table instead, because larger tables benefit most from broadcasting",
+        "Cross join the two tables and filter afterwards, which keeps the code simple and fast",
+        "Repartition the large table into a single partition before joining it to the dimension",
+        "Broadcast the small table to all executors, avoiding a shuffle of the large one, if it fits in memory"
+      ],
+      "correct": 4,
+      "modelAnswer": "A broadcast hash join ships a copy of the small table to every executor, so the large table is joined where it already sits and is never shuffled. It is usually the biggest single win for fact-to-dimension joins. The caveat is memory: the broadcast table is collected through the driver and held on each executor, so broadcasting something that is too big causes driver or executor failures, and the automatic threshold is deliberately modest. Spark will choose a broadcast automatically for small tables when statistics are available, and adaptive execution can switch at runtime. A hint helps when statistics are missing, but always verify the physical plan to confirm it was applied."
+    },
+    {
+      "category": "Batch processing & distributed compute",
+      "level": "mid",
+      "stem": "You must reduce a DataFrame from 2,000 partitions to 100 before writing, and you do not need perfectly even partition sizes. Which operation fits best?",
+      "options": [
+        "limit(100), which creates exactly 100 partitions out of the data",
+        "collect() the data and split it manually on the driver machine",
+        "coalesce(100000) so that the write benefits from much higher parallelism",
+        "repartition(100), which never moves any data across the network at all",
+        "coalesce(100), which merges neighbouring partitions without a full shuffle"
+      ],
+      "correct": 4,
+      "modelAnswer": "coalesce reduces the partition count by combining neighbouring partitions on the same executors, which avoids a full shuffle and is cheap. The cost is that partition sizes may become uneven, and because it is a narrow operation it can also reduce the parallelism of upstream work if placed early. repartition performs a full shuffle, which balances sizes and can also increase the count, but it moves all the data across the network, so use it when evenness matters or when you need to partition by a column. Neither approach should go through the driver, and limit restricts rows rather than partitions. Always check resulting file sizes after the write."
+    },
+    {
+      "category": "Batch processing & distributed compute",
+      "level": "mid",
+      "stem": "When is caching or persisting a DataFrame in Spark most appropriate?",
+      "options": [
+        "When a result is going to be used exactly once, so that this single use is faster",
+        "Whenever a DataFrame is created, to protect it from garbage collection on the executors in the cluster",
+        "When an expensive intermediate result is reused by several actions and fits in memory or on disk",
+        "When the job reads a small lookup file once at the very start of the application",
+        "When the data must survive a restart of the cluster or the loss of an executor node"
+      ],
+      "correct": 2,
+      "modelAnswer": "Caching pays off when computing a result is costly and it is read more than once, for example a cleaned dataset feeding several aggregations or iterative algorithms. Without it Spark recomputes the lineage for every action. Caching something used once only wastes memory and can evict more useful data, and it adds overhead for materialisation. It is also not durable storage: cached data disappears with the application or when executors are lost, so it cannot replace writing results to a table. Remember to unpersist when finished, choose a storage level that matches available memory, and measure the benefit in the Spark UI instead of assuming it helps."
+    },
+    {
+      "category": "Batch processing & distributed compute",
+      "level": "mid",
+      "stem": "A daily Spark job overwrites a table partitioned by date, but should replace only the dates present in the incoming data. With the default settings a rerun for one day wipes all other days. What is the right fix?",
+      "options": [
+        "Cache the DataFrame before writing, which protects the other partitions from deletion",
+        "Disable partitioning altogether, so that an overwrite touches only one data file at a time",
+        "Run the job twice, so the second run restores the dates the first run wiped",
+        "Switch to append mode and remove the resulting duplicate rows manually afterwards",
+        "Enable dynamic partition overwrite so only partitions present in the new data are replaced"
+      ],
+      "correct": 4,
+      "modelAnswer": "In static overwrite mode, writing with overwrite replaces the whole table or all partitions matching the path, which is why a single-day rerun can destroy history. Dynamic partition overwrite, configured through spark.sql.sources.partitionOverwriteMode, replaces only the partitions that appear in the new data, so rerunning one date is safe and idempotent. Table formats such as Iceberg and Delta offer even safer options like replaceWhere or MERGE with transactional guarantees. Append plus manual de-duplication risks duplicates when a job fails halfway, and caching has no effect on what the writer deletes. Test the rerun path on a copy first."
+    },
+    {
+      "category": "Batch processing & distributed compute",
+      "level": "senior",
+      "stem": "A nightly Spark job grew from 40 minutes to 3 hours after input data doubled. What should you do first?",
+      "options": [
+        "Raise every memory and partition setting to its maximum value and rerun the job",
+        "Double the cluster size, since runtime should scale linearly with the amount of data, so no investigation is needed",
+        "Switch off adaptive query execution because it adds runtime overhead to every query",
+        "Inspect the Spark UI for slow stages and compare task times, shuffle sizes, spill and skew before tuning",
+        "Rewrite the whole job in another language straight away to get better performance"
+      ],
+      "correct": 3,
+      "modelAnswer": "A fourfold slowdown for twice the data signals a non-linear effect such as skew, spilling to disk, a join strategy that changed, or a shuffle that no longer fits in memory. Guessing at configuration changes wastes money and may hide the cause. Start with evidence: find the stages that grew most, look at the distribution of task times for stragglers, compare shuffle read and spill metrics, and check the physical plan for a join that switched from broadcast to sort-merge. Then fix that specific cause, perhaps by handling skew, resizing partitions or restoring a broadcast. Adding nodes can help only if the work is evenly distributed, and recording a before and after benchmark proves the fix."
+    },
+    {
+      "category": "Batch processing & distributed compute",
+      "level": "senior",
+      "stem": "Two 5 TB tables are joined with the default 200 shuffle partitions. Tasks spill heavily to disk and some executors fail with out-of-memory errors. Which adjustment addresses the root cause?",
+      "options": [
+        "Run everything on a single very large executor so that no data has to cross the network",
+        "Broadcast both 5 TB tables to every executor so the shuffle disappears from the join",
+        "Reduce shuffle partitions to 20 to cut scheduling overhead and the number of small tasks, so executors stay busy",
+        "Increase the shuffle partition count, or let adaptive execution size it, so each task handles less data",
+        "Switch the output from Parquet to CSV, since text files need less memory to write"
+      ],
+      "correct": 3,
+      "modelAnswer": "With 5 TB shuffled across 200 partitions, each task must process on the order of tens of gigabytes, far more than the memory available per task, so it spills and eventually fails. The remedy is more, smaller partitions, so that each handles a few hundred megabytes at most, or turning on adaptive execution with an advisory partition size so the engine tunes it from runtime statistics. Fewer partitions makes the problem worse, and broadcasting multi-terabyte tables is impossible. Changing the file format is unrelated to shuffle memory. Also check for skew and whether filters and column pruning could shrink the join inputs first, because moving less data is better than moving it more cleverly."
+    },
+    {
+      "category": "Streaming & messaging",
+      "level": "junior",
+      "stem": "In Apache Kafka, what ordering guarantee does a topic provide to consumers?",
+      "options": [
+        "Messages are ordered within one partition, and records with the same key go to the same partition",
+        "Messages are globally ordered across all partitions of a topic, whatever the number of partitions",
+        "Ordering is guaranteed only when there is exactly one consumer group reading the topic",
+        "Ordering is never guaranteed because brokers reorder records for throughput reasons",
+        "Messages are delivered in order of size, smallest first, to keep consumer latency low"
+      ],
+      "correct": 0,
+      "modelAnswer": "Kafka orders records within each partition, because a partition is an append-only log. A topic with several partitions has no global order across them. Producers choose the partition, normally by hashing the record key, so all events for one key, such as one customer or device, land in the same partition and are read in order. That is why key choice is a design decision: you must key by whatever entity needs ordered processing, while keeping keys spread widely enough to avoid hot partitions. If strict global ordering is required, you would need a single partition, which limits throughput, so it is rarely the right answer."
+    },
+    {
+      "category": "Streaming & messaging",
+      "level": "junior",
+      "stem": "What is the difference between event time and processing time in stream processing?",
+      "options": [
+        "They are the same value unless the clocks of the brokers differ by more than a second",
+        "Event time measures how long a job runs, and processing time measures network latency",
+        "Event time is when the event happened at the source, processing time is when the system handles it",
+        "Event time is used only by batch jobs, and processing time is used only by streaming jobs",
+        "Event time is when the event is written to disk, while processing time is when it was sent by the producer"
+      ],
+      "correct": 2,
+      "modelAnswer": "Event time is the timestamp describing when something happened in the real world, such as when a user tapped a button. Processing time is the clock of the system at the moment the record is handled. Networks delay data, mobile devices go offline, and consumers lag, so the two can differ by seconds or days. Aggregating by processing time makes results depend on delays and replays, which gives different answers each run. Event-time processing with watermarks produces results that reflect what actually occurred, and that stay the same when you reprocess history. The price is that you must decide how long to wait for late data."
+    },
+    {
+      "category": "Streaming & messaging",
+      "level": "junior",
+      "stem": "A Kafka topic has 6 partitions, and a consumer group has 4 consumers. How are the partitions assigned?",
+      "options": [
+        "Each partition goes to exactly one consumer in the group, so some consumers handle two partitions",
+        "Consumers must all be restarted before each of them will receive exactly one partition from the broker",
+        "Each message is split into pieces so the work is shared equally between the consumers",
+        "Each partition is delivered to all four consumers so that none of them misses any data",
+        "Only four partitions are read, and the other two are ignored until more consumers join"
+      ],
+      "correct": 0,
+      "modelAnswer": "Within a consumer group, Kafka assigns each partition to exactly one consumer at a time, which preserves per-partition ordering and lets the group share the workload. With six partitions and four consumers, two consumers will own two partitions and two will own one. If a consumer fails or joins, a rebalance redistributes partitions. This also means the number of partitions caps useful parallelism: a group with more consumers than partitions leaves the extras idle. Different consumer groups are independent and each receives every message, which is how several applications can read the same topic."
+    },
+    {
+      "category": "Streaming & messaging",
+      "level": "mid",
+      "stem": "A consumer reads a message, writes the result to a database, and only then commits its offset. If it crashes between the write and the commit, what is the delivery semantics outcome?",
+      "options": [
+        "Zero-once: the consumer group is disabled until an operator manually resets its offsets",
+        "At-least-once: the message is reprocessed after restart, so the sink must tolerate duplicates",
+        "Ordered-once: only the order of the messages may change, but nothing is lost or repeated",
+        "At-most-once: the message is lost after the crash because the offset was already advanced",
+        "Exactly-once: Kafka cancels the earlier database write automatically when the consumer restarts"
+      ],
+      "correct": 1,
+      "modelAnswer": "Committing after processing means a crash in the window between the two steps leaves the offset unchanged, so after restart the same message is read again. That is at-least-once delivery: nothing is lost, but duplicates are possible. Committing before processing would give at-most-once, because a crash after the commit loses the message. Real pipelines usually choose at-least-once and make the sink idempotent, for example by upserting on a unique event id, which yields effectively-once results. Kafka does not undo a database write that happened outside its own transaction, so treating this as exactly-once without idempotent handling is a common design mistake."
+    },
+    {
+      "category": "Streaming & messaging",
+      "level": "mid",
+      "stem": "In event-time stream processing, what is the purpose of a watermark?",
+      "options": [
+        "It encrypts the stream so that consumers who join late cannot read earlier messages",
+        "It guarantees that no event can ever arrive late, whatever the source or network delay or retry policy",
+        "It tracks event-time progress so windows close, old state is dropped and later events count as late",
+        "It marks the Kafka offset up to which a consumer group has committed its progress",
+        "It stamps each record with the processing time of the broker that first received it"
+      ],
+      "correct": 2,
+      "modelAnswer": "A watermark is a moving threshold, typically the maximum event time seen minus an allowed lateness. When it passes the end of a window, the engine can finalise the aggregate and release the state held for it; events older than the watermark may be dropped or sent to a side output. Without watermarks, state would grow forever because any old event might still arrive. The trade-off is lateness versus latency and memory: a longer allowance captures more stragglers but delays results and holds more state. Choose it from measured lateness in the data, and monitor dropped events so you know how much data is being ignored."
+    },
+    {
+      "category": "Streaming & messaging",
+      "level": "mid",
+      "stem": "You want to group a user's clicks into visits, where a visit ends after 30 minutes of inactivity. Which window type fits?",
+      "options": [
+        "A sliding window of 30 minutes that advances once every minute",
+        "A tumbling window with fixed, non-overlapping slices of 30 minutes each",
+        "A global window that stays open for each user without ever closing",
+        "A session window that closes after 30 minutes without activity",
+        "A fixed daily window aligned to midnight in the UTC time zone"
+      ],
+      "correct": 3,
+      "modelAnswer": "A session window is defined by activity rather than the clock: it starts at an event and is extended by each further event arriving within the gap, closing when no event appears for the gap duration. Window boundaries therefore differ per user, which matches the idea of a visit. A tumbling window cuts time into fixed non-overlapping slices, so one visit could be split across two windows or two visits merged. A sliding window overlaps and is meant for rolling metrics such as a moving average. Remember session windows keep state per key until the gap passes, and that late events can merge two sessions into one."
+    },
+    {
+      "category": "Streaming & messaging",
+      "level": "mid",
+      "stem": "A stream job writes results to a relational database, and a failure causes some batches to be retried. How do you obtain correct, effectively exactly-once results in the database?",
+      "options": [
+        "Add a sleep between retries so that the network filters out the duplicate writes",
+        "Disable retries entirely so that no message is ever processed twice, accepting occasional losses of whole records",
+        "Turn on the Kafka idempotent producer, which also protects writes to external databases",
+        "Rely on the database auto-increment key to detect and remove the repeated records",
+        "Make the writes idempotent, for example by upserting on a unique event key, so retries give the same state"
+      ],
+      "correct": 4,
+      "modelAnswer": "End-to-end exactly-once depends on the sink. Kafka's idempotent producer and transactions protect writes into Kafka, and can tie consumed offsets to produced records, but they cannot make an external database ignore a repeated insert. The practical approach is at-least-once delivery combined with idempotent writes: use a deterministic key such as the event id, upsert or MERGE on it, or record processed batch ids in the same database transaction as the data. Disabling retries trades duplicates for data loss. An auto-increment id is generated per insert and therefore treats a replayed record as new, so it cannot detect duplicates."
+    },
+    {
+      "category": "Streaming & messaging",
+      "level": "mid",
+      "stem": "A Kafka topic has 6 partitions. Consumer lag grows steadily even after you scale the consumer group from 6 to 12 instances. Why did scaling not help?",
+      "options": [
+        "The extra instances were assigned to the wrong brokers and need to be restarted",
+        "Kafka rejects any consumer group that has more members than there are brokers in the cluster",
+        "Lag is measured on the producer side, so adding consumers cannot change its value",
+        "Each consumer fetch is capped at 6 messages per second, whatever the group size",
+        "Only 6 consumers receive partitions, so 6 sit idle; add partitions or speed up each consumer"
+      ],
+      "correct": 4,
+      "modelAnswer": "Within a group, a partition is consumed by at most one consumer, so parallelism is capped by the partition count. With six partitions, six instances already do all the reading; the additional six wait as standbys for failover. To increase throughput you can add partitions, remembering that this changes key-to-partition mapping for new data and cannot be undone, or make each consumer faster by batching, optimising downstream calls, or processing records in parallel while preserving ordering where needed. Always find the bottleneck first: if the sink is slow, more consumers only increase pressure on it. Lag should be monitored per partition to reveal hot partitions."
+    },
+    {
+      "category": "Streaming & messaging",
+      "level": "mid",
+      "stem": "A single malformed message repeatedly fails deserialisation and blocks a partition because the consumer keeps retrying it. What is the best handling pattern?",
+      "options": [
+        "Delete and recreate the topic so that the malformed record is gone for good",
+        "After a few attempts, publish the record with error details to a dead-letter topic and continue",
+        "Stop the whole consumer group until a developer repairs the malformed message",
+        "Skip the record silently and keep no trace of what was dropped or why it failed",
+        "Retry indefinitely with an increasing delay until the message deserialises correctly and without raising alerts"
+      ],
+      "correct": 1,
+      "modelAnswer": "A poison message must not halt the pipeline, nor disappear without trace. Retry a small number of times in case the failure is transient, then publish the record, plus metadata such as the error, source topic, partition, offset and timestamp, to a dead-letter topic, and move on. Alert when the dead-letter rate exceeds a threshold, and provide a way to inspect and replay messages once the cause is fixed, for example after a schema correction. Silent skipping hides data loss, halting the group turns one bad record into an outage, and infinite retries block everything behind it on that partition."
+    },
+    {
+      "category": "Streaming & messaging",
+      "level": "senior",
+      "stem": "A multi-tenant platform keys Kafka events by tenant_id, but one tenant produces 60 percent of traffic, leaving one partition and its consumer overloaded. Ordering is only required per customer. What is the best fix?",
+      "options": [
+        "Compress the messages so that the large tenant uses less storage per partition",
+        "Switch to random partitioning and accept that ordering is lost for every consumer of the whole topic",
+        "Add many more partitions but keep keying by tenant_id so tenants stay together",
+        "Give the large tenant a bigger consumer instance and leave the key unchanged",
+        "Key by customer_id, or another finer entity, so load spreads while per-customer order is kept"
+      ],
+      "correct": 4,
+      "modelAnswer": "The partition key defines both ordering and distribution. Keying by tenant gives ordering per tenant, which the requirements do not need, and concentrates a heavy tenant on one partition. Re-keying by the finer entity that actually needs ordering, here the customer, keeps that guarantee and spreads a large tenant across many partitions. Adding partitions alone does not help because the same key still hashes to one partition, and random partitioning breaks needed ordering. A bigger consumer only raises the ceiling of one partition. The migration needs care, because changing keys reshuffles existing data, so plan a cut-over, perhaps with a new topic, and make downstream state handle the mapping change."
+    },
+    {
+      "category": "Streaming & messaging",
+      "level": "senior",
+      "stem": "You must replicate changes from an operational database to a data lake, including deletes and the order of updates. A colleague proposes a nightly query on an updated_at column. Which approach is stronger?",
+      "options": [
+        "Log-based change data capture, which reads inserts, updates and deletes in commit order",
+        "Manual exports triggered by email whenever an analyst asks for fresher data",
+        "Polling updated_at every minute, which also captures every intermediate change and every delete",
+        "Nightly full table copies, which preserve the order of every intermediate update",
+        "Parsing the application's text log files to infer which rows were changed"
+      ],
+      "correct": 0,
+      "modelAnswer": "Timestamp polling misses hard deletes, cannot see intermediate states if a row changes twice between polls, depends on every writer maintaining the column correctly, and puts query load on the source. Log-based change data capture reads the database's transaction log, so it sees every committed insert, update and delete in order with low impact and can include the before and after images. On the lake side, apply changes with idempotent MERGE using the key and the log position so replays do not corrupt data, and handle schema changes explicitly. The trade-offs are operational: log retention, snapshotting the initial state, and permissions on the source. Full copies lose the change sequence and are expensive."
+    },
+    {
+      "category": "Orchestration & pipelines",
+      "level": "junior",
+      "stem": "What does it mean for a data pipeline task to be idempotent?",
+      "options": [
+        "It processes records in strictly increasing order of their primary keys",
+        "It never reads from external systems, so nothing outside the task can change its result",
+        "It runs faster each time it is repeated because intermediate results are cached",
+        "It can be run only once and refuses every later attempt with the same parameters",
+        "Repeated runs with the same input leave the data in the same final state as one run"
+      ],
+      "correct": 4,
+      "modelAnswer": "An idempotent task produces the same result no matter how many times it runs for the same input, so retries, reruns and backfills are safe. This matters because failures and reruns are normal: networks drop, workers are restarted, and people rerun a day to fix a bug. Achieve it by writing in a replace-or-upsert fashion, for example overwriting the target partition for the run's date or using MERGE on a business key, rather than blindly appending. A task that appends rows on every run creates duplicates when retried. Idempotency is not about speed, ordering, or whether the task reads external systems; it is about repeatable outcomes."
+    },
+    {
+      "category": "Orchestration & pipelines",
+      "level": "junior",
+      "stem": "Why are workflow definitions in orchestrators such as Airflow modelled as directed acyclic graphs?",
+      "options": [
+        "Dependencies have a direction and no cycles, so a valid execution order always exists",
+        "It guarantees that every task in the workflow takes exactly the same time to finish",
+        "Acyclic graphs allow all tasks of a workflow to run only on one machine",
+        "Graphs without direction are not supported by the databases that store metadata",
+        "Cycles are faster for the scheduler to process but harder to draw on screen"
+      ],
+      "correct": 0,
+      "modelAnswer": "A workflow is a set of tasks with dependencies: B needs A to finish first. Directed edges express that order, and the absence of cycles guarantees there is always a task that can run next and the workflow eventually finishes. If A depended on B and B on A, neither could ever start. The structure also lets the scheduler run independent branches in parallel, retry just the failed task and its downstream tasks, and show clear lineage of what ran. Loops, such as repeating until a condition is true, are expressed by sensors, retries or by scheduling new runs rather than by cycles inside one graph."
+    },
+    {
+      "category": "Orchestration & pipelines",
+      "level": "junior",
+      "stem": "Why do pipelines usually configure task retries with exponential backoff instead of retrying immediately and repeatedly?",
+      "options": [
+        "Backoff reduces the volume of data that each retried task has to process again",
+        "Backoff makes failed tasks eventually succeed even when the underlying code is wrong or misconfigured",
+        "It is a prerequisite for making a task idempotent in most orchestrators",
+        "Immediate retries are impossible in distributed systems because of network latency",
+        "Transient failures often clear after a wait, and growing delays avoid hammering a struggling system"
+      ],
+      "correct": 4,
+      "modelAnswer": "Many failures are transient: a brief network blip, a throttled API, a database failover. Retrying after a delay gives the dependency time to recover, and increasing the delay each attempt, often with some random jitter, prevents many clients from retrying in lockstep and overloading the service again. Retries must be bounded and should not be applied to permanent errors such as a syntax error or a missing permission, where they only waste time. Importantly, retries are only safe when tasks are idempotent; otherwise a retry after a partial success can duplicate data. Backoff does not fix wrong code or change how much data is processed."
+    },
+    {
+      "category": "Orchestration & pipelines",
+      "level": "mid",
+      "stem": "A daily job uses the current wall-clock date to decide which day's data to load. After an outage you rerun yesterday's missed run, and it loads today's data again. What design change fixes this?",
+      "options": [
+        "Hard-code the target date inside the script and edit it by hand before each rerun of the pipeline",
+        "Run the job more often so that the gap between the clock and the data shrinks",
+        "Disable retries, so that runs missed during an outage are never repeated at all",
+        "Delete all older runs from the scheduler history before triggering a rerun",
+        "Parameterise the task by the run's logical date so that a rerun processes the intended period"
+      ],
+      "correct": 4,
+      "modelAnswer": "Tasks should be a pure function of the interval they represent, not of when they happen to run. Orchestrators pass a logical date or data interval for each run; the task uses it to select its input and to name its output partition. Then rerunning Tuesday on Friday processes Tuesday, and a backfill of two hundred days is just two hundred parameterised runs. Using now() ties correctness to timing, making recovery manual and error-prone, and hard-coded dates are even more fragile. Combine this with an idempotent write that replaces that period's output, and make sure source queries are bounded by the interval instead of selecting everything newer than the last run."
+    },
+    {
+      "category": "Orchestration & pipelines",
+      "level": "mid",
+      "stem": "A pipeline starts at 02:00 every night on the assumption that the upstream team's export is finished by then. Some mornings it processes half-empty data. What is the best improvement?",
+      "options": [
+        "Move the schedule to 03:00 and hope the export is faster than it was last week",
+        "Make the run wait for the upstream completion signal, using a sensor, dataset trigger or ready marker",
+        "Process whatever data is present at 02:00 and repair the gaps manually when the dashboards are noticed to look wrong",
+        "Ask the upstream team to promise in writing that the export will never be late",
+        "Add a long fixed sleep at the start of the job so the export has time to finish"
+      ],
+      "correct": 1,
+      "modelAnswer": "Time-based coupling is fragile: any delay upstream silently produces incomplete results. Make the dependency explicit. Options include an event or dataset trigger fired when the upstream job publishes, a sensor that waits for a completion marker such as a success file or a row in a control table, or a validation task that checks expected row counts and fails rather than loading partial data. Use timeouts and alerting so a missing upstream is noticed instead of waiting forever, and prefer deferrable or event-driven waiting so worker slots are not tied up. Fixed sleeps and later schedules only move the problem and still break on a bad day."
+    },
+    {
+      "category": "Orchestration & pipelines",
+      "level": "mid",
+      "stem": "One task produces a 5 GB intermediate dataset consumed by the next task. What is the recommended way to pass it between tasks in an orchestrator such as Airflow?",
+      "options": [
+        "Serialise the whole dataset into XCom so that it lives in the metadata database",
+        "Keep it in a global Python variable defined at the top of the DAG file for all tasks to read",
+        "Email the file to the owner of the downstream task so that they can load it manually",
+        "Write it to shared storage such as an object store and pass only its location through XCom",
+        "Regenerate the data inside every downstream task from the original source each time"
+      ],
+      "correct": 3,
+      "modelAnswer": "XCom is designed for small pieces of metadata, such as a path, a row count, or a run identifier, and typically lives in the orchestrator's metadata database, which would be overloaded and slowed down by gigabytes of payload. Tasks may also run on different workers, so in-process variables are not shared. The robust pattern is for the producer to write its output to durable shared storage, ideally in a location derived from the run's logical date, and hand the reference downstream. That also makes outputs inspectable and tasks restartable independently. Regenerating the data in each consumer wastes compute and can give inconsistent results."
+    },
+    {
+      "category": "Orchestration & pipelines",
+      "level": "mid",
+      "stem": "A DAG file queries a production database and calls an API at import time to decide how many tasks to create. Scheduler performance degrades. What is the principle at fault?",
+      "options": [
+        "The metadata database cannot hold more than ten tasks for a single workflow",
+        "APIs may not be called from Python code that runs inside a scheduler process",
+        "DAG files are parsed repeatedly, so expensive work belongs in tasks that run at execution time",
+        "Dynamic task creation is forbidden in every orchestrator, so the DAG is rejected when it is parsed",
+        "DAG files may execute only once per day, so the scheduler stalls while it waits"
+      ],
+      "correct": 2,
+      "modelAnswer": "The scheduler re-parses DAG files continuously to detect changes, so any top-level code runs on every parse, many times an hour, on the scheduler's schedule rather than at your run time. Network calls there slow parsing, can fail the whole file, and put load on production systems. Keep the top level to cheap definitions, read configuration from lightweight files or variables, and move queries and API calls into tasks. If the task list truly has to depend on data, use the orchestrator's supported dynamic mapping, which expands tasks at run time. Dynamic generation is allowed; doing expensive work during parsing is the pitfall."
+    },
+    {
+      "category": "Orchestration & pipelines",
+      "level": "mid",
+      "stem": "A load task is rerun after failing halfway, and the target now has duplicate rows for that day. Which write pattern avoids this in the future?",
+      "options": [
+        "Truncate the entire target table before every run, regardless of which day is being loaded by that run",
+        "Replace the day's partition, or MERGE on the business key, in one atomic step so a rerun overwrites",
+        "Run the job outside the scheduler, so that failures are never retried at all",
+        "Increase the retry count so that the task succeeds on its very first attempt",
+        "Append the rows again and rely on analysts to filter the duplicates in reports"
+      ],
+      "correct": 1,
+      "modelAnswer": "Plain appends are not rerun-safe: if half the rows were written before the failure, a retry writes them again. Make the final step replace-style. Typical patterns are overwriting the partition for the run's date, a delete-then-insert for that key range within one transaction, or MERGE on a unique business key. Do the work in a staging table and swap or commit it only after validation, so consumers never see partial data. Truncating the whole table is safe against duplicates but destroys other days' history and makes backfills heavy. More retries do not help, because the problem is not luck but design."
+    },
+    {
+      "category": "Orchestration & pipelines",
+      "level": "senior",
+      "stem": "A pipeline loads a reporting table that dashboards read continuously. Occasionally a failed run leaves the table half-updated for several minutes. What design addresses this?",
+      "options": [
+        "Load into staging, validate, then publish atomically by a swap or commit so readers see old or new",
+        "Disable the dashboards while the load runs and re-enable them afterwards by hand, every single night",
+        "Add alerts so that an on-call person can repair the half-updated table manually",
+        "Load directly into the live table because that is the fastest way to finish",
+        "Run the load twice and keep whichever of the two results looks more complete"
+      ],
+      "correct": 0,
+      "modelAnswer": "Consumers should never observe intermediate states. Build the new version somewhere private, run row-count and quality checks against it, and only then expose it with an atomic step: a table swap, a view repoint, an Iceberg or Delta commit, or a single transaction. If anything fails before that step, the previous version stays intact and the run can simply be retried. The cost is temporary extra storage and a little more orchestration. Writing straight into the live table is simplest, but any failure leaves readers with a mixture. Alerts are necessary, yet they inform people about the mess rather than preventing it."
+    },
+    {
+      "category": "Orchestration & pipelines",
+      "level": "senior",
+      "stem": "You must backfill two years of daily history, which means 730 runs, from an operational database that also serves customers. What is the safest way to run it?",
+      "options": [
+        "Run it during business hours so that any problems are noticed immediately",
+        "Skip validation during the backfill to reduce the load on the source database and speed it up",
+        "Cap concurrency with pools, throttle reads, run off-peak, and keep every run idempotent",
+        "Trigger all 730 runs at once so the backfill finishes as quickly as possible",
+        "Delete the destination table first so that retries are never necessary"
+      ],
+      "correct": 2,
+      "modelAnswer": "A backfill is a load test against your sources. Uncontrolled parallelism can exhaust connections or slow customer-facing queries. Use concurrency limits such as pools and maximum active runs, read from a replica or an export if possible, schedule the work in quiet hours, and process in manageable chunks, newest or oldest first according to business value. Because each daily run is parameterised by its logical date and idempotent, a failed or paused backfill can resume without cleanup. Keep validation on and compare totals with the source for sample days. Launching everything at once risks an incident, and deleting the destination first removes your safety net."
+    },
+    {
+      "category": "Storage, lakehouse & warehouse",
+      "level": "junior",
+      "stem": "Why is a columnar file format such as Parquet well suited to analytical queries?",
+      "options": [
+        "It makes single-row updates faster than they are in any transactional database",
+        "It stores every row as readable text, which makes the files easy to edit by hand",
+        "Queries read only the needed columns, and similar values stored together compress well",
+        "It automatically removes duplicate rows when files are written to storage",
+        "It needs no schema information at all because each file describes itself in plain text"
+      ],
+      "correct": 2,
+      "modelAnswer": "Analytical queries typically touch a few columns across many rows, such as summing revenue by region. In a columnar layout each column is stored contiguously, so the engine reads only the needed columns and skips the rest, saving I/O. Values within a column are similar and often repeated, so encoding and compression are very effective, and min and max statistics per row group let the reader skip chunks that cannot match a filter. The trade-offs are that it is poorly suited to frequent single-row updates and point lookups, which is where row-oriented transactional databases do better, and that files are immutable, so changes mean rewriting files or using a table format."
+    },
+    {
+      "category": "Storage, lakehouse & warehouse",
+      "level": "junior",
+      "stem": "What is the main idea of a lakehouse architecture?",
+      "options": [
+        "Open table formats on object storage add ACID commits and schema control to one shared copy of data",
+        "A data warehouse design that forbids any machine learning workload from reading its data in object storage",
+        "A real-time operational database used only by applications that need millisecond writes",
+        "A data lake that holds only unstructured files, with no tables, schemas or transactions",
+        "A backup system that copies the contents of a warehouse into object storage every night"
+      ],
+      "correct": 0,
+      "modelAnswer": "A lakehouse combines the low-cost, open storage of a data lake with warehouse-like management. Data lives as files, commonly Parquet, in object storage, and an open table format such as Iceberg, Delta Lake or Hudi layers on a metadata or transaction log that provides ACID commits, schema enforcement and evolution, time travel and efficient pruning. Multiple engines can then query the same governed copy, which reduces duplication between a lake and a warehouse. It is not a plain file dump, and it still needs good modelling, partitioning and maintenance such as compaction. The benefit is flexibility and avoiding vendor lock-in, balanced against operational responsibility for table upkeep."
+    },
+    {
+      "category": "Storage, lakehouse & warehouse",
+      "level": "junior",
+      "stem": "Which column is usually the best candidate for partitioning a large events table that analysts almost always filter by date?",
+      "options": [
+        "The column with the most distinct values, because it spreads the data most finely",
+        "The event date, because queries can then skip whole partitions outside the requested range",
+        "A unique identifier such as event_id, so that every row ends up in its own partition",
+        "A free-text description column, because it carries the most information per row",
+        "A random number generated at load time, so that partitions are perfectly balanced"
+      ],
+      "correct": 1,
+      "modelAnswer": "Partition on a column that is commonly used in filters and has a moderate number of distinct values, so partition pruning removes most of the data from a scan. Date is the classic choice for event data since queries are usually time-bounded and each day has a good volume of rows. Partitioning on a unique or very high-cardinality column creates millions of tiny partitions and files, which hurts metadata handling and read performance. A column nobody filters on gives no benefit. Choose the granularity, such as day or month, so that partitions are neither tiny nor enormous, and aim for partition files of at least hundreds of megabytes in total where practical."
+    },
+    {
+      "category": "Storage, lakehouse & warehouse",
+      "level": "mid",
+      "stem": "A streaming job writes a new Parquet file every few seconds, and queries on the table are now slow because the table holds millions of files of a few kilobytes. What is the right remedy?",
+      "options": [
+        "Disable file statistics to reduce the amount of metadata the engine has to read during planning of each query",
+        "Add more partitions, so that each of the files becomes even smaller than today",
+        "Increase the cluster size and leave the file layout exactly as it is now",
+        "Convert the table to CSV so that the many files are easier for engines to list",
+        "Compact the small files into larger ones on a schedule, and have the writer batch more per file"
+      ],
+      "correct": 4,
+      "modelAnswer": "Many tiny files cause heavy listing and open overhead and poor compression, and make query planning slow, regardless of how much compute you add. The fix is to compact them into files of roughly a hundred megabytes to a gigabyte, using the table format's maintenance command such as rewrite data files in Iceberg or OPTIMIZE in Delta, and to reduce creation of tiny files by buffering or increasing trigger intervals. Compaction should be scheduled and aware of concurrent writers. Partitioning more finely makes the problem worse and removing statistics hurts data skipping. A bigger cluster only hides the inefficiency at higher cost."
+    },
+    {
+      "category": "Storage, lakehouse & warehouse",
+      "level": "mid",
+      "stem": "How do open table formats such as Iceberg and Delta Lake give readers a consistent view while writers are committing changes?",
+      "options": [
+        "They lock the entire table against all readers for the full duration of each write operation that touches it",
+        "They rely on the clocks of the client machines to hide files that are half written",
+        "They overwrite data files in place and hope that no reader happens to be looking",
+        "Atomic commits publish new metadata pointing to immutable files, so readers see a complete snapshot",
+        "They copy the table to a separate bucket for every query so readers stay isolated"
+      ],
+      "correct": 3,
+      "modelAnswer": "Data files are never modified once written. A writer produces new files and then commits a new table version, via a metadata pointer in Iceberg or an entry in the transaction log in Delta, using atomic operations and optimistic concurrency. Readers pick a snapshot, which is a complete list of files, and keep reading it even if newer commits arrive, so they never see half-written results. If two writers conflict, one retries or fails validation. This also enables time travel and rollback to earlier snapshots. The costs are metadata growth and the need to expire old snapshots and clean up unreferenced files, so maintenance is part of operating the tables."
+    },
+    {
+      "category": "Storage, lakehouse & warehouse",
+      "level": "mid",
+      "stem": "A table of 20 million customers is partitioned by customer_id, creating millions of directories, and queries are slow. What is a better design?",
+      "options": [
+        "Partition by a coarse column such as date, and sort or cluster by customer_id for fast lookups",
+        "Keep the layout as it is and put a result cache in front of the slow queries",
+        "Store each customer in its own separate table so that no scan ever reads the rows of other customers",
+        "Remove all file statistics so that the engine has less metadata to process",
+        "Partition by customer_id and also by every other column to maximise pruning"
+      ],
+      "correct": 0,
+      "modelAnswer": "Partitioning is meant for coarse pruning. With millions of values, each partition holds a handful of rows, so you pay enormous metadata and file overhead and get tiny files. Use a low-cardinality column that matches common filters, typically time, and then use a finer layout technique within it: hash bucketing, sorting or clustering on customer_id so that file-level statistics let the engine skip files for point lookups. Modern formats offer hidden partitioning and clustering features that can be changed later without rewriting the whole table. Separate tables per customer is an operational nightmare, and caching does not repair the physical layout."
+    },
+    {
+      "category": "Storage, lakehouse & warehouse",
+      "level": "mid",
+      "stem": "A lakehouse team wants to cut storage costs by deleting old data files, but data scientists use time travel to read earlier versions. What is the correct approach?",
+      "options": [
+        "Delete files straight from object storage, because the table format will notice and adapt by itself later",
+        "Move all current data files to a cold storage tier so that they cost less to keep",
+        "Run snapshot expiry or vacuum with a retention window covering the time-travel and rollback needs",
+        "Never delete anything, since time travel requires that every file is kept forever",
+        "Disable the transaction log so that no old versions can exist in the first place"
+      ],
+      "correct": 2,
+      "modelAnswer": "Every update or delete in a table format leaves old files that are still referenced by earlier snapshots, so storage keeps growing until you clean up. Use the supported commands, such as expire snapshots and remove orphan files in Iceberg or VACUUM in Delta, which remove only files that no retained snapshot needs. Choose a retention window that outlasts long-running queries, the rollback period operations want, and any audit needs, because older versions become unreachable once cleaned. Deleting files manually can corrupt the table, since metadata still points to them, and keeping everything forever is costly. Document the policy and test restores."
+    },
+    {
+      "category": "Storage, lakehouse & warehouse",
+      "level": "mid",
+      "stem": "A table in a lake has a column renamed from cust_name to customer_name. Why is this safe in Apache Iceberg without rewriting the data files?",
+      "options": [
+        "Column names are never stored in the files, so nothing can possibly break on a rename",
+        "Iceberg rewrites every data file automatically in the background before the rename takes effect",
+        "The rename is applied only to the query engine's cache and not to the table itself",
+        "Iceberg tracks columns by unique ids, not by name or position, so a rename only changes metadata",
+        "Iceberg disallows renames, so the operation silently fails and leaves the schema unchanged"
+      ],
+      "correct": 3,
+      "modelAnswer": "Iceberg assigns each column a unique field id recorded in the schema and in the data files. Readers match by id, so renaming, reordering, or adding columns is a metadata-only change, and old files remain valid. Formats that bind purely by name or position can silently return wrong or null data after such changes. This is a key reason table formats are preferred over raw Parquet folders for evolving schemas. The caution is still organisational: downstream consumers who reference the old name by query will break, so communicate changes, deprecate gradually, and use contracts and tests. Type changes are limited to safe widening such as int to long."
+    },
+    {
+      "category": "Storage, lakehouse & warehouse",
+      "level": "senior",
+      "stem": "A table receives constant small updates and deletes from a CDC stream, and queries must stay fast but writers must keep up. How should you reason about copy-on-write versus merge-on-read?",
+      "options": [
+        "The two modes are identical and differ only in the name used by each engine",
+        "Merge-on-read speeds writes via delta files but needs compaction, while copy-on-write favours reads",
+        "Merge-on-read deletes data physically as soon as the commit is made, so reads stay fast",
+        "Copy-on-write is always the faster choice for writers because it avoids rewriting any files at commit time",
+        "Merge-on-read removes the need for compaction forever, since changes never accumulate"
+      ],
+      "correct": 1,
+      "modelAnswer": "Copy-on-write rewrites each affected data file at commit time. Reads are simple and fast, but write amplification is high when many small changes touch many files. Merge-on-read writes small delta or delete files and merges them with base files when reading, which makes frequent updates cheap but adds work to queries until compaction folds the changes in. For a high-rate CDC feed, merge-on-read plus regular compaction is usually the better balance; for mostly-read tables with infrequent bulk updates, copy-on-write is simpler. Monitor read latency and delete-file counts, schedule compaction, and verify your query engines support the chosen mode."
+    },
+    {
+      "category": "Storage, lakehouse & warehouse",
+      "level": "senior",
+      "stem": "After a bug fix, finance needs last year's metrics recalculated with new business logic. The pipeline only kept the cleaned output of each stage. What architectural practice would have made this easy?",
+      "options": [
+        "Asking the source system to resend a year of data every time the logic changes",
+        "Overwriting raw data with cleaned data so that only one copy needs to be stored",
+        "Storing the derived tables inside the dashboards rather than in durable storage",
+        "Keeping only the aggregates, since they take far less storage than detailed rows and are enough for reporting",
+        "Keeping an immutable raw (bronze) copy, so downstream layers can be rebuilt when logic changes"
+      ],
+      "correct": 4,
+      "modelAnswer": "Keep the data as it arrived, unmodified and append-only, in a raw or bronze layer, with ingestion metadata such as load time and source file. Cleaning, conformance and business logic then live in later layers that are reproducible from the raw copy. When definitions change or a bug is found, you replay from raw instead of begging source teams or accepting wrong history. The costs are storage, which is cheap in object storage with lifecycle tiers, and governance, since raw data may hold sensitive fields and needs access control and retention rules. Overwriting the raw layer saves a little money and permanently removes your ability to correct mistakes."
+    },
+    {
+      "category": "Data quality, testing & observability",
+      "level": "junior",
+      "stem": "A customers table contains an age value of -5 and another of 420. Which data quality dimension is most directly violated?",
+      "options": [
+        "Timeliness, because the data arrived later than the business needed it",
+        "Uniqueness, because the same customer appears twice in the table",
+        "Completeness, because required values are missing from the age column",
+        "Validity, because the values break the allowed range or business rule",
+        "Consistency, because two systems disagree about the age of one person"
+      ],
+      "correct": 3,
+      "modelAnswer": "Validity asks whether data conforms to the defined format, type, range or business rules, and an age of minus five or four hundred and twenty plainly breaks them. The other dimensions describe different failures. Uniqueness concerns duplicated entities, timeliness concerns whether data is current enough when needed, completeness concerns missing required values or records, and consistency concerns contradictions across datasets. A strong answer also says how you would respond: add a rule at ingestion, for example age between zero and 120, decide whether to reject, quarantine or flag violations, and track the rate of failures over time. Note that valid is not the same as accurate: 35 could be valid but still wrong."
+    },
+    {
+      "category": "Data quality, testing & observability",
+      "level": "junior",
+      "stem": "Where in a pipeline should data quality checks be applied?",
+      "options": [
+        "Only inside the BI tool, by the people who build the individual reports",
+        "Only once a year during the audit, since more frequent checks are too expensive",
+        "At ingestion boundaries and at key transformation stages, so bad data is caught early",
+        "Nowhere, because source systems always supply data that is complete and correct",
+        "Only at the very end, on the final dashboard that business users look at"
+      ],
+      "correct": 2,
+      "modelAnswer": "The earlier a defect is caught, the cheaper it is to fix and the less downstream damage it does. Validate data as it enters the platform, with schema, null, range and volume checks, and again after major transformations, where joins and aggregations can introduce new problems such as duplicates or lost rows. Decide what happens on failure: block the load, quarantine bad records, or warn, depending on severity. Checking only at the end means wrong numbers may already have been published and are hard to trace to a cause. Source systems are never perfect, and audits are too infrequent to protect daily decisions."
+    },
+    {
+      "category": "Data quality, testing & observability",
+      "level": "junior",
+      "stem": "What is data lineage, and what is one practical use of it?",
+      "options": [
+        "A backup copy of the table kept in another region, used for disaster recovery",
+        "A list of the users who may read a table, used mainly for billing and chargeback between departments",
+        "The compressed size of each file in a dataset, used to plan storage purchases",
+        "The order in which columns are displayed in a report, used to design layouts",
+        "A record of where data came from and how it changed, used for impact and root-cause analysis"
+      ],
+      "correct": 4,
+      "modelAnswer": "Lineage traces data flows from sources through transformations to consumers, ideally down to column level. It answers two everyday questions. If a number looks wrong, trace upstream to find where the issue entered. If someone wants to change or retire a column, trace downstream to see which models, dashboards and teams are affected, before breaking them. It also supports compliance, for instance showing where personal data flows. Lineage is best captured automatically from orchestrators, query logs or transformation tools, since manual diagrams go stale. It is not a permission list, a size metric, or a backup, although catalogues often show those things beside it."
+    },
+    {
+      "category": "Data quality, testing & observability",
+      "level": "mid",
+      "stem": "A producing team renames a column in its event schema without warning, and three downstream pipelines break. What practice best prevents this?",
+      "options": [
+        "A policy that consumers must read the producer's code before each of its deployments to production",
+        "Letting producers change schemas freely and having the consumers adapt afterwards",
+        "A data contract on schema and meaning, enforced by compatibility checks in the producer's build",
+        "A larger on-call rota for the downstream teams so someone always fixes the breakage",
+        "Storing every event as untyped text so that there is no schema left to break"
+      ],
+      "correct": 2,
+      "modelAnswer": "A data contract is an explicit agreement between producer and consumers about the structure and meaning of the data, plus expectations such as freshness, ownership and how changes are announced. Its value comes from enforcement: the producer's build pipeline runs schema compatibility checks against registered consumers or a schema registry and fails if a breaking change, such as a rename or removal, is attempted. Compatible changes, like adding an optional field, go through; breaking ones require a versioned new schema and a deprecation period. This shifts quality left, to where the change is made. Untyped text removes the guardrails rather than the problem, and relying on on-call staff treats the symptom."
+    },
+    {
+      "category": "Data quality, testing & observability",
+      "level": "mid",
+      "stem": "Consumers use an Avro or Protobuf schema with a registry. Which change to the producer's schema is normally backward-compatible, so existing consumers keep working?",
+      "options": [
+        "Adding a new optional field that carries a sensible default value",
+        "Renaming an existing required field to a clearer name",
+        "Reusing an old field name for an entirely different meaning",
+        "Removing a field that some consumers currently read",
+        "Changing the type of an existing field from string to integer"
+      ],
+      "correct": 0,
+      "modelAnswer": "Compatible evolution means old and new readers and writers can still understand each other. Adding an optional field with a default is safe because existing consumers ignore it and new consumers can use the default when reading older data. Renames, removals and type changes break consumers that rely on the old shape, and reusing an identifier for a new meaning is the most dangerous because it corrupts data silently. Schema registries can enforce backward, forward or full compatibility modes, so choose the mode that matches your deployment order. Breaking changes should be released as a new version or topic with a migration plan."
+    },
+    {
+      "category": "Data quality, testing & observability",
+      "level": "mid",
+      "stem": "A nightly load finishes successfully with no errors, but the target table received only 3 percent of the usual number of rows. Which control would have caught this?",
+      "options": [
+        "A linting check on the SQL formatting and naming used inside the load script",
+        "A larger executor size for the load job so that it can process more rows",
+        "A check that the job's exit code was zero and no errors were written to the log",
+        "A volume check against a baseline that alerts when a load is abnormally small",
+        "A rule that every column in the target table must be declared as non-null"
+      ],
+      "correct": 3,
+      "modelAnswer": "A job can succeed technically while delivering wrong data, for example when an upstream export was truncated or a filter matched almost nothing. Exit codes only show that the code ran. Volume and freshness monitors are the basic observability layer: compare today's row count with a trailing average or a seasonal expectation, and alert or stop publication when it deviates beyond a tolerance. Combine this with distribution checks on key columns and schema checks, because a correct row count can still hide shifted values. Tune thresholds to avoid false alarms on legitimate swings such as weekends or holidays, and route alerts to someone who owns the dataset."
+    },
+    {
+      "category": "Data quality, testing & observability",
+      "level": "mid",
+      "stem": "About 0.01 percent of records in a payments feed fail validation each day. What is the most sensible handling?",
+      "options": [
+        "Repair the bad records by guessing plausible values and load them as normal",
+        "Quarantine failing records with the reason, load the valid rows, and alert if the rate rises",
+        "Fail the whole load every time that a single record turns out to be invalid",
+        "Ignore the issue completely because the percentage of bad records is so small",
+        "Silently drop the failing records, since keeping a log of them is not necessary for such a small volume"
+      ],
+      "correct": 1,
+      "modelAnswer": "The right response balances completeness against safety. Quarantining keeps the pipeline flowing for the 99.99 percent of good data, while preserving the bad records with the validation error, source and timestamp so they can be investigated and replayed once fixed. Set a threshold, for example a failure rate above a few percent or any failure in a critical field, at which the pipeline stops or escalates, because a sudden jump usually means an upstream change. Failing everything for one bad record harms timeliness, silently dropping them is untraceable data loss, and guessing values invents data. In payments, reconcile quarantined amounts against control totals."
+    },
+    {
+      "category": "Data quality, testing & observability",
+      "level": "senior",
+      "stem": "You rebuild a critical pipeline on new technology and must prove the new output matches the old one before cut-over. What is the most rigorous approach?",
+      "options": [
+        "Run both in parallel and compare counts, key sets and column aggregates per partition",
+        "Trust the new code because it passed all of its unit tests in the CI pipeline on every commit",
+        "Compare only the total file size on disk of the old and the new output",
+        "Switch over immediately and wait for business users to report any differences",
+        "Compare only the first ten rows of each output by eye before switching over"
+      ],
+      "correct": 0,
+      "modelAnswer": "Parallel running is the standard safeguard for migrations. Process identical inputs through both pipelines and reconcile at several levels: row counts per partition, sets of primary keys present in one but not the other, column-level sums, null counts and hashes of row content for exact comparison. Investigate each discrepancy, because some are real bugs and others are intended changes or floating-point and ordering differences that should be documented and agreed with business owners. Define an acceptance threshold in advance and run long enough to cover month-end or other special cases. Unit tests are necessary but do not prove equivalence on production data, and waiting for complaints is the riskiest option."
+    },
+    {
+      "category": "Data quality, testing & observability",
+      "level": "senior",
+      "stem": "The data platform team receives about 200 alerts a day and has begun to ignore them, missing a real incident. What is the most effective remedy?",
+      "options": [
+        "Mute the alert channel permanently, because the team already knows the platform well enough to spot real incidents",
+        "Add many more alert types so that no kind of problem can ever be missed again",
+        "Send every alert to every engineer by email so that everybody is aware",
+        "Alert on consumer-facing SLOs, route to dataset owners with runbooks, and retire the noisy alerts",
+        "Lower every alert threshold so that alerts fire earlier than they do today"
+      ],
+      "correct": 3,
+      "modelAnswer": "Alert fatigue means the signal-to-noise ratio is too low. Start from what consumers care about, such as freshness by 07:00 or completeness of the revenue table, and define service-level objectives for those. Alert when an objective is at risk, not on every internal hiccup. Group related alerts into one incident, assign each dataset a clear owner, classify severity so only urgent ones page someone, and attach a runbook describing likely causes and first steps. Review alerts regularly and delete or fix those that were never actionable. More alerts or lower thresholds worsen the noise, and muting channels simply guarantees missed incidents."
+    },
+    {
+      "category": "ELT & transformation",
+      "level": "junior",
+      "stem": "What distinguishes ELT from the older ETL pattern?",
+      "options": [
+        "ELT is a pattern used only for streaming sources, never for batch files",
+        "ELT forbids SQL transformations and requires all logic to live in application code",
+        "ELT transforms the data on a separate server before any loading into the warehouse takes place",
+        "ELT lands raw data first and transforms it inside the warehouse using its scalable compute",
+        "ELT never stores the raw data, and keeps only the final transformed tables"
+      ],
+      "correct": 3,
+      "modelAnswer": "In ETL, data is transformed on a separate processing server before being loaded, so only the transformed result reaches the warehouse. In ELT you land the raw data first and then transform it inside the warehouse or lakehouse, using its elastic compute and SQL. Advantages are that raw data is preserved for reprocessing, transformations can be rewritten and rerun without re-extracting from sources, and analysts and engineers can share version-controlled SQL models. Drawbacks include the need to govern raw sensitive data and to manage warehouse compute cost. ELT is not limited to streaming and does not discard raw data; keeping it is one of its main benefits."
+    },
+    {
+      "category": "ELT & transformation",
+      "level": "junior",
+      "stem": "In dbt, what is the main role of the ref() function when one model selects from another?",
+      "options": [
+        "It deletes the referenced model after the current model has finished building",
+        "It resolves the real name of the other model and registers the dependency for build order",
+        "It downloads the referenced model from a public package registry at every run",
+        "It encrypts the referenced table so that only the current model can read it",
+        "It copies the data of the other model into the current model when the code is compiled"
+      ],
+      "correct": 1,
+      "modelAnswer": "Using ref() instead of hard-coded table names does two things. First, it resolves to the correct relation for the current environment, so the same code points to a development schema while testing and a production schema in deployment. Second, it records the dependency, which lets the tool build a directed graph, run models in the right order, run only a model and its parents or children, and generate lineage documentation. Hard-coding schema and table names breaks environment isolation and hides dependencies, so the order of execution can be wrong. A similar function, source(), does the same job for raw tables outside the project."
+    },
+    {
+      "category": "ELT & transformation",
+      "level": "mid",
+      "stem": "An incremental model loads rows where updated_at is greater than the maximum already loaded. Some records arrive late with older timestamps and never appear. What is the best remedy?",
+      "options": [
+        "Reprocess a lookback window of recent periods, with a unique key so rows merge, not duplicate",
+        "Remove the filter and always reload the complete history on every single run",
+        "Delete the records with older timestamps at the source before the model runs",
+        "Run the incremental model twice per day so that late rows get a second chance",
+        "Filter on updated_at equal to today's date only, so late rows are never loaded twice by the model"
+      ],
+      "correct": 0,
+      "modelAnswer": "A strict high-water-mark filter assumes data arrives in order, which late events violate. A lookback window, for example reprocessing the last three days on every run, picks up stragglers; set it from how late data actually arrives. Because rows may be seen again, the model needs a unique key and a merge, delete-plus-insert or partition-replace strategy so reprocessing updates rows instead of duplicating them. Filtering on ingestion time instead of event time is another way to avoid missing data. Reloading the whole table is correct but costly, and is better kept for occasional full refreshes to correct drift. Running twice per day does not recover rows older than the filter."
+    },
+    {
+      "category": "ELT & transformation",
+      "level": "mid",
+      "stem": "An hourly job transforms a 4 TB append-only event table, and rebuilding it completely every run is too slow and costly. Which materialisation fits best?",
+      "options": [
+        "A view that recomputes the whole table again every time that somebody queries it",
+        "An incremental model that processes only new data, perhaps in time-based batches",
+        "A seed file loaded from a CSV and refreshed by hand when the data changes",
+        "A full table rebuild on every run, scheduled slightly less often than hourly",
+        "An ephemeral model that is inlined into every one of its downstream consumers"
+      ],
+      "correct": 1,
+      "modelAnswer": "For large append-mostly data, incremental processing does the work proportional to what changed rather than to the full history. The model selects only rows newer than what the target already holds, or processes time-sliced batches, which also supports retries and backfills of single periods. Views and ephemeral models push the cost to query time and recompute everything repeatedly. A full rebuild is simpler and always correct but wasteful at this scale. The trade-offs are complexity and drift risk: incremental logic must handle late data and deletes, so schedule occasional full refreshes or reconciliation checks to confirm that incremental and full results agree."
+    },
+    {
+      "category": "ELT & transformation",
+      "level": "mid",
+      "stem": "A transformation project has staging, intermediate and mart layers. What belongs in the staging layer?",
+      "options": [
+        "Raw files exactly as they arrived, stored without any change whatsoever",
+        "Joins across many sources that produce wide denormalised tables for analysts",
+        "Machine learning model outputs and the features that are used to train them",
+        "Final business metrics that are ready to be used directly in dashboards and reports by executives",
+        "Light one-to-one cleaning of each source table, such as renaming and casting, with no joins"
+      ],
+      "correct": 4,
+      "modelAnswer": "Staging models give every source table a clean, consistent interface: they rename columns to a convention, cast types, normalise units and timestamps, and perhaps filter out clearly invalid system rows. Keeping them one-to-one with sources and free of business logic means a source change is fixed in one place and downstream layers stay stable. Intermediate models then combine and reshape data, and marts expose business-ready entities and metrics at a declared grain. Putting joins or metrics in staging makes the logic harder to reuse and test. The raw data itself sits before staging, in the landing area, and should remain unchanged."
+    },
+    {
+      "category": "ELT & transformation",
+      "level": "mid",
+      "stem": "Which combination of tests best protects the declared grain of a transformation model that should have one row per order_id?",
+      "options": [
+        "Uniqueness and not-null tests on order_id, plus a relationships test to the parent where relevant",
+        "A test that confirms the table name is written in lowercase letters only",
+        "No tests at all, because well-written SQL cannot produce duplicate rows",
+        "A not-null test on every column except the key, which is assumed to be correct by the source system",
+        "Only a test that confirms that the model compiles without any syntax errors"
+      ],
+      "correct": 0,
+      "modelAnswer": "The grain defines which column or columns identify a row, so the most important tests assert exactly that: the key is never null and never repeated. A relationships test confirms that every foreign key points to an existing parent, catching orphans from late or missing loads. Run them on every model that others depend on, and on composite keys when the grain has more than one column. Duplicates are easy to create accidentally through a one-to-many join, which is why this check is more valuable than a compilation test. Add accepted-value and freshness tests where relevant, and make failures block deployment of downstream models when the data is critical."
+    },
+    {
+      "category": "ELT & transformation",
+      "level": "senior",
+      "stem": "A source system overwrites records in place and keeps no history, but analysts need the history of changes. You use scheduled snapshots to build a type 2 table. What limitation must you explain to stakeholders?",
+      "options": [
+        "A snapshot table may be run only once in its lifetime, after which it is frozen",
+        "Changes between two snapshot runs are not captured, so history is only as fine as the schedule",
+        "Snapshots reproduce every single change exactly, whatever the schedule happens to be for that table",
+        "Snapshots delete the source rows once they have been copied into the history table",
+        "Snapshots work only for streaming data and cannot be scheduled like batch jobs"
+      ],
+      "correct": 1,
+      "modelAnswer": "A snapshot compares the source to the previous snapshot at a given moment, then closes changed rows and inserts new versions with validity dates. If a record changes twice between runs, only the last state is seen, and a change that is reverted before the next run is invisible. The valid-from date also reflects the observation time, not necessarily when the change happened in the source. If exact history matters, use change data capture or an audit table at the source instead, or increase snapshot frequency. Be explicit that the history starts when snapshotting starts, and make sure snapshots are never full-refreshed, since the history cannot be recreated from the current state."
+    },
+    {
+      "category": "ELT & transformation",
+      "level": "senior",
+      "stem": "CI for a project with 1,500 models takes two hours, since every pull request builds everything. What is the best way to speed it up without reducing safety?",
+      "options": [
+        "Allow merges whenever the compile step succeeds, without running any build",
+        "Run the full build only once a week and skip all checks on pull requests",
+        "Build and test only changed models and their dependants, deferring unchanged upstream to production",
+        "Remove all tests from pull requests so that the build finishes much faster",
+        "Combine all 1,500 models into one giant model that is built in a single step, which makes lineage easier to read"
+      ],
+      "correct": 2,
+      "modelAnswer": "Most pull requests touch a handful of models, so slim CI selects only what changed, using state comparison against the last production run, plus everything downstream of those models. For unchanged upstream dependencies, deferral points to the existing production tables instead of rebuilding them, so the check is quick but still realistic. Keep tests on the selected models, and consider running them against a limited data sample or a clone of production for speed. Schedule a full build regularly as a backstop to catch interactions that selection might miss. Removing tests or relying on compilation only trades safety for speed, and one giant model destroys modularity and lineage."
+    },
+    {
+      "category": "Cloud, security & governance",
+      "level": "junior",
+      "stem": "What does the principle of least privilege mean for the service account that runs a data pipeline?",
+      "options": [
+        "It shares the personal credentials of the engineer who originally built the pipeline",
+        "It has all permissions during the working day and none at all outside office hours",
+        "It receives administrator rights so that it never fails because of missing permissions on any resource",
+        "It receives only the permissions its tasks need, such as read on one source and write on one target",
+        "It has no permissions of its own and asks a human to approve every single action"
+      ],
+      "correct": 3,
+      "modelAnswer": "Least privilege limits the damage from mistakes and compromised credentials. A pipeline that only ingests files into one landing area should be able to read its source and write to that location, and nothing else, such as deleting other buckets or reading unrelated tables. In practice, define narrowly scoped roles, grant access to specific resources, separate read and write, use different identities per environment and per pipeline, and review permissions regularly. Administrator rights are convenient but turn any bug or leaked key into a disaster, and sharing a person's credentials ruins accountability and breaks when that person leaves. A zero-permission account cannot do its work at all."
+    },
+    {
+      "category": "Cloud, security & governance",
+      "level": "junior",
+      "stem": "Why should pipelines authenticate with managed identities or IAM roles rather than long-lived access keys stored in code?",
+      "options": [
+        "Roles issue short-lived credentials automatically, so there is no static secret to leak",
+        "Keys stored in code are encrypted automatically by the version control system",
+        "It is only a naming convention that has no effect on how security works",
+        "Roles make the pipeline run faster because authentication happens inside the network",
+        "Access keys cannot be used with cloud storage services under any circumstances"
+      ],
+      "correct": 0,
+      "modelAnswer": "Static keys are a classic source of breaches: they get pasted into scripts, committed to repositories, copied into chat, and often never rotated. Managed identities and roles let the platform issue temporary credentials to the running workload, scoped by policy and expiring automatically, so nothing sensitive sits in code or configuration. Where a secret is unavoidable, store it in a secrets manager, inject it at runtime, rotate it on a schedule, and scan repositories for leaks. Keys in source control are not protected merely because the repository is private, since history, forks and clones spread them. The benefit is security and operational simplicity, not execution speed."
+    },
+    {
+      "category": "Cloud, security & governance",
+      "level": "junior",
+      "stem": "Which statement about encryption of data in a cloud data platform is correct?",
+      "options": [
+        "Encryption at rest makes TLS unnecessary, as stored data is the only real target",
+        "Encryption in transit protects stored files from anyone who has access to the storage account or its keys",
+        "Encryption removes the need for access control, since nobody can read ciphertext",
+        "Encryption is needed only for databases, and object storage is exempt by design",
+        "Data should be protected in transit, for example with TLS, and at rest, because the threats differ"
+      ],
+      "correct": 4,
+      "modelAnswer": "Encryption in transit protects data moving across networks from interception, which TLS provides between clients, services and storage. Encryption at rest protects stored data, such as disks and objects, from someone who obtains the media or bypasses normal access paths, and is typically handled with keys in a key management service, possibly customer-managed for tighter control. They guard different risks, so you want both. Neither replaces access control, because an authorised but over-privileged identity can still read plaintext through the service. Encryption also applies to object storage, backups and logs, not just databases, and key management, rotation and access to keys are part of the design."
+    },
+    {
+      "category": "Cloud, security & governance",
+      "level": "mid",
+      "stem": "Analysts need to join customer tables on email address, but must not see raw emails. Which approach best supports this?",
+      "options": [
+        "Give analysts the raw emails and trust them not to misuse the information",
+        "Delete the email column and forbid analysts from joining customer tables at all",
+        "Hash the email with a public, unsalted function and document the method for analysts in the wiki",
+        "Pseudonymise the email with a keyed hash or token, and restrict access to the key or mapping",
+        "Copy the table to a shared spreadsheet from which the email column has been removed"
+      ],
+      "correct": 3,
+      "modelAnswer": "A consistent pseudonym, such as an HMAC with a secret key or a token from a vault, maps the same email to the same value every time, so joins and counts work, while the original is not visible. Keep the key or token mapping in a separate, tightly controlled place, because anyone who holds it can re-identify people. Plain unsalted hashes of low-entropy values like emails can be reversed by hashing guesses, so they offer weak protection. Remember that pseudonymised data is still personal data under regimes like the GDPR and PDPA-style laws, since re-identification is possible, so access control, purpose limits and retention continue to apply. Dropping the column loses analytical value."
+    },
+    {
+      "category": "Cloud, security & governance",
+      "level": "mid",
+      "stem": "A warehouse table contains emails and phone numbers. Support staff should see full values, and analysts should see masked values. What is the best-practice mechanism?",
+      "options": [
+        "Ask analysts not to select those columns and rely on their good judgement",
+        "Filter the sensitive values in the dashboard layer only, leaving the table as it is",
+        "Policy-based column masking tied to roles, with sensitive columns classified by tags",
+        "Maintain two physical copies of the table and synchronise them by hand every night",
+        "Remove the sensitive columns for everyone, including the support staff who need them"
+      ],
+      "correct": 2,
+      "modelAnswer": "Enforcing the rule inside the data platform makes it consistent for every client tool. Most warehouses support dynamic masking policies or column-level grants that return the real value to authorised roles and a masked or hashed one to others. Pair that with classification tags that mark columns as personal or sensitive, so policies can be applied by tag at scale and show up in the catalogue and audits. Dashboard-only filtering is bypassable by anyone who connects with SQL or another tool, and instructions to analysts are not controls. Duplicate tables drift out of sync and multiply the surface that needs protection. Test policies with each role and log access."
+    },
+    {
+      "category": "Cloud, security & governance",
+      "level": "mid",
+      "stem": "A person asks for their personal data to be erased. Your lake stores immutable Parquet files with a table format that supports row-level deletes. What is a sound approach?",
+      "options": [
+        "Find the records, delete them through the table format, then expire old snapshots and handle copies",
+        "Tell the person that data stored in a lake can never be removed once written",
+        "Rename the underlying file so that nobody is able to find the data again",
+        "Hide the row in the dashboard layer so that it is no longer visible to any user, which satisfies the erasure request",
+        "Wait for time travel to expire by itself and take no action in the meantime"
+      ],
+      "correct": 0,
+      "modelAnswer": "Erasure requires deletion in every place the data lives, within the legal timeframe, so you need to know where it is: maintain a data inventory and a subject-to-key index. In table formats a DELETE or MERGE marks rows as removed, but earlier snapshots still reference old files, so follow with compaction and snapshot expiry or VACUUM to remove the files physically. Include derived tables, extracts, search indexes and backups, whose handling may follow documented retention cycles, and keep an auditable record of the request without storing the erased data. Hiding data in a dashboard is not deletion. Design for this early, for example by separating personal identifiers into small tables that are easy to purge. Confirm exact obligations with the privacy officer or legal counsel."
+    },
+    {
+      "category": "Cloud, security & governance",
+      "level": "mid",
+      "stem": "Raw web logs with full IP addresses are kept indefinitely 'in case they are useful'. From a data-protection perspective, what is the best response?",
+      "options": [
+        "Hash the name of the table so that nobody is able to find the logs again",
+        "Copy them to a personal laptop for safekeeping in case the platform ever fails",
+        "Define a purpose and retention period, minimise fields, and enforce deletion with lifecycle rules",
+        "Delete all of them immediately without first checking any retention requirements or the audit obligations",
+        "Keep them forever because storage is cheap and the data might be useful some day"
+      ],
+      "correct": 2,
+      "modelAnswer": "Data-protection principles such as purpose limitation, data minimisation and storage limitation, which appear in the GDPR and in comparable laws such as Singapore's PDPA, mean you should not keep personal data longer than needed for a defined purpose. Agree with the owners and legal advisers what the logs are used for, then reduce what you store, for example by truncating or hashing IP addresses where full values are unnecessary, set retention such as ninety days for raw logs, and automate deletion with storage lifecycle policies and table retention settings so it does not depend on memory. Deleting everything at once may breach security or audit retention requirements, so decisions need documented rules, not guesswork."
+    },
+    {
+      "category": "Cloud, security & governance",
+      "level": "senior",
+      "stem": "A shared analytics platform serves several customers, and each must only see its own rows. Which control is strongest?",
+      "options": [
+        "Giving all tenants one shared role and separating them by their passwords alone at the login screen",
+        "A reminder in the onboarding guide that people must only view their own rows",
+        "A filter applied by the BI tool, which users are trusted not to remove or edit",
+        "Naming conventions that put the customer name into every table and column",
+        "Row-level policies in the platform, bound to the verified tenant identity and proved by tests"
+      ],
+      "correct": 4,
+      "modelAnswer": "Isolation must be enforced where the data lives, so every access path, including direct SQL, notebooks and APIs, passes through the same rule. Row-access policies or secure views evaluate the caller's identity claim, such as tenant id from the identity provider, instead of any value the user can set. For stronger separation, use separate schemas, projects or accounts per tenant at the cost of operational overhead. Prove it with automated tests that attempt cross-tenant reads and with periodic access reviews, and log all queries. BI-layer filters can be bypassed, naming conventions do nothing, and shared roles defeat the point. The choice depends on risk and scale, but enforcement belongs in the data layer."
+    },
+    {
+      "category": "Cloud, security & governance",
+      "level": "senior",
+      "stem": "A regulator asks who accessed a table of sensitive customer data in the last 90 days. What capability must have been in place?",
+      "options": [
+        "A dashboard showing the row counts of each table over the past three months, with the growth rate of each",
+        "Central, tamper-resistant audit logging of data access, retained long enough and searchable",
+        "The ability to restore the table from the backup that was taken last night",
+        "A list of the engineers who created the table and who own its pipeline",
+        "Verbal confirmation from the team leads that nobody looked at the table"
+      ],
+      "correct": 1,
+      "modelAnswer": "You can only answer such a question if access events were recorded before it was asked. Enable platform audit logs and query history for reads on sensitive data, send them to a central, write-protected store separate from the people being audited, retain them for the required period, and make them searchable by user, table, and time. Classification tags or a catalogue tell you which tables are sensitive, so you can scope the report quickly and set alerts for unusual access, such as bulk exports. Backups, row counts and creator lists say nothing about reads. Also consider service accounts, since automated jobs account for much access and need individual identities to be attributable."
+    },
+    {
+      "category": "Performance & cost optimisation",
+      "level": "junior",
+      "stem": "Why is SELECT * discouraged when querying a large table in a columnar cloud warehouse?",
+      "options": [
+        "It converts every column to text, which makes the later joins much slower",
+        "It locks the table so that no other users can query it until the scan is done",
+        "SELECT * is a syntax error in modern SQL dialects and is rejected by most engines and cloud warehouses",
+        "The engine must read every column, so more data is scanned, raising runtime and often cost",
+        "It forces the rows to be returned in a random order that changes between runs"
+      ],
+      "correct": 3,
+      "modelAnswer": "Columnar storage lets the engine read only the columns a query needs. Selecting everything defeats that benefit, so wide tables with dozens of columns, some holding large text or JSON, are scanned in full. On platforms that bill by bytes scanned, that translates directly into money, and on others into longer runtimes and more compute use. List the columns you actually need, and filter early so partitions and files can be pruned. A star select is not invalid, and it is fine for a quick exploratory look with a LIMIT, though even then limits may not reduce the bytes scanned on some engines, so check the platform's rules. In views and pipelines, explicit columns also make schema changes safer."
+    },
+    {
+      "category": "Performance & cost optimisation",
+      "level": "junior",
+      "stem": "What is predicate pushdown, and why does it improve performance?",
+      "options": [
+        "The query text is pushed to a remote server which executes it on behalf of the client",
+        "Filters are applied as close to the data as possible, so less data is read and moved",
+        "The data is sorted before it is filtered so that later steps can run in order",
+        "Predicates are converted into stored procedures that the database runs nightly",
+        "The filtered rows are copied permanently into a cache table for later reuse"
+      ],
+      "correct": 1,
+      "modelAnswer": "With pushdown, the engine hands filter conditions to the storage layer or file reader. For columnar formats such as Parquet, the reader checks min and max statistics per row group and skips groups that cannot satisfy the condition, and with partitioned data it skips entire directories. The result is much less data read from storage, fewer rows shuffled and lower cost. It works best with simple comparisons on raw columns; wrapping a column in a function, such as applying a cast or a date function to it, can prevent pushdown and cause full scans. Writing sargable conditions, and checking the query plan to confirm that filters appear in the scan, are practical habits."
+    },
+    {
+      "category": "Performance & cost optimisation",
+      "level": "mid",
+      "stem": "In PostgreSQL, a query SELECT * FROM events WHERE customer_id = 42 performs a sequential scan over 500 million rows, although it returns about 200. What is the most appropriate step?",
+      "options": [
+        "Disable the query optimiser so that it can no longer choose sequential scans",
+        "Add a B-tree index on customer_id and confirm with EXPLAIN that the plan uses it",
+        "Add more RAM to the database server and leave the query and the schema unchanged",
+        "Partition the table by a randomly generated column so that the rows are spread out",
+        "Replace the query with SELECT COUNT(*) so that fewer columns have to be returned"
+      ],
+      "correct": 1,
+      "modelAnswer": "A highly selective filter on an unindexed column forces the database to read the whole table. An index on customer_id lets it jump straight to the matching rows, turning a scan of hundreds of millions of rows into a lookup. Use EXPLAIN or EXPLAIN ANALYZE before and after to prove the plan changed and the time dropped. The trade-offs are index storage and slower inserts and updates, so index columns that queries actually use, and avoid indexing everything. Index choice also depends on data type and query patterns, such as a composite index when filters combine columns. More memory only makes the scan faster, not unnecessary."
+    },
+    {
+      "category": "Performance & cost optimisation",
+      "level": "mid",
+      "stem": "A development warehouse is nearly idle, yet the bill shows it running around the clock. Which change brings the biggest saving with the least risk?",
+      "options": [
+        "Enable auto-suspend with a short idle timeout and auto-resume, and add budgets or resource monitors",
+        "Increase the warehouse size so that its queries finish sooner and it sleeps more often between the bursts",
+        "Disable query logging so that fewer background operations keep the compute awake",
+        "Delete the development environment entirely and let developers share production",
+        "Switch every user to the production warehouse so that only one cluster exists"
+      ],
+      "correct": 0,
+      "modelAnswer": "Compute is typically billed while it is running, whether or not queries are executing. Auto-suspend stops the compute after a short idle time, such as a minute or a few minutes, and auto-resume starts it when the next query arrives, so you pay for use rather than for availability. Add budgets, alerts or resource monitors to catch runaways, and right-size warehouses by workload instead of using one large size for all. Be aware that suspending drops local caches and a very short timeout may add cold-start delay for latency-sensitive dashboards, so tune it per workload. Enlarging the warehouse raises the hourly cost, and moving users to production only mixes workloads."
+    },
+    {
+      "category": "Performance & cost optimisation",
+      "level": "mid",
+      "stem": "You need to choose clustering or sort columns for a very large warehouse table. Which guidance is most sound?",
+      "options": [
+        "Cluster on every column of the table so that all possible queries are covered",
+        "Choose columns at random so that the data is spread evenly across all files",
+        "Pick columns common in filters or joins with enough distinct values, and avoid tiny tables",
+        "Choose the column that has only two distinct values to keep the key very small and the maintenance cheap",
+        "Cluster a table of a few thousand rows, because small tables gain the most"
+      ],
+      "correct": 2,
+      "modelAnswer": "Clustering or sorting co-locates similar values so that the engine can skip files or micro-partitions that cannot match a filter. It pays off when queries repeatedly filter or join on a few columns, the table is large, and cardinality is enough for effective pruning, though extremely high-cardinality columns can be costly to maintain. Limit the key to a few columns, order them from most to least selective for your workload, and measure scanned bytes or partitions before and after. Maintenance such as automatic reclustering has a cost, particularly on tables with constant updates. A tiny table gains nothing, and a column with only two values prunes at most half the data."
+    },
+    {
+      "category": "Performance & cost optimisation",
+      "level": "mid",
+      "stem": "A dashboard runs the same heavy aggregation over 5 billion rows hundreds of times per day. What is an appropriate optimisation?",
+      "options": [
+        "Precompute the aggregate into a summary table or materialised view refreshed on a schedule",
+        "Add more filters in the dashboard so that nobody is able to see all of the data at the same time",
+        "Buy a bigger BI licence so that the dashboards can use more concurrent sessions",
+        "Ask users to open the dashboard less often so that fewer queries are sent",
+        "Remove the aggregation and show the raw rows so that nothing needs computing"
+      ],
+      "correct": 0,
+      "modelAnswer": "If many users repeat the same expensive computation, do it once. A pre-aggregated table or a materialised view, refreshed incrementally or on a schedule, serves dashboards in milliseconds and cuts compute cost dramatically. The trade-off is freshness and maintenance: the summary is only as current as its last refresh, so agree an acceptable staleness with the business and show it on the dashboard. Choose the grain of the summary to match the questions people ask, and keep it consistent with the detailed data through tests. Result caching can help for identical queries but not when filters vary. Asking users to stop using a dashboard defeats its purpose."
+    },
+    {
+      "category": "Performance & cost optimisation",
+      "level": "mid",
+      "stem": "Raw files in object storage are mostly accessed in the first month and rarely afterwards, yet all are stored in the most expensive tier. What is the usual solution?",
+      "options": [
+        "Compress the files with a different extension and keep them in the same tier",
+        "Delete every file that is older than one week to remove the storage cost completely",
+        "Move all data to cold storage immediately, including data that is in current use",
+        "Apply lifecycle rules that move older objects to cheaper classes, noting retrieval fees",
+        "Copy everything to a second region, because storage there is always cheaper"
+      ],
+      "correct": 3,
+      "modelAnswer": "Object stores offer storage classes with lower per-gigabyte prices for infrequently accessed data, at the price of retrieval charges, minimum storage durations and sometimes slower access. A lifecycle policy automates the transition by age or prefix, and can expire data at the end of its retention period. Before applying it, analyse access patterns so that frequently used data is not penalised by retrieval fees, check that tables and engines can tolerate archival tiers, since some tiers require restoring objects before reading, and align with compliance retention. Deleting after a week may violate retention or reprocessing needs, and moving hot data to cold storage can increase total cost."
+    },
+    {
+      "category": "Performance & cost optimisation",
+      "level": "senior",
+      "stem": "The monthly cloud data bill rose by 60 percent in one quarter. What is the best first step?",
+      "options": [
+        "Cut every team's budget by 60 percent so that the bill returns to its old level",
+        "Shut the platform down for a week to see which users complain about the outage",
+        "Attribute spend by tag, team, workload and query to find the main drivers, then target those",
+        "Ask each engineer to guess where the extra cost comes from and fix their own area of the platform",
+        "Switch to another cloud provider immediately, because prices will be lower there"
+      ],
+      "correct": 2,
+      "modelAnswer": "Optimising without data wastes effort. Use cost allocation tags, billing exports and query or job history to see which services, projects, warehouses or pipelines grew, and whether the cause is more data, more users, inefficient queries, a new always-on cluster, or a one-off backfill. Usually a few items explain most of the increase. Then fix the specific causes: right-size or auto-suspend compute, fix full scans, add partition filters, set retention, and reduce duplication. Put in place budgets, alerts and showback so teams own their spend and see changes early. Arbitrary cuts or a migration are drastic, risky, and might not address the actual cause."
+    },
+    {
+      "category": "Performance & cost optimisation",
+      "level": "senior",
+      "stem": "The business needs updated figures by 08:00 every day, but a team proposes an always-on streaming cluster for a 2 TB source because streaming is modern. What is the soundest engineering response?",
+      "options": [
+        "Adopt streaming anyway, because a streaming job can always be made to do batch work when it is needed",
+        "Change the requirement to one-second latency so that streaming becomes justified",
+        "Choose the simplest design meeting the stated latency, here scheduled incremental batch loads",
+        "Run the streaming job and a batch pipeline in parallel on a permanent basis",
+        "Reject every pipeline that runs more often than once a day on principle"
+      ],
+      "correct": 2,
+      "modelAnswer": "Architecture should follow requirements, not fashion. A daily deadline is a batch-shaped need: an incremental scheduled job costs a fraction of an always-on cluster, is simpler to operate, test and backfill, and meets the objective with margin. Streaming adds state management, late-data logic, monitoring and continuous compute cost, which is justified when business value depends on seconds or minutes of freshness, such as fraud detection or operational alerts. Document the decision along with the trigger for revisiting it, for example if consumers need hourly data. Micro-batching can be a middle path if latency tightens. Running both permanently doubles cost and creates reconciliation problems."
+    },
+    {
+      "category": "Software engineering for data",
+      "level": "junior",
+      "stem": "Why should pipeline code and SQL models live in version control and be changed through reviewed pull requests rather than edited directly in a production console?",
+      "options": [
+        "Version control encrypts the data that the pipeline processes while it is in transit between systems",
+        "Changes become reviewable, reproducible and reversible, with a history of who changed what and why",
+        "Production consoles do not allow SQL, so code must be stored elsewhere first",
+        "It makes the code run faster in production because the files are stored compressed",
+        "It removes the need for testing because every change is already reviewed by peers"
+      ],
+      "correct": 1,
+      "modelAnswer": "Version control gives a complete history, so you can see what changed, who changed it and why, compare versions during an incident, and roll back quickly to a known good state. Pull requests add peer review, automated checks and a place to discuss design, which catches many defects before they reach production. Editing in a console leaves no trace, cannot be reproduced in another environment, and makes it hard to restore what was working. Small, focused commits and descriptive messages make reviews and reverts easier. None of this speeds up execution or replaces testing; it is about traceability, collaboration and safe change, and it is the base for CI/CD and infrastructure as code."
+    },
+    {
+      "category": "Software engineering for data",
+      "level": "junior",
+      "stem": "You must process a 30 GB CSV file on a laptop with 16 GB of memory using Python. Which approach is most appropriate?",
+      "options": [
+        "Split the file by deleting every second row so that it fits into memory",
+        "Open the file in a text editor and copy the rows across to a new file by hand one piece at a time",
+        "Convert the file to an image first, since images are always smaller than text",
+        "Stream the file in chunks, or use a lazy engine, and write the results out incrementally",
+        "Read the whole file into a single in-memory list and process it all at once"
+      ],
+      "correct": 3,
+      "modelAnswer": "When data exceeds memory, process it incrementally. Read the file in chunks, for example using a chunked reader or a generator that yields rows or batches, transform each chunk, and write the output as you go, keeping only small state such as running counts in memory. Alternatively use a tool designed for larger-than-memory or lazy execution, or an embedded analytical engine that can query the file directly, and consider converting the CSV once to Parquet, which is much smaller and faster to query. Loading everything into one object fails with a memory error, and discarding rows loses data. Also specify column types explicitly to avoid memory-hungry defaults."
+    },
+    {
+      "category": "Software engineering for data",
+      "level": "junior",
+      "stem": "What makes a data transformation function easy to unit test?",
+      "options": [
+        "It is a pure function of its inputs that returns a result, with I/O kept apart from the logic",
+        "It reads directly from production databases and writes straight into dashboards without any staging",
+        "It prints its results to the console instead of returning them to the caller",
+        "It is written as one very long script that relies on many global variables",
+        "It depends on the current clock time and on random values at each call"
+      ],
+      "correct": 0,
+      "modelAnswer": "A unit test needs to supply small inputs and check outputs quickly and repeatably. Functions that take data in, return data out, and avoid hidden dependencies such as the clock, global state, network calls or files can be tested with a few hand-made rows covering normal cases, edge cases like nulls and duplicates, and known bad input. Keep input and output code thin and separate, then test the logic in memory and cover the wiring with a few integration tests. Passing the date or configuration as an argument removes time dependence. Code that talks directly to production systems or relies on global variables is hard to test and risky to run."
+    },
+    {
+      "category": "Software engineering for data",
+      "level": "mid",
+      "stem": "Which deployment practice best fits a data pipeline team that wants safe, repeatable releases?",
+      "options": [
+        "Production is changed first, and the tests are run afterwards to confirm it",
+        "CI/CD that tests, then promotes one versioned artefact through dev, staging and production",
+        "Every engineer deploys straight from a personal laptop to the production system whenever they are ready",
+        "Engineers copy the changed files to production by hand whenever they feel ready",
+        "All testing is performed in production, where the real data and users are"
+      ],
+      "correct": 1,
+      "modelAnswer": "Automated pipelines make releases consistent and auditable. On each pull request, CI runs linting, unit tests and data tests against a safe environment. After merge, the same versioned artefact, such as a container image or package, is promoted from development to staging and then to production, ideally with configuration differences kept outside the code. Deployment is done by the automation with limited, logged credentials rather than by individuals, which reduces human error and enables fast rollback to a previous version. Manual copying and laptop deployments produce environment drift and no audit trail. Testing only in production means customers find the bugs."
+    },
+    {
+      "category": "Software engineering for data",
+      "level": "mid",
+      "stem": "Someone changes a storage bucket policy manually in the cloud console, and the Terraform plan now reports a difference. What should the team do?",
+      "options": [
+        "Make every future change manually in the console and stop maintaining the code",
+        "Delete the Terraform state file so that the plan no longer reports anything",
+        "Disable the plan step in the CI pipeline so that the warning is no longer shown",
+        "Ignore the difference permanently, because the console change already works fine in practice",
+        "Treat it as drift: sync the code or revert the change, then restrict console write access"
+      ],
+      "correct": 4,
+      "modelAnswer": "Infrastructure as code works only when the code is the source of truth. A difference between the declared and actual state is drift, and it may hide an insecure or undocumented change. Investigate who changed it and why. If the change was needed, express it in the code through a reviewed pull request; if not, apply the code to restore the intended state. Then reduce the chance of recurrence by limiting console permissions, alerting on out-of-band changes, and running periodic plan checks. Deleting state or disabling plans destroys the safety net, and going manual loses repeatability. Also protect the remote state with locking and access control because it can contain sensitive values."
+    },
+    {
+      "category": "Software engineering for data",
+      "level": "mid",
+      "stem": "For testing a pipeline end to end, which kind of test data is the most appropriate and responsible choice?",
+      "options": [
+        "Customer data that has been downloaded onto personal laptops for convenience",
+        "Synthetic or anonymised data that mimics real structure and edge cases, kept apart from production",
+        "Whatever sample rows a developer happens to remember from the previous week",
+        "A complete copy of the production personal data placed in the test environment",
+        "Empty tables, because tests need no input data to prove anything about the logic of the pipeline steps"
+      ],
+      "correct": 1,
+      "modelAnswer": "Tests need realistic shapes and edge cases such as nulls, duplicates, late records, odd encodings and boundary dates, but not real people's information. Generate synthetic data, or mask and sample production data through an approved process that removes or replaces direct identifiers, and keep it in a non-production environment with its own access controls. Include a small curated fixture set for unit tests and a larger realistic set for performance and integration tests. Copying production personal data into lower environments multiplies breach and compliance risk, since those environments are usually less protected. Empty tables prove nothing, and laptops are out of the organisation's control."
+    },
+    {
+      "category": "Software engineering for data",
+      "level": "mid",
+      "stem": "A Python pipeline that worked for months suddenly fails after a dependency released a new minor version. How should this be prevented in future?",
+      "options": [
+        "Run the pipeline on a different day of the week to avoid the new release",
+        "Delete the requirements file so that no dependency version is ever constrained",
+        "Always install the newest version of every dependency each time the pipeline starts so that it stays current",
+        "Pin versions in a lock file, use a reproducible build, and upgrade deliberately with tests in CI",
+        "Avoid every third-party library and write all of the functionality in-house"
+      ],
+      "correct": 3,
+      "modelAnswer": "Unpinned dependencies mean that the same code can behave differently from one build to the next. Use a lock file that records exact versions, including transitive dependencies, and build the runtime as a container image or similarly reproducible environment so development, CI and production match. Handle upgrades on purpose: use an automated tool to propose them, run the test suite, then merge, so breakage appears in a pull request rather than at 3 a.m. in production. Installing the latest at run time makes failures unpredictable. Avoiding third-party libraries altogether is impractical for data work, and the problem is not the schedule. Also scan dependencies for known vulnerabilities."
+    },
+    {
+      "category": "Software engineering for data",
+      "level": "senior",
+      "stem": "You inherit a 3,000-line script that mixes extraction, transformation and loading, with hard-coded paths, and the business relies on its output. How do you improve it safely?",
+      "options": [
+        "Rewrite it from scratch in a new language and replace the old script on Friday",
+        "Capture current outputs as tests first, then refactor in small steps, verifying output is unchanged",
+        "Leave it untouched forever, because it works and the business relies on it",
+        "Add comments and documentation throughout but make no change to the code itself",
+        "Delete the parts of the script that look unused, then see whether anything breaks in the next production run"
+      ],
+      "correct": 1,
+      "modelAnswer": "Legacy code that makes money should be changed carefully. First freeze behaviour: run the script on representative inputs and save the outputs as golden files, then write characterisation tests that fail if results differ. Next refactor in small, reviewable steps, extracting pure transformation functions, isolating reading and writing, replacing hard-coded paths with configuration, and adding logging and error handling, rerunning the tests after each step. Once logic is testable you can add proper unit tests and improve performance or structure. A big-bang rewrite loses undocumented behaviour that stakeholders rely on, and deleting seemingly unused code is risky without evidence. Run old and new in parallel before cut-over."
+    },
+    {
+      "category": "Software engineering for data",
+      "level": "senior",
+      "stem": "A team must rename a heavily used table column and change a data type, while dozens of downstream consumers cannot all update at the same time. Which release strategy is safest?",
+      "options": [
+        "Create a new table with a different name and hide the old one without notice",
+        "Change the data type silently so that the old queries keep running unmodified",
+        "Add the new column alongside the old, migrate consumers gradually, then remove the old one",
+        "Rename the column in production immediately and let consumers fix their own queries",
+        "Wait until every consumer team agrees on a single common release day for all changes"
+      ],
+      "correct": 2,
+      "modelAnswer": "The expand and contract pattern, also called parallel change, separates the migration into compatible steps. First expand: add the new column or table alongside the old and keep both populated, possibly through a view that exposes the old shape. Then migrate consumers at their own pace, using lineage and query logs to see who still reads the old column, and communicate a deprecation date. Finally contract: remove the old structure once usage reaches zero. This avoids a coordinated big-bang release and gives a simple rollback path at each step. Breaking consumers instantly causes incidents, and silent type changes risk wrong results. Contract tests can verify compatibility throughout."
+    }
+  ]
+}

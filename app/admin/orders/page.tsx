@@ -88,6 +88,11 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
             Free Assessment Check unlock fee
           </Link>{" "}
           <span className="text-[var(--color-ink-faint)]">— the one-time fee for a result document (US$10; Pakistan exempt): on/off, amount, label.</span>
+          <br />
+          <Link href="/admin/orders/interest" className="text-[var(--color-primary)] underline underline-offset-4" data-testid="admin-interest-setting-link">
+            Interest registration fee
+          </Link>{" "}
+          <span className="text-[var(--color-ink-faint)]">— &ldquo;Register your interest&rdquo; in a training format (USD 2, non-refundable; Pakistan free): on/off, amount, label.</span>
         </p>
       </header>
 
@@ -184,7 +189,7 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
               <tr className="border-b border-[var(--color-line)] text-left">
                 {columns.map((c, i) => (
                   <th key={i} scope="col" className="text-label px-4 py-3 font-semibold">
-                    {c || <span className="sr-only">Open</span>}
+                    {c || <span className="sr-only">Edit</span>}
                   </th>
                 ))}
               </tr>
@@ -220,8 +225,8 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
                   </td>
                   <td className="px-4 py-3 whitespace-nowrap text-[var(--color-ink-quiet)]">{o.registrationStatus ? o.registrationStatus : "—"}</td>
                   <td className="px-4 py-3 whitespace-nowrap">
-                    <Link href={`/admin/orders/${o.id}`} className="text-[var(--color-primary)] underline underline-offset-4" aria-label={`Open order for ${o.userEmail}`} data-testid="order-open">
-                      Open
+                    <Link href={`/admin/orders/${o.id}`} className="text-[var(--color-primary)] underline underline-offset-4" aria-label={`Edit order for ${o.userEmail}`} data-testid="order-open">
+                      Edit
                     </Link>
                   </td>
                 </tr>

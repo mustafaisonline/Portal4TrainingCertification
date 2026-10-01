@@ -12,7 +12,7 @@ import { SignOut } from "./SignOut";
  */
 export const metadata: Metadata = {
   title: "Signed out",
-  description: "You have been signed out of your Data & AI Academy account.",
+  description: "You have been signed out of your DataAI Nexus account.",
 };
 
 export default function SignOutPage() {

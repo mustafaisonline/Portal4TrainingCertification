@@ -118,7 +118,7 @@ export function HowPortalWorks({
       key: "certification",
       label: "Step 2 · Validate",
       icon: <IconCertificate />,
-      title: "Free Certification",
+      title: "Free Assessment",
       free: true,
       description: `Test your Data & AI knowledge with The Free Assessment Check — ${ASSESSMENT_SIZE} questions in ${ASSESSMENT_TIME_LIMIT_MS / 3_600_000} hours, drawn from our growing question bank of ${questions ? `${questions} ` : ""}questions. Take it free of charge and earn a graded certificate when you achieve the required passing score.`,
       highlights: [questions ? `${questions} Questions` : "A growing question bank", "The Free Assessment Check", "Graded Certificate on Passing"],
@@ -126,7 +126,7 @@ export function HowPortalWorks({
       // certificate document is paid (Q1), so say so up front. Read from the
       // admin-managed setting, never typed: change or switch off the fee and this follows.
       note: certificateFee ? `Certificate document: ${certificateFee}` : null,
-      cta: { label: "Start Free Certification", href: "/free-certifications" },
+      cta: { label: "Start an Assessment", href: "/assessment" },
     },
     {
       key: "training",
@@ -148,7 +148,7 @@ export function HowPortalWorks({
         </h2>
         <p className="mb-10 max-w-[760px] text-xl font-medium leading-snug text-[var(--color-ink)]" data-testid="how-portal-works-intro">
           Learn, test your knowledge, and build your professional capabilities — all in one place. Start with free Data &amp; AI knowledge, validate your
-          understanding through free certification, or take a professional training program to deepen your skills.
+          understanding through an assessment, or take a professional training program to deepen your skills.
         </p>
 
         <ol className="grid list-none gap-6 p-0 md:grid-cols-2 lg:grid-cols-3">

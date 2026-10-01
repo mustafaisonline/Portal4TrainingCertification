@@ -32,9 +32,9 @@ import type { LegalDocument } from "./types";
 export const refundPolicy: LegalDocument = {
   key: "refund",
   title: "Refund & cancellation policy",
-  version: "DRAFT-2026-09-30",
+  version: "DRAFT-2026-10-01",
   status: "draft",
-  lastUpdated: "2026-09-30",
+  lastUpdated: "2026-10-01",
   summary:
     "When a training registration can be cancelled or moved to another date, how much is refunded, how to do it, and what happens if the Academy has to cancel or reschedule.",
   sections: [
@@ -59,6 +59,7 @@ export const refundPolicy: LegalDocument = {
         "It does not apply to private or corporate cohorts, which are governed by the written agreement for that cohort (see section 8).",
         "Certificate of Completion renewal fee: the fee you pay to renew a certificate is not refundable once the renewal has been applied, because the extension to the certificate's expiry date is delivered immediately when the payment is confirmed. If you believe a renewal was charged in error — for example, you were charged twice — raise it through Contact us or by emailing [contact email], and we will look into it and handle it manually.",
         "Free Assessment Check certificate unlock: the one-time fee you may pay to unlock the printable Certificate of Achievement for a passed Free Assessment Check is not refundable once the certificate has been shown, because the certificate is delivered immediately when the payment is confirmed. The result itself, its ID and its public verification page are free and are never withheld. If you believe an unlock was charged in error, raise it through Contact us or by emailing [contact email].",
+        "Register your interest: the small fee you pay to register your interest in a training format (shown before you pay; currently USD 2) is not refundable and is not credited against the training fee. It records that you want the training in that format, so the trainer can plan it; it does not reserve a seat, and the day-based schedule in section 2 does not apply to it. A participant in Pakistan registers interest without the fee. If you believe it was charged in error — for example, you were charged twice — raise it through Contact us or by emailing [contact email].",
         "Support the Academy: this is a one-off payment that grants no service or benefit in return, so the day-based schedule in section 2 does not apply to it. If you paid by mistake, or want to ask for a refund for another reason, raise it through Contact us or by emailing [contact email] and we will consider it.",
         "\"Start date\" means the first scheduled session of the offering you registered for, in the time zone shown on the offering. Days are counted as calendar days before that date, not business days.",
       ],

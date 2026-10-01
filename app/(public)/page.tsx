@@ -30,8 +30,8 @@ import { Card } from "@/shared/ui/Card";
 
 export const metadata: Metadata = {
   // The homepage carries the site name alone; every other page uses the
-  // root layout's "%s · Data & AI Academy" template.
-  title: { absolute: "Data & AI Academy" },
+  // root layout's "%s · DataAI Nexus" template.
+  title: { absolute: "DataAI Nexus" },
 };
 
 /**

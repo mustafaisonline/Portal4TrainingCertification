@@ -20,6 +20,7 @@ import { courses, mentorshipPackages, pricingRegions, type Course, type RegionKe
 import { practitioners } from "./seed-data/practitioners.ts";
 import { faqGroups } from "./seed-data/faq.ts";
 import { questions } from "./seed-data/questions.ts";
+import { seedInterview } from "./seed-interview.ts";
 
 const envFile = path.resolve(process.cwd(), ".env.local");
 if (!process.env["DATABASE_URL"] && existsSync(envFile)) {
@@ -317,6 +318,15 @@ async function seedKnowledgeCheckUnlock() {
   });
 }
 
+/** Opening interest fee (CR-2026-10-01-2138, founder: USD 2, non-refundable) — once, never overwritten. */
+async function seedInterestFee() {
+  const existing = await prisma.interestFeeSetting.count();
+  if (existing > 0) return;
+  await prisma.interestFeeSetting.create({
+    data: { enabled: true, amountMinor: 200, currency: "USD", label: "Register your interest", effectiveFrom: new Date(0), createdByUserId: null, note: "Opening setting (founder, 2026-10-01): USD 2.00 non-refundable to register interest in a training format; Pakistan registers without the fee" },
+  });
+}
+
 async function main() {
   const domainIds = await seedDomains();
   const programmeIds = await seedProgrammes(domainIds);
@@ -326,8 +336,11 @@ async function main() {
   await seedCertificateFee();
   await seedSupportPayment();
   await seedKnowledgeCheckUnlock();
+  await seedInterestFee();
+  // CR-2026-10-01-1711: the Interview roles, their draft question banks and the first organisation (create-only).
+  await seedInterview();
 
-  const [d, p, published, m, f, pr, e, faq, q, o] = await Promise.all([
+  const [d, p, published, m, f, pr, e, faq, q, o, ir, iq, org] = await Promise.all([
     prisma.domain.count(),
     prisma.programme.count(),
     prisma.programme.count({ where: { status: "published" } }),
@@ -338,9 +351,12 @@ async function main() {
     prisma.faqEntry.count(),
     prisma.diagnosticQuestion.count(),
     prisma.scheduledOffering.count(),
+    prisma.assessmentRole.count({ where: { organisationId: null } }),
+    prisma.roleQuestion.count({ where: { organisationId: null } }),
+    prisma.organisation.count(),
   ]);
   console.log(
-    `seed: domains=${d} programmes=${p} (published=${published}) modules=${m} formats=${f} prices=${pr} experts=${e} faq=${faq} questions=${q} offerings=${o}`,
+    `seed: domains=${d} programmes=${p} (published=${published}) modules=${m} formats=${f} prices=${pr} experts=${e} faq=${faq} questions=${q} offerings=${o} interviewRoles=${ir} interviewQuestions=${iq} organisations=${org}`,
   );
 }
 

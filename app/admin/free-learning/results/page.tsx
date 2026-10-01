@@ -42,7 +42,7 @@ export default async function AdminKnowledgeCheckResultsPage({ searchParams }: {
         <Link href="/admin/free-learning" className="text-body-sm mb-2 inline-block py-1 text-[var(--color-primary)] underline underline-offset-4">
           ← Free Learning
         </Link>
-        <p className="text-label mb-2 text-[var(--color-primary)]">Free Certifications</p>
+        <p className="text-label mb-2 text-[var(--color-primary)]">Assessment</p>
         <h1 className="text-display" data-testid="kc-results-title">
           Free Assessment Check certificates
         </h1>

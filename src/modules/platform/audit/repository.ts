@@ -86,7 +86,34 @@ export type AuditAction =
   | "coupon.updated"
   | "coupon.status_changed"
   | "coupon.deleted"
-  | "coupon.redeemed";
+  | "coupon.redeemed"
+  // CR-2026-10-01-1711 (P2–P4): role tests (Prepare for Interview) and
+  // organisation interview screening — roles, questions, organisations,
+  // organisation access, and a person's role-test result.
+  | "assessment_role.created"
+  | "assessment_role.updated"
+  | "assessment_role.published_changed"
+  | "assessment_role.deleted"
+  | "role_question.created"
+  | "role_question.updated"
+  | "role_question.deleted"
+  | "role_question.status_changed"
+  | "role_question.bulk_status_changed"
+  | "role_question.imported"
+  | "organisation.created"
+  | "organisation.updated"
+  | "organisation.published_changed"
+  | "organisation_role.added"
+  | "organisation_role.removed"
+  | "organisation_access.granted"
+  | "organisation_access.revoked"
+  | "role_test.finished"
+  | "role_test.deleted"
+  // CR-2026-10-01-2138: "Register your interest" in a training format.
+  | "interest.registered"
+  | "interest.confirmed"
+  | "interest.notified"
+  | "interest_fee.changed";
 
 export type AuditEntry = {
   /** Our `users.id`; null when the system acted on its own. */

@@ -27,7 +27,8 @@ export const ROLE_LABEL: Record<Role, string> = {
   // shown as "Trainer" everywhere; the enum value is unchanged.
   expert: "Trainer",
   assessor: "Assessor",
-  org_admin: "Organisation administrator",
+  // CR-2026-10-01-1711 (founder): the `org_admin` role is shown as "Organisation"; the enum value is unchanged.
+  org_admin: "Organisation",
   platform_admin: "Platform administrator",
 };
 
@@ -157,7 +158,7 @@ export type AdminUserRegistration = {
 
 export type AdminUserOrder = {
   id: string;
-  kind: "registration" | "certificate_renewal" | "support" | "knowledge_check_unlock";
+  kind: "registration" | "certificate_renewal" | "support" | "knowledge_check_unlock" | "interest";
   status: "pending" | "paid" | "expired" | "failed" | "cancelled" | "refunded" | "partially_refunded";
   currency: string;
   amountMinor: number;
@@ -359,7 +360,7 @@ export async function getUserForAdmin(id: string, db: Db = getPrisma()): Promise
       amountMinor: Number(o.amountMinor),
       createdAt: o.createdAt,
       paidAt: o.paidAt,
-      programmeTitle: o.programme?.title ?? offeringlessOrderTitle(o.kind),
+      programmeTitle: o.programme?.title ?? offeringlessOrderTitle(o.kind, o.programme?.title),
       certificateCode: o.certificate?.certificateId ?? null,
     })),
     certificates: certificates.map((c) => ({ ...c })),

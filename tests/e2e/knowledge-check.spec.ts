@@ -50,11 +50,11 @@ async function expectNoAxeViolations(page: Page) {
 }
 
 async function signIn(page: Page) {
-  await page.goto("/sign-in?return-to=%2Ffree-certifications");
+  await page.goto("/sign-in?return-to=%2Fassessment");
   await page.getByLabel("Email").fill(email);
   await page.getByLabel("Password", { exact: true }).fill(STRONG_PASSWORD);
   await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page).toHaveURL(/\/free-certifications$/);
+  await expect(page).toHaveURL(/\/assessment$/);
 }
 
 /** The signed-in person's user id. */
@@ -78,21 +78,24 @@ async function setDeadlineIn(attemptId: string, endsInMs: number) {
   await getPrisma().knowledgeCheckAttempt.update({ where: { id: attemptId }, data: { startedAt: new Date(Date.now() + endsInMs - 3 * 3_600_000) } });
 }
 
-test("signed out: /free-certifications shows the pitch and a sign-in button; signed in it offers ONE test — no sizes, no unfinished list, no time-limit-free wording", async ({ page }) => {
-  // Founder, 2026-09-28 ("New more change"): the start screen lives on /free-certifications — public page, sign-in offered on it;
+test("signed out: /assessment shows the pitch and a sign-in button; signed in it offers ONE test — no sizes, no unfinished list, no time-limit-free wording", async ({ page }) => {
+  // Founder, 2026-09-28 ("New more change"): the start screen lives on /assessment (renamed from /free-certifications 2026-10-01) — public page, sign-in offered on it;
   // the old URL redirects here.
   await page.goto("/free-learning/knowledge-check");
-  await expect(page).toHaveURL(/\/free-certifications$/);
+  await expect(page).toHaveURL(/\/assessment$/);
   await expect(page.getByTestId("kc-signed-out")).toBeVisible();
-  await expect(page.getByTestId("start-knowledge-check")).toHaveAttribute("href", "/sign-in?return-to=%2Ffree-certifications");
+  await expect(page.getByTestId("start-knowledge-check")).toHaveAttribute("href", "/sign-in?return-to=%2Fassessment");
   await expect(page.getByTestId("start-knowledge-check")).toContainText("Free Assessment Check");
   // Founder, 2026-09-30: the hero and the wording.
-  await expect(page.getByTestId("free-certifications-title")).toHaveText("Take the Free Assessment Check. Earn a graded certificate.");
-  await expect(page.getByTestId("free-certifications-lead")).toContainText("A 200-question, 3-hour assessment drawn from a bank of");
-  await expect(page.getByTestId("free-certifications-lead")).toContainText("Charlie, Bravo or Alpha");
-  await expect(page.getByTestId("kc-title")).toHaveText("The Free Assessment Check");
+  await expect(page.getByTestId("assessment-title")).toHaveText("Test yourself. Prepare. Screen.");
+  await expect(page.getByTestId("persona-card-data-foundation")).toContainText("200 questions in 3 hours, drawn fresh from a bank of");
+  await expect(page.getByTestId("persona-card-data-foundation")).toContainText("Alpha — 81–100 %");
+  await expect(page.getByTestId("kc-title")).toHaveText("Assess your Data Foundation");
   await expect(page.getByTestId("free-test")).toContainText("200 questions");
   await expect(page.getByTestId("free-test")).toContainText("3 hours");
+  // Founder, 2026-10-01 23:50/23:58: the founder's paragraph, then the bands as a facts list
+  // in the same shape as the other two cards; bank count and not-a-credential line gone.
+  await expect(page.getByTestId("free-test")).toContainText("thousands of questions");
   await expect(page.getByTestId("kc-grades")).toContainText("Charlie — 60–70 %");
   await expect(page.getByTestId("kc-grades")).toContainText("Bravo — 71–80 %");
   await expect(page.getByTestId("kc-grades")).toContainText("Alpha — 81–100 %");
@@ -110,8 +113,8 @@ test("signed out: /free-certifications shows the pitch and a sign-in button; sig
   await expect(page).toHaveURL(/\/sign-in\?registered=1$/);
   await signIn(page);
 
-  await expect(page.getByTestId("kc-title")).toHaveText("The Free Assessment Check");
-  await expect(page.getByTestId("kc-bank")).toContainText("reviewed questions are in the bank");
+  await expect(page.getByTestId("kc-title")).toHaveText("Assess your Data Foundation");
+  await expect(page.getByTestId("kc-bank")).toHaveCount(0); // the bank count was removed from the card (founder, 2026-10-01 23:50)
   // ONE start button — the three size buttons and the Unfinished card are gone.
   await expect(page.getByTestId("kc-start")).toBeEnabled();
   await expect(page.getByTestId("kc-start")).toHaveText("Start the Free Assessment Check");
@@ -222,7 +225,7 @@ test("a 200-question test: ten a page, a countdown, answers kept across pages, f
 
   // The old start URL redirects to the merged page, where the finished result is listed and the one start button renders.
   await page.goto("/free-learning/knowledge-check");
-  await expect(page).toHaveURL(/\/free-certifications$/);
+  await expect(page).toHaveURL(/\/assessment$/);
   await expect(page.getByTestId("kc-result-row")).toHaveCount(1);
   await expect(page.getByTestId("kc-start")).toBeVisible();
   await expect(page.getByTestId("start-knowledge-check")).toHaveCount(0);
@@ -250,8 +253,8 @@ test("one running test per person: starting again returns to it; a late save (af
   const attemptUrl = page.url();
   const attemptId = attemptUrl.split("/").pop()!;
 
-  // Back on Free Certifications the test is shown as running, and the one button returns to the SAME test — no Unfinished list, no Continue/Cancel.
-  await page.goto("/free-certifications");
+  // Back on Assessment the test is shown as running, and the one button returns to the SAME test — no Unfinished list, no Continue/Cancel.
+  await page.goto("/assessment");
   await expect(page.getByTestId("kc-running")).toContainText("It ends at");
   await expect(page.getByTestId("kc-start")).toHaveText("Return to my running test");
   await expect(page.getByTestId("kc-unfinished")).toHaveCount(0);
@@ -272,8 +275,8 @@ test("one running test per person: starting again returns to it; a late save (af
   await expect(page.getByTestId("result-time-taken")).toHaveText("03:00:00"); // exactly three hours, never more
   await expectNoAxeViolations(page);
 
-  // The test is over, so Free Certifications offers a fresh start again.
-  await page.goto("/free-certifications");
+  // The test is over, so Assessment offers a fresh start again.
+  await page.goto("/assessment");
   await expect(page.getByTestId("kc-running")).toHaveCount(0);
   await expect(page.getByTestId("kc-start")).toHaveText("Start the Free Assessment Check");
 });
@@ -292,7 +295,7 @@ test("visiting a test after its 3 hours settles it (lazy expiry); the countdown'
   await expect(page.getByTestId("result-title")).toHaveText("Not passed — 0 of 200 (0 %)");
   await expect(page.getByTestId("result-grade")).toHaveCount(0);
   await expect(page.getByTestId("result-time-taken")).toHaveText("03:00:00");
-  await page.goto("/free-certifications");
+  await page.goto("/assessment");
   await expect(page.getByTestId("kc-result-row").first()).toContainText("Not passed");
 
   // The timer: a few seconds left when the page loads → it counts down and submits by itself → the result.

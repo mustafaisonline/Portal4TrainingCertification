@@ -87,7 +87,7 @@ test("both certificate types render on sample data: every required field, the QR
   const sheets = page.getByTestId("certificate");
   await expect(sheets).toHaveCount(2);
 
-  // ── Free Certification: Certificate of Achievement ──
+  // ── Assessment: Certificate of Achievement ──
   const a = sheets.nth(0);
   await expect(a).toHaveAttribute("data-kind", "achievement");
   await expect(a.getByTestId("certificate-title")).toHaveText("Certificate of Achievement");
@@ -166,7 +166,7 @@ test("both certificate types render on sample data: every required field, the QR
   await expect(gaps).toContainText("HRD Corp organisation logo");
 });
 
-test("the Free Certification sample has one sheet per grade: Alpha (default), Bravo, Charlie, or all three", async ({ page }) => {
+test("the Assessment sample has one sheet per grade: Alpha (default), Bravo, Charlie, or all three", async ({ page }) => {
   await signIn(page, adminEmail);
   await page.setViewportSize({ width: 1280, height: 1000 });
   const expected = { alpha: ["Grade: ALPHA · 81–100 %", "180 of 200 · 90%"], bravo: ["Grade: BRAVO · 71–80 %", "150 of 200 · 75%"], charlie: ["Grade: CHARLIE · 60–70 %", "130 of 200 · 65%"] } as const;

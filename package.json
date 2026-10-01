@@ -18,14 +18,15 @@
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:deploy": "prisma migrate deploy",
-    "db:seed": "node --experimental-transform-types prisma/seed.ts",
+    "db:seed": "node --experimental-transform-types --import ./scripts/register-alias.mjs prisma/seed.ts",
     "db:reset": "prisma migrate reset --force",
     "admin:grant": "node --experimental-transform-types --import ./scripts/register-alias.mjs scripts/grant-admin.ts",
     "learning:import": "node --experimental-transform-types --import ./scripts/register-alias.mjs scripts/ingest-datapedia.ts",
     "learning:import-questions": "node --experimental-transform-types --import ./scripts/register-alias.mjs scripts/import-questions.ts",
     "unlock:relabel": "node --experimental-transform-types --import ./scripts/register-alias.mjs scripts/relabel-unlock-setting.ts",
     "stripe:check": "node --experimental-transform-types --import ./scripts/register-alias.mjs scripts/stripe-check.ts",
-    "knowledge-check:approve-all": "node --experimental-transform-types --import ./scripts/register-alias.mjs scripts/bulk-review-questions.ts"
+    "knowledge-check:approve-all": "node --experimental-transform-types --import ./scripts/register-alias.mjs scripts/bulk-review-questions.ts",
+    "interview:approve-all": "node --experimental-transform-types --import ./scripts/register-alias.mjs scripts/approve-interview-questions.ts"
   },
   "dependencies": {
     "@prisma/adapter-pg": "7.10.0",

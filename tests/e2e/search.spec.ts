@@ -65,7 +65,7 @@ test("the header has the four items beside the logo (which is Home) and a search
   const nav = page.getByRole("navigation", { name: "Primary", exact: true });
   // UX review 2026-09-27 D1: "Home" is the logo on the desktop bar; the phone menu keeps the item.
   // Founder, 2026-09-28: Knowledge Hub / Free Certifications / Professional Trainings (in that order) replace the earlier set; For Organisations was merged into the trainings page and no longer has its own item. (The search bar was briefly a full-width second row the same day; reverted on founder feedback to its place beside Reviews, then reduced in width.)
-  expect(await nav.getByRole("link").allTextContents()).toEqual(["Knowledge Hub", "Free Certifications", "Professional Trainings", "Reviews"]);
+  expect(await nav.getByRole("link").allTextContents()).toEqual(["Knowledge Hub", "Free Assessment", "Professional Trainings", "Reviews"]);
   const search = page.getByTestId("site-search").getByRole("searchbox");
   await expect(search).toHaveAttribute("placeholder", "Search Candidates or Training");
   await search.fill("vibe");
@@ -78,7 +78,7 @@ test("the header has the four items beside the logo (which is Home) and a search
     ["/diagnostic/result", /\/free-learning\/diagnostic\/result$/],
     ["/free-learning", /\/free-trainings$/],
     ["/free-learning/topics", /\/free-trainings$/],
-    ["/free-learning/knowledge-check", /\/free-certifications$/],
+    ["/free-learning/knowledge-check", /\/assessment$/],
     ["/for-organisations", /\/programs(#for-organisations)?$/],
   ] as const) {
     await page.goto(from);
@@ -139,8 +139,8 @@ test("Professional Trainings has HRD Corp merged, no registration-in-progress co
 
   // Free Certifications hosts the Free Assessment Check start screen (signed out:
   // the pitch, the bank and a sign-in button).
-  await page.goto("/free-certifications");
-  await expect(page.getByTestId("free-certifications-title")).toBeVisible();
+  await page.goto("/assessment");
+  await expect(page.getByTestId("assessment-title")).toBeVisible();
   await expect(page.getByTestId("free-test")).toContainText("200 questions");
   await expect(page.getByTestId("free-test")).not.toContainText("50, 100 or 200");
   await expect(page.getByTestId("kc-signed-out")).toBeVisible();

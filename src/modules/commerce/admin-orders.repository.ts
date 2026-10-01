@@ -4,7 +4,7 @@ import { isUuid, MODALITY_LABEL } from "@/modules/catalogue/offerings/repository
 import type { PriceRegion } from "@/modules/catalogue/programmes/types";
 import { addDays, isIsoDate, zonedLocalToInstant } from "@/modules/certificates/dates";
 import { listAuditForEntity, type AuditRecord } from "@/modules/platform/audit/repository";
-import { offeringlessOrderTitle, type OrderKind, type OrderStatus, type RefundStatus, type RegistrationStatus } from "./registrations.service";
+import { offeringlessOrderFormat, offeringlessOrderTitle, type OrderKind, type OrderStatus, type RefundStatus, type RegistrationStatus } from "./registrations.service";
 
 /*
  * Orders & payments for administrators (Milestone 8 plan §2 item 2) —
@@ -25,8 +25,8 @@ export const ORDER_STATUS_LABEL: Record<OrderStatus, string> = {
   refunded: "Refunded",
   partially_refunded: "Partially refunded",
 };
-export const ORDER_KINDS = ["registration", "certificate_renewal", "support", "knowledge_check_unlock"] as const satisfies readonly OrderKind[];
-export const ORDER_KIND_LABEL: Record<OrderKind, string> = { registration: "Registration", certificate_renewal: "Certificate renewal", support: "Support payment", knowledge_check_unlock: "Free Assessment Check unlock" };
+export const ORDER_KINDS = ["registration", "certificate_renewal", "support", "knowledge_check_unlock", "interest"] as const satisfies readonly OrderKind[];
+export const ORDER_KIND_LABEL: Record<OrderKind, string> = { registration: "Registration", certificate_renewal: "Certificate renewal", support: "Support payment", knowledge_check_unlock: "Free Assessment Check unlock", interest: "Interest registration" };
 export const REFUND_REASON_LABEL: Record<"participant_cancellation" | "academy_cancellation" | "manual", string> = {
   participant_cancellation: "Participant cancellation",
   academy_cancellation: "Academy cancellation",
@@ -98,6 +98,7 @@ export const ADMIN_ORDERS_PAGE_SIZE = 25;
 const listInclude = {
   user: { select: { email: true, name: true } },
   offering: { include: { programme: { select: { title: true } }, deliveryFormat: { select: { name: true } } } },
+  programme: { select: { title: true } },
   payment: { select: { receiptUrl: true } },
   registration: { select: { id: true, status: true } },
   certificate: { select: { certificateId: true } },
@@ -144,8 +145,8 @@ export async function listOrdersForAdmin(filters: AdminOrderFilters = {}, db: Db
       userId: o.userId,
       userEmail: o.user.email,
       userName: o.user.name,
-      programmeTitle: o.offering ? o.offering.programme.title : offeringlessOrderTitle(o.kind),
-      formatName: o.offering ? (o.offering.deliveryFormat?.name ?? MODALITY_LABEL[o.offering.modality]) : o.kind === "knowledge_check_unlock" ? "One-time unlock" : "One-off payment",
+      programmeTitle: o.offering ? o.offering.programme.title : offeringlessOrderTitle(o.kind, o.programme?.title),
+      formatName: o.offering ? (o.offering.deliveryFormat?.name ?? MODALITY_LABEL[o.offering.modality]) : offeringlessOrderFormat(o.kind),
       startsOn: o.offering?.startsOn ?? null,
       endsOn: o.offering?.endsOn ?? null,
       registrationId: o.registration?.id ?? null,
@@ -248,8 +249,8 @@ export async function getOrderForAdmin(id: string, db: Db = getPrisma()): Promis
     userId: o.userId,
     userEmail: o.user.email,
     userName: o.user.name,
-    programmeTitle: o.offering ? o.offering.programme.title : offeringlessOrderTitle(o.kind),
-    formatName: o.offering ? (o.offering.deliveryFormat?.name ?? MODALITY_LABEL[o.offering.modality]) : o.kind === "knowledge_check_unlock" ? "One-time unlock" : "One-off payment",
+    programmeTitle: o.offering ? o.offering.programme.title : offeringlessOrderTitle(o.kind, o.programme?.title),
+    formatName: o.offering ? (o.offering.deliveryFormat?.name ?? MODALITY_LABEL[o.offering.modality]) : offeringlessOrderFormat(o.kind),
     startsOn: o.offering?.startsOn ?? null,
     endsOn: o.offering?.endsOn ?? null,
     registrationId: o.registration?.id ?? null,

@@ -1,9 +1,9 @@
 "use client";
 
 import { useActionState, useId, useState } from "react";
-import { grantAdminAction, grantTrainerAction, revokeAdminAction, revokeTrainerAction, type AdminUserActionState } from "@/modules/identity/admin-users.actions";
+import { grantAdminAction, grantOrganisationAction, grantTrainerAction, revokeAdminAction, revokeOrganisationAction, revokeTrainerAction, type AdminUserActionState } from "@/modules/identity/admin-users.actions";
 import { Button } from "@/shared/ui/Button";
-import { FormStatus } from "@/shared/ui/forms";
+import { FormStatus, SelectField } from "@/shared/ui/forms";
 
 /*
  * Grant / revoke platform administrator on /admin/users/[id] (M8 plan §2
@@ -121,6 +121,72 @@ export function RevokeAdmin({ userId, name, isSelf }: { userId: string; name: st
       <div>
         <Button type="submit" variant="secondary" disabled={pending || !confirmed || state.status === "done"} data-testid="revoke-admin-submit">
           {pending ? "Revoking…" : "Revoke platform administrator"}
+        </Button>
+      </div>
+      {state.status === "done" ? <FormStatus tone="success">{state.message}</FormStatus> : null}
+      {state.status === "error" ? <FormStatus tone="error">{state.message}</FormStatus> : null}
+    </form>
+  );
+}
+
+/* CR-2026-10-01-1711: the Organisation role — granted per organisation, like Trainer
+   but scoped to ONE organisation. The person then sees that organisation's dashboard. */
+export function GrantOrganisation({ userId, name, organisations }: { userId: string; name: string; organisations: { id: string; name: string }[] }) {
+  const [state, action, pending] = useActionState(grantOrganisationAction, initial);
+  if (organisations.length === 0) {
+    return (
+      <p className="text-body-sm text-[var(--color-ink-quiet)]" data-testid="grant-org-none">
+        There is no organisation left to grant. Register one under Organisations first.
+      </p>
+    );
+  }
+  return (
+    <form action={action} className="flex flex-col gap-3" data-testid="grant-org-form" aria-label="Grant organisation access">
+      <input type="hidden" name="userId" value={userId} />
+      <p className="text-body-sm text-[var(--color-ink-quiet)]">
+        {name} will see the Organisation dashboard of the organisation you choose, to manage its roles, questions and candidate results. The grant is recorded in the audit log with your name.
+      </p>
+      <SelectField label="Organisation" name="organisationId" required defaultValue="" data-testid="grant-org-select">
+        <option value="" disabled>
+          Choose an organisation…
+        </option>
+        {organisations.map((o) => (
+          <option key={o.id} value={o.id}>
+            {o.name}
+          </option>
+        ))}
+      </SelectField>
+      <div>
+        <Button type="submit" disabled={pending} data-testid="grant-org-submit">
+          {pending ? "Granting…" : "Grant organisation access"}
+        </Button>
+      </div>
+      {state.status === "done" ? <FormStatus tone="success">{state.message}</FormStatus> : null}
+      {state.status === "error" ? <FormStatus tone="error">{state.message}</FormStatus> : null}
+    </form>
+  );
+}
+
+export function RevokeOrganisation({ userId, name, organisationId, organisationName }: { userId: string; name: string; organisationId: string; organisationName: string }) {
+  const [state, action, pending] = useActionState(revokeOrganisationAction, initial);
+  const [confirmed, setConfirmed] = useState(false);
+  const confirmId = useId();
+  return (
+    <form action={action} className="flex flex-col gap-3" data-testid="revoke-org-form" data-organisation-id={organisationId} aria-label={`Revoke access to ${organisationName}`}>
+      <input type="hidden" name="userId" value={userId} />
+      <input type="hidden" name="organisationId" value={organisationId} />
+      <p className="text-body-sm text-[var(--color-ink-quiet)]">
+        {name} holds Organisation access to <strong className="text-[var(--color-ink)]">{organisationName}</strong>. Revoking removes that dashboard immediately; the organisation&apos;s roles, questions and results are kept, and access can be granted again later.
+      </p>
+      <div className="flex items-start gap-2">
+        <input id={confirmId} type="checkbox" name="confirm" value="yes" checked={confirmed} onChange={(e) => setConfirmed(e.target.checked)} className="mt-1 h-4 w-4" data-testid="revoke-org-confirm" />
+        <label htmlFor={confirmId} className="text-body-sm text-[var(--color-ink)]">
+          I want to revoke {name}&apos;s access to {organisationName}
+        </label>
+      </div>
+      <div>
+        <Button type="submit" variant="secondary" disabled={pending || !confirmed || state.status === "done"} data-testid="revoke-org-submit">
+          {pending ? "Revoking…" : "Revoke organisation access"}
         </Button>
       </div>
       {state.status === "done" ? <FormStatus tone="success">{state.message}</FormStatus> : null}

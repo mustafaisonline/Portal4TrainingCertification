@@ -7,7 +7,7 @@ import { fitStep } from "./format";
  * THE CERTIFICATE — one reusable design for both certificate types
  * (Milestone 15, Requirement 2; founder, 2026-09-29).
  *
- *   kind "achievement" — Free Certification: a passed Free Assessment Check
+ *   kind "achievement" — Assessment: a passed Free Assessment Check
  *   kind "completion"  — Professional Training: Certificate of Completion
  *
  * A4 LANDSCAPE, 297 × 210 mm, and it scales as one piece: the sheet is a CSS

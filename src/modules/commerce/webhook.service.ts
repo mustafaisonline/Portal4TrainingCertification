@@ -7,7 +7,7 @@ import { writeAudit } from "@/modules/platform/audit/repository";
 import { formatDateRange } from "@/shared/util/dates";
 import { appBaseUrl } from "./checkout.service";
 import { redeemCoupon } from "./coupons.repository";
-import { knowledgeCheckUnlockedMessage, registrationConfirmedMessage, supportPaymentReceivedMessage } from "./emails";
+import { interestRegisteredMessage, knowledgeCheckUnlockedMessage, registrationConfirmedMessage, supportPaymentReceivedMessage } from "./emails";
 import { recomputePaymentStatus } from "./payments";
 import { mapRefundStatus, stripeGateway, type PaymentGateway, type Stripe } from "./stripe";
 
@@ -308,6 +308,44 @@ async function sessionPaid(tx: Tx, event: Stripe.Event, session: Stripe.Checkout
     };
   }
 
+  // CR-2026-10-01-2138: a "Register your interest" payment confirms the
+  // person's interest row — in this same transaction, only now that Stripe
+  // has said the money arrived. Non-refundable; nothing else is granted.
+  if (order.kind === "interest") {
+    const interest = await tx.trainingInterest.findUnique({ where: { orderId: order.id }, include: { programme: { select: { title: true, slug: true } }, deliveryFormat: { select: { name: true } } } });
+    if (!interest) throw new Error(`interest order ${order.id} names no interest registration`);
+    if (interest.status !== "confirmed") {
+      await tx.trainingInterest.update({ where: { id: interest.id }, data: { status: "confirmed", confirmedAt: now } });
+      await writeAudit(tx, {
+        actorUserId: null,
+        action: "interest.confirmed",
+        entityType: "training_interest",
+        entityId: interest.id,
+        before: { status: interest.status },
+        after: { status: "confirmed", orderId: order.id, programmeId: interest.programmeId, formatId: interest.deliveryFormatId },
+        reason,
+      });
+    }
+    return {
+      status: "processed",
+      note: `interest in ${interest.programme.title} (${interest.deliveryFormat.name}) confirmed`,
+      emails: [
+        interestRegisteredMessage({
+          to: interest.email,
+          name: interest.fullName ?? order.user.name,
+          trainingTitle: interest.programme.title,
+          formatName: interest.deliveryFormat.name,
+          orderId: order.id,
+          amountMinor,
+          currency,
+          receiptUrl: payment.receiptUrl,
+          trainingUrl: `${appBaseUrl()}/programs/${interest.programme.slug}`,
+          accountUrl: `${appBaseUrl()}/account/trainings#interests`,
+        }),
+      ],
+    };
+  }
+
   // A registration order always carries its offering (the column is null
   // only for the one-off kinds); a row that does not is corrupt, never guessed.
   if (!order.offeringId || !order.offering) throw new Error(`registration order ${order.id} has no offering`);
@@ -352,6 +390,7 @@ async function sessionExpired(tx: Tx, event: Stripe.Event, session: Stripe.Check
   if (!order) return { status: "ignored", note: `order ${orderId} is unknown to this database`, emails: [] };
   if (order.status !== "pending") return { status: "processed", note: `order ${orderId} was already ${order.status}; no change`, emails: [] };
   await tx.order.update({ where: { id: order.id }, data: { status: "expired" } });
+  if (order.kind === "interest") await tx.trainingInterest.updateMany({ where: { orderId: order.id, status: "pending" }, data: { status: "expired" } });
   await writeAudit(tx, {
     actorUserId: null,
     action: "order.expired",
@@ -371,6 +410,7 @@ async function sessionPaymentFailed(tx: Tx, session: Stripe.Checkout.Session): P
   if (!order) return { status: "ignored", note: `order ${orderId} is unknown to this database`, emails: [] };
   if (order.status !== "pending") return { status: "processed", note: `order ${orderId} was already ${order.status}; no change`, emails: [] };
   await tx.order.update({ where: { id: order.id }, data: { status: "failed" } });
+  if (order.kind === "interest") await tx.trainingInterest.updateMany({ where: { orderId: order.id, status: "pending" }, data: { status: "expired" } });
   return { status: "processed", note: "async payment failed; hold released", emails: [] };
 }
 

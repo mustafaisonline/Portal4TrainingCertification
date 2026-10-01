@@ -29,7 +29,7 @@ export default function GlobalError({ error, retry }: { error: Error & { digest?
   return (
     <html lang="en">
       <body>
-        <title>Something went wrong · Data &amp; AI Academy</title>
+        <title>Something went wrong · DataAI Nexus</title>
         <main className="mx-auto max-w-[560px] px-4 py-20 text-center sm:px-6">
           <p className="text-label mb-3 text-[var(--color-primary)]">500</p>
           <h1 className="text-display mb-3" data-testid="error-title">

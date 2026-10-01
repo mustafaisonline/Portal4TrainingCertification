@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Card } from "@/shared/ui/Card";
 import type { DeliveryFormatRecord } from "@/modules/catalogue/programmes/types";
 
@@ -14,7 +15,16 @@ import type { DeliveryFormatRecord } from "@/modules/catalogue/programmes/types"
  * `content.paceNotes` — listed under the cards, so a reader sees the
  * minimum group size next to the format it applies to.
  */
-export function DeliveryFormats({ formats, notes }: { formats: DeliveryFormatRecord[]; notes?: string[] }) {
+export function DeliveryFormats({
+  formats,
+  notes,
+  slots,
+}: {
+  formats: DeliveryFormatRecord[];
+  notes?: string[];
+  /** CR-2026-10-01-2138: per-format content under the card (the "Register your interest" action), keyed by format id. */
+  slots?: Record<string, ReactNode>;
+}) {
   if (formats.length === 0) return null;
   return (
     <section id="formats" className="mx-auto max-w-[1280px] scroll-mt-24 px-6 py-16">
@@ -61,6 +71,7 @@ export function DeliveryFormats({ formats, notes }: { formats: DeliveryFormatRec
                 </li>
               ))}
             </ul>
+            {slots?.[format.id] ? <div className="mt-5 flex flex-1 flex-col justify-end">{slots[format.id]}</div> : null}
           </Card>
         ))}
       </div>

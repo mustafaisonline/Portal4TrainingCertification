@@ -52,8 +52,8 @@ export const metadata: Metadata = {
   // (plan §7 M10), so nothing is hardcoded here.
   metadataBase: new URL(process.env["APP_BASE_URL"] ?? "http://localhost:3100"),
   title: {
-    default: "Data & AI Academy",
-    template: "%s · Data & AI Academy",
+    default: "DataAI Nexus",
+    template: "%s · DataAI Nexus",
   },
   description: "Expert-led Data & AI training and certification.",
   // Nothing is indexable until launch cutover (plan §7 M10) lifts this.

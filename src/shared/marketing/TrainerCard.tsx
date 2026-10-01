@@ -28,11 +28,23 @@ import { trainerProfileUrl } from "@/modules/catalogue/experts/profile-url";
  * https only), and plain text otherwise.
  *
  * HRD Corp badge: conditional on `person.hrdCorpAccreditation`, so a trainer
- * without one renders exactly as before.
+ * without one renders exactly as before. With it the card also shows the
+ * Trainer ID and "Verify on HRD Corp" — HRD Corp's own public verification
+ * permalink stored on the accreditation (`verifyUrl`; founder, 2026-10-01,
+ * CR-2026-10-01-2246), opened in a new tab; shown only if it is an https URL.
  */
+function safeHttps(url: string): string | null {
+  try {
+    return new URL(url).protocol === "https:" ? url : null;
+  } catch {
+    return null;
+  }
+}
+
 export function TrainerCard({ person }: { person: ExpertRecord }) {
   const profileUrl = trainerProfileUrl(person);
   const accreditation = person.hrdCorpAccreditation;
+  const verifyUrl = accreditation ? safeHttps(accreditation.verifyUrl) : null;
 
   return (
     <Card variant="panel" className="flex flex-col gap-5 sm:flex-row">
@@ -88,6 +100,26 @@ export function TrainerCard({ person }: { person: ExpertRecord }) {
         <p className="text-body-sm mb-4 text-[var(--color-ink-quiet)]">
           {person.summary}
         </p>
+        {accreditation && (
+          <p className="text-body-sm mb-4 text-[var(--color-ink-quiet)]" data-testid="trainer-card-hrd">
+            <span className="font-medium text-[var(--color-ink)]">HRD Corp Accredited Trainer</span> · ID {accreditation.trainerId}
+            {verifyUrl && (
+              <>
+                {" · "}
+                <a
+                  href={verifyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block py-1 font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]"
+                  data-testid="trainer-card-hrd-verify"
+                  aria-label="Verify on HRD Corp (opens HRD Corp's website in a new tab)"
+                >
+                  Verify on HRD Corp ↗
+                </a>
+              </>
+            )}
+          </p>
+        )}
         <div className="mb-5 flex flex-wrap gap-2">
           {person.expertise.slice(0, 3).map((tag) => (
             <Chip key={tag}>{tag}</Chip>

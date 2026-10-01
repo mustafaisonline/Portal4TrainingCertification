@@ -11,9 +11,9 @@ import { PublicShell } from "@/shared/chrome/PublicShell";
  * the wireframe's client-side `SignInGate` only pretended to do
  * (BACKEND_HANDOFF_INDEX.md C18). Screen set grows in M5.
  */
-// A nested `default` keeps the root "%s · Data & AI Academy" template for
+// A nested `default` keeps the root "%s · DataAI Nexus" template for
 // pages beneath (a bare string here would replace it).
-export const metadata: Metadata = { title: { default: "My account", template: "%s · Data & AI Academy" } };
+export const metadata: Metadata = { title: { default: "My account", template: "%s · DataAI Nexus" } };
 
 export default async function AccountLayout({ children }: { children: ReactNode }) {
   // Layouts do not know the leaf path; pages that need a precise return path

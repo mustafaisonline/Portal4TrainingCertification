@@ -32,21 +32,21 @@ describe("site navigation", () => {
     expect(isActive("/about-us", "/trainers")).toBe(false);
   });
 
-  it("the header is exactly the founder's five items (2026-09-28: Knowledge Hub / Free Certifications / Professional Trainings, in that order); About Us is footer-only; the search bar targets /search", () => {
+  it("the header is exactly the founder's five items (2026-09-28: Knowledge Hub / Assessment (was Free Certifications) / Professional Trainings, in that order); About Us is footer-only; the search bar targets /search", () => {
     // Founder, 2026-09-28 (three renames the same day): "Free Trainings" →
     // "Free Knowledge Hub" → "Knowledge Hub"; "Paid Trainings" →
     // "Professional Trainings", moved next to Free Certifications. URLs
     // unchanged.
-    expect(primaryNav.map((i) => i.label)).toEqual(["Home", "Knowledge Hub", "Free Certifications", "Professional Trainings", "Reviews"]);
+    expect(primaryNav.map((i) => i.label)).toEqual(["Home", "Knowledge Hub", "Free Assessment", "Professional Trainings", "Reviews"]);
     expect(primaryNav).toContainEqual({ href: "/programs", label: "Professional Trainings" });
     expect(primaryNav).toContainEqual({ href: "/free-trainings", label: "Knowledge Hub" });
-    expect(primaryNav).toContainEqual({ href: "/free-certifications", label: "Free Certifications" });
+    expect(primaryNav).toContainEqual({ href: "/assessment", label: "Free Assessment" });
     expect(primaryNav.map((i) => i.href)).not.toContain("/trainers");
     expect(primaryNav.map((i) => i.href)).not.toContain("/for-organisations");
     expect(primaryNav.map((i) => i.href)).not.toContain("/about-us");
     expect(footerExplore).toContainEqual({ href: "/about-us", label: "About Us" });
     expect(footerExplore).toContainEqual({ href: "/free-trainings", label: "Knowledge Hub" });
-    expect(footerExplore).toContainEqual({ href: "/free-certifications", label: "Free Certifications" });
+    expect(footerExplore).toContainEqual({ href: "/assessment", label: "Free Assessment" });
     expect(footerExplore).toContainEqual({ href: "/programs", label: "Professional Trainings" });
     // Founder, 2026-09-30 (M7): the trainer's dedicated page is removed, so the
     // footer has no "Trainer" item and nothing in the navigation (or therefore

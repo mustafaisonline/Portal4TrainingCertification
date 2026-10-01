@@ -74,7 +74,10 @@ const nextConfig: NextConfig = {
       // topic's own reading page and a running check's pages are unchanged.
       { source: "/free-learning", destination: "/free-trainings", permanent: true },
       { source: "/free-learning/topics", destination: "/free-trainings", permanent: true },
-      { source: "/free-learning/knowledge-check", destination: "/free-certifications", permanent: true },
+      { source: "/free-learning/knowledge-check", destination: "/assessment", permanent: true },
+      // 2026-10-01 (founder, CR-2026-10-01-1711): "Free Certifications" is now "Assessment" everywhere,
+      // address included. The old address keeps working for every link already shared.
+      { source: "/free-certifications", destination: "/assessment", permanent: true },
       // 2026-09-28 evening (founder): the /trainers directory is retired —
       // the one trainer's page lived at the top-level slug. 2026-09-30 (M7):
       // that page is gone too; the top-level slug is now a content-less route
@@ -121,6 +124,7 @@ const nextConfig: NextConfig = {
       // page outcome is uncacheable in both modes either way.
       { source: "/verify/:id", headers: noStore },
       { source: "/account/:path*", headers: noStore },
+      { source: "/organisation/:path*", headers: noStore },
       { source: "/admin/:path*", headers: noStore },
       { source: "/api/:path*", headers: noStore },
       // Exceptions restated so production and dev agree with what the route

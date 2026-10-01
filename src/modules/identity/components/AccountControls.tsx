@@ -1,6 +1,6 @@
 import { Button } from "@/shared/ui/Button";
 import { getProfile } from "../profile.repository";
-import { holdsRole } from "../roles.repository";
+import { holdsRole, isOrganisationUser } from "../roles.repository";
 import { getCurrentUser } from "../session";
 import { AccountMenu } from "./AccountMenu";
 
@@ -35,6 +35,7 @@ export async function AccountControls({ variant = "header" }: { variant?: "heade
     }
     const isTrainer = holdsRole(user.roles, "expert");
     const isAdmin = holdsRole(user.roles, "platform_admin");
+    const isOrganisation = isOrganisationUser(user.roles);
     return (
       <div className="flex flex-col gap-1" data-testid="mobile-account-menu">
         <p className="px-1 pb-1">
@@ -48,6 +49,11 @@ export async function AccountControls({ variant = "header" }: { variant?: "heade
           {isTrainer && (
             <Button variant="secondary" href="/admin">
               Trainer Dashboard
+            </Button>
+          )}
+          {isOrganisation && (
+            <Button variant="secondary" href="/organisation" data-testid="mobile-organisation-dashboard">
+              Organisation Dashboard
             </Button>
           )}
           {isAdmin && (
@@ -75,6 +81,7 @@ export async function AccountControls({ variant = "header" }: { variant?: "heade
       name={user.name}
       email={user.email}
       isTrainer={holdsRole(user.roles, "expert")}
+      isOrganisation={isOrganisationUser(user.roles)}
       isAdmin={holdsRole(user.roles, "platform_admin")}
       hasPhoto={profile?.hasPhoto ?? false}
       photoVersion={profile?.photoUpdatedAt?.getTime() ?? 0}

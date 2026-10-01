@@ -14,6 +14,9 @@ export const adminNavItems: readonly AdminNavItem[] = [
   { href: "/admin", label: "Overview" },
   // Milestone 12: trainings (details, sections, curriculum, formats, fees, dates).
   { href: "/admin/trainings", label: "Trainings" },
+  // CR-2026-10-01-2138: every training's pace formats in one place, and the people who registered interest in them.
+  { href: "/admin/formats", label: "Formats" },
+  { href: "/admin/interest", label: "Users Interest" },
   { href: "/admin/offerings", label: "Offerings" },
   // Milestone 13 (founder decision 9): attendance recorded per date.
   { href: "/admin/attendance", label: "Attendance" },
@@ -25,17 +28,21 @@ export const adminNavItems: readonly AdminNavItem[] = [
   { href: "/admin/certificates", label: "Certificates" },
   // Milestone 14 Phase 2: the book's topics — publish / unpublish.
   { href: "/admin/free-learning", label: "Free Learning" },
+  // CR-2026-10-01-1711: the Interview roles' question banks (+ the approval queue) and the registered organisations.
+  { href: "/admin/interview", label: "Interview roles" },
+  { href: "/admin/organisations", label: "Organisations" },
   { href: "/admin/users", label: "Users" },
   { href: "/admin/audit", label: "Audit log" },
   { href: "/admin/reports", label: "Reports" },
 ];
 
 /** What a Trainer sees (Milestone 12, decisions L3/L7): the overview (their
- *  reduced dashboard), the Trainings area and — Milestone 13, N7 — the
+ *  reduced dashboard), the Trainings area, — CR-2026-10-01-2138 — their
+ *  Formats and the Users Interest in them, and — Milestone 13, N7 — the
  *  Attendance sheet for their own dates. Every other admin screen answers
  *  403 to them regardless of what the bar shows. */
 export const trainerNavItems: readonly AdminNavItem[] = adminNavItems.filter(
-  (i) => i.href === "/admin" || i.href === "/admin/trainings" || i.href === "/admin/attendance",
+  (i) => i.href === "/admin" || i.href === "/admin/trainings" || i.href === "/admin/formats" || i.href === "/admin/interest" || i.href === "/admin/attendance",
 );
 
 /** Exact match for the overview (every other item is under /admin), nested

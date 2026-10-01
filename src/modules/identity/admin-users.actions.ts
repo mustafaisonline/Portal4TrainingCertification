@@ -2,6 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { withTransaction } from "@/db/prisma";
+import { AssessmentError } from "@/modules/assessment/errors";
+import { grantOrganisationAccess, revokeOrganisationAccess } from "@/modules/assessment/organisations.repository";
 import { isUuid } from "@/modules/catalogue/offerings/repository";
 import { AdminUserNotFoundError, grantPlatformAdmin, grantTrainer, revokePlatformAdmin, revokeTrainer, RoleChangeRefusedError } from "./admin-users.repository";
 import { authorise } from "./session";
@@ -42,6 +44,7 @@ function revalidate(userId: string) {
 function failure(err: unknown, verb: string): AdminUserActionState {
   if (err instanceof RoleChangeRefusedError) return { status: "error", message: err.message };
   if (err instanceof AdminUserNotFoundError) return { status: "error", message: "This person could not be found." };
+  if (err instanceof AssessmentError && (err.reason === "not_found" || err.reason === "invalid_input")) return { status: "error", message: "That organisation or person could not be found." };
   console.error(`[admin-users] ${verb} failed`, err);
   return { status: "error", message: `We could not ${verb} this access. Please try again.` };
 }
@@ -110,6 +113,45 @@ export async function revokeAdminAction(_prev: AdminUserActionState, formData: F
     const revoked = await withTransaction((tx) => revokePlatformAdmin(tx, userId, gate.userId));
     revalidate(userId);
     return { status: "done", message: revoked ? "Platform administrator access revoked." : "This person is not an administrator." };
+  } catch (err) {
+    return failure(err, "revoke");
+  }
+}
+
+/** CR-2026-10-01-1711 — Organisation access, like Trainer but scoped to ONE organisation. Fields: `userId` (uuid), `organisationId` (uuid). */
+export async function grantOrganisationAction(_prev: AdminUserActionState, formData: FormData): Promise<AdminUserActionState> {
+  const gate = await refuseUnlessAdmin();
+  if ("status" in gate) return gate;
+  const userId = targetFrom(formData);
+  if (!userId) return { status: "error", message: "This person could not be found." };
+  const organisationId = String(formData.get("organisationId") ?? "").trim();
+  if (!isUuid(organisationId)) return { status: "error", message: "Choose an organisation." };
+  try {
+    const granted = await withTransaction((tx) => grantOrganisationAccess(tx, { userId, organisationId, grantedByUserId: gate.userId }));
+    revalidate(userId);
+    revalidatePath("/admin/organisations");
+    revalidatePath(`/admin/organisations/${organisationId}`);
+    return { status: "done", message: granted ? "Organisation access granted." : "This person already has access to that organisation." };
+  } catch (err) {
+    return failure(err, "grant");
+  }
+}
+
+/** Fields: `userId` (uuid), `organisationId` (uuid), `confirm` = "yes". */
+export async function revokeOrganisationAction(_prev: AdminUserActionState, formData: FormData): Promise<AdminUserActionState> {
+  const gate = await refuseUnlessAdmin();
+  if ("status" in gate) return gate;
+  const userId = targetFrom(formData);
+  if (!userId) return { status: "error", message: "This person could not be found." };
+  const organisationId = String(formData.get("organisationId") ?? "").trim();
+  if (!isUuid(organisationId)) return { status: "error", message: "That organisation could not be found." };
+  if (String(formData.get("confirm") ?? "") !== "yes") return { status: "error", message: "Tick the confirmation before revoking." };
+  try {
+    const revoked = await withTransaction((tx) => revokeOrganisationAccess(tx, { userId, organisationId, revokedByUserId: gate.userId }));
+    revalidate(userId);
+    revalidatePath("/admin/organisations");
+    revalidatePath(`/admin/organisations/${organisationId}`);
+    return { status: "done", message: revoked ? "Organisation access revoked." : "This person does not have access to that organisation." };
   } catch (err) {
     return failure(err, "revoke");
   }

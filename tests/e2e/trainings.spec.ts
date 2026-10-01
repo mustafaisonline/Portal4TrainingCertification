@@ -480,6 +480,20 @@ test("/programs/data-blueprint-ai-vibe-coding renders the flagship on the shared
       await expect(page.getByTestId("trainer-card-name")).toHaveText(shown.name);
     }
     await expect(page.locator('a[href^="/mustafa-qizilbash"]')).toHaveCount(0);
+    // CR-2026-10-01-2246: a trainer with an HRD Corp accreditation also shows the Trainer ID and HRD Corp's own verification link; one without shows neither.
+    const hrd = shown.hrdCorpAccreditation;
+    const verify = page.getByTestId("trainer-card-hrd-verify");
+    if (hrd) {
+      await expect(page.getByTestId("trainer-card-hrd")).toContainText(`ID ${hrd.trainerId}`);
+      await expect(verify).toHaveText("Verify on HRD Corp ↗");
+      await expect(verify).toHaveAttribute("href", hrd.verifyUrl);
+      await expect(verify).toHaveAttribute("target", "_blank");
+      await expect(verify).toHaveAttribute("rel", /noopener/);
+      await expect(verify).toHaveAttribute("rel", /noreferrer/);
+    } else {
+      await expect(verify).toHaveCount(0);
+      await expect(page.getByTestId("trainer-card-hrd")).toHaveCount(0);
+    }
   }
 
   // Certification note and FAQ (five questions, native <details>).
@@ -566,6 +580,24 @@ test("/programs/data-blueprint-ai-vibe-coding renders the flagship on the shared
     "Online training price. In-person training needs a minimum of 100 participants; cost discussed separately.",
   );
   await expectNoAxeViolations(page);
+});
+
+test("every published training's \"Who delivers this\" shows the trainer's HRD Corp verification link when the trainer has the HRD badge (CR-2026-10-01-2246)", async ({ page }) => {
+  const { getPrisma, disconnectPrisma } = await import("../../src/db/prisma");
+  const { listPublishedExperts } = await import("../../src/modules/catalogue/experts/repository");
+  const slugs = (await getPrisma().programme.findMany({ where: { status: "published" }, select: { slug: true } })).map((p) => p.slug);
+  await disconnectPrisma();
+  expect(slugs.length).toBeGreaterThanOrEqual(2);
+  const accredited = (await listPublishedExperts()).filter((e) => e.hrdCorpAccreditation);
+  expect(accredited.length).toBeGreaterThanOrEqual(1);
+  for (const slug of slugs) {
+    await page.goto(`/programs/${slug}`);
+    const card = page.getByTestId("trainer-card-name");
+    if ((await card.count()) === 0) continue; // a training with no trainer card shows no section
+    const verify = page.getByTestId("trainer-card-hrd-verify");
+    await expect(verify, slug).toHaveCount(1);
+    await expect(verify, slug).toHaveAttribute("href", /^https:\/\/trainers\.hrdcorp\.gov\.my\/ecert\?id=/);
+  }
 });
 
 test("the retired URLs redirect permanently to the /programs paths", async ({ request }) => {

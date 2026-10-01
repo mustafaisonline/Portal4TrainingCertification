@@ -11,6 +11,7 @@ import { isModulePointGroup } from "@/modules/catalogue/programmes/module-points
 import { listPublishedExperts } from "@/modules/catalogue/experts/repository";
 import { interestMailto } from "@/content/contact";
 import { CourseCard } from "@/shared/marketing/CourseCard";
+import { buildInterestSlots } from "@/modules/commerce/components/interest-slots";
 import { DeliveryFormats } from "@/shared/marketing/DeliveryFormats";
 import { TrainerCard } from "@/shared/marketing/TrainerCard";
 import { ProgrammePricing } from "@/shared/marketing/ProgrammePricing";
@@ -79,10 +80,13 @@ export async function generateMetadata({
 
 export default async function CourseDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ interest?: string | string[] }>;
 }) {
   const { slug } = await params;
+  const { interest } = await searchParams;
   const course = await findPublishedProgrammeBySlug(slug);
   if (!course) notFound();
 
@@ -96,6 +100,8 @@ export default async function CourseDetailPage({
   ]);
   const openDates = offerings.filter((o) => o.status === "open").length;
   const datesHref = `/schedule?training=${course.slug}`;
+  // CR-2026-10-01-2138: "Register your interest" under each format with no open date.
+  const interestSlots = await buildInterestSlots({ programmeSlug: course.slug, formats: course.deliveryFormats, interestParam: typeof interest === "string" ? interest : undefined, datesHref });
 
   // The programme's delivering expert, with the full published profile
   // (the programme record carries only a summary).
@@ -264,7 +270,8 @@ export default async function CourseDetailPage({
       </section>
 
       {/* ===== Delivery formats ===== (shared with the flagship landing) */}
-      <DeliveryFormats formats={course.deliveryFormats} notes={content.paceNotes} />
+      {interestSlots.banner ? <div className="mx-auto max-w-[1280px] px-6 pt-10">{interestSlots.banner}</div> : null}
+      <DeliveryFormats formats={course.deliveryFormats} notes={content.paceNotes} slots={interestSlots.slots} />
 
       {/* ===== Learning outcomes ===== */}
       {(content.outcomes || content.outcomeGroups) && (

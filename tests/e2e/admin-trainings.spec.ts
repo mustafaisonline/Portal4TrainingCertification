@@ -269,7 +269,7 @@ test("a Trainer sees only the Trainings area, creates their own draft, cannot pu
   // Reduced dashboard and bar.
   await page.goto("/admin");
   await expect(page.getByTestId("trainer-dashboard")).toBeVisible();
-  await expect(page.getByTestId("admin-nav").getByRole("link")).toHaveCount(3); // Overview · Trainings · Attendance (M13 N7)
+  await expect(page.getByTestId("admin-nav").getByRole("link")).toHaveCount(5); // Overview · Trainings · Formats · Users Interest · Attendance (M13 N7; CR-2026-10-01-2138)
   await expect(page.getByTestId("admin-card-trainings")).toContainText("No trainings yet");
   await expect(page.getByTestId("admin-card-reviews")).toHaveCount(0);
   // Every other screen is a 403 — and the flagship's workspace a 404 (not theirs).

@@ -127,7 +127,7 @@ test("contact page: no form, one email option, no WhatsApp; an old context link 
 });
 
 test("public pages have no WCAG 2.2 AA violations", async ({ page }) => {
-  for (const href of ["/", "/programs", "/about-us", "/faq", "/free-trainings", "/free-certifications", "/verify"]) {
+  for (const href of ["/", "/programs", "/about-us", "/faq", "/free-trainings", "/assessment", "/verify"]) {
     await page.goto(href);
     await expect(page.getByRole("heading", { level: 1 }), href).toBeVisible();
     await expectNoAxeViolations(page);
@@ -187,7 +187,7 @@ test("the old trainer address 308s to the trainer's external profile (data-drive
 });
 
 test("no public page links to a trainer page, and the sitemap lists none (founder, 2026-09-30, M7)", async ({ page, request }) => {
-  for (const href of ["/", "/programs", "/programs/learn-vibe-coding", "/programs/data-blueprint-ai-vibe-coding", "/about-us", "/contact-us", "/free-trainings", "/free-certifications", "/faq", "/schedule", "/reviews", "/verify"]) {
+  for (const href of ["/", "/programs", "/programs/learn-vibe-coding", "/programs/data-blueprint-ai-vibe-coding", "/about-us", "/contact-us", "/free-trainings", "/assessment", "/faq", "/schedule", "/reviews", "/verify"]) {
     await page.goto(href);
     const links = await page.locator("a[href]").evaluateAll((els) => els.map((e) => e.getAttribute("href") ?? ""));
     expect(links.filter((h) => /^\/(mustafa-qizilbash|trainers)(\/|#|\?|$)/.test(h)), href).toEqual([]);

@@ -85,7 +85,7 @@ test("an administrator finds the participant, sees the masked ID, grants and rev
   await expectNoAxeViolations(page);
 
   // Detail: masked ID only.
-  await row.getByRole("link", { name: `Open ${PARTICIPANT_NAME}` }).click();
+  await row.getByRole("link", { name: `Edit ${PARTICIPANT_NAME}` }).click();
   await expect(page).toHaveURL(new RegExp(`/admin/users/${participantId}$`));
   await expect(page.getByTestId("user-detail")).toBeVisible();
   await expect(page.getByTestId("admin-user-email")).toHaveText(participantEmail);

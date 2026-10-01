@@ -122,7 +122,13 @@ export async function deleteTestUser(email: string): Promise<void> {
     const paymentIds = (await prisma.payment.findMany({ where: { orderId: { in: orderIds } }, select: { id: true } })).map((p) => p.id);
     const refundIds = (await prisma.refund.findMany({ where: { paymentId: { in: paymentIds } }, select: { id: true } })).map((r) => r.id);
     const registrationIds = (await prisma.registration.findMany({ where: { userId: user.id }, select: { id: true } })).map((r) => r.id);
+    const interestIds = (await prisma.trainingInterest.findMany({ where: { userId: user.id }, select: { id: true } })).map((r) => r.id);
     await prisma.$transaction([
+      // CR-2026-10-01-2138: interest registrations restrict their user, their order and
+      // (as the notifier) an administrator; their audit rows go with them.
+      prisma.auditLog.deleteMany({ where: { entityType: "training_interest", entityId: { in: interestIds } } }),
+      prisma.trainingInterest.deleteMany({ where: { id: { in: interestIds } } }),
+      prisma.trainingInterest.updateMany({ where: { notifiedByUserId: user.id }, data: { notifiedByUserId: null } }),
       prisma.auditLog.deleteMany({ where: { entityType: "review", entityId: { in: reviewIds } } }),
       prisma.review.deleteMany({ where: { userId: user.id } }),
       // M13: attendance rows restrict both their registration and the person
@@ -133,6 +139,11 @@ export async function deleteTestUser(email: string): Promise<void> {
       // stands, the attribution is cleared); attempts restrict their user.
       prisma.topicQuestion.updateMany({ where: { reviewedByUserId: user.id }, data: { reviewedByUserId: null } }),
       prisma.knowledgeCheckAttempt.deleteMany({ where: { userId: user.id } }),
+      // CR-2026-10-01-1711: role-test attempts restrict their user; a person's
+      // role questions keep standing (the attribution is cleared).
+      prisma.roleTestAttempt.deleteMany({ where: { userId: user.id } }),
+      prisma.roleQuestion.updateMany({ where: { reviewedByUserId: user.id }, data: { reviewedByUserId: null } }),
+      prisma.roleQuestion.updateMany({ where: { createdByUserId: user.id }, data: { createdByUserId: null } }),
       prisma.auditLog.deleteMany({ where: { entityType: { in: ["certificate", "certificate_renewal"] }, entityId: { in: [...certIds, ...renewalIds] } } }),
       prisma.certificateRenewal.deleteMany({ where: { id: { in: renewalIds } } }),
       prisma.refund.deleteMany({ where: { id: { in: refundIds } } }),

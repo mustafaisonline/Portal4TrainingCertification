@@ -454,6 +454,9 @@ export async function replaceTrainingFormats(tx: Tx, id: string, scope: Training
   if (removed.length) {
     const inUse = await tx.scheduledOffering.count({ where: { programmeId: id, deliveryFormat: { code: { in: removed.map((r) => r.code) } } } });
     if (inUse > 0) throw new TrainingRefusedError("format_in_use", "A format that dates are scheduled under cannot be removed. Cancel or re-assign those dates first.");
+    // CR-2026-10-01-2138: people who registered interest in a format are waiting for it — it is identified by its name, so renaming it removes it too.
+    const interested = await tx.trainingInterest.count({ where: { programmeId: id, deliveryFormat: { code: { in: removed.map((r) => r.code) } } } });
+    if (interested > 0) throw new TrainingRefusedError("format_in_use", "People have registered interest in a format that would be removed (a format is identified by its name, so renaming it removes it). Keep its name, or schedule it and let them know first.");
   }
   for (const [i, f] of parsed.entries()) {
     const data = { name: f.name, badge: f.badge, durationLabel: f.durationLabel, scheduleLabel: f.scheduleLabel, totalTimeLabel: f.totalTimeLabel, bestFor: f.bestFor, position: i + 1 };
@@ -604,12 +607,12 @@ export async function deleteTraining(tx: Tx, id: string, actorUserId: string): P
       slug: true,
       title: true,
       status: true,
-      _count: { select: { offerings: true, orders: true, certificates: true, coupons: true, reviews: true } },
+      _count: { select: { offerings: true, orders: true, certificates: true, coupons: true, reviews: true, interests: true } },
     },
   });
   if (!programme) return "not_found";
   const c = programme._count;
-  if (c.offerings > 0 || c.orders > 0 || c.certificates > 0 || c.coupons > 0 || c.reviews > 0) return "in_use";
+  if (c.offerings > 0 || c.orders > 0 || c.certificates > 0 || c.coupons > 0 || c.reviews > 0 || c.interests > 0) return "in_use";
   await writeAudit(tx, {
     actorUserId,
     action: "programme.deleted",

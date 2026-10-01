@@ -15,7 +15,7 @@ import { SignInForm } from "./SignInForm";
  */
 export const metadata: Metadata = {
   title: "Sign in",
-  description: "Sign in to your Data & AI Academy account.",
+  description: "Sign in to your DataAI Nexus account.",
 };
 
 export default async function SignInPage({

@@ -29,9 +29,9 @@ import type { LegalDocument } from "./types";
 export const privacyPolicy: LegalDocument = {
   key: "privacy",
   title: "Privacy policy",
-  version: "DRAFT-2026-09-30",
+  version: "DRAFT-2026-10-01",
   status: "draft",
-  lastUpdated: "2026-09-30",
+  lastUpdated: "2026-10-01",
   summary:
     "What personal data the Data & AI Academy collects, why, who it is shared with, where it may be stored, how long it is kept, and your rights under the Personal Data Protection Act 2010.",
   sections: [
@@ -72,6 +72,8 @@ export const privacyPolicy: LegalDocument = {
         "Registrations — which offerings you have registered for, their status, and attendance and completion as recorded by the trainer.",
         "Orders — what you paid, in which currency, when, by which method type (for example \"card\"), and the payment reference our payment processor gives us, whether for a registration, a Knowledge Check result-document unlock or a support payment. We never receive or store your card number.",
         "Free Assessment Check attempts — if you take one, the 200 questions served to you, the answers you gave, when you started and finished, your score, whether you passed and your grade, and the result ID. This needs an account; it is not the diagnostic (see above).",
+        "Interest registrations — if you register your interest in a training format: the training and format, the email address you give (required), and, if you choose to give them, your full name, mobile number and date of birth; the fee you paid or that it was waived, and whether the trainer has told you about a date. You tick, before registering, that the trainer may contact you.",
+        "Interview assessment attempts — if you take one, the questions served to you, your answers, when you started and finished, and your score. If you take an organisation's screening test, your name and email address, the role, your score and the time you took are also shared with that organisation — you confirm this before you start. This needs an account.",
         "Consents — which version of the Terms of service and this policy you accepted, and when.",
         "Certificates — if one is issued, your name as it appears on the certificate, the training and format, the completion, issue and expiry dates, the certificate identifier, any renewal you pay for, and whether you have chosen to be listed in public name search (see section 6).",
         "Audit entries — a record of significant actions on your account (such as sign-in, a change of password, a registration or a refund), with a time stamp, kept so we can investigate problems and show what happened.",
@@ -90,6 +92,8 @@ export const privacyPolicy: LegalDocument = {
         "To decide which currency and price apply to you, based on your profile country.",
         "To record completion and, where earned, to issue and verify your Certificate of Completion.",
         "To run a Free Assessment Check you take, score it, give you a verifiable result and — if you passed — a graded certificate, and, if you pay to unlock it, to show you the printable Certificate of Achievement.",
+        "To record the interest you register in a training format, so the trainer can plan the training, and to contact you about it when it is scheduled.",
+        "To run an interview assessment you take, score it and show you the model answers; and, for an organisation's screening test, to give that organisation your result after you have confirmed that you agree.",
         "To send you the messages the service needs — confirmations, reminders, changes to an offering, receipts and notices about your account. These are not marketing.",
         "To answer your questions and resolve complaints.",
         "To keep the portal secure, prevent misuse and investigate problems.",
@@ -112,6 +116,8 @@ export const privacyPolicy: LegalDocument = {
         "Hosting provider [to be named] — the servers and database on which the portal and its data run.",
         "Email provider [to be named] — used to deliver the service messages described in section 3.",
         "The trainer of an offering you registered for — your name and email address, so that attendance and completion can be recorded and you can be admitted to the sessions.",
+        "The trainer of a training you registered interest in, and our administrators — the details you gave when registering interest (email address, and your name, mobile number and date of birth if you gave them), so they can plan the training and email you about its schedule. They are not shared with anyone else, and the trainer sees only the people interested in their own trainings.",
+        "An organisation whose screening test you take — your name, email address, the role, your score and the time taken, and only after you have confirmed, before starting, that the result is shared with that organisation. The organisation decides what to do with it under its own privacy practices; it sees only its own candidates' results.",
         "HRD Corp or your employer — only where you ask us to provide evidence of your attendance or completion, for example to support a training claim, and only what is needed for that purpose. HRD Corp claims are for Malaysian citizens and are normally made through an employer registered with HRD Corp.",
         "Authorities — where the law requires us to disclose, for example to a court, a regulator or a law-enforcement agency acting within its powers.",
       ],

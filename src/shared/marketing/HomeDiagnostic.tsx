@@ -256,7 +256,7 @@ export function HomeDiagnostic({ questions, teaser = false }: { questions: Diagn
               <p className="mt-5 max-w-[480px] border-t border-[var(--color-line)] pt-4 text-body-sm text-[var(--color-ink-faint)]" data-testid="diagnostic-not-saved">
                 Always free, no account needed — and your answers stay in your browser: we do not save your diagnostic
                 results. For the book and its topic self-checks, see the Knowledge Hub; for The Free Assessment
-                Check, see Free Certifications.
+                Check, see Assessment.
               </p>
             </div>
           </div>

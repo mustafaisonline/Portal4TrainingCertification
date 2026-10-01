@@ -74,6 +74,23 @@ export function knowledgeCheckUnlockedMessage(input: { to: string; name: string;
   };
 }
 
+/** CR-2026-10-01-2138: the interest payment is confirmed — non-refundable, no seat yet. */
+export function interestRegisteredMessage(input: { to: string; name: string; trainingTitle: string; formatName: string; orderId: string; amountMinor: number; currency: string; receiptUrl: string | null; trainingUrl: string; accountUrl: string }): EmailMessage {
+  return {
+    to: input.to,
+    templateKey: "commerce.interest-registered",
+    subject: `Your interest is registered: ${input.trainingTitle} (${input.formatName})`,
+    text:
+      `Hello ${input.name},\n\n` +
+      `Thank you. Your interest in ${input.trainingTitle} — ${input.formatName} is registered.\n\n` +
+      `Order ${input.orderId.slice(0, 8).toUpperCase()} · Paid ${formatMoney(input.amountMinor, input.currency)} (non-refundable)\n\n` +
+      (input.receiptUrl ? `Your Stripe receipt: ${input.receiptUrl}\n\n` : "") +
+      `This is not a seat. When the trainer schedules this format, you will be told by email and can register on the portal:\n${input.trainingUrl}\n\n` +
+      `Your interests are listed in your account:\n${input.accountUrl}` +
+      SIGN_OFF,
+  };
+}
+
 export function registrationCancelledMessage(input: {
   to: string;
   name: string;

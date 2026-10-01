@@ -30,6 +30,8 @@ export type DataExport = {
   certificates: Record<string, unknown>[];
   renewals: Record<string, unknown>[];
   consents: Record<string, unknown>[];
+  /** CR-2026-10-01-2138: formats the person registered interest in, with the details they gave. */
+  interests: Record<string, unknown>[];
   auditAsActor: Record<string, unknown>[];
 };
 
@@ -163,6 +165,13 @@ export async function buildDataExport(userId: string, db: Db = getPrisma(), now 
 
   const dateOnly = (d: Date) => d.toISOString().slice(0, 10);
 
+  // CR-2026-10-01-2138: the formats the person registered interest in, with the details they gave.
+  const interests = await db.trainingInterest.findMany({
+    where: { userId },
+    orderBy: { createdAt: "asc" },
+    select: { id: true, status: true, email: true, fullName: true, mobile: true, dateOfBirth: true, consent: true, feeWaived: true, confirmedAt: true, notifiedAt: true, createdAt: true, orderId: true, programme: { select: { title: true } }, deliveryFormat: { select: { name: true } } },
+  });
+
   return {
     exportedAt: now.toISOString(),
     format: "data-ai-academy/personal-data-export",
@@ -199,6 +208,9 @@ export async function buildDataExport(userId: string, db: Db = getPrisma(), now 
       certificates.map((c) => ({ ...c, completedOn: dateOnly(c.completedOn), issuedOn: dateOnly(c.issuedOn), expiresOn: dateOnly(c.expiresOn) })),
     ),
     renewals: asRecords(renewals.map((r) => ({ ...r, previousExpiresOn: dateOnly(r.previousExpiresOn), newExpiresOn: dateOnly(r.newExpiresOn) }))),
+    interests: asRecords(
+      interests.map(({ programme, deliveryFormat, dateOfBirth, ...i }) => ({ ...i, dateOfBirth: dateOfBirth ? dateOnly(dateOfBirth) : null, programmeTitle: programme.title, formatName: deliveryFormat.name })),
+    ),
     consents: asRecords(consents),
     auditAsActor: asRecords(auditAsActor),
   };

@@ -54,7 +54,7 @@ export function certificateBrandGaps(brand: CertificateBrand = certificateBrand)
   if (!brand.registrationNumber) gaps.push("YPT company registration number");
   if (!brand.address) gaps.push("YPT registered address");
   if (!brand.hrdCorpLogoPath || !brand.hrdCorpLogoAuthorised) {
-    gaps.push("HRD Corp organisation logo + confirmation of authorisation to display it (Professional Training certificate only — not used on the Free Certification)");
+    gaps.push("HRD Corp organisation logo + confirmation of authorisation to display it (Professional Training certificate only — not used on the Assessment certification)");
   }
   return gaps;
 }

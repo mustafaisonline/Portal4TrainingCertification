@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const view = await load(id);
   return {
     title: view ? `Certificate ${view.certificateId}` : "Certificate not found",
-    description: "Verification of a Data & AI Academy Certificate of Completion.",
+    description: "Verification of a DataAI Nexus Certificate of Completion.",
     robots: { index: false, follow: false },
   };
 }

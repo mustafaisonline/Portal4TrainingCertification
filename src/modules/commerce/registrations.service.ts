@@ -44,7 +44,7 @@ export type RegistrationView = {
   refunds: RefundView[];
 };
 
-export type OrderKind = "registration" | "certificate_renewal" | "support" | "knowledge_check_unlock";
+export type OrderKind = "registration" | "certificate_renewal" | "support" | "knowledge_check_unlock" | "interest";
 
 export type OrderView = {
   id: string;
@@ -74,9 +74,18 @@ export const SUPPORT_ORDER_TITLE = "Support the Academy";
 /** What a Free Assessment Check unlock order is called in every order list (M14 Phase 5). */
 export const UNLOCK_ORDER_TITLE = "Free Assessment Check result document";
 
-/** The title of an order with no offering: the two one-off kinds. */
-export function offeringlessOrderTitle(kind: OrderKind): string {
+/** What an interest-registration order is called when its training is not at hand (CR-2026-10-01-2138). */
+export const INTEREST_ORDER_TITLE = "Register your interest";
+
+/** The title of an order with no offering: the one-off kinds. An interest order names its training when `programmeTitle` is given. */
+export function offeringlessOrderTitle(kind: OrderKind, programmeTitle?: string | null): string {
+  if (kind === "interest") return programmeTitle ? `Interest — ${programmeTitle}` : INTEREST_ORDER_TITLE;
   return kind === "knowledge_check_unlock" ? UNLOCK_ORDER_TITLE : SUPPORT_ORDER_TITLE;
+}
+
+/** The second line of an order with no offering. */
+export function offeringlessOrderFormat(kind: OrderKind): string {
+  return kind === "knowledge_check_unlock" ? "One-time unlock" : kind === "interest" ? "Non-refundable interest fee" : "One-off payment";
 }
 
 const registrationInclude = {
@@ -150,6 +159,7 @@ export async function listOrdersForUser(userId: string): Promise<OrderView[]> {
       registration: { select: { id: true } },
       certificate: { select: { certificateId: true } },
       offering: { include: { programme: { select: { title: true } }, deliveryFormat: { select: { name: true } } } },
+      programme: { select: { title: true } },
     },
   });
   return rows.map((o) => ({
@@ -163,8 +173,8 @@ export async function listOrdersForUser(userId: string): Promise<OrderView[]> {
     amountMinor: Number(o.amountMinor),
     currency: o.currency,
     region: o.region,
-    programmeTitle: o.offering ? o.offering.programme.title : offeringlessOrderTitle(o.kind),
-    formatName: o.offering ? (o.offering.deliveryFormat?.name ?? MODALITY_LABEL[o.offering.modality]) : o.kind === "knowledge_check_unlock" ? "One-time unlock" : "One-off payment",
+    programmeTitle: o.offering ? o.offering.programme.title : offeringlessOrderTitle(o.kind, o.programme?.title),
+    formatName: o.offering ? (o.offering.deliveryFormat?.name ?? MODALITY_LABEL[o.offering.modality]) : offeringlessOrderFormat(o.kind),
     startsOn: o.offering?.startsOn ?? null,
     endsOn: o.offering?.endsOn ?? null,
     receiptUrl: o.payment?.receiptUrl ?? null,

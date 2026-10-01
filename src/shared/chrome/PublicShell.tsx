@@ -8,6 +8,9 @@ import { LogoMark } from "./LogoMark";
 import { ThemeToggle } from "./ThemeToggle";
 import { footerExplore, footerLegal, isActive, primaryNav, siteSearch, verifyLink } from "./site-nav";
 
+/** Footer links the primary nav does not already list — the burger menu carries ALL footer links (founder, 2026-10-01). */
+const footerMoreLinks = footerExplore.filter((l) => !primaryNav.some((p) => p.href === l.href));
+
 /*
  * Global public shell — header, mobile menu and footer.
  *
@@ -75,9 +78,9 @@ export function PublicShell({
           <Link href="/" className="flex shrink-0 items-center gap-3">
             <LogoMark />
             <span className="leading-tight">
-              <span className="wordmark block sm:whitespace-nowrap">Data &amp; AI Academy</span>
+              <span className="wordmark block sm:whitespace-nowrap">DataAI Nexus</span>
               <span className="text-label hidden whitespace-nowrap text-[0.6rem] sm:block">
-                Training &amp; certification
+                Learn, Train, Assess &amp; Certify
               </span>
             </span>
           </Link>
@@ -191,6 +194,33 @@ export function PublicShell({
                 );
               })}
             </nav>
+            {/* Founder, 2026-10-01: every footer link is also in the burger menu. */}
+            <nav aria-label="More, mobile" className="mt-2 flex flex-col border-t border-[var(--color-line)] pt-2" data-testid="mobile-footer-links">
+              <p className="text-label px-2 pb-1 pt-1">More</p>
+              {[...footerMoreLinks, verifyLink].map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  aria-current={isActive(pathname, item.href) ? "page" : undefined}
+                  className="rounded-[var(--radius-plate)] px-2 py-3 text-body-sm text-[var(--color-ink-quiet)] hover:bg-[var(--color-ground-raised)] hover:text-[var(--color-ink)]"
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <p className="text-label px-2 pb-1 pt-3">Legal</p>
+              {footerLegal.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMenuOpen(false)}
+                  aria-current={isActive(pathname, item.href) ? "page" : undefined}
+                  className="rounded-[var(--radius-plate)] px-2 py-3 text-body-sm text-[var(--color-ink-quiet)] hover:bg-[var(--color-ground-raised)] hover:text-[var(--color-ink)]"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
             {mobileAccountSlot ? (
               <div className="mt-2 flex flex-col gap-3 border-t border-[var(--color-line)] pt-4 sm:hidden">
                 {mobileAccountSlot}
@@ -211,7 +241,7 @@ export function PublicShell({
           <div>
             <div className="mb-4 flex items-center gap-3">
               <LogoMark />
-              <span className="font-semibold text-[var(--color-ink)]">Data &amp; AI Academy</span>
+              <span className="font-semibold text-[var(--color-ink)]">DataAI Nexus</span>
             </div>
             <p className="max-w-[26ch]">
               Expert-led Data &amp; AI training and certification. Live learning, real capability.

@@ -198,7 +198,7 @@ test("/verify/<ID> shows the verification layout with status in words and the de
   // sends "private, no-cache, no-store, max-age=0, must-revalidate").
   expect(cacheControl).not.toContain("s-maxage");
   expect(cacheControl).toMatch(/no-(cache|store)/);
-  await expect(page).toHaveTitle(`Certificate ${listed.certificate.certificateId} · Data & AI Academy`);
+  await expect(page).toHaveTitle(`Certificate ${listed.certificate.certificateId} · DataAI Nexus`);
   await expect(page.getByTestId("verify-holder")).toHaveText(LISTED_NAME);
   await expect(page.getByTestId("certificate-status")).toHaveAttribute("data-status", "active");
   await expect(page.getByTestId("certificate-status")).toHaveText("Valid");

@@ -42,7 +42,12 @@ export type CommerceErrorCode =
   | "coupon_used"
   | "coupon_email_mismatch"
   | "coupon_wrong_training"
-  | "coupon_payment_in_progress";
+  | "coupon_payment_in_progress"
+  // CR-2026-10-01-2138: "Register your interest" in a training format.
+  | "interest_unavailable"
+  | "interest_fee_off"
+  | "interest_already_registered"
+  | "interest_order_pending";
 
 export class CommerceError extends Error {
   readonly code: CommerceErrorCode;

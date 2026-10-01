@@ -5,6 +5,7 @@ import { MODALITY_LABEL } from "@/modules/catalogue/offerings/repository";
 import { formatMoney } from "@/modules/catalogue/programmes/types";
 import { listCertificatesForUser } from "@/modules/certificates/repository";
 import { startsInFuture } from "@/modules/commerce/capacity";
+import { listInterestsForUser, type MyInterest } from "@/modules/commerce/interest.repository";
 import { refundAmountMinor, refundPercentFor } from "@/modules/commerce/refund-policy";
 import { findOrderForUser, listRegistrationsForUser, type OrderView, type RegistrationView } from "@/modules/commerce/registrations.service";
 import { requireUser } from "@/modules/identity/session";
@@ -119,6 +120,35 @@ function AttendanceChip({ attendance }: { attendance: Attendance }) {
         <Chip>Attendance not recorded</Chip>
       )}
     </span>
+  );
+}
+
+/** CR-2026-10-01-2138: one format the person registered interest in, and whether the trainer has scheduled it. */
+function InterestCard({ interest }: { interest: MyInterest }) {
+  return (
+    <Card variant="panel" className="p-5 sm:p-6" data-testid="interest-card">
+      <div className="mb-2 flex flex-wrap gap-2">
+        <Chip tone="primary">Interest registered</Chip>
+        {interest.feeWaived ? <Chip>No fee</Chip> : <Chip>Fee non-refundable</Chip>}
+      </div>
+      <p className="text-body-lg font-medium">{interest.programmeTitle}</p>
+      <p className="text-body-sm text-[var(--color-ink)]">{interest.formatName}</p>
+      <p className="text-body-sm mt-2 text-[var(--color-ink-quiet)]" data-testid="interest-state">
+        {interest.hasOpenDate ? (
+          <>
+            A date is now open for this format.{" "}
+            <Link href={`/schedule?training=${interest.programmeSlug}`} className="text-[var(--color-primary)] underline underline-offset-4">
+              See the dates and register
+            </Link>
+            .
+          </>
+        ) : interest.notifiedAt ? (
+          `The trainer has contacted you (${formatDateRange(interest.notifiedAt, interest.notifiedAt)}). Watch your email for the schedule.`
+        ) : (
+          "No date is scheduled yet — the trainer will email you when this format is planned."
+        )}
+      </p>
+    </Card>
   );
 }
 
@@ -238,12 +268,13 @@ export default async function MyTrainingsPage({ searchParams }: { searchParams: 
   const now = new Date();
   const today = new Date(now);
   today.setUTCHours(0, 0, 0, 0);
-  const [registrations, order, reviews, attendance, certificates] = await Promise.all([
+  const [registrations, order, reviews, attendance, certificates, interests] = await Promise.all([
     listRegistrationsForUser(user.id),
     orderParam ? findOrderForUser(orderParam, user.id) : Promise.resolve(null),
     listReviewsForUser(user.id),
     attendanceForUser(user.id),
     listCertificatesForUser(user.id),
+    listInterestsForUser(user.id, now),
   ]);
   const reviewByRegistration = new Map(reviews.filter((r) => r.registrationId).map((r) => [r.registrationId!, r]));
   const certified = new Set(certificates.map((c) => c.registrationId));
@@ -325,6 +356,21 @@ export default async function MyTrainingsPage({ searchParams }: { searchParams: 
           ) : null}
         </>
       )}
+
+      {interests.length > 0 ? (
+        <section id="interests" aria-labelledby="trainings-interests" className="scroll-mt-24">
+          <h2 id="trainings-interests" className="text-h1 mb-4">
+            My interests
+          </h2>
+          <ul className="flex flex-col gap-4" data-testid="trainings-interests">
+            {interests.map((i) => (
+              <li key={i.id}>
+                <InterestCard interest={i} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
     </div>
   );
 }

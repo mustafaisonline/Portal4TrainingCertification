@@ -21,7 +21,7 @@ import { RegisterForm } from "./RegisterForm";
  */
 export const metadata: Metadata = {
   title: "Create an account",
-  description: "Create your Data & AI Academy account.",
+  description: "Create your DataAI Nexus account.",
 };
 
 export default async function RegisterPage() {

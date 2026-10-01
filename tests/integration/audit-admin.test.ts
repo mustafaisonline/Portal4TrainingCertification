@@ -133,7 +133,10 @@ describe("getAuditForAdmin / listAuditFilterValues", () => {
     const values = await listAuditFilterValues();
     expect(values.actions).toEqual(expect.arrayContaining(["role.granted", "role.revoked", "job.run"]));
     expect(values.entityTypes).toEqual(expect.arrayContaining(["m8test", "m8test-b"]));
-    expect(values.actions).toEqual([...values.actions].sort());
+    // Sorted by the DATABASE's collation (which does not order "_" and "." like JavaScript's
+    // code-unit sort once action names mix them) — asked of the database itself.
+    const dbOrder = await getPrisma().$queryRaw<{ action: string }[]>`SELECT DISTINCT action FROM audit_log ORDER BY action ASC`;
+    expect(values.actions).toEqual(dbOrder.map((r) => r.action));
     expect(new Set(values.actions).size).toBe(values.actions.length);
   });
 });

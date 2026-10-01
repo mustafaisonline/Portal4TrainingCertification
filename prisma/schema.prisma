@@ -166,24 +166,32 @@ model User {
   createdAt       DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt       DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  identities             AuthIdentity[]
-  roles                  UserRole[]
-  consents               Consent[]
-  orders                 Order[]
-  registrations          Registration[]
-  profile                UserProfile?
-  reviews                Review[]
-  certificates           Certificate[]
+  identities                AuthIdentity[]
+  roles                     UserRole[]
+  consents                  Consent[]
+  orders                    Order[]
+  registrations             Registration[]
+  profile                   UserProfile?
+  reviews                   Review[]
+  certificates              Certificate[]
   /// Attendance rows this person saved as administrator or Trainer (M13).
-  attendanceRecorded     AttendanceRecord[]      @relation("attendance_recorded_by")
+  attendanceRecorded        AttendanceRecord[]      @relation("attendance_recorded_by")
   /// Topic questions this administrator marked reviewed (M14 Phase 3).
-  topicQuestionsReviewed TopicQuestion[]         @relation("topic_question_reviewed_by")
-  knowledgeCheckAttempts KnowledgeCheckAttempt[]
+  topicQuestionsReviewed    TopicQuestion[]         @relation("topic_question_reviewed_by")
+  knowledgeCheckAttempts    KnowledgeCheckAttempt[]
   /// Knowledge Check certificates this administrator revoked (M15).
-  knowledgeChecksRevoked KnowledgeCheckAttempt[] @relation("kc_revoked_by")
+  knowledgeChecksRevoked    KnowledgeCheckAttempt[] @relation("kc_revoked_by")
   /// Coupons this administrator created / this participant redeemed (N1, 2026-09-28).
-  couponsCreated         Coupon[]                @relation("coupon_created_by")
-  couponsRedeemed        Coupon[]                @relation("coupon_redeemed_by")
+  couponsCreated            Coupon[]                @relation("coupon_created_by")
+  couponsRedeemed           Coupon[]                @relation("coupon_redeemed_by")
+  /// CR-2026-10-01-2138: formats this person registered interest in / interests an administrator marked notified.
+  trainingInterests         TrainingInterest[]
+  trainingInterestsNotified TrainingInterest[]      @relation("interest_notified_by")
+  /// Role-test questions this person wrote / this administrator reviewed, and
+  /// the role tests this person took (CR-2026-10-01-1711, P2–P4).
+  roleQuestionsCreated      RoleQuestion[]          @relation("role_question_created_by")
+  roleQuestionsReviewed     RoleQuestion[]          @relation("role_question_reviewed_by")
+  roleTestAttempts          RoleTestAttempt[]
 
   @@map("users")
 }
@@ -505,6 +513,7 @@ model Programme {
   reviews         Review[]
   certificates    Certificate[]
   coupons         Coupon[]
+  interests       TrainingInterest[]
 
   @@index([domainId])
   @@index([status, sortOrder])
@@ -539,6 +548,7 @@ model DeliveryFormat {
   position       Int
 
   offerings ScheduledOffering[]
+  interests TrainingInterest[]
 
   @@unique([programmeId, code])
   @@map("delivery_formats")
@@ -770,6 +780,8 @@ enum OrderKind {
   support
   /// M14 Phase 5: the US$10 unlock of a Knowledge Check result document.
   knowledge_check_unlock
+  /// CR-2026-10-01-2138: the non-refundable "Register your interest" payment (USD 2).
+  interest
 
   @@map("order_kind")
 }
@@ -813,12 +825,14 @@ model Order {
   createdAt               DateTime               @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt               DateTime               @updatedAt @map("updated_at") @db.Timestamptz(6)
 
-  payment      Payment?
-  registration Registration?
-  renewal      CertificateRenewal?
+  payment          Payment?
+  registration     Registration?
+  renewal          CertificateRenewal?
   /// The coupon whose redemption THIS order is (set by the webhook when the
   /// order is paid — distinct from `coupon`, which any pending attempt carries).
-  couponRedemption Coupon? @relation("coupon_redeemed_order")
+  couponRedemption Coupon?             @relation("coupon_redeemed_order")
+  /// CR-2026-10-01-2138: the interest registration THIS order pays for (kind = interest only).
+  interest         TrainingInterest?
 
   @@index([userId, createdAt])
   @@index([offeringId, status, expiresAt])
@@ -1027,45 +1041,45 @@ model StripeEvent {
 /// One per completed registration. Issued in the same transaction as the
 /// administrator's completion record (E2); the ID is never reused (R-D3).
 model Certificate {
-  id               String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id                    String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   /// Human-readable `DAA-YYYY-XXXX-XXXX`, 31-symbol alphabet, server-generated
   /// from a cryptographic source; uniqueness enforced here, not by hope.
-  certificateId    String            @unique @map("certificate_id")
-  registrationId   String            @unique @map("registration_id") @db.Uuid
-  registration     Registration      @relation(fields: [registrationId], references: [id], onDelete: Restrict)
-  userId           String            @map("user_id") @db.Uuid
-  user             User              @relation(fields: [userId], references: [id], onDelete: Restrict)
-  programmeId      String            @map("programme_id") @db.Uuid
-  programme        Programme         @relation(fields: [programmeId], references: [id], onDelete: Restrict)
-  offeringId       String            @map("offering_id") @db.Uuid
-  offering         ScheduledOffering @relation(fields: [offeringId], references: [id], onDelete: Restrict)
+  certificateId         String            @unique @map("certificate_id")
+  registrationId        String            @unique @map("registration_id") @db.Uuid
+  registration          Registration      @relation(fields: [registrationId], references: [id], onDelete: Restrict)
+  userId                String            @map("user_id") @db.Uuid
+  user                  User              @relation(fields: [userId], references: [id], onDelete: Restrict)
+  programmeId           String            @map("programme_id") @db.Uuid
+  programme             Programme         @relation(fields: [programmeId], references: [id], onDelete: Restrict)
+  offeringId            String            @map("offering_id") @db.Uuid
+  offering              ScheduledOffering @relation(fields: [offeringId], references: [id], onDelete: Restrict)
   /// Snapshots: a later profile or catalogue edit must never rewrite a printed
   /// certificate. `holder_name` is correctable by an administrator only (E8).
-  holderName       String            @map("holder_name")
+  holderName            String            @map("holder_name")
   /// Lower-cased, accent-stripped copy of `holder_name` for word-prefix search.
-  holderNameSearch String            @map("holder_name_search")
-  programmeTitle   String            @map("programme_title")
-  formatName       String            @map("format_name")
+  holderNameSearch      String            @map("holder_name_search")
+  programmeTitle        String            @map("programme_title")
+  formatName            String            @map("format_name")
   /// Milestone 15 (Q3, approved 2026-09-29): snapshots taken at issue so a later
   /// catalogue edit never rewrites a printed certificate. Null only for a row
   /// with no linked trainer / no duration to snapshot; existing rows were
   /// backfilled from their programme by the migration.
-  trainingDurationLabel String?       @map("training_duration_label")
+  trainingDurationLabel String?           @map("training_duration_label")
   /// All linked trainers, lead first, comma-separated.
-  trainerName      String?           @map("trainer_name")
-  completedOn      DateTime          @map("completed_on") @db.Date
-  issuedOn         DateTime          @map("issued_on") @db.Date
+  trainerName           String?           @map("trainer_name")
+  completedOn           DateTime          @map("completed_on") @db.Date
+  issuedOn              DateTime          @map("issued_on") @db.Date
   /// Last day the certificate is active (inclusive), MYT calendar date.
-  expiresOn        DateTime          @map("expires_on") @db.Date
+  expiresOn             DateTime          @map("expires_on") @db.Date
   /// Opt-in to public NAME search (E3). ID lookup works regardless.
-  listed           Boolean           @default(false)
-  listedChangedAt  DateTime?         @map("listed_changed_at") @db.Timestamptz(6)
-  revokedAt        DateTime?         @map("revoked_at") @db.Timestamptz(6)
-  revokedByUserId  String?           @map("revoked_by_user_id") @db.Uuid
-  revocationReason String?           @map("revocation_reason")
-  issuedByUserId   String            @map("issued_by_user_id") @db.Uuid
-  createdAt        DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt        DateTime          @updatedAt @map("updated_at") @db.Timestamptz(6)
+  listed                Boolean           @default(false)
+  listedChangedAt       DateTime?         @map("listed_changed_at") @db.Timestamptz(6)
+  revokedAt             DateTime?         @map("revoked_at") @db.Timestamptz(6)
+  revokedByUserId       String?           @map("revoked_by_user_id") @db.Uuid
+  revocationReason      String?           @map("revocation_reason")
+  issuedByUserId        String            @map("issued_by_user_id") @db.Uuid
+  createdAt             DateTime          @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt             DateTime          @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   renewals CertificateRenewal[]
   orders   Order[]
@@ -1235,23 +1249,23 @@ model TopicQuestionOption {
 /// once finished — the score, pass (≥ 70 %), the holder's name at that
 /// moment and a public ID that /verify resolves. NOT a credential (DR-01).
 model KnowledgeCheckAttempt {
-  id          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  userId      String    @map("user_id") @db.Uuid
-  user        User      @relation(fields: [userId], references: [id], onDelete: Restrict)
+  id               String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId           String    @map("user_id") @db.Uuid
+  user             User      @relation(fields: [userId], references: [id], onDelete: Restrict)
   /// 50, 100 or 200.
-  size        Int
+  size             Int
   /// string[] — reviewed question ids in the order served.
-  questionIds Json      @map("question_ids")
+  questionIds      Json      @map("question_ids")
   /// { [questionId]: optionPosition } — saved page by page.
-  answers     Json      @default("{}")
-  score       Int?
-  passed      Boolean?
+  answers          Json      @default("{}")
+  score            Int?
+  passed           Boolean?
   /// KC-YYYY-XXXX-XXXX, set when finished; what /verify resolves.
-  publicId    String?   @unique @map("public_id")
+  publicId         String?   @unique @map("public_id")
   /// The profile's legal name when finished, as the result shows it.
-  holderName  String?   @map("holder_name")
-  startedAt   DateTime  @default(now()) @map("started_at") @db.Timestamptz(6)
-  finishedAt  DateTime? @map("finished_at") @db.Timestamptz(6)
+  holderName       String?   @map("holder_name")
+  startedAt        DateTime  @default(now()) @map("started_at") @db.Timestamptz(6)
+  finishedAt       DateTime? @map("finished_at") @db.Timestamptz(6)
   /// Milestone 15 (Q3, approved 2026-09-29): a passed check's certificate can be
   /// revoked, mirroring `certificates`. Time taken, percentage, issue date,
   /// certificate ID/type and expiry are DERIVED (finished_at − started_at,
@@ -1261,8 +1275,8 @@ model KnowledgeCheckAttempt {
   revokedByUserId  String?   @map("revoked_by_user_id") @db.Uuid
   revokedByUser    User?     @relation("kc_revoked_by", fields: [revokedByUserId], references: [id], onDelete: Restrict)
   revocationReason String?   @map("revocation_reason")
-  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
+  createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   unlockOrders Order[]
 
@@ -1287,4 +1301,251 @@ model KnowledgeCheckUnlockSetting {
 
   @@index([effectiveFrom])
   @@map("knowledge_check_unlock_settings")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CR-2026-10-01-1711 (P2–P4) — Prepare for Interview and Organisation
+// Interview Screening. ADDITIVE ONLY: six new tables, two new enums, nothing
+// existing is altered. Founder approval: "implement all the requirements before
+// we implement to production" (2026-10-01) — dev and test databases only;
+// production receives this migration only after the founder has seen the SQL.
+// Organisation membership uses the EXISTING scoped `user_roles` (`org_admin`,
+// scope `organisation`, scope_id = organisations.id); time limit, percentage
+// and who may see a result are DERIVED, never stored.
+// ─────────────────────────────────────────────────────────────────────────────
+
+enum OrganisationType {
+  company
+  education
+
+  @@map("organisation_type")
+}
+
+/// A registered organisation that screens candidates (a company or an
+/// education-sector body). Created by an administrator; listed publicly only
+/// when `published` and it offers at least one listed role.
+model Organisation {
+  id           String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug         String           @unique
+  name         String
+  type         OrganisationType
+  /// A public path of a logo image, when supplied; never a user upload.
+  logoPath     String?          @map("logo_path")
+  contactEmail String           @map("contact_email")
+  published    Boolean          @default(false)
+  createdAt    DateTime         @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime         @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  /// This organisation's PRIVATE roles (assessment_roles.organisation_id).
+  privateRoles AssessmentRole[]
+  /// The roles this organisation offers (its enabled shared roles + its own).
+  offeredRoles OrganisationRole[]
+  questions    RoleQuestion[]
+  attempts     RoleTestAttempt[]
+
+  @@map("organisations")
+}
+
+/// A job role a person can practise for or be screened for (e.g. Data
+/// Engineer). `organisation_id` NULL = a SHARED role (the catalogue);
+/// set = that organisation's PRIVATE role, tested with its own questions only.
+model AssessmentRole {
+  id             String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  slug           String        @unique
+  name           String
+  description    String
+  /// Display order among roles (ascending).
+  position       Int           @default(0)
+  published      Boolean       @default(false)
+  organisationId String?       @map("organisation_id") @db.Uuid
+  organisation   Organisation? @relation(fields: [organisationId], references: [id], onDelete: Restrict)
+  createdAt      DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt      DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  organisationRoles OrganisationRole[]
+  questions         RoleQuestion[]
+  attempts          RoleTestAttempt[]
+
+  @@index([organisationId])
+  @@map("assessment_roles")
+}
+
+/// Which roles an organisation offers (shared roles it enabled, plus its own
+/// private roles). Composite key; a removal deletes the row (the audit log
+/// is the record).
+model OrganisationRole {
+  organisationId String         @map("organisation_id") @db.Uuid
+  organisation   Organisation   @relation(fields: [organisationId], references: [id], onDelete: Cascade)
+  roleId         String         @map("role_id") @db.Uuid
+  role           AssessmentRole @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  createdAt      DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@id([organisationId, roleId])
+  @@index([roleId])
+  @@map("organisation_roles")
+}
+
+/// A question's lifecycle. Only `reviewed` questions are ever served.
+/// Shared-bank questions go draft → reviewed (or rejected); an organisation's
+/// own questions are `pending` until an administrator approves (→ reviewed).
+enum RoleQuestionStatus {
+  draft
+  pending
+  reviewed
+  rejected
+
+  @@map("role_question_status")
+}
+
+/// A multiple-choice interview question of a role, with a detailed model
+/// answer shown after the test. `organisation_id` NULL = the shared bank;
+/// set = that organisation's own question (served only in its tests). Exactly
+/// five options and exactly one correct are enforced by the repository.
+model RoleQuestion {
+  id               String             @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  roleId           String             @map("role_id") @db.Uuid
+  role             AssessmentRole     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  organisationId   String?            @map("organisation_id") @db.Uuid
+  organisation     Organisation?      @relation(fields: [organisationId], references: [id], onDelete: Restrict)
+  /// The topic the per-category breakdown groups by.
+  category         String
+  stem             String
+  /// The detailed answer, written the way a strong candidate would say it.
+  modelAnswer      String             @map("model_answer")
+  status           RoleQuestionStatus @default(draft)
+  /// Where the content came from (a blueprint, a source note); optional.
+  source           String?
+  createdByUserId  String?            @map("created_by_user_id") @db.Uuid
+  createdBy        User?              @relation("role_question_created_by", fields: [createdByUserId], references: [id], onDelete: Restrict)
+  reviewedByUserId String?            @map("reviewed_by_user_id") @db.Uuid
+  reviewedBy       User?              @relation("role_question_reviewed_by", fields: [reviewedByUserId], references: [id], onDelete: Restrict)
+  reviewedAt       DateTime?          @map("reviewed_at") @db.Timestamptz(6)
+  createdAt        DateTime           @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime           @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  options RoleQuestionOption[]
+
+  @@index([roleId, status])
+  @@index([organisationId, roleId, status])
+  @@map("role_questions")
+}
+
+model RoleQuestionOption {
+  id         String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  questionId String       @map("question_id") @db.Uuid
+  question   RoleQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  /// 1..5, in display order.
+  position   Int
+  text       String
+  isCorrect  Boolean      @map("is_correct")
+
+  @@unique([questionId, position])
+  @@map("role_question_options")
+}
+
+/// One role test by a signed-in person (Prepare for Interview, or an
+/// organisation's screening when `organisation_id` is set). Same shape as
+/// `knowledge_check_attempts`: the questions served (ids, in order), the
+/// answers so far, and — once finished — the score. The deadline
+/// (`started_at` + 90 min), percentage and time taken are DERIVED. The
+/// result is visible to the organisation only when `shared_with_organisation`
+/// (the candidate's acknowledgement before starting). NOT a credential.
+model RoleTestAttempt {
+  id                     String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId                 String         @map("user_id") @db.Uuid
+  user                   User           @relation(fields: [userId], references: [id], onDelete: Restrict)
+  roleId                 String         @map("role_id") @db.Uuid
+  role                   AssessmentRole @relation(fields: [roleId], references: [id], onDelete: Restrict)
+  organisationId         String?        @map("organisation_id") @db.Uuid
+  organisation           Organisation?  @relation(fields: [organisationId], references: [id], onDelete: Restrict)
+  size                   Int
+  /// string[] — role question ids in the order served.
+  questionIds            Json           @map("question_ids")
+  /// { [questionId]: optionPosition } — saved page by page.
+  answers                Json           @default("{}")
+  score                  Int?
+  startedAt              DateTime       @default(now()) @map("started_at") @db.Timestamptz(6)
+  finishedAt             DateTime?      @map("finished_at") @db.Timestamptz(6)
+  /// The candidate acknowledged, before starting, that this organisation sees the result.
+  sharedWithOrganisation Boolean        @default(false) @map("shared_with_organisation")
+  createdAt              DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt              DateTime       @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([userId, startedAt])
+  @@index([organisationId, roleId, finishedAt])
+  @@map("role_test_attempts")
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CR-2026-10-01-2138 — "Register your interest" (founder, 2026-10-01; "go ahead
+// with CR 2"). ADDITIVE ONLY: one enum, one enum value (order_kind.interest),
+// two tables; nothing existing is altered. A person pays a small non-refundable
+// fee (USD 2 by default, administrator-managed with history) to say they want a
+// training in a given pace format; the trainer of that training and the
+// administrator see the interested people and tell them when a date exists.
+// The row becomes `confirmed` ONLY in the verified-webhook transaction (or at
+// once, with `fee_waived`, for a participant in Pakistan — no card route).
+// One row per person per format (a retry re-uses an unpaid row).
+// Dev and test databases only; production receives the migration after the
+// founder has seen the SQL.
+// ─────────────────────────────────────────────────────────────────────────────
+
+enum InterestStatus {
+  pending
+  confirmed
+  expired
+
+  @@map("interest_status")
+}
+
+model TrainingInterest {
+  id               String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  programmeId      String         @map("programme_id") @db.Uuid
+  programme        Programme      @relation(fields: [programmeId], references: [id], onDelete: Restrict)
+  deliveryFormatId String         @map("delivery_format_id") @db.Uuid
+  deliveryFormat   DeliveryFormat @relation(fields: [deliveryFormatId], references: [id], onDelete: Restrict)
+  userId           String         @map("user_id") @db.Uuid
+  user             User           @relation(fields: [userId], references: [id], onDelete: Restrict)
+  /// The pending/paid order (null when the fee is waived or not yet started).
+  orderId          String?        @unique @map("order_id") @db.Uuid
+  order            Order?         @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  /// The contact email the person gave (required); the trainer writes to this.
+  email            String
+  fullName         String?        @map("full_name")
+  mobile           String?
+  dateOfBirth      DateTime?      @map("date_of_birth") @db.Date
+  /// The person agreed that the trainer of this training may contact them.
+  consent          Boolean
+  status           InterestStatus @default(pending)
+  /// True for a participant in Pakistan (no card route): registered without the fee.
+  feeWaived        Boolean        @default(false) @map("fee_waived")
+  confirmedAt      DateTime?      @map("confirmed_at") @db.Timestamptz(6)
+  notifiedAt       DateTime?      @map("notified_at") @db.Timestamptz(6)
+  notifiedByUserId String?        @map("notified_by_user_id") @db.Uuid
+  notifiedByUser   User?          @relation("interest_notified_by", fields: [notifiedByUserId], references: [id], onDelete: Restrict)
+  createdAt        DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt        DateTime       @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@unique([userId, deliveryFormatId])
+  @@index([programmeId, status])
+  @@index([deliveryFormatId, status])
+  @@map("training_interests")
+}
+
+/// The interest fee, administrator-managed, effective-dated, insert-only (same
+/// discipline as `knowledge_check_unlock_settings`): the row in force is the
+/// newest `effective_from <= now`; `enabled` is the switch.
+model InterestFeeSetting {
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  enabled         Boolean  @default(true)
+  amountMinor     Int      @map("amount_minor")
+  currency        String   @db.Char(3)
+  label           String
+  effectiveFrom   DateTime @map("effective_from") @db.Timestamptz(6)
+  createdByUserId String?  @map("created_by_user_id") @db.Uuid
+  note            String?
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([effectiveFrom])
+  @@map("interest_fee_settings")
 }

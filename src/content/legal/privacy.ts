@@ -29,35 +29,17 @@ import type { LegalDocument } from "./types";
 export const privacyPolicy: LegalDocument = {
   key: "privacy",
   title: "Privacy policy",
-  version: "DRAFT-2026-10-01",
-  status: "draft",
-  lastUpdated: "2026-10-01",
+  version: "2026-10-02",
+  status: "published",
+  lastUpdated: "2026-10-02",
   summary:
     "What personal data the Data & AI Academy collects, why, who it is shared with, where it may be stored, how long it is kept, and your rights under the Personal Data Protection Act 2010.",
   sections: [
     {
-      heading: "About this draft",
-      paragraphs: [
-        "This is a draft prepared for review by a Malaysian-qualified lawyer. It is not yet in force. Until a reviewed version is published on this page with an effective date, it is not a notice under the Personal Data Protection Act 2010 and should not be relied on as one.",
-        "It is written to serve as the written notice required by the Notice and Choice Principle of the Personal Data Protection Act 2010 (as amended), and to reflect the Act's other principles — General, Disclosure, Security, Retention, Data Integrity and Access — together with the 2024 amendments on breach notification and the appointment of a data protection officer where applicable. That intention has not yet been confirmed by legal review.",
-        "The following details are not yet known and appear as placeholders in square brackets. They must be completed before publication:",
-      ],
-      bullets: [
-        "[contact email]",
-        "[data protection contact / officer]",
-        "[phone number]",
-        "[effective date]",
-        "[to be named] — the hosting and email providers, once chosen",
-        "[retention periods] — how long each category of data is kept",
-        "Where the portal's data is hosted, and therefore whether a cross-border transfer takes place (see section 7)",
-        "A Bahasa Malaysia version of this notice, if counsel advises that one is required",
-      ],
-    },
-    {
       heading: "1. Who is responsible for your data",
       paragraphs: [
         "The Data & AI Academy portal is operated by Your Partner Technologies, a training practice in Kuala Lumpur, Malaysia (business registration number 202401023226 (1569075-K); registered address 15-03A, One Jelatek Condominium, Jalan Jelatek, Kementah, 54200 Kuala Lumpur W.P. Kuala Lumpur, Malaysia). Your Partner Technologies decides how and why your personal data is processed, and is the data user for the purposes of the Personal Data Protection Act 2010.",
-        "Questions about this policy, or about your data, go to [data protection contact / officer] at [contact email].",
+        "Questions about this policy, or about your data, go to our Data Protection Contact at sales@yourpartnertechnologies.com.",
       ],
     },
     {
@@ -103,7 +85,7 @@ export const privacyPolicy: LegalDocument = {
     {
       heading: "4. Marketing",
       paragraphs: [
-        "We do not send marketing messages unless you have separately opted in to receive them. If you do opt in, every marketing email carries a way to opt out, and you can also opt out by writing to [contact email]. Opting out of marketing does not stop the service messages described above, which you need in order to attend what you have registered for.",
+        "We do not send marketing messages unless you have separately opted in to receive them. If you do opt in, every marketing email carries a way to opt out, and you can also opt out by writing to sales@yourpartnertechnologies.com. Opting out of marketing does not stop the service messages described above, which you need in order to attend what you have registered for.",
       ],
     },
     {
@@ -113,8 +95,8 @@ export const privacyPolicy: LegalDocument = {
       ],
       bullets: [
         "Stripe — our payment processor. When you pay, you enter your payment details directly with Stripe, which processes the payment under its own privacy policy. We receive confirmation of payment, not your card details.",
-        "Hosting provider [to be named] — the servers and database on which the portal and its data run.",
-        "Email provider [to be named] — used to deliver the service messages described in section 3.",
+        "DigitalOcean — our hosting provider. The servers and database on which the portal and its data run are hosted by DigitalOcean in New York, United States.",
+        "Email provider — none at present: the portal does not currently send email through any provider. If that changes, we will name the provider here before any personal data is shared with it.",
         "The trainer of an offering you registered for — your name and email address, so that attendance and completion can be recorded and you can be admitted to the sessions.",
         "The trainer of a training you registered interest in, and our administrators — the details you gave when registering interest (email address, and your name, mobile number and date of birth if you gave them), so they can plan the training and email you about its schedule. They are not shared with anyone else, and the trainer sees only the people interested in their own trainings.",
         "An organisation whose screening test you take — your name, email address, the role, your score and the time taken, and only after you have confirmed, before starting, that the result is shared with that organisation. The organisation decides what to do with it under its own privacy practices; it sees only its own candidates' results.",
@@ -129,14 +111,14 @@ export const privacyPolicy: LegalDocument = {
         "The portal also offers a public search by name. That search returns only holders who have chosen to be listed in it. Being listed is optional and is off unless you turn it on from your account. When you turn it on we record that choice, with the wording you agreed to and the time. You can withdraw it at any time from your account, and the withdrawal takes effect immediately for name search; the identifier and link continue to work.",
         "A Free Assessment Check result has its own verification page, reached only by its own ID or its link — it is never returned by the name search above. It shows the name on the result, the score, whether it passed, the grade and the date, and says plainly that it is not a Certificate of Completion and not the Academy's earned credential.",
         "Whether reached by identifier, link or name search, a verification page never shows your email address, your country, your contact details or any identity-document details. Dates on it are calendar dates in Malaysia time (Asia/Kuala_Lumpur).",
-        "If you have a concern about how your certificate or Free Assessment Check result can be verified, write to [contact email].",
+        "If you have a concern about how your certificate or Free Assessment Check result can be verified, write to sales@yourpartnertechnologies.com.",
       ],
     },
     {
       heading: "7. Where your data is stored, and transfers outside Malaysia",
       paragraphs: [
-        "The location where the portal is hosted has not yet been decided. Your personal data may therefore be stored or processed on servers outside Malaysia, and our payment processor and other providers may process data outside Malaysia.",
-        "Where a transfer outside Malaysia takes place we will rely on one of the grounds permitted by section 129 of the Personal Data Protection Act 2010 (as amended) — such as your consent, the transfer being necessary to perform our agreement with you, or the recipient being bound to protect the data to a standard at least equivalent to the Act — and we will put appropriate contractual and technical safeguards in place. This section will be updated with the confirmed hosting location before this policy is published.",
+        "The portal is hosted by DigitalOcean on servers in New York, United States. Your personal data is therefore stored and processed outside Malaysia, and our payment processor may also process data outside Malaysia.",
+        "Where a transfer outside Malaysia takes place we will rely on one of the grounds permitted by section 129 of the Personal Data Protection Act 2010 (as amended) — such as your consent, the transfer being necessary to perform our agreement with you, or the recipient being bound to protect the data to a standard at least equivalent to the Act — and we will put appropriate contractual and technical safeguards in place.",
       ],
     },
     {
@@ -162,15 +144,15 @@ export const privacyPolicy: LegalDocument = {
     {
       heading: "10. How long we keep it",
       paragraphs: [
-        "We keep personal data only for as long as it is needed for the purposes above, and then delete or anonymise it, in keeping with the Retention Principle. The specific periods are to be confirmed: [retention periods]. The principles that will govern them are:",
+        "We keep personal data only for as long as it is needed for the purposes above, and then delete or anonymise it, in keeping with the Retention Principle. The periods we apply are:",
       ],
       bullets: [
-        "Account and profile details — for as long as your account is open, and for a short period afterwards so a closed account can be restored if closing it was a mistake.",
-        "Registration and completion records — for as long as needed to support your Certificate of Completion, since a certificate can be verified for years after it is issued.",
-        "Orders and payment records — for the period Malaysian tax law requires financial records to be kept, which is typically seven years.",
-        "Consent records — for as long as the account exists and for the limitation period afterwards, so we can show what you agreed to.",
-        "Audit entries — for a fixed period sufficient to investigate security incidents and disputes.",
-        "Messages you send us — until your query is resolved and for a reasonable period afterwards.",
+        "Account and profile details — for as long as your account is open, and for 30 days after you close it so a closed account can be restored if closing it was a mistake.",
+        "Registration and completion records — for as long as the certificate they support can be verified, and for seven years after it was issued or expired.",
+        "Orders and payment records — for seven years, the period Malaysian tax law requires financial records to be kept.",
+        "Consent records — for as long as the account exists and for six years afterwards (the limitation period), so we can show what you agreed to.",
+        "Audit entries — for two years, a period sufficient to investigate security incidents and disputes.",
+        "Messages you send us — until your query is resolved and for twelve months afterwards.",
       ],
     },
     {
@@ -182,7 +164,7 @@ export const privacyPolicy: LegalDocument = {
     {
       heading: "12. Your rights",
       paragraphs: [
-        "Under the Personal Data Protection Act 2010 (as amended) you have the following rights. To exercise any of them, write to [data protection contact / officer] at [contact email]. We may ask you to confirm your identity first, and we will respond within the time the Act allows.",
+        "Under the Personal Data Protection Act 2010 (as amended) you have the following rights. To exercise any of them, write to our Data Protection Contact at sales@yourpartnertechnologies.com. We may ask you to confirm your identity first, and we will respond within the time the Act allows.",
       ],
       bullets: [
         "Access — to ask for a copy of the personal data we hold about you. The Act permits a modest fee for this; we will tell you before charging one.",
@@ -207,7 +189,7 @@ export const privacyPolicy: LegalDocument = {
     {
       heading: "14. Children",
       paragraphs: [
-        "The portal is intended for adults. We do not knowingly collect personal data from anyone under 18 without the consent of a parent or guardian. [Founder to confirm the age rule in the Terms of service, section 3; this section will follow it.] If you believe a child has created an account without that consent, tell us at [contact email] and we will delete the account.",
+        "The portal is intended for adults. We do not knowingly collect personal data from anyone under 18 and our Terms of service require you to be at least 18 to create an account. If you believe someone under 18 has created an account, tell us at sales@yourpartnertechnologies.com and we will delete the account.",
       ],
     },
     {
@@ -220,8 +202,8 @@ export const privacyPolicy: LegalDocument = {
       heading: "16. Contact",
       paragraphs: [
         "Your Partner Technologies (business registration number 202401023226 (1569075-K)), 15-03A, One Jelatek Condominium, Jalan Jelatek, Kementah, 54200 Kuala Lumpur W.P. Kuala Lumpur, Malaysia.",
-        "Data protection: [data protection contact / officer]. Email: [contact email]. Telephone: [phone number].",
-        "Effective date of this version: [effective date]. Version: DRAFT-2026-09-28 (not yet in force).",
+        "Data protection: Data Protection Contact. Email: sales@yourpartnertechnologies.com.",
+        "Effective date of this version: 2 October 2026. Version: 2026-10-02.",
       ],
     },
   ],

@@ -32,35 +32,21 @@ import type { LegalDocument } from "./types";
 export const refundPolicy: LegalDocument = {
   key: "refund",
   title: "Refund & cancellation policy",
-  version: "DRAFT-2026-10-01",
-  status: "draft",
-  lastUpdated: "2026-10-01",
+  version: "2026-10-02",
+  status: "published",
+  lastUpdated: "2026-10-02",
   summary:
     "When a training registration can be cancelled or moved to another date, how much is refunded, how to do it, and what happens if the Academy has to cancel or reschedule.",
   sections: [
-    {
-      heading: "About this draft",
-      paragraphs: [
-        "This is a draft prepared for review by a Malaysian-qualified lawyer. It is not yet in force, and no refund or cancellation term applies until a reviewed version is published on this page with an effective date.",
-        "It is written to be read alongside the Consumer Protection Act 1999 — including the Consumer Protection (Electronic Trade Transactions) Regulations 2012, which require an online seller to state its cancellation and refund terms clearly before a purchase — and the Contracts Act 1950. It is intended to meet those laws; that intention has not yet been confirmed by legal review.",
-        "The following details are not yet known and appear as placeholders in square brackets. They must be completed before publication:",
-      ],
-      bullets: [
-        "[contact email]",
-        "[phone number]",
-        "[effective date]",
-        "[SST registration status]",
-      ],
-    },
     {
       heading: "1. What this policy covers",
       paragraphs: [
         "This policy applies to registrations for the scheduled public offerings of Data & AI Academy trainings that you register and pay for on this portal, operated by Your Partner Technologies (business registration number 202401023226 (1569075-K)). It forms part of the Terms of service.",
         "It does not apply to private or corporate cohorts, which are governed by the written agreement for that cohort (see section 8).",
-        "Certificate of Completion renewal fee: the fee you pay to renew a certificate is not refundable once the renewal has been applied, because the extension to the certificate's expiry date is delivered immediately when the payment is confirmed. If you believe a renewal was charged in error — for example, you were charged twice — raise it through Contact us or by emailing [contact email], and we will look into it and handle it manually.",
-        "Free Assessment Check certificate unlock: the one-time fee you may pay to unlock the printable Certificate of Achievement for a passed Free Assessment Check is not refundable once the certificate has been shown, because the certificate is delivered immediately when the payment is confirmed. The result itself, its ID and its public verification page are free and are never withheld. If you believe an unlock was charged in error, raise it through Contact us or by emailing [contact email].",
-        "Register your interest: the small fee you pay to register your interest in a training format (shown before you pay; currently USD 2) is not refundable and is not credited against the training fee. It records that you want the training in that format, so the trainer can plan it; it does not reserve a seat, and the day-based schedule in section 2 does not apply to it. A participant in Pakistan registers interest without the fee. If you believe it was charged in error — for example, you were charged twice — raise it through Contact us or by emailing [contact email].",
-        "Support the Academy: this is a one-off payment that grants no service or benefit in return, so the day-based schedule in section 2 does not apply to it. If you paid by mistake, or want to ask for a refund for another reason, raise it through Contact us or by emailing [contact email] and we will consider it.",
+        "Certificate of Completion renewal fee: the fee you pay to renew a certificate is not refundable once the renewal has been applied, because the extension to the certificate's expiry date is delivered immediately when the payment is confirmed. If you believe a renewal was charged in error — for example, you were charged twice — raise it through Contact us or by emailing sales@yourpartnertechnologies.com, and we will look into it and handle it manually.",
+        "Free Assessment Check certificate unlock: the one-time fee you may pay to unlock the printable Certificate of Achievement for a passed Free Assessment Check is not refundable once the certificate has been shown, because the certificate is delivered immediately when the payment is confirmed. The result itself, its ID and its public verification page are free and are never withheld. If you believe an unlock was charged in error, raise it through Contact us or by emailing sales@yourpartnertechnologies.com.",
+        "Register your interest: the small fee you pay to register your interest in a training format (shown before you pay; currently USD 2) is not refundable and is not credited against the training fee. It records that you want the training in that format, so the trainer can plan it; it does not reserve a seat, and the day-based schedule in section 2 does not apply to it. A participant in Pakistan registers interest without the fee. If you believe it was charged in error — for example, you were charged twice — raise it through Contact us or by emailing sales@yourpartnertechnologies.com.",
+        "Support the Academy: this is a one-off payment that grants no service or benefit in return, so the day-based schedule in section 2 does not apply to it. If you paid by mistake, or want to ask for a refund for another reason, raise it through Contact us or by emailing sales@yourpartnertechnologies.com and we will consider it.",
         "\"Start date\" means the first scheduled session of the offering you registered for, in the time zone shown on the offering. Days are counted as calendar days before that date, not business days.",
       ],
     },
@@ -84,7 +70,7 @@ export const refundPolicy: LegalDocument = {
     {
       heading: "3. How to cancel",
       paragraphs: [
-        "Cancel from the registration in your account area on this portal, or by emailing [contact email] from the email address on your account. Either way, tell us which offering you are cancelling.",
+        "Cancel from the registration in your account area on this portal, or by emailing sales@yourpartnertechnologies.com from the email address on your account. Either way, tell us which offering you are cancelling.",
         "The date we receive your cancellation — the moment you confirm it in the account area, or the time your email reaches us — is the date used to decide which line of the schedule applies. We confirm every cancellation by email, with the refund amount, so you have a record.",
         "If you registered on behalf of someone else, the cancellation must come from the account that made the registration.",
       ],
@@ -92,9 +78,9 @@ export const refundPolicy: LegalDocument = {
     {
       heading: "4. Transferring to a later date instead",
       paragraphs: [
-        "Rather than cancel, you may transfer your registration once, free of charge, to a later scheduled date of the same training, provided you ask before the start date of the offering you are leaving and the later offering has a place available. Ask from your account area or by emailing [contact email].",
+        "Rather than cancel, you may transfer your registration once, free of charge, to a later scheduled date of the same training, provided you ask before the start date of the offering you are leaving and the later offering has a place available. Ask from your account area or by emailing sales@yourpartnertechnologies.com.",
         "After a transfer, the refund schedule in section 2 is counted from the start date of the new offering — but the transfer itself is not a cancellation, and no refund is made for it.",
-        "A second transfer is not available under this policy; if you cannot attend the new date, section 2 applies. A transfer to a different training, or to another person, is not available under this policy; if you need either, write to [contact email] and we will tell you what is possible.",
+        "A second transfer is not available under this policy; if you cannot attend the new date, section 2 applies. A transfer to a different training, or to another person, is not available under this policy; if you need either, write to sales@yourpartnertechnologies.com and we will tell you what is possible.",
       ],
     },
     {
@@ -112,14 +98,14 @@ export const refundPolicy: LegalDocument = {
       paragraphs: [
         "Refunds are returned to the payment method you originally paid with, through Stripe, our payment processor. We cannot refund to a different card, account or person, and refunds are made in the currency you paid in.",
         "The amount refunded is the percentage due under section 2, less the payment-processing fee that Stripe charged us on your original payment. Stripe does not return that fee when a payment is refunded, so it is deducted from the refund rather than absorbed by the Academy. The exact fee and the resulting refund are shown to you on the cancellation screen before you confirm.",
-        "We instruct the refund promptly once a cancellation is confirmed. How long it then takes to appear depends on your bank or card issuer — typically 5 to 10 business days, sometimes longer for some banks and e-wallets. If a refund has not arrived after 15 business days, tell us at [contact email] and we will chase it with Stripe and give you the reference.",
+        "We instruct the refund promptly once a cancellation is confirmed. How long it then takes to appear depends on your bank or card issuer — typically 5 to 10 business days, sometimes longer for some banks and e-wallets. If a refund has not arrived after 15 business days, tell us at sales@yourpartnertechnologies.com and we will chase it with Stripe and give you the reference.",
         "If you paid in a currency other than the one your bank account uses, the amount that arrives may differ from the amount you paid because of exchange-rate movements and your bank's fees. Those differences are outside our control and are not refunded by us.",
       ],
     },
     {
       heading: "7. Sales and Service Tax on refunds",
       paragraphs: [
-        "Where Malaysian Sales and Service Tax (SST) was charged on a registration, it is refunded in the same proportion as the price. Our SST position is: [SST registration status]. Your refund confirmation shows the tax element separately where it applies.",
+        "Where Malaysian Sales and Service Tax (SST) was charged on a registration, it is refunded in the same proportion as the price. Our SST position is: we are not currently registered for Sales and Service Tax, so no SST is charged. Your refund confirmation shows the tax element separately where it applies.",
       ],
     },
     {
@@ -145,8 +131,8 @@ export const refundPolicy: LegalDocument = {
       heading: "11. Contact",
       paragraphs: [
         "Your Partner Technologies (business registration number 202401023226 (1569075-K)), 15-03A, One Jelatek Condominium, Jalan Jelatek, Kementah, 54200 Kuala Lumpur W.P. Kuala Lumpur, Malaysia.",
-        "Email: [contact email]. Telephone: [phone number].",
-        "Effective date of this version: [effective date]. Version: DRAFT-2026-09-28 (not yet in force).",
+        "Email: sales@yourpartnertechnologies.com.",
+        "Effective date of this version: 2 October 2026. Version: 2026-10-02.",
       ],
     },
   ],

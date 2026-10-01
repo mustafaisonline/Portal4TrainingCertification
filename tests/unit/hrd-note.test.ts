@@ -33,7 +33,7 @@ describe("HRD claim note", () => {
     expect(src, `${file} must use HRD_CLAIM_NOTE`).toContain("HRD_CLAIM_NOTE"); // … so it must carry the note
   });
 
-  it("the privacy draft and the FAQ (seed data) carry the sentence next to their HRD mentions", () => {
+  it("the privacy policy and the FAQ (seed data) carry the sentence next to their HRD mentions", () => {
     const privacyText = JSON.stringify(privacyPolicy);
     expect(privacyText).toContain(HRD_CLAIM_NOTE);
     const hrdFaqs = faqGroups.flatMap((g) => g.items).filter((f) => /HRD/i.test(f.q + f.a));

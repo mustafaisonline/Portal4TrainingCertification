@@ -2,13 +2,13 @@ import { describe, expect, it } from "vitest";
 import { privacyPolicy } from "@/content/legal/privacy";
 import { refundPolicy } from "@/content/legal/refund-policy";
 import { termsOfService } from "@/content/legal/terms";
-import { LEGAL_PLACEHOLDERS, type LegalDocument } from "@/content/legal/types";
+import type { LegalDocument } from "@/content/legal/types";
 import { sectionAnchor } from "@/shared/legal/LegalDocumentView";
 
 /*
- * Legal drafts (2026-09-21). These are content, not logic, so the tests guard
- * the properties a reader depends on: every document is visibly a DRAFT, it
- * opens by saying so, it is substantial rather than a stub, it has no empty
+ * Legal documents (drafted 2026-09-21, published 2026-10-02). These are content, not logic, so the tests guard
+ * the properties a reader depends on: every document is PUBLISHED with no draft notice or
+ * unfilled placeholder, it is substantial rather than a stub, it has no empty
  * paragraphs that would render as blank lines, and the refund policy carries
  * the founder's numbers (14 days / 50% / 7 days) so an edit cannot silently
  * drop or change the rule without a test noticing.
@@ -27,27 +27,20 @@ function allText(doc: LegalDocument): string {
     .join("\n");
 }
 
-describe("legal drafts (src/content/legal)", () => {
-  it.each(documents)("$key is a clearly-labelled draft", (doc) => {
-    expect(doc.status).toBe("draft");
-    // Each draft carries its own date: the refund policy moved to 2026-09-27 when the
-    // Knowledge Check unlock sentence was added (M14 Phase 5); all three moved to
-    // 2026-09-28 when the founder had them synced with the portal's current state
-    // (Free Learning, the Knowledge Check, one-off payments, "Training" wording) —
-    // so a consent recorded after that day names the text it accepted.
-    expect(doc.version).toMatch(/^DRAFT-\d{4}-\d{2}-\d{2}$/);
-    expect(doc.lastUpdated).toBe(doc.version.slice("DRAFT-".length));
-    expect(doc.version).toBe("DRAFT-2026-10-01");
+describe("legal documents (src/content/legal)", () => {
+  it.each(documents)("$key is published, dated and versioned", (doc) => {
+    expect(doc.status).toBe("published");
+    expect(doc.version).toBe("2026-10-02");
+    expect(doc.lastUpdated).toBe(doc.version);
     expect(doc.summary.trim().length).toBeGreaterThan(0);
   });
 
-  it.each(documents)("$key opens with the 'About this draft' section", (doc) => {
-    const first = doc.sections[0];
-    expect(first?.heading).toBe("About this draft");
-    expect(first?.paragraphs.join(" ")).toMatch(/Malaysian-qualified lawyer/);
-    expect(first?.paragraphs.join(" ")).toMatch(/not yet in force/);
-    // The placeholders the founder must fill in are listed up front.
-    expect(first?.bullets?.length ?? 0).toBeGreaterThan(0);
+  it.each(documents)("$key carries no draft section, draft notice or effective-date placeholder", (doc) => {
+    expect(doc.sections[0]?.heading).not.toBe("About this draft");
+    const text = allText(doc);
+    expect(text).not.toMatch(/not yet in force|DRAFT-|draft prepared for review/i);
+    expect(text).toContain("Effective date of this version: 2 October 2026. Version: 2026-10-02.");
+    expect(text).toContain("sales@yourpartnertechnologies.com");
   });
 
   it.each(documents)("$key has at least 8 sections and no empty paragraphs", (doc) => {
@@ -60,15 +53,9 @@ describe("legal drafts (src/content/legal)", () => {
     }
   });
 
-  it.each(documents)("$key uses only the agreed placeholders (square brackets)", (doc) => {
-    const text = allText(doc);
-    // Every bracketed token is either an agreed placeholder, a to-be-named
-    // provider, a retention period, or a "[Founder to confirm …]" note.
-    const known = new Set<string>([...LEGAL_PLACEHOLDERS, "[to be named]", "[retention periods]"]);
-    const found = text.match(/\[[^\]]+\]/g) ?? [];
-    expect(found.length).toBeGreaterThan(0);
-    const unknown = found.filter((t) => !known.has(t) && !t.startsWith("[Founder to confirm"));
-    expect(unknown, `unexpected bracketed text: ${unknown.join(", ")}`).toEqual([]);
+  it.each(documents)("$key has no unfilled [placeholder] left to publish", (doc) => {
+    const found = allText(doc).match(/\[[^\]]+\]/g) ?? [];
+    expect(found, `unfilled placeholder(s): ${found.join(", ")}`).toEqual([]);
   });
 
   it.each(documents)("$key section headings produce unique anchors", (doc) => {

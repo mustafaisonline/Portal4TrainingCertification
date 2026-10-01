@@ -56,8 +56,9 @@ export const metadata: Metadata = {
     template: "%s · DataAI Nexus",
   },
   description: "Expert-led Data & AI training and certification.",
-  // Nothing is indexable until launch cutover (plan §7 M10) lifts this.
-  robots: { index: false, follow: false },
+  // Indexable since the 2026-10-02 launch (founder). Private and per-attempt pages
+  // keep their own `robots: { index: false }`; /robots.txt excludes the private routes.
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

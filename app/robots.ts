@@ -6,10 +6,9 @@ import type { MetadataRoute } from "next";
  * authentication routes are excluded. Certificate pages (/verify/[id])
  * additionally carry `noindex` in their own metadata.
  *
- * Note for launch cutover (M10): app/layout.tsx still sets
- * `robots: { index: false, follow: false }` on every page — nothing is
- * indexable until the founder lifts that at cutover. This file only says
- * where crawlers may go once it is lifted.
+ * Launch (2026-10-02, founder): app/layout.tsx no longer sets site-wide
+ * `noindex`; this file says where crawlers may go, and private or per-attempt
+ * pages carry their own `noindex`.
  *
  * Dynamic so APP_BASE_URL is read when the request arrives, not baked in at
  * build time (the same container image may serve staging and production).

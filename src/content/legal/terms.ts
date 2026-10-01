@@ -35,27 +35,12 @@ import type { LegalDocument } from "./types";
 export const termsOfService: LegalDocument = {
   key: "terms",
   title: "Terms of service",
-  version: "DRAFT-2026-10-01",
-  status: "draft",
-  lastUpdated: "2026-10-01",
+  version: "2026-10-02",
+  status: "published",
+  lastUpdated: "2026-10-02",
   summary:
     "The agreement between Your Partner Technologies and anyone who creates an account, registers for a Data & AI Academy training, uses Free Learning or the Free Assessment Check, or makes a one-off payment: registering, paying, cancelling, taking part, and the Certificate of Completion.",
   sections: [
-    {
-      heading: "About this draft",
-      paragraphs: [
-        "This is a draft prepared for review by a Malaysian-qualified lawyer. It is not yet in force, and nothing in it is a term, policy or undertaking until a reviewed version is published on this page with an effective date.",
-        "It is written to be read alongside the Consumer Protection Act 1999 (including the Consumer Protection (Electronic Trade Transactions) Regulations 2012), the Contracts Act 1950, the Electronic Commerce Act 2006 and the Personal Data Protection Act 2010 (as amended). It is intended to meet those laws; that intention has not yet been confirmed by legal review.",
-        "The following details are not yet known and appear as placeholders in square brackets. They must be completed before publication:",
-      ],
-      bullets: [
-        "[contact email]",
-        "[phone number]",
-        "[effective date]",
-        "[SST registration status]",
-        "Whether participants under 18 may register with a parent's or guardian's consent, or not at all (see section 3)",
-      ],
-    },
     {
       heading: "1. Who we are and what these terms cover",
       paragraphs: [
@@ -79,8 +64,8 @@ export const termsOfService: LegalDocument = {
     {
       heading: "3. Your account and who may register",
       paragraphs: [
-        "You need an account to register for a training. An account is created with your name, an email address and a password, and you must keep those details accurate. You are responsible for keeping your password confidential and for everything done under your account; tell us at [contact email] as soon as you know of any unauthorised use.",
-        "You must be at least 18 years old to create an account and register. [Founder to confirm: participants under 18 may register only where a parent or guardian gives consent in writing — or, if preferred, may not register at all.]",
+        "You need an account to register for a training. An account is created with your name, an email address and a password, and you must keep those details accurate. You are responsible for keeping your password confidential and for everything done under your account; tell us at sales@yourpartnertechnologies.com as soon as you know of any unauthorised use.",
+        "You must be at least 18 years old to create an account and register. We do not accept registrations from anyone under 18.",
         "You may register on behalf of someone else only if you have their permission and provide their correct details; the person who attends is the participant for the purposes of the Certificate of Completion.",
         "We may suspend or close an account that is used in breach of these terms, or where we reasonably believe the details given are false. Section 8 explains the conduct we expect.",
       ],
@@ -108,7 +93,7 @@ export const termsOfService: LegalDocument = {
     {
       heading: "6. Sales and Service Tax",
       paragraphs: [
-        "Prices are shown inclusive or exclusive of Malaysian Sales and Service Tax (SST) as indicated at checkout. Our SST position is: [SST registration status]. Where SST applies, the amount is shown before you confirm payment and appears on your receipt.",
+        "Prices are shown inclusive or exclusive of Malaysian Sales and Service Tax (SST) as indicated at checkout. Our SST position is: we are not currently registered for Sales and Service Tax, so no SST is charged. Where SST applies, the amount is shown before you confirm payment and appears on your receipt.",
         "If you are charged in a currency other than MYR, your bank or card issuer may apply its own conversion rate and fees. Those are outside our control and are not refundable by us.",
       ],
     },
@@ -188,7 +173,7 @@ export const termsOfService: LegalDocument = {
       heading: "16. Governing law and disputes",
       paragraphs: [
         "These terms are governed by the laws of Malaysia, and the courts of Malaysia have jurisdiction over any dispute arising from them, except where the law gives you the right to bring a claim elsewhere.",
-        "If something goes wrong, please contact us first at [contact email]; most problems can be sorted out directly. If you are a consumer in Malaysia and we cannot resolve a dispute, you may be able to bring a claim before the Tribunal for Consumer Claims Malaysia, which hears consumer claims up to the limit set under the Consumer Protection Act 1999 without the need for a lawyer.",
+        "If something goes wrong, please contact us first at sales@yourpartnertechnologies.com; most problems can be sorted out directly. If you are a consumer in Malaysia and we cannot resolve a dispute, you may be able to bring a claim before the Tribunal for Consumer Claims Malaysia, which hears consumer claims up to the limit set under the Consumer Protection Act 1999 without the need for a lawyer.",
         "These terms are written in English. If a translation is provided, the English version prevails where they differ.",
       ],
     },
@@ -196,15 +181,15 @@ export const termsOfService: LegalDocument = {
       heading: "17. General",
       paragraphs: [
         "These terms, the Privacy policy and the Refund & cancellation policy are the whole agreement between you and the Academy about the portal and your registrations. If any part of these terms is found to be unenforceable, the rest still applies. If we do not enforce a term on one occasion, we may still enforce it later. You may not transfer your registration to another person except as the Refund & cancellation policy allows.",
-        "Notices to you are sent to the email address on your account. Notices to us should be sent to [contact email].",
+        "Notices to you are sent to the email address on your account. Notices to us should be sent to sales@yourpartnertechnologies.com.",
       ],
     },
     {
       heading: "18. Contact",
       paragraphs: [
         "Your Partner Technologies (business registration number 202401023226 (1569075-K)), 15-03A, One Jelatek Condominium, Jalan Jelatek, Kementah, 54200 Kuala Lumpur W.P. Kuala Lumpur, Malaysia.",
-        "Email: [contact email]. Telephone: [phone number].",
-        "Effective date of this version: [effective date]. Version: DRAFT-2026-09-28 (not yet in force).",
+        "Email: sales@yourpartnertechnologies.com.",
+        "Effective date of this version: 2 October 2026. Version: 2026-10-02.",
       ],
     },
   ],

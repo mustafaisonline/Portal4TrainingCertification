@@ -24,6 +24,7 @@ deploy only on the founder's word; report honestly what was and was not tested.
 
 | CR file | Title | Status |
 |---|---|---|
+| [CR-2026-10-02-0610-publish-legal-documents-and-lift-noindex.md](CR-2026-10-02-0610-publish-legal-documents-and-lift-noindex.md) | Stripe live confirmed, legal documents published, `noindex` lifted |
 | [CR-2026-10-01-2345-hero-copy-workspace-positioning.md](CR-2026-10-01-2345-hero-copy-workspace-positioning.md) | Homepage hero copy: training portal → Data & AI workspace (eyebrow, headline, description, benefit chips; cards kept) | BUILT & VERIFIED, uncommitted |
 | [CR-2026-10-01-2310-brand-name-dataai-nexus.md](CR-2026-10-01-2310-brand-name-dataai-nexus.md) | Header/footer/title brand name "Data & AI Academy" → "DataAI Nexus" | BUILT & VERIFIED, uncommitted |
 | [CR-2026-10-01-2246-assessment-check-card-and-hrd-verification-link.md](CR-2026-10-01-2246-assessment-check-card-and-hrd-verification-link.md) | /assessment: "The Free Assessment Check" as a card, "Assess your Data Foundation" heading removed; HRD verification link on "Who delivers this" | BUILT & VERIFIED, uncommitted |

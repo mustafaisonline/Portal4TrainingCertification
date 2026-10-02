@@ -69,4 +69,4 @@ See `CR/specs/CR-SPEC-2026-10-02-2034-ai-delivery-framework.md`.
 | Date (MYT) | Entry |
 |---|---|
 | 2026-10-02 20:34 | CR created. |
-| 2026-10-02 21:00 | All steps built; links checked (0 broken in moved files, index READMEs, framework, specs). Agents/skills not yet exercised (load at session start). Spec: `CR/specs/CR-SPEC-2026-10-02-2034-ai-delivery-framework.md`. |
+| 2026-10-02 | All steps built; links checked (0 broken in moved files, index READMEs, framework, specs). Agents/skills not yet exercised (load at session start). Spec: `CR/specs/CR-SPEC-2026-10-02-2034-ai-delivery-framework.md`. |

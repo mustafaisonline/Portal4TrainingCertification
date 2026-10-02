@@ -53,7 +53,7 @@ Optimize for: **product integrity over speed. Understanding before modification.
 
 ## CHANGE REQUISITIONS (`CR/`) — BINDING
 
-**Every new requirement, fix or decision the founder gives becomes ONE timestamped file in `CR/` — `CR-YYYY-MM-DD-HHMM-short-title.md`, Malaysia time (MYT) — created BEFORE any code or configuration is changed.** It records the founder's request verbatim, the facts gathered, decisions and assumptions, the plan, a status tracker and a dated progress log, and is updated after every step. Add a row to the index in `CR/README.md`. Work is done one CR at a time.
+**Every new requirement, fix or decision the founder gives becomes ONE timestamped file in `CR/` — `CR-YYYY-MM-DD-HHMM-short-title.md`, Malaysia time (MYT) — created BEFORE any code or configuration is changed.** It records the founder's request verbatim, the facts gathered, decisions and assumptions, the plan, a status tracker and a dated progress log, and is updated after every step. Add a row to the index in `CR/README.md`. A CR may hold several related tasks (one tracker row each); the `new-cr` skill decides the grouping. Work is done one CR at a time.
 
 This is the memory that survives a usage limit or a lost conversation: after reading `docs/execution/PROJECT_STATUS.md`, **read the `CR/README.md` index and open every CR that is not DONE or DEPLOYED**, then continue from its tracker. A CR whose status is DEFERRED (for example the email provider) must be raised with the founder at the start of the next working session. Full template and rules: `CR/README.md`.
 

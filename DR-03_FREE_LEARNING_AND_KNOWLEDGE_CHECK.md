@@ -1,6 +1,6 @@
 # DECISION RECORD DR-03 — FREE SELF-PACED LEARNING AND THE KNOWLEDGE CHECK
 
-**Status:** Approved by the founder, 2026-09-27 (chat: *"Let's change the rule … it will be self train, not expert-led"*; decisions P1–P20 of `docs/execution/MILESTONE_14_IMPACT_ANALYSIS.md` §9). Binding on all three specifications and on DR-02.
+**Status:** Approved by the founder, 2026-09-27 (chat: *"Let's change the rule … it will be self train, not expert-led"*; decisions P1–P20 of `framework/milestones/MILESTONE_14_IMPACT_ANALYSIS.md` §9). Binding on all three specifications and on DR-02.
 **Amends:** DR-02 §1 ("We are not … a generic LMS · a self-paced content consumption platform") — **partially**, as stated in §2 below. DR-01 is **unchanged** (§3).
 
 ## 1. Why

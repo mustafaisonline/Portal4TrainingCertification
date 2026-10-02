@@ -1,0 +1,47 @@
+# table — assessment_roles
+
+| Field | Value |
+|---|---|
+| Category | technical |
+| Kind | table |
+| Source of truth | `prisma/schema.prisma` (model `AssessmentRole`) and `prisma/migrations/` |
+| Owner | founder |
+| Version / date | generated from the schema 2026-10-02 |
+| Status | approved (in production schema) |
+| Related | CLAUDE.md Rule 1 (data model is a RED gate) |
+
+## Purpose
+A job role a person can practise for or be screened for (e.g. Data Engineer). `organisation_id` NULL = a SHARED role (the catalogue); set = that organisation's PRIVATE role, tested with its own questions only.
+
+## Columns
+
+| Column | Type | Nullable | DB type | Default | Keys | Note |
+|---|---|---|---|---|---|---|
+| `id` | String | no | `Uuid` | `dbgenerated("gen_random_uuid()")` | PK |  |
+| `slug` | String | no |  |  | unique |  |
+| `name` | String | no |  |  |  |  |
+| `description` | String | no |  |  |  |  |
+| `position` | Int | no |  | `0` |  | Display order among roles (ascending). |
+| `published` | Boolean | no |  | `false` |  |  |
+| `organisation_id` | String | yes | `Uuid` |  |  |  |
+| `created_at` | DateTime | no | `Timestamptz(6)` | `now()` |  |  |
+| `updated_at` | DateTime | no | `Timestamptz(6)` |  |  |  |
+
+## Relationships
+
+| Field | Target model → table | Cardinality | Definition |
+|---|---|---|---|
+| `organisation` | `Organisation` → `organisations` | optional one | `@relation(fields: [organisationId], references: [id], onDelete: Restrict)` |
+| `organisationRoles` | `OrganisationRole` → `organisation_roles` | many |  |
+| `questions` | `RoleQuestion` → `role_questions` | many |  |
+| `attempts` | `RoleTestAttempt` → `role_test_attempts` | many |  |
+
+## Indexes and constraints
+
+```
+@@index([organisationId])
+```
+
+## Change history
+
+- 2026-10-02 — file generated from the schema by CR-2026-10-02-2045. Re-generate or edit when the schema changes (a schema change is a RED gate).

@@ -1,6 +1,6 @@
 # `deploy/` — the governed deployment framework
 
-> **Status: BUILT 2026-09-26 (Milestone 11, Phase A), REWRITTEN 2026-09-27/28 — rehearsed in `--dry-run` only. Droplet created 2026-09-27, not yet bootstrapped.** Phase B (provisioning) is the founder's, step by step, per [`docs/execution/MILESTONE_11_EXECUTION_PLAN.md`](../docs/execution/MILESTONE_11_EXECUTION_PLAN.md) §2. Decisions K1–K16 were approved 2026-09-26 (ADR-046); K2/K3/K6/K9 have since been reversed and K5 re-decided — see §1 below and the ADR's supersession notes.
+> **Status: BUILT 2026-09-26 (Milestone 11, Phase A), REWRITTEN 2026-09-27/28 — rehearsed in `--dry-run` only. Droplet created 2026-09-27, not yet bootstrapped.** Phase B (provisioning) is the founder's, step by step, per [`framework/milestones/MILESTONE_11_EXECUTION_PLAN.md`](../framework/milestones/MILESTONE_11_EXECUTION_PLAN.md) §2. Decisions K1–K16 were approved 2026-09-26 (ADR-046); K2/K3/K6/K9 have since been reversed and K5 re-decided — see §1 below and the ADR's supersession notes.
 >
 > **⚠ Three decisions reversed since Phase A, all on the founder's explicit instruction, all explained in full before being confirmed:**
 > 1. **2026-09-27 — Staging DROPPED** (ADR-029's supersession note). Only production is provisioned — no second container/process, no second database, no `staging.<domain>`.

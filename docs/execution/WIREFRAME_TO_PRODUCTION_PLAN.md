@@ -42,7 +42,7 @@ The repository already holds the three things a transition needs, written at dif
 | Layer | Document | What it settles |
 |---|---|---|
 | Decisions | `docs/architecture/` (register, stack, principles) | *What* the system is — frozen baseline, partially approved |
-| First step | `docs/execution/MILESTONE_1_EXECUTION_PLAN.md` | The Walking Skeleton — scope accepted, never executed |
+| First step | `framework/milestones/MILESTONE_1_EXECUTION_PLAN.md` | The Walking Skeleton — scope accepted, never executed |
 | Requirements | `docs/execution/BACKEND_HANDOFF_INDEX.md` + the three requirements records | *Everything the wireframe implies*, every simulation to delete, every blocking decision |
 
 What was missing is the bridge: **in what order those become a running product, what is carried over from 83 wireframe pages, and which decisions must land before which milestone.** This document is that bridge. It changes nothing above it; when it and the WBS disagree, the WBS is the register and this plan is a proposal to update it (§11).

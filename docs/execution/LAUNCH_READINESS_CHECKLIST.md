@@ -1,6 +1,6 @@
 # Launch Readiness Checklist — Milestone 10 §1
 
-> **Status: AUDIT COMPLETE 2026-09-23 · LAUNCH BLOCKED — every item below is Open until the founder acts.** Built under [`MILESTONE_10_EXECUTION_PLAN.md`](MILESTONE_10_EXECUTION_PLAN.md) §1. This is the single list the founder walks before deciding to go live. **No public copy was changed by this audit** (default K2; Rule 8) — every discrepancy is reported here for decision.
+> **Status: AUDIT COMPLETE 2026-09-23 · LAUNCH BLOCKED — every item below is Open until the founder acts.** Built under [`MILESTONE_10_EXECUTION_PLAN.md`](../../framework/milestones/MILESTONE_10_EXECUTION_PLAN.md) §1. This is the single list the founder walks before deciding to go live. **No public copy was changed by this audit** (default K2; Rule 8) — every discrepancy is reported here for decision.
 >
 > States: **Open** (nothing done) · **Ready** (the code/runbook side exists; the founder's action remains) · **Done** (evidence recorded).
 

@@ -20,7 +20,7 @@ The **operator's manual** for the portal: how to deploy it, keep it up, back it 
 
 ## Founder decisions these documents depend on (all OPEN)
 
-From `docs/execution/MILESTONE_9_EXECUTION_PLAN.md` §4. Each document marks where a decision changes the procedure.
+From `framework/milestones/MILESTONE_9_EXECUTION_PLAN.md` §4. Each document marks where a decision changes the procedure.
 
 | # | Decision | Recommendation (AP-12, free-first) | State |
 |---|---|---|---|

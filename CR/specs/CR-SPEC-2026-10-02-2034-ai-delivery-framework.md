@@ -1,6 +1,6 @@
 # CR-SPEC-2026-10-02-2034 — AI delivery framework
 
-**CR:** [CR-2026-10-02-2034](../CR-2026-10-02-2034-ai-delivery-framework-folders-agents-skills.md) · **Created:** 2026-10-02 20:55 MYT
+**CR:** [CR-2026-10-02-2034](../CR-2026-10-02-2034-ai-delivery-framework-folders-agents-skills.md) · **Created:** 2026-10-02 MYT
 
 ## Tasks
 

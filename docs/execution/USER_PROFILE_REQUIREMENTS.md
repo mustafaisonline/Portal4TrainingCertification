@@ -1,6 +1,6 @@
 # User Profile — Requirements Record
 
-> **Status: AGREED 2026-09-22 — founder decisions in §8; executed as Milestone 5a** ([`MILESTONE_5A_EXECUTION_PLAN.md`](MILESTONE_5A_EXECUTION_PLAN.md)) · originally proposed 2026-09-22
+> **Status: AGREED 2026-09-22 — founder decisions in §8; executed as Milestone 5a** ([`MILESTONE_5A_EXECUTION_PLAN.md`](../../framework/milestones/MILESTONE_5A_EXECUTION_PLAN.md)) · originally proposed 2026-09-22
 > **Trigger:** founder direction — *"make email the unique ID at the backend, one account one email, mandatory; then add profile fields as per best practices of a training portal (location, national ID or passport number, and more)."*
 > **Authorises nothing.** Implementation starts only after the decisions in §7 are answered. Any table or column below is a **Rule 1** change and is listed for that approval.
 

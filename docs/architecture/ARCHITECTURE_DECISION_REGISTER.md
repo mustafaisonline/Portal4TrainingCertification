@@ -239,7 +239,7 @@ Each record: **Context · Decision/Recommendation · Alternatives considered · 
 
 **Approval.** 🔴 Required — authentication architecture is a named RED gate. **Three separate decisions: B1** approve the specification deviation · **B2** select the provider · **B3** accept conditions 1–5 if Better Auth is selected.
 
-> **Execution note — 2026-09-21.** Status remains **PENDING HUMAN APPROVAL**. Under the founder's blanket direction of 2026-09-21 and the default posted at the start of execution (`docs/execution/WIREFRAME_TO_PRODUCTION_PLAN.md` §0.1 #1), Milestone 2 was built on the **recommendation — Better Auth 1.7.5 — with conditions 1–3 enforced in code** (surface = email/password + TOTP only; no organisation/roles plugin; mapping pattern in `auth_identities`) and conditions 4–5 recorded as operational commitments. **B1/B2/B3 await the founder's ratification**; the mapping pattern keeps a switch to Clerk a one-table rewrite. See `docs/execution/MILESTONE_2_EXECUTION_PLAN.md` §3, §10 and the completion report.
+> **Execution note — 2026-09-21.** Status remains **PENDING HUMAN APPROVAL**. Under the founder's blanket direction of 2026-09-21 and the default posted at the start of execution (`docs/execution/WIREFRAME_TO_PRODUCTION_PLAN.md` §0.1 #1), Milestone 2 was built on the **recommendation — Better Auth 1.7.5 — with conditions 1–3 enforced in code** (surface = email/password + TOTP only; no organisation/roles plugin; mapping pattern in `auth_identities`) and conditions 4–5 recorded as operational commitments. **B1/B2/B3 await the founder's ratification**; the mapping pattern keeps a switch to Clerk a one-table rewrite. See `framework/milestones/MILESTONE_2_EXECUTION_PLAN.md` §3, §10 and the completion report.
 
 ---
 
@@ -1135,7 +1135,7 @@ NEVER PORT: every `demo*` simulation, `sessionStorage` state, sample registries 
 ---
 
 ### ADR-046 — Production hosting, deployment governance and Stripe key type (Milestone 11)
-**Date:** 2026-09-26 · **Status:** APPROVED — 2026-09-26 · **K2/K6/K9 REVERSED 2026-09-27, on the founder's explicit instruction** · **Resolves:** ADR-016 (hosting), ADR-005a (production PostgreSQL host), OQ-18 / M9 J6 (release gate); refines J1, J7, J9 · **Arises from:** `docs/execution/MILESTONE_11_EXECUTION_PLAN.md` §5 (K1–K16)
+**Date:** 2026-09-26 · **Status:** APPROVED — 2026-09-26 · **K2/K6/K9 REVERSED 2026-09-27, on the founder's explicit instruction** · **Resolves:** ADR-016 (hosting), ADR-005a (production PostgreSQL host), OQ-18 / M9 J6 (release gate); refines J1, J7, J9 · **Arises from:** `framework/milestones/MILESTONE_11_EXECUTION_PLAN.md` §5 (K1–K16)
 
 **⚠ 2026-09-27 SUPERSESSION — K2 (a), K6 and K9's Docker/registry mechanics dropped; PM2 process management adopted instead.** While walking Milestone 11 Phase B (provisioning), the founder asked why the portal wasn't deploying the same way as eCard — rsync + `npm install` + PM2, directly on the Droplet, no image, no registry — since eCard runs that way in production today. Before changing anything, I read eCard's actual scripts (`~/Documents/GitHub/eCard/Deployement-Steps/`, outside this repository) and found the premise needed a correction first: **eCard has no build step at all** — its backend is a plain Express server (`node server.js`, no TypeScript, no bundler) and its frontend is plain static files; `npm install` is its entire "build." This portal is Next.js/TypeScript and genuinely needs `next build` before it can run, something eCard's own pattern never had to solve. With that clarified, the founder chose, deliberately: keep building (and PROVING) in GitHub Actions exactly as K6 already required, but ship the built output via rsync instead of packaging it as a Docker image, and run it under PM2 on the Droplet instead of a container — matching eCard's actual process-ownership model (root-owned release files, an unprivileged `deploy` user, PM2 running as `deploy`) even though its build mechanics don't apply here. Consequently:
 - **K2 (a)** is unchanged in substance (one Droplet, Caddy in front) but the app now runs directly under **PM2**, not a Docker container.
@@ -1172,7 +1172,7 @@ NEVER PORT: every `demo*` simulation, `sessionStorage` state, sample registries 
 ---
 
 ### ADR-047 — Trainer role and trainings managed in the portal (Milestone 12)
-**Date:** 2026-09-26 · **Status:** APPROVED — 2026-09-26 · **Resolves:** M8 §5 A7 (trainer role); PROJECT_STATUS §3 item 8(a) (Malaysian checkout price) · **Arises from:** `docs/execution/MILESTONE_12_EXECUTION_PLAN.md` §6 (L1–L12)
+**Date:** 2026-09-26 · **Status:** APPROVED — 2026-09-26 · **Resolves:** M8 §5 A7 (trainer role); PROJECT_STATUS §3 item 8(a) (Malaysian checkout price) · **Arises from:** `framework/milestones/MILESTONE_12_EXECUTION_PLAN.md` §6 (L1–L12)
 
 **Context.** The founder asked (2026-09-26) for an admin-assignable **Trainer** role whose holders can launch a training; `/admin` cards to add trainings, set the schedule and set a **four-row fee structure** (Malaysia via HRD Corp · Malaysia not via HRD Corp · Pakistan · Rest of the world); and for all of it to be *"managed at database level, nothing at front end"*. Trainings were read-only in the portal (content in `prisma/seed-data/courses.ts`, upserted by the seed), fees were one row per region with the HRD Corp split in presentation JSON, and the schedule page was hard-wired to the flagship.
 
@@ -1210,7 +1210,7 @@ NEVER PORT: every `demo*` simulation, `sessionStorage` state, sample registries 
 - **What this approval does NOT authorize:** Any other new order kind · changes to registration checkout, refund tiers or webhook handling of registrations · a live payment before the M11 Phase B environment exists.
 
 ### ADR-049 — Attendance records and the participant journey (Milestone 13)
-**Date:** 2026-09-27 · **Status:** APPROVED — 2026-09-27 · **Arises from:** the founder's "Flow" requirements of 2026-09-27 and the answers to the ten review questions the same day · **Record:** [`../execution/MILESTONE_13_EXECUTION_PLAN.md`](../execution/MILESTONE_13_EXECUTION_PLAN.md)
+**Date:** 2026-09-27 · **Status:** APPROVED — 2026-09-27 · **Arises from:** the founder's "Flow" requirements of 2026-09-27 and the answers to the ten review questions the same day · **Record:** [`../execution/MILESTONE_13_EXECUTION_PLAN.md`](../../framework/milestones/MILESTONE_13_EXECUTION_PLAN.md)
 
 **Context.** The founder walked the participant journey end to end — training card → training page → dates → payment → account → certificate — and asked for the account to be re-ordered around it (Profile first, My Trainings with "Yet to attend" / "Attended", Certifications, Reviews), for attendance to be recorded by the Academy on the day, and for the certificate to be shown only after a substantive review.
 
@@ -1228,7 +1228,7 @@ NEVER PORT: every `demo*` simulation, `sessionStorage` state, sample registries 
 - **What this approval does NOT authorize:** removing the transfer capability from the service or the refund policy · card payment for Pakistan · attendance-driven issuance · any change to fees or the credential model.
 
 ### ADR-050 — Free Learning: the founder's book as topics in PostgreSQL, imported by a dev-time script (Milestone 14 Phases 1–2)
-**Date:** 2026-09-27 · **Status:** APPROVED — 2026-09-27 (impact analysis P1–P20; "§4 rows 1–2 approved, start Phase 2") · **Depends on:** [DR-03](../../DR-03_FREE_LEARNING_AND_KNOWLEDGE_CHECK.md) · **Record:** [`../execution/MILESTONE_14_EXECUTION_PLAN.md`](../execution/MILESTONE_14_EXECUTION_PLAN.md)
+**Date:** 2026-09-27 · **Status:** APPROVED — 2026-09-27 (impact analysis P1–P20; "§4 rows 1–2 approved, start Phase 2") · **Depends on:** [DR-03](../../DR-03_FREE_LEARNING_AND_KNOWLEDGE_CHECK.md) · **Record:** [`../execution/MILESTONE_14_EXECUTION_PLAN.md`](../../framework/milestones/MILESTONE_14_EXECUTION_PLAN.md)
 
 **Context.** DR-03 makes free self-paced learning a product line. The content is the founder's own published book (a 72 MB Word document: 383 top-level headings, ~175,000 words, 449 images), to be readable topic by topic with a search, and later quizzed. Object storage is still undecided (ADR-008).
 

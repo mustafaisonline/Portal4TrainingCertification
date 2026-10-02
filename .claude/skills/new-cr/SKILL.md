@@ -7,6 +7,7 @@ description: Create a new Change Requisition file in CR/ for a founder requireme
 
 CLAUDE.md makes a CR mandatory before any code or config change. Steps:
 
+0. **Evaluate the requirement first.** Read it, check it against `framework/brd.md`, the decision records and open CRs. Decide how many CRs it needs: related tasks that share a goal, files or release belong in **one CR** with one tracker row per task; split into separate CRs only when tasks are independent, differ in risk (e.g. one is a RED gate), or would be deployed separately. One task per CR is not required. State the grouping and why.
 1. Get the current Malaysia time: `TZ=Asia/Kuala_Lumpur date '+%Y-%m-%d-%H%M'`.
 2. Create `CR/CR-<YYYY-MM-DD-HHMM>-<short-kebab-title>.md` using the same structure as existing CRs (see `CR/CR-2026-10-02-0630-cr-process-binding.md`):
    - Header: `# CR-<stamp> — <title>`, then Received (date, time MYT), Status, Requested by.

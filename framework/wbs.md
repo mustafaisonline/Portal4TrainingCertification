@@ -17,7 +17,7 @@
 |---|---|
 | Where does the project stand right now? | *What is the system and why?* → [`../architecture/`](../docs/architecture/README.md) |
 | What is complete, active, ready, blocked, deferred? | *Which decision was made, on what basis?* → [`../architecture/ARCHITECTURE_DECISION_REGISTER.md`](../docs/architecture/ARCHITECTURE_DECISION_REGISTER.md) |
-| What must be decided before a workstream can proceed? | *How is a milestone implemented, step by step?* → the milestone's own execution plan, e.g. [`MILESTONE_1_EXECUTION_PLAN.md`](../docs/execution/MILESTONE_1_EXECUTION_PLAN.md) |
+| What must be decided before a workstream can proceed? | *How is a milestone implemented, step by step?* → the milestone's own execution plan, e.g. [`MILESTONE_1_EXECUTION_PLAN.md`](milestones/MILESTONE_1_EXECUTION_PLAN.md) |
 | What comes next, and in what order? | *What is the product?* → the approved specifications in the repository root |
 | What remains before MVP and before production readiness? | *What are the durable principles?* → [`../architecture/ARCHITECTURE_PRINCIPLES.md`](../docs/architecture/ARCHITECTURE_PRINCIPLES.md) |
 
@@ -211,7 +211,7 @@ Notation used below: `D·—·—` means drafted only; `D·A·—` means drafted
 | `docs/architecture/TECHNOLOGY_DECISION_PACKAGE_PHASE_1.md` | ✅ | ◐ | **❌** | Partly approved 2026-08-30 (A, C, D approved; **B pending**) |
 | `docs/architecture/DECISION_B_AUTHENTICATION.md` | ✅ | — | **❌** | **RECOMMENDATION ONLY — PENDING HUMAN APPROVAL** |
 | `docs/execution/README.md` | ✅ | — | **❌** | Index |
-| `docs/execution/MILESTONE_1_EXECUTION_PLAN.md` | ✅ | ◐ | **❌** | **Scope accepted; execution NOT authorized** |
+| `framework/milestones/MILESTONE_1_EXECUTION_PLAN.md` | ✅ | ◐ | **❌** | **Scope accepted; execution NOT authorized** |
 | `framework/wbs.md` *(this document)* | ✅ | — | **❌** | DRAFT — pending human review |
 
 **Legend:** ✅ yes · ◐ partial, per the artifact's own approval records · — no · **❌ not in git history**.
@@ -361,7 +361,7 @@ authentication → authorisation → programme discovery
 
 | WBS | Work package | Status | Depends on | Blocking decision | Reference | Exit criterion |
 |---|---|---|---|---|---|---|
-| **4.2.1** | **Milestone 1 — Walking Skeleton.** One thin path through every approved layer: container → database → migration → seed → repository → route → rendered page → test | ⏸ **Ready — authorization required** · scope accepted | 3.x approvals (001, 002, 004, 005, 005a-local, 007, 023, 025, 029, 038) | **None architectural** — execution authorization only | [`MILESTONE_1_EXECUTION_PLAN.md`](../docs/execution/MILESTONE_1_EXECUTION_PLAN.md) | Its §8 — all ten pass/fail criteria, **especially 7 and 8, the restart proofs** |
+| **4.2.1** | **Milestone 1 — Walking Skeleton.** One thin path through every approved layer: container → database → migration → seed → repository → route → rendered page → test | ⏸ **Ready — authorization required** · scope accepted | 3.x approvals (001, 002, 004, 005, 005a-local, 007, 023, 025, 029, 038) | **None architectural** — execution authorization only | [`MILESTONE_1_EXECUTION_PLAN.md`](milestones/MILESTONE_1_EXECUTION_PLAN.md) | Its §8 — all ten pass/fail criteria, **especially 7 and 8, the restart proofs** |
 | 4.2.1a | RED gate — initialise Next.js App Router + TypeScript at the repository root | ⏸ Authorization required | 4.2.1 authorized | — | Plan §5.1 | Framework present; nothing beyond the plan's scope |
 | 4.2.1b | RED gate — install **only** the §5.2 pinned set | ⏸ Authorization required | 4.2.1a | — | Plan §5.2 | Criterion 10: no package installed beyond the list |
 | 4.2.1c | RED gate — start a local PostgreSQL container (non-production, synthetic data only) | ⏸ Authorization required | 4.2.1b | Permitted under the ADR-032 **sequencing rule** | Plan §5.3 | Criterion 1 |
@@ -672,7 +672,7 @@ Everything that cannot proceed today, in one place. **Nothing in this table may 
 
 | Milestone | Phase / WBS | Detailed plan | Status |
 |---|---|---|---|
-| **Milestone 1 — Walking Skeleton** | 4.2.1 | [`MILESTONE_1_EXECUTION_PLAN.md`](../docs/execution/MILESTONE_1_EXECUTION_PLAN.md) | ⏸ Scope accepted · execution **not authorized** |
+| **Milestone 1 — Walking Skeleton** | 4.2.1 | [`MILESTONE_1_EXECUTION_PLAN.md`](milestones/MILESTONE_1_EXECUTION_PLAN.md) | ⏸ Scope accepted · execution **not authorized** |
 | **Milestone 2 — Auth → authz → dashboard** | 4.2.2 | **Does not exist yet** — WP 4.2.2a | ⛔ Blocked by ADR-006 |
 | *(remaining Track B slice steps — **milestone structure not yet defined**)* | 4.2.3–4.2.9 | **No milestone defined; no plan exists** | ❓ Milestone structure is an open planning question for the owner |
 | **Phase 1B blocks** (5.1–5.11) | 5.x | **Do not exist yet** | ◻ Future |

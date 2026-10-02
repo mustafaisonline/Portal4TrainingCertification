@@ -1,6 +1,6 @@
 # CR-2026-10-02-2012 — Project agents and skills (`.claude/agents`, `.claude/skills`)
 
-**Received:** 2026-10-02 20:12 MYT · **Status:** BUILT · **Requested by:** founder
+**Received:** 2026-10-02 20:12 MYT · **Status:** DEPLOYED (`v2026.10.02-5`) · **Requested by:** founder
 
 ## 1. Request (verbatim)
 
@@ -36,3 +36,4 @@ Create `.claude/agents/governance-reviewer.md`, `.claude/agents/test-verifier.md
 | Date (MYT) | Entry |
 |---|---|
 | 2026-10-02 20:12 | CR created; files built. Not yet exercised — agents/skills load at session start. |
+| 2026-10-02 | Founder: "commit, push and deploy in production". Deployed as `v2026.10.02-5` (commit `2487ad3`): gate PASSED (tsc, Vitest, build, Playwright; npm-audit advisory warning), backup, migration sandbox, switch, health 200, post-deploy validation PASSED. Live check: `/schedule` generic Register interest → `/programs`; diagnostic pages 200. |

@@ -1,6 +1,6 @@
 # CR-2026-10-02-2016 — Mobile burger menu is not scrollable
 
-**Received:** 2026-10-02 20:16 MYT · **Status:** BUILT & VERIFIED in dev — not deployed · **Requested by:** founder · **Recommended model:** Sonnet 5.5 — one-file UI fix plus an e2e test; this session is Sonnet 5.5
+**Received:** 2026-10-02 20:16 MYT · **Status:** DEPLOYED (`v2026.10.02-5`) · **Requested by:** founder · **Recommended model:** Sonnet 5.5 — one-file UI fix plus an e2e test; this session is Sonnet 5.5
 
 Spec: [`CR-SPEC-2026-10-02-2016-mobile-burger-menu-not-scrollable.md`](specs/CR-SPEC-2026-10-02-2016-mobile-burger-menu-not-scrollable.md)
 
@@ -29,7 +29,7 @@ Give the panel a viewport-based max height under the header (`dvh` so it respect
 |---|---|---|---|
 | 1 | Build | **BUILT** — `max-h-[calc(100dvh-4.5rem)] overflow-y-auto overscroll-contain` on `#mobile-nav` | 2026-10-02 |
 | 2 | Verify | **VERIFIED** — new Playwright test at 320×568 and 375×600 fails without the fix, passes with it; `assessment.spec.ts` + `cr-2136-menus-and-admin-labels.spec.ts` 11/11; `tsc` clean. Not run at 390×844 or on a real phone. | 2026-10-02 |
-| 3 | Deploy | NOT STARTED (founder's word) | — |
+| 3 | Deploy | **DEPLOYED** `v2026.10.02-5` | 2026-10-02 |
 
 ## 6. Progress log
 
@@ -37,3 +37,4 @@ Give the panel a viewport-based max height under the header (`dvh` so it respect
 |---|---|
 | 2026-10-02 20:16 | CR created from the founder's list. Facts gathered read-only.  |
 | 2026-10-02 | Executed via `run-cr` (latest open CR). Fix in `PublicShell.tsx`, test added to `assessment.spec.ts`. Full gate (`deploy/04-release-gate.sh`) not run; that happens at deploy. CR-2013 (avatar on mobile) untouched. |
+| 2026-10-02 | Founder: "commit, push and deploy in production". Deployed as `v2026.10.02-5` (commit `2487ad3`): gate PASSED (tsc, Vitest, build, Playwright; npm-audit advisory warning), backup, migration sandbox, switch, health 200, post-deploy validation PASSED. Live check: `/schedule` generic Register interest → `/programs`; diagnostic pages 200. |

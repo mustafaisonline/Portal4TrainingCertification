@@ -1,6 +1,6 @@
 # CR-2026-10-02-2013 — Profile picture not visible on mobile
 
-**Received:** 2026-10-02 20:13 MYT · **Status:** BUILT & VERIFIED in dev — not deployed · **Requested by:** founder · **Recommended model:** Sonnet 5.5 — small UI change plus e2e; this session is Sonnet 5.5
+**Received:** 2026-10-02 20:13 MYT · **Status:** DEPLOYED (`v2026.10.02-5`) · **Requested by:** founder · **Recommended model:** Sonnet 5.5 — small UI change plus e2e; this session is Sonnet 5.5
 
 Spec: [`CR-SPEC-2026-10-02-2013-profile-picture-not-visible-on-mobile.md`](specs/CR-SPEC-2026-10-02-2013-profile-picture-not-visible-on-mobile.md)
 
@@ -37,3 +37,4 @@ Remove the `hidden sm:` gate (adjust header spacing so search/theme/burger still
 |---|---|
 | 2026-10-02 20:13 | CR created from the founder's list. Facts gathered read-only.  |
 | 2026-10-02 | Executed by `run-cr` using the CR's stated default assumption (avatar in the header on phones, menu anchored to the header). Built; menus spec 6/6; full-suite regression recorded in the commit/summary. Not deployed. |
+| 2026-10-02 | Founder: "commit, push and deploy in production". Deployed as `v2026.10.02-5` (commit `2487ad3`): gate PASSED (tsc, Vitest, build, Playwright; npm-audit advisory warning), backup, migration sandbox, switch, health 200, post-deploy validation PASSED. Live check: `/schedule` generic Register interest → `/programs`; diagnostic pages 200. |

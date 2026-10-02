@@ -24,7 +24,7 @@
 | Session | `resume-work` | Orient: status, open CRs, deferred items |
 | Business requirements | `vision-write` · `brd-write` | Maintain `vision.md`, `brd.md` |
 | Planning | `milestones-update` · `wbs-update` | Maintain `milestones.md`, `wbs.md` |
-| Change control | `new-cr` · `cr-spec` · `run-cr` | CR file → its spec → execute the latest open CR |
+| Change control | `new-cr` · `cr-spec` · `run-cr` | CR file → its spec → plan and execute all open CRs (parallel/sequence; flags new-terminal/model) |
 | Governance | `guardrails-check` · `techstack-check` | Check work against `guardrails.md`, `techstack.md` |
 | Wireframe | `wireframe-signoff` | Check/record the sign-off gate |
 | Metadata | `metadata-capture` | One `.md` per table, view, script, policy, procedure |

@@ -1,21 +1,33 @@
 ---
 name: run-cr
-description: Pick and execute the latest Change Requisition in CR/ that is not yet done or deployed. Use when the founder says "execute the latest CR", "do the next CR" or "run CR", with or without a CR name.
+description: Scan every open Change Request in CR/, plan which can run in parallel or in sequence, flag which run in this terminal and which need a new terminal on a different Claude model, then execute. Use when the founder says "run CR", "execute the open CRs" or "do the latest CR".
 ---
 
-# Run the latest open CR
+# Run open CRs
 
-If the founder names a CR, use it. Otherwise select one:
+If the founder names one CR, run only that one (steps 4–8). Otherwise plan and run **all** open CRs:
 
-1. Read `CR/README.md` to list all CRs, then open each CR file and read its own `**Status:**` header and `## 5. Tracker`. The index status text can be stale or missing, so the CR file wins.
-2. Order candidates by the timestamp in the filename, newest first (do not trust the index order).
-3. Classify each CR:
-   - **Executable:** NOT STARTED or IN PROGRESS (some tracker step not yet BUILT).
-   - **Skip, but report:** BUILT / BUILT & VERIFIED (awaiting commit, verify or deploy), DEFERRED, BLOCKED, awaiting a founder decision.
-   - **Skip:** DONE, DEPLOYED, or every tracker step complete.
-   Legacy entries outside `CR/` (`modification.md`, milestone plans) are all deployed; ignore them.
-4. Pick the newest executable CR. State plainly which one and why, plus any newer CRs skipped and the reason. Then run `model-recommend`: if the recommended model differs from this session's, stop and have Buddy ask the founder to open a new terminal on it (unless they say "continue here"). If none is executable, say so, list the BUILT/DEFERRED ones, and stop.
-5. Open the CR's spec in `CR/specs/` (create it with `cr-spec` if missing) and follow it. Execute per `CLAUDE.md`: pre-flight assessment, read the CR's request, facts and plan, make the smallest change, one tracker step at a time. Stop and ask at any RED gate (data model, new dependency, auth, payments, destructive action) or open ambiguity; never invent business rules.
-6. After each step update the CR's tracker, status header and progress log (MYT), and the status text of its row in `CR/README.md`. Validate (use the `test-verifier` agent) before marking VERIFIED; review with `governance-reviewer` when the change is significant.
-7. When a milestone or WBS task is achieved, update `framework/milestones.md` / `framework/wbs.md` (`milestones-update`, `wbs-update`).
-8. Commit, push and deploy only on the founder's word. Finish with the standard completion report.
+## A. Scan and classify
+1. Read `CR/README.md`, then open every CR file; the CR's own `**Status:**` header and `## 5. Tracker` win over the index. Order by filename timestamp.
+2. Classify:
+   - **Executable:** NOT STARTED or IN PROGRESS.
+   - **Needs the founder first:** open question, missing screenshot/reproduction, BLOCKED, RED gate awaiting approval, DEFERRED.
+   - **Awaiting verify/commit/deploy:** BUILT / BUILT & VERIFIED. Report; do not re-execute.
+   - **Skip:** DONE, DEPLOYED. Legacy entries outside `CR/` are deployed; ignore.
+
+## B. Plan execution
+3. For each executable CR open its spec (`cr-spec` if missing), list the files it will touch and its risk (data model, dependency, auth, payments = RED gate → not auto-run).
+4. Build the order:
+   - **Parallel group:** CRs with disjoint files, no data-model/dependency change, not RED, not depending on each other's output. Run as worktree-isolated subagents (`Agent` with `isolation: "worktree"`, `exec-developer`), merge one at a time, resolve conflicts, then test.
+   - **Sequence:** CRs that share files or components, depend on each other (note CR cross-references), or whose overlap is unclear. **When unsure, sequence.**
+   - Tests run **serially** (one `next dev` per project dir; Playwright port 3101), after the code changes of a group are merged.
+5. Run `model-recommend` per CR. Compare with this session's model.
+   - **This terminal:** recommended model equals this session's. 
+   - **New terminal:** recommended model differs. Give the exact command per group: `claude --model <id>`, then `run-cr CR-<id>`. Do not execute these here unless the founder says "continue here".
+6. **Show the plan before executing**, as one table: CR · task · model · where (this terminal / new terminal + command) · parallel group or sequence position · blocker or question for the founder. Highlight the "new terminal" rows. A parallel set run in new terminals must use separate worktrees/branches, never the same checkout at the same time.
+
+## C. Execute (the this-terminal set)
+7. Execute per `CLAUDE.md` and each spec: pre-flight, smallest change, stop and ask at RED gates or ambiguity, never invent business rules. After each step update the CR tracker, status header, progress log (MYT) and its `CR/README.md` row. Validate with `test-verifier`; review significant changes with `governance-reviewer`.
+8. Update `framework/milestones.md` / `framework/wbs.md` when a milestone or WBS task is achieved.
+9. Commit one CR per commit (stage files by name). Push and deploy only on the founder's word, or in Buddy Autonomous mode. Prefer one deploy at the end for the whole batch.
+10. Finish with a summary table: CR → done / needs-founder / needs-new-terminal / blocked, and the questions waiting on the founder.

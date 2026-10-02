@@ -15,6 +15,7 @@
 | Testing | `governance-reviewer` | Reviews a diff against the rules and decision records |
 | Deployment | `deploy-engineer` | Governed deploy pipeline, rollback, verification |
 | Metadata | `meta-steward` | Business / technical / operational metadata files |
+| Prompt engineering | `pe-selector` | Picks the cheapest accurate `pf-*` framework skill and rebuilds the prompt |
 
 ## Skills
 
@@ -27,6 +28,8 @@
 | Governance | `guardrails-check` · `techstack-check` | Check work against `guardrails.md`, `techstack.md` |
 | Wireframe | `wireframe-signoff` | Check/record the sign-off gate |
 | Metadata | `metadata-capture` | One `.md` per table, view, script, policy, procedure |
+| Prompt engineering | 30 `pf-*` skills (RTF, TAG, APE, BAB, PAR, RACE, CARE, RODES, ROSES, RASCEF, RISEN, CO-STAR, CRISPE, CLEAR, zero-shot, few-shot, chain-of-thought, self-consistency, tree-of-thoughts, ReAct, least-to-most, step-back, plan-and-solve, prompt-chaining, chain-of-verification, self-refine, meta-prompting, generated-knowledge, xml-structured, role-prompting) | One per framework; catalogue in [`prompt-frameworks.md`](prompt-frameworks.md) |
+| Model choice | `model-recommend` | Cheapest sufficient Claude model per CR/task; same model → execute, else new terminal |
 | Deployment | `deploy-audit` · `deploy-incremental` · `deploy-full` · `deploy-rollback` | The existing `deploy/` pipeline as skills |
 
 ## Adding more

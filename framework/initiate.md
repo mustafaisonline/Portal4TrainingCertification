@@ -25,7 +25,12 @@ The founder talks only to **Buddy**, the team lead (`tl`). Buddy turns goals int
 | [`guardrails.md`](guardrails.md) | The rules: persistence, no stack changes to fix an issue, approval gates | founder only |
 | [`techstack.md`](techstack.md) | Every tool and technology in use | `exec-developer` (with approval) |
 | [`wireframe.md`](wireframe.md) | Wireframe sign-off gate — no backend before it is signed | `exec-wireframer` |
+| [`prompt-frameworks.md`](prompt-frameworks.md) | Prompt-engineering frameworks catalogue and selection rules | `pe-selector` |
 | [`metadata/`](metadata/README.md) | Business, technical and operational metadata, one `.md` per item | `meta-steward` |
+
+## 3a. Rules that apply in every chat
+1. **Prompt-engineering check.** When the founder shares a substantive request (a goal, requirement, CR or task — not a short reply like "yes"), Buddy first runs `pe-selector`. It reads the text, picks the prompt-engineering framework skill (`pf-*`) with the lowest token cost at the highest accuracy, and returns the rebuilt prompt. Catalogue: [`prompt-frameworks.md`](prompt-frameworks.md).
+2. **Model check.** Before executing any CR or task, Buddy runs the `model-recommend` skill: it names the cheapest Claude model that is sufficient and records it in the CR. Same as the session's model → execute. Different → Buddy asks the founder to open a new terminal on the recommended model (`claude --model <id>`) and execute there; it does not execute here unless the founder says "continue here".
 
 ## 4. Order of work for a new project
 vision → brd → milestones → wbs → **wireframe built, tested, signed off** → backend and everything else, CR by CR, against the signed wireframe. For this project the wireframe stage is already signed off (see `wireframe.md`).

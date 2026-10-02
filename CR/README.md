@@ -26,6 +26,7 @@ deploy only on the founder's word, except in `buddy` Autonomous mode, where the 
 
 | CR file | Title | Status |
 |---|---|---|
+| [CR-2026-10-02-2054-business-ops-metadata-and-prompt-engineering.md](CR-2026-10-02-2054-business-ops-metadata-and-prompt-engineering.md) | Business and operational metadata; prompt-engineering skills + selector agent; per-chat and per-task model rules — BUILT, awaiting push |
 | [CR-2026-10-02-2045-framework-followups-milestones-metadata-push.md](CR-2026-10-02-2045-framework-followups-milestones-metadata-push.md) | Framework follow-ups: multi-task CRs, milestone files moved, table/script metadata, push — BUILT |
 | [CR-2026-10-02-2034-ai-delivery-framework-folders-agents-skills.md](CR-2026-10-02-2034-ai-delivery-framework-folders-agents-skills.md) | AI delivery framework: `framework/` document set, 3 files moved, 6 agents, 12 skills — BUILT, awaiting founder review |
 | [CR-2026-10-02-2030-buddy-default-agent-and-autonomous-push.md](CR-2026-10-02-2030-buddy-default-agent-and-autonomous-push.md) | Buddy is the default agent; autonomous mode may commit/push/deploy — BUILT |

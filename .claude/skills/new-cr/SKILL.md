@@ -19,6 +19,7 @@ CLAUDE.md makes a CR mandatory before any code or config change. Steps:
    - `## 6. Progress log` — dated lines, newest last.
 3. Add a row at the top of the index table in `CR/README.md` (newest first): `| [file](file) | Title — STATUS |`.
 4. Name the WBS task and milestone (`framework/wbs.md`, `framework/milestones.md`) the CR belongs to, or write "unplanned change request". Then create its specification with the `cr-spec` skill before any code.
-5. Tell the founder the CR is open, then work one CR at a time. Update the tracker and log after every step; commit, push and deploy only on the founder's word.
+5. Run `model-recommend` and write `**Recommended model:** <name> — <reason>` under the CR header.
+6. Tell the founder the CR is open, then work one CR at a time. Update the tracker and log after every step; commit, push and deploy only on the founder's word.
 
 Argument, if given, is the request text or title.

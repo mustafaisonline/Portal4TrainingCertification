@@ -14,7 +14,7 @@ If the founder names a CR, use it. Otherwise select one:
    - **Skip, but report:** BUILT / BUILT & VERIFIED (awaiting commit, verify or deploy), DEFERRED, BLOCKED, awaiting a founder decision.
    - **Skip:** DONE, DEPLOYED, or every tracker step complete.
    Legacy entries outside `CR/` (`modification.md`, milestone plans) are all deployed; ignore them.
-4. Pick the newest executable CR. State plainly which one and why, plus any newer CRs skipped and the reason. If none is executable, say so, list the BUILT/DEFERRED ones, and stop.
+4. Pick the newest executable CR. State plainly which one and why, plus any newer CRs skipped and the reason. Then run `model-recommend`: if the recommended model differs from this session's, stop and have Buddy ask the founder to open a new terminal on it (unless they say "continue here"). If none is executable, say so, list the BUILT/DEFERRED ones, and stop.
 5. Open the CR's spec in `CR/specs/` (create it with `cr-spec` if missing) and follow it. Execute per `CLAUDE.md`: pre-flight assessment, read the CR's request, facts and plan, make the smallest change, one tracker step at a time. Stop and ask at any RED gate (data model, new dependency, auth, payments, destructive action) or open ambiguity; never invent business rules.
 6. After each step update the CR's tracker, status header and progress log (MYT), and the status text of its row in `CR/README.md`. Validate (use the `test-verifier` agent) before marking VERIFIED; review with `governance-reviewer` when the change is significant.
 7. When a milestone or WBS task is achieved, update `framework/milestones.md` / `framework/wbs.md` (`milestones-update`, `wbs-update`).

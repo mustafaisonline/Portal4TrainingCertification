@@ -1,6 +1,6 @@
 # CR-2026-10-02-2014 — Free skill diagnostic: the score is not displayed
 
-**Received:** 2026-10-02 20:14 MYT · **Status:** NOT STARTED — not yet reproduced · **Requested by:** founder
+**Received:** 2026-10-02 20:14 MYT · **Status:** NOT STARTED — founder decision needed: scored result or charts of the existing counts? · **Requested by:** founder
 
 ## 1. Request (verbatim)
 
@@ -37,3 +37,4 @@ Reproduce in dev with the same steps; find the root cause (not a patch); fix; ad
 |---|---|
 | 2026-10-02 20:14 | CR created from the founder's list. Facts gathered read-only.  |
 | 2026-10-02 | run-cr 2026-10-02: kept OPEN — not reproduced; needs where/when the score is missing (right after finishing vs later/refresh, desktop/mobile) and a screenshot. Re-run run-cr after that. |
+| 2026-10-02 | Founder: the page is https://dataainexus.com/free-learning/diagnostic/result — the total score and the learning-area charts are missing. Finding: this is by design today, not a bug. `DiagnosticResultView.tsx` states 'Never a score': it shows only answered / not-sure counts per capability area, and `diagnostic_questions` stores no correct answers, so a score cannot be computed. A total score and charts would need new business rules (what is correct, how scored, level bands) and, for a score, a data-model change (RED gate). Questions raised with the founder; nothing built. |

@@ -1,6 +1,6 @@
 # CR-2026-10-02-2011 — HOW IT WORKS images missing on the home page — bring them from dev to production
 
-**Received:** 2026-10-02 20:11 MYT · **Status:** NOT STARTED — cannot be reproduced yet; needs a screenshot · **Requested by:** founder
+**Received:** 2026-10-02 20:11 MYT · **Status:** DONE — no change needed (founder can now see the images) · **Requested by:** founder
 
 ## 1. Request (verbatim)
 
@@ -37,3 +37,4 @@ Depends on the answers. If they are DB-uploaded images (e.g. Admin → training 
 |---|---|
 | 2026-10-02 20:11 | CR created from the founder's list. Facts gathered read-only.  |
 | 2026-10-02 | run-cr 2026-10-02: kept OPEN — cannot be reproduced; needs the founder's screenshot (desktop/mobile, browser) and whether the images are different pictures uploaded in dev. Re-run run-cr after that. |
+| 2026-10-02 | Founder: "Now I can see those" — the four delivery photographs are visible; nothing was changed. Closed as not-a-defect (cause not found; most likely a browser cache or slow load). Reopen if it recurs, with a screenshot. |

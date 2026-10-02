@@ -43,3 +43,4 @@ Written case for approval (problem, why the existing `log` transport is insuffic
 |---|---|
 | 2026-10-02 20:15 | CR created from the founder's list. Facts gathered read-only. CR-0626 is marked ACTIVATED by this CR. |
 | 2026-10-02 | run-cr 2026-10-02: kept OPEN (BLOCKED) — RED gate (new external service): the founder must choose the email provider (Resend or Postmark), the sending address, and confirm DNS access. Re-run run-cr after the decision. |
+| 2026-10-02 | Founder: "let this CR there" — kept open and blocked (RED gate: provider not chosen). |

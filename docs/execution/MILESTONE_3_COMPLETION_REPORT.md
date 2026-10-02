@@ -83,7 +83,7 @@ Ten tables and seven enum types exactly as plan §5: `programmes` · `programme_
 
 ## 7. Documentation updated
 
-Plan (status) · this report · `README.md` (§3 index, §4 status row) · `BACKEND_HANDOFF_INDEX.md` §3.2 (content files, fixtures and invented offerings marked retired) · `.env.example` (`ENQUIRY_NOTIFY_EMAIL`). **Not updated:** `PROJECT_PLAN_WBS.md` has no M3 row (M3–M10 enter the WBS only when the transition plan is accepted — its §11); proposed there on acceptance.
+Plan (status) · this report · `README.md` (§3 index, §4 status row) · `BACKEND_HANDOFF_INDEX.md` §3.2 (content files, fixtures and invented offerings marked retired) · `.env.example` (`ENQUIRY_NOTIFY_EMAIL`). **Not updated:** `framework/wbs.md` has no M3 row (M3–M10 enter the WBS only when the transition plan is accepted — its §11); proposed there on acceptance.
 
 ## 8. Risks, observations and deviations
 

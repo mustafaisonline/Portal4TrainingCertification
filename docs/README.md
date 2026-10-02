@@ -24,4 +24,4 @@ Product requirements come from the repository root, which outranks everything he
 
 All three specifications have been reconciled with DR-02 and carry reconciliation notices plus in-place `⊘ RETIRED` / `↻ REFRAMED` / `⏸ DEFERRED` markers. **Superseded wording is retained deliberately for traceability — where a marker and the surrounding text disagree, the marker wins.**
 
-Governance comes from `CLAUDE.md` and `AI_DEVELOPMENT_GUARDRAILS.md`. Where this folder and any of the above conflict, **the above wins and this folder is wrong**.
+Governance comes from `CLAUDE.md` and `framework/guardrails.md`. Where this folder and any of the above conflict, **the above wins and this folder is wrong**.

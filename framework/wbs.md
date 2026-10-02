@@ -5,21 +5,21 @@
 > **Created:** 2026-08-30 · **Version:** 1.0 · **Owner:** project owner
 > **Status of this document:** DRAFT — execution navigation reference, pending human review
 >
-> **This document authorises nothing.** It records where the project stands, what is sequenced next, and what is blocked. It does not approve a decision, promote a status, resolve an open question, or grant execution authority. Every RED gate named in `CLAUDE.md`, `AI_DEVELOPMENT_GUARDRAILS.md` and `../architecture/ARCHITECTURE_APPROVAL_PACKAGE.md` still applies in full.
+> **This document authorises nothing.** It records where the project stands, what is sequenced next, and what is blocked. It does not approve a decision, promote a status, resolve an open question, or grant execution authority. Every RED gate named in `CLAUDE.md`, `framework/guardrails.md` and `../architecture/ARCHITECTURE_APPROVAL_PACKAGE.md` still applies in full.
 
 ---
 
 ## 0. What this document is, and what it is not
 
-`PROJECT_PLAN_WBS.md` is the **master execution navigation layer**: the hierarchical breakdown of the whole project, its phases, workstreams, milestones and work packages, with honest status, dependencies and approval gates.
+`framework/wbs.md` is the **master execution navigation layer**: the hierarchical breakdown of the whole project, its phases, workstreams, milestones and work packages, with honest status, dependencies and approval gates.
 
 | This document answers | Go elsewhere for |
 |---|---|
-| Where does the project stand right now? | *What is the system and why?* → [`../architecture/`](../architecture/README.md) |
-| What is complete, active, ready, blocked, deferred? | *Which decision was made, on what basis?* → [`../architecture/ARCHITECTURE_DECISION_REGISTER.md`](../architecture/ARCHITECTURE_DECISION_REGISTER.md) |
-| What must be decided before a workstream can proceed? | *How is a milestone implemented, step by step?* → the milestone's own execution plan, e.g. [`MILESTONE_1_EXECUTION_PLAN.md`](MILESTONE_1_EXECUTION_PLAN.md) |
+| Where does the project stand right now? | *What is the system and why?* → [`../architecture/`](../docs/architecture/README.md) |
+| What is complete, active, ready, blocked, deferred? | *Which decision was made, on what basis?* → [`../architecture/ARCHITECTURE_DECISION_REGISTER.md`](../docs/architecture/ARCHITECTURE_DECISION_REGISTER.md) |
+| What must be decided before a workstream can proceed? | *How is a milestone implemented, step by step?* → the milestone's own execution plan, e.g. [`MILESTONE_1_EXECUTION_PLAN.md`](../docs/execution/MILESTONE_1_EXECUTION_PLAN.md) |
 | What comes next, and in what order? | *What is the product?* → the approved specifications in the repository root |
-| What remains before MVP and before production readiness? | *What are the durable principles?* → [`../architecture/ARCHITECTURE_PRINCIPLES.md`](../architecture/ARCHITECTURE_PRINCIPLES.md) |
+| What remains before MVP and before production readiness? | *What are the durable principles?* → [`../architecture/ARCHITECTURE_PRINCIPLES.md`](../docs/architecture/ARCHITECTURE_PRINCIPLES.md) |
 
 **Documentation boundary, restated.** If it would still be true after the current milestone ships, it belongs in `docs/architecture/`. If it describes delivery, sequencing, milestones, work packages, dependencies, progress or current status, it belongs here. **This document must never become a second architecture specification or decision register.** Where it names a decision, it names the ID and the status only — the reasoning lives in the ADR.
 
@@ -27,10 +27,10 @@
 
 ```
 Approved specifications (root)  ─┐
-CLAUDE.md · AI_DEVELOPMENT_GUARDRAILS.md  ─┤ govern everything below
+CLAUDE.md · framework/guardrails.md  ─┤ govern everything below
 docs/architecture/ (frozen baseline) ─┘
                     ↓
-        PROJECT_PLAN_WBS.md   ← this document: the master roadmap
+        framework/wbs.md   ← this document: the master roadmap
                     ↓
               Major phases
                     ↓
@@ -50,7 +50,7 @@ docs/architecture/ (frozen baseline) ─┘
 
 > ## 🔄 EXECUTION LAYER RECONCILED WITH DR-02 — 2026-08-31
 >
-> The product model was corrected by [`DR-02_EXPERT_LED_DELIVERY_MODEL.md`](../../DR-02_EXPERT_LED_DELIVERY_MODEL.md) and propagated through the three root specifications and the architecture layer. **This execution plan has now been reconciled with that baseline.** The organisation is an independent professional **training and certification organisation** built on **expert-led delivery**; the portal supports that ecosystem rather than being where learning happens.
+> The product model was corrected by [`DR-02_EXPERT_LED_DELIVERY_MODEL.md`](../DR-02_EXPERT_LED_DELIVERY_MODEL.md) and propagated through the three root specifications and the architecture layer. **This execution plan has now been reconciled with that baseline.** The organisation is an independent professional **training and certification organisation** built on **expert-led delivery**; the portal supports that ecosystem rather than being where learning happens.
 >
 > **What changed here:** the Track B slice · Track A screen sequence · the `4.3` authoring outputs · Phase 5 blocks `5.2` and `5.8` · the deferred register triggers for AI and video.
 > **What did not:** **Milestone 1**, every RED gate, the Retrofit Test discipline, the certification and assessment sequencing, and the architecture principles.
@@ -190,7 +190,7 @@ Notation used below: `D·—·—` means drafted only; `D·A·—` means drafted
 | Artifact | D | A | C | Approval state (authoritative source) |
 |---|---|---|---|---|
 | `CLAUDE.md` | ✅ | ✅ | ✅ | In force — commit `690495c` |
-| `AI_DEVELOPMENT_GUARDRAILS.md` | ✅ | ✅ | ✅ | In force — commit `690495c` |
+| `framework/guardrails.md` | ✅ | ✅ | ✅ | In force — commit `690495c` |
 | `DATA_AI_ACADEMY_MVP_BUILD_SPEC.md` | ✅ | ✅ | ✅ | Binding scope contract — commit `39177f2` |
 | `DATA_AI_ACADEMY_PORTAL_BLUEPRINT.md` | ✅ | ✅ | ✅ | Authoritative for vision — commit `39177f2` |
 | `DATA_AI_ACADEMY_PORTAL_MOCKUP_SPECIFICATION.md` | ✅ | ✅ | ✅ | Authoritative for design language and IA — commit `39177f2` |
@@ -201,7 +201,7 @@ Notation used below: `D·—·—` means drafted only; `D·A·—` means drafted
 | `docs/architecture/ARCHITECTURE_APPROVAL_PACKAGE.md` | ✅ | ◐ | **❌** | PARTIALLY APPROVED 2026-08-30 |
 | `docs/architecture/ARCHITECTURE_OVERVIEW.md` | ✅ | ◐ | **❌** | DRAFT; §2.14 approved as ADR-040 |
 | `docs/architecture/TESTING_ARCHITECTURE.md` | ✅ | ◐ | **❌** | Layers, tiers and Tier 1 set **APPROVED** (ADR-038) |
-| `docs/architecture/TECHNOLOGY_STACK.md` | ✅ | — | **❌** | DRAFT — PENDING HUMAN APPROVAL |
+| `framework/techstack.md` | ✅ | — | **❌** | DRAFT — PENDING HUMAN APPROVAL |
 | `docs/architecture/DATA_ARCHITECTURE.md` | ✅ | — | **❌** | DRAFT — PENDING HUMAN APPROVAL |
 | `docs/architecture/SECURITY_ARCHITECTURE.md` | ✅ | — | **❌** | DRAFT — PENDING HUMAN APPROVAL |
 | `docs/architecture/INTEGRATION_ARCHITECTURE.md` | ✅ | — | **❌** | DRAFT — PENDING HUMAN APPROVAL |
@@ -212,7 +212,7 @@ Notation used below: `D·—·—` means drafted only; `D·A·—` means drafted
 | `docs/architecture/DECISION_B_AUTHENTICATION.md` | ✅ | — | **❌** | **RECOMMENDATION ONLY — PENDING HUMAN APPROVAL** |
 | `docs/execution/README.md` | ✅ | — | **❌** | Index |
 | `docs/execution/MILESTONE_1_EXECUTION_PLAN.md` | ✅ | ◐ | **❌** | **Scope accepted; execution NOT authorized** |
-| `docs/execution/PROJECT_PLAN_WBS.md` *(this document)* | ✅ | — | **❌** | DRAFT — pending human review |
+| `framework/wbs.md` *(this document)* | ✅ | — | **❌** | DRAFT — pending human review |
 
 **Legend:** ✅ yes · ◐ partial, per the artifact's own approval records · — no · **❌ not in git history**.
 
@@ -233,7 +233,7 @@ Notation used below: `D·—·—` means drafted only; `D·A·—` means drafted
 | WBS | Work package | Status | Depends on | Blocking decision | Reference | Exit criterion |
 |---|---|---|---|---|---|---|
 | **1.1** | Operating constitution — 10 non-negotiable rules, approval gates, pre-flight assessment, completion report format | ✅ Complete | — | — | `CLAUDE.md` | Committed and binding on every session |
-| **1.2** | Full governance reference — 50 sections covering persistence, security, testing, git, destructive actions, mock discipline | ✅ Complete | 1.1 | — | `AI_DEVELOPMENT_GUARDRAILS.md` | Committed; referenced by `CLAUDE.md` |
+| **1.2** | Full governance reference — 50 sections covering persistence, security, testing, git, destructive actions, mock discipline | ✅ Complete | 1.1 | — | `framework/guardrails.md` | Committed; referenced by `CLAUDE.md` |
 | **1.3** | Repository hygiene — technology-neutral `.gitignore`, repository boundary protection, intended remote confirmed | ✅ Complete | — | — | commit `690495c`; Guardrails §47 | `.gitignore` present; remote is `Portal4TrainingCertification` |
 | **1.4** | **Persist the documentation baseline in version control** — stage `docs/architecture/` and `docs/execution/` file-by-file, in bounded commits | ⏸ **Ready — authorization required** | 1.3 | — | `MILESTONE_1_EXECUTION_PLAN.md` §5.5(a); AP-09 | Both folders tracked; **no `git add .`**; `Reference Material/` untouched |
 
@@ -361,7 +361,7 @@ authentication → authorisation → programme discovery
 
 | WBS | Work package | Status | Depends on | Blocking decision | Reference | Exit criterion |
 |---|---|---|---|---|---|---|
-| **4.2.1** | **Milestone 1 — Walking Skeleton.** One thin path through every approved layer: container → database → migration → seed → repository → route → rendered page → test | ⏸ **Ready — authorization required** · scope accepted | 3.x approvals (001, 002, 004, 005, 005a-local, 007, 023, 025, 029, 038) | **None architectural** — execution authorization only | [`MILESTONE_1_EXECUTION_PLAN.md`](MILESTONE_1_EXECUTION_PLAN.md) | Its §8 — all ten pass/fail criteria, **especially 7 and 8, the restart proofs** |
+| **4.2.1** | **Milestone 1 — Walking Skeleton.** One thin path through every approved layer: container → database → migration → seed → repository → route → rendered page → test | ⏸ **Ready — authorization required** · scope accepted | 3.x approvals (001, 002, 004, 005, 005a-local, 007, 023, 025, 029, 038) | **None architectural** — execution authorization only | [`MILESTONE_1_EXECUTION_PLAN.md`](../docs/execution/MILESTONE_1_EXECUTION_PLAN.md) | Its §8 — all ten pass/fail criteria, **especially 7 and 8, the restart proofs** |
 | 4.2.1a | RED gate — initialise Next.js App Router + TypeScript at the repository root | ⏸ Authorization required | 4.2.1 authorized | — | Plan §5.1 | Framework present; nothing beyond the plan's scope |
 | 4.2.1b | RED gate — install **only** the §5.2 pinned set | ⏸ Authorization required | 4.2.1a | — | Plan §5.2 | Criterion 10: no package installed beyond the list |
 | 4.2.1c | RED gate — start a local PostgreSQL container (non-production, synthetic data only) | ⏸ Authorization required | 4.2.1b | Permitted under the ADR-032 **sequencing rule** | Plan §5.3 | Criterion 1 |
@@ -672,7 +672,7 @@ Everything that cannot proceed today, in one place. **Nothing in this table may 
 
 | Milestone | Phase / WBS | Detailed plan | Status |
 |---|---|---|---|
-| **Milestone 1 — Walking Skeleton** | 4.2.1 | [`MILESTONE_1_EXECUTION_PLAN.md`](MILESTONE_1_EXECUTION_PLAN.md) | ⏸ Scope accepted · execution **not authorized** |
+| **Milestone 1 — Walking Skeleton** | 4.2.1 | [`MILESTONE_1_EXECUTION_PLAN.md`](../docs/execution/MILESTONE_1_EXECUTION_PLAN.md) | ⏸ Scope accepted · execution **not authorized** |
 | **Milestone 2 — Auth → authz → dashboard** | 4.2.2 | **Does not exist yet** — WP 4.2.2a | ⛔ Blocked by ADR-006 |
 | *(remaining Track B slice steps — **milestone structure not yet defined**)* | 4.2.3–4.2.9 | **No milestone defined; no plan exists** | ❓ Milestone structure is an open planning question for the owner |
 | **Phase 1B blocks** (5.1–5.11) | 5.x | **Do not exist yet** | ◻ Future |
@@ -721,7 +721,7 @@ This document is designed to be the persistent orientation layer for future sess
 
 **Recommended: a short pointer in `CLAUDE.md`, not an expansion of it.** `CLAUDE.md` is the operating constitution; adding execution detail to it would violate its own separation of governance from delivery. A block of roughly the following weight, placed after *"Always read project knowledge before significant work"*, would be sufficient:
 
-> **Before beginning significant work, read [`docs/execution/PROJECT_PLAN_WBS.md`](docs/execution/PROJECT_PLAN_WBS.md) §1 Current Project Position.** Identify the current phase and milestone. Confirm what is complete, active, blocked, pending decision and deferred. Confirm the dependencies and approval gates that apply to the work being requested. **Do not start work that belongs to a future, blocked or deferred phase.** Detailed implementation steps live in the relevant milestone execution plan, never in this file. Update the WBS **only** when work has actually been completed and verified.
+> **Before beginning significant work, read [`framework/wbs.md`](wbs.md) §1 Current Project Position.** Identify the current phase and milestone. Confirm what is complete, active, blocked, pending decision and deferred. Confirm the dependencies and approval gates that apply to the work being requested. **Do not start work that belongs to a future, blocked or deferred phase.** Detailed implementation steps live in the relevant milestone execution plan, never in this file. Update the WBS **only** when work has actually been completed and verified.
 
 **Why this shape:**
 
@@ -738,11 +738,11 @@ This document is designed to be the persistent orientation layer for future sess
 
 | Field | Value |
 |---|---|
-| **Document** | `docs/execution/PROJECT_PLAN_WBS.md` |
+| **Document** | `framework/wbs.md` |
 | **Version** | 1.0 |
 | **Created** | 2026-08-30 |
 | **Status** | DRAFT — pending human review |
 | **Scope** | Execution and project management only. Not architecture, not a decision register, not a specification |
 | **Authority** | Level 3 (subordinate to human instruction, the approved specifications, and `docs/architecture/`) |
-| **Sources** | `CLAUDE.md` · `AI_DEVELOPMENT_GUARDRAILS.md` · the three root specifications · every document in `docs/architecture/` · `docs/execution/README.md` · `MILESTONE_1_EXECUTION_PLAN.md` · `git status` and `git log` as at 2026-08-30 |
+| **Sources** | `CLAUDE.md` · `framework/guardrails.md` · the three root specifications · every document in `docs/architecture/` · `docs/execution/README.md` · `MILESTONE_1_EXECUTION_PLAN.md` · `git status` and `git log` as at 2026-08-30 |
 | **Authorises** | **Nothing** |

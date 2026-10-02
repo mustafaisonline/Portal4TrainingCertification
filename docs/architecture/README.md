@@ -31,7 +31,7 @@ Architecture decisions on this project must not exist only inside an AI conversa
 - which decisions a human has actually approved,
 - and what remains open.
 
-Future AI sessions and human developers read these documents **before** significant work, as required by `CLAUDE.md` Rule 2 and `AI_DEVELOPMENT_GUARDRAILS.md` §4.
+Future AI sessions and human developers read these documents **before** significant work, as required by `CLAUDE.md` Rule 2 and `framework/guardrails.md` §4.
 
 These documents are **derived from**, and subordinate to, the authoritative product specifications:
 
@@ -59,7 +59,7 @@ Where this directory and a specification conflict, **the specification wins** an
 | [`README.md`](README.md) | This index; how architecture is approved and updated | DRAFT |
 | [`ARCHITECTURE_PRINCIPLES.md`](ARCHITECTURE_PRINCIPLES.md) | **AP-01…AP-12** — durable, technology-independent principles that outlive any framework or vendor | ✅ **APPROVED 2026-08-30** |
 | [`ARCHITECTURE_OVERVIEW.md`](ARCHITECTURE_OVERVIEW.md) | System architecture, components, responsibilities, data flows, principles | DRAFT — PENDING HUMAN APPROVAL |
-| [`TECHNOLOGY_STACK.md`](TECHNOLOGY_STACK.md) | Proposed technologies, purpose, alternatives, rationale, approval status | DRAFT — PENDING HUMAN APPROVAL |
+| [`framework/techstack.md`](../../framework/techstack.md) | Proposed technologies, purpose, alternatives, rationale, approval status | DRAFT — PENDING HUMAN APPROVAL |
 | [`ARCHITECTURE_DECISION_REGISTER.md`](ARCHITECTURE_DECISION_REGISTER.md) | The central register — ADR-001 onwards | DRAFT — PENDING HUMAN APPROVAL |
 | [`DATA_ARCHITECTURE.md`](DATA_ARCHITECTURE.md) | **Conceptual** data architecture: domains, entities, ownership, classification, persistence | DRAFT — PENDING HUMAN APPROVAL |
 | [`INTEGRATION_ARCHITECTURE.md`](INTEGRATION_ARCHITECTURE.md) | External integration categories, candidate providers, boundaries, failure handling | DRAFT — PENDING HUMAN APPROVAL |
@@ -162,12 +162,12 @@ Questions that **cannot reasonably be inferred from the specifications** and req
 | ID | Question | Blocks | Raised in |
 |---|---|---|---|
 | ~~OQ-1~~ | ~~Is the Phase 1A prototype built in a design tool or in the production stack?~~ | — | **CLOSED 2026-08-30** by human direction: a production-grade vertical slice. See ADR-036 |
-| **OQ-2** | Which Malaysian payment rail, under which legal entity — and do corporate cohorts actually buy on **invoice and bank transfer** rather than an online rail? Also: service-tax treatment | ADR-014; possibly deprioritises the rail entirely | `TECHNOLOGY_STACK.md` §4.2 |
-| **OQ-3** | Which sending domain will carry transactional email, with SPF/DKIM/DMARC? | ADR-015 | `TECHNOLOGY_STACK.md` §5 |
+| **OQ-2** | Which Malaysian payment rail, under which legal entity — and do corporate cohorts actually buy on **invoice and bank transfer** rather than an online rail? Also: service-tax treatment | ADR-014; possibly deprioritises the rail entirely | `framework/techstack.md` §4.2 |
+| **OQ-3** | Which sending domain will carry transactional email, with SPF/DKIM/DMARC? | ADR-015 | `framework/techstack.md` §5 |
 | **OQ-4** | Is a data-processing agreement in place with the AI provider, including a "no training on learner data" term? | ADR-013; Blueprint §17.4 compliance | `SECURITY_ARCHITECTURE.md` §12 |
 | **OQ-5** | What domain will serve credential verification? *(Refined 2026-08-30.)* **Permanent credential identity is an architectural requirement and is settled by ADR-039. The domain is a product and branding decision** with an engineered redirect/migration path — important and early, but it **does not block foundational architecture**. It does block the first real credential issuance | First credential issuance; branding | ADR-039, `DEPLOYMENT_ARCHITECTURE.md` §4 |
 | **OQ-6** | What **data residency** obligations actually apply? *(Refined 2026-08-30 — no residency requirement is assumed in either direction; the earlier Malaysia-leaning framing is withdrawn.)* Seven inputs need independent verification, each classified as legal/regulatory, contractual/customer, or risk-management | Region choice for hosting, database, storage **and backups** | ADR-032, `SECURITY_ARCHITECTURE.md` §11 |
-| **OQ-7** | Does the first corporate pilot need **SSO** sooner than the specifications assume? | ADR-006 provider choice | `TECHNOLOGY_STACK.md` §3 |
+| **OQ-7** | Does the first corporate pilot need **SSO** sooner than the specifications assume? | ADR-006 provider choice | `framework/techstack.md` §3 |
 | **OQ-8** | What are the **current, verified HRD Corp / e-TRIS** submission requirements? | The `O10` evidence pack; the specification warns this is currently written from general knowledge, not a verified checklist | `SECURITY_ARCHITECTURE.md` §11 M-4 |
 | **OQ-9** | What is the **refund, cancellation and withdrawal policy** per product type (course, path, exam, candidacy, corporate seat)? | Commerce design; legally required and entirely absent from the specifications | `SECURITY_ARCHITECTURE.md` §5 |
 | **OQ-10** | What are the **RPO and RTO** targets? | ADR-031 | `DATA_ARCHITECTURE.md` §7.2 |

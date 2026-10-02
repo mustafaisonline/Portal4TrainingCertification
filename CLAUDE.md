@@ -3,7 +3,11 @@
 
 **This file is the daily operating constitution. It is binding on every session.**
 
-For detailed guidance, consult **`AI_DEVELOPMENT_GUARDRAILS.md`** — the complete governance reference — whenever performing significant work: architecture decisions, database work, testing decisions, security work, technology or infrastructure changes, Git operations, destructive operations, persistent-state decisions, failure and recovery design, and completion verification.
+For detailed guidance, consult **`framework/guardrails.md`** — the complete governance reference — whenever performing significant work: architecture decisions, database work, testing decisions, security work, technology or infrastructure changes, Git operations, destructive operations, persistent-state decisions, failure and recovery design, and completion verification.
+
+---
+
+@framework/initiate.md
 
 ---
 

@@ -13,7 +13,7 @@
 
 ## Purpose and scope
 
-These principles are **durable and technology-independent**. They are written to remain valid if every framework, vendor and library in `TECHNOLOGY_STACK.md` were replaced.
+These principles are **durable and technology-independent**. They are written to remain valid if every framework, vendor and library in `framework/techstack.md` were replaced.
 
 The distinction matters:
 
@@ -21,7 +21,7 @@ The distinction matters:
 |---|---|---|
 | **Principles** (this document) | Years. Change only by deliberate decision | `ARCHITECTURE_PRINCIPLES.md` |
 | **Decisions** (ADRs) | Until superseded, with history retained | `ARCHITECTURE_DECISION_REGISTER.md` |
-| **Technologies** (vendors, libraries) | Replaceable | `TECHNOLOGY_STACK.md` |
+| **Technologies** (vendors, libraries) | Replaceable | `framework/techstack.md` |
 
 A principle is not a preference. When a proposed change conflicts with a principle, the principle wins unless it is **explicitly amended** through the same governance path as any other architectural change.
 
@@ -403,7 +403,7 @@ Every technology recommendation must include this table:
 
 ## Relationship to the governance documents
 
-These principles restate, at an architectural level, obligations already binding through `CLAUDE.md` and `AI_DEVELOPMENT_GUARDRAILS.md`. Where the governance documents and these principles appear to differ, **the governance documents prevail** and this document is defective and must be corrected.
+These principles restate, at an architectural level, obligations already binding through `CLAUDE.md` and `framework/guardrails.md`. Where the governance documents and these principles appear to differ, **the governance documents prevail** and this document is defective and must be corrected.
 
 | Principle | Primary governance basis |
 |---|---|

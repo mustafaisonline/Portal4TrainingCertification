@@ -4,7 +4,7 @@
 > **Executed under:** founder direction of 2026-09-21 (*"go ahead and implement the production ready product"*), recorded in `README.md` §4 and `WIREFRAME_TO_PRODUCTION_PLAN.md` §0.
 > **Plan executed:** [`MILESTONE_1_EXECUTION_PLAN.md`](MILESTONE_1_EXECUTION_PLAN.md) (scope accepted 2026-08-30).
 > **Branch:** `feat/production-foundation` · not pushed · nothing on `main`.
-> Standard format per `AI_DEVELOPMENT_GUARDRAILS.md` §44.
+> Standard format per `framework/guardrails.md` §44.
 
 ---
 
@@ -61,7 +61,7 @@ Exactly the plan's §2 scope, plus the one extension ADR-045 attaches to M1: the
 
 ## 4. What was not changed
 
-`project-artifacts/mockup/` — untouched (ADR-045; founder: "keep it for comparison"). The three specifications, `DR-02`, `AI_DEVELOPMENT_GUARDRAILS.md`. The global Node installation (Node 23 remains the machine default; Node 24 is keg-only). The repository remote and `main`. No hosting, no external account, no secret, no deployment.
+`project-artifacts/mockup/` — untouched (ADR-045; founder: "keep it for comparison"). The three specifications, `DR-02`, `framework/guardrails.md`. The global Node installation (Node 23 remains the machine default; Node 24 is keg-only). The repository remote and `main`. No hosting, no external account, no secret, no deployment.
 
 ## 5. Testing
 
@@ -93,7 +93,7 @@ Exactly the plan's §2 scope, plus the one extension ADR-045 attaches to M1: the
 
 ## 7. Documentation updated
 
-`ARCHITECTURE_DECISION_REGISTER.md` (ADR-045) · `docs/execution/README.md` (§3 index, §4 status) · `WIREFRAME_TO_PRODUCTION_PLAN.md` (acceptance, §0.1) · `MILESTONE_1_EXECUTION_PLAN.md` (status banner) · this report. Not yet updated: `PROJECT_PLAN_WBS.md` WP 4.2.1 status (proposed as the next bounded doc change together with M3–M10 entry).
+`ARCHITECTURE_DECISION_REGISTER.md` (ADR-045) · `docs/execution/README.md` (§3 index, §4 status) · `WIREFRAME_TO_PRODUCTION_PLAN.md` (acceptance, §0.1) · `MILESTONE_1_EXECUTION_PLAN.md` (status banner) · this report. Not yet updated: `framework/wbs.md` WP 4.2.1 status (proposed as the next bounded doc change together with M3–M10 entry).
 
 ## 8. Risks, observations and deviations — reported, not hidden
 

@@ -26,6 +26,7 @@ deploy only on the founder's word, except in `buddy` Autonomous mode, where the 
 
 | CR file | Title | Status |
 |---|---|---|
+| [CR-2026-10-02-2034-ai-delivery-framework-folders-agents-skills.md](CR-2026-10-02-2034-ai-delivery-framework-folders-agents-skills.md) | AI delivery framework: `framework/` document set, 3 files moved, 6 agents, 12 skills — BUILT, awaiting founder review |
 | [CR-2026-10-02-2030-buddy-default-agent-and-autonomous-push.md](CR-2026-10-02-2030-buddy-default-agent-and-autonomous-push.md) | Buddy is the default agent; autonomous mode may commit/push/deploy — BUILT |
 | [CR-2026-10-02-2027-buddy-agent.md](CR-2026-10-02-2027-buddy-agent.md) | `buddy` agent: founder's single point of contact, guided/autonomous modes — BUILT, not yet exercised |
 | [CR-2026-10-02-2021-run-cr-skill-pick-latest-open.md](CR-2026-10-02-2021-run-cr-skill-pick-latest-open.md) | `run-cr` skill: execute the latest CR not yet deployed — BUILT, not yet exercised |

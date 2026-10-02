@@ -490,4 +490,4 @@ Per `CLAUDE.md` ("If specifications conflict, identify the conflict and request 
 
 ---
 
-*End of overview. Companion documents: `TECHNOLOGY_STACK.md`, `ARCHITECTURE_DECISION_REGISTER.md`, `DATA_ARCHITECTURE.md`, `INTEGRATION_ARCHITECTURE.md`, `SECURITY_ARCHITECTURE.md`, `DEPLOYMENT_ARCHITECTURE.md`.*
+*End of overview. Companion documents: `framework/techstack.md`, `ARCHITECTURE_DECISION_REGISTER.md`, `DATA_ARCHITECTURE.md`, `INTEGRATION_ARCHITECTURE.md`, `SECURITY_ARCHITECTURE.md`, `DEPLOYMENT_ARCHITECTURE.md`.*

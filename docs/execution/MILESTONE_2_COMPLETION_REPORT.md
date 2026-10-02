@@ -4,7 +4,7 @@
 > **Executed under:** founder direction of 2026-09-21 (*"go ahead and implement the production ready product"*) and the defaults posted at the start (`WIREFRAME_TO_PRODUCTION_PLAN.md` §0.1). **Scope acceptance and ADR-006 B1/B2/B3 await the founder's ratification** — see §9.
 > **Plan executed:** [`MILESTONE_2_EXECUTION_PLAN.md`](MILESTONE_2_EXECUTION_PLAN.md).
 > **Branch:** `feat/production-foundation` · not pushed · nothing on `main`.
-> Standard format per `AI_DEVELOPMENT_GUARDRAILS.md` §44.
+> Standard format per `framework/guardrails.md` §44.
 
 ---
 
@@ -38,7 +38,7 @@ Twelve tables and three enum types, exactly as plan §5 (as-built notes are in t
 | Shared (ported structure) | `src/shared/chrome/AuthScreen.tsx` · `AccountFrame.tsx` · `src/shared/ui/forms.tsx` · `src/shared/util/return-to.ts` |
 | Ops | `scripts/grant-admin.ts` (`npm run admin:grant -- <email>`) · `.env.example` (three new names) · `next.config.ts` (`authInterrupts` for a real 403) · `app/layout.tsx` (theme script via `next/script`) |
 | Tests | `tests/integration/identity.test.ts` (13) · `tests/e2e/identity.spec.ts` (6) · `tests/unit/{return-to,legal-documents,totp}.test.ts` (10) · `tests/helpers/{identity-db,totp}.ts` · CI/Playwright/Vitest env for the consent gate and secret |
-| Governance | plan · this report · `README.md` · `PROJECT_PLAN_WBS.md` 4.2.2 · `BACKEND_HANDOFF_INDEX.md` §3 (five rows retired) · ADR-006 and ADR-015 execution notes |
+| Governance | plan · this report · `README.md` · `framework/wbs.md` 4.2.2 · `BACKEND_HANDOFF_INDEX.md` §3 (five rows retired) · ADR-006 and ADR-015 execution notes |
 
 ### 3.4 How the design commitments were met
 
@@ -56,7 +56,7 @@ Twelve tables and three enum types, exactly as plan §5 (as-built notes are in t
 
 ## 4. What was not changed
 
-`project-artifacts/mockup/` (untouched; its demo files are now *recorded* as retired, not deleted — retirement happens at M10). The specifications, `DR-02`, `AI_DEVELOPMENT_GUARDRAILS.md`, `CLAUDE.md` governance text. No push; no `main`; no external account; no secret committed (`.env.local` is ignored; the secret was generated locally). ADR statuses were **not** changed — execution notes were appended.
+`project-artifacts/mockup/` (untouched; its demo files are now *recorded* as retired, not deleted — retirement happens at M10). The specifications, `DR-02`, `framework/guardrails.md`, `CLAUDE.md` governance text. No push; no `main`; no external account; no secret committed (`.env.local` is ignored; the secret was generated locally). ADR statuses were **not** changed — execution notes were appended.
 
 ## 5. Testing
 
@@ -90,7 +90,7 @@ Twelve tables and three enum types, exactly as plan §5 (as-built notes are in t
 
 ## 7. Documentation updated
 
-Plan (as-built notes, status) · this report · `docs/execution/README.md` (§3 index, §4 status) · `PROJECT_PLAN_WBS.md` (4.2.2, 4.2.2a–c) · `BACKEND_HANDOFF_INDEX.md` §3.1/§3.2 (five simulation rows marked retired) · `ARCHITECTURE_DECISION_REGISTER.md` (execution notes under ADR-006 and ADR-015; statuses unchanged) · `.env.example`.
+Plan (as-built notes, status) · this report · `docs/execution/README.md` (§3 index, §4 status) · `framework/wbs.md` (4.2.2, 4.2.2a–c) · `BACKEND_HANDOFF_INDEX.md` §3.1/§3.2 (five simulation rows marked retired) · `ARCHITECTURE_DECISION_REGISTER.md` (execution notes under ADR-006 and ADR-015; statuses unchanged) · `.env.example`.
 
 ## 8. Risks, observations and deviations
 

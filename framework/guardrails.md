@@ -5,6 +5,11 @@
 The concise operational version lives in `CLAUDE.md` and loads at the start of every session.
 This document is the complete, authoritative guardrails reference. Consult it when performing significant development work, architecture decisions, database work, testing decisions, security work, technology or infrastructure changes, Git operations, destructive operations, persistent-state decisions, failure and recovery design, and completion verification.
 
+> **Quick reference — added 2026-10-02 (CR-2026-10-02-2034); restates rules already in force below.**
+> 1. No business-critical code, state or functionality lives only in cache, in-memory variables or browser/session memory (see the Service Restart Test).
+> 2. **To fix an issue, never change the technology stack.** Fix the root cause inside the approved stack (`framework/techstack.md`); a defect is not grounds for a new framework, library, database or service. If the stack truly cannot solve it, stop and request approval with a written case.
+> 3. No physical data-model change, new dependency or new external service without human approval.
+
 ## 1. PURPOSE
 
 We are building and continuously evolving a Training & Certification Portal using AI-assisted development tools.
@@ -1387,7 +1392,7 @@ Portal4TrainingCertification/
 │
 ├── .git/
 ├── CLAUDE.md
-├── AI_DEVELOPMENT_GUARDRAILS.md
+├── framework/guardrails.md
 ├── Project Specifications/
 ├── src/
 ├── tests/

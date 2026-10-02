@@ -6,7 +6,7 @@ Production application for an expert-led training and certification organisation
 
 | Need | Go to |
 |---|---|
-| Operating rules for every session | [`CLAUDE.md`](CLAUDE.md) · [`AI_DEVELOPMENT_GUARDRAILS.md`](AI_DEVELOPMENT_GUARDRAILS.md) |
+| Operating rules for every session | [`CLAUDE.md`](CLAUDE.md) · [`framework/guardrails.md`](framework/guardrails.md) |
 | Product requirements | `DR-02_EXPERT_LED_DELIVERY_MODEL.md` (outranks the specs) · `DATA_AI_ACADEMY_MVP_BUILD_SPEC.md` · `..._PORTAL_BLUEPRINT.md` · `..._MOCKUP_SPECIFICATION.md` |
 | Architecture decisions | [`docs/architecture/`](docs/architecture/README.md) |
 | Milestone plans and completion reports | [`docs/execution/`](docs/execution/README.md) |

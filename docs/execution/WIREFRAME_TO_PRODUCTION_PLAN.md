@@ -29,8 +29,8 @@ Posted at the start of execution as required; each stands until the founder chan
 
 | Question | Short answer | Where the detail is |
 |---|---|---|
-| **Will there be another folder like `project-artifacts/mockup` for the real implementation?** | **No — not as currently accepted.** The accepted Milestone 1 scope places the production application **at the repository root** (`MILESTONE_1_EXECUTION_PLAN.md` §2 item 1, §5.1; `PROJECT_PLAN_WBS.md` WP 4.2.1a). `project-artifacts/mockup/` stays where it is as a disposable artifact until it is retired. This plan proposes keeping that decision (§3) and asks you to confirm it once, in an ADR, because it has never been recorded as one. | §3 |
-| **Did we create tech-stack `.md` files?** | **Yes — a full set, since 2026-08-30.** `docs/architecture/TECHNOLOGY_STACK.md` plus a 44-entry decision register and data/security/integration/deployment/testing architecture. 20 directions are approved; the vendor layer (hosting, DB host, email, storage, analytics) and **authentication** are still open. Nothing in them authorises installing anything. | §2 |
+| **Will there be another folder like `project-artifacts/mockup` for the real implementation?** | **No — not as currently accepted.** The accepted Milestone 1 scope places the production application **at the repository root** (`MILESTONE_1_EXECUTION_PLAN.md` §2 item 1, §5.1; `framework/wbs.md` WP 4.2.1a). `project-artifacts/mockup/` stays where it is as a disposable artifact until it is retired. This plan proposes keeping that decision (§3) and asks you to confirm it once, in an ADR, because it has never been recorded as one. | §3 |
+| **Did we create tech-stack `.md` files?** | **Yes — a full set, since 2026-08-30.** `framework/techstack.md` plus a 44-entry decision register and data/security/integration/deployment/testing architecture. 20 directions are approved; the vendor layer (hosting, DB host, email, storage, analytics) and **authentication** are still open. Nothing in them authorises installing anything. | §2 |
 | **What is the strategy to move from wireframe to implementation?** | **Rebuild on the approved architecture, port the mockup deliberately rather than copy it, and deliver in ten milestones that each retire a named set of simulations** — with the decisions that gate each milestone put in front of you in order, batched, rather than one at a time. | §4–§8 |
 
 ---
@@ -102,7 +102,7 @@ It is, however, the **only place the product's design system, copy, information 
 
 ```
 Portal4TrainingCertification/
-├── CLAUDE.md · AI_DEVELOPMENT_GUARDRAILS.md · DR-02 · the three specifications   (unchanged)
+├── CLAUDE.md · framework/guardrails.md · DR-02 · the three specifications   (unchanged)
 ├── docs/                      architecture · execution · design               (unchanged)
 ├── project-artifacts/
 │   └── mockup/                the wireframe — frozen, still buildable, retired at M10 (§9)
@@ -119,13 +119,13 @@ Portal4TrainingCertification/
 
 Why root and not `project-artifacts/app` or `apps/portal`:
 
-1. **It is the accepted scope** (`MILESTONE_1_EXECUTION_PLAN.md` §2/§5.1, WBS 4.2.1a) and the guardrails' illustrative tree (`AI_DEVELOPMENT_GUARDRAILS.md` §47.2: `src/`, `tests/` at root). Reopening it needs an AP-10 case, and question 1 — *what does root fail to solve?* — has no answer.
+1. **It is the accepted scope** (`MILESTONE_1_EXECUTION_PLAN.md` §2/§5.1, WBS 4.2.1a) and the guardrails' illustrative tree (`framework/guardrails.md` §47.2: `src/`, `tests/` at root). Reopening it needs an AP-10 case, and question 1 — *what does root fail to solve?* — has no answer.
 2. **One application, one `package.json`, one deploy** matches ADR-001. A monorepo tool would be new technology (Rule 5) for a single app.
 3. Two `package.json` files in one repository (root + mockup) is unremarkable; the mockup already runs via `npm --prefix project-artifacts/mockup`, and `.claude/launch.json` keeps working.
 
 What this needs from you: **confirm it as an ADR** (proposed ADR-045, "Repository layout and mockup relationship" — one paragraph). It also settles the external review's open finding **I-3**, which asked for exactly this ruling.
 
-**What it does *not* do:** move, rename, or delete anything in `project-artifacts/mockup/` (destructive — separate approval, §9), or change the repository's remote or boundaries (`AI_DEVELOPMENT_GUARDRAILS.md` §47).
+**What it does *not* do:** move, rename, or delete anything in `project-artifacts/mockup/` (destructive — separate approval, §9), or change the repository's remote or boundaries (`framework/guardrails.md` §47).
 
 ---
 
@@ -276,7 +276,7 @@ Per AP-09 drift is a defect to report. Proposed as WP **1.x "Register hygiene"**
 | `ARCHITECTURE_DECISION_REGISTER.md` | §1 summary vs §2 record headers disagree on status for ADR-008/009/011/012/015/016/018/019/021/024/026/027/033/034 (DEFERRED vs PROPOSED/PENDING); ADR-038 says ADR-025 "remains PENDING" while ADR-025 reads APPROVED (scoped); ADR-041 body lists AP-01…10, approval says AP-01…11 |
 | `TESTING_ARCHITECTURE.md` header vs `EXTERNAL_ARCHITECTURE_REVIEW` §9 | ADR-025 pending vs "approved" |
 | `INTEGRATION_ARCHITECTURE.md` §2/§3 | Stripe still "PENDING" though approved 2026-09-02; AI provider prose still says "MVP required" (deferred by DR-02) |
-| `PROJECT_PLAN_WBS.md` §1.1 vs §2.4/§3 | WP 1.4 recorded complete in one place, "authorization required" in another |
+| `framework/wbs.md` §1.1 vs §2.4/§3 | WP 1.4 recorded complete in one place, "authorization required" in another |
 | `docs/execution/README.md` §4 | Milestone table predates M3–M10 (this plan proposes the update) |
 | `MILESTONE_1_EXECUTION_PLAN.md` | Written before the mockup existed; needs a one-line note that G0-3 may add the `/preview` fence and ported tokens to its scope, or a follow-on M1b |
 
@@ -297,7 +297,7 @@ Per AP-09 drift is a defect to report. Proposed as WP **1.x "Register hygiene"**
 
 | # | Decision | Effect |
 |---|---|---|
-| 1 | Accept this plan's **shape** (§6–§7) as the Track B extension to be written into the WBS | Unlocks WP-level updates to `PROJECT_PLAN_WBS.md` and `README.md` §4 |
+| 1 | Accept this plan's **shape** (§6–§7) as the Track B extension to be written into the WBS | Unlocks WP-level updates to `framework/wbs.md` and `README.md` §4 |
 | 2 | **ADR-045** — root layout + reuse policy (§3–§4) | Unlocks M1's port of tokens/primitives and the `/preview` fence |
 | 3 | **Sitting 1** decisions (G0-1…G0-5), especially **ADR-006** | Unlocks M1 execution now and M2 planning |
 | 4 | Whether to run the **register-hygiene** change (§11) | Housekeeping |
@@ -306,4 +306,4 @@ Per AP-09 drift is a defect to report. Proposed as WP **1.x "Register hygiene"**
 
 ---
 
-*Document control — Version 0.1 · Created 2026-09-21 · Status DRAFT `D·–·–` · Authorises: nothing · Supersedes: nothing · Companion to `MILESTONE_1_EXECUTION_PLAN.md`, `BACKEND_HANDOFF_INDEX.md`, `PROJECT_PLAN_WBS.md`.*
+*Document control — Version 0.1 · Created 2026-09-21 · Status DRAFT `D·–·–` · Authorises: nothing · Supersedes: nothing · Companion to `MILESTONE_1_EXECUTION_PLAN.md`, `BACKEND_HANDOFF_INDEX.md`, `framework/wbs.md`.*

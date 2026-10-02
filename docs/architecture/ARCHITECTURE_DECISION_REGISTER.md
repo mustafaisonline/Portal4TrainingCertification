@@ -114,7 +114,7 @@ Each record: **Context · Decision/Recommendation · Alternatives considered · 
 
 **Decision.** Next.js App Router + React + TypeScript as the single application framework, with server components by default and business logic held in framework-agnostic service modules.
 
-**Alternatives.** Remix; Astro + separate API; SPA + Node API; Django/Rails — assessed in `TECHNOLOGY_STACK.md` §1.1. The SPA option is disqualified by NFR-4; the split-stack options add a second deployable that NFR-11 cannot afford.
+**Alternatives.** Remix; Astro + separate API; SPA + Node API; Django/Rails — assessed in `framework/techstack.md` §1.1. The SPA option is disqualified by NFR-4; the split-stack options add a second deployable that NFR-11 cannot afford.
 
 **Consequences.** Framework coupling to App Router conventions and caching semantics. Upgrade cadence must be budgeted. Business rules must be deliberately kept out of route and component files so that BR-1, BR-8 and BR-11 are enforceable and testable.
 

@@ -42,7 +42,7 @@ Homepage Implementation (not authorised)    code
 
 **Where this document and any source above it conflict, the source above wins and this document is wrong.** It introduces no new product rule, resolves no open decision, and creates no requirement not traceable to an approved source.
 
-**Primary inputs.** `DR-02` (whole); `MVP_BUILD_SPEC.md` §1, §4, §5, §6, §7, §11, §12; `MOCKUP_SPECIFICATION.md` §1.3, §1.4, §4 `P01` rewritten brief, §13, §15.2, §16; `BLUEPRINT.md` §1, §3, §10.5, §14, §25; `ARCHITECTURE_DECISION_REGISTER.md` ADR-043, ADR-044; `docs/architecture/README.md` open questions; `docs/execution/PROJECT_PLAN_WBS.md` WP 4.1.x, 4.4.x; and the Homepage Design Strategy of 2026-08-31, whose decisions are recorded durably in §3 below.
+**Primary inputs.** `DR-02` (whole); `MVP_BUILD_SPEC.md` §1, §4, §5, §6, §7, §11, §12; `MOCKUP_SPECIFICATION.md` §1.3, §1.4, §4 `P01` rewritten brief, §13, §15.2, §16; `BLUEPRINT.md` §1, §3, §10.5, §14, §25; `ARCHITECTURE_DECISION_REGISTER.md` ADR-043, ADR-044; `docs/architecture/README.md` open questions; `framework/wbs.md` WP 4.1.x, 4.4.x; and the Homepage Design Strategy of 2026-08-31, whose decisions are recorded durably in §3 below.
 
 ---
 

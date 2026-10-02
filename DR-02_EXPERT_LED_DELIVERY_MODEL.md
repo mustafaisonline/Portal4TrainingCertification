@@ -423,7 +423,7 @@ Recorded explicitly to prevent the correction being read as permission for a gen
 
 **Architecture — no decision is reversed.** All twelve principles `AP-01`…`AP-12` · all forty-two records `ADR-001`…`ADR-042` · the modular monolith · PostgreSQL as sole source of truth · scoped many-to-many RBAC enforced at the data-access layer · append-only skill assertions and assessment responses · audit rows in the same transaction · `organisation_id` from commit one · the `jobs` table · the server-authoritative exam clock · the five testing layers and the Tier 1 workflow set · the security, deployment and integration architecture · `ADR-023`'s expansion shape, including `domains` as seeded data and never a constant.
 
-**Governance:** `CLAUDE.md` · `AI_DEVELOPMENT_GUARDRAILS.md` · the approval gates · the RED-gate boundaries · the conflict resolution register (none of `CONF-1`…`CONF-10` is invalidated).
+**Governance:** `CLAUDE.md` · `framework/guardrails.md` · the approval gates · the RED-gate boundaries · the conflict resolution register (none of `CONF-1`…`CONF-10` is invalidated).
 
 **Execution:** the Milestone 1 walking skeleton is unaffected. The expert authoring workstream remains the real critical path — its **outputs** shift toward programme design and session plans, but its priority and its status do not change.
 

@@ -4,6 +4,7 @@ import { formatMoney, type DeliveryFormatRecord } from "@/modules/catalogue/prog
 import { getProfile } from "@/modules/identity/profile.repository";
 import { getCurrentUser } from "@/modules/identity/session";
 import { formatIdsWithoutOpenDate, enabledInterestSetting, interestStatusForUser } from "../interest.repository";
+import { interestSignInHref } from "../interest-routing";
 import { findInterestOrderForUser } from "../interest.service";
 import { PAYMENTS_NOT_CONFIGURED_MESSAGE } from "../messages";
 import { regionForCountry } from "../pricing";
@@ -30,11 +31,6 @@ const noteClass = "text-body-sm text-[var(--color-ink-quiet)]";
  *  when no format offers the flow (feature off, or every format has an open date): the page
  *  then keeps its enquiry link, so the button never leads nowhere. */
 export type InterestSlots = { slots: Record<string, ReactNode>; banner: ReactNode | null; heroHref: string | null };
-
-/** The one sign-in link for registering interest, shared by the format slot and the hero button. */
-function interestSignInHref(programmeSlug: string): string {
-  return `/sign-in?return-to=${encodeURIComponent(`/programs/${programmeSlug}#formats`)}`;
-}
 
 export async function buildInterestSlots(input: { programmeSlug: string; formats: DeliveryFormatRecord[]; interestParam?: string; datesHref: string }): Promise<InterestSlots> {
   const now = new Date();

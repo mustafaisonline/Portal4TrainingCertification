@@ -98,7 +98,9 @@ test("schedule shows the honest no-dates state and a register-interest path", as
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
   const interest = page.getByRole("link", { name: /register interest/i }).first();
   await expect(interest).toBeVisible();
-  await expect(interest).toHaveAttribute("href", /^mailto:sales@yourpartnertechnologies\.com\?subject=Interest/);
+  // CR-2026-10-02-2010 (founder Q4): with no training chosen, "Register interest" leads to the Trainings
+  // list, where each training offers its own interest flow (it was a mailto).
+  await expect(interest).toHaveAttribute("href", "/programs");
   await expectNoAxeViolations(page);
 });
 

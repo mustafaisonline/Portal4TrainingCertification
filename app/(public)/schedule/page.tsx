@@ -3,6 +3,7 @@ import Link from "next/link";
 import { interestMailto } from "@/content/contact";
 import { listUpcomingPublicOfferings, type OfferingRecord } from "@/modules/catalogue/offerings/repository";
 import { findPublishedProgrammeBySlug } from "@/modules/catalogue/programmes/repository";
+import { interestHrefForTraining } from "@/modules/commerce/interest-routing";
 import { OfferingDateCard } from "@/shared/marketing/ProgrammeDates";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
@@ -56,6 +57,8 @@ export default async function SchedulePage({ searchParams }: { searchParams: Pro
   // honest and empty — rather than silently showing every other training.
   const only = training ? (all.find((g) => g.slug === training.slug) ?? { slug: training.slug, title: training.title, offerings: [] }) : null;
   const groups = only ? [only] : all;
+  // CR-2026-10-02-2010: where "Register interest" goes, per training shown (null → the mailto fallback).
+  const interestHrefBySlug = new Map(await Promise.all(groups.map(async (g) => [g.slug, await interestHrefForTraining(g.slug)] as const)));
 
   return (
     <section className="bg-[var(--color-ground-tint)]">
@@ -84,7 +87,7 @@ export default async function SchedulePage({ searchParams }: { searchParams: Pro
               Register your interest and we will tell you the moment a date opens.
             </p>
             <div className="mt-5 flex flex-wrap gap-3">
-              <Button href={interestMailto(only.title)}>Register interest</Button>
+              <Button href={interestHrefBySlug.get(only.slug) ?? interestMailto(only.title)} data-testid="schedule-register-interest">Register interest</Button>
               <Button variant="secondary" href={`/programs/${only.slug}`}>
                 About this training
               </Button>
@@ -100,13 +103,15 @@ export default async function SchedulePage({ searchParams }: { searchParams: Pro
               dates, not a padded catalogue.
             </p>
             <div className="mt-5">
-              <Button href={interestMailto()}>Register interest</Button>
+              {/* CR-2026-10-02-2010 (founder Q4): no training chosen → the Trainings list, where each training offers its own interest flow. */}
+              <Button href="/programs" data-testid="schedule-register-interest">Register interest</Button>
             </div>
           </Card>
         ) : (
           <div className="flex flex-col gap-10">
             {groups.map((g) => {
               const enquiryHref = interestMailto(g.title);
+              const interestHref = interestHrefBySlug.get(g.slug) ?? null;
               return (
                 <section key={g.slug} aria-labelledby={`schedule-${g.slug}`} data-testid="schedule-group" data-slug={g.slug}>
                   <h2 id={`schedule-${g.slug}`} className="text-h1 mb-1">
@@ -122,7 +127,7 @@ export default async function SchedulePage({ searchParams }: { searchParams: Pro
                   <ul className="flex flex-col gap-4">
                     {g.offerings.map((o) => (
                       <li key={o.id}>
-                        <OfferingDateCard offering={o} enquiryHref={enquiryHref} />
+                        <OfferingDateCard offering={o} enquiryHref={enquiryHref} interestHref={interestHref} />
                       </li>
                     ))}
                   </ul>

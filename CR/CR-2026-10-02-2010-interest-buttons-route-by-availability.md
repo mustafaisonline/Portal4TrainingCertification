@@ -1,6 +1,8 @@
 # CR-2026-10-02-2010 — Every "Register your interest" / "Register interest" button routes by availability
 
-**Received:** 2026-10-02 20:10 MYT · **Status:** NOT STARTED — extends and replaces the open question in CR-2026-10-02-0721 · **Requested by:** founder
+**Received:** 2026-10-02 20:10 MYT · **Status:** BUILT & VERIFIED in dev — not deployed · **Requested by:** founder · **Recommended model:** Sonnet 5.5 — routing across several files, no payment logic or data model; this session is Sonnet 5.5
+
+Spec: [`CR-SPEC-2026-10-02-2010-interest-buttons-route-by-availability.md`](specs/CR-SPEC-2026-10-02-2010-interest-buttons-route-by-availability.md)
 
 ## 1. Request (verbatim)
 
@@ -32,7 +34,7 @@ One shared helper decides the destination for a training (open date → registra
 | # | Step | Status | Updated |
 |---|---|---|---|
 | 1 | Founder answers §3 | **AWAITING founder** | — |
-| 2 | Build the helper + wire the buttons | NOT STARTED | — |
+| 2 | Build the helper + wire the buttons | **VERIFIED** (unit + e2e + related specs) | 2026-10-02 |
 | 3 | Verify in dev + tests | NOT STARTED | — |
 | 4 | Deploy with CR-0721 | AWAITING founder's word | — |
 
@@ -43,3 +45,4 @@ One shared helper decides the destination for a training (open date → registra
 | 2026-10-02 20:10 | CR created from the founder's list. Facts gathered read-only. CR-0721's schedule-page question is closed by this CR. |
 | 2026-10-02 | run-cr 2026-10-02: kept OPEN — Q2 (the path to Stripe: Stripe is reachable only after sign-in and registration of an open date; confirm the intended path and, with several open dates, where the button goes) and Q4 (generic /schedule button) are unanswered. Re-run run-cr after answering. |
 | 2026-10-02 | Founder answer to Q2 (part): reach Stripe only if the user is logged in (signed-out → sign-in first). Still open: with several open dates where the button goes; Q4 generic /schedule button. Both explained to the founder with recommendations. |
+| 2026-10-02 | Founder: Q2 = A, Q4 = A ("go with the recommendations"); Stripe only when logged in. Built via `run-cr`: shared `interest-routing.ts`, schedule page, offering card, checkout card. Unit 3/3; `training-interest.spec` 10/10 (twice); related specs 29/29 after updating `public.spec.ts` (generic button now `/programs`). The generic `/schedule` button and the checkout-card button are covered by code and `public.spec`, not by a dedicated e2e. Not deployed. |

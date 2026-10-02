@@ -138,6 +138,31 @@ test("the hero \"Register your interest\" button leads where the format's \"Sign
   await expect(page.getByTestId("hero-interest")).toHaveAttribute("href", "#formats");
 });
 
+test("the schedule's \"Register interest\" for a training with no dates leads to the interest flow: sign-in signed out, the formats signed in; never Stripe (CR-2026-10-02-2010)", async ({ page }) => {
+  await page.context().clearCookies();
+  await page.goto(`/schedule?training=${slug}`);
+  await expect(page.getByTestId("schedule-training-empty")).toBeVisible();
+  const button = page.getByTestId("schedule-register-interest");
+  await expect(button).toContainText("Register interest");
+  // Same destination as the training page's own "Sign in to register your interest" link — not the old mailto.
+  const formatLink = await (async () => {
+    await page.goto(`/programs/${slug}`);
+    return page.getByTestId(`interest-signin-${formatCode}`).getByTestId("interest-signin").getAttribute("href");
+  })();
+  await page.goto(`/schedule?training=${slug}`);
+  await expect(button).toHaveAttribute("href", formatLink!);
+  await expect(button).not.toHaveAttribute("href", /^mailto:/);
+  await button.click();
+  await expect(page).toHaveURL(new RegExp(`/sign-in\\?return-to=.*${slug}`));
+  // Signed in: the same button lands on the training's formats, where the form is.
+  await signIn(page, cardEmail);
+  await page.goto(`/schedule?training=${slug}`);
+  await expect(page.getByTestId("schedule-register-interest")).toHaveAttribute("href", `/programs/${slug}#formats`);
+  await page.getByTestId("schedule-register-interest").click();
+  await expect(page).toHaveURL(new RegExp(`/programs/${slug}#formats$`));
+  await expect(page.getByTestId("interest-open").first()).toBeVisible();
+});
+
 test("a card payer: the form states the fee is non-refundable, validates, and with Stripe not configured charges and records nothing", async ({ page }) => {
   await signIn(page, cardEmail);
   await page.goto(`/programs/${slug}`);

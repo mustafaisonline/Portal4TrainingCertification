@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { interestMailto, localPartnerMailto } from "@/content/contact";
+import { localPartnerMailto } from "@/content/contact";
 import { countryName } from "@/content/countries";
 import { MODALITY_LABEL } from "@/modules/catalogue/offerings/repository";
 import { formatMoney } from "@/modules/catalogue/programmes/types";
@@ -179,7 +179,7 @@ function Unavailable({ preview }: { preview: Exclude<CheckoutPreview, { ok: true
             My registrations
           </Button>
         ) : (
-          <Button variant="secondary" href={interestMailto()}>
+          <Button variant="secondary" href="/programs">
             Register interest
           </Button>
         )}

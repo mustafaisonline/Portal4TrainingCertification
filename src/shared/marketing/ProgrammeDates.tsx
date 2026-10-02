@@ -31,7 +31,8 @@ export function offeringStarted(offering: { startsOn: Date }, now = new Date()):
   return offering.startsOn.getTime() <= today.getTime();
 }
 
-export function OfferingDateCard({ offering, enquiryHref, now = new Date() }: { offering: OfferingRecord; enquiryHref: string; now?: Date }) {
+/** `interestHref` (CR-2026-10-02-2010): where "Register interest" goes when the training offers the interest flow; `enquiryHref` stays the mailto for "Ask about the next date" and as the fallback. */
+export function OfferingDateCard({ offering, enquiryHref, interestHref, now = new Date() }: { offering: OfferingRecord; enquiryHref: string; interestHref?: string | null; now?: Date }) {
   const f = offering.format;
   const started = offeringStarted(offering, now);
   return (
@@ -70,7 +71,7 @@ export function OfferingDateCard({ offering, enquiryHref, now = new Date() }: { 
               Register
             </Button>
           ) : (
-            <Button href={enquiryHref}>Register interest</Button>
+            <Button href={interestHref ?? enquiryHref}>Register interest</Button>
           )}
         </div>
       </div>
@@ -78,7 +79,7 @@ export function OfferingDateCard({ offering, enquiryHref, now = new Date() }: { 
   );
 }
 
-export function ProgrammeDates({ offerings, enquiryHref }: { offerings: OfferingRecord[]; enquiryHref: string }) {
+export function ProgrammeDates({ offerings, enquiryHref, interestHref }: { offerings: OfferingRecord[]; enquiryHref: string; interestHref?: string | null }) {
   if (offerings.length === 0) return null;
   const open = offerings.filter((o) => o.status === "open").length;
   return (
@@ -92,7 +93,7 @@ export function ProgrammeDates({ offerings, enquiryHref }: { offerings: Offering
         <ul className="flex flex-col gap-4">
           {offerings.map((o) => (
             <li key={o.id}>
-              <OfferingDateCard offering={o} enquiryHref={enquiryHref} />
+              <OfferingDateCard offering={o} enquiryHref={enquiryHref} interestHref={interestHref} />
             </li>
           ))}
         </ul>

@@ -39,3 +39,4 @@
 |---|---|
 | 2026-10-02 07:21 | CR created; root cause found: hero button was never moved from the mailto to the CR-2138 flow. |
 | 2026-10-02 07:50 | Built and verified (see tracker). Open question for the founder: the `/schedule` page has the same kind of button ("Register interest", mailto, for a training with no dates). Change it too (go to the training's formats / sign-in)? Left as is meanwhile. |
+| 2026-10-02 20:10 | The open question about `/schedule`'s button is answered by the founder's next message and moved to CR-2026-10-02-2010 (all Register-interest buttons route by availability). Deploy CR-0721 together with it. |

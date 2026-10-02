@@ -1,6 +1,6 @@
 # CR-2026-10-02-0626 — Email provider — DEFERRED, remind the founder
 
-**Received:** 2026-10-02 06:26 MYT · **Status:** DEFERRED (founder: "We will do it later. Please remind me later.") · **Requested by:** founder
+**Received:** 2026-10-02 06:26 MYT · **Status:** ACTIVATED 2026-10-02 20:15 MYT — now wanted; continues in CR-2026-10-02-2015 (email API + account confirmation) · **Requested by:** founder
 
 ## 1. Request (verbatim)
 
@@ -37,3 +37,4 @@
 | Date (MYT) | Entry |
 |---|---|
 | 2026-10-02 06:26 | CR created; deferred at the founder's word. Added to PROJECT_STATUS §3 (item 16) and the assistant's memory so any session raises it. |
+| 2026-10-02 20:15 | Founder, same evening: "Email Api and confirmation after creating new account". Work moves to CR-2026-10-02-2015, which carries the questions and plan; this CR stays as the deferral record. |

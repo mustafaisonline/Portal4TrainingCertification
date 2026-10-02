@@ -119,6 +119,28 @@ test("the Assessment page has no WCAG 2.2 AA violations (light and dark) and no 
   }
 });
 
+test("the burger menu scrolls inside itself on a short phone screen (CR-2026-10-02-2016)", async ({ page }) => {
+  for (const size of [{ width: 320, height: 568 }, { width: 375, height: 600 }]) {
+    await page.setViewportSize(size);
+    await page.goto("/");
+    await page.getByRole("button", { name: "Open menu" }).click();
+    const panel = page.locator("#mobile-nav");
+    await expect(panel).toBeVisible();
+    const m = await panel.evaluate((el) => ({ scroll: el.scrollHeight, client: el.clientHeight, overflowY: getComputedStyle(el).overflowY }));
+    expect(m.overflowY, `${size.width}x${size.height}`).toBe("auto");
+    expect(m.scroll, "content is taller than the panel, so it must scroll").toBeGreaterThan(m.client);
+    // The panel plus the header bar fits in the viewport.
+    const bottom = await panel.evaluate((el) => el.getBoundingClientRect().bottom);
+    expect(bottom).toBeLessThanOrEqual(size.height);
+    // The last item is reachable by scrolling the panel and is clickable.
+    const last = panel.getByRole("link", { name: "Refund & cancellation policy" });
+    await last.scrollIntoViewIfNeeded();
+    await expect(last).toBeInViewport();
+    await last.click();
+    await expect(page).toHaveURL(/\/refund-policy/);
+  }
+});
+
 test("the burger menu carries every footer link (P1), and each one closes the menu", async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 900 });
   await page.goto("/");

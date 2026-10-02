@@ -1,6 +1,8 @@
 # CR-2026-10-02-2016 — Mobile burger menu is not scrollable
 
-**Received:** 2026-10-02 20:16 MYT · **Status:** NOT STARTED — root cause identified · **Requested by:** founder
+**Received:** 2026-10-02 20:16 MYT · **Status:** BUILT & VERIFIED in dev — not deployed · **Requested by:** founder · **Recommended model:** Sonnet 5.5 — one-file UI fix plus an e2e test; this session is Sonnet 5.5
+
+Spec: [`CR-SPEC-2026-10-02-2016-mobile-burger-menu-not-scrollable.md`](specs/CR-SPEC-2026-10-02-2016-mobile-burger-menu-not-scrollable.md)
 
 ## 1. Request (verbatim)
 
@@ -25,11 +27,13 @@ Give the panel a viewport-based max height under the header (`dvh` so it respect
 
 | # | Step | Status | Updated |
 |---|---|---|---|
-| 1 | Build | NOT STARTED | — |
-| 2 | Verify at 320×568 / 375×667 / 390×844 | NOT STARTED | — |
+| 1 | Build | **BUILT** — `max-h-[calc(100dvh-4.5rem)] overflow-y-auto overscroll-contain` on `#mobile-nav` | 2026-10-02 |
+| 2 | Verify | **VERIFIED** — new Playwright test at 320×568 and 375×600 fails without the fix, passes with it; `assessment.spec.ts` + `cr-2136-menus-and-admin-labels.spec.ts` 11/11; `tsc` clean. Not run at 390×844 or on a real phone. | 2026-10-02 |
+| 3 | Deploy | NOT STARTED (founder's word) | — |
 
 ## 6. Progress log
 
 | Date (MYT) | Entry |
 |---|---|
 | 2026-10-02 20:16 | CR created from the founder's list. Facts gathered read-only.  |
+| 2026-10-02 | Executed via `run-cr` (latest open CR). Fix in `PublicShell.tsx`, test added to `assessment.spec.ts`. Full gate (`deploy/04-release-gate.sh`) not run; that happens at deploy. CR-2013 (avatar on mobile) untouched. |

@@ -159,7 +159,12 @@ export function PublicShell({
             the panel on click, in case client-side navigation doesn't unmount
             this component (e.g. same-page anchors). */}
         {menuOpen && (
-          <div id="mobile-nav" className="border-t border-[var(--color-line)] px-4 pb-4 pt-2 sm:px-6 lg:hidden">
+          /* CR-2026-10-02-2016 (founder: "on mobile buger menu is not scrollable"):
+            the header is sticky, so a panel taller than the screen could not be
+            reached by page scroll. Cap it to the viewport below the 4.5rem header
+            bar (dvh follows the mobile browser bar) and scroll inside it;
+            overscroll-contain keeps the page behind from scrolling. */
+          <div id="mobile-nav" className="max-h-[calc(100dvh-4.5rem)] overflow-y-auto overscroll-contain border-t border-[var(--color-line)] px-4 pb-4 pt-2 sm:px-6 lg:hidden">
             <form role="search" action={siteSearch.action} method="get" className="mb-2 flex items-center gap-2 lg:hidden" data-testid="site-search-mobile">
               <label htmlFor="site-search-q-mobile" className="sr-only">
                 {siteSearch.label}

@@ -69,10 +69,14 @@ export async function AccountControls({ variant = "header" }: { variant?: "heade
     );
   }
   if (!user) {
+    // CR-2026-10-02-2013: the header slot now shows on phones for the avatar; the signed-out text link stays
+    // `sm`-up only (the burger menu carries "Sign in" for phones) so the 320 px header does not overflow.
     return (
-      <Button variant="text" href="/sign-in" data-testid="header-sign-in">
-        Sign in
-      </Button>
+      <span className="hidden sm:inline-flex">
+        <Button variant="text" href="/sign-in" data-testid="header-sign-in">
+          Sign in
+        </Button>
+      </span>
     );
   }
   const profile = await getProfile(user.id);

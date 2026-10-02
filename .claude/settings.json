@@ -10,5 +10,6 @@
   },
   "enabledMcpjsonServers": [
     "reference-material"
-  ]
+  ],
+  "agent": "buddy"
 }

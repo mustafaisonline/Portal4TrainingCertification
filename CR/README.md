@@ -20,12 +20,13 @@ request arrived, so files sort in the order the founder asked.
 **Binding since 2026-10-02:** `CLAUDE.md` ("CHANGE REQUISITIONS") makes this process mandatory for every session.
 
 Working agreement (unchanged): **one CR / one step at a time on the founder's "go"**; commit, push and
-deploy only on the founder's word; report honestly what was and was not tested.
+deploy only on the founder's word, except in `buddy` Autonomous mode, where the founder has granted them (CR-2026-10-02-2030); report honestly what was and was not tested.
 
 ## Index (newest first)
 
 | CR file | Title | Status |
 |---|---|---|
+| [CR-2026-10-02-2030-buddy-default-agent-and-autonomous-push.md](CR-2026-10-02-2030-buddy-default-agent-and-autonomous-push.md) | Buddy is the default agent; autonomous mode may commit/push/deploy — BUILT |
 | [CR-2026-10-02-2027-buddy-agent.md](CR-2026-10-02-2027-buddy-agent.md) | `buddy` agent: founder's single point of contact, guided/autonomous modes — BUILT, not yet exercised |
 | [CR-2026-10-02-2021-run-cr-skill-pick-latest-open.md](CR-2026-10-02-2021-run-cr-skill-pick-latest-open.md) | `run-cr` skill: execute the latest CR not yet deployed — BUILT, not yet exercised |
 | [CR-2026-10-02-2012-project-agents-and-skills.md](CR-2026-10-02-2012-project-agents-and-skills.md) | Project agents (governance-reviewer, test-verifier) and skills (new-cr, resume-work) — BUILT, not yet exercised |

@@ -37,8 +37,8 @@ deploy only on the founder's word, except in `buddy` Autonomous mode, where the 
 | [CR-2026-10-02-2016-mobile-burger-menu-not-scrollable.md](CR-2026-10-02-2016-mobile-burger-menu-not-scrollable.md) | Mobile burger menu is not scrollable — **BUILT & VERIFIED in dev, not deployed** |
 | [CR-2026-10-02-2015-email-api-and-account-confirmation.md](CR-2026-10-02-2015-email-api-and-account-confirmation.md) | Email API and confirmation email after creating an account — ACTIVATES the deferred provider decision |
 | [CR-2026-10-02-2014-free-diagnostic-score-not-displayed.md](CR-2026-10-02-2014-free-diagnostic-score-not-displayed.md) | Free skill diagnostic: the score is not displayed |
-| [CR-2026-10-02-2013-profile-picture-not-visible-on-mobile.md](CR-2026-10-02-2013-profile-picture-not-visible-on-mobile.md) | Profile picture not visible on mobile |
-| [CR-2026-10-02-2012-show-name-instead-of-account.md](CR-2026-10-02-2012-show-name-instead-of-account.md) | Header shows the person's name instead of "Account" |
+| [CR-2026-10-02-2013-profile-picture-not-visible-on-mobile.md](CR-2026-10-02-2013-profile-picture-not-visible-on-mobile.md) | Profile picture not visible on mobile — **BUILT & VERIFIED in dev, not deployed** |
+| [CR-2026-10-02-2012-show-name-instead-of-account.md](CR-2026-10-02-2012-show-name-instead-of-account.md) | Header shows the person's name instead of "Account" — **BUILT & VERIFIED in dev, not deployed** |
 | [CR-2026-10-02-2011-how-it-works-images-missing.md](CR-2026-10-02-2011-how-it-works-images-missing.md) | HOW IT WORKS images missing on the home page — bring them from dev to production |
 | [CR-2026-10-02-2010-interest-buttons-route-by-availability.md](CR-2026-10-02-2010-interest-buttons-route-by-availability.md) | Every "Register your interest" / "Register interest" button routes by availability |
 | [CR-2026-10-02-0721-interest-button-leads-to-signin-flow.md](CR-2026-10-02-0721-interest-button-leads-to-signin-flow.md) | Hero "Register your interest" button → the sign-in/interest flow (was a mailto) — BUILT, awaiting deploy |

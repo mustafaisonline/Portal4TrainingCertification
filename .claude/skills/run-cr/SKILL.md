@@ -31,3 +31,4 @@ If the founder names one CR, run only that one (steps 4–8). Otherwise plan and
 8. Update `framework/milestones.md` / `framework/wbs.md` when a milestone or WBS task is achieved.
 9. Commit one CR per commit (stage files by name). Push and deploy only on the founder's word, or in Buddy Autonomous mode. Prefer one deploy at the end for the whole batch.
 10. Finish with a summary table: CR → done / needs-founder / needs-new-terminal / blocked, and the questions waiting on the founder.
+11. **Reminder rule.** A CR that cannot run now stays open: leave its status unchanged (never mark it done), add one dated progress-log line saying what it waits for, and list it in every run's summary. The next `run-cr` rescans it and runs it as soon as the blocker is gone. Re-running `run-cr` is the standing reminder of everything still pending.

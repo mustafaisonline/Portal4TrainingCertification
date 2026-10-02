@@ -36,3 +36,4 @@ Depends on the answers. If they are DB-uploaded images (e.g. Admin → training 
 | Date (MYT) | Entry |
 |---|---|
 | 2026-10-02 20:11 | CR created from the founder's list. Facts gathered read-only.  |
+| 2026-10-02 | run-cr 2026-10-02: kept OPEN — cannot be reproduced; needs the founder's screenshot (desktop/mobile, browser) and whether the images are different pictures uploaded in dev. Re-run run-cr after that. |

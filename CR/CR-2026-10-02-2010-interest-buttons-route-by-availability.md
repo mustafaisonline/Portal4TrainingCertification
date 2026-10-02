@@ -41,3 +41,4 @@ One shared helper decides the destination for a training (open date → registra
 | Date (MYT) | Entry |
 |---|---|
 | 2026-10-02 20:10 | CR created from the founder's list. Facts gathered read-only. CR-0721's schedule-page question is closed by this CR. |
+| 2026-10-02 | run-cr 2026-10-02: kept OPEN — Q2 (the path to Stripe: Stripe is reachable only after sign-in and registration of an open date; confirm the intended path and, with several open dates, where the button goes) and Q4 (generic /schedule button) are unanswered. Re-run run-cr after answering. |

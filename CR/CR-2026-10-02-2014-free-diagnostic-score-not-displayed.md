@@ -36,3 +36,4 @@ Reproduce in dev with the same steps; find the root cause (not a patch); fix; ad
 | Date (MYT) | Entry |
 |---|---|
 | 2026-10-02 20:14 | CR created from the founder's list. Facts gathered read-only.  |
+| 2026-10-02 | run-cr 2026-10-02: kept OPEN — not reproduced; needs where/when the score is missing (right after finishing vs later/refresh, desktop/mobile) and a screenshot. Re-run run-cr after that. |

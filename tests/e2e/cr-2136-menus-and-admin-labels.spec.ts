@@ -102,6 +102,31 @@ test("the avatar menu carries every header and footer item, grouped, and each li
   await expect(page.getByTestId("account-menu")).toHaveCount(0);
 });
 
+test("the signed-in header shows the first name (CR-2012) and the avatar on a phone, with the menu on screen (CR-2013)", async ({ page }) => {
+  await signIn(page, personEmail);
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.goto("/");
+  // CR-2012: the first name replaces the word "Account"; the full name stays in the accessible name.
+  await expect(page.getByTestId("header-account-name")).toHaveText("Pia");
+  await expect(page.getByTestId("header-account")).toHaveAttribute("aria-label", "Account menu for Pia Cr Person");
+  await expect(page.getByTestId("header-account")).not.toContainText("Account");
+  // CR-2013: the avatar is in the header on phones, and the opened menu stays inside the screen.
+  for (const width of [320, 375]) {
+    await page.setViewportSize({ width, height: 700 });
+    await page.goto("/");
+    const avatar = page.getByTestId("header-avatar");
+    await expect(avatar, `${width}px`).toBeVisible();
+    await page.getByTestId("header-account").click();
+    const menu = page.getByTestId("account-menu");
+    await expect(menu).toBeVisible();
+    const box = await menu.boundingBox();
+    expect(box!.x, `${width}px left edge`).toBeGreaterThanOrEqual(0);
+    expect(box!.x + box!.width, `${width}px right edge`).toBeLessThanOrEqual(width);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(1);
+    await page.keyboard.press("Escape");
+  }
+});
+
 test("Users and Orders lists say Edit, not Open", async ({ page }) => {
   await signIn(page, adminEmail);
   await page.goto("/admin/users");

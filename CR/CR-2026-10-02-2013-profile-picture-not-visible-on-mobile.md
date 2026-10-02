@@ -1,6 +1,8 @@
 # CR-2026-10-02-2013 — Profile picture not visible on mobile
 
-**Received:** 2026-10-02 20:13 MYT · **Status:** NOT STARTED — root cause identified, fix waits for the CR queue · **Requested by:** founder
+**Received:** 2026-10-02 20:13 MYT · **Status:** BUILT & VERIFIED in dev — not deployed · **Requested by:** founder · **Recommended model:** Sonnet 5.5 — small UI change plus e2e; this session is Sonnet 5.5
+
+Spec: [`CR-SPEC-2026-10-02-2013-profile-picture-not-visible-on-mobile.md`](specs/CR-SPEC-2026-10-02-2013-profile-picture-not-visible-on-mobile.md)
 
 ## 1. Request (verbatim)
 
@@ -27,10 +29,11 @@ Remove the `hidden sm:` gate (adjust header spacing so search/theme/burger still
 | # | Step | Status | Updated |
 |---|---|---|---|
 | 1 | Founder confirms the placement | **AWAITING founder** | — |
-| 2 | Build + verify at 320/375/640 px | NOT STARTED | — |
+| 2 | Build + verify at 320/375/640 px | **VERIFIED** (e2e, tsc) | 2026-10-02 |
 
 ## 6. Progress log
 
 | Date (MYT) | Entry |
 |---|---|
 | 2026-10-02 20:13 | CR created from the founder's list. Facts gathered read-only.  |
+| 2026-10-02 | Executed by `run-cr` using the CR's stated default assumption (avatar in the header on phones, menu anchored to the header). Built; menus spec 6/6; full-suite regression recorded in the commit/summary. Not deployed. |

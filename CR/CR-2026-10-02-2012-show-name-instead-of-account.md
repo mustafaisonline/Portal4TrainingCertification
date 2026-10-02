@@ -1,6 +1,8 @@
 # CR-2026-10-02-2012 — Header shows the person's name instead of "Account"
 
-**Received:** 2026-10-02 20:12 MYT · **Status:** NOT STARTED — one question · **Requested by:** founder
+**Received:** 2026-10-02 20:12 MYT · **Status:** BUILT & VERIFIED in dev — not deployed · **Requested by:** founder · **Recommended model:** Sonnet 5.5 — small UI change plus e2e; this session is Sonnet 5.5
+
+Spec: [`CR-SPEC-2026-10-02-2012-show-name-instead-of-account.md`](specs/CR-SPEC-2026-10-02-2012-show-name-instead-of-account.md)
 
 ## 1. Request (verbatim)
 
@@ -27,10 +29,11 @@ Replace the literal "Account" with the person's display name (truncated); keep t
 | # | Step | Status | Updated |
 |---|---|---|---|
 | 1 | Founder answers §3 | **AWAITING founder** | — |
-| 2 | Build + verify at 375/640/1280 px | NOT STARTED | — |
+| 2 | Build + verify at 375/640/1280 px | **VERIFIED** (e2e, tsc) | 2026-10-02 |
 
 ## 6. Progress log
 
 | Date (MYT) | Entry |
 |---|---|
 | 2026-10-02 20:12 | CR created from the founder's list. Facts gathered read-only.  |
+| 2026-10-02 | Executed by `run-cr` using the CR's stated default assumption (first name, max 16 characters). Built; menus spec 6/6; full-suite regression recorded in the commit/summary. Not deployed. |

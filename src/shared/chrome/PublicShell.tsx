@@ -139,8 +139,9 @@ export function PublicShell({
               className="text-body-sm w-44 rounded-[var(--radius-plate)] border border-[var(--color-line-strong)] bg-[var(--color-ground)] px-3 py-1.5 text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] xl:w-48"
             />
           </form>
-          <div className="flex shrink-0 items-center gap-3">
-            {accountSlot ? <span className="hidden sm:inline-flex">{accountSlot}</span> : null}
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+            {/* CR-2026-10-02-2013: shown on phones too (was `hidden sm:inline-flex`). */}
+            {accountSlot ? <span className="inline-flex">{accountSlot}</span> : null}
             <ThemeToggle />
             {/* Mobile menu toggle — only where the inline <nav> is hidden. */}
             <button

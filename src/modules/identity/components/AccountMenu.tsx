@@ -72,8 +72,16 @@ export function AccountMenu({
     };
   }, [open]);
 
+  // CR-2026-10-02-2012 (founder: "Show Name instead of account"): the header
+  // button shows the person's first name; the full name stays in the menu and
+  // in the accessible name.
+  const firstName = name.trim().split(/\s+/)[0] || "Account";
+
   return (
-    <div ref={ref} className="relative">
+    // CR-2026-10-02-2013: below `sm` the wrapper is not positioned, so the open
+    // menu anchors to the sticky header and spans its width (a 16rem panel
+    // anchored to a phone-sized avatar would run off the left edge).
+    <div ref={ref} className="static sm:relative">
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
@@ -81,7 +89,7 @@ export function AccountMenu({
         aria-haspopup="true"
         aria-label={`Account menu for ${name}`}
         data-testid="header-account"
-        className="flex items-center gap-2 rounded-full border border-[var(--color-line-strong)] py-1 pl-1 pr-3 text-body-sm text-[var(--color-ink)] hover:border-[var(--color-primary)]"
+        className="flex items-center gap-2 rounded-full border border-[var(--color-line-strong)] py-1 pl-1 pr-1 text-body-sm md:pr-3 text-[var(--color-ink)] hover:border-[var(--color-primary)]"
       >
         <span
           aria-hidden="true"
@@ -95,12 +103,14 @@ export function AccountMenu({
             initialsOf(name)
           )}
         </span>
-        <span className="hidden md:inline">Account</span>
+        <span className="hidden max-w-[16ch] truncate md:inline" data-testid="header-account-name">
+          {firstName}
+        </span>
       </button>
       {open && (
         <div
           data-testid="account-menu"
-          className="absolute right-0 top-full z-20 mt-2 max-h-[80vh] w-64 overflow-y-auto rounded-[var(--radius-panel)] border border-[var(--color-line)] bg-[var(--color-ground-raised)] p-2 shadow-[0_10px_30px_rgba(16,24,40,0.18)]"
+          className="absolute inset-x-4 top-full z-20 mt-2 max-h-[80vh] overflow-y-auto sm:inset-x-auto sm:right-0 sm:w-64 rounded-[var(--radius-panel)] border border-[var(--color-line)] bg-[var(--color-ground-raised)] p-2 shadow-[0_10px_30px_rgba(16,24,40,0.18)]"
         >
           <p className="px-3 pb-2 pt-1">
             <span className="block text-body-sm font-medium text-[var(--color-ink)]">{name}</span>

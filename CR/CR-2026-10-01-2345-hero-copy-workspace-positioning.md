@@ -1,6 +1,6 @@
 # CR-2026-10-01-2345 — Homepage hero copy: from training portal to Data & AI workspace
 
-**Received:** 2026-10-01 23:45 MYT · **Status:** BUILT & VERIFIED, uncommitted · **Requested by:** founder
+**Received:** 2026-10-01 23:45 MYT · **Status:** DEPLOYED (`v2026.10.02-1`) · **Requested by:** founder
 
 ## 1. Request (verbatim)
 

@@ -1,6 +1,6 @@
 # CR-2026-10-01-2246 — Assessment page: "The Free Assessment Check" as a card; HRD verification link on "Who delivers this"
 
-**Received:** 2026-10-01 22:46 MYT · **Status:** BUILT & VERIFIED, uncommitted (founder: "go ahead with CR 3"; implementation re-verified on request) · **Requested by:** founder
+**Received:** 2026-10-01 22:46 MYT · **Status:** DEPLOYED (`v2026.10.02-1`) · **Requested by:** founder
 
 ## 1. Request (verbatim)
 

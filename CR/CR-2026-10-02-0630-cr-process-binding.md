@@ -1,6 +1,6 @@
 # CR-2026-10-02-0630 — Make the CR (Change Requisition) process binding on every session
 
-**Received:** 2026-10-02 06:30 MYT · **Status:** BUILT · **Requested by:** founder
+**Received:** 2026-10-02 06:30 MYT · **Status:** DONE · **Requested by:** founder
 
 ## 1. Request (verbatim)
 

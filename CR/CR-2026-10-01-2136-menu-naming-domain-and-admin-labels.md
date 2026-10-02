@@ -1,6 +1,6 @@
 # CR-2026-10-01-2136 — Free Assessment naming, burger menu, domain dataainexus.com, admin Edit/Delete labels
 
-**Received:** 2026-10-01 21:36 MYT · **Status:** PLANNED — questions in §3, awaiting the founder's "go" · **Requested by:** founder
+**Received:** 2026-10-01 21:36 MYT · **Status:** DONE — built, deployed (`v2026.10.02-1`); domain `dataainexus.com` live; Stripe webhook verified · **Requested by:** founder
 
 ## 1. Request (verbatim)
 

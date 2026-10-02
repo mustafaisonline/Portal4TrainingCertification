@@ -1,6 +1,6 @@
 # CR-2026-10-02-0030 — Deploy straight from the laptop; GitHub no longer in the deploy path
 
-**Received:** 2026-10-02 00:30 MYT · **Status:** PATCH WRITTEN, awaiting the founder to apply it · **Requested by:** founder
+**Received:** 2026-10-02 00:30 MYT · **Status:** DONE — patch applied (`4724599`); first real deploy from the laptop succeeded (`v2026.10.02-1`); used for `-2` and `-4` · **Requested by:** founder
 
 ## 1. Request (verbatim)
 

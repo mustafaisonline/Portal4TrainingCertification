@@ -1,6 +1,6 @@
 # CR-2026-10-01-1711 — Personas on Free Certifications: Assess your Data Foundation · Prepare for Interview · Organisations Interview Screening
 
-**Received:** 2026-10-01 17:11 MYT · **Status:** REVISED with the founder's responses (§1b) — **awaiting the founder's approval to go ahead** · **Requested by:** founder
+**Received:** 2026-10-01 17:11 MYT · **Status:** DEPLOYED (`v2026.10.02-1`; migration `20261001095148` applied; 2×100 interview questions seeded and approved 2026-10-02; YPT organisation created — its own questions still need review) · **Requested by:** founder
 
 ## 1. Request (verbatim)
 

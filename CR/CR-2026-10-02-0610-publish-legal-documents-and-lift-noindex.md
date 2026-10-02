@@ -1,6 +1,6 @@
 # CR-2026-10-02-0610 — Publish the legal documents, lift `noindex`, confirm Stripe live
 
-**Received:** 2026-10-02 · **Status:** BUILT & unit-tested; **deploy + two server steps pending (founder)** · **Requested by:** founder
+**Received:** 2026-10-02 · **Status:** DEPLOYED (`v2026.10.02-2`); `LEGAL_DOCUMENT_VERSIONS` set on the server. Open: the founder's RM 2.00 live payment (CR-0625) · **Requested by:** founder
 
 ## 1. Request (verbatim)
 

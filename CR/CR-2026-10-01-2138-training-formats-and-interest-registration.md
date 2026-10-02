@@ -1,6 +1,6 @@
 # CR-2026-10-01-2138 — Formats tab for trainers/admin + "Register your interest" (USD 2) with a "Users Interest" tab
 
-**Received:** 2026-10-01 21:38 MYT · **Status:** BUILT & VERIFIED in dev/test (F1–F6), **uncommitted; the migration SQL awaits the founder's approval before production** — founder said "go ahead with CR 2" (recommendations to Q1–Q9 taken as answered) · **Requested by:** founder
+**Received:** 2026-10-01 21:38 MYT · **Status:** DEPLOYED (`v2026.10.02-1`, migration `20261001140339` applied in production). Follow-up: CR-2026-10-02-0721 (hero button) · **Requested by:** founder
 
 ## 1. Request (verbatim)
 

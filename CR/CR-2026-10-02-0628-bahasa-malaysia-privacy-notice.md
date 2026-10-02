@@ -1,6 +1,6 @@
 # CR-2026-10-02-0628 — Bahasa Malaysia version of the Privacy notice
 
-**Received:** 2026-10-02 06:28 MYT · **Status:** PLANNED — one decision needed from the founder · **Requested by:** founder
+**Received:** 2026-10-02 06:28 MYT · **Status:** DRAFT WRITTEN, UNPUBLISHED (deployed as inert code in `-4`) — awaiting translator/counsel review and the founder's "reviewed" · **Requested by:** founder
 
 ## 1. Request (verbatim)
 

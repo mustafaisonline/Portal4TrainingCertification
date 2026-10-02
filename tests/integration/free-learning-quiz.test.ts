@@ -109,7 +109,7 @@ describe("topic quiz", () => {
 
   // Founder, 2026-09-28 ("New change" item 1): the free diagnostic draws a
   // fresh random set from the reviewed bank on every start.
-  it("drawDiagnosticQuestions: distinct reviewed questions of published topics, without answers; an oversized draw is refused honestly", async () => {
+  it("drawDiagnosticQuestions: distinct reviewed questions of published topics, with the correct option (no explanation); an oversized draw is refused honestly", async () => {
     const drawn = await drawDiagnosticQuestions(3);
     expect(drawn).not.toBeNull();
     expect(drawn!.length).toBe(3);
@@ -118,8 +118,9 @@ describe("topic quiz", () => {
       expect(d.options.length).toBe(5);
       expect(d.stem.length).toBeGreaterThan(0);
       expect(d.topicTitle.length).toBeGreaterThan(0);
-      // The drawn shape never carries the correct option or the explanation.
-      expect(Object.keys(d).sort()).toEqual(["id", "options", "stem", "topicSlug", "topicTitle"]);
+      // The drawn shape carries the correct option text (CR-2026-10-02-2014: the score is computed in the browser) and never the explanation.
+      expect(Object.keys(d).sort()).toEqual(["correct", "id", "options", "stem", "topicSlug", "topicTitle"]);
+      expect(d.options).toContain(d.correct);
       const row = await prisma.topicQuestion.findUnique({ where: { id: d.id }, select: { status: true, topic: { select: { published: true } } } });
       expect(row).toMatchObject({ status: "reviewed", topic: { published: true } });
     }

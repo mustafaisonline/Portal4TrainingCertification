@@ -35,6 +35,8 @@ export type DrawnDiagnosticQuestion = {
   options: string[];
   domainCode: string;
   domainName: string;
+  /** Text of the correct option (CR-2026-10-02-2014); null/absent → that question cannot be scored. */
+  correct?: string | null;
 };
 
 /** Appended by the UI as an equal, unpenalised option — never stored. */
@@ -112,6 +114,8 @@ export type CompletedAnswer = {
   domainName: string;
   scenario: string;
   selected: string | null;
+  /** Text of the correct option, when the question set carried one (CR-2026-10-02-2014). */
+  correct?: string | null;
 };
 
 export type CompletedDiagnostic = {

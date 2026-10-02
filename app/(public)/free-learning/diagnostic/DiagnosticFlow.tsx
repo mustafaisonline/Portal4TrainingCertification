@@ -168,6 +168,7 @@ export function DiagnosticFlow() {
           domainName: q.domainName,
           scenario: q.scenario,
           selected: answers[i] ?? null,
+          correct: q.correct ?? null,
         })),
       };
       try {

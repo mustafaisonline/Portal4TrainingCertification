@@ -26,6 +26,7 @@ export async function drawDiagnosticQuestionsAction(): Promise<DiagnosticDrawRes
       options: q.options,
       domainCode: q.topicSlug,
       domainName: q.topicTitle,
+      correct: q.correct,
     })),
   };
 }

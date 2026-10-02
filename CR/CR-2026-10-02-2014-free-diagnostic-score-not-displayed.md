@@ -1,6 +1,8 @@
 # CR-2026-10-02-2014 — Free skill diagnostic: the score is not displayed
 
-**Received:** 2026-10-02 20:14 MYT · **Status:** NOT STARTED — founder decision needed: scored result or charts of the existing counts? · **Requested by:** founder
+**Received:** 2026-10-02 20:14 MYT · **Status:** BUILT & VERIFIED in dev — pending deploy · **Requested by:** founder · **Recommended model:** Sonnet 5.5 — no schema change was needed; this session is Sonnet 5.5
+
+Spec: [`CR-SPEC-2026-10-02-2014-free-diagnostic-score-not-displayed.md`](specs/CR-SPEC-2026-10-02-2014-free-diagnostic-score-not-displayed.md)
 
 ## 1. Request (verbatim)
 
@@ -28,7 +30,7 @@ Reproduce in dev with the same steps; find the root cause (not a patch); fix; ad
 | # | Step | Status | Updated |
 |---|---|---|---|
 | 1 | Reproduction details | **AWAITING founder** | — |
-| 2 | Reproduce + root cause | NOT STARTED | — |
+| 2 | Reproduce + root cause | **VERIFIED** (e2e + integration) | 2026-10-02 |
 | 3 | Fix + regression test | NOT STARTED | — |
 
 ## 6. Progress log
@@ -38,3 +40,4 @@ Reproduce in dev with the same steps; find the root cause (not a patch); fix; ad
 | 2026-10-02 20:14 | CR created from the founder's list. Facts gathered read-only.  |
 | 2026-10-02 | run-cr 2026-10-02: kept OPEN — not reproduced; needs where/when the score is missing (right after finishing vs later/refresh, desktop/mobile) and a screenshot. Re-run run-cr after that. |
 | 2026-10-02 | Founder: the page is https://dataainexus.com/free-learning/diagnostic/result — the total score and the learning-area charts are missing. Finding: this is by design today, not a bug. `DiagnosticResultView.tsx` states 'Never a score': it shows only answered / not-sure counts per capability area, and `diagnostic_questions` stores no correct answers, so a score cannot be computed. A total score and charts would need new business rules (what is correct, how scored, level bands) and, for a score, a data-model change (RED gate). Questions raised with the founder; nothing built. |
+| 2026-10-02 | Founder: option B (score), "schema approval = consider it approved", then "commit, push and deploy". Finding: the live diagnostic draws from `topic_questions`, which already stores the correct option — **no schema change was needed**. Built: correct option returned with the draw, scoring in the browser (nothing sent to the server), result page with total, % and a bar per area, where-to-focus, no bands. New e2e (3) including a real flow; side-fix for a 320 px header overflow I introduced in CR-2013. Open: homepage band still counts-only. |

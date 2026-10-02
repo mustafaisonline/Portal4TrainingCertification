@@ -33,7 +33,7 @@ export function DiagnosticStartCard({
     <Card variant="feature">
       <p className="text-label mb-3">Ten questions · about ten minutes</p>
       <p className="text-body-sm mb-6 max-w-[52ch] text-[var(--color-ink-quiet)]" data-testid="diagnostic-basics">
-        A quick check of basic data and AI concepts — not a score, not a credential. For a longer free test with a
+        A quick check of basic data and AI concepts — you get a score, not a credential. For a longer free test with a
         verifiable result, take The Free Assessment Check once you have an account.
       </p>
       <Button onClick={onStart}>Start free diagnostic (10 min)</Button>

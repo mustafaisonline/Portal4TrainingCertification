@@ -36,7 +36,7 @@ deploy only on the founder's word, except in `buddy` Autonomous mode, where the 
 | [CR-2026-10-02-2012-project-agents-and-skills.md](CR-2026-10-02-2012-project-agents-and-skills.md) | Project agents (governance-reviewer, test-verifier) and skills (new-cr, resume-work) — BUILT, not yet exercised |
 | [CR-2026-10-02-2016-mobile-burger-menu-not-scrollable.md](CR-2026-10-02-2016-mobile-burger-menu-not-scrollable.md) | Mobile burger menu is not scrollable — **BUILT & VERIFIED in dev, not deployed** |
 | [CR-2026-10-02-2015-email-api-and-account-confirmation.md](CR-2026-10-02-2015-email-api-and-account-confirmation.md) | Email API and confirmation email after creating an account — ACTIVATES the deferred provider decision |
-| [CR-2026-10-02-2014-free-diagnostic-score-not-displayed.md](CR-2026-10-02-2014-free-diagnostic-score-not-displayed.md) | Free skill diagnostic: the score is not displayed |
+| [CR-2026-10-02-2014-free-diagnostic-score-not-displayed.md](CR-2026-10-02-2014-free-diagnostic-score-not-displayed.md) | Free skill diagnostic: the score is not displayed — **BUILT & VERIFIED in dev, pending deploy** |
 | [CR-2026-10-02-2013-profile-picture-not-visible-on-mobile.md](CR-2026-10-02-2013-profile-picture-not-visible-on-mobile.md) | Profile picture not visible on mobile — **BUILT & VERIFIED in dev, not deployed** |
 | [CR-2026-10-02-2012-show-name-instead-of-account.md](CR-2026-10-02-2012-show-name-instead-of-account.md) | Header shows the person's name instead of "Account" — **BUILT & VERIFIED in dev, not deployed** |
 | [CR-2026-10-02-2011-how-it-works-images-missing.md](CR-2026-10-02-2011-how-it-works-images-missing.md) | HOW IT WORKS images missing on the home page — bring them from dev to production |

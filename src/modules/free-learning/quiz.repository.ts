@@ -208,16 +208,19 @@ export async function setAllQuestionsStatus(tx: Tx, input: { topicId: string; st
   return rows.length;
 }
 
-export type DiagnosticDrawQuestion = { id: string; stem: string; topicSlug: string; topicTitle: string; options: string[] };
+/** `correct`: the text of the correct option, or null if the bank row has none. Sent to the browser so the score is computed there (CR-2026-10-02-2014). */
+export type DiagnosticDrawQuestion = { id: string; stem: string; topicSlug: string; topicTitle: string; options: string[]; correct: string | null };
 
 /** `count` REVIEWED questions of PUBLISHED topics, drawn afresh at random on
  *  every call (founder, 2026-09-28: the free diagnostic serves "a fresh
  *  random set" from the question bank on every start — the same
  *  crypto-shuffled draw the Knowledge Check uses, without an attempt row
  *  because the diagnostic is anonymous and nothing is saved). Returns `null`
- *  honestly while the bank is smaller than `count`. Correct answers and
- *  explanations are deliberately not selected — the diagnostic records
- *  answers, it does not grade them. */
+ *  honestly while the bank is smaller than `count`. The correct option's text
+ *  is returned (founder, 2026-10-02, CR-2026-10-02-2014: the diagnostic shows
+ *  a score) so the browser can score the answers locally — no answer ever
+ *  reaches the server, as the Privacy policy says. Explanations are still
+ *  not selected. */
 export async function drawDiagnosticQuestions(count: number, db: Db = getPrisma()): Promise<DiagnosticDrawQuestion[] | null> {
   const pool = await db.topicQuestion.findMany({ where: { status: "reviewed", topic: { published: true } }, select: { id: true }, orderBy: { id: "asc" } });
   if (pool.length < count) return null;
@@ -229,11 +232,11 @@ export async function drawDiagnosticQuestions(count: number, db: Db = getPrisma(
   const picked = ids.slice(0, count);
   const rows = await db.topicQuestion.findMany({
     where: { id: { in: picked } },
-    select: { id: true, stem: true, topic: { select: { slug: true, title: true } }, options: { orderBy: { position: "asc" }, select: { text: true } } },
+    select: { id: true, stem: true, topic: { select: { slug: true, title: true } }, options: { orderBy: { position: "asc" }, select: { text: true, isCorrect: true } } },
   });
   const byId = new Map(rows.map((r) => [r.id, r]));
   return picked.map((id) => {
     const r = byId.get(id)!;
-    return { id: r.id, stem: r.stem, topicSlug: r.topic.slug, topicTitle: r.topic.title, options: r.options.map((o) => o.text) };
+    return { id: r.id, stem: r.stem, topicSlug: r.topic.slug, topicTitle: r.topic.title, options: r.options.map((o) => o.text), correct: r.options.find((o) => o.isCorrect)?.text ?? null };
   });
 }

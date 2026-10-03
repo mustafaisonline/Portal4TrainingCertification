@@ -219,3 +219,62 @@ test("on a 320 px phone there is no room for a bell: the header does not overflo
   await expect(page.getByTestId("bell-button")).toBeVisible();
   await expect(page.getByTestId("mobile-unread-badge")).toBeHidden();
 });
+
+/* CR-2026-10-03-2250 (founder): the light/dark switch left the header — the bell took its place — and now lives in the
+   burger menu, the avatar menu and the footer. */
+
+async function themeIs(page: Page, expected: "light" | "dark") {
+  await expect(page.locator("html")).toHaveAttribute("data-theme", expected);
+}
+
+test("on a 375 px phone the bell is in the header beside the avatar and the burger, the theme icon is gone from the header, and the switch is in the burger menu and persists", async ({ page }) => {
+  await clearNotes();
+  await notify(3);
+  await page.emulateMedia({ colorScheme: "light" });
+  await page.setViewportSize({ width: 375, height: 700 });
+  await signIn(page, personEmail);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+  await expect(page.getByTestId("bell-button")).toBeVisible(); // the bell fits from 360 px
+  await expect(page.getByTestId("mobile-unread-badge")).toBeHidden(); // so the avatar badge steps aside
+  await expect(page.getByTestId("header-account")).toBeVisible();
+  await expect(page.getByTestId("theme-toggle")).toHaveCount(0); // not in the header any more
+  // The burger's right edge stays inside the screen.
+  const burger = await page.getByRole("button", { name: "Open menu" }).boundingBox();
+  expect(burger!.x + burger!.width).toBeLessThanOrEqual(375);
+
+  await page.getByRole("button", { name: "Open menu" }).click();
+  const row = page.getByTestId("theme-toggle-menu");
+  await expect(row).toContainText("Switch to dark theme");
+  await row.click();
+  await themeIs(page, "dark");
+  await expect(row).toContainText("Switch to light theme");
+  await page.reload();
+  await themeIs(page, "dark"); // remembered
+  await page.getByRole("button", { name: "Open menu" }).click();
+  await page.getByTestId("theme-toggle-menu").click();
+  await themeIs(page, "light");
+});
+
+test("on a laptop the theme switch is in the avatar menu and the footer — not in the header; signed out it is in the footer", async ({ page }) => {
+  await page.emulateMedia({ colorScheme: "light" });
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await signIn(page, personEmail);
+  await expect(page.getByTestId("bell-button")).toBeVisible();
+  await expect(page.getByTestId("theme-toggle")).toHaveCount(0);
+  await page.getByTestId("header-account").click();
+  await page.getByTestId("theme-toggle-account").click();
+  await themeIs(page, "dark");
+  await expect(page.getByTestId("theme-toggle-footer")).toContainText("Switch to light theme");
+  await page.getByTestId("theme-toggle-footer").click();
+  await themeIs(page, "light");
+
+  // Signed out: no bell, no avatar menu — the footer switch is the way to choose.
+  await page.context().clearCookies();
+  await page.goto("/");
+  await expect(page.getByTestId("theme-toggle")).toHaveCount(0);
+  await expect(page.getByTestId("bell-button")).toHaveCount(0);
+  await page.getByTestId("theme-toggle-footer").click();
+  await themeIs(page, "dark");
+  await page.getByTestId("theme-toggle-footer").click();
+  await themeIs(page, "light");
+});

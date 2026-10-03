@@ -17,7 +17,7 @@ export function MobileUnreadBadge({ initialUnread }: { initialUnread: number }) 
   }, []);
   if (unread <= 0) return null;
   return (
-    <span data-testid="mobile-unread-badge" className="pointer-events-none absolute -right-1 -top-1 grid min-w-[1.25rem] place-items-center rounded-full bg-[var(--color-action)] px-1 text-[0.7rem] font-semibold leading-5 text-[var(--color-action-ink)] sm:hidden">
+    <span data-testid="mobile-unread-badge" className="pointer-events-none absolute -right-1 -top-1 grid min-w-[1.25rem] place-items-center rounded-full bg-[var(--color-action)] px-1 text-[0.7rem] font-semibold leading-5 text-[var(--color-action-ink)] min-[360px]:hidden">
       <span aria-hidden="true">{unread > 99 ? "99+" : unread}</span>
       <span className="sr-only">{unread} unread notifications</span>
     </span>

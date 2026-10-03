@@ -142,7 +142,7 @@ export function PublicShell({
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             {/* CR-2026-10-02-2013: shown on phones too (was `hidden sm:inline-flex`). */}
             {accountSlot ? <span className="inline-flex">{accountSlot}</span> : null}
-            <ThemeToggle />
+            {/* CR-2026-10-03-2250: the theme switch moved into the menus and the footer; the bell took its place. */}
             {/* Mobile menu toggle — only where the inline <nav> is hidden. */}
             <button
               type="button"
@@ -227,6 +227,10 @@ export function PublicShell({
                 </Link>
               ))}
             </nav>
+            <div className="mt-2 border-t border-[var(--color-line)] pt-2" data-testid="mobile-appearance">
+              <p className="text-label px-2 pb-1 pt-1">Appearance</p>
+              <ThemeToggle variant="row" testId="theme-toggle-menu" />
+            </div>
             {mobileAccountSlot ? (
               <div className="mt-2 flex flex-col gap-3 border-t border-[var(--color-line)] pt-4 sm:hidden">
                 {mobileAccountSlot}
@@ -252,6 +256,10 @@ export function PublicShell({
             <p className="max-w-[26ch]">
               Expert-led Data &amp; AI training and certification. Live learning, real capability.
             </p>
+            {/* CR-2026-10-03-2250: also here, so a signed-out visitor on a laptop (no burger, no avatar menu) can still choose a theme. */}
+            <div className="mt-4 max-w-[26ch]">
+              <ThemeToggle variant="row" testId="theme-toggle-footer" />
+            </div>
           </div>
           <div>
             <p className="text-label mb-3">Explore</p>

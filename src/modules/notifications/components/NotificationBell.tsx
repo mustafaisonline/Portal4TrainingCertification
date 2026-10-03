@@ -121,7 +121,7 @@ export function NotificationBell({ initialUnread, initialLatest }: { initialUnre
   const label = unread > 0 ? `Notifications, ${unread} unread` : "Notifications, none unread";
   return (
     // From the `sm` breakpoint up; on a phone the header has no room, so the count shows as a badge on the avatar instead.
-    <div ref={wrap} className="relative hidden sm:block" data-testid="notification-bell">
+    <div ref={wrap} className="relative hidden min-[360px]:block" data-testid="notification-bell">
       <button
         ref={button}
         type="button"

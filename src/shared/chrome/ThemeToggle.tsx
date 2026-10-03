@@ -40,7 +40,12 @@ function IconMoon() {
   );
 }
 
-export function ThemeToggle({ className = "" }: { className?: string }) {
+/**
+ * CR-2026-10-03-2250 (founder, 2026-10-03): the light/dark switch no longer sits in the header (the notification bell
+ * took its place). `variant="row"` is the labelled row used inside the burger menu, the avatar menu and the footer.
+ * `testId` keeps the three instances apart.
+ */
+export function ThemeToggle({ className = "", variant = "icon", testId = "theme-toggle" }: { className?: string; variant?: "icon" | "row"; testId?: string }) {
   // null until mounted — avoids assuming a theme before reading the real
   // (persisted or system) value, which would fight the no-flash script.
   const [theme, setTheme] = useState<Theme | null>(null);
@@ -54,6 +59,18 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
     // No explicit choice yet: reflect the system preference so the icon
     // offers the opposite of what the visitor is actually seeing.
     setTheme(window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  }, []);
+
+  // CR-2026-10-03-2250: there can now be several switches on a page (burger menu, avatar menu, footer). They all follow
+  // the page's real theme, so changing it in one updates the label of the others.
+  useEffect(() => {
+    const root = document.documentElement;
+    const observer = new MutationObserver(() => {
+      const now = root.getAttribute(THEME_ATTRIBUTE);
+      if (now === "dark" || now === "light") setTheme(now);
+    });
+    observer.observe(root, { attributes: true, attributeFilter: [THEME_ATTRIBUTE] });
+    return () => observer.disconnect();
   }, []);
 
   const toggle = () => {
@@ -71,17 +88,30 @@ export function ThemeToggle({ className = "" }: { className?: string }) {
   if (!theme) {
     // Stable-sized placeholder pre-mount so the header doesn't shift layout
     // once the real icon appears.
-    return <span aria-hidden="true" className={`inline-block h-9 w-9 ${className}`} />;
+    return <span aria-hidden="true" className={variant === "row" ? `block h-11 ${className}` : `inline-block h-9 w-9 ${className}`} />;
   }
 
   const label = theme === "dark" ? "Switch to light theme" : "Switch to dark theme";
+  if (variant === "row") {
+    return (
+      <button
+        type="button"
+        onClick={toggle}
+        data-testid={testId}
+        className={`flex min-h-11 w-full items-center gap-3 rounded-[var(--radius-plate)] px-2 py-2 text-left text-body-sm text-[var(--color-ink-quiet)] transition-colors hover:bg-[var(--color-ground-raised)] hover:text-[var(--color-ink)] ${className}`}
+      >
+        {theme === "dark" ? <IconSun /> : <IconMoon />}
+        <span>{label}</span>
+      </button>
+    );
+  }
   return (
     <button
       type="button"
       onClick={toggle}
       aria-label={label}
       title={label}
-      data-testid="theme-toggle"
+      data-testid={testId}
       className={`grid h-9 w-9 shrink-0 place-items-center rounded-full border border-[var(--color-line-strong)] text-[var(--color-ink-quiet)] transition-colors hover:border-[var(--color-primary)] hover:text-[var(--color-primary)] ${className}`}
     >
       {theme === "dark" ? <IconSun /> : <IconMoon />}

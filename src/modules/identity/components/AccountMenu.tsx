@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { ThemeToggle } from "@/shared/chrome/ThemeToggle";
 import { footerExplore, footerLegal, primaryNav, verifyLink } from "@/shared/chrome/site-nav";
 import { initialsOf } from "@/shared/util/initials";
 
@@ -183,6 +184,9 @@ export function AccountMenu({
               ))}
             </ul>
           </nav>
+          <div className="mt-1 border-t border-[var(--color-line)] px-1 pt-1" data-testid="account-appearance">
+            <ThemeToggle variant="row" testId="theme-toggle-account" className="px-2" />
+          </div>
           <Link
             href="/sign-out"
             onClick={() => setOpen(false)}

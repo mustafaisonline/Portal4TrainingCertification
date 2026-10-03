@@ -171,7 +171,7 @@ export default async function HomePage() {
               glyph: <GlyphTarget />,
               label: "Not sure where to start?",
               title: "Assess your capability",
-              body: "Ten minutes, free, and you get a specific answer about where you stand — not a score.",
+              body: "Ten minutes, free, and you get a score for each learning area — so you know where you stand.",
               href: "/free-learning/diagnostic",
               cta: "Start free diagnostic (10 min)",
             },

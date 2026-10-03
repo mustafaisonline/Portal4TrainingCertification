@@ -233,8 +233,8 @@ export function HomeDiagnostic({ questions, teaser = false }: { questions: Diagn
               </p>
               <h2 className="text-h1 mb-3">Not sure where you stand?</h2>
               <p className="text-body-sm text-[var(--color-ink-quiet)]">
-                The free diagnostic locates you across our capability areas
-                and names your gaps in plain language — before you commit
+                The free diagnostic locates you across our learning areas
+                and shows your score for each — before you commit
                 to anything.
               </p>
               <div className="mt-5">

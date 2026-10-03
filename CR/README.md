@@ -26,6 +26,7 @@ deploy only on the founder's word, except in `buddy` Autonomous mode, where the 
 
 | CR file | Title | Status |
 |---|---|---|
+| [CR-2026-10-03-0815-homepage-diagnostic-band-scores.md](CR-2026-10-03-0815-homepage-diagnostic-band-scores.md) | Homepage diagnostic band: make it score too (it leads to the scored diagnostic; copy fixed) — **BUILT & VERIFIED in dev, not deployed** |
 | [CR-2026-10-02-2123-run-cr-executes-all-open-crs.md](CR-2026-10-02-2123-run-cr-executes-all-open-crs.md) | `run-cr` plans and executes ALL open CRs (parallel/sequence), flags new-terminal/model — BUILT |
 | [CR-2026-10-02-2054-business-ops-metadata-and-prompt-engineering.md](CR-2026-10-02-2054-business-ops-metadata-and-prompt-engineering.md) | Business and operational metadata; prompt-engineering skills + selector agent; per-chat and per-task model rules — BUILT, awaiting push |
 | [CR-2026-10-02-2045-framework-followups-milestones-metadata-push.md](CR-2026-10-02-2045-framework-followups-milestones-metadata-push.md) | Framework follow-ups: multi-task CRs, milestone files moved, table/script metadata, push — BUILT |

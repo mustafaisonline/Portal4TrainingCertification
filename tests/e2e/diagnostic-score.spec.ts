@@ -62,6 +62,17 @@ test("a record without correct options (older attempt, homepage walkthrough) kee
   await expect(page.getByRole("link", { name: "Start the free diagnostic" }).first()).toBeVisible();
 });
 
+test("the homepage band and card say the diagnostic gives a score, and the band's button opens the scored diagnostic (CR-2026-10-03-0815)", async ({ page }) => {
+  await page.goto("/");
+  const band = page.locator("#free-skill-diagnostic");
+  await expect(band).toContainText("shows your score for each");
+  await expect(band).not.toContainText(/not a score/i);
+  await expect(band.getByRole("link", { name: /Free Diagnostic/ })).toHaveAttribute("href", "/free-learning/diagnostic");
+  await expect(page.locator("body")).not.toContainText(/not a score/i);
+  await expect(page.getByText("A score by learning area")).toBeVisible();
+  await expect(page.getByText(/you get a score for each learning area/)).toBeVisible();
+});
+
 const BANK_SLUGS = ["t-diag-score-a", "t-diag-score-b"];
 
 test.describe("the real flow", () => {

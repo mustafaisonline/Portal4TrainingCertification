@@ -107,7 +107,7 @@ const trustPoints = [
   },
   {
     icon: <IconBars />,
-    title: "Named gaps, not a score",
+    title: "A score by learning area",
     body: "Clear, actionable insights",
   },
   {

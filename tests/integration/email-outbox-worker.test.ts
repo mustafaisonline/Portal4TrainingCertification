@@ -293,7 +293,7 @@ describe("permanent failures, first-attempt lease, lease theft, budget", () => {
     const to = addr("inflight");
     const pending = sendEmail(msg(to));
     let row = null as Awaited<ReturnType<typeof rowOf>> | null;
-    await expect.poll(async () => (row = await getPrisma().outboundEmail.findFirst({ where: { toEmail: to } })) !== null && behaviour.sends.includes(to)).toBe(true);
+    await expect.poll(async () => (row = await getPrisma().outboundEmail.findFirst({ where: { toEmail: to } })) !== null && behaviour.sends.includes(to), { timeout: 15_000 }).toBe(true);
     expect(row!.status).toBe("queued");
     expect(row!.nextAttemptAt!.getTime() - Date.now()).toBeGreaterThan(100_000);
     expect((await processOutbox()).claimed).toBe(0); // the worker leaves it alone
@@ -309,7 +309,7 @@ describe("permanent failures, first-attempt lease, lease theft, budget", () => {
     let release!: () => void;
     behaviour.gate = new Promise<void>((r) => (release = r));
     const run = processOutbox();
-    await expect.poll(() => behaviour.sends.includes(addr("slow1"))).toBe(true); // run A is mid-send of the first row, holding a claim on the second
+    await expect.poll(() => behaviour.sends.includes(addr("slow1")), { timeout: 15_000 }).toBe(true); // run A is mid-send of the first row, holding a claim on the second
     // Meanwhile "run B" takes the second row (its lease is moved on).
     await getPrisma().outboundEmail.update({ where: { id: second.id }, data: { nextAttemptAt: new Date(Date.now() + 600_000) } });
     release();

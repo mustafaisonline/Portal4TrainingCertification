@@ -40,7 +40,7 @@ export type OutboxRunResult = {
   budget: string | null;
 };
 
-type Claimed = { id: string; to_email: string; template_key: string; subject: string; text_body: string; attempts: number };
+type Claimed = { id: string; to_email: string; template_key: string; subject: string; text_body: string; attempts: number; created_at: Date };
 
 const toRow = (c: Claimed): OutboxRow => ({ id: c.id, toEmail: c.to_email, templateKey: c.template_key, subject: c.subject, textBody: c.text_body, attempts: c.attempts });
 
@@ -68,7 +68,9 @@ export async function processOutbox(opts: { now?: Date; limit?: number } = {}): 
       ORDER BY created_at
       LIMIT ${limit}
       FOR UPDATE SKIP LOCKED)
-    RETURNING id, to_email, template_key, subject, text_body, attempts`;
+    RETURNING id, to_email, template_key, subject, text_body, attempts, created_at`;
+  // `UPDATE … RETURNING` gives no order: send the oldest first, as the claim intended.
+  claimed.sort((a, b) => a.created_at.getTime() - b.created_at.getTime());
   result.claimed = claimed.length;
   if (claimed.length === 0) return result;
 
@@ -127,7 +129,7 @@ export async function retryFailedEmail(id: string, now: Date = new Date()): Prom
   const claimed = await prisma.$queryRaw<Claimed[]>`
     UPDATE outbound_emails SET status = 'queued'::outbound_email_status, attempts = 0, next_attempt_at = ${new Date(now.getTime() + OUTBOX_LEASE_MS)}, last_error = NULL
     WHERE id = ${id}::uuid AND status = 'failed'::outbound_email_status
-    RETURNING id, to_email, template_key, subject, text_body, attempts`;
+    RETURNING id, to_email, template_key, subject, text_body, attempts, created_at`;
   const c = claimed[0];
   if (!c) {
     const exists = await prisma.outboundEmail.findUnique({ where: { id }, select: { id: true } }).catch(() => null);

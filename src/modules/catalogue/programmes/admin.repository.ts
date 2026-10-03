@@ -588,6 +588,16 @@ export async function listReviewRequests(db: Db = getPrisma()): Promise<Map<stri
   const rows = await db.auditLog.findMany({ where: { action: "programme.review_requested", entityType: "programme" }, orderBy: { createdAt: "desc" }, select: { entityId: true, createdAt: true }, take: 500 });
   const map = new Map<string, Date>();
   for (const r of rows) if (!map.has(r.entityId)) map.set(r.entityId, r.createdAt);
+  // A request is "handled" once the training's status changed after it (published, unpublished, retired): drop those.
+  if (map.size > 0) {
+    const changes = await db.auditLog.findMany({ where: { action: "programme.status_changed", entityType: "programme", entityId: { in: [...map.keys()] } }, orderBy: { createdAt: "desc" }, select: { entityId: true, createdAt: true } });
+    const lastChange = new Map<string, Date>();
+    for (const c of changes) if (!lastChange.has(c.entityId)) lastChange.set(c.entityId, c.createdAt);
+    for (const [id, requested] of [...map]) {
+      const changed = lastChange.get(id);
+      if (changed && changed.getTime() > requested.getTime()) map.delete(id);
+    }
+  }
   return map;
 }
 

@@ -101,6 +101,7 @@ export default async function TrainingDetailsPage({
               </p>
               {problems.length > 0 ? (
                 <ul
+                  id="training-not-ready-list"
                   className="text-body-sm mt-2 list-disc pl-5 text-[var(--color-ink-quiet)]"
                   data-testid="training-not-ready-readonly"
                 >
@@ -116,6 +117,7 @@ export default async function TrainingDetailsPage({
                   requestedAt={
                     requestedAt ? formatTimestamp(requestedAt) : null
                   }
+                  describedBy="training-not-ready-list"
                 />
               ) : null}
             </>

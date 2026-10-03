@@ -12,13 +12,13 @@ import { FormStatus } from "@/shared/ui/forms";
  */
 const initial = { status: "idle" } as const;
 
-export function SubmitForReviewForm({ id, ready, requestedAt }: { id: string; ready: boolean; requestedAt: string | null }) {
+export function SubmitForReviewForm({ id, ready, requestedAt, describedBy }: { id: string; ready: boolean; requestedAt: string | null; describedBy?: string }) {
   const [state, action, pending] = useActionState(requestTrainingReviewAction, initial);
   return (
     <form action={action} className="mt-3 flex flex-col gap-2" data-testid="submit-review-form" aria-label="Submit for review">
       <input type="hidden" name="id" value={id} />
       <div className="flex flex-wrap items-center gap-3">
-        <Button type="submit" disabled={pending || !ready} data-testid="submit-review">
+        <Button type="submit" disabled={pending || !ready} aria-describedby={!ready ? describedBy : undefined} data-testid="submit-review">
           {pending ? "Sending…" : "Submit for review"}
         </Button>
         {requestedAt && state.status !== "saved" ? (

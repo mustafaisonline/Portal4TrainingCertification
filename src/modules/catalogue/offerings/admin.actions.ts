@@ -135,7 +135,8 @@ export async function createOfferingAction(_prev: OfferingFormState, formData: F
         title: `A trainer scheduled a date${o?.programmeTitle ? ` for ${o.programmeTitle}` : ""}`,
         body: "It is saved as planned. Open it for registration when you have approved it.",
         link: `/admin/offerings/${created.id}`,
-        dedupeKey: `offering-created:${created.id}`,
+        // One notice per training per hour, so scheduling several dates in a row does not flood the bell.
+        dedupeKey: `offering-created:${input.programmeId}:${Math.floor(Date.now() / 3_600_000)}`,
       }).catch((err) => console.error("[offerings] admin notice failed", err instanceof Error ? err.message : err));
     }
     revalidate();
@@ -164,7 +165,11 @@ export async function updateOfferingAction(_prev: OfferingFormState, formData: F
   if (!(await canManageTraining(getPrisma(), gate.scope, existing.programmeId)) || !(await canManageTraining(getPrisma(), gate.scope, input.programmeId))) return NOT_YOURS;
 
   // A Trainer cannot change a date's status (planned / open / full / completed / cancelled) — an administrator does.
-  if (!gate.isAdmin) input.status = existing.status;
+  if (!gate.isAdmin) {
+    input.status = existing.status;
+    // An administrator-opened date cannot be carried by a Trainer to another training (it would land open, unreviewed).
+    if (existing.status !== "planned" && input.programmeId !== existing.programmeId) return { status: "error", message: "Only an administrator can move a date that is already open to another training.", fieldErrors: { programmeId: "Ask an administrator to move this date." } };
+  }
 
   try {
     const updated = await withTransaction((tx) => updateOffering(tx, id, input, gate.userId));

@@ -1,6 +1,6 @@
 # CR-2026-10-03-1420 — Upgrade Next.js 16.3.3 → 16.3.8 (critical advisory GHSA-vcvr-r3jv-pc5j)
 
-**Received:** 2026-10-03 14:20 MYT · **Status:** BUILT & VERIFIED — deploys with the next release · **Requested by:** founder ("Yes, prepare it", 2026-10-03; "go ahead with all of it") · **Model:** sonnet
+**Received:** 2026-10-03 14:20 MYT · **Status:** DEPLOYED (`v2026.10.03-6`) · **Requested by:** founder ("Yes, prepare it", 2026-10-03; "go ahead with all of it") · **Model:** sonnet
 
 ## 1. Request (verbatim)
 
@@ -24,3 +24,4 @@
 | Date (MYT) | Entry |
 |---|---|
 | 2026-10-03 14:20 | CR created. |
+| 2026-10-03 14:40 | **DEPLOYED `v2026.10.03-6` (`30f9d2e`)** — Next.js 16.3.8 is live; the critical advisory is gone from `npm audit --omit=dev`. |

@@ -20,3 +20,11 @@ Check each changed file against:
 9. **Git hygiene** — files belong to this project; nothing unrelated staged.
 
 Report: verdict (PASS / PASS WITH NOTES / STOP), then findings grouped RED / YELLOW / observations, each with `file:line` and the rule it touches. Do not invent business rules; if something is ambiguous, list it as a question for the founder.
+
+## Skills you use
+- `guardrails-check`
+- `techstack-check`
+
+Pick the skills the task needs; do not run the others.
+
+**Several possible actions?** When a step has more than one sensible choice, do not pick silently: return the options with your own recommendation to Buddy, who asks the human.

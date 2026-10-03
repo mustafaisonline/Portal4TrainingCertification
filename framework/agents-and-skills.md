@@ -8,6 +8,7 @@
 |---|---|---|
 | Team lead | `buddy` (= `tl`) | The only agent the founder talks to; guided / autonomous modes; delegates to all others. Default session agent (`.claude/settings.json`) |
 | Business requirements | `br-analyst` | Vision and BRD |
+| Business requirements | `br-impact-analyst` | Whole-workspace impact analysis, recorded in the CR spec |
 | Business requirements | `br-planner` | Milestones, WBS, CRs, CR specs |
 | Execution | `exec-wireframer` | Wireframe build, test, sign-off gate |
 | Execution | `exec-developer` | Implements one CR against its spec |
@@ -24,7 +25,8 @@
 | Session | `resume-work` | Orient: status, open CRs, deferred items |
 | Business requirements | `vision-write` · `brd-write` | Maintain `vision.md`, `brd.md` |
 | Planning | `milestones-update` · `wbs-update` | Maintain `milestones.md`, `wbs.md` |
-| Change control | `new-cr` · `cr-spec` · `run-cr` | CR file → its spec → plan and execute all open CRs (parallel/sequence; flags new-terminal/model) |
+| Impact analysis | `impact-analysis` · `impact-record` | Scan the workspace for every impacted element; record it in the CR spec |
+| Change control | `new-cr` · `cr-spec` · `run-cr` | CR file → its spec → plan and execute all open CRs; CRs are split by model with the model at the end of the name (parallel/sequence; flags new-terminal/model) |
 | Governance | `guardrails-check` · `techstack-check` | Check work against `guardrails.md`, `techstack.md` |
 | Wireframe | `wireframe-signoff` | Check/record the sign-off gate |
 | Metadata | `metadata-capture` | One `.md` per table, view, script, policy, procedure |

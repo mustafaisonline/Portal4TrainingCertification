@@ -19,3 +19,10 @@ Output (short):
 - **Open questions:** only genuine gaps.
 
 Guidance in the catalogue is rule of thumb, not measurement; say so if the choice is close.
+
+## Skills you use
+- pf-* (all 30 prompt-framework skills; see framework/prompt-frameworks.md)
+
+Pick the skills the task needs; do not run the others.
+
+**Several possible actions?** When a step has more than one sensible choice, do not pick silently: return the options with your own recommendation to Buddy, who asks the human.

@@ -5,7 +5,7 @@ is written.** The file is the record *and* the resume point: if a usage limit is
 lost, a new session reads `PROJECT_STATUS.md`, then this index, then the open CR file, and carries on.
 
 ## Naming
-`CR-YYYY-MM-DD-HHMM-short-title.md` — the timestamp is **Malaysia time (MYT, UTC+8)** at the moment the
+`CR-YYYY-MM-DD-HHMM-short-title-<model>.md` — **model = `haiku`, `sonnet`, `opus` or `fable`, at the end of the name** (since 2026-10-03): a requirement bundle is split into one CR per Claude model, and the suffix tells the human which terminal/model runs it. Finished CRs keep their original names. Every CR has a 1:1 spec `specs/CR-SPEC-<same name>.md` (impacted elements, status per task, "Resume here"). Task status: OPEN → IN PROGRESS → BUILT → VERIFIED → DEPLOYED, plus CLOSED and BLOCKED. The timestamp is **Malaysia time (MYT, UTC+8)** at the moment the
 request arrived, so files sort in the order the founder asked.
 
 ## What every CR file contains (copy the template below)
@@ -26,6 +26,7 @@ deploy only on the founder's word, except in `buddy` Autonomous mode, where the 
 
 | CR file | Title | Status |
 |---|---|---|
+| [CR-2026-10-03-1048-cr-model-naming-impact-analysis-roster-sonnet.md](CR-2026-10-03-1048-cr-model-naming-impact-analysis-roster-sonnet.md) | CR/spec convention (model in the name), impact analysis agent+skills, Buddy routing, ask-with-recommendation — BUILT, awaiting review |
 | [CR-2026-10-03-0815-homepage-diagnostic-band-scores.md](CR-2026-10-03-0815-homepage-diagnostic-band-scores.md) | Homepage diagnostic band: make it score too (it leads to the scored diagnostic; copy fixed) — **DEPLOYED `v2026.10.03-1`** |
 | [CR-2026-10-02-2123-run-cr-executes-all-open-crs.md](CR-2026-10-02-2123-run-cr-executes-all-open-crs.md) | `run-cr` plans and executes ALL open CRs (parallel/sequence), flags new-terminal/model — BUILT |
 | [CR-2026-10-02-2054-business-ops-metadata-and-prompt-engineering.md](CR-2026-10-02-2054-business-ops-metadata-and-prompt-engineering.md) | Business and operational metadata; prompt-engineering skills + selector agent; per-chat and per-task model rules — BUILT, awaiting push |
@@ -36,7 +37,7 @@ deploy only on the founder's word, except in `buddy` Autonomous mode, where the 
 | [CR-2026-10-02-2021-run-cr-skill-pick-latest-open.md](CR-2026-10-02-2021-run-cr-skill-pick-latest-open.md) | `run-cr` skill: execute the latest CR not yet deployed — BUILT, not yet exercised |
 | [CR-2026-10-02-2012-project-agents-and-skills.md](CR-2026-10-02-2012-project-agents-and-skills.md) | Project agents (governance-reviewer, test-verifier) and skills (new-cr, resume-work) — BUILT, not yet exercised |
 | [CR-2026-10-02-2016-mobile-burger-menu-not-scrollable.md](CR-2026-10-02-2016-mobile-burger-menu-not-scrollable.md) | Mobile burger menu is not scrollable — **DEPLOYED `v2026.10.02-5`** |
-| [CR-2026-10-02-2015-email-api-and-account-confirmation.md](CR-2026-10-02-2015-email-api-and-account-confirmation.md) | Email API and confirmation email after creating an account — ACTIVATES the deferred provider decision |
+| [CR-2026-10-02-2015-email-api-and-account-confirmation-sonnet.md](CR-2026-10-02-2015-email-api-and-account-confirmation-sonnet.md) | Email API and confirmation email after creating an account — ACTIVATES the deferred provider decision |
 | [CR-2026-10-02-2014-free-diagnostic-score-not-displayed.md](CR-2026-10-02-2014-free-diagnostic-score-not-displayed.md) | Free skill diagnostic: the score is not displayed — **DEPLOYED `v2026.10.02-5`** |
 | [CR-2026-10-02-2013-profile-picture-not-visible-on-mobile.md](CR-2026-10-02-2013-profile-picture-not-visible-on-mobile.md) | Profile picture not visible on mobile — **DEPLOYED `v2026.10.02-5`** |
 | [CR-2026-10-02-2012-show-name-instead-of-account.md](CR-2026-10-02-2012-show-name-instead-of-account.md) | Header shows the person's name instead of "Account" — **DEPLOYED `v2026.10.02-5`** |
@@ -64,7 +65,7 @@ deploy only on the founder's word, except in `buddy` Autonomous mode, where the 
 ## Template
 
 ```markdown
-# CR-YYYY-MM-DD-HHMM — <title>
+# CR-YYYY-MM-DD-HHMM — <title>   (file name ends with -<model>)
 **Received:** <MYT timestamp> · **Status:** NOT STARTED · **Requested by:** founder
 
 ## 1. Request (verbatim)

@@ -16,3 +16,10 @@ Setup rules (machine-specific):
 Procedure: identify what changed (`git diff --stat`), pick the relevant suites, run them, and for each failure read the output and name the likely root cause. Re-run a failure once to separate flaky from real.
 
 Report: commands run, pass/fail counts, each failure with file and cause, anything skipped and why. Distinguish Implemented / Tested / Partially tested / Blocked. Never describe a skipped or failing check as passing.
+
+## Skills you use
+- none of your own; you run the project's test commands and report
+
+Pick the skills the task needs; do not run the others.
+
+**Several possible actions?** When a step has more than one sensible choice, do not pick silently: return the options with your own recommendation to Buddy, who asks the human.

@@ -144,3 +144,46 @@ test("a participant recorded as not attended is refused a certificate on the ros
   await expect(roster.getByTestId("record-completion-form")).toHaveCount(0);
   expect(absentRegistrationId).toBeTruthy();
 });
+
+test("the sheet gives the trainer tools for the people who paid — copy, one BCC message, a CSV — and the CSV is guarded", async ({ page }) => {
+  await signInViaUi(page, adminEmail);
+  await page.goto(`/admin/attendance/${running.id}`);
+  const tools = page.getByTestId("participants-tools");
+  await expect(tools).toContainText("people who paid for this date");
+  await expect(tools).toContainText("your own mailbox");
+  await expect(page.getByTestId("participants-copy-emails")).toBeVisible();
+
+  // One message, everyone in BCC.
+  const mailto = decodeURIComponent((await page.getByTestId("participants-mailto").getAttribute("href")) ?? "");
+  expect(mailto.startsWith("mailto:?bcc=")).toBe(true);
+  expect(mailto).toContain(present.email.toLowerCase());
+  expect(mailto).toContain(absent.email.toLowerCase());
+
+  // The CSV: this date's two confirmed people, with the Attended answer from the test before.
+  const csvHref = await page.getByTestId("participants-csv").getAttribute("href");
+  expect(csvHref).toBe(`/admin/attendance/${running.id}/export.csv`);
+  const res = await page.request.get(csvHref!);
+  expect(res.status()).toBe(200);
+  expect(res.headers()["content-type"]).toContain("text/csv");
+  expect(res.headers()["cache-control"]).toBe("no-store");
+  expect(res.headers()["content-disposition"]).toContain("attachment");
+  const body = await res.text();
+  expect(body.split("\r\n")[0]).toBe("Training,Dates,Full name,Email,Date of birth,Country,Attended");
+  expect(body).toContain("Pat Present");
+  expect(body).toContain(present.email);
+  expect(body).toContain("Abe Absent");
+  expect(body).toContain("1991-03-04");
+
+  // Another date holds only its own participant.
+  const other = await (await page.request.get(`/admin/attendance/${ended.id}/export.csv`)).text();
+  expect(other).toContain("Abe Absent");
+  expect(other).not.toContain("Pat Present");
+  expect((await page.request.get("/admin/attendance/not-a-uuid/export.csv")).status()).toBe(404);
+  await expectNoAxeViolations(page);
+
+  // Signed out: sent to sign in, no file.
+  await page.context().clearCookies();
+  const out = await page.request.get(csvHref!, { maxRedirects: 0 });
+  expect([307, 302]).toContain(out.status());
+  expect(out.headers()["location"]).toContain("/sign-in");
+});

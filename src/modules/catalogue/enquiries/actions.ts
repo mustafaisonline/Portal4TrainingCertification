@@ -3,7 +3,8 @@
 import { headers } from "next/headers";
 import { getPrisma } from "@/db/prisma";
 import { sendEmail } from "@/modules/notifications/email";
-import { enquiryAcknowledgementMessage, enquiryNotifyAddress, enquiryTeamMessage } from "./emails";
+import { notifyAdmins } from "@/modules/notifications/notifications.service";
+import { enquiryAcknowledgementMessage, enquiryNotifyAddress, enquiryTeamMessage, kindLabel } from "./emails";
 import { enquiryReference, validateEnquiryForm, type EnquiryField } from "./enquiry-validation";
 import { clientKeyOf, enquiryOverLimit } from "./rate-limit";
 import { createEnquiry } from "./repository";
@@ -84,6 +85,9 @@ export async function submitEnquiry(_prev: EnquiryFormState, formData: FormData)
   });
   const reference = enquiryReference(enquiry.id);
   const base = (process.env["APP_BASE_URL"] ?? "http://localhost:3100").replace(/\/+$/, "");
+
+  // Tell the administrators in-app (their bell) — independent of any email; never able to fail the submission.
+  void notifyAdmins({ kind: "enquiry", title: `New message from ${values.name}`, body: `${kindLabel(values.kind)}${programme?.title ? ` — ${programme.title}` : ""}. Reference ${reference}.`, link: `/admin/enquiries/${enquiry.id}`, dedupeKey: `enquiry:${enquiry.id}` }).catch((err) => console.error("[notifications] admin notice failed for", reference, err));
 
   // The message is safe in the database. The portal-wide caps now decide only whether the two emails go out (each counts,
   // so every accepted message is counted once); over a cap the team simply reads it in Admin → Enquiries.

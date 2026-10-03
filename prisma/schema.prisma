@@ -167,6 +167,8 @@ model User {
   updatedAt       DateTime  @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   identities                AuthIdentity[]
+  /// In-app notifications (CR-2026-10-03-1228).
+  notifications             Notification[]
   roles                     UserRole[]
   consents                  Consent[]
   orders                    Order[]
@@ -1568,4 +1570,31 @@ model HumanChallenge {
 
   @@index([expiresAt])
   @@map("human_challenges")
+}
+
+// ── CR-2026-10-03-1228: in-app notifications ─────────────────────────────────
+
+/// One in-app notification for one person (the header bell and /account/notifications).
+/// Created next to the email an event sends (and for events that send none), so what
+/// someone is told never depends on mail delivery. Holds NO one-time links and no
+/// secrets: a title, a short sentence and a same-site path. `dedupeKey` makes an
+/// event notify a person at most once.
+model Notification {
+  id        String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String    @map("user_id") @db.Uuid
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  /// Category: registration, payment, interest, assessment, certificate, enquiry, system.
+  kind      String
+  title     String
+  body      String
+  /// A same-site path ("/account/trainings"), or null.
+  link      String?
+  readAt    DateTime? @map("read_at") @db.Timestamptz(6)
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  dedupeKey String?   @map("dedupe_key")
+
+  @@unique([userId, dedupeKey])
+  @@index([userId, createdAt])
+  @@index([userId, readAt])
+  @@map("notifications")
 }

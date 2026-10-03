@@ -1,5 +1,6 @@
 import { timingSafeEqual } from "node:crypto";
 import { runCertificateReminders } from "@/modules/certificates/reminders.service";
+import { purgeReadBefore } from "@/modules/notifications/notifications.repository";
 
 /*
  * POST /api/jobs/certificate-reminders (M7 plan §2.3; default F2). The
@@ -44,7 +45,12 @@ export async function POST(req: Request): Promise<Response> {
   }
   try {
     const result = await runCertificateReminders();
-    return Response.json(result, { status: result.failed > 0 ? 500 : 200 });
+    // Daily housekeeping on the same schedule (CR-2026-10-03-1228): READ notifications older than 12 months go; unread stay.
+    const notificationsPurged = await purgeReadBefore(new Date(Date.now() - 365 * 24 * 60 * 60 * 1000)).catch((err) => {
+      console.error("[jobs] notification retention failed", err);
+      return 0;
+    });
+    return Response.json({ ...result, notificationsPurged }, { status: result.failed > 0 ? 500 : 200 });
   } catch (err) {
     console.error("[jobs] certificate-reminders run failed", err);
     return Response.json({ error: "run_failed" }, { status: 500 });

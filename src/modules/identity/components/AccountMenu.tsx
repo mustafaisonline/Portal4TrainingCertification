@@ -122,6 +122,12 @@ export function AccountMenu({
                 User Dashboard
               </Link>
             </li>
+            <li>
+              {/* CR-2026-10-03-1228: on phones the header has no room for a bell, so the page is one tap away here. */}
+              <Link href="/account/notifications" onClick={() => setOpen(false)} className={itemClass} data-testid="menu-notifications">
+                Notifications
+              </Link>
+            </li>
             {isTrainer && (
               <li>
                 <Link href="/admin" onClick={() => setOpen(false)} className={itemClass}>

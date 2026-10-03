@@ -116,7 +116,8 @@ test("the header menu opens with name, email, User Dashboard, the site menu, the
   const labels = (await menu.getByRole("link").allTextContents()).map((l) => l.trim());
   expect(labels[0]).toBe("User Dashboard");
   expect(labels[labels.length - 1]).toBe("Sign out");
-  expect(labels.slice(1, 3)).toEqual(["Home", "Knowledge Hub"]);
+  // CR-2026-10-03-1228: Notifications sits right after User Dashboard (the phone header has no room for a bell).
+  expect(labels.slice(1, 4)).toEqual(["Notifications", "Home", "Knowledge Hub"]);
   await expect(menu.getByRole("link", { name: "User Dashboard" })).toHaveAttribute("href", "/account");
   await expect(menu.getByRole("link", { name: "Sign out" })).toHaveAttribute("href", "/sign-out");
   // A plain participant sees neither role-scoped entry.

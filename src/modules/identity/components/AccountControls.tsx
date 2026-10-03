@@ -2,6 +2,9 @@ import { Button } from "@/shared/ui/Button";
 import { getProfile } from "../profile.repository";
 import { holdsRole, isOrganisationUser } from "../roles.repository";
 import { getCurrentUser } from "../session";
+import { latestNotifications, unreadCount } from "@/modules/notifications/notifications.repository";
+import { MobileUnreadBadge } from "@/modules/notifications/components/MobileUnreadBadge";
+import { NotificationBell } from "@/modules/notifications/components/NotificationBell";
 import { AccountMenu } from "./AccountMenu";
 
 /*
@@ -79,16 +82,21 @@ export async function AccountControls({ variant = "header" }: { variant?: "heade
       </span>
     );
   }
-  const profile = await getProfile(user.id);
+  const [profile, unread, latest] = await Promise.all([getProfile(user.id), unreadCount(user.id), latestNotifications(user.id)]);
   return (
-    <AccountMenu
-      name={user.name}
-      email={user.email}
-      isTrainer={holdsRole(user.roles, "expert")}
-      isOrganisation={isOrganisationUser(user.roles)}
-      isAdmin={holdsRole(user.roles, "platform_admin")}
-      hasPhoto={profile?.hasPhoto ?? false}
-      photoVersion={profile?.photoUpdatedAt?.getTime() ?? 0}
-    />
+    <div className="relative flex items-center gap-2">
+      {/* CR-2026-10-03-1228: the bell sits beside the avatar (sm and up); on phones the count is a badge on the avatar. */}
+      <NotificationBell initialUnread={unread} initialLatest={latest.map((n) => ({ ...n, createdAt: n.createdAt.toISOString() }))} />
+      <AccountMenu
+        name={user.name}
+        email={user.email}
+        isTrainer={holdsRole(user.roles, "expert")}
+        isOrganisation={isOrganisationUser(user.roles)}
+        isAdmin={holdsRole(user.roles, "platform_admin")}
+        hasPhoto={profile?.hasPhoto ?? false}
+        photoVersion={profile?.photoUpdatedAt?.getTime() ?? 0}
+      />
+      <MobileUnreadBadge initialUnread={unread} />
+    </div>
   );
 }

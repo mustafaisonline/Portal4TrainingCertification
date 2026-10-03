@@ -113,12 +113,12 @@ test("the job refuses a missing or wrong token, queues a 30-day reminder for a c
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Your notifications");
   const row = page.getByTestId("notification-row").filter({ hasText: printedId });
   await expect(row).toHaveCount(1);
-  await expect(row.getByTestId("notification-subject")).toContainText(`Your certificate ${printedId} expires on`);
-  await expect(row.getByTestId("notification-status")).toHaveText("Queued");
-  await expect(row.getByTestId("notification-status")).toHaveAttribute("data-status", "queued");
-  await expect(page.getByText("will be delivered once email sending is enabled")).toBeVisible();
+  // CR-2026-10-03-1228: the page now shows in-app notifications — the reminder is one, unread, linking to Certifications.
+  await expect(row).toContainText(`Your certificate ${printedId} expires on`);
+  await expect(row).toHaveAttribute("data-read", "false");
+  await expect(row.getByTestId("notification-open")).toHaveAttribute("href", "/account/certifications");
   await expect(page.getByTestId("notifications-empty")).toHaveCount(0);
-  // Subject and status only — never the body (it carries the renewal link).
+  // The title and a fixed sentence only — never the email body (it carries the renewal link).
   expect(await page.content()).not.toContain("Hello Rina Reminder");
   await expectNoAxeViolations(page);
   await signOut(page);

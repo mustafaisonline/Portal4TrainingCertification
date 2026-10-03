@@ -1,3 +1,4 @@
+import { notifyFromEmail } from "@/modules/notifications/notifications.service";
 import type { Db } from "@/db/prisma";
 import { getPrisma, withTransaction } from "@/db/prisma";
 import { appBaseUrl } from "@/modules/commerce/checkout.service";
@@ -171,6 +172,8 @@ export async function runCertificateReminders(opts: { now?: Date; db?: Db } = {}
       });
       result.queued += 1;
       result.byStage[stage] += 1;
+      // The in-app channel (CR-2026-10-03-1228): the holder's bell shows the reminder whether or not mail is ever delivered.
+      void notifyFromEmail(message, outboundEmailId).catch((e) => console.error(`[notifications] reminder not recorded for certificate ${row.id}`, e));
       // The log transport's line (recipient, template, subject, id — never
       // the body); the row itself stays `queued` — see the header.
       console.info(`[email:log] to=${message.to} template=${message.templateKey} subject="${message.subject}" id=${outboundEmailId}`);

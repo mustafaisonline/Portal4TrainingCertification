@@ -1,4 +1,5 @@
 import { getPrisma } from "@/db/prisma";
+import { notifyFromEmail } from "./notifications.service";
 import { createSmtpTransport, smtpConfigFromEnv } from "./smtp";
 
 /*
@@ -101,6 +102,10 @@ export async function sendEmail(message: EmailMessage): Promise<{ id: string; st
     },
     select: { id: true },
   });
+
+  // The in-app channel (CR-2026-10-03-1228): the events a person would want in their bell also become a notification —
+  // independent of whether mail is delivered, and never able to break the send (failure is logged only).
+  void notifyFromEmail(message, row.id).catch((err) => console.error(`[notifications] could not record for "${message.templateKey}":`, err));
 
   // A transport that cannot be built (missing or malformed SMTP settings) must NEVER take the caller down —
   // sign-in, payments and webhooks send mail through here. The row is marked failed with the reason (variable

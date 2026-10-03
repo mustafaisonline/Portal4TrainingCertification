@@ -56,20 +56,20 @@ test("the old addresses redirect to /assessment, and nothing on the page still s
     expect(res.status(), old).toBe(308);
     expect(new URL(res.headers()["location"]!, "http://x").pathname, old).toBe("/assessment");
   }
-  expect(primaryNav.map((i) => i.label)).toContain("Free Assessment");
+  expect(primaryNav.map((i) => i.label)).toContain("Assessment");
   for (const href of ["/", "/assessment", "/free-trainings", "/programs"]) {
     await page.goto(href);
     await expect(page.locator("body"), href).not.toContainText(/Free Certification/i);
   }
   // The header and the footer link to /assessment, labelled Assessment.
   await page.goto("/assessment");
-  await expect(page.getByRole("navigation", { name: /primary/i }).getByRole("link", { name: "Free Assessment", exact: true }).first()).toHaveAttribute("href", "/assessment");
+  await expect(page.getByRole("navigation", { name: /primary/i }).getByRole("link", { name: "Assessment", exact: true }).first()).toHaveAttribute("href", "/assessment");
 });
 
 test("the page is a gateway of three persona cards: Assess your Data Foundation (live), Prepare for Interview and Organisations (both live)", async ({ page }) => {
   await page.goto("/assessment");
   await expect(page.getByTestId("assessment-title")).toHaveText("Test yourself. Prepare. Screen.");
-  await expect(page).toHaveTitle(/^Free Assessment/);
+  await expect(page).toHaveTitle(/^Assessment/);
   // Count the CARDS (card 1 now holds the grade list's own <li>s, so "every li" would over-count).
   const cards = page.getByTestId("persona-cards").locator('[data-testid^="persona-card-"]');
   await expect(cards).toHaveCount(3);

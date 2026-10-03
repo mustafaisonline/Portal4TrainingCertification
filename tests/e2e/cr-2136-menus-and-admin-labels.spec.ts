@@ -87,7 +87,7 @@ test("the avatar menu carries every header and footer item, grouped, and each li
   const hrefs = await menu.getByRole("link").evaluateAll((els) => els.map((e) => e.getAttribute("href")));
   for (const l of [...primaryNav, ...footerExplore, ...footerLegal, verifyLink]) expect(hrefs, l.label).toContain(l.href);
   expect(hrefs).not.toContain("/credential-integrity-policy"); // unpublished, not linked (CR-2026-10-02-0627)
-  for (const label of ["Home", "Knowledge Hub", "Free Assessment", "Professional Trainings", "Reviews", "About Us", "Schedule", "FAQ", "Contact Us", "Search completion certificates", "Terms of service", "Privacy policy", "Refund & cancellation policy"]) {
+  for (const label of ["Home", "Knowledge Hub", "Assessment", "Professional Trainings", "Reviews", "About Us", "Schedule", "FAQ", "Contact Us", "Search completion certificates", "Terms of service", "Privacy policy", "Refund & cancellation policy"]) {
     await expect(menu.getByRole("link", { name: label, exact: true }), label).toBeVisible();
   }
   // The dashboards stay at the top of the menu.

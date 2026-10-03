@@ -32,7 +32,7 @@ import { StartForm } from "./StartForm";
  * for the page name alone — the certificate wording is DR-05's.
  */
 export const metadata: Metadata = {
-  title: "Free Assessment",
+  title: "Assessment",
   description: `Test yourself, prepare for an interview, or screen candidates. Start with the Free Assessment Check — ${ASSESSMENT_SIZE} questions in 3 hours, a ${ASSESSMENT_PASS_PERCENT}% pass mark, and a graded, verifiable certificate: Charlie, Bravo or Alpha.`,
 };
 
@@ -59,7 +59,7 @@ export default async function AssessmentPage() {
         { label: `${ROLE_TEST_TIME_LIMIT_MS / 60_000} minutes`, text: "the portal keeps the time" },
         { label: "Model answers", text: "shown beside your own once you finish" },
       ],
-      cta: "Prepare for an interview",
+      cta: "Prepare for an interview for Free",
       href: "/assessment/interview",
       live: true,
     },
@@ -83,7 +83,7 @@ export default async function AssessmentPage() {
     <>
       <section className="night hero-band relative overflow-hidden">
         <div className="relative mx-auto max-w-[1280px] px-6 py-14 lg:py-16">
-          <p className="text-label mb-4 text-[var(--color-primary)]">Free Assessment</p>
+          <p className="text-label mb-4 text-[var(--color-primary)]">Assessment</p>
           <h1 className="text-display-lg mb-4 max-w-[820px]" data-testid="assessment-title">
             Test yourself. Prepare. Screen.
           </h1>

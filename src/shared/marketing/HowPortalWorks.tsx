@@ -118,7 +118,7 @@ export function HowPortalWorks({
       key: "certification",
       label: "Step 2 · Validate",
       icon: <IconCertificate />,
-      title: "Free Assessment",
+      title: "Assessment",
       free: true,
       description: `Test your Data & AI knowledge with The Free Assessment Check — ${ASSESSMENT_SIZE} questions in ${ASSESSMENT_TIME_LIMIT_MS / 3_600_000} hours, drawn from our growing question bank of ${questions ? `${questions} ` : ""}questions. Take it free of charge and earn a graded certificate when you achieve the required passing score.`,
       highlights: [questions ? `${questions} Questions` : "A growing question bank", "The Free Assessment Check", "Graded Certificate on Passing"],

@@ -65,7 +65,7 @@ test("the header has the four items beside the logo (which is Home) and a search
   const nav = page.getByRole("navigation", { name: "Primary", exact: true });
   // UX review 2026-09-27 D1: "Home" is the logo on the desktop bar; the phone menu keeps the item.
   // Founder, 2026-09-28: Knowledge Hub / Free Certifications / Professional Trainings (in that order) replace the earlier set; For Organisations was merged into the trainings page and no longer has its own item. (The search bar was briefly a full-width second row the same day; reverted on founder feedback to its place beside Reviews, then reduced in width.)
-  expect(await nav.getByRole("link").allTextContents()).toEqual(["Knowledge Hub", "Free Assessment", "Professional Trainings", "Reviews"]);
+  expect(await nav.getByRole("link").allTextContents()).toEqual(["Knowledge Hub", "Assessment", "Professional Trainings", "Reviews"]);
   const search = page.getByTestId("site-search").getByRole("searchbox");
   await expect(search).toHaveAttribute("placeholder", "Search Candidates or Training");
   await search.fill("vibe");

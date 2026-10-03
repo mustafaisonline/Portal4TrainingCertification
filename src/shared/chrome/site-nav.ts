@@ -46,7 +46,7 @@ export type NavItem = { href: string; label: string };
 export const primaryNav: readonly NavItem[] = [
   { href: "/", label: "Home" },
   { href: "/free-trainings", label: "Knowledge Hub" },
-  { href: "/assessment", label: "Free Assessment" },
+  { href: "/assessment", label: "Assessment" },
   { href: "/programs", label: "Professional Trainings" },
   { href: "/reviews", label: "Reviews" }, // founder, 2026-09-23 (M5b D-10's 8th item)
 ];
@@ -57,7 +57,7 @@ export const siteSearch = { action: "/search", placeholder: "Search Candidates o
 
 export const footerExplore: readonly NavItem[] = [
   { href: "/free-trainings", label: "Knowledge Hub" },
-  { href: "/assessment", label: "Free Assessment" },
+  { href: "/assessment", label: "Assessment" },
   { href: "/programs", label: "Professional Trainings" },
   // Founder, 2026-09-30 (M7): the trainer's dedicated page is removed, so the
   // footer "Trainer" item is gone (the old address redirects to the trainer's

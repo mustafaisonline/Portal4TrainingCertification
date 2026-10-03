@@ -39,14 +39,14 @@ test("the section sits directly below the learning journey, with the founder's i
   const cards = section.locator("ol > li");
   await expect(cards).toHaveCount(3);
   await expect(cards.nth(0).getByRole("heading", { level: 3 })).toHaveText("Knowledge Hub");
-  await expect(cards.nth(1).getByRole("heading", { level: 3 })).toHaveText("Free Assessment");
+  await expect(cards.nth(1).getByRole("heading", { level: 3 })).toHaveText("Assessment");
   await expect(cards.nth(2).getByRole("heading", { level: 3 })).toHaveText("Professional Training");
   await expect(cards.nth(0)).toContainText("Step 1");
   await expect(cards.nth(1)).toContainText("Step 2");
   await expect(cards.nth(2)).toContainText("Step 3");
 });
 
-test("card copy and links: the Knowledge Hub, Free Assessment and Professional Training cards", async ({ page }) => {
+test("card copy and links: the Knowledge Hub, Assessment and Professional Training cards", async ({ page }) => {
   const { countPublishedTopics } = await import("../../src/modules/free-learning/book.repository");
   const { bankSize } = await import("../../src/modules/free-learning/knowledge-check.repository");
   const { listPublishedExperts } = await import("../../src/modules/catalogue/experts/repository");
@@ -80,7 +80,7 @@ test("card copy and links: the Knowledge Hub, Free Assessment and Professional T
     await expect(page.getByTestId("portal-amazon")).toHaveCount(0);
   }
 
-  // Card 2 — Free Assessment. No passing percentage is written anywhere (it is one configurable constant).
+  // Card 2 — Assessment. No passing percentage is written anywhere (it is one configurable constant).
   const cert = page.getByTestId("portal-card-certification");
   // Founder, 2026-09-30: the card names "The Free Assessment Check" (200 questions, 3 hours) and a graded certificate.
   await expect(cert).toContainText("Test your Data & AI knowledge with The Free Assessment Check — 200 questions in 3 hours, drawn from our growing question bank of");

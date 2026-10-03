@@ -1,9 +1,10 @@
 [Unit]
-Description=p4tc — run the email outbox worker every minute
+Description=p4tc — run the email outbox worker once a day at 01:30 UTC (09:30 MYT), after the renewal reminders (01:00 UTC)
 
 [Timer]
-OnCalendar=*-*-* *:*:00
-AccuracySec=10s
+OnCalendar=*-*-* 01:30:00 UTC
+Persistent=true
+RandomizedDelaySec=120
 
 [Install]
 WantedBy=timers.target

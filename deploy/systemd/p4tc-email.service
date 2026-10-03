@@ -1,7 +1,8 @@
-# Email outbox worker — one authenticated POST a minute (CR-2026-10-03-1225 slice 2). Sends the queued emails that
+# Email outbox worker — one authenticated POST a day, 01:30 UTC (CR-2026-10-03-1225 slice 2; founder 2026-10-03: once in 24 hours is enough
+# while traffic is low — a shorter interval is the open CR CR-2026-10-03-2215). Sends the queued emails that
 # are due (retries with back-off, the daily certificate reminders). JOBS_SECRET comes from the root-owned env file
 # via EnvironmentFile. systemd expands ${JOBS_SECRET} into curl's arguments WITHOUT a shell, so it is not in any shell
-# history or log, but it is visible to other local users in the process list for the second curl runs (every minute).
+# history or log, but it is visible to other local users in the process list for the second curl runs (once a day).
 # On this single-tenant host that is acceptable; use a long random secret (32+ bytes). The reminders unit has the same shape.
 [Unit]
 Description=p4tc — email outbox worker (POST /api/jobs/email-outbox)

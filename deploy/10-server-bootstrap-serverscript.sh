@@ -21,7 +21,7 @@
 #              plus the narrow pm2 commands the wrapper runs on deploy's behalf
 #   caddy      /etc/caddy/Caddyfile from deploy/Caddyfile.example
 #   systemd    p4tc-reminders.timer (01:00 UTC → POST /api/jobs/certificate-reminders)
-#              p4tc-email.timer (every minute → POST /api/jobs/email-outbox)
+#              p4tc-email.timer (01:30 UTC daily → POST /api/jobs/email-outbox)
 #              p4tc-backup.timer   (02:00 UTC → 01-backup for production — the
 #              SOLE recovery mechanism now that there is no managed PITR)
 #              pm2 startup (deploy's PM2 process list survives a reboot)

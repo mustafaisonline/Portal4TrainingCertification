@@ -3,7 +3,7 @@ import { attemptDelivery, emailDeliveryProblem, FIRST_ATTEMPT_LEASE_MS, selectTr
 import { isSuppressed } from "./suppression";
 
 /*
- * The outbox worker (CR-2026-10-03-1225 slice 2). `POST /api/jobs/email-outbox` calls this once a minute (systemd
+ * The outbox worker (CR-2026-10-03-1225 slice 2). `POST /api/jobs/email-outbox` calls this once a day at 01:30 UTC (systemd
  * timer, deploy/systemd). It sends the `queued` rows that are due: emails whose first attempt failed (back-off in
  * email.ts) and rows other code queued without sending — the daily certificate reminders.
  *

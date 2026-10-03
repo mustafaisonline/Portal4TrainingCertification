@@ -1,6 +1,6 @@
 # CR-2026-10-03-2045 — Trainer sees who registered interest or who paid (replaces the trainer email CR)
 
-**Received:** 2026-10-03 20:45 MYT · **Status:** BUILT & VERIFIED — deploying (option B) · **Requested by:** founder · **Model:** sonnet
+**Received:** 2026-10-03 20:45 MYT · **Status:** DEPLOYED `v2026.10.03-10` · **Requested by:** founder · **Model:** sonnet
 
 ## 1. Request (verbatim)
 
@@ -33,3 +33,4 @@
 | 2026-10-03 21:05 | **Founder chose option B:** add the interest page's copy-addresses / BCC message / CSV tools to the paid (confirmed) participants on the Attendance sheet. No schema change; trainers see only their own dates (scope already applied). Build waits for the slice-2 reviews to finish so the reviewed tree does not move. |
 
 | 2026-10-03 22:25 | **Option B built.** On each Attendance sheet (a date's confirmed = paid participants) the trainer gets the Users-Interest tools: *Copy all emails*, *Open an email to all (BCC)* (a short editable draft, no invented policy; dropped above ~1800 characters, then "copy" is the way), *Download CSV* (Training, Dates, Full name, Email, Date of birth, Country, Attended — only what the sheet already shows). New: `src/modules/attendance/participants-tools.ts`, the CSV route (same gate as the interest export: signed out → sign-in, other roles 403, a Trainer sees only their own dates via `getAttendanceSheet(…, scope)`, non-UUID → 404, no-store/attachment/nosniff, formula guard), toolbar in the sheet page. The portal sends no email. No schema, dependency or payment change. Tests: unit (CSV, formula guard, de-dupe, mailto cap), e2e (tools, mailto BCC, CSV body and per-date isolation, 404, axe, signed-out redirect); Trainer scope is covered by `attendance.test.ts`. Review: PASS WITH NOTES (no HIGH/MEDIUM). **Rollback:** revert the commit (no data change). Users Interest already existed unchanged. |
+| 2026-10-03 20:46 MYT (12:45 UTC) | **DEPLOYED `v2026.10.03-10` (`40388c2`).** Validation PASSED, 0 warnings; the new CSV route signed-out → sign-in; health OK. |

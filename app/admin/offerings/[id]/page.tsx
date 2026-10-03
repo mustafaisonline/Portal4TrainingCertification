@@ -65,6 +65,7 @@ export default async function EditOfferingPage({ params }: { params: Promise<{ i
           programmes={programmes}
           formats={formats}
           experts={experts.map((x) => ({ id: x.id, name: x.name }))}
+          canSetStatus={access.isAdmin}
         />
       </Card>
     </div>

@@ -304,8 +304,57 @@ test("a Trainer sees only the Trainings area, creates their own draft, cannot pu
   const offering = page.getByRole("form", { name: "New offering" });
   await expect(offering.getByLabel("Programme", { exact: true }).locator("option")).toHaveCount(1);
 
+  // CR-2026-10-03-2254: a Trainer cannot open a date — the status is read-only and the date is saved as PLANNED.
   const { getPrisma } = await import("../../src/db/prisma");
   const prisma = getPrisma();
+  await expect(page.getByTestId("offering-status")).toBeDisabled();
+  await offering.getByLabel("Delivery").selectOption("live_online");
+  await offering.getByLabel("First day").fill(iso(futureDate(3, 6)));
+  await offering.getByLabel("Last day").fill(iso(futureDate(3, 6)));
+  await offering.getByLabel(/^Capacity/).fill("10");
+  await page.getByTestId("offering-save").click();
+  await expect(page.getByTestId("offering-created")).toBeVisible();
+  const mineEarly = await prisma.programme.findUniqueOrThrow({ where: { slug: trainerSlug }, select: { id: true } });
+  const dates = await prisma.scheduledOffering.findMany({ where: { programmeId: mineEarly.id }, select: { status: true } });
+  expect(dates.map((d) => d.status)).toEqual(["planned"]);
+
+  // "Submit for review": disabled while the draft is not ready (it is a fresh draft: starter text, no fees, no modules).
+  await page.goto(`/admin/trainings/${mineEarly.id}`);
+  await expect(page.getByTestId("submit-review")).toBeDisabled();
+  await expect(page.getByTestId("training-not-ready-readonly")).toContainText("Save a fee for");
+  // Make it ready in the database, then submit.
+  const { FEE_REGIONS } = await import("../../src/modules/catalogue/programmes/constants");
+  await prisma.programme.update({ where: { id: mineEarly.id }, data: { content: { highlights: ["Real highlight"], whoShouldAttend: { intro: "Real intro.", roles: ["Analysts"] }, rationale: { heading: "Why this training", paragraphs: ["Real reason."] }, related: [] } } });
+  await prisma.programmeModule.create({ data: { programmeId: mineEarly.id, position: 1, title: "Module 1", description: "d", points: [] } });
+  for (const region of FEE_REGIONS) await prisma.programmePrice.create({ data: { programmeId: mineEarly.id, region, currency: "MYR", listAmountMinor: 100000n, offerAmountMinor: 50000n, offerLabel: "50% OFF", offerName: "Launch offer" } });
+  await page.reload();
+  await expect(page.getByTestId("submit-review")).toBeEnabled();
+  await page.getByTestId("submit-review").click();
+  await expect(page.getByText("Sent. An administrator will review it and publish it.")).toBeVisible();
+  await expect(prisma.auditLog.count({ where: { action: "programme.review_requested", entityId: mineEarly.id } })).resolves.toBe(1);
+  // Pressing it again straight away is refused (one request per 10 minutes).
+  await page.reload();
+  await expect(page.getByTestId("review-requested")).toBeVisible();
+  await page.getByTestId("submit-review").click();
+  await expect(page.getByText(/already requested a moment ago/)).toBeVisible();
+
+  // The administrator is told (bell notices) and sees "Review requested" on the list.
+  const admins = await prisma.userRole.findMany({ where: { role: "platform_admin", revokedAt: null }, select: { userId: true } });
+  const notices = await prisma.notification.findMany({ where: { userId: { in: admins.map((a) => a.userId) }, dedupeKey: { startsWith: `review:${mineEarly.id}:` } } });
+  expect(notices.length).toBeGreaterThan(0);
+  expect(notices[0]!.title).toContain(trainerTitle);
+  await page.context().clearCookies();
+  await signInViaUi(page, email);
+  await page.goto("/admin/trainings");
+  await expect(page.getByTestId("training-row").filter({ hasText: trainerTitle }).getByTestId("review-requested-chip")).toBeVisible();
+  const dateNotice = await prisma.notification.count({ where: { userId: { in: admins.map((a) => a.userId) }, dedupeKey: { startsWith: "offering-created:" }, title: { contains: trainerTitle } } });
+  expect(dateNotice).toBeGreaterThan(0);
+
+  await prisma.notification.deleteMany({ where: { dedupeKey: { startsWith: `review:${mineEarly.id}:` } } });
+  await prisma.notification.deleteMany({ where: { title: { contains: trainerTitle } } });
+  await prisma.scheduledOffering.deleteMany({ where: { programmeId: mineEarly.id } });
+  await prisma.programmePrice.deleteMany({ where: { programmeId: mineEarly.id } });
+  await prisma.programmeModule.deleteMany({ where: { programmeId: mineEarly.id } });
   const mine = await prisma.programme.findUnique({ where: { slug: trainerSlug }, select: { id: true } });
   if (mine) {
     await prisma.auditLog.deleteMany({ where: { entityType: "programme", entityId: mine.id } });

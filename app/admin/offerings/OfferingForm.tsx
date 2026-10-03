@@ -120,6 +120,7 @@ export function OfferingForm({
   formats,
   experts,
   initialProgrammeId,
+  canSetStatus = true,
 }: {
   /** Present in edit mode; absent when creating. */
   offering?: OfferingRecord;
@@ -128,6 +129,8 @@ export function OfferingForm({
   experts: ExpertOption[];
   /** Create mode: the training to pre-select (M12 — "Add a date" from a training). */
   initialProgrammeId?: string;
+  /** CR-2026-10-03-2254: only an administrator opens a date for registration; a Trainer's dates stay planned. */
+  canSetStatus?: boolean;
 }) {
   const mode = offering ? "edit" : "create";
   const [state, action, pending] = useActionState(mode === "edit" ? updateOfferingAction : createOfferingAction, initial);
@@ -222,9 +225,11 @@ export function OfferingForm({
         <SelectField
           label="Status"
           required
-          hint="Planned, open and full appear on the public schedule; completed and cancelled do not."
+          hint={canSetStatus ? "Planned, open and full appear on the public schedule; completed and cancelled do not." : "A date you schedule stays planned (people can register interest, not pay). An administrator opens it for registration."}
           error={fieldErrors.status}
           {...bind("status")}
+          disabled={!canSetStatus}
+          data-testid="offering-status"
         >
           {OFFERING_STATUSES.map((s) => (
             <option key={s} value={s}>

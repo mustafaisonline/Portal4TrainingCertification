@@ -3,10 +3,15 @@ import { forbidden, notFound, redirect } from "next/navigation";
 import { listDomains } from "@/modules/catalogue/domains/repository";
 import { trainingAccess } from "@/modules/catalogue/programmes/admin-access";
 import { publishReadiness } from "@/modules/catalogue/programmes/readiness";
-import { getTrainingForAdmin } from "@/modules/catalogue/programmes/admin.repository";
+import {
+  getTrainingForAdmin,
+  listReviewRequests,
+} from "@/modules/catalogue/programmes/admin.repository";
 import { Card } from "@/shared/ui/Card";
 import { TrainingDetailsForm } from "../TrainingDetailsForm";
 import { TrainingPhotoUploader } from "../TrainingPhotoUploader";
+import { formatTimestamp } from "@/shared/util/dates";
+import { SubmitForReviewForm } from "../SubmitForReviewForm";
 import { TrainingStatusForm } from "../TrainingStatusForm";
 
 /* Details tab (M12 WP2): the typed columns, and — for administrators — the
@@ -34,6 +39,7 @@ export default async function TrainingDetailsPage({
   ]);
   if (!training) notFound();
 
+  const requestedAt = (await listReviewRequests()).get(training.id) ?? null;
   const problems = publishReadiness({
     moduleCount: training.modules.length,
     feeRegions: training.feeRows.map((r) => r.region),
@@ -91,7 +97,7 @@ export default async function TrainingDetailsPage({
               >
                 Only an administrator can publish a training. When yours is
                 ready — sections written, curriculum, the four fee rows and a
-                date — ask an administrator to publish it.
+                date — submit it for review; an administrator then publishes it.
               </p>
               {problems.length > 0 ? (
                 <ul
@@ -102,6 +108,15 @@ export default async function TrainingDetailsPage({
                     <li key={p.message}>{p.message}</li>
                   ))}
                 </ul>
+              ) : null}
+              {training.status === "unlisted" ? (
+                <SubmitForReviewForm
+                  id={training.id}
+                  ready={problems.length === 0}
+                  requestedAt={
+                    requestedAt ? formatTimestamp(requestedAt) : null
+                  }
+                />
               ) : null}
             </>
           )}

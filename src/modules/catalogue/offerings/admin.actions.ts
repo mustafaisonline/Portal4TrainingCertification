@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { getPrisma, withTransaction } from "@/db/prisma";
+import { notifyAdmins } from "@/modules/notifications/notifications.service";
 import { trainingAccess } from "@/modules/catalogue/programmes/admin-access";
 import { canManageTraining, type TrainingScope } from "@/modules/catalogue/programmes/admin.repository";
 import {
@@ -84,7 +85,7 @@ function parseForm(formData: FormData): { input: OfferingWriteInput; fieldErrors
 /* Milestone 12 (L7): an administrator may schedule any training; a Trainer
    only the trainings linked to their profile. The scope is re-checked on the
    programme of the offering being written, never taken from the form. */
-async function refuseUnlessAllowed(): Promise<OfferingFormState | { userId: string; scope: TrainingScope }> {
+async function refuseUnlessAllowed(): Promise<OfferingFormState | { userId: string; scope: TrainingScope; isAdmin: boolean }> {
   const access = await trainingAccess();
   if (!access.ok) {
     return {
@@ -96,7 +97,7 @@ async function refuseUnlessAllowed(): Promise<OfferingFormState | { userId: stri
       fieldErrors: {},
     };
   }
-  return { userId: access.user.id, scope: access.scope };
+  return { userId: access.user.id, scope: access.scope, isAdmin: access.isAdmin };
 }
 
 const NOT_YOURS: OfferingFormState = { status: "error", message: "You can only schedule dates for your own trainings.", fieldErrors: { programmeId: "Choose one of your trainings." } };
@@ -113,12 +114,30 @@ export async function createOfferingAction(_prev: OfferingFormState, formData: F
   const gate = await refuseUnlessAllowed();
   if ("status" in gate) return gate;
 
+  // A Trainer's form does not send a status (the field is read-only for them): the server decides it.
+  if (!gate.isAdmin) formData.set("status", "planned");
   const { input, fieldErrors } = parseForm(formData);
   if (Object.keys(fieldErrors).length) return { status: "error", message: CHECK_FIELDS, fieldErrors };
   if (!(await canManageTraining(getPrisma(), gate.scope, input.programmeId))) return NOT_YOURS;
 
+  // CR-2026-10-03-2254 (founder: a Trainer's new date needs the administrator's approval): a Trainer's date is always
+  // saved as PLANNED — it is not open for registration or payment until an administrator opens it. (A date of a
+  // training that is not published is hidden anyway; this also covers dates added to a published training.)
+  if (!gate.isAdmin) input.status = "planned";
+
   try {
     const created = await withTransaction((tx) => createOffering(tx, input, gate.userId));
+    if (!gate.isAdmin) {
+      // Tell the administrators (bell), never able to fail the save.
+      const o = await findOfferingById(created.id).catch(() => null);
+      void notifyAdmins({
+        kind: "system",
+        title: `A trainer scheduled a date${o?.programmeTitle ? ` for ${o.programmeTitle}` : ""}`,
+        body: "It is saved as planned. Open it for registration when you have approved it.",
+        link: `/admin/offerings/${created.id}`,
+        dedupeKey: `offering-created:${created.id}`,
+      }).catch((err) => console.error("[offerings] admin notice failed", err instanceof Error ? err.message : err));
+    }
     revalidate();
     return { status: "saved", id: created.id };
   } catch (err) {
@@ -135,6 +154,7 @@ export async function updateOfferingAction(_prev: OfferingFormState, formData: F
   const id = text(formData, "id");
   if (!isUuid(id)) return { status: "error", message: "This offering could not be found.", fieldErrors: {} };
 
+  if (!gate.isAdmin) formData.set("status", "planned"); // placeholder so the form parses; replaced by the current status below
   const { input, fieldErrors } = parseForm(formData);
   if (Object.keys(fieldErrors).length) return { status: "error", message: CHECK_FIELDS, fieldErrors };
   // Both the offering's current training and the one it is being moved to
@@ -142,6 +162,9 @@ export async function updateOfferingAction(_prev: OfferingFormState, formData: F
   const existing = await findOfferingById(id);
   if (!existing) return { status: "error", message: "This offering could not be found.", fieldErrors: {} };
   if (!(await canManageTraining(getPrisma(), gate.scope, existing.programmeId)) || !(await canManageTraining(getPrisma(), gate.scope, input.programmeId))) return NOT_YOURS;
+
+  // A Trainer cannot change a date's status (planned / open / full / completed / cancelled) — an administrator does.
+  if (!gate.isAdmin) input.status = existing.status;
 
   try {
     const updated = await withTransaction((tx) => updateOffering(tx, id, input, gate.userId));

@@ -157,7 +157,7 @@ export class TrainingValidationError<F extends string = string> extends Error {
 }
 
 export class TrainingRefusedError extends Error {
-  readonly code: "forbidden" | "not_found" | "slug_locked" | "format_in_use" | "last_fee_row" | "not_ready";
+  readonly code: "forbidden" | "not_found" | "slug_locked" | "format_in_use" | "last_fee_row" | "not_ready" | "review_not_needed" | "already_requested";
   constructor(code: TrainingRefusedError["code"], message: string) {
     super(message);
     this.name = "TrainingRefusedError";
@@ -556,6 +556,41 @@ export async function removeTrainingFee(tx: Tx, id: string, scope: TrainingScope
 
 /* ---------------------------------------------------------------- status */
 
+/** What still stops this training being published (the one check used by Publish and by "Submit for review"). */
+export async function trainingReadinessProblems(db: Db, id: string): Promise<ReturnType<typeof publishReadiness>> {
+  const row = await db.programme.findUnique({ where: { id }, select: { content: true, prices: { select: { region: true } }, _count: { select: { modules: true } } } });
+  return publishReadiness({ moduleCount: row?._count.modules ?? 0, feeRegions: (row?.prices ?? []).map((p) => p.region), content: row?.content as unknown as ProgrammeContent });
+}
+
+/** A Trainer may ask for a review at most once in this window (also the notice's de-dupe bucket). */
+export const REVIEW_REQUEST_WINDOW_MS = 10 * 60_000;
+
+/**
+ * CR-2026-10-03-2254 (founder): a Trainer's training is published only by an administrator. "Submit for review" tells the
+ * administrators it is ready — an audit row (no schema change) — and is refused until the readiness check passes, for a
+ * training that is already published or retired, and when one was sent in the last 10 minutes.
+ */
+export async function requestTrainingReview(tx: Tx, id: string, scope: TrainingScope, actorUserId: string, now: Date = new Date()): Promise<{ title: string }> {
+  if (!(await canManageTraining(tx, scope, id))) throw new TrainingRefusedError("not_found", "This training could not be found.");
+  const row = await tx.programme.findUnique({ where: { id }, select: { title: true, status: true } });
+  if (!row) throw new TrainingRefusedError("not_found", "This training could not be found.");
+  if (row.status !== "unlisted") throw new TrainingRefusedError("review_not_needed", "Only a draft needs a review request.");
+  const problems = await trainingReadinessProblems(tx, id);
+  if (problems.length > 0) throw new TrainingRefusedError("not_ready", `Finish these first: ${problems.map((p) => p.message).join(" ")}`);
+  const recent = await tx.auditLog.count({ where: { action: "programme.review_requested", entityType: "programme", entityId: id, createdAt: { gt: new Date(now.getTime() - REVIEW_REQUEST_WINDOW_MS) } } });
+  if (recent > 0) throw new TrainingRefusedError("already_requested", "A review was already requested a moment ago. The administrators have been told.");
+  await writeAudit(tx, { actorUserId, action: "programme.review_requested", entityType: "programme", entityId: id, after: { title: row.title } });
+  return { title: row.title };
+}
+
+/** Draft trainings with a review request, newest request per training (read from the audit log). */
+export async function listReviewRequests(db: Db = getPrisma()): Promise<Map<string, Date>> {
+  const rows = await db.auditLog.findMany({ where: { action: "programme.review_requested", entityType: "programme" }, orderBy: { createdAt: "desc" }, select: { entityId: true, createdAt: true }, take: 500 });
+  const map = new Map<string, Date>();
+  for (const r of rows) if (!map.has(r.entityId)) map.set(r.entityId, r.createdAt);
+  return map;
+}
+
 /** Publish / unpublish / retire — administrators only (decision L2); the
  *  action layer enforces the role, this records the change. */
 export async function setTrainingStatus(tx: Tx, id: string, status: ProgrammeStatus, actorUserId: string): Promise<void> {
@@ -565,8 +600,7 @@ export async function setTrainingStatus(tx: Tx, id: string, status: ProgrammeSta
   if (existing.status === status) return;
   if (status === "published") {
     // The screen disables Publish until ready; the server holds the same line (CR-2026-10-03-2255).
-    const row = await tx.programme.findUnique({ where: { id }, select: { content: true, prices: { select: { region: true } }, _count: { select: { modules: true } } } });
-    const problems = publishReadiness({ moduleCount: row?._count.modules ?? 0, feeRegions: (row?.prices ?? []).map((p) => p.region), content: row?.content as unknown as ProgrammeContent });
+    const problems = await trainingReadinessProblems(tx, id);
     if (problems.length > 0) throw new TrainingRefusedError("not_ready", `Not ready to publish: ${problems.map((p) => p.message).join(" ")}`);
   }
   await tx.programme.update({ where: { id }, data: { status } });

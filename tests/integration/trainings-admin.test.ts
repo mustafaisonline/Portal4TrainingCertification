@@ -11,7 +11,9 @@ import {
   parseMajorToMinor,
   removeTrainingFee,
   replaceTrainingFormats,
+  listReviewRequests,
   replaceTrainingModules,
+  requestTrainingReview,
   saveTrainingFee,
   setTrainingStatus,
   slugify,
@@ -250,8 +252,23 @@ describe("the launch sequence through the repository", () => {
     expect(actions.filter((a) => a === "programme.fee_removed").length).toBe(1);
   });
 
+  it("submit for review (CR-2026-10-03-2254): refused while not ready, then accepted once; a second request within 10 minutes is refused; another trainer's training is not found", async () => {
+    const scope: TrainingScope = { kind: "expert", expertId: trainerExpertId };
+    // The first test of this sequence left the draft complete (curriculum, four fee rows, written sections) — ready.
+    const first = await withTransaction((tx) => requestTrainingReview(tx, createdId, scope, trainerUser.id));
+    expect(first.title).toBeTruthy();
+    expect((await listAuditForEntity(prisma, "programme", createdId)).filter((a) => a.action === "programme.review_requested")).toHaveLength(1);
+    expect([...(await listReviewRequests()).keys()]).toContain(createdId);
+    await expect(withTransaction((tx) => requestTrainingReview(tx, createdId, scope, trainerUser.id))).rejects.toMatchObject({ code: "already_requested" });
+    // Outside the window it is allowed again.
+    await expect(withTransaction((tx) => requestTrainingReview(tx, createdId, scope, trainerUser.id, new Date(Date.now() + 11 * 60_000)))).resolves.toBeTruthy();
+    // Another trainer's training is not found, never revealed.
+    await expect(withTransaction((tx) => requestTrainingReview(tx, createdId, { kind: "expert", expertId: otherExpertId }, trainerUser.id))).rejects.toMatchObject({ code: "not_found" });
+  });
+
   it("publish: the training appears publicly with its four rows; the address is then locked; unpublish hides it again", async () => {
     await withTransaction((tx) => setTrainingStatus(tx, createdId, "published", admin.id));
+    await expect(withTransaction((tx) => requestTrainingReview(tx, createdId, { kind: "expert", expertId: trainerExpertId }, trainerUser.id))).rejects.toMatchObject({ code: "review_not_needed" }); // a published training needs no review
     const pub = await findPublishedProgrammeBySlug(createdSlug);
     expect(pub?.status).toBe("published");
     expect(pub?.prices.map((p) => p.region)).toEqual(["malaysia_hrdcorp", "malaysia", "pakistan", "international"]);

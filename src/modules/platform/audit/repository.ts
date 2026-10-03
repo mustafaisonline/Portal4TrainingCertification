@@ -118,7 +118,9 @@ export type AuditAction =
   // CR-2026-10-03-1225 slice 2: Admin → Email.
   | "email.retried"
   | "email.suppression_added"
-  | "email.suppression_removed";
+  | "email.suppression_removed"
+  // CR-2026-10-03-2254: a Trainer asks an administrator to review a training for publishing.
+  | "programme.review_requested";
 
 export type AuditEntry = {
   /** Our `users.id`; null when the system acted on its own. */

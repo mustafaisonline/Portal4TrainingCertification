@@ -40,7 +40,7 @@ export default async function NewOfferingPage({ searchParams }: { searchParams: 
         <h1 className="text-display">New offering</h1>
       </header>
       <Card variant="panel" className="max-w-[760px] p-6">
-        <OfferingForm programmes={options} formats={formats} experts={experts.map((x) => ({ id: x.id, name: x.name }))} initialProgrammeId={preselected} />
+        <OfferingForm programmes={options} formats={formats} experts={experts.map((x) => ({ id: x.id, name: x.name }))} initialProgrammeId={preselected} canSetStatus={access.isAdmin} />
       </Card>
     </div>
   );

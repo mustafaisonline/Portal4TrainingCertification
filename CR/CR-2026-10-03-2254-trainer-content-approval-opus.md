@@ -1,6 +1,6 @@
 # CR-2026-10-03-2254 — Trainer-created training, formats and dates need admin approval before they go public
 
-**Received:** 2026-10-03 22:50 MYT · **Status:** DECIDED — build queued · **Requested by:** founder · **Model:** opus
+**Received:** 2026-10-03 22:50 MYT · **Status:** BUILT & VERIFIED — review next, then deploy · **Requested by:** founder · **Model:** opus
 
 ## 1. Request (verbatim)
 
@@ -36,3 +36,4 @@
 |---|---|
 | 2026-10-03 22:50 | CR created from the founder's message; existing code inspected read-only; nothing built. |
 | 2026-10-03 23:05 | Founder answered the §3 decisions: "I agree with all your recommendation with my few responses." **Item 11:** "I approved now" — approach A (no schema change): a "Submit for review" button notifies administrators; Trainer-created dates are saved as planned and only an administrator can open them; a Trainer's edits to an already-published training stay allowed as today. |
+| 2026-10-04 03:10 | **BUILT & VERIFIED (approach A, no schema change).** (1) **Submit for review** on a Trainer's draft: disabled until the readiness check passes (same check as Publish); an audit row `programme.review_requested`, a bell notice to every administrator, at most one request per 10 minutes, refused for a published/retired training or another trainer's; the trainings list shows **"Review requested"** to administrators. (2) **A Trainer's dates are saved as *planned*** (the server sets it; the Status field is read-only for them) and cannot change a date's status; only an administrator opens a date; administrators get a bell notice when a trainer schedules a date. Publishing was already administrator-only. Tests: integration (review request rules), e2e (trainer flow: planned date, Submit disabled → enabled → sent → repeat refused, admin notices + chip); full unit/integration 849/849; related e2e specs green (three load flakes passed on re-run). **Not covered (noted for the founder):** pace *formats* a Trainer adds to an already-published training and a Trainer's edits to the text of a published training still go live immediately (as today). **Rollback:** revert the commit (no data change). |

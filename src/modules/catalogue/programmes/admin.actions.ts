@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { withTransaction } from "@/db/prisma";
 import { isUuid } from "@/modules/catalogue/offerings/repository";
+import { notifyAdmins } from "@/modules/notifications/notifications.service";
 import { trainingAccess, type TrainingAccess } from "./admin-access";
 import { CONTENT_FIELDS, FEE_REGIONS, PROGRAMME_LEVELS, PROGRAMME_STATUSES, type ContentFieldErrors, type ContentForm } from "./constants";
 import {
@@ -12,6 +13,8 @@ import {
   removeTrainingPhoto,
   replaceTrainingFormats,
   replaceTrainingModules,
+  requestTrainingReview,
+  REVIEW_REQUEST_WINDOW_MS,
   saveTrainingFee,
   saveTrainingPhoto,
   setTrainingStatus,
@@ -287,6 +290,29 @@ export async function setTrainingStatusAction(_prev: FormState<{ status?: string
     return { status: "saved", id };
   } catch (err) {
     return failure(err, "status");
+  }
+}
+
+/** CR-2026-10-03-2254: a Trainer (or an administrator) tells the administrators a draft is ready to review and publish. */
+export async function requestTrainingReviewAction(_prev: FormState<Record<string, never>>, fd: FormData): Promise<FormState<Record<string, never>>> {
+  const g = await gate();
+  if ("error" in g) return g.error;
+  const id = text(fd, "id");
+  if (!isUuid(id)) return { status: "error", message: "This training could not be found.", fieldErrors: {} };
+  try {
+    const { title } = await withTransaction((tx) => requestTrainingReview(tx, id, g.access.scope, g.access.user.id));
+    // After the commit; the notice can never fail the request. One notice per 10-minute window (matches the rate limit).
+    void notifyAdmins({
+      kind: "system",
+      title: `Training ready for review: ${title}`,
+      body: "A trainer finished it and asks you to review and publish it.",
+      link: `/admin/trainings/${id}`,
+      dedupeKey: `review:${id}:${Math.floor(Date.now() / REVIEW_REQUEST_WINDOW_MS)}`,
+    }).catch((err) => console.error("[trainings] review notice failed", err instanceof Error ? err.message : err));
+    revalidate(id);
+    return { status: "saved", id };
+  } catch (err) {
+    return failure(err, "review request");
   }
 }
 

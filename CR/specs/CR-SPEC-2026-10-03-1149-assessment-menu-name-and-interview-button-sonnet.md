@@ -8,7 +8,7 @@
 | 2 | `/assessment` page title and eyebrow; home "Step 2 · Validate" card title | `app/(public)/assessment/page.tsx`, `src/shared/marketing/HowPortalWorks.tsx` | BUILT, VERIFIED | |
 | 3 | Interview card button → "Prepare for an interview for Free" | `app/(public)/assessment/page.tsx` (`cta`) | BUILT, VERIFIED | fits one line at 375 px |
 | 4 | Tests that name the old label | `tests/unit/site-nav.test.ts`, `tests/e2e/{assessment,cr-2136-menus-and-admin-labels,home,search}.spec.ts` | BUILT, VERIFIED | |
-| 5 | Deploy | `deploy/start.sh --env production --tag <next>` | IN PROGRESS | delta vs live `v2026.10.03-1` |
+| 5 | Deploy | `deploy/start.sh --env production --tag v2026.10.03-2` | DEPLOYED | live, validated 2026-10-03 |
 
 **Data model:** none. **Dependencies:** none. **Rollback:** revert the commit and redeploy (or `deploy/07-rollback.sh`).
 **Resume here:** if the deploy is not recorded as done in the CR log, check `deploy/reports/deployment-summary.md` and the live release (`ssh deploy@… readlink /opt/p4tc/releases/current`).

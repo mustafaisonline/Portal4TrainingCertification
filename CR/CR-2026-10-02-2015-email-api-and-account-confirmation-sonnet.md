@@ -1,6 +1,6 @@
 # CR-2026-10-02-2015 — Email API and confirmation email after creating an account — ACTIVATES the deferred provider decision
 
-**Received:** 2026-10-02 20:15 MYT · **Status:** PARKED — founder (2026-10-03): "we will look into later"; still a RED gate (provider choice) when resumed · **Requested by:** founder · **Recommended model:** Sonnet 5.5 — one transport implementation behind the existing interface (the provider decision itself is the founder's)
+**Received:** 2026-10-02 20:15 MYT · **Status:** SUPERSEDED 2026-10-03 by CR-2026-10-03-1225 (email platform foundation) — the founder re-activated email · **Requested by:** founder · **Recommended model:** Sonnet 5.5 — one transport implementation behind the existing interface (the provider decision itself is the founder's)
 
 ## 1. Request (verbatim)
 
@@ -46,3 +46,4 @@ Written case for approval (problem, why the existing `log` transport is insuffic
 | 2026-10-02 | Founder: "let this CR there" — kept open and blocked (RED gate: provider not chosen). |
 | 2026-10-03 | Renamed with the model suffix (`…-sonnet`) per the CR convention of 2026-10-03; content unchanged. |
 | 2026-10-03 11:49 | Founder: "Pelase partk these two … As seperate CR we will look into later." Status PARKED. `resume-work`/`run-cr` keep listing it until the founder resumes it. |
+| 2026-10-03 12:25 | Founder re-activated email ("Now let's connect email with our portal"). Scope widened (contact form, event emails, trainer messaging, notification centre) and split into CR-2026-10-03-1225 … 1229 with a proposal document. This CR stays as history. |

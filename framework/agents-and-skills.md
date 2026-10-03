@@ -17,7 +17,7 @@
 | Testing | `governance-reviewer` | Reviews a diff against the rules and decision records |
 | Deployment | `deploy-engineer` | Governed deploy pipeline, rollback, verification |
 | Metadata | `meta-steward` | Business / technical / operational metadata files |
-| Prompt engineering | `pe-selector` | Picks the cheapest accurate `pf-*` framework skill and rebuilds the prompt |
+| Prompt engineering | `pe-selector` | Picks the cheapest accurate framework (from `prompt-frameworks`) and rebuilds the prompt |
 
 ## Skills
 
@@ -32,9 +32,12 @@
 | Governance | `guardrails-check` · `techstack-check` · `schema-proposal` · `security-review` (built-in) | Check work against the guardrails and stack; draft the RED-gate case for a schema change; security review of pending changes |
 | Wireframe | `wireframe-signoff` | Check/record the sign-off gate |
 | Metadata | `metadata-capture` | One `.md` per table, view, script, policy, procedure |
-| Prompt engineering | 30 `pf-*` skills (RTF, TAG, APE, BAB, PAR, RACE, CARE, RODES, ROSES, RASCEF, RISEN, CO-STAR, CRISPE, CLEAR, zero-shot, few-shot, chain-of-thought, self-consistency, tree-of-thoughts, ReAct, least-to-most, step-back, plan-and-solve, prompt-chaining, chain-of-verification, self-refine, meta-prompting, generated-knowledge, xml-structured, role-prompting) | One per framework; catalogue in [`prompt-frameworks.md`](prompt-frameworks.md) |
+| Prompt engineering | `prompt-frameworks` | One skill holding all 30 frameworks and the selection rules (consolidated 2026-10-03 to cut per-session token cost) |
 | Model choice | `model-recommend` | Cheapest sufficient Claude model per CR/task; same model → execute, else new terminal |
 | Deployment | `deploy-audit` · `deploy-incremental` · `deploy-full` · `deploy-rollback` | The existing `deploy/` pipeline as skills |
+
+## Enforcement
+`.claude/hooks/guard.py` (PreToolUse) blocks the critical rules deterministically — see `framework/initiate.md` §3a.6. Buddy's Autonomous mode has stop conditions and notifications (`buddy.md`).
 
 ## How agents reach skills
 Every agent lists `Skill` in its `tools:` and preloads its core skills in `skills:` (Claude Code docs: a subagent can invoke project skills only through the Skill tool). Buddy, the main agent, is the only one that can ask the human.

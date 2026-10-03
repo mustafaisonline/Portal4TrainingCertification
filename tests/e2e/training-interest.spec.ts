@@ -309,7 +309,10 @@ test("the administrator sees every interest, the Formats card, and the fee setti
   await page.goto(`/admin/interest?format=${formatId}`);
   await expect(page.getByTestId("interest-row")).toHaveCount(2);
   await page.goto("/admin/orders");
-  await page.getByTestId("admin-interest-setting-link").click();
+  // CR-2026-10-03-1122: assert the link, then navigate directly — a click that landed during
+  // hydration was lost in ~3 of 4 local runs (URL stayed /admin/orders), making the release gate flaky.
+  await expect(page.getByTestId("admin-interest-setting-link")).toHaveAttribute("href", "/admin/orders/interest");
+  await page.goto("/admin/orders/interest");
   await expect(page).toHaveURL(/\/admin\/orders\/interest$/);
   await expect(page.getByTestId("interest-setting-amount")).toContainText("USD 2.00");
   await expect(page.getByTestId("interest-setting-form")).toBeVisible();

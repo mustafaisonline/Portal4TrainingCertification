@@ -16,5 +16,5 @@ description: Draft the written RED-gate case for a physical data-model change (t
    - Alternatives considered and why rejected.
    - Rollback: whether the migration is reversible, what data would be lost, and the restore path (`deploy-rollback --restore-db` is destructive and needs the founder's word).
    - Privacy: any personal data added, retention, encryption, and Privacy-notice updates.
-3. **Ask.** Return the proposal to Buddy, who presents it to the founder with a recommendation. Only an explicit approval in chat (quoted into the CR log) unblocks the task.
+3. **Ask.** Return the proposal to Buddy, who presents it to the founder with a recommendation. Only an explicit approval in chat unblocks the task: quote it into the CR log and write the exact line `SCHEMA CHANGE APPROVED BY FOUNDER — <date>, "<founder's words>"` into the CR spec. The guard hook (`.claude/hooks/guard.py`) refuses every edit to `prisma/schema.prisma` and `prisma/migrations/` until an OPEN spec carries that line.
 4. **After approval:** write the migration with `prisma migrate dev --name <name>` on the dev database, apply to the test database, update `framework/metadata/technical/table-*.md` for every table touched (`metadata-capture`), and the CR/spec status.

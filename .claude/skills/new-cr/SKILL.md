@@ -24,6 +24,6 @@ CLAUDE.md makes a CR mandatory before any code or config change.
    - `## 6. Progress log` — dated lines, newest last.
 8. Add a row at the top of `CR/README.md` (newest first) with the model in the title. Name the WBS task and milestone (`framework/wbs.md`, `framework/milestones.md`) or write "unplanned change request".
 9. Create the CR's specification with the `cr-spec` skill (one spec per CR, same name) before any code.
-10. Tell the founder which CRs exist and, for each, which terminal/model runs it (the ones matching the current session run here; the rest: new terminal, `claude --model <id>`, then `run-cr`). Commit, push and deploy only on the founder's word or in Buddy Autonomous mode.
+10. Tell the founder which CRs exist and, for each, which terminal/model runs it (the ones matching the current session run here; the rest: a new terminal in its own worktree — `claude --worktree --model <id>` from the repository folder — then `run-cr CR-<name>`; never two terminals in one checkout). Commit, push and deploy only on the founder's word or in Buddy Autonomous mode.
 
 Argument, if given, is the request text or title. Finished CRs keep their historical names; the model suffix applies to new and open CRs.

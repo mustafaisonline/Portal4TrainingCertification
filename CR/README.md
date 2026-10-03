@@ -26,6 +26,7 @@ deploy only on the founder's word, except in `buddy` Autonomous mode, where the 
 
 | CR file | Title | Status |
 |---|---|---|
+| [CR-2026-10-03-1122-agentic-hardening-sonnet.md](CR-2026-10-03-1122-agentic-hardening-sonnet.md) | Agentic hardening: guard hook, stop conditions, worktrees, review gate, notifications, flaky gate, restore rehearsal, prompt-framework consolidation — BUILT & VERIFIED, awaiting push |
 | [CR-2026-10-03-1115-advisor-agent-sonnet.md](CR-2026-10-03-1115-advisor-agent-sonnet.md) | `advisor` agent + `next-steps`/`capability-gap` skills + gap register — BUILT, not yet exercised |
 | [CR-2026-10-03-1105-agent-network-fixes-sonnet.md](CR-2026-10-03-1105-agent-network-fixes-sonnet.md) | Agent network fixes: Skill tool on every agent, ordering, DR/security/schema skills — BUILT, pending the founder's new-tab test |
 | [CR-2026-10-03-1048-cr-model-naming-impact-analysis-roster-sonnet.md](CR-2026-10-03-1048-cr-model-naming-impact-analysis-roster-sonnet.md) | CR/spec convention (model in the name), impact analysis agent+skills, Buddy routing, ask-with-recommendation — BUILT, awaiting review |

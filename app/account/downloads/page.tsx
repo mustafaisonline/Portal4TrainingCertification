@@ -32,7 +32,9 @@ export default async function MyDownloadsPage({ searchParams }: { searchParams: 
       ? `Thank you — ${order.title} is ready.`
       : order?.effectiveStatus === "pending"
         ? "We are confirming your payment with Stripe — refresh in a moment. Your purchase appears here once the payment is confirmed."
-        : order
+        : order?.effectiveStatus === "refunded" || order?.effectiveStatus === "partially_refunded"
+          ? "This payment has been refunded. Contact us through the Contact Us form if you have a question."
+          : order
           ? "That payment did not complete, so nothing was added. Nothing has been charged."
           : null;
   return (

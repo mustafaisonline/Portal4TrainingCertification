@@ -13,10 +13,10 @@ You may use this agent or skill for yourself and inside your own organisation, o
 to your needs.
 You may not sell it, resell it, publish it, or share the download with people outside your organisation.
 It is provided as is, without warranty: review what an agent or skill does before you rely on it, and keep your own backups.
-We may improve the catalogue over time; your purchase covers the version you downloaded and later versions of the same item
-while you keep access to it on the portal.
+We may improve the catalogue over time. An item you bought, or claimed with a credit, stays yours, and later versions of it
+are available to you in My Agentic AI. Items you could download only through an Agentic AI plan stay available while the plan is active.
 
-Full terms: see the Terms of service on the portal.
+Full terms: the Agentic AI terms on the portal (/agentic-ai/terms).
 `;
 
 const list = (items: readonly string[]) => items.map((i) => `- ${i}`).join("\n");
@@ -55,6 +55,7 @@ ${item.howItWorks.map((s, i) => `${i + 1}. ${s}`).join("\n")}
 ## Limits — please read
 
 ${list(item.limits)}
+- "Read-only" and "never edits" describe what the written instructions tell it to do. They are instructions, not technical locks: the permissions you give Claude Code are what actually enforce them.
 
 ## Make it yours
 
@@ -89,7 +90,7 @@ ${how}
 
 ## Check it worked
 
-${item.kind === "agent" ? "Ask Claude: \"list my agents\" — you should see " + item.slug + "." : "Type `/` in Claude Code — you should see " + item.slug + " in the list."}
+${item.kind === "agent" ? "Type `/agents` in Claude Code — you should see " + item.slug + " in the list." : "Type `/` in Claude Code — you should see " + item.slug + " in the list."}
 
 ## Editing it
 

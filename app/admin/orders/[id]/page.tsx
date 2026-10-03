@@ -184,7 +184,9 @@ export default async function AdminOrderDetailPage({ params }: { params: Promise
             <p className="text-body-sm text-[var(--color-ink-quiet)]" data-testid="order-detail-registration">
               {order.kind === "certificate_renewal"
                 ? "A renewal order has no registration of its own."
-                : order.kind === "interest"
+                : order.kind === "agentic_item" || order.kind === "agentic_pack" || order.kind === "access_pass"
+                  ? "An Agentic AI purchase has no registration — the item, credits or pass are granted when the payment is confirmed, and it is non-refundable."
+                  : order.kind === "interest"
                   ? "An interest payment is not a registration — it is listed under Users Interest, and it is non-refundable."
                   : "No registration — one is created only when the payment is confirmed."}
             </p>

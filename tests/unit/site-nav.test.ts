@@ -67,7 +67,7 @@ describe("site navigation", () => {
     }
   });
 
-  it("the desktop header bar is Home · Product ▾ · Reviews · About Us, and every Product-panel link goes to a page that exists (CR-2026-10-04-0110)", async () => {
+  it("the desktop header bar is Home · Product ▾ · Reviews · About Us, and every Product-panel link is a plain site path (route existence is proved by the e2e product-menu spec) (CR-2026-10-04-0110)", async () => {
     const { headerBarLinks, productMenuLearning, productMenuAgentic, productMenuMore } = await import("@/shared/chrome/site-nav");
     expect([headerBarLinks.before.label, ...headerBarLinks.after.map((i) => i.label)]).toEqual(["Home", "Reviews", "About Us"]);
     const sections = [productMenuLearning, productMenuAgentic, productMenuMore];

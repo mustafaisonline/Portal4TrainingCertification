@@ -21,7 +21,7 @@ const usd = (minor: number) => formatMoney(minor, AGENTIC_CURRENCY);
 
 const FEATURES: Record<PassPlan, string[]> = {
   agentic_unlimited: ["Download every agent and skill, as often as you like", "New agents and skills added to the catalogue are included while your plan is active", "Full manuals and install guides in every download"],
-  portal_unlimited: ["Everything in Agentic AI Unlimited", "Unlimited unlocks of your Certificates of Achievement — the printable certificate for a passed Free Assessment Check — with no unlock fee", "One plan for the whole portal"],
+  portal_unlimited: ["Everything in Agentic AI Unlimited", "Unlimited unlocks of your Certificates of Achievement — the printable certificate for a passed Free Assessment Check — with no unlock fee", "Trainings and registrations are paid separately — this plan covers Agentic AI and your Certificates of Achievement only"],
 };
 
 export default async function SubscriptionPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {

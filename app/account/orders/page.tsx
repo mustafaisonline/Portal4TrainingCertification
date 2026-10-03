@@ -67,7 +67,9 @@ export default async function OrdersPage() {
                       <p className="text-body-sm text-[var(--color-ink)]">
                         {o.kind === "certificate_renewal"
                           ? `Certificate renewal${o.certificateCode ? ` · ${o.certificateCode}` : ""}`
-                          : o.kind === "support" || !o.startsOn || !o.endsOn
+                          : o.kind === "agentic_item" || o.kind === "agentic_pack" || o.kind === "access_pass"
+                            ? o.formatName
+                            : o.kind === "support" || !o.startsOn || !o.endsOn
                             ? "One-off payment — thank you for supporting the Academy"
                             : `${o.formatName} · ${formatDateRange(o.startsOn, o.endsOn)}`}
                       </p>

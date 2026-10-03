@@ -59,7 +59,7 @@ export async function startAgenticCheckout(input: StartAgenticCheckoutInput): Pr
         expiresAt: new Date(now.getTime() + ORDER_HOLD_MINUTES * 60_000),
       },
     });
-    await writeAudit(tx, { actorUserId: user.id, action: "order.created", entityType: "order", entityId: created.id, after: { kind: created.kind, sku: input.sku, amountMinor, currency: AGENTIC_CURRENCY, expiresAt: created.expiresAt.toISOString() } });
+    await writeAudit(tx, { actorUserId: user.id, action: "order.created", entityType: "order", entityId: created.id, after: { kind: created.kind, sku: input.sku, amountMinor, currency: AGENTIC_CURRENCY, acknowledgedNonRefundable: true, termsUpdated: "2026-10-04", expiresAt: created.expiresAt.toISOString() } });
     return created;
   });
 

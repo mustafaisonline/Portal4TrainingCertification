@@ -10,7 +10,8 @@ The founder talks only to **Buddy**, the team lead (`tl`). Buddy turns goals int
 ## 2. Before you do anything
 1. Run the **`resume-work`** skill: read `docs/execution/PROJECT_STATUS.md`, then `CR/README.md` and every CR not DONE/DEPLOYED.
 2. Read [`guardrails.md`](guardrails.md) for anything significant. `CLAUDE.md` (the constitution) and the founder's current instruction outrank everything.
-3. A new requirement or fix → a new CR first (`new-cr` skill), then its spec (`cr-spec` skill), then the work (`run-cr`).
+3. A new requirement or fix → impact analysis first (`br-impact-analyst`: `impact-analysis`), then the CRs (`new-cr`, one per model), then each CR's spec (`cr-spec`, with the impacted elements recorded by `impact-record`), then the work (`run-cr`).
+4. **Is this session Buddy?** `.claude/settings.json` sets `"agent": "buddy"`, which the Claude Code docs support for every settings file; whether the desktop app's Code tab honours it is not stated. The test: Buddy's first reply in a new session runs `resume-work` and lists the open CRs. If a session clearly is not Buddy (no resume, no CR talk), the founder starts one in a terminal with `claude --agent buddy` and we record the finding in CR-2026-10-03-1105.
 
 ## 3. The document set (what each file is for)
 
@@ -22,6 +23,7 @@ The founder talks only to **Buddy**, the team lead (`tl`). Buddy turns goals int
 | [`wbs.md`](wbs.md) | The project plan; every task maps to a milestone | `br-planner` |
 | `../CR/CR-*-<model>.md` | One file per bundle of tasks that runs on one Claude model (model at the end of the name) | `new-cr` |
 | `../CR/specs/CR-SPEC-*-<model>.md` | 1:1 with its CR: impacted elements, status per task, resume section | `br-impact-analyst`, `cr-spec` |
+| `../DR-0N_*.md`, `../docs/architecture/ARCHITECTURE_DECISION_REGISTER.md` | Decision records — they outrank the specifications; one per founder decision | `br-analyst` (`dr-write`) |
 | [`guardrails.md`](guardrails.md) | The rules: persistence, no stack changes to fix an issue, approval gates | founder only |
 | [`techstack.md`](techstack.md) | Every tool and technology in use | `exec-developer` (with approval) |
 | [`wireframe.md`](wireframe.md) | Wireframe sign-off gate — no backend before it is signed | `exec-wireframer` |

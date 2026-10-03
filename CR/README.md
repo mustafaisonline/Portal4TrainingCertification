@@ -26,6 +26,7 @@ deploy only on the founder's word, except in `buddy` Autonomous mode, where the 
 
 | CR file | Title | Status |
 |---|---|---|
+| [CR-2026-10-03-1105-agent-network-fixes-sonnet.md](CR-2026-10-03-1105-agent-network-fixes-sonnet.md) | Agent network fixes: Skill tool on every agent, ordering, DR/security/schema skills — BUILT, pending the founder's new-tab test |
 | [CR-2026-10-03-1048-cr-model-naming-impact-analysis-roster-sonnet.md](CR-2026-10-03-1048-cr-model-naming-impact-analysis-roster-sonnet.md) | CR/spec convention (model in the name), impact analysis agent+skills, Buddy routing, ask-with-recommendation — BUILT, awaiting review |
 | [CR-2026-10-03-0815-homepage-diagnostic-band-scores.md](CR-2026-10-03-0815-homepage-diagnostic-band-scores.md) | Homepage diagnostic band: make it score too (it leads to the scored diagnostic; copy fixed) — **DEPLOYED `v2026.10.03-1`** |
 | [CR-2026-10-02-2123-run-cr-executes-all-open-crs.md](CR-2026-10-02-2123-run-cr-executes-all-open-crs.md) | `run-cr` plans and executes ALL open CRs (parallel/sequence), flags new-terminal/model — BUILT |

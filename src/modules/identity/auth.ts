@@ -69,7 +69,7 @@ function confirmationLink(url: string): string {
   }
 }
 
-const APP_NAME = "Data & AI Academy";
+const APP_NAME = "DataAI Nexus";
 const ONE_HOUR = 60 * 60;
 
 function requiredEnv(name: string): string {

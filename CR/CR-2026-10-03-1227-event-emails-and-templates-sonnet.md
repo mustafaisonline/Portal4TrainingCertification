@@ -62,3 +62,4 @@ See the spec: [CR-SPEC-2026-10-03-1227-event-emails-and-templates-sonnet](specs/
 |---|---|
 | 2026-10-03 12:27 | CR created from the founder's message; existing code inspected read-only; proposal written. Nothing built. |
 | 2026-10-03 12:40 | Founder answered D1–D6 (see §7): HostGator SMTP, sales@ sender, no public emails, strict activation + human check, tables approved, D5/D6 ok. |
+| 2026-10-03 19:20 | **Slice 1 (templates):** one shared closing `EMAIL_SIGN_OFF` ("DataAI Nexus … you can reply to this email") replaces the four copies that said "Data & AI Academy … replies are not monitored" (identity, commerce, certificates, reminders); Better Auth `appName` and the reset-password sentence rebranded. No address is printed (the team mailbox is also the Reply-To). Test `email-sign-off.test.ts`. Still open in this CR: trainer-notified-of-interest, schedule-change emails, preferences/unsubscribe (needs the `email_preferences` table SQL shown first). |

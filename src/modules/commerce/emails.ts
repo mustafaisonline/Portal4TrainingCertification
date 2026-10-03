@@ -1,5 +1,6 @@
 import type { EmailMessage } from "@/modules/notifications/email";
 import { formatMoney } from "@/modules/catalogue/programmes/types";
+import { EMAIL_SIGN_OFF } from "@/modules/notifications/sign-off";
 
 /*
  * Commerce email templates (M4 plan §2 item 8) — plain text through the
@@ -8,7 +9,7 @@ import { formatMoney } from "@/modules/catalogue/programmes/types";
  * redirect or the browser.
  */
 
-const SIGN_OFF = "\n\n— Data & AI Academy\nThis is an automated message; replies are not monitored.";
+const SIGN_OFF = EMAIL_SIGN_OFF;
 
 export type OfferingLine = { programmeTitle: string; formatName: string | null; dates: string };
 

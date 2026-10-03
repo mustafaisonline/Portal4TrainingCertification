@@ -1,4 +1,5 @@
 import type { EmailMessage } from "@/modules/notifications/email";
+import { EMAIL_SIGN_OFF } from "@/modules/notifications/sign-off";
 
 /*
  * Identity email templates — plain text, deliberately. Links are absolute
@@ -7,7 +8,7 @@ import type { EmailMessage } from "@/modules/notifications/email";
  * that an address is registered beyond the fact of this message.
  */
 
-const SIGN_OFF = "\n\n— Data & AI Academy\nThis is an automated message; replies are not monitored.";
+const SIGN_OFF = EMAIL_SIGN_OFF;
 
 export function verifyEmailMessage(input: { to: string; name: string; url: string; expiresInMinutes: number }): EmailMessage {
   return {
@@ -30,7 +31,7 @@ export function resetPasswordMessage(input: { to: string; name: string; url: str
     subject: "Choose a new password",
     text:
       `Hello ${input.name},\n\n` +
-      `A password reset was requested for your Data & AI Academy account. Open the link below to choose a new password. ` +
+      `A password reset was requested for your DataAI Nexus account. Open the link below to choose a new password. ` +
       `It works once and expires in ${input.expiresInMinutes} minutes.\n\n${input.url}\n\n` +
       `If you did not request this, you can ignore this message; your password has not changed.` +
       SIGN_OFF,

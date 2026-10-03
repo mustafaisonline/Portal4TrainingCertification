@@ -1,6 +1,7 @@
 import { formatMoney } from "@/modules/catalogue/programmes/types";
 import type { EmailMessage } from "@/modules/notifications/email";
 import { formatCalendarDate } from "./dates";
+import { EMAIL_SIGN_OFF } from "@/modules/notifications/sign-off";
 
 /*
  * Certificate email templates (M6 plan §5 "Emails") — plain text through the
@@ -9,7 +10,7 @@ import { formatCalendarDate } from "./dates";
  * browser. Reminders before expiry are deferred (E10).
  */
 
-const SIGN_OFF = "\n\n— Data & AI Academy\nThis is an automated message; replies are not monitored.";
+const SIGN_OFF = EMAIL_SIGN_OFF;
 
 export const CERTIFICATE_EMAIL_TEMPLATES = {
   issued: "certificate.issued",

@@ -2,6 +2,7 @@ import type { EmailMessage } from "@/modules/notifications/email";
 import { CERTIFICATE_TIMEZONE } from "./constants";
 import { daysBetween, formatCalendarDate } from "./dates";
 import type { StatusInput } from "./rules";
+import { EMAIL_SIGN_OFF } from "@/modules/notifications/sign-off";
 
 /*
  * Renewal reminders — the PURE rule (Milestone 7; MILESTONE_7_EXECUTION_PLAN
@@ -69,7 +70,7 @@ export function formatFee(amountMinor: number, currency: string): string {
   return `${currency} ${(amountMinor / 100).toFixed(2)}`;
 }
 
-const SIGN_OFF = "\n\n— Data & AI Academy\nThis is an automated message; replies are not monitored.";
+const SIGN_OFF = EMAIL_SIGN_OFF;
 
 export type ReminderMessageInput = {
   stage: ReminderStage;

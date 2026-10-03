@@ -1,6 +1,6 @@
 # CR-2026-10-03-1400 — INCIDENT: production down ~15 min after empty SMTP settings were written to the server env
 
-**Received:** 2026-10-03 13:50 MYT (UTC 05:50) · **Status:** RESTORED; code safeguard BUILT — deploys with the next release · **Requested by:** assistant-raised incident (founder away) · **Model:** sonnet
+**Received:** 2026-10-03 13:50 MYT (UTC 05:50) · **Status:** RESOLVED — restored, safeguard DEPLOYED (`v2026.10.03-5`); root-access question open · **Requested by:** assistant-raised incident (founder away) · **Model:** sonnet
 
 ## 1. What happened (timeline, UTC)
 
@@ -34,7 +34,8 @@ The assistant used the laptop's **root SSH key** (until now only `deploy@` had b
 |---|---|---|---|
 | 1 | Restore production | **DONE** 05:50 UTC | 2026-10-03 |
 | 2 | Code safeguard + tests | **DONE** — unit 775/775 | 2026-10-03 |
-| 3 | Deploy the safeguard | IN PROGRESS | 2026-10-03 |
+| 3 | Deploy the safeguard | **DONE** — `v2026.10.03-5` | 2026-10-03 |
 | 4 | Founder: decide the root-access question (§4) | AWAITING founder | — |
 | 5 | Re-do the SMTP2GO env step with guarded commands, after the account exists | NOT STARTED | — |
 | 2026-10-03 14:15 | **Pre-deploy checks on 2dd7e07:** governance PASS WITH NOTES (the "warning + failed row + log" design judged legitimate, not a hidden fallback); security PASS WITH NOTES (no HIGH; one MEDIUM: the portal-wide caps could discard real messages / lock the form for everyone); tests PASS (775/775). **MEDIUM applied in the next commit exactly as recommended:** per-visitor limits (client, address) alone decide whether a message is ACCEPTED; the portal-wide caps (20/hour, 40/day, 300/30 days = 600 emails of the monthly 1,000) now gate ONLY whether the two emails are sent — over a cap the message is stored, the visitor sees the normal thank-you, and the team reads it in Admin → Enquiries (new e2e proves it). Also: `.catch` on the two `void sendEmail(...)` calls in auth.ts. Left as noted: an invalid `EMAIL_TRANSPORT` value (a typo) still refuses to start (fail-closed on purpose); no retry worker yet — a mail recorded `failed` is not re-sent (CR-1225 slice 2). |
+| 2026-10-03 14:05 | **DEPLOYED `v2026.10.03-5` (`2291000`)** — gate green (the earlier `-4` had been aborted by the flaky title race, now fixed), 06-validate PASSED. Live: privacy names SMTP2GO; incomplete SMTP env can no longer take the portal down; the portal-wide caps gate only the emails. Production env is `EMAIL_TRANSPORT=log` (restored). `-4` was never deployed. |

@@ -337,3 +337,44 @@ test("an administrator approves → the card is public; hides → gone; restores
   expect(audit.map((a) => a.action)).toEqual(["review.submitted", "review.moderated", "review.hidden", "review.restored"]);
   expect(audit.slice(1).every((a) => a.actorUserId === admin.id)).toBe(true);
 });
+
+/* CR-2026-10-04-0420 (founder): anyone who is signed in can review — including someone who only learns from the Knowledge Hub —
+   and every review is approved by an administrator before the public sees it. */
+const FREE_BODY =
+  `I only used the Knowledge Hub and the free assessment, never a paid training, and they were genuinely useful. ` +
+  `The explanations were clear and short, the questions made me look up things I had skipped, and I came away with a plan for what to learn next. ` +
+  `I would happily recommend the free material to a colleague who is just starting with data and AI. ${randomUUID().slice(0, 8)}`;
+
+test("a signed-in person with no training can review the portal: the form is open, it stays private unless they consent, and a consented review is public only after an administrator approves it", async ({ page }) => {
+  const freeEmail = newEmail("e2e-review-free");
+  await registerViaUi(page, freeEmail, "Fatima Free");
+  await signInViaUi(page, freeEmail);
+  await page.goto("/reviews");
+  await expect(page.getByTestId("nothing-to-review")).toBeVisible(); // no registrations to review…
+  const section = page.getByTestId("free-learner-review");
+  await expect(section).toBeVisible(); // …but the portal review is open, not tucked away
+  await expect(page.getByTestId("free-learner-note")).toContainText("only after an administrator has approved it");
+  const form = page.getByTestId("review-diagnostic-form");
+  await expect(form).toBeVisible();
+  await form.getByLabel("Share your experience").fill(FREE_BODY);
+  await form.getByRole("radio", { name: /^Yes/ }).check();
+  await form.getByTestId("review-submit").click();
+  await expect(page.getByTestId("review-outcome")).toContainText("will appear once it has been reviewed");
+
+  const { getPrisma } = await import("../../src/db/prisma");
+  const prisma = getPrisma();
+  const row = await prisma.review.findFirstOrThrow({ where: { body: { contains: FREE_BODY.slice(-8) } } });
+  expect(row).toMatchObject({ kind: "diagnostic", registrationId: null, moderationStatus: "pending", consentPublic: true });
+
+  // Pending: not on the public list (guests and everyone else).
+  await signOut(page);
+  await page.goto("/reviews");
+  await expect(page.getByTestId("public-review").filter({ hasText: FREE_BODY.slice(-8) })).toHaveCount(0);
+
+  // The administrator approves it (the moderation screen is covered above) → it is public, labelled for portal learners.
+  await prisma.review.update({ where: { id: row.id }, data: { moderationStatus: "approved", moderatedAt: new Date() } });
+  await page.goto("/reviews");
+  const card = page.getByTestId("public-review").filter({ hasText: FREE_BODY.slice(-8) });
+  await expect(card).toHaveCount(1);
+  await expect(card).toContainText("Knowledge Hub & free tools");
+});

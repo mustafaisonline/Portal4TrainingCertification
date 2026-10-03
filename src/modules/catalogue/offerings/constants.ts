@@ -5,10 +5,10 @@
  * everything here for server code.
  */
 
-export type OfferingStatus = "planned" | "open" | "full" | "completed" | "cancelled";
+export type OfferingStatus = "planned" | "open" | "full" | "completed" | "cancelled" | "pending_review";
 export type DeliveryModality = "live_online" | "face_to_face" | "corporate_private";
 
-export const OFFERING_STATUSES: readonly OfferingStatus[] = ["planned", "open", "full", "completed", "cancelled"];
+export const OFFERING_STATUSES: readonly OfferingStatus[] = ["planned", "open", "full", "completed", "cancelled", "pending_review"];
 export const DELIVERY_MODALITIES: readonly DeliveryModality[] = ["live_online", "face_to_face", "corporate_private"];
 
 export const MODALITY_LABEL: Record<DeliveryModality, string> = {
@@ -23,6 +23,7 @@ export const OFFERING_STATUS_LABEL: Record<OfferingStatus, string> = {
   full: "Full",
   completed: "Completed",
   cancelled: "Cancelled",
+  pending_review: "Waiting for approval",
 };
 
 export const DEFAULT_TIMEZONE = "Asia/Kuala_Lumpur";

@@ -23,7 +23,8 @@ import { isPubliclyVisible, publicWhere } from "./visibility";
  */
 
 /** UX review 2026-09-27 D4: the registration-free review borrows the flagship's programme row; it is shown under this title, not the training's. */
-export const FREE_LEARNING_REVIEW_TITLE = "Free Learning & the free diagnostic";
+/** CR-2026-10-04-0420: the public label of a review from someone who learns on the portal without a paid training. */
+export const FREE_LEARNING_REVIEW_TITLE = "Knowledge Hub & free tools";
 
 export class ReviewConsentError extends Error {
   constructor(reviewId: string) {

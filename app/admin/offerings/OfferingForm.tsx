@@ -46,13 +46,13 @@ type Values = {
   leadExpertId: string;
 };
 
-function initialValues(offering: OfferingRecord | undefined, programmes: AdminProgrammeOption[], initialProgrammeId?: string): Values {
+function initialValues(offering: OfferingRecord | undefined, programmes: AdminProgrammeOption[], initialProgrammeId?: string, newStatus = "planned"): Values {
   if (!offering) {
     return {
       programmeId: initialProgrammeId ?? programmes[0]?.id ?? "",
       deliveryFormatId: "",
       modality: "live_online",
-      status: "planned",
+      status: newStatus,
       startsOn: "",
       endsOn: "",
       capacity: "",
@@ -136,7 +136,7 @@ export function OfferingForm({
   const [state, action, pending] = useActionState(mode === "edit" ? updateOfferingAction : createOfferingAction, initial);
   const fieldErrors = state.status === "error" ? state.fieldErrors : {};
   const noteErrorId = useId();
-  const [values, setValues] = useState<Values>(() => initialValues(offering, programmes, initialProgrammeId));
+  const [values, setValues] = useState<Values>(() => initialValues(offering, programmes, initialProgrammeId, canSetStatus ? "planned" : "pending_review"));
   const bind = (field: keyof Values) => ({
     name: field,
     value: values[field],
@@ -225,7 +225,7 @@ export function OfferingForm({
         <SelectField
           label="Status"
           required
-          hint={canSetStatus ? "Planned, open and full appear on the public schedule; completed and cancelled do not." : "A date you schedule stays planned (people can register interest, not pay). An administrator opens it for registration."}
+          hint={canSetStatus ? "Planned, open and full appear on the public schedule; completed, cancelled and waiting for approval do not. To approve a trainer's date, set it to Planned or Open." : "A date you schedule waits for an administrator's approval and is not public until then. The administrators are emailed."}
           error={fieldErrors.status}
           {...bind("status")}
           disabled={!canSetStatus}

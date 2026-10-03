@@ -175,6 +175,17 @@ describe("create → find → update", () => {
   });
 });
 
+describe("a Trainer's date waits for approval (CR-2026-10-03-2254)", () => {
+  it("a pending_review date is on the admin list but NOT public — until an administrator sets it to planned", async () => {
+    const record = await create(baseInput({ startsOn: "2027-06-07", endsOn: "2027-06-09", status: "pending_review" }));
+    expect((await listAllOfferings()).find((o) => o.id === record.id)?.status).toBe("pending_review");
+    expect((await listUpcomingPublicOfferings(flagship.id)).map((o) => o.id)).not.toContain(record.id);
+    // It cannot be registered for either: it is not open.
+    await withTransaction((tx) => updateOffering(tx, record.id, { status: "planned" }, actor)); // the administrator approves it
+    expect((await listUpcomingPublicOfferings(flagship.id)).map((o) => o.id)).toContain(record.id);
+  });
+});
+
 describe("validation", () => {
   it("rejects a last day before the first day", async () => {
     await expectValidationError(() => create(baseInput({ startsOn: "2027-03-05", endsOn: "2027-03-04" })), "endsOn");

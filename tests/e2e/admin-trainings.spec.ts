@@ -316,7 +316,7 @@ test("a Trainer sees only the Trainings area, creates their own draft, cannot pu
   await expect(page.getByTestId("offering-created")).toBeVisible();
   const mineEarly = await prisma.programme.findUniqueOrThrow({ where: { slug: trainerSlug }, select: { id: true } });
   const dates = await prisma.scheduledOffering.findMany({ where: { programmeId: mineEarly.id }, select: { status: true } });
-  expect(dates.map((d) => d.status)).toEqual(["planned"]);
+  expect(dates.map((d) => d.status)).toEqual(["pending_review"]); // hidden until an administrator approves it
 
   // "Submit for review": disabled while the draft is not ready (it is a fresh draft: starter text, no fees, no modules).
   await page.goto(`/admin/trainings/${mineEarly.id}`);
@@ -349,9 +349,19 @@ test("a Trainer sees only the Trainings area, creates their own draft, cannot pu
   await expect(page.getByTestId("training-row").filter({ hasText: trainerTitle }).getByTestId("review-requested-chip")).toBeVisible();
   const dateNotice = await prisma.notification.count({ where: { userId: { in: admins.map((a) => a.userId) }, dedupeKey: { startsWith: "offering-created:" }, title: { contains: trainerTitle } } });
   expect(dateNotice).toBeGreaterThan(0);
+  // Founder, 2026-10-04: both events also EMAIL the administrator (to their own account address), with the link to sign in and approve.
+  const reviewMail = await prisma.outboundEmail.findFirst({ where: { toEmail: email.toLowerCase(), templateKey: "admin.review-requested", subject: { contains: trainerTitle } } });
+  expect(reviewMail).not.toBeNull();
+  expect(reviewMail!.textBody).toContain(`/admin/trainings/${mineEarly.id}`);
+  expect(reviewMail!.subject).not.toMatch(/[\r\n]/);
+  const dateMail = await prisma.outboundEmail.findFirst({ where: { toEmail: email.toLowerCase(), templateKey: "admin.date-scheduled", subject: { contains: trainerTitle } } });
+  expect(dateMail).not.toBeNull();
+  expect(dateMail!.textBody).toContain("/admin/offerings/");
+  expect(dateMail!.textBody).toContain("hidden from the public until you set it to Planned or Open");
 
   await prisma.notification.deleteMany({ where: { dedupeKey: { startsWith: `review:${mineEarly.id}:` } } });
   await prisma.notification.deleteMany({ where: { title: { contains: trainerTitle } } });
+  await prisma.outboundEmail.deleteMany({ where: { OR: [{ subject: { contains: trainerTitle } }, { idempotencyKey: { startsWith: `admin-review:${mineEarly.id}:` } }] } });
   await prisma.scheduledOffering.deleteMany({ where: { programmeId: mineEarly.id } });
   await prisma.programmePrice.deleteMany({ where: { programmeId: mineEarly.id } });
   await prisma.programmeModule.deleteMany({ where: { programmeId: mineEarly.id } });

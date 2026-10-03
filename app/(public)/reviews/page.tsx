@@ -7,7 +7,7 @@ import { ReviewAvatar } from "@/modules/reviews/components/ReviewAvatar";
 import { formatMonthYear, Stars } from "@/modules/reviews/components/Stars";
 import { REVIEW_EDIT_WINDOW_DAYS } from "@/modules/reviews/constants";
 import { getOwnReviews, listReviewableRegistrations, OWN_REVIEW_STATUS_LABEL, ownReviewStatus } from "@/modules/reviews/eligibility";
-import { editWindowOpen, findReviewById, listPublicReviews, type PublicReview, type ReviewRecord } from "@/modules/reviews/repository";
+import { editWindowOpen, findReviewById, FREE_LEARNING_REVIEW_TITLE, listPublicReviews, type PublicReview, type ReviewRecord } from "@/modules/reviews/repository";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { AccountFrame } from "@/shared/chrome/AccountFrame";
@@ -182,7 +182,7 @@ export default async function ReviewsPage({ searchParams }: { searchParams: Prom
               </h2>
               {signedIn.reviewable.length === 0 ? (
                 <p className="text-body-sm text-[var(--color-ink-quiet)]" data-testid="nothing-to-review">
-                  A review can be shared once a training you registered for has ended.
+                  A review of a training can be shared once a training you registered for has ended.
                 </p>
               ) : (
                 <ul className="flex flex-col gap-4">
@@ -205,15 +205,16 @@ export default async function ReviewsPage({ searchParams }: { searchParams: Prom
             </section>
 
             {header && signedIn.flagshipTitle ? (
-              <details className="rounded-[var(--radius-panel)] border border-[var(--color-line)] bg-[var(--color-ground-raised)] px-5 py-4" id="free-learning">
-                <summary className="text-body-sm cursor-pointer font-medium" data-testid="diagnostic-review-toggle">
-                  Tried Free Learning or the free diagnostic? Share a review
-                </summary>
-                <p className="text-body-sm mt-2 mb-4 text-[var(--color-ink-quiet)]">
-                  This is not tied to a certificate. It is private unless you choose otherwise.
+              <section aria-labelledby="free-learner-review" id="free-learning" className="rounded-[var(--radius-panel)] border border-[var(--color-line)] bg-[var(--color-ground-raised)] px-5 py-5" data-testid="free-learner-review">
+                <h3 id="free-learner-review" className="text-h2 mb-1">
+                  Not taken a training? You can still review us
+                </h3>
+                <p className="text-body-sm mb-4 text-[var(--color-ink-quiet)]" data-testid="free-learner-note">
+                  Everyone with an account can share a review — for the Knowledge Hub, the assessments or anything else on the portal. It is not tied to a certificate. It stays private unless you choose to share
+                  it, and even then it is shown to the public only after an administrator has approved it.
                 </p>
-                <ReviewForm mode="create" kind="diagnostic" header={{ ...header, programmeTitle: "Free Learning & the free diagnostic", dates: null }} />
-              </details>
+                <ReviewForm mode="create" kind="diagnostic" header={{ ...header, programmeTitle: FREE_LEARNING_REVIEW_TITLE, dates: null }} />
+              </section>
             ) : null}
 
             <section aria-labelledby="your-reviews-heading" id="your-reviews" className="scroll-mt-24">
@@ -233,7 +234,7 @@ export default async function ReviewsPage({ searchParams }: { searchParams: Prom
                           <div className="mb-2 flex flex-wrap items-center gap-2">
                             <Chip tone={status === "published" ? "primary" : "neutral"}>{OWN_REVIEW_STATUS_LABEL[status]}</Chip>
                             <span className="text-body-sm text-[var(--color-ink-quiet)]">
-                              {r.kind === "diagnostic" ? "Free Learning & the free diagnostic" : r.programmeTitle}
+                              {r.kind === "diagnostic" ? FREE_LEARNING_REVIEW_TITLE : r.programmeTitle}
                               {r.offeringStartsOn && r.offeringEndsOn ? ` · ${formatDateRange(r.offeringStartsOn, r.offeringEndsOn)}` : ""}
                               {" · "}
                               {formatMonthYear(r.submittedAt)}

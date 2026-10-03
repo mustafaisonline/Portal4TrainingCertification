@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { withTransaction } from "@/db/prisma";
 import { isUuid } from "@/modules/catalogue/offerings/repository";
 import { notifyAdmins } from "@/modules/notifications/notifications.service";
+import { emailAdminsReviewRequested } from "./admin-emails";
 import { trainingAccess, type TrainingAccess } from "./admin-access";
 import { CONTENT_FIELDS, FEE_REGIONS, PROGRAMME_LEVELS, PROGRAMME_STATUSES, type ContentFieldErrors, type ContentForm } from "./constants";
 import {
@@ -309,6 +310,8 @@ export async function requestTrainingReviewAction(_prev: FormState<Record<string
       link: `/admin/trainings/${id}`,
       dedupeKey: `review:${id}:${Math.floor(Date.now() / REVIEW_REQUEST_WINDOW_MS)}`,
     }).catch((err) => console.error("[trainings] review notice failed", err instanceof Error ? err.message : err));
+    // Founder, 2026-10-04: the administrators are also EMAILED (each to their own address), so they know to sign in and approve.
+    void emailAdminsReviewRequested({ programmeId: id, title, bucket: Math.floor(Date.now() / REVIEW_REQUEST_WINDOW_MS) }).catch((err) => console.error("[trainings] review email failed", err instanceof Error ? err.message : err));
     revalidate(id);
     return { status: "saved", id };
   } catch (err) {

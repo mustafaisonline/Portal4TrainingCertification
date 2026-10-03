@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { getPrisma, withTransaction } from "@/db/prisma";
+import { emailAdminsDateScheduled } from "@/modules/catalogue/programmes/admin-emails";
 import { notifyAdmins } from "@/modules/notifications/notifications.service";
 import { trainingAccess } from "@/modules/catalogue/programmes/admin-access";
 import { canManageTraining, type TrainingScope } from "@/modules/catalogue/programmes/admin.repository";
@@ -115,15 +116,14 @@ export async function createOfferingAction(_prev: OfferingFormState, formData: F
   if ("status" in gate) return gate;
 
   // A Trainer's form does not send a status (the field is read-only for them): the server decides it.
-  if (!gate.isAdmin) formData.set("status", "planned");
+  if (!gate.isAdmin) formData.set("status", "pending_review");
   const { input, fieldErrors } = parseForm(formData);
   if (Object.keys(fieldErrors).length) return { status: "error", message: CHECK_FIELDS, fieldErrors };
   if (!(await canManageTraining(getPrisma(), gate.scope, input.programmeId))) return NOT_YOURS;
 
-  // CR-2026-10-03-2254 (founder: a Trainer's new date needs the administrator's approval): a Trainer's date is always
-  // saved as PLANNED — it is not open for registration or payment until an administrator opens it. (A date of a
-  // training that is not published is hidden anyway; this also covers dates added to a published training.)
-  if (!gate.isAdmin) input.status = "planned";
+  // CR-2026-10-03-2254 (founder: "Admin should login and give approval"): a Trainer's date is always saved as WAITING
+  // FOR APPROVAL (`pending_review`) — hidden from the public schedule until an administrator sets it to planned or open.
+  if (!gate.isAdmin) input.status = "pending_review";
 
   try {
     const created = await withTransaction((tx) => createOffering(tx, input, gate.userId));
@@ -133,11 +133,13 @@ export async function createOfferingAction(_prev: OfferingFormState, formData: F
       void notifyAdmins({
         kind: "system",
         title: `A trainer scheduled a date${o?.programmeTitle ? ` for ${o.programmeTitle}` : ""}`,
-        body: "It is saved as planned. Open it for registration when you have approved it.",
+        body: "It is waiting for your approval and is hidden from the public. Approve it by setting it to Planned or Open.",
         link: `/admin/offerings/${created.id}`,
         // One notice per training per hour, so scheduling several dates in a row does not flood the bell.
         dedupeKey: `offering-created:${input.programmeId}:${Math.floor(Date.now() / 3_600_000)}`,
       }).catch((err) => console.error("[offerings] admin notice failed", err instanceof Error ? err.message : err));
+      // Founder, 2026-10-04: and an email to each administrator, to sign in and approve.
+      void emailAdminsDateScheduled({ offeringId: created.id, programmeTitle: o?.programmeTitle ?? null, startsOn: input.startsOn }).catch((err) => console.error("[offerings] admin email failed", err instanceof Error ? err.message : err));
     }
     revalidate();
     return { status: "saved", id: created.id };
@@ -167,8 +169,8 @@ export async function updateOfferingAction(_prev: OfferingFormState, formData: F
   // A Trainer cannot change a date's status (planned / open / full / completed / cancelled) — an administrator does.
   if (!gate.isAdmin) {
     input.status = existing.status;
-    // An administrator-opened date cannot be carried by a Trainer to another training (it would land open, unreviewed).
-    if (existing.status !== "planned" && input.programmeId !== existing.programmeId) return { status: "error", message: "Only an administrator can move a date that is already open to another training.", fieldErrors: { programmeId: "Ask an administrator to move this date." } };
+    // An approved date cannot be carried by a Trainer to another training (it would land public, unreviewed).
+    if (existing.status !== "pending_review" && input.programmeId !== existing.programmeId) return { status: "error", message: "Only an administrator can move a date that is already open to another training.", fieldErrors: { programmeId: "Ask an administrator to move this date." } };
   }
 
   try {

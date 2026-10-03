@@ -1,6 +1,6 @@
 # CR-2026-10-04-0113 — Annual subscriptions: Agentic AI unlimited and portal-level unlimited
 
-**Received:** 2026-10-04 01:10 MYT · **Status:** DECIDED — one question open (the cut-off sentence) · **Requested by:** founder · **Model:** opus
+**Received:** 2026-10-04 01:10 MYT · **Status:** DECIDED & APPROVED — building (design in CR-0112) · **Requested by:** founder · **Model:** opus
 
 ## 1. Request (verbatim)
 

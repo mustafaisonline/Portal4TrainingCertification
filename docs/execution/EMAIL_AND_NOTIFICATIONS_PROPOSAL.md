@@ -2,6 +2,17 @@
 
 **Status:** PROPOSAL for the founder's decision (2026-10-03, MYT). Nothing here is built. Requested in the founder's message of 2026-10-03 ("Now let's connect email with our portal …"); tracked by CR-2026-10-03-1225 … -1229. Every item marked **RED** needs the founder's explicit approval first (CLAUDE.md: new external service, new tables).
 
+## 0. Founder's decisions (2026-10-03 12:40 MYT) — these override the recommendations in §2
+> 1 = I have emails on Hostgator .com where i have emails attached with yourpartnertechnologies.com. as from now on, we will not show email on the portal, means wherever way user want to conenct with portal staff, the control will tkae user to the contract us page, from where user can use the form (pelase create one, if not there) to send us email. Don't use anything which need to fee.
+> 2 = no-reply@dataainexus.com ignore it. and use this sales@yourpartnertechnologies.com every. But no need to show user when we will reply then yes user will see this email: sales@yourpartnertechnologies.com
+> 3 = Please go ahead as per the best practices.
+> 4 = For sign-up, please send confirmation email with activation Link. Once user click this link, it should open new webpage and get confiramtion at database level to convfirme user is correct user. please also introduce that features that when user signup, it should show that verfiication game i.e. to verfiy whether user createing new account is ahuman or not
+> 5 = Ok
+>
+> Provide is hostgator.com. Current email is sales@yourpartnertechnologies.com later we will change to dataasinexus.com email
+
+Applied: **HostGator SMTP** (free, existing `sales@yourpartnertechnologies.com` mailbox; Postmark/Resend dropped — and with them the bounce/complaint webhooks and `email_events`: bounces arrive as mail in that mailbox); sender `sales@yourpartnertechnologies.com` for everything, changed later by one setting; **no email address on the portal** — everything goes through the Contact Us form; tables approved; **strict activation** with an emailed link plus a **human check at sign-up**; trainer-mail rules accepted. Open: the `nodemailer` dependency (RED) needs an explicit yes.
+
 ## 1. What exists today (verified in the repository, 2026-10-03)
 
 | Area | Fact |

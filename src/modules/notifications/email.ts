@@ -1,11 +1,12 @@
 import { getPrisma } from "@/db/prisma";
+import { createSmtpTransport, smtpConfigFromEnv } from "./smtp";
 
 /*
  * Transactional email — behind an interface, with a durable record.
  *
- * ADR-015 (provider) is OPEN and needs the founder's account and a sending
- * domain (G0-8 / OQ-3), so no provider is wired here (plan §0.1 default 5).
- * What IS built is the part that must not change when one is chosen:
+ * ADR-015 (provider): decided 2026-10-03 — the founder's own HostGator mailbox
+ * over SMTP (smtp.ts), no paid provider. The part below does not change with
+ * the transport:
  *
  *  1. Every email the system decides to send is first written to
  *     `outbound_emails` (status `queued`). Nothing is "sent" without a row, so
@@ -17,10 +18,11 @@ import { getPrisma } from "@/db/prisma";
  *                          ONLY. Never the body: verification and reset links
  *                          must not land in logs (SECURITY_ARCHITECTURE §9).
  *                          Tests read the link from the database row.
- *   - `resend`, `postmark` — recognised but NOT IMPLEMENTED: selecting one
- *                          throws at first use with a message naming the
- *                          decision that is missing. There is no silent
- *                          fallback to `log` in production (AP-07).
+ *   - `smtp`             — delivers through the SMTP mailbox named by SMTP_HOST,
+ *                          SMTP_PORT, SMTP_USER, SMTP_PASSWORD and EMAIL_FROM
+ *                          (smtp.ts; founder 2026-10-03: HostGator, no paid
+ *                          provider). Missing settings throw at first use — there
+ *                          is no silent fallback to `log` in production (AP-07).
  */
 
 export type EmailMessage = {
@@ -36,15 +38,6 @@ export type EmailTransport = {
   send(message: EmailMessage & { id: string }): Promise<{ providerMessageId: string | null }>;
 };
 
-class EmailNotConfiguredError extends Error {
-  constructor(transport: string) {
-    super(
-      `EMAIL_TRANSPORT="${transport}" is not implemented: the transactional email provider (ADR-015) has not been decided and no credentials exist. Use "log" until it is.`,
-    );
-    this.name = "EmailNotConfiguredError";
-  }
-}
-
 const logTransport: EmailTransport = {
   name: "log",
   async send(message) {
@@ -54,16 +47,19 @@ const logTransport: EmailTransport = {
   },
 };
 
+let smtpTransport: EmailTransport | null = null;
+
 function selectTransport(): EmailTransport {
   const name = process.env["EMAIL_TRANSPORT"] ?? "log";
   switch (name) {
     case "log":
       return logTransport;
-    case "resend":
-    case "postmark":
-      throw new EmailNotConfiguredError(name);
+    case "smtp":
+      // One transporter per process (connection reuse); settings are read once, at first use.
+      smtpTransport ??= createSmtpTransport(smtpConfigFromEnv());
+      return smtpTransport;
     default:
-      throw new Error(`Unknown EMAIL_TRANSPORT "${name}". Known: log, resend, postmark.`);
+      throw new Error(`Unknown EMAIL_TRANSPORT "${name}". Known: log, smtp.`);
   }
 }
 

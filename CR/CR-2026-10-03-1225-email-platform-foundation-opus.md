@@ -1,6 +1,6 @@
 # CR-2026-10-03-1225 — Email platform foundation — provider, delivery, suppression, email log
 
-**Received:** 2026-10-03 12:25 MYT · **Status:** DECIDED — founder answered 2026-10-03; build order below; awaiting the `nodemailer` dependency yes · **Requested by:** founder · **Model:** opus
+**Received:** 2026-10-03 12:25 MYT · **Status:** DECIDED — founder answered 2026-10-03; build order below; `nodemailer` dependency APPROVED by the founder 2026-10-03 ("yes add nodemailer") · **Requested by:** founder · **Model:** opus
 
 ## 1. Request (verbatim)
 
@@ -34,10 +34,11 @@ See the spec: [CR-SPEC-2026-10-03-1225-email-platform-foundation-opus](specs/CR-
 
 | # | Step | Status | Updated |
 |---|---|---|---|
-| 1 | Founder answers + approvals | **DONE** (§7); only the `nodemailer` dependency yes is open | 2026-10-03 |
-| 2 | Build | NOT STARTED | — |
-| 3 | Verify (tests, review, security where noted) | NOT STARTED | — |
-| 4 | Deploy | NOT STARTED | — |
+| 1 | Founder answers + approvals | **DONE** (§7); `nodemailer` APPROVED 2026-10-03 | 2026-10-03 |
+| 2a | **Slice 1 — SMTP sender:** `nodemailer` + `@types/nodemailer` (dev); `src/modules/notifications/smtp.ts` (implicit TLS on 465 / STARTTLS required otherwise, TLS ≥ 1.2, timeouts, refused recipient = failure); `EMAIL_TRANSPORT=smtp` in `email.ts`; env validation of the five SMTP settings; `.env.example`; `npm run email:test`; `resend`/`postmark` removed | **DONE** — unit 751/751 | 2026-10-03 |
+| 2b | **Slice 2 — reliability:** retry worker with back-off (route + timer, like the reminders), suppression list, Email log screen | NOT STARTED (needs schema: `last_attempt_at`, `idempotency_key`, `email_suppressions`) | — |
+| 3 | Verify (tests, governance + security review) | IN PROGRESS | 2026-10-03 |
+| 4 | Deploy slice 1 (with the Contact Us form), then the founder sets the SMTP env on the server, then `npm run email:test` | IN PROGRESS | 2026-10-03 |
 
 ## 7. Founder's decisions (2026-10-03 12:40 MYT) — recorded verbatim, then how they are applied
 
@@ -66,3 +67,5 @@ See the spec: [CR-SPEC-2026-10-03-1225-email-platform-foundation-opus](specs/CR-
 | 2026-10-03 12:25 | CR created from the founder's message; existing code inspected read-only; proposal written. Nothing built. |
 | 2026-10-03 12:40 | Founder answered D1–D6 (see §7): HostGator SMTP, sales@ sender, no public emails, strict activation + human check, tables approved, D5/D6 ok. |
 | 2026-10-03 12:57 | Founder: the portal's address is now `sales@dataainexus.com` (CR-1257) — SMTP login and From use it; HostGator's mail host/port for that domain is typed by the founder in the server env. |
+| 2026-10-03 13:10 | Founder: "yes add nodemailer, push it" — the RED dependency gate is cleared for `nodemailer` (MIT, no sub-dependencies) and its TypeScript types (`@types/nodemailer`, dev only). Slice 1: SMTP transport + env validation + a test-send script; slice 2: retry worker, suppression list, Email log. |
+| 2026-10-03 13:30 | Founder: "Yes lets setup the Hostgator email in our portal" / "set SMTP and all related items to make sure emails works". Slice 1 built. **Order matters:** the code must be deployed BEFORE `EMAIL_TRANSPORT=smtp` is set on the server (an unknown transport value would fail validation at start-up). Then the founder types the five settings in `/etc/p4tc/production.env`; the assistant runs `npm run email:test` over SSH and checks the outbox. |

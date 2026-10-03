@@ -189,3 +189,35 @@ describe("validateEnv — development / test", () => {
     expect(validateEnv({}).mode).toBe("development");
   });
 });
+
+describe("validateEnv — EMAIL_TRANSPORT=smtp (CR-2026-10-03-1225)", () => {
+  const smtp = { EMAIL_TRANSPORT: "smtp", SMTP_HOST: "mail.dataainexus.com", SMTP_PORT: "465", SMTP_USER: "sales@dataainexus.com", SMTP_PASSWORD: "p".repeat(12), EMAIL_FROM: "sales@dataainexus.com" };
+
+  it("accepts a complete SMTP configuration in production", () => {
+    const r = validateEnv({ ...complete(), ...smtp }, "production");
+    expect(r.ok).toBe(true);
+    expect(r.missing).toEqual([]);
+    expect(r.invalid).toEqual([]);
+  });
+
+  it("the five SMTP settings are required together — each missing one is named, no value is", () => {
+    const { SMTP_HOST: _h, SMTP_PASSWORD: _p, ...partial } = { ...complete(), ...smtp };
+    const r = validateEnv(partial, "production");
+    expect(r.ok).toBe(false);
+    expect(r.missing.sort()).toEqual(["SMTP_HOST", "SMTP_PASSWORD"]);
+    expect(describeValidation(r)).not.toContain("p".repeat(12));
+  });
+
+  it("a malformed port or sender address is invalid", () => {
+    const r = validateEnv({ ...complete(), ...smtp, SMTP_PORT: "mail", EMAIL_FROM: "not-an-address" }, "production");
+    expect(r.invalid.map((p) => p.name).sort()).toEqual(["EMAIL_FROM", "SMTP_PORT"]);
+  });
+
+  it("the log transport needs no SMTP settings; resend and postmark are gone", () => {
+    expect(validateEnv(complete(), "production").ok).toBe(true);
+    for (const old of ["resend", "postmark"]) {
+      const r = validateEnv({ ...complete(), EMAIL_TRANSPORT: old }, "production");
+      expect(r.invalid.map((p) => p.name)).toEqual(["EMAIL_TRANSPORT"]);
+    }
+  });
+});

@@ -42,7 +42,9 @@ export const REQUIRED_ALWAYS = ["DATABASE_URL", "BETTER_AUTH_SECRET", "APP_BASE_
 /** Additionally required in production (optional but validated elsewhere). */
 export const REQUIRED_IN_PRODUCTION = ["JOBS_SECRET", "STRIPE_SECRET_KEY", "STRIPE_WEBHOOK_SECRET"] as const;
 
-export const EMAIL_TRANSPORTS = ["log", "resend", "postmark"] as const;
+export const EMAIL_TRANSPORTS = ["log", "smtp"] as const;
+/** Required together when EMAIL_TRANSPORT=smtp (the HostGator mailbox; CR-2026-10-03-1225). Optional: EMAIL_FROM_NAME. */
+export const SMTP_VARIABLES = ["SMTP_HOST", "SMTP_PORT", "SMTP_USER", "SMTP_PASSWORD", "EMAIL_FROM"] as const;
 
 const MIN_AUTH_SECRET = 32;
 const MIN_JOBS_SECRET = 16;
@@ -145,6 +147,16 @@ export function validateEnv(env: EnvLike = process.env, mode: EnvMode = env["NOD
 
   if (present(env, "EMAIL_TRANSPORT") && !(EMAIL_TRANSPORTS as readonly string[]).includes(env["EMAIL_TRANSPORT"]!)) {
     invalid.push({ name: "EMAIL_TRANSPORT", why: `must be one of ${EMAIL_TRANSPORTS.join(", ")}` });
+  }
+
+  // SMTP (CR-2026-10-03-1225): the mailbox settings are required together, and well-formed, when it is the transport.
+  if (env["EMAIL_TRANSPORT"] === "smtp") {
+    for (const name of SMTP_VARIABLES) if (!present(env, name)) missing.push(name);
+    if (present(env, "SMTP_PORT")) {
+      const port = Number(env["SMTP_PORT"]);
+      if (!(Number.isInteger(port) && port > 0 && port <= 65535)) invalid.push({ name: "SMTP_PORT", why: "must be a port number (465 or 587)" });
+    }
+    if (present(env, "EMAIL_FROM") && !/^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]{2,}$/.test(env["EMAIL_FROM"]!)) invalid.push({ name: "EMAIL_FROM", why: "must be an email address" });
   }
 
   if (present(env, "JOBS_SECRET") && env["JOBS_SECRET"]!.length < MIN_JOBS_SECRET) {

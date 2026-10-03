@@ -1,6 +1,6 @@
 # CR-2026-10-03-1246 — No email address on the portal — every contact path leads to the Contact Us form
 
-**Received:** 2026-10-03 12:46 MYT · **Status:** BUILT & VERIFIED — awaits deploy + three founder steps · **Requested by:** founder · **Model:** sonnet
+**Received:** 2026-10-03 12:46 MYT · **Status:** DEPLOYED (`v2026.10.03-3`) — two founder steps remain · **Requested by:** founder · **Model:** sonnet
 
 ## 1. Request (verbatim)
 
@@ -32,7 +32,7 @@ Spec: see `specs/`.
 | 2 | Replace mailto links and printed addresses in pages/components | **DONE** — `contactUsHref()` replaces the mailto helpers: schedule, Trainings, training pages, price cards, local-partner checkout, account help; head-office card has no email row (a partner's own address is kept); FAQ seed answer | 2026-10-03 |
 | 3 | Legal documents: the form instead of the address | **DONE in code** — Terms, Privacy, Refund (and the unpublished Malay draft) say "through the Contact Us page"; new version **2026-10-03** (effective 3 October 2026). **PDPA flag for the founder:** the Privacy policy is the PDPA notice and names a contact for data requests; a web form is a contact channel but the assistant is not a lawyer — please confirm | 2026-10-03 |
 | 4 | Tests + sweep | **DONE** — no address remains in `app/`, `src/`, `prisma/`, `tests/` except a partner's own (Infocentric) and the internal constant; unit 737/737, e2e 187/187 | 2026-10-03 |
-| 5 | Deploy + founder steps: (a) root: set `LEGAL_DOCUMENT_VERSIONS` to 2026-10-03 for terms/privacy/refund; (b) re-run `npm run db:seed` for the FAQ answer (check it updates the existing row); (c) edit the YPT organisation's contact email in Admin | AWAITING founder's word | — |
+| 5 | **Deployed v2026.10.03-3; FAQ re-seeded.** Founder steps still open: (a) root: set `LEGAL_DOCUMENT_VERSIONS` to 2026-10-03 for terms/privacy/refund; (c) edit the YPT organisation's contact email in Admin | AWAITING founder's word | — |
 
 ## 6. Progress log
 
@@ -40,3 +40,4 @@ Spec: see `specs/`.
 |---|---|
 | 2026-10-03 12:46 | CR created from the founder's answers. |
 | 2026-10-03 13:00 | Built and verified. New address `sales@dataainexus.com` applied (CR-1257). Not deployed. |
+| 2026-10-03 14:50 | **DEPLOYED `v2026.10.03-3` (`6649697`)** — gate green (tsc, Vitest, build, full Playwright), delta upload, 06-validate PASSED. Live: `/contact-us` shows the form and no mailto (only Infocentric's own address remains); privacy text names HostGator; FAQ answer refreshed (`db:seed` run on the server, idempotent). Production env is STILL `EMAIL_TRANSPORT=log` and `LEGAL_DOCUMENT_VERSIONS` 2026-10-02 until the founder runs the root block (SMTP settings + versions). |

@@ -1,6 +1,6 @@
 # CR-2026-10-03-1257 — The portal's email address is sales@dataainexus.com
 
-**Received:** 2026-10-03 12:57 MYT · **Status:** BUILT & VERIFIED — in the working tree with the Contact Us form (CR-1226/1246) · **Requested by:** founder · **Model:** sonnet
+**Received:** 2026-10-03 12:57 MYT · **Status:** DEPLOYED (`v2026.10.03-3`) · **Requested by:** founder · **Model:** sonnet
 
 ## 1. Request (verbatim)
 
@@ -30,3 +30,4 @@
 | Date (MYT) | Entry |
 |---|---|
 | 2026-10-03 12:57 | CR created from the founder's message (arrived while the Contact Us form was being finished). Old address replaced in code and current-state docs; historical CRs keep what was true when written. |
+| 2026-10-03 14:50 | Live in `v2026.10.03-3`. |

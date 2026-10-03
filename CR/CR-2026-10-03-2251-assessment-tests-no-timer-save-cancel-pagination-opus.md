@@ -1,6 +1,6 @@
 # CR-2026-10-03-2251 — Interview and organisation tests: no timer, per-page results, cancel, save & exit, paginated results
 
-**Received:** 2026-10-03 22:50 MYT · **Status:** BUILT & VERIFIED locally — awaiting review and deploy · **Requested by:** founder · **Model:** opus
+**Received:** 2026-10-03 22:50 MYT · **Status:** DEPLOYED v2026.10.04-3 (2026-10-04) · **Requested by:** founder · **Model:** opus
 
 ## 1. Request (verbatim)
 
@@ -41,7 +41,7 @@
 | 1 | Founder answers §3 | DONE | 2026-10-03 |
 | 2 | Build (after the answers) | DONE | 2026-10-04 |
 | 3 | Verify (tests, reviews) | DONE | 2026-10-04 |
-| 4 | Deploy | v2026.10.04-3 | 2026-10-04 |
+| 4 | Deploy | DONE — gate + validation passed | 2026-10-04 |
 
 ## 6. Progress log
 

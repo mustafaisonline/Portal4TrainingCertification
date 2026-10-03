@@ -80,7 +80,7 @@ export async function replyToEnquiryAction(_prev: EnquiryActionState, formData: 
     revalidatePath("/admin/enquiries");
     revalidatePath(`/admin/enquiries/${id}`);
     revalidatePath("/admin");
-    return { status: "done", message: `Reply sent to ${enquiry.email}.` };
+    return { status: "done", message: sent.status === "queued" ? `The mail server did not answer just now. The reply to ${enquiry.email} is queued and will be retried automatically.` : `Reply sent to ${enquiry.email}.` };
   } catch (err) {
     console.error("[enquiries] reply was sent but the status could not be saved", err);
     return { status: "error", message: "The reply was sent, but the enquiry could not be marked as replied. Use Mark replied." };

@@ -21,6 +21,7 @@
 #              plus the narrow pm2 commands the wrapper runs on deploy's behalf
 #   caddy      /etc/caddy/Caddyfile from deploy/Caddyfile.example
 #   systemd    p4tc-reminders.timer (01:00 UTC → POST /api/jobs/certificate-reminders)
+#              p4tc-email.timer (every minute → POST /api/jobs/email-outbox)
 #              p4tc-backup.timer   (02:00 UTC → 01-backup for production — the
 #              SOLE recovery mechanism now that there is no managed PITR)
 #              pm2 startup (deploy's PM2 process list survives a reboot)
@@ -183,9 +184,11 @@ caddy validate --config /etc/caddy/Caddyfile >/dev/null && systemctl enable --no
 log "8/9 systemd timers + firewall + unattended upgrades"
 sed -e "s/{{DOMAIN}}/$DOMAIN/g" "$DEPLOY_DIR/systemd/p4tc-reminders.service" >/etc/systemd/system/p4tc-reminders.service
 cp "$DEPLOY_DIR/systemd/p4tc-reminders.timer" /etc/systemd/system/p4tc-reminders.timer
+sed -e "s/{{DOMAIN}}/$DOMAIN/g" "$DEPLOY_DIR/systemd/p4tc-email.service" >/etc/systemd/system/p4tc-email.service
+cp "$DEPLOY_DIR/systemd/p4tc-email.timer" /etc/systemd/system/p4tc-email.timer
 sed -e "s#{{OPT}}#$OPT#g" "$DEPLOY_DIR/systemd/p4tc-backup.service" >/etc/systemd/system/p4tc-backup.service
 cp "$DEPLOY_DIR/systemd/p4tc-backup.timer" /etc/systemd/system/p4tc-backup.timer
-systemctl daemon-reload; systemctl enable --now p4tc-reminders.timer p4tc-backup.timer >/dev/null
+systemctl daemon-reload; systemctl enable --now p4tc-reminders.timer p4tc-email.timer p4tc-backup.timer >/dev/null
 ufw --force default deny incoming >/dev/null; ufw default allow outgoing >/dev/null
 ufw allow 22/tcp >/dev/null; ufw allow 80/tcp >/dev/null; ufw allow 443/tcp >/dev/null; ufw --force enable >/dev/null
 dpkg-reconfigure -f noninteractive unattended-upgrades >/dev/null 2>&1 || true

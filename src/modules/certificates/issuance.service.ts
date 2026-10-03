@@ -260,8 +260,9 @@ export async function recordCompletion(input: RecordCompletionInput): Promise<Re
     const c = outcome.certificate;
     try {
       const base = appBaseUrl();
-      await sendEmail(
-        certificateIssuedMessage({
+      await sendEmail({
+        idempotencyKey: `certificate-issued:${c.id}`,
+        ...certificateIssuedMessage({
           to: outcome.email.to,
           name: outcome.email.name,
           programmeTitle: c.programmeTitle,
@@ -271,7 +272,7 @@ export async function recordCompletion(input: RecordCompletionInput): Promise<Re
           verifyUrl: `${base}/verify/${c.certificateId}`,
           accountUrl: `${base}/account/certifications`,
         }),
-      );
+      });
     } catch (err) {
       console.error(`[certificates] issued email not queued for certificate ${c.id}`, err);
     }

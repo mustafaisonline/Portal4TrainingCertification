@@ -24,6 +24,8 @@ export const adminNavItems: readonly AdminNavItem[] = [
   // Coupons (N1–N8 approved 2026-09-28): per-person percentage discounts.
   { href: "/admin/coupons", label: "Coupons" },
   { href: "/admin/enquiries", label: "Enquiries" },
+  // CR-2026-10-03-1225 slice 2: the email log, retry, and the do-not-send list.
+  { href: "/admin/email", label: "Email" },
   { href: "/admin/reviews", label: "Reviews" },
   { href: "/admin/certificates", label: "Certificates" },
   // Milestone 14 Phase 2: the book's topics — publish / unpublish.

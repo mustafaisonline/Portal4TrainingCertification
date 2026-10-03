@@ -123,7 +123,7 @@ Rollback for each: tables are new and empty at first (drop = revert); the added 
 2. **Contact Us form (CR-1226, sonnet).**
 3. **Event emails and templates (CR-1227, sonnet)** — the event map in §3E, one shared layout, preferences/unsubscribe.
 4. **Notification centre + header bell (CR-1228, sonnet)** — can be built in parallel with 2–3 once the `notifications` table is approved.
-5. **Trainer bulk/individual messaging (CR-1229, opus)** — last, because it carries the legal and reputation risk.
+5. ~~**Trainer bulk/individual messaging (CR-1229, opus)**~~ — **CANCELLED by the founder 2026-10-03**: trainers will write from their own DataAI Nexus mailbox; the portal shows them who registered interest or paid (CR-2045).
 
 ## 6. Risks to keep in view
 - Email deliverability is **earned**: new domain, no history → start with transactional only, warm up volume, watch bounce/complaint rates (< 0.3 % complaints).

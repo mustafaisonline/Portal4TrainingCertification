@@ -1,6 +1,6 @@
-import { timingSafeEqual } from "node:crypto";
 import { runCertificateReminders } from "@/modules/certificates/reminders.service";
 import { purgeReadBefore } from "@/modules/notifications/notifications.repository";
+import { jobsAuthProblem } from "@/modules/platform/jobs-auth";
 
 /*
  * POST /api/jobs/certificate-reminders (M7 plan §2.3; default F2). The
@@ -21,28 +21,9 @@ import { purgeReadBefore } from "@/modules/notifications/notifications.repositor
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-function bearerToken(req: Request): string | null {
-  const header = req.headers.get("authorization");
-  if (!header) return null;
-  const m = /^Bearer\s+(.+)$/i.exec(header.trim());
-  return m?.[1]?.trim() || null;
-}
-
-function tokenMatches(given: string, expected: string): boolean {
-  const a = Buffer.from(given, "utf8");
-  const b = Buffer.from(expected, "utf8");
-  return a.length === b.length && timingSafeEqual(a, b);
-}
-
 export async function POST(req: Request): Promise<Response> {
-  const secret = process.env["JOBS_SECRET"];
-  if (!secret) {
-    return Response.json({ error: "jobs_disabled" }, { status: 503 });
-  }
-  const token = bearerToken(req);
-  if (!token || !tokenMatches(token, secret)) {
-    return Response.json({ error: "unauthorised" }, { status: 401 });
-  }
+  const denied = jobsAuthProblem(req);
+  if (denied) return denied;
   try {
     const result = await runCertificateReminders();
     // Daily housekeeping on the same schedule (CR-2026-10-03-1228): READ notifications older than 12 months go; unread stay.

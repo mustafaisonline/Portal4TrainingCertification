@@ -114,7 +114,11 @@ export type AuditAction =
   | "interest.registered"
   | "interest.confirmed"
   | "interest.notified"
-  | "interest_fee.changed";
+  | "interest_fee.changed"
+  // CR-2026-10-03-1225 slice 2: Admin → Email.
+  | "email.retried"
+  | "email.suppression_added"
+  | "email.suppression_removed";
 
 export type AuditEntry = {
   /** Our `users.id`; null when the system acted on its own. */

@@ -1,6 +1,6 @@
 # CR-2026-10-03-1229 — Trainer dashboard: send bulk or individual email to interested / paid people
 
-**Received:** 2026-10-03 12:29 MYT · **Status:** DECIDED — founder answered 2026-10-03; build order below; awaiting the `nodemailer` dependency yes · **Requested by:** founder · **Model:** opus
+**Received:** 2026-10-03 12:29 MYT · **Status:** CANCELLED by the founder 2026-10-03 (nothing was built) · **Requested by:** founder · **Model:** opus
 
 ## 1. Request (verbatim)
 
@@ -64,3 +64,9 @@ See the spec: [CR-SPEC-2026-10-03-1229-trainer-bulk-and-individual-email-opus](s
 |---|---|
 | 2026-10-03 12:29 | CR created from the founder's message; existing code inspected read-only; proposal written. Nothing built. |
 | 2026-10-03 12:40 | Founder answered D1–D6 (see §7): HostGator SMTP, sales@ sender, no public emails, strict activation + human check, tables approved, D5/D6 ok. |
+
+## 8. CANCELLED — founder, 2026-10-03
+
+> Trainer bulk and individual email. Response: Please remove this requirement as i can see it too much to ask in the portal. Lets show trainer who registered the interest or who paid. We will create trainer email on the DataAINexus email server which can use later to send email to candidate. So ignore this requirement, If already in progress, please revert back.
+
+Nothing had been built (`git log` and the working tree hold no code for this CR; only the proposal and this CR file existed), so there is nothing to revert. The portal will **not** send email on a trainer's behalf: no compose screen, no audience picker, no per-trainer caps. Trainers will write to candidates from their own DataAI Nexus mailbox. The follow-up — showing the trainer who registered interest or paid — is [CR-2026-10-03-2045-trainer-sees-interested-and-paid-sonnet](CR-2026-10-03-2045-trainer-sees-interested-and-paid-sonnet.md). The slice-2 columns (retry/idempotency/suppression) were approved for the email platform and do not depend on this CR.

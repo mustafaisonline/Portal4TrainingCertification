@@ -169,6 +169,8 @@ model User {
   identities                AuthIdentity[]
   /// In-app notifications (CR-2026-10-03-1228).
   notifications             Notification[]
+  /// Addresses this person added to the do-not-send list (CR-2026-10-03-1225 slice 2).
+  emailSuppressions         EmailSuppression[]
   roles                     UserRole[]
   consents                  Consent[]
   orders                    Order[]
@@ -423,6 +425,12 @@ model OutboundEmail {
   providerMessageId String?             @map("provider_message_id")
   createdAt         DateTime            @default(now()) @map("created_at") @db.Timestamptz(6)
   sentAt            DateTime?           @map("sent_at") @db.Timestamptz(6)
+  /// Slice 2 (CR-2026-10-03-1225): when delivery was last tried, and when the retry worker may try again
+  /// (also the short lease that keeps the worker off a row whose first attempt is still in flight).
+  lastAttemptAt     DateTime?           @map("last_attempt_at") @db.Timestamptz(6)
+  nextAttemptAt     DateTime?           @map("next_attempt_at") @db.Timestamptz(6)
+  /// One email per event: a repeated event with the same key never queues a second row.
+  idempotencyKey    String?             @unique @map("idempotency_key")
 
   @@index([status, createdAt])
   @@map("outbound_emails")
@@ -1597,4 +1605,17 @@ model Notification {
   @@index([userId, createdAt])
   @@index([userId, readAt])
   @@map("notifications")
+}
+
+/// The do-not-send list (CR-2026-10-03-1225 slice 2): an address that bounced or asked
+/// not to be written to. Checked before every send. `email` is stored lower-cased.
+model EmailSuppression {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email     String   @unique
+  reason    String
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  createdBy String?  @map("created_by") @db.Uuid
+  creator   User?    @relation(fields: [createdBy], references: [id], onDelete: SetNull)
+
+  @@map("email_suppressions")
 }

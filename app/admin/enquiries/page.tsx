@@ -63,8 +63,7 @@ export default async function AdminEnquiriesPage({ searchParams }: { searchParam
           Enquiries
         </h1>
         <p className="text-body-sm mt-2 max-w-[70ch] text-[var(--color-ink-quiet)]">
-          History of the messages sent through the contact and register-interest forms, which were retired on 2026-09-29 — new enquiries now arrive by email at the sales mailbox. Nothing here is deleted. Mark an old enquiry replied or closed so the board stays accurate.
-        </p>
+          The messages people send through the Contact Us form and the register-interest forms, newest first. Open one to read it and reply. Nothing here is deleted. Mark an enquiry replied or closed so the board stays accurate.</p>
       </header>
 
       <Card variant="panel" className="p-5">

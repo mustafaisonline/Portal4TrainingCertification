@@ -85,7 +85,10 @@ export function createSmtpTransport(config: SmtpConfig, factory: Factory = nodem
         headers: { "X-Portal-Email-Id": message.id },
       });
       // A single recipient the server refused is a failure, not a success.
-      if (info.rejected && info.rejected.length > 0) throw new Error(`recipient refused by the mail server: ${info.rejected.length} of ${(info.accepted?.length ?? 0) + info.rejected.length}`);
+      if (info.rejected && info.rejected.length > 0) {
+        // Permanent: the server said no to this address — retrying cannot help (email.ts stops after one try).
+        throw Object.assign(new Error(`recipient refused by the mail server: ${info.rejected.length} of ${(info.accepted?.length ?? 0) + info.rejected.length}`), { permanent: true });
+      }
       return { providerMessageId: info.messageId ?? null };
     },
   };

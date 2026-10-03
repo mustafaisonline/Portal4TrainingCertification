@@ -13,3 +13,5 @@
 **Data model:** see the proposal §4 — every new table/column is a RED gate; SQL shown and approved before it is applied.
 **Dependencies:** none new in the app; the external provider account is the founder's. **Rollback:** revert the commit; `EMAIL_TRANSPORT=log`; new tables are empty at first.
 **Resume here:** open questions in the CR (§3). Nothing is built until they are answered.
+
+**CANCELLED by the founder, 2026-10-03.** Every task below is withdrawn; nothing was built. See the CR §8.

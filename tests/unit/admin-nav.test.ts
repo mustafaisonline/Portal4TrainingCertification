@@ -33,7 +33,7 @@ describe("admin navigation", () => {
     // "Attendance" by Milestone 13 (founder decision 9); "Coupons" by the
     // coupon feature (N1–N8 approved 2026-09-28); "Interview roles" and
     // "Organisations" by CR-2026-10-01-1711; "Formats" and "Users Interest" by CR-2026-10-01-2138.
-    expect(adminNavItems.map((i) => i.label)).toEqual(["Overview", "Trainings", "Formats", "Users Interest", "Offerings", "Attendance", "Orders", "Coupons", "Enquiries", "Reviews", "Certificates", "Free Learning", "Interview roles", "Organisations", "Users", "Audit log", "Reports"]);
+    expect(adminNavItems.map((i) => i.label)).toEqual(["Overview", "Trainings", "Formats", "Users Interest", "Offerings", "Attendance", "Orders", "Coupons", "Enquiries", "Email", "Reviews", "Certificates", "Free Learning", "Interview roles", "Organisations", "Users", "Audit log", "Reports"]);
     expect(adminNavItems[0]!.href).toBe("/admin");
   });
 

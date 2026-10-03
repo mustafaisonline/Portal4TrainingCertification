@@ -82,7 +82,8 @@ export async function handleStripeWebhook(rawBody: string, signature: string, ga
       where: { id: event.id },
       data: { status: result.status, processedAt: new Date(), error: result.note ?? null },
     });
-    for (const message of result.emails) await sendEmail(message);
+    // One key per event + position: Stripe retries and the stuck-event retry above never mail a person twice.
+    for (const [i, message] of result.emails.entries()) await sendEmail({ ...message, idempotencyKey: `stripe:${event.id}:${i}` });
     // Refunds are net of Stripe's fee (founder, 2026-09-22): record it as soon
     // as a payment is settled. Outside the transaction — a network call must
     // not hold the order lock — and never fatal: a missing fee is retried on

@@ -1,6 +1,7 @@
 import { getPrisma } from "@/db/prisma";
 import { notifyFromEmail } from "./notifications.service";
 import { createSmtpTransport, smtpConfigFromEnv } from "./smtp";
+import { isSuppressed } from "./suppression";
 
 /*
  * Transactional email — behind an interface, with a durable record.
@@ -33,7 +34,56 @@ export type EmailMessage = {
   templateKey: string;
   subject: string;
   text: string;
+  /**
+   * Optional: names the EVENT this email is for (e.g. `stripe:evt_123:0`). A second send with the same key never
+   * queues a second email — the first row is returned — so a repeated webhook or a double click cannot mail twice.
+   */
+  idempotencyKey?: string;
 };
+
+export type SendResult = { id: string; status: "sent" | "failed" | "queued" };
+
+/** Delivery is tried 4 times in all: now, then after 1 minute, 5 minutes and 30 minutes (CR-2026-10-03-1225 slice 2). */
+export const MAX_ATTEMPTS = 4;
+export const RETRY_BACKOFF_MINUTES = [1, 5, 30] as const;
+/** While the first attempt is in flight, the retry worker leaves the row alone for this long. */
+export const FIRST_ATTEMPT_LEASE_MS = 2 * 60 * 1000;
+
+/** When the worker may try again after `attemptsMade` tries, or null when the attempts are used up. */
+export function nextAttemptAfter(attemptsMade: number, now: Date): Date | null {
+  if (attemptsMade >= MAX_ATTEMPTS) return null;
+  const minutes = RETRY_BACKOFF_MINUTES[Math.max(0, attemptsMade - 1)] ?? RETRY_BACKOFF_MINUTES[RETRY_BACKOFF_MINUTES.length - 1]!;
+  return new Date(now.getTime() + minutes * 60_000);
+}
+
+/**
+ * Send budget (security review M2). The free SMTP2GO plan allows 1,000 emails a month and 200 a day; the portal stops
+ * short of both so a flood — or a retry storm — can never push the account over its quota and silently block real mail.
+ * Only mail the relay actually accepted counts (`provider_message_id` is set; log-transport rows have none). Over the
+ * budget, mail waits as `queued` and the worker sends it when the window moves on.
+ */
+export const SEND_BUDGET_PER_DAY = 180;
+export const SEND_BUDGET_PER_30_DAYS = 900;
+
+export async function sendBudgetExhausted(now: Date = new Date()): Promise<string | null> {
+  const prisma = getPrisma();
+  const [day, month] = await Promise.all([
+    prisma.outboundEmail.count({ where: { providerMessageId: { not: null }, sentAt: { gt: new Date(now.getTime() - 24 * 3600_000) } } }),
+    prisma.outboundEmail.count({ where: { providerMessageId: { not: null }, sentAt: { gt: new Date(now.getTime() - 30 * 24 * 3600_000) } } }),
+  ]);
+  if (day >= SEND_BUDGET_PER_DAY) return `daily send budget reached (${SEND_BUDGET_PER_DAY})`;
+  if (month >= SEND_BUDGET_PER_30_DAYS) return `30-day send budget reached (${SEND_BUDGET_PER_30_DAYS})`;
+  return null;
+}
+
+/** A refusal the server will repeat: a permanent 5xx reply or a refused recipient. Retrying cannot help, so it is `failed` at once. */
+export function isPermanentFailure(err: unknown): boolean {
+  if (typeof err !== "object" || err === null) return false;
+  const e = err as { permanent?: unknown; responseCode?: unknown };
+  return e.permanent === true || (typeof e.responseCode === "number" && e.responseCode >= 500 && e.responseCode < 600);
+}
+
+const isUniqueViolation = (err: unknown) => typeof err === "object" && err !== null && (err as { code?: unknown }).code === "P2002";
 
 export type EmailTransport = {
   readonly name: string;
@@ -51,7 +101,7 @@ const logTransport: EmailTransport = {
 
 let smtpTransport: EmailTransport | null = null;
 
-function selectTransport(): EmailTransport {
+export function selectTransport(): EmailTransport {
   const name = process.env["EMAIL_TRANSPORT"] ?? "log";
   switch (name) {
     case "log":
@@ -86,53 +136,98 @@ export function emailDeliveryProblem(env: Record<string, string | undefined> = p
   return "Outgoing email is not set up yet (the portal is in log-only mode), so nothing would be delivered.";
 }
 
+export const SUPPRESSED_MESSAGE = "Not sent: the address is on the do-not-send list.";
+
+export type OutboxRow = { id: string; toEmail: string; templateKey: string; subject: string; textBody: string; attempts: number };
+
 /**
- * Record and send one email. Resolves once the row reflects the outcome; it
- * never throws — a delivery failure and a misconfigured transport both leave
- * the row `failed` with the reason (and the misconfiguration is logged).
+ * One delivery attempt for a row that already exists (used by sendEmail's first try and by the retry worker).
+ * Success → `sent`. A delivery error → `queued` again with a back-off, until the attempts are used up → `failed`.
+ * Never throws for a delivery error.
  */
-export async function sendEmail(message: EmailMessage): Promise<{ id: string; status: "sent" | "failed" }> {
+export async function attemptDelivery(row: OutboxRow, transport: EmailTransport, now: Date = new Date()): Promise<SendResult["status"]> {
   const prisma = getPrisma();
-  const row = await prisma.outboundEmail.create({
-    data: {
-      toEmail: message.to,
-      templateKey: message.templateKey,
-      subject: message.subject,
-      textBody: message.text,
-    },
-    select: { id: true },
-  });
+  try {
+    const { providerMessageId } = await transport.send({ to: row.toEmail, templateKey: row.templateKey, subject: row.subject, text: row.textBody, id: row.id });
+    await prisma.outboundEmail.update({
+      where: { id: row.id },
+      data: { status: "sent", attempts: row.attempts + 1, providerMessageId, sentAt: now, lastAttemptAt: now, nextAttemptAt: null },
+    });
+    return "sent";
+  } catch (err) {
+    const lastError = (err instanceof Error ? `${err.name}: ${err.message}` : String(err)).slice(0, 500);
+    const attemptsMade = row.attempts + 1;
+    const next = isPermanentFailure(err) ? null : nextAttemptAfter(attemptsMade, now);
+    await prisma.outboundEmail.update({
+      where: { id: row.id },
+      data: { status: next ? "queued" : "failed", attempts: attemptsMade, lastError, lastAttemptAt: now, nextAttemptAt: next },
+    });
+    return next ? "queued" : "failed";
+  }
+}
+
+/**
+ * Record and send one email. Resolves once the row reflects the first attempt; it never throws — a delivery
+ * failure leaves the row `queued` for the retry worker (or `failed` once the attempts are used up), and a
+ * misconfigured transport leaves it `failed` with the reason.
+ */
+export async function sendEmail(message: EmailMessage): Promise<SendResult> {
+  const prisma = getPrisma();
+  const key = message.idempotencyKey?.trim() || null;
+  if (key) {
+    const existing = await prisma.outboundEmail.findUnique({ where: { idempotencyKey: key }, select: { id: true, status: true } });
+    if (existing) return { id: existing.id, status: existing.status };
+  }
+
+  const suppressed = await isSuppressed(message.to);
+  let row: OutboxRow;
+  try {
+    row = await prisma.outboundEmail.create({
+      data: {
+        toEmail: message.to,
+        templateKey: message.templateKey,
+        subject: message.subject,
+        textBody: message.text,
+        idempotencyKey: key,
+        // A suppressed address is recorded (so the log shows why nothing went) but never attempted.
+        ...(suppressed ? { status: "failed" as const, lastError: SUPPRESSED_MESSAGE } : { nextAttemptAt: new Date(Date.now() + FIRST_ATTEMPT_LEASE_MS) }),
+      },
+      select: { id: true, toEmail: true, templateKey: true, subject: true, textBody: true, attempts: true },
+    });
+  } catch (err) {
+    if (key && isUniqueViolation(err)) {
+      const existing = await prisma.outboundEmail.findUnique({ where: { idempotencyKey: key }, select: { id: true, status: true } });
+      if (existing) return { id: existing.id, status: existing.status }; // a parallel identical send won the race
+    }
+    throw err;
+  }
 
   // The in-app channel (CR-2026-10-03-1228): the events a person would want in their bell also become a notification —
   // independent of whether mail is delivered, and never able to break the send (failure is logged only).
   void notifyFromEmail(message, row.id).catch((err) => console.error(`[notifications] could not record for "${message.templateKey}":`, err));
 
+  if (suppressed) return { id: row.id, status: "failed" };
+
   // A transport that cannot be built (missing or malformed SMTP settings) must NEVER take the caller down —
   // sign-in, payments and webhooks send mail through here. The row is marked failed with the reason (variable
   // NAMES only, never a value) and the problem is logged loudly; nothing throws. (Incident 2026-10-03: empty SMTP
-  // settings made the whole portal refuse to start; email is not worth an outage.)
+  // settings made the whole portal refuse to start; email is not worth an outage.) It is not retried by the worker:
+  // a settings problem is not transient — fix the settings, then use Retry in Admin → Email.
   let transport: EmailTransport;
   try {
     transport = selectTransport();
   } catch (err) {
     const lastError = err instanceof Error ? `${err.name}: ${err.message}` : String(err);
     console.error(`[email] cannot send "${message.templateKey}" (id=${row.id}): ${lastError}`);
-    await prisma.outboundEmail.update({ where: { id: row.id }, data: { status: "failed", attempts: { increment: 1 }, lastError } });
+    await prisma.outboundEmail.update({ where: { id: row.id }, data: { status: "failed", attempts: { increment: 1 }, lastError, lastAttemptAt: new Date(), nextAttemptAt: null } });
     return { id: row.id, status: "failed" };
   }
-  try {
-    const { providerMessageId } = await transport.send({ ...message, id: row.id });
-    await prisma.outboundEmail.update({
-      where: { id: row.id },
-      data: { status: "sent", attempts: { increment: 1 }, providerMessageId, sentAt: new Date() },
-    });
-    return { id: row.id, status: "sent" };
-  } catch (err) {
-    const lastError = err instanceof Error ? `${err.name}: ${err.message}` : String(err);
-    await prisma.outboundEmail.update({
-      where: { id: row.id },
-      data: { status: "failed", attempts: { increment: 1 }, lastError },
-    });
-    return { id: row.id, status: "failed" };
+  // Over the send budget the row simply waits (`queued`, no lease): the worker sends it when the window moves on.
+  const overBudget = await sendBudgetExhausted();
+  if (overBudget) {
+    console.warn(`[email] ${overBudget}: "${message.templateKey}" (id=${row.id}) is queued, not sent`);
+    await prisma.outboundEmail.update({ where: { id: row.id }, data: { nextAttemptAt: null } });
+    return { id: row.id, status: "queued" };
   }
+  return { id: row.id, status: await attemptDelivery(row, transport) };
 }

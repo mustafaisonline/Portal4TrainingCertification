@@ -27,13 +27,17 @@ export type EnquiryFormState =
 const TEN_MINUTES = 10 * 60 * 1000;
 const ONE_HOUR = 60 * 60 * 1000;
 /**
- * Every visitor together. Each accepted message sends 2 emails (team notice + acknowledgement) through the free SMTP2GO
- * relay (1,000 emails a month) that registrations and replies share, so a flood must not be able to use up the quota:
- * at most 20 messages an hour and 40 a day portal-wide.
+ * Portal-wide EMAIL caps (security review, MEDIUM). Each accepted message sends 2 emails (team notice + acknowledgement)
+ * through the free SMTP2GO relay (1,000 emails a month) that registrations and replies share. These caps decide ONLY
+ * whether those two emails are sent — never whether the message is stored — so a flood can neither discard a real
+ * enquiry nor lock everyone out of the form: the admin inbox always has the message. Per-visitor limits (below) decide
+ * whether a message is accepted at all.
  */
-const GLOBAL_PER_HOUR = 20;
-const GLOBAL_PER_DAY = 40;
+const EMAIL_CAP_PER_HOUR = 20;
+const EMAIL_CAP_PER_DAY = 40;
+const EMAIL_CAP_PER_30_DAYS = 300; // 300 messages = 600 emails, leaving headroom of the monthly 1,000 for sign-up and replies
 const ONE_DAY = 24 * ONE_HOUR;
+const THIRTY_DAYS = 30 * ONE_DAY;
 const SOURCE_PATH_RE = /^\/[A-Za-z0-9\-._~/?=&%]{0,199}$/;
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -57,8 +61,8 @@ export async function submitEnquiry(_prev: EnquiryFormState, formData: FormData)
 
   const h = await headers();
   const clientKey = clientKeyOf((h.get("x-forwarded-for") ?? h.get("x-real-ip") ?? "local").split(",")[0]!);
-  // Three independent limits (each atomic): this client, this address, and the whole portal, per hour and per day (the email quota is shared).
-  const tooMany = (await enquiryOverLimit("ip", clientKey, TEN_MINUTES, 5)) || (await enquiryOverLimit("email", values.email, ONE_HOUR, 3)) || (await enquiryOverLimit("all", "portal", ONE_HOUR, GLOBAL_PER_HOUR)) || (await enquiryOverLimit("all-day", "portal", ONE_DAY, GLOBAL_PER_DAY));
+  // Per-visitor limits (each atomic) decide whether the message is ACCEPTED: this client and this address.
+  const tooMany = (await enquiryOverLimit("ip", clientKey, TEN_MINUTES, 5)) || (await enquiryOverLimit("email", values.email, ONE_HOUR, 3));
   if (tooMany) return { status: "error", message: "Too many messages in a short time. Please try again in a few minutes.", fieldErrors: {} };
 
   // The training the page was about, when it is a real one.
@@ -81,7 +85,17 @@ export async function submitEnquiry(_prev: EnquiryFormState, formData: FormData)
   const reference = enquiryReference(enquiry.id);
   const base = (process.env["APP_BASE_URL"] ?? "http://localhost:3100").replace(/\/+$/, "");
 
-  // The message is safe in the database; mail is best-effort and recorded in the outbox either way.
+  // The message is safe in the database. The portal-wide caps now decide only whether the two emails go out (each counts,
+  // so every accepted message is counted once); over a cap the team simply reads it in Admin → Enquiries.
+  const overHour = await enquiryOverLimit("all", "portal", ONE_HOUR, EMAIL_CAP_PER_HOUR);
+  const overDay = await enquiryOverLimit("all-day", "portal", ONE_DAY, EMAIL_CAP_PER_DAY);
+  const overMonth = await enquiryOverLimit("all-month", "portal", THIRTY_DAYS, EMAIL_CAP_PER_30_DAYS);
+  if (overHour || overDay || overMonth) {
+    console.warn(`[enquiries] portal-wide email cap reached (${overHour ? "hour" : overDay ? "day" : "30 days"}): ${reference} is stored and visible in Admin, no email was sent`);
+    return { status: "sent", reference };
+  }
+
+  // Mail is best-effort and recorded in the outbox either way.
   const sent = await Promise.allSettled([
     sendEmail(
       enquiryTeamMessage({

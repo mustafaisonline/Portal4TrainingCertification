@@ -173,6 +173,23 @@ test("the same address cannot send a fourth message within an hour", async ({ pa
   await expect(page.getByText(/Too many messages in a short time/)).toBeVisible();
 });
 
+test("when the portal-wide email cap is reached the message is STILL stored and thanked — only the two emails are skipped (security review MEDIUM)", async ({ page }) => {
+  const { getPrisma } = await import("../../src/db/prisma");
+  const prisma = getPrisma();
+  const now = Date.now();
+  // The portal-wide hourly counter is already past its cap, as if a flood had just happened.
+  await prisma.authRateLimit.upsert({ where: { key: "enquiry:all:portal" }, create: { id: "enquiry:all:portal", key: "enquiry:all:portal", count: 999, lastRequest: BigInt(now) }, update: { count: 999, lastRequest: BigInt(now) } });
+  const address = sender();
+  await page.goto("/contact-us");
+  await fillForm(page, { email: address, message: `${marker}: sent while the portal-wide email cap is reached.` });
+  await page.getByTestId("enquiry-submit").click();
+  await expect(page.getByTestId("enquiry-sent")).toBeVisible(); // not "too many messages": a flood must not discard a real enquiry
+  const row = await prisma.enquiry.findFirstOrThrow({ where: { email: address.toLowerCase() } });
+  expect(row.message).toContain("portal-wide email cap");
+  expect(await prisma.outboundEmail.count({ where: { toEmail: address.toLowerCase() } })).toBe(0); // no acknowledgement
+  expect(await prisma.outboundEmail.count({ where: { templateKey: "enquiry.notify", textBody: { contains: row.id.slice(0, 8).toUpperCase() } } })).toBe(0); // no team notice
+});
+
 /** Clears the per-client counter between submissions but leaves the per-address one. */
 async function resetRateLimitsKeepingEmail() {
   const { getPrisma } = await import("../../src/db/prisma");

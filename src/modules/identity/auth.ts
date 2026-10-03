@@ -107,7 +107,7 @@ export const auth = betterAuth({
     sendResetPassword: async ({ user, url }) => {
       // Not awaited on purpose (timing-safe: the response must not reveal
       // whether an address exists). The row records the outcome.
-      void sendEmail(resetPasswordMessage({ to: user.email, name: user.name, url, expiresInMinutes: 60 }));
+      void sendEmail(resetPasswordMessage({ to: user.email, name: user.name, url, expiresInMinutes: 60 })).catch((err) => console.error("[email] password-reset email could not be recorded", err));
     },
     onPasswordReset: async ({ user }) => {
       await withTransaction(async (tx) => {
@@ -129,7 +129,7 @@ export const auth = betterAuth({
     autoSignInAfterVerification: true,
     expiresIn: ONE_HOUR,
     sendVerificationEmail: async ({ user, url }) => {
-      void sendEmail(verifyEmailMessage({ to: user.email, name: user.name, url, expiresInMinutes: 60 }));
+      void sendEmail(verifyEmailMessage({ to: user.email, name: user.name, url, expiresInMinutes: 60 })).catch((err) => console.error("[email] verification email could not be recorded", err));
     },
     afterEmailVerification: async (user) => {
       await withTransaction((tx) => markEmailVerified(tx, user.id));

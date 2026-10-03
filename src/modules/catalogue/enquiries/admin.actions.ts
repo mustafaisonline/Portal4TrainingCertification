@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { withTransaction } from "@/db/prisma";
 import { authorise } from "@/modules/identity/session";
-import { sendEmail } from "@/modules/notifications/email";
+import { emailDeliveryProblem, sendEmail } from "@/modules/notifications/email";
 import { writeAudit } from "@/modules/platform/audit/repository";
 import { EnquiryNotFoundError, getEnquiryForAdmin, isEnquiryStatus, setEnquiryStatus } from "./admin.repository";
 import { enquiryReplyMessage } from "./emails";
@@ -65,6 +65,8 @@ export async function replyToEnquiryAction(_prev: EnquiryActionState, formData: 
   if (body.length > REPLY_MAX) return { status: "error", message: `Please keep the reply under ${REPLY_MAX} characters.` };
   const enquiry = await getEnquiryForAdmin(id);
   if (!enquiry) return { status: "error", message: "This enquiry could not be found." };
+  const problem = emailDeliveryProblem();
+  if (problem) return { status: "error", message: `${problem} Nothing was sent and the enquiry was not marked replied.` };
 
   const sent = await sendEmail(enquiryReplyMessage({ to: enquiry.email, name: enquiry.name, reference: enquiryReference(enquiry.id), body, original: enquiry.message }));
   if (sent.status === "failed") {

@@ -71,7 +71,7 @@ export const refundPolicy: LegalDocument = {
       heading: "3. How to cancel",
       paragraphs: [
         "Cancel from the registration in your account area on this portal, or through Contact us, using the email address on your account. Either way, tell us which offering you are cancelling.",
-        "The date we receive your cancellation — the moment you confirm it in the account area, or the time your email reaches us — is the date used to decide which line of the schedule applies. We confirm every cancellation by email, with the refund amount, so you have a record.",
+        "The date we receive your cancellation — the moment you confirm it in the account area, or the time your request reaches us through Contact us — is the date used to decide which line of the schedule applies. We confirm every cancellation by email, with the refund amount, so you have a record.",
         "If you registered on behalf of someone else, the cancellation must come from the account that made the registration.",
       ],
     },

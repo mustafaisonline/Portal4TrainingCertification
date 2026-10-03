@@ -108,7 +108,8 @@ test("a good message is stored, the team is notified and the sender is acknowled
 
   const ack = await prisma.outboundEmail.findFirstOrThrow({ where: { toEmail: firstSender.toLowerCase(), templateKey: "enquiry.acknowledgement" } });
   expect(ack.subject).toContain(reference);
-  expect(ack.textBody).toContain(marker);
+  expect(ack.textBody).toContain(reference);
+  expect(ack.textBody).not.toContain(marker); // fixed text: nothing the visitor typed is ever echoed to them (security review M2)
   const team = await prisma.outboundEmail.findFirstOrThrow({ where: { templateKey: "enquiry.notify", textBody: { contains: reference } } });
   expect(team.textBody).toContain(`/admin/enquiries/${row.id}`);
   expect(team.textBody).toContain(firstSender.toLowerCase());
@@ -133,7 +134,7 @@ test("a bot that fills the hidden field sees the same thank-you screen and nothi
   const address = sender();
   await page.goto("/contact-us");
   await fillForm(page, { email: address });
-  await page.locator("input[name=website]").evaluate((el: HTMLInputElement) => {
+  await page.locator("input[name=hp_ref_code]").evaluate((el: HTMLInputElement) => {
     el.value = "http://spam.example";
   });
   await page.getByTestId("enquiry-submit").click();

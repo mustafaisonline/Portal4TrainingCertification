@@ -19,11 +19,12 @@ const envFile = path.resolve(process.cwd(), ".env.local");
 if (!process.env["DATABASE_URL"] && existsSync(envFile)) process.loadEnvFile(envFile);
 
 const { getPrisma, disconnectPrisma } = await import("../src/db/prisma.ts");
+const { isPlainEmailAddress } = await import("../src/shared/util/email-address.ts");
 const { sendEmail } = await import("../src/modules/notifications/email.ts");
 const { SmtpNotConfiguredError } = await import("../src/modules/notifications/smtp.ts");
 
 const to = process.argv[2]?.trim();
-if (!to || !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(to)) {
+if (!to || !isPlainEmailAddress(to)) {
   console.error("usage: npm run email:test -- <address to send the test to>");
   process.exit(2);
 }

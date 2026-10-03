@@ -22,6 +22,8 @@
  *    it must parse, or it is `invalid`.
  */
 
+import { isPlainEmailAddress } from "@/shared/util/email-address";
+
 export type EnvMode = "production" | "development" | "test" | (string & {});
 
 export type EnvProblem = { name: string; why: string };
@@ -156,7 +158,7 @@ export function validateEnv(env: EnvLike = process.env, mode: EnvMode = env["NOD
       const port = Number(env["SMTP_PORT"]);
       if (!(Number.isInteger(port) && port > 0 && port <= 65535)) invalid.push({ name: "SMTP_PORT", why: "must be a port number (465 or 587)" });
     }
-    if (present(env, "EMAIL_FROM") && !/^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]{2,}$/.test(env["EMAIL_FROM"]!)) invalid.push({ name: "EMAIL_FROM", why: "must be an email address" });
+    if (present(env, "EMAIL_FROM") && !isPlainEmailAddress(env["EMAIL_FROM"]!)) invalid.push({ name: "EMAIL_FROM", why: "must be an email address" });
   }
 
   if (present(env, "JOBS_SECRET") && env["JOBS_SECRET"]!.length < MIN_JOBS_SECRET) {

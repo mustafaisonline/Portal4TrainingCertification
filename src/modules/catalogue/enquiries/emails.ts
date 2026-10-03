@@ -1,5 +1,6 @@
 import { CONTACT_EMAIL } from "@/content/contact";
 import type { EmailMessage } from "@/modules/notifications/email";
+import { isPlainEmailAddress } from "@/shared/util/email-address";
 import { ENQUIRY_KIND_CHOICES, type EnquiryKindValue } from "./enquiry-validation";
 
 /*
@@ -23,7 +24,8 @@ export function kindLabel(kind: EnquiryKindValue | string): string {
 
 /** Where new messages are announced: the configured inbox, else the sales address. */
 export function enquiryNotifyAddress(): string {
-  return process.env["ENQUIRY_NOTIFY_EMAIL"]?.trim() || CONTACT_EMAIL;
+  const configured = process.env["ENQUIRY_NOTIFY_EMAIL"]?.trim();
+  return configured && isPlainEmailAddress(configured) ? configured : CONTACT_EMAIL; // a malformed override never sends mail anywhere odd
 }
 
 function quote(text: string): string {
@@ -55,22 +57,26 @@ export function enquiryTeamMessage(input: {
       `About: ${kindLabel(input.kind)}${input.programmeTitle ? ` — ${input.programmeTitle}` : ""}\n` +
       `Page: ${input.sourcePath}\n` +
       `Reference: ${input.reference}\n\n` +
-      `${input.message}\n\n` +
-      `Read and reply: ${input.adminUrl}`,
+      `--- what the sender typed (untrusted) ---\n${input.message}\n--- end ---\n\n` +
+      `Read and reply (this link is ours): ${input.adminUrl}`,
   };
 }
 
-export function enquiryAcknowledgementMessage(input: { to: string; name: string; reference: string; message: string }): EmailMessage {
+/**
+ * The acknowledgement is FIXED TEXT plus the reference (security review M2): it
+ * quotes nothing the visitor typed and uses no name, so the portal's mailbox
+ * can never be made to deliver attacker-chosen words to a third party.
+ */
+export function enquiryAcknowledgementMessage(input: { to: string; reference: string }): EmailMessage {
   return {
     to: input.to,
     templateKey: "enquiry.acknowledgement",
     subject: `We received your message [${input.reference}]`,
     text:
-      `Hello ${input.name},\n\n` +
+      `Hello,\n\n` +
       `Thank you for contacting ${BRAND}. We have your message and a member of our team will reply to this email address.\n\n` +
       `Your reference: ${input.reference}\n\n` +
-      `What you wrote:\n${quote(input.message)}\n\n` +
-      `If you did not send this message, you can ignore this email.` +
+      `If you did not send a message to us, you can ignore this email.` +
       SIGN_OFF,
   };
 }

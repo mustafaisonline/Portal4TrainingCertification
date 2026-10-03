@@ -5,7 +5,7 @@ import { getPrisma } from "@/db/prisma";
 import { sendEmail } from "@/modules/notifications/email";
 import { enquiryAcknowledgementMessage, enquiryNotifyAddress, enquiryTeamMessage } from "./emails";
 import { enquiryReference, validateEnquiryForm, type EnquiryField } from "./enquiry-validation";
-import { enquiryOverLimit } from "./rate-limit";
+import { clientKeyOf, enquiryOverLimit } from "./rate-limit";
 import { createEnquiry } from "./repository";
 
 /*
@@ -26,6 +26,9 @@ export type EnquiryFormState =
 
 const TEN_MINUTES = 10 * 60 * 1000;
 const ONE_HOUR = 60 * 60 * 1000;
+/** Every visitor together: HostGator limits how many emails a mailbox may send per hour, and registrations share it. */
+const GLOBAL_PER_HOUR = 60;
+const SOURCE_PATH_RE = /^\/[A-Za-z0-9\-._~/?=&%]{0,199}$/;
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 function clean(value: FormDataEntryValue | null): string {
@@ -39,7 +42,7 @@ export async function submitEnquiry(_prev: EnquiryFormState, formData: FormData)
     organisation: clean(formData.get("organisation")),
     message: clean(formData.get("message")),
     kind: clean(formData.get("kind")),
-    website: clean(formData.get("website")),
+    trap: clean(formData.get("hp_ref_code")),
   });
   // A bot gets the same screen as a person; nothing is stored or sent.
   if (checked.kind === "bot") return { status: "sent", reference: "—" };
@@ -47,16 +50,18 @@ export async function submitEnquiry(_prev: EnquiryFormState, formData: FormData)
   const { values } = checked;
 
   const h = await headers();
-  const clientKey = (h.get("x-forwarded-for") ?? h.get("x-real-ip") ?? "local").split(",")[0]!.trim();
-  const tooMany = (await enquiryOverLimit("ip", clientKey, TEN_MINUTES, 5)) || (await enquiryOverLimit("email", values.email.toLowerCase(), ONE_HOUR, 3));
+  const clientKey = clientKeyOf((h.get("x-forwarded-for") ?? h.get("x-real-ip") ?? "local").split(",")[0]!);
+  // Three independent limits (each atomic): this client, this address, and the whole portal (the mailbox has an hourly send cap).
+  const tooMany = (await enquiryOverLimit("ip", clientKey, TEN_MINUTES, 5)) || (await enquiryOverLimit("email", values.email, ONE_HOUR, 3)) || (await enquiryOverLimit("all", "portal", ONE_HOUR, GLOBAL_PER_HOUR));
   if (tooMany) return { status: "error", message: "Too many messages in a short time. Please try again in a few minutes.", fieldErrors: {} };
 
   // The training the page was about, when it is a real one.
   const prisma = getPrisma();
   const programmeRaw = clean(formData.get("programmeId")).trim();
   const programme = UUID_RE.test(programmeRaw) ? await prisma.programme.findUnique({ where: { id: programmeRaw }, select: { id: true, title: true } }) : null;
+  // A plain site path only (no control characters, backslashes or protocol-relative forms) — it is printed in the team email and the admin screen.
   const requested = clean(formData.get("sourcePath")).trim();
-  const sourcePath = requested.startsWith("/") && !requested.startsWith("//") ? requested.slice(0, 200) : "/contact-us";
+  const sourcePath = SOURCE_PATH_RE.test(requested) && !requested.startsWith("//") ? requested : "/contact-us";
 
   const enquiry = await createEnquiry({
     kind: values.kind,
@@ -86,7 +91,7 @@ export async function submitEnquiry(_prev: EnquiryFormState, formData: FormData)
         message: values.message,
       }),
     ),
-    sendEmail(enquiryAcknowledgementMessage({ to: values.email, name: values.name, reference, message: values.message })),
+    sendEmail(enquiryAcknowledgementMessage({ to: values.email, reference })),
   ]);
   for (const r of sent) if (r.status === "rejected") console.error("[enquiries] email could not be recorded for", reference, r.reason);
 

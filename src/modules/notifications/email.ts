@@ -64,6 +64,19 @@ function selectTransport(): EmailTransport {
 }
 
 /**
+ * Why outgoing email cannot really be delivered right now, or null when it can.
+ * The `log` transport records a row and reports it `sent` without delivering
+ * anything — fine in development and tests, a lie in production. Screens that
+ * promise a delivery (the admin's Reply) check this first (CR-2026-10-03-1226).
+ */
+export function emailDeliveryProblem(env: Record<string, string | undefined> = process.env): string | null {
+  const transport = env["EMAIL_TRANSPORT"] ?? "log";
+  if (transport !== "log") return null;
+  if (env["NODE_ENV"] !== "production" || env["APP_ENV"] === "test") return null; // development and the test suite use the log on purpose
+  return "Outgoing email is not set up yet (the portal is in log-only mode), so nothing would be delivered.";
+}
+
+/**
  * Record and send one email. Resolves once the row reflects the outcome; it
  * never throws for a delivery failure (the row says `failed`), only for a
  * misconfiguration, which is a deployment defect and should surface.

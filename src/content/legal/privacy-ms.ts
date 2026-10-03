@@ -54,7 +54,7 @@ export const privacyPolicyMs: LegalDocument = {
         "Persetujuan — versi Terma perkhidmatan dan dasar ini yang telah anda terima, dan bilakah.",
         "Sijil — jika satu dikeluarkan, nama anda seperti yang tertera pada sijil, latihan dan formatnya, tarikh penyempurnaan, pengeluaran dan tamat tempoh, pengecam sijil, sebarang pembaharuan yang anda bayar, dan sama ada anda telah memilih untuk disenaraikan dalam carian nama awam (lihat bahagian 6).",
         "Entri audit — rekod tindakan penting pada akaun anda (seperti log masuk, pertukaran kata laluan, pendaftaran atau bayaran balik), dengan cap masa, disimpan supaya kami dapat menyiasat masalah dan menunjukkan apa yang berlaku.",
-        "Mesej — apa-apa yang anda hantar kepada kami melalui e-mel, supaya kami dapat membalas.",
+        "Mesej — apa yang anda tulis kepada kami melalui halaman Hubungi Kami (nama, alamat e-mel, organisasi anda jika diberikan, perkara mesej itu, latihan yang berkaitan jika ada, halaman tempat anda menulis, dan mesej anda) dan apa-apa yang anda hantar kepada kami melalui e-mel, supaya kami dapat membalas.",
       ],
     },
     {
@@ -91,7 +91,7 @@ export const privacyPolicyMs: LegalDocument = {
       bullets: [
         "Stripe — pemproses pembayaran kami. Apabila anda membayar, anda memasukkan butiran pembayaran terus kepada Stripe, yang memproses pembayaran itu di bawah dasar privasinya sendiri. Kami menerima pengesahan pembayaran, bukan butiran kad anda.",
         "DigitalOcean — penyedia pengehosan kami. Pelayan dan pangkalan data tempat portal dan datanya dijalankan dihoskan oleh DigitalOcean di New York, Amerika Syarikat.",
-        "Penyedia e-mel — tiada buat masa ini: portal tidak menghantar e-mel melalui mana-mana penyedia pada masa ini. Jika ini berubah, kami akan menamakan penyedia itu di sini sebelum sebarang data peribadi dikongsi dengannya.",
+        "HostGator — hos e-mel kami. Portal menghantar e-melnya (pengesahan akaun, makluman penerimaan dan balasan kepada mesej anda, serta notis perkhidmatan) melalui peti mel yang dihoskan oleh HostGator, yang oleh itu mengendalikan alamat penghantar dan penerima serta teks mesej tersebut.",
         "Jurulatih bagi sesuatu tawaran yang anda daftar — nama dan alamat e-mel anda, supaya kehadiran dan penyempurnaan dapat direkodkan dan anda dapat dibenarkan masuk ke sesi.",
         "Jurulatih bagi sesuatu latihan yang anda daftarkan minat, dan pentadbir kami — butiran yang anda berikan semasa mendaftar minat (alamat e-mel, dan nama, nombor telefon bimbit serta tarikh lahir anda jika anda memberikannya), supaya mereka dapat merancang latihan itu dan menghantar e-mel kepada anda mengenai jadualnya. Butiran ini tidak dikongsi dengan sesiapa lain, dan jurulatih hanya melihat orang yang berminat terhadap latihan mereka sendiri.",
         "Organisasi yang ujian saringannya anda ambil — nama, alamat e-mel, peranan, markah dan masa yang anda ambil, dan hanya selepas anda mengesahkan, sebelum bermula, bahawa keputusan itu dikongsi dengan organisasi tersebut. Organisasi itu menentukan apa yang akan dilakukan dengannya di bawah amalan privasinya sendiri; ia hanya melihat keputusan calonnya sendiri.",
@@ -112,7 +112,7 @@ export const privacyPolicyMs: LegalDocument = {
     {
       heading: "7. Di mana data anda disimpan, dan pemindahan ke luar Malaysia",
       paragraphs: [
-        "Portal dihoskan oleh DigitalOcean pada pelayan di New York, Amerika Syarikat. Data peribadi anda oleh itu disimpan dan diproses di luar Malaysia, dan pemproses pembayaran kami juga mungkin memproses data di luar Malaysia.",
+        "Portal dihoskan oleh DigitalOcean pada pelayan di New York, Amerika Syarikat. Data peribadi anda oleh itu disimpan dan diproses di luar Malaysia, dan pemproses pembayaran serta hos e-mel kami juga mungkin memproses data di luar Malaysia.",
         "Apabila pemindahan ke luar Malaysia berlaku, kami akan bergantung pada salah satu asas yang dibenarkan oleh seksyen 129 Akta Perlindungan Data Peribadi 2010 (seperti yang dipinda) — seperti persetujuan anda, pemindahan itu diperlukan untuk melaksanakan perjanjian kami dengan anda, atau penerima terikat untuk melindungi data itu pada tahap yang sekurang-kurangnya setara dengan Akta — dan kami akan meletakkan perlindungan kontrak dan teknikal yang sewajarnya.",
       ],
     },

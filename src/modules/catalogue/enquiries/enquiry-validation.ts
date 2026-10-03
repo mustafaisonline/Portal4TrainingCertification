@@ -1,8 +1,13 @@
+import { isPlainEmailAddress } from "@/shared/util/email-address";
+
 /*
  * Contact Us form — the pure rules (CR-2026-10-03-1226; no database, no
  * framework, so they are unit-tested). The form posts through a server action
  * (`actions.ts`); everything it accepts is decided here.
  *
+ *  - Email: one linear-time check (`isPlainEmailAddress`) — no regular expression over
+ *    the input, so a crafted string cannot freeze the server; a list, display name or
+ *    quoted form is refused, so the stored address is the one mail is sent to.
  *  - Honeypot: a field no person can see. A bot that fills it is answered with
  *    the same "sent" screen and nothing is stored (it learns nothing).
  *  - Header safety: every value that may end up in an email header or subject
@@ -32,8 +37,8 @@ export type EnquiryFormInput = {
   organisation: string;
   message: string;
   kind: string;
-  /** The honeypot. Anything in it means a bot. */
-  website: string;
+  /** The honeypot (a field no person sees, named so autofill ignores it). Anything in it means a bot. */
+  trap: string;
 };
 
 export type EnquiryValues = { name: string; email: string; organisation: string | null; message: string; kind: EnquiryKindValue };
@@ -43,7 +48,6 @@ export type EnquiryCheck =
   | { kind: "bot" }
   | { kind: "invalid"; fieldErrors: Partial<Record<EnquiryField, string>> };
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 // C0 controls (incl. CR/LF/TAB) and DEL — never allowed in a single-line value.
 // eslint-disable-next-line no-control-regex
 const CONTROL_RE = /[\u0000-\u001f\u007f]/;
@@ -57,7 +61,15 @@ export function isEnquiryKindValue(value: string): value is EnquiryKindValue {
 }
 
 export function validateEnquiryForm(input: EnquiryFormInput): EnquiryCheck {
-  if (input.website.trim() !== "") return { kind: "bot" };
+  if (input.trap.trim() !== "") return { kind: "bot" };
+
+  // Cheap size caps FIRST, before any other work (security review H1): an oversized field is simply invalid.
+  const tooLong: Partial<Record<EnquiryField, string>> = {};
+  if (input.name.length > ENQUIRY_LIMITS.nameMax * 2) tooLong.name = "Please enter your name.";
+  if (input.email.length > ENQUIRY_LIMITS.emailMax + 32) tooLong.email = "Please enter a valid email address.";
+  if (input.organisation.length > ENQUIRY_LIMITS.organisationMax * 2) tooLong.organisation = `Please keep this under ${ENQUIRY_LIMITS.organisationMax} characters.`;
+  if (input.message.length > ENQUIRY_LIMITS.messageMax * 2) tooLong.message = `Please keep your message under ${ENQUIRY_LIMITS.messageMax} characters.`;
+  if (Object.keys(tooLong).length > 0) return { kind: "invalid", fieldErrors: tooLong };
 
   const name = oneLine(input.name);
   const email = input.email.trim().toLowerCase(); // one canonical form for the row, the outbox and the rate limit
@@ -66,7 +78,7 @@ export function validateEnquiryForm(input: EnquiryFormInput): EnquiryCheck {
   const fieldErrors: Partial<Record<EnquiryField, string>> = {};
 
   if (name.length < ENQUIRY_LIMITS.nameMin || name.length > ENQUIRY_LIMITS.nameMax || CONTROL_RE.test(name)) fieldErrors.name = "Please enter your name.";
-  if (!EMAIL_RE.test(email) || email.length > ENQUIRY_LIMITS.emailMax || CONTROL_RE.test(email)) fieldErrors.email = "Please enter a valid email address.";
+  if (!isPlainEmailAddress(email)) fieldErrors.email = "Please enter a valid email address.";
   if (organisation.length > ENQUIRY_LIMITS.organisationMax) fieldErrors.organisation = `Please keep this under ${ENQUIRY_LIMITS.organisationMax} characters.`;
   if (message.length < ENQUIRY_LIMITS.messageMin) fieldErrors.message = `Please tell us a little more (at least ${ENQUIRY_LIMITS.messageMin} characters).`;
   else if (message.length > ENQUIRY_LIMITS.messageMax) fieldErrors.message = `Please keep your message under ${ENQUIRY_LIMITS.messageMax} characters.`;

@@ -82,7 +82,7 @@ describe("createSmtpTransport", () => {
     expect(sent).toMatchObject({
       from: { name: "DataAI Nexus", address: "sales@dataainexus.com" },
       replyTo: "sales@dataainexus.com",
-      to: "aisha@example.com",
+      to: { name: "", address: "aisha@example.com" }, // an address OBJECT, never a string (a string is parsed as a list)
       subject: "Subject line",
       text: "Body text",
       messageId: "<id-1@dataainexus.com>",
@@ -98,5 +98,20 @@ describe("createSmtpTransport", () => {
   it("passes a transport error through (timeouts, authentication) for the outbox to record", async () => {
     const t = createSmtpTransport(config, () => ({ sendMail: async () => { throw new Error("Invalid login: 535 Authentication failed"); } }) as never);
     await expect(t.send({ id: "id-3", to: "a@b.co", templateKey: "t", subject: "s", text: "b" })).rejects.toThrow(/Authentication failed/);
+  });
+});
+
+describe("emailDeliveryProblem — no false promise of delivery", () => {
+  it("is null whenever a real transport is configured", async () => {
+    const { emailDeliveryProblem } = await import("@/modules/notifications/email");
+    expect(emailDeliveryProblem({ EMAIL_TRANSPORT: "smtp", NODE_ENV: "production" })).toBeNull();
+  });
+
+  it("flags the log-only transport in production, but not in development or the test suite", async () => {
+    const { emailDeliveryProblem } = await import("@/modules/notifications/email");
+    expect(emailDeliveryProblem({ NODE_ENV: "production" })).toMatch(/not set up yet/);
+    expect(emailDeliveryProblem({ EMAIL_TRANSPORT: "log", NODE_ENV: "production" })).toMatch(/log-only/);
+    expect(emailDeliveryProblem({ EMAIL_TRANSPORT: "log", NODE_ENV: "development" })).toBeNull();
+    expect(emailDeliveryProblem({ EMAIL_TRANSPORT: "log", NODE_ENV: "production", APP_ENV: "test" })).toBeNull();
   });
 });

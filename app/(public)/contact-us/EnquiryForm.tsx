@@ -58,7 +58,7 @@ export function EnquiryForm({
       {programmeId ? <input type="hidden" name="programmeId" value={programmeId} /> : null}
       <input type="hidden" name="sourcePath" value={sourcePath} />
       {/* Honeypot — real people never fill a field they cannot see. */}
-      <input type="text" name="website" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+      <input type="text" name="hp_ref_code" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
 
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Your name" type="text" name="name" autoComplete="name" required error={fieldErrors.name} {...bind("name")} />

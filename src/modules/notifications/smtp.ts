@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
 import { SMTP_VARIABLES } from "@/config/env";
+import { isPlainEmailAddress } from "@/shared/util/email-address";
 import type { EmailTransport } from "./email";
 
 /*
@@ -30,7 +31,6 @@ export class SmtpNotConfiguredError extends Error {
   }
 }
 
-const ADDRESS_RE = /^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]{2,}$/;
 const DEFAULT_FROM_NAME = "DataAI Nexus";
 
 /** Reads and checks the SMTP settings. Throws `SmtpNotConfiguredError` naming what is missing or malformed. */
@@ -40,7 +40,7 @@ export function smtpConfigFromEnv(env: Record<string, string | undefined> = proc
   const invalid: string[] = [];
   const port = Number(get("SMTP_PORT"));
   if (get("SMTP_PORT") !== "" && !(Number.isInteger(port) && port > 0 && port <= 65535)) invalid.push("SMTP_PORT");
-  if (get("EMAIL_FROM") !== "" && !ADDRESS_RE.test(get("EMAIL_FROM"))) invalid.push("EMAIL_FROM");
+  if (get("EMAIL_FROM") !== "" && !isPlainEmailAddress(get("EMAIL_FROM"))) invalid.push("EMAIL_FROM");
   if (/[\r\n]/.test(get("SMTP_HOST")) || /\s/.test(get("SMTP_HOST"))) invalid.push("SMTP_HOST");
   if (missing.length || invalid.length) throw new SmtpNotConfiguredError(missing, invalid);
   return { host: get("SMTP_HOST"), port, user: get("SMTP_USER"), password: env["SMTP_PASSWORD"]!, fromAddress: get("EMAIL_FROM"), fromName: get("EMAIL_FROM_NAME") || DEFAULT_FROM_NAME };
@@ -76,7 +76,8 @@ export function createSmtpTransport(config: SmtpConfig, factory: Factory = nodem
     async send(message) {
       const info = await transporter.sendMail({
         from: { name: config.fromName, address: config.fromAddress },
-        to: message.to,
+        // An address OBJECT, never a string: nodemailer parses a string as a list ("a,b@c.com" = two recipients).
+        to: { name: "", address: message.to },
         replyTo: config.fromAddress,
         subject: message.subject,
         text: message.text,

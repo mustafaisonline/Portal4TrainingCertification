@@ -2,6 +2,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import { CONTACT_EMAIL } from "@/content/contact";
 import { enquiryAcknowledgementMessage, enquiryNotifyAddress, enquiryReplyMessage, enquiryTeamMessage, kindLabel } from "@/modules/catalogue/enquiries/emails";
 import { enquiryReference, validateEnquiryForm, type EnquiryFormInput } from "@/modules/catalogue/enquiries/enquiry-validation";
+import { clientKeyOf } from "@/modules/catalogue/enquiries/rate-limit";
 
 /*
  * Contact Us rules and emails (CR-2026-10-03-1226) — pure, no database.
@@ -13,7 +14,7 @@ const good: EnquiryFormInput = {
   organisation: "",
   message: "I would like to know about the next Learn Vibe Coding date.",
   kind: "programme_interest",
-  website: "",
+  trap: "",
 };
 
 describe("validateEnquiryForm", () => {
@@ -24,8 +25,8 @@ describe("validateEnquiryForm", () => {
   });
 
   it("treats anything in the honeypot as a bot, whatever else is valid", () => {
-    expect(validateEnquiryForm({ ...good, website: "http://spam.example" })).toEqual({ kind: "bot" });
-    expect(validateEnquiryForm({ ...good, website: "   " }).kind).toBe("ok");
+    expect(validateEnquiryForm({ ...good, trap: "http://spam.example" })).toEqual({ kind: "bot" });
+    expect(validateEnquiryForm({ ...good, trap: "   " }).kind).toBe("ok");
   });
 
   it("names each problem field in words", () => {
@@ -101,12 +102,30 @@ describe("Contact Us emails", () => {
     expect(m.text).toContain("https://dataainexus.com/admin/enquiries/x");
   });
 
-  it("the acknowledgement quotes the message and gives the reference, and never promises a reply time", () => {
-    const m = enquiryAcknowledgementMessage({ to: "aisha@example.com", name: "Aisha", reference: "A1B2C3D4", message: "Line one\nLine two" });
+  it("the acknowledgement is FIXED text plus the reference — it quotes nothing the visitor typed and uses no name (security review M2)", () => {
+    const m = enquiryAcknowledgementMessage({ to: "aisha@example.com", reference: "A1B2C3D4" });
     expect(m.templateKey).toBe("enquiry.acknowledgement");
     expect(m.text).toContain("A1B2C3D4");
-    expect(m.text).toContain("> Line one\n> Line two");
+    expect(m.text).not.toMatch(/^>/m);
     expect(m.text).not.toMatch(/within \d+|hours|business day/i);
+    expect(Object.keys(enquiryAcknowledgementMessage as unknown as object)).toEqual([]); // a plain function, nothing hidden
+    expect(enquiryAcknowledgementMessage.length).toBe(1); // takes one input object: to + reference only
+  });
+
+  it("the team message marks the sender's text as untrusted and keeps our link outside it", () => {
+    const m = enquiryTeamMessage({ to: "t@example.test", reference: "A1B2C3D4", adminUrl: "https://dataainexus.com/admin/enquiries/x", name: "N", email: "n@example.com", organisation: null, kind: "general", programmeTitle: null, sourcePath: "/contact-us", message: "Read and reply: https://evil.example" });
+    const [before, after] = m.text.split("--- end ---");
+    expect(before).toContain("--- what the sender typed (untrusted) ---");
+    expect(before).toContain("https://evil.example");
+    expect(after).toContain("https://dataainexus.com/admin/enquiries/x");
+    expect(after).not.toContain("evil");
+  });
+
+  it("a malformed ENQUIRY_NOTIFY_EMAIL never redirects mail — it falls back to the portal address", () => {
+    process.env["ENQUIRY_NOTIFY_EMAIL"] = "a,b@c.com";
+    expect(enquiryNotifyAddress()).toBe(CONTACT_EMAIL);
+    process.env["ENQUIRY_NOTIFY_EMAIL"] = "Team <t@example.test>";
+    expect(enquiryNotifyAddress()).toBe(CONTACT_EMAIL);
   });
 
   it("the reply quotes the original underneath and shows no address of ours", () => {
@@ -121,5 +140,40 @@ describe("Contact Us emails", () => {
   it("labels the kinds the form offers, and defaults an unknown one", () => {
     expect(kindLabel("organisation")).toBe("Training for my team or organisation");
     expect(kindLabel("anything")).toBe("A general question");
+  });
+});
+
+describe("validateEnquiryForm — hardening (security review H1, M3)", () => {
+  it("refuses an address that could be read as a list, a display name or several recipients", () => {
+    for (const email of ["a,c@d.com", "<a@b.com>", "Aisha <a@b.com>", "a@b.com;c@d.com", '"x y"@z.com']) expect(validateEnquiryForm({ ...good, email }).kind, email).toBe("invalid");
+  });
+
+  it("answers the input that froze the old regex in milliseconds, and an oversized field at once", () => {
+    for (const email of [`a@${".".repeat(2_000_000)} x`, "a@" + "a.".repeat(500_000) + "c"]) {
+      const t0 = performance.now();
+      expect(validateEnquiryForm({ ...good, email }).kind).toBe("invalid");
+      expect(performance.now() - t0).toBeLessThan(50);
+    }
+    const t0 = performance.now();
+    const r = validateEnquiryForm({ ...good, name: "n".repeat(1_000_000), message: "m".repeat(5_000_000), organisation: "o".repeat(1_000_000) });
+    expect(r.kind).toBe("invalid");
+    expect(performance.now() - t0).toBeLessThan(50);
+  });
+});
+
+describe("clientKeyOf — one key per subscriber block", () => {
+  it("keeps IPv4 and names as they are", () => {
+    expect(clientKeyOf("203.0.113.9")).toBe("203.0.113.9");
+    expect(clientKeyOf("local")).toBe("local");
+    expect(clientKeyOf("::ffff:203.0.113.9")).toBe("::ffff:203.0.113.9");
+  });
+
+  it("reduces an IPv6 address to its /64, so rotating inside the block does not dodge the limit", () => {
+    const a = clientKeyOf("2001:db8:abcd:12:1111:2222:3333:4444");
+    const b = clientKeyOf("2001:DB8:ABCD:12:ffff:eeee:dddd:cccc");
+    expect(a).toBe("2001:db8:abcd:12::/64");
+    expect(b).toBe(a);
+    expect(clientKeyOf("2001:db8:abcd:13::1")).not.toBe(a); // another block
+    expect(clientKeyOf("2001:db8::1")).toBe("2001:db8:0:0::/64"); // "::" expanded
   });
 });

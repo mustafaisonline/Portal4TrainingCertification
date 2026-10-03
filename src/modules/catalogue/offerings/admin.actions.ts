@@ -139,7 +139,7 @@ export async function createOfferingAction(_prev: OfferingFormState, formData: F
         dedupeKey: `offering-created:${input.programmeId}:${Math.floor(Date.now() / 3_600_000)}`,
       }).catch((err) => console.error("[offerings] admin notice failed", err instanceof Error ? err.message : err));
       // Founder, 2026-10-04: and an email to each administrator, to sign in and approve.
-      void emailAdminsDateScheduled({ offeringId: created.id, programmeTitle: o?.programmeTitle ?? null, startsOn: input.startsOn }).catch((err) => console.error("[offerings] admin email failed", err instanceof Error ? err.message : err));
+      void emailAdminsDateScheduled({ programmeId: input.programmeId, offeringId: created.id, programmeTitle: o?.programmeTitle ?? null, startsOn: input.startsOn }).catch((err) => console.error("[offerings] admin email failed", err instanceof Error ? err.message : err));
     }
     revalidate();
     return { status: "saved", id: created.id };

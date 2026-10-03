@@ -11,6 +11,8 @@ import {
   type OfferingWriteInput,
 } from "@/modules/catalogue/offerings/repository";
 import { listDomains } from "@/modules/catalogue/domains/repository";
+import { lockOfferingForSeat } from "@/modules/commerce/capacity";
+import { previewCheckout } from "@/modules/commerce/checkout.service";
 import { createTraining, type TrainingDetailsInput } from "@/modules/catalogue/programmes/admin.repository";
 import { findProgrammeBySlug, listDeliveryFormatsForAdmin, listProgrammesForAdmin } from "@/modules/catalogue/programmes/repository";
 import type { ProgrammeRecord } from "@/modules/catalogue/programmes/types";
@@ -180,7 +182,9 @@ describe("a Trainer's date waits for approval (CR-2026-10-03-2254)", () => {
     const record = await create(baseInput({ startsOn: "2027-06-07", endsOn: "2027-06-09", status: "pending_review" }));
     expect((await listAllOfferings()).find((o) => o.id === record.id)?.status).toBe("pending_review");
     expect((await listUpcomingPublicOfferings(flagship.id)).map((o) => o.id)).not.toContain(record.id);
-    // It cannot be registered for either: it is not open.
+    // It cannot be registered for or paid for either: the checkout and the seat lock refuse a date that is not open.
+    expect(await previewCheckout(record.id, { id: actor, country: "Malaysia" })).toMatchObject({ ok: false, reason: "offering_not_open" });
+    await expect(withTransaction((tx) => lockOfferingForSeat(tx, record.id, new Date()))).rejects.toMatchObject({ code: "offering_not_open" });
     await withTransaction((tx) => updateOffering(tx, record.id, { status: "planned" }, actor)); // the administrator approves it
     expect((await listUpcomingPublicOfferings(flagship.id)).map((o) => o.id)).toContain(record.id);
   });

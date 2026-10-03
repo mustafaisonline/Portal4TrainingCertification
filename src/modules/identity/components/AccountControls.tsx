@@ -84,8 +84,10 @@ export async function AccountControls({ variant = "header" }: { variant?: "heade
   }
   const [profile, unread, latest] = await Promise.all([getProfile(user.id), unreadCount(user.id), latestNotifications(user.id)]);
   return (
-    <div className="relative flex items-center gap-2">
-      {/* CR-2026-10-03-1228: the bell sits beside the avatar (sm and up); on phones the count is a badge on the avatar. */}
+    // NOT positioned: the open avatar menu anchors to the sticky header on phones (CR-2026-10-02-2013). The phone badge is
+    // rendered INSIDE the avatar button instead, so it needs no positioned wrapper here.
+    <div className="flex items-center gap-2">
+      {/* CR-2026-10-03-1228: the bell sits beside the avatar (from 360 px); below that the count is a badge on the avatar. */}
       <NotificationBell initialUnread={unread} initialLatest={latest.map((n) => ({ ...n, createdAt: n.createdAt.toISOString() }))} />
       <AccountMenu
         name={user.name}
@@ -95,8 +97,8 @@ export async function AccountControls({ variant = "header" }: { variant?: "heade
         isAdmin={holdsRole(user.roles, "platform_admin")}
         hasPhoto={profile?.hasPhoto ?? false}
         photoVersion={profile?.photoUpdatedAt?.getTime() ?? 0}
+        badge={<MobileUnreadBadge initialUnread={unread} />}
       />
-      <MobileUnreadBadge initialUnread={unread} />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ThemeToggle } from "@/shared/chrome/ThemeToggle";
 import { footerExplore, footerLegal, primaryNav, verifyLink } from "@/shared/chrome/site-nav";
 import { initialsOf } from "@/shared/util/initials";
@@ -42,6 +42,7 @@ export function AccountMenu({
   isAdmin,
   hasPhoto = false,
   photoVersion = 0,
+  badge,
 }: {
   name: string;
   email: string;
@@ -53,6 +54,8 @@ export function AccountMenu({
    *  instead of the initials. `photoVersion` busts the browser cache. */
   hasPhoto?: boolean;
   photoVersion?: number;
+  /** The phone unread badge (below 360 px): rendered inside the avatar button, which is its positioned anchor. */
+  badge?: ReactNode;
 }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -90,7 +93,7 @@ export function AccountMenu({
         aria-haspopup="true"
         aria-label={`Account menu for ${name}`}
         data-testid="header-account"
-        className="flex items-center gap-2 rounded-full border border-[var(--color-line-strong)] py-1 pl-1 pr-1 text-body-sm md:pr-3 text-[var(--color-ink)] hover:border-[var(--color-primary)]"
+        className="relative flex items-center gap-2 rounded-full border border-[var(--color-line-strong)] py-1 pl-1 pr-1 text-body-sm md:pr-3 text-[var(--color-ink)] hover:border-[var(--color-primary)]"
       >
         <span
           aria-hidden="true"
@@ -107,6 +110,7 @@ export function AccountMenu({
         <span className="hidden max-w-[16ch] truncate md:inline" data-testid="header-account-name">
           {firstName}
         </span>
+        {badge}
       </button>
       {open && (
         <div

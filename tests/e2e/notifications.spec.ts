@@ -278,3 +278,27 @@ test("on a laptop the theme switch is in the avatar menu and the footer — not 
   await page.getByTestId("theme-toggle-footer").click();
   await themeIs(page, "light");
 });
+
+test("the bell panel and the avatar menu stay fully inside the screen at 360, 375, 390 and 430 px (CR-2026-10-03-2250 review finding)", async ({ page }) => {
+  await clearNotes();
+  await notify(3);
+  await signIn(page, personEmail);
+  for (const width of [360, 375, 390, 430]) {
+    await page.setViewportSize({ width, height: 700 });
+    await page.goto("/programs");
+    await page.getByTestId("bell-button").click();
+    const panel = page.getByTestId("bell-panel");
+    await expect(panel).toBeVisible();
+    const box = (await panel.boundingBox())!;
+    expect(box.x, `bell panel left edge at ${width}px`).toBeGreaterThanOrEqual(0);
+    expect(box.x + box.width, `bell panel right edge at ${width}px`).toBeLessThanOrEqual(width);
+    await page.keyboard.press("Escape");
+    await page.getByTestId("header-account").click();
+    const menu = page.getByTestId("account-menu");
+    await expect(menu).toBeVisible();
+    const m = (await menu.boundingBox())!;
+    expect(m.x, `account menu left edge at ${width}px`).toBeGreaterThanOrEqual(0);
+    expect(m.x + m.width, `account menu right edge at ${width}px`).toBeLessThanOrEqual(width);
+    expect(m.width, `account menu is usable at ${width}px`).toBeGreaterThan(200);
+  }
+});

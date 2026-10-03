@@ -304,7 +304,7 @@ test("a Trainer sees only the Trainings area, creates their own draft, cannot pu
   const offering = page.getByRole("form", { name: "New offering" });
   await expect(offering.getByLabel("Programme", { exact: true }).locator("option")).toHaveCount(1);
 
-  // CR-2026-10-03-2254: a Trainer cannot open a date — the status is read-only and the date is saved as PLANNED.
+  // CR-2026-10-03-2254: a Trainer cannot open a date — the status is read-only and the date is saved as WAITING FOR APPROVAL (pending_review).
   const { getPrisma } = await import("../../src/db/prisma");
   const prisma = getPrisma();
   await expect(page.getByTestId("offering-status")).toBeDisabled();

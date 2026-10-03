@@ -40,10 +40,12 @@ export async function emailAdminsReviewRequested(input: { programmeId: string; t
 }
 
 /** A Trainer scheduled a date. */
-export async function emailAdminsDateScheduled(input: { offeringId: string; programmeTitle: string | null; startsOn: string }): Promise<void> {
+export async function emailAdminsDateScheduled(input: { programmeId: string; offeringId: string; programmeTitle: string | null; startsOn: string }): Promise<void> {
   const title = oneLine(input.programmeTitle ?? "a training");
   await emailAdministrators({
-    key: `admin-date:${input.offeringId}`,
+    // One email per administrator per training per hour (like the bell notice), so a Trainer adding many dates in a row does
+    // not flood the inboxes or the daily send budget.
+    key: `admin-date:${input.programmeId}:${Math.floor(Date.now() / 3_600_000)}`,
     templateKey: "admin.date-scheduled",
     subject: `A trainer scheduled a date: ${title}`,
     body: (name) =>

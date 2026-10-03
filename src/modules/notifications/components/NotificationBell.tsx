@@ -120,7 +120,8 @@ export function NotificationBell({ initialUnread, initialLatest }: { initialUnre
 
   const label = unread > 0 ? `Notifications, ${unread} unread` : "Notifications, none unread";
   return (
-    // From the `sm` breakpoint up; on a phone the header has no room, so the count shows as a badge on the avatar instead.
+    // From 360 px up; below that the header has no room, so the count shows as a badge on the avatar instead. On a phone the
+    // panel spans the screen width just under the header (fixed), so it can never be clipped; from `sm` it hangs from the bell.
     <div ref={wrap} className="relative hidden min-[360px]:block" data-testid="notification-bell">
       <button
         ref={button}
@@ -143,7 +144,7 @@ export function NotificationBell({ initialUnread, initialLatest }: { initialUnre
         {unread > 0 ? `${unread} unread notifications` : ""}
       </span>
       {open ? (
-        <div data-testid="bell-panel" className="absolute right-0 top-full z-30 mt-2 max-h-[75vh] w-80 max-w-[calc(100vw-1rem)] overflow-y-auto rounded-[var(--radius-panel)] border border-[var(--color-line)] bg-[var(--color-ground-raised)] p-2 shadow-[0_10px_30px_rgba(16,24,40,0.18)]">
+        <div data-testid="bell-panel" className="fixed inset-x-2 top-[4.5rem] z-30 max-h-[75vh] overflow-y-auto sm:absolute sm:inset-x-auto sm:right-0 sm:top-full sm:mt-2 sm:w-80 rounded-[var(--radius-panel)] border border-[var(--color-line)] bg-[var(--color-ground-raised)] p-2 shadow-[0_10px_30px_rgba(16,24,40,0.18)]">
           <div className="flex items-center justify-between px-2 pb-1 pt-1">
             <p className="text-label">Notifications</p>
             {unread > 0 ? (

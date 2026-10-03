@@ -249,10 +249,24 @@ test("the acknowledgement is REQUIRED; then the test includes the organisation's
 
   // The result, under the organisation's address. Every one of the organisation's 6 approved questions is in the test; none of its 3 pending ones.
   await expect(page).toHaveURL(new RegExp(`${rolePath()}/result/${attemptId}$`));
-  await expect(page.getByTestId("result-question")).toHaveCount(TEST_SIZE);
-  await expect(page.getByTestId("result-question").filter({ hasText: "Fixture question ORGQ-" })).toHaveCount(OWN_QUESTIONS);
-  await expect(page.getByTestId("result-question").filter({ hasText: "PENDQ" })).toHaveCount(0);
-  await expect(page.getByTestId("result-model-answer")).toHaveCount(TEST_SIZE);
+  // Ten questions a page (CR-2026-10-03-2251), so the 36 questions are read across four pages.
+  await expect(page.getByTestId("result-question")).toHaveCount(10);
+  await expect(page.getByTestId("result-page-label").first()).toHaveText(`Questions 1–10 of ${TEST_SIZE} · Page 1 of ${Math.ceil(TEST_SIZE / 10)}`);
+  let listed = 0;
+  let own = 0;
+  let pending = 0;
+  let models = 0;
+  for (let n = 1; n <= Math.ceil(TEST_SIZE / 10); n += 1) {
+    if (n > 1) await page.getByTestId("result-next").first().click();
+    await expect(page.getByTestId("result-page-label").first()).toContainText(`Page ${n} of ${Math.ceil(TEST_SIZE / 10)}`);
+    listed += await page.getByTestId("result-question").count();
+    own += await page.getByTestId("result-question").filter({ hasText: "Fixture question ORGQ-" }).count();
+    pending += await page.getByTestId("result-question").filter({ hasText: "PENDQ" }).count();
+    models += await page.getByTestId("result-model-answer").count();
+  }
+  expect({ listed, own, pending, models }).toEqual({ listed: TEST_SIZE, own: OWN_QUESTIONS, pending: 0, models: TEST_SIZE });
+  // An organisation's test keeps its timer, so its result still shows the time taken.
+  await expect(page.getByTestId("result-time-taken")).toBeVisible();
   await expect(page.getByTestId("result-title")).toHaveText(new RegExp(`^\\d+ of ${TEST_SIZE} \\(\\d+ %\\)$`));
   await expect(page.locator("main")).toContainText(`Shared with ${orgName()}`);
   await expect(page.getByTestId("result-retake")).toHaveAttribute("href", rolePath()); // a new test needs the acknowledgement again

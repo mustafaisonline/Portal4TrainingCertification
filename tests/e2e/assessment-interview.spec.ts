@@ -7,12 +7,14 @@ import { deleteTestUser, resetRateLimits, STRONG_PASSWORD, uniqueEmail } from ".
  * Prepare for Interview through the screens (CR-2026-10-01-1711, P2): role cards
  * (a role with no reviewed questions is "Coming soon"; an unpublished one is not
  * shown); a role page; a running test — ten questions a page, answers kept
- * between pages, a countdown to the SERVER's 90-minute deadline, Finish asks
- * about unanswered questions; the result — score, percentage, time, a breakdown
- * by topic, EVERY question with the correct option and the model answer; "Take it
- * again"; one running test per person (resume); a late save is refused and the
- * test scored as it stands; lazy expiry and the timer's own auto-submit end at
- * the result; owner-only access; signed-out people are sent to sign in. The
+ * between pages, NO timer (CR-2026-10-03-2251), Finish asks about unanswered
+ * questions; "View results of this page" (locks the page), "Save and exit"
+ * (resume on the first unanswered page) and "Cancel test" (nothing kept); the
+ * result — score, percentage, a breakdown by topic, EVERY question with the
+ * correct option and the model answer, ten a page (and no "time taken"); "Take it
+ * again"; one running test per person (resume) that never expires; owner-only
+ * access; signed-out people are sent to sign in. The 90-minute limit of an
+ * organisation's screening test is proved in assessment-organisations.spec.ts. The
  * fixtures are this spec's own roles (unique slugs; no assumption about seed
  * data or global counts) and are removed afterwards.
  */
@@ -118,8 +120,8 @@ test("signed out: role cards (a role without reviewed questions is Coming soon, 
   await expect(card).toHaveAttribute("data-ready", "yes");
   await expect(card).toContainText(`E2E Interview Role ${tag}`);
   await expect(card).toContainText("A role fixture.");
-  // 25 reviewed questions (the 7 drafts are never counted) · 90 minutes · model answers.
-  await expect(page.getByTestId(`role-facts-${role.slug}`)).toHaveText(`${QUESTIONS} questions · 90 minutes · model answers`);
+  // 25 reviewed questions (the 7 drafts are never counted) · no time limit · model answers.
+  await expect(page.getByTestId(`role-facts-${role.slug}`)).toHaveText(`${QUESTIONS} questions · no time limit · model answers`);
   await expect(page.getByTestId(`role-open-${role.slug}`)).toHaveAttribute("href", rolePath());
 
   const soon = page.getByTestId(`role-card-${emptyRole.slug}`);
@@ -135,7 +137,8 @@ test("signed out: role cards (a role without reviewed questions is Coming soon, 
   await expect(page).toHaveURL(new RegExp(`${rolePath()}$`));
   await expect(page.getByTestId("role-title")).toHaveText(`E2E Interview Role ${tag}`);
   await expect(page.getByTestId("role-expect")).toContainText(`${QUESTIONS} questions`);
-  await expect(page.getByTestId("role-expect")).toContainText("90 minutes");
+  await expect(page.getByTestId("role-expect")).not.toContainText("90 minutes");
+  await expect(page.getByTestId("role-expect-no-timer")).toContainText("No time limit");
   await expect(page.getByTestId("role-expect")).toContainText("model answer");
   await expect(page.getByTestId("role-signed-out")).toBeVisible();
   await expect(page.getByTestId("role-signin")).toHaveAttribute("href", `/sign-in?return-to=${encodeURIComponent(rolePath())}`);
@@ -161,7 +164,7 @@ test("signed out: role cards (a role without reviewed questions is Coming soon, 
   await register(page, otherEmail, "Otto Other");
 });
 
-test("a test: ten a page, a countdown, answers kept across pages, Finish asks about unanswered ones → score, breakdown, every question with its model answer; Take it again; delete the result", async ({ page }) => {
+test("a test: ten a page, NO timer, answers kept across pages, Finish asks about unanswered ones → score, breakdown, every question with its model answer; Take it again; delete the result", async ({ page }) => {
   await signIn(page, email, rolePath());
   await expect(page.getByTestId("role-start-card")).toBeVisible();
   await expect(page.getByTestId("role-running")).toHaveCount(0);
@@ -180,10 +183,12 @@ test("a test: ten a page, a countdown, answers kept across pages, Finish asks ab
   const html = await page.content();
   expect(html).not.toContain("isCorrect");
   expect(html).not.toContain("Fixture model answer");
-  // The countdown to the server's deadline: HH:MM:SS, just under 90 minutes.
-  await expect(page.getByTestId("attempt-timer")).toHaveText(/^01:\d{2}:\d{2}$/);
-  await expect(page.getByRole("timer")).toBeVisible();
-  expect(Number(await page.getByTestId("attempt-timer").getAttribute("data-remaining-ms"))).toBeLessThanOrEqual(90 * 60_000);
+  // Interview practice has no timer, and offers Save and exit, per-page results and Cancel test.
+  await expect(page.getByTestId("attempt-timer")).toHaveCount(0);
+  await expect(page.getByRole("timer")).toHaveCount(0);
+  await expect(page.getByTestId("attempt-save-exit")).toBeVisible();
+  await expect(page.getByTestId("attempt-view-results")).toBeVisible();
+  await expect(page.getByTestId("cancel-test")).toBeVisible();
   await expectNoAxeViolationsBothThemes(page);
 
   // Page 1: all ten answered A (the correct option). Saving and continuing keeps them.
@@ -217,7 +222,7 @@ test("a test: ten a page, a countdown, answers kept across pages, Finish asks ab
   await expect(page).toHaveURL(new RegExp(`${rolePath()}/result/${firstId}$`));
   await expect(page.getByTestId("result-title")).toHaveText(`17 of ${QUESTIONS} (68 %)`);
   await expect(page.getByTestId("result-score")).toHaveText(`17 of ${QUESTIONS}`);
-  await expect(page.getByTestId("result-time-taken")).toHaveText(/^00:\d{2}:\d{2}$/);
+  await expect(page.getByTestId("result-time-taken")).toHaveCount(0); // interview practice has no "time taken"
   await expect(page.locator("main")).toContainText("no pass mark");
   // The per-topic breakdown: the fixtures use three categories, listed alphabetically.
   const rows = page.getByTestId("result-breakdown-row");
@@ -225,15 +230,38 @@ test("a test: ten a page, a countdown, answers kept across pages, Finish asks ab
   expect(await rows.evaluateAll((els) => els.map((e) => e.getAttribute("data-category")))).toEqual(["Governance", "Modelling", "Pipelines"]);
   const totals = await rows.evaluateAll((els) => els.map((e) => Number(/of (\d+)/.exec(e.querySelector("td")?.textContent ?? "")?.[1] ?? 0)));
   expect(totals.reduce((a, b) => a + b, 0)).toBe(QUESTIONS);
-  // EVERY question with the person's answer, the correct option and the model answer.
-  await expect(page.getByTestId("result-question")).toHaveCount(QUESTIONS);
-  await expect(page.getByTestId("result-model-answer")).toHaveCount(QUESTIONS);
-  await expect(page.getByTestId("result-model-answer").first()).toContainText("Fixture model answer");
-  await expect(page.locator('[data-testid="result-question"][data-outcome="correct"]')).toHaveCount(17);
-  await expect(page.locator('[data-testid="result-question"][data-outcome="wrong"]')).toHaveCount(5);
-  await expect(page.locator('[data-testid="result-question"][data-outcome="unanswered"]')).toHaveCount(3);
-  await expect(page.locator('[data-testid="result-option"][data-correct="yes"]')).toHaveCount(QUESTIONS);
-  await expect(page.locator('[data-testid="result-option"][data-chosen="yes"]')).toHaveCount(22);
+  // EVERY question with the person's answer, the correct option and the model answer — ten a page (25 questions = three pages).
+  const resultUrl = `${rolePath()}/result/${firstId}`;
+  await expect(page.getByTestId("result-question")).toHaveCount(10);
+  await expect(page.getByTestId("result-page-label").first()).toHaveText(`Questions 1–10 of ${QUESTIONS} · Page 1 of 3`);
+  await expect(page.getByTestId("result-prev")).toHaveCount(0);
+  await expect(page.getByTestId("result-pager-top")).toBeVisible();
+  await expect(page.getByTestId("result-pager-bottom")).toBeVisible();
+  const tally = { correct: 0, wrong: 0, unanswered: 0, models: 0, correctOptions: 0, chosenOptions: 0, questions: 0 };
+  for (const n of [1, 2, 3]) {
+    if (n > 1) {
+      await page.getByTestId("result-next").first().click();
+      await expect(page).toHaveURL(new RegExp(`result/${firstId}\\?page=${n}`));
+      await expect(page.getByTestId("result-page-label").first()).toContainText(`Page ${n} of 3`);
+    }
+    tally.questions += await page.getByTestId("result-question").count();
+    tally.models += await page.getByTestId("result-model-answer").count();
+    tally.correct += await page.locator('[data-testid="result-question"][data-outcome="correct"]').count();
+    tally.wrong += await page.locator('[data-testid="result-question"][data-outcome="wrong"]').count();
+    tally.unanswered += await page.locator('[data-testid="result-question"][data-outcome="unanswered"]').count();
+    tally.correctOptions += await page.locator('[data-testid="result-option"][data-correct="yes"]').count();
+    tally.chosenOptions += await page.locator('[data-testid="result-option"][data-chosen="yes"]').count();
+  }
+  expect(tally).toEqual({ correct: 17, wrong: 5, unanswered: 3, models: QUESTIONS, correctOptions: QUESTIONS, chosenOptions: 22, questions: QUESTIONS });
+  await expect(page.getByTestId("result-next")).toHaveCount(0); // the last page
+  await expect(page.getByTestId("result-page-label").first()).toHaveText(`Questions 21–${QUESTIONS} of ${QUESTIONS} · Page 3 of 3`);
+  await page.getByTestId("result-prev").first().click();
+  await expect(page.getByTestId("result-page-label").first()).toContainText("Page 2 of 3");
+  // A page number past the end shows the last page (never an error); the whole-test score above is unchanged.
+  await page.goto(`${resultUrl}?page=99`);
+  await expect(page.getByTestId("result-page-label").first()).toContainText("Page 3 of 3");
+  await expect(page.getByTestId("result-title")).toHaveText(`17 of ${QUESTIONS} (68 %)`);
+  await page.goto(resultUrl);
   await expect(page.getByTestId("result-back")).toHaveAttribute("href", rolePath());
   await expectNoAxeViolationsBothThemes(page);
 
@@ -248,11 +276,13 @@ test("a test: ten a page, a countdown, answers kept across pages, Finish asks ab
 
   // The role page lists the finished result (and the running test); the person may delete their own result.
   await page.goto(rolePath());
-  await expect(page.getByTestId("role-running")).toContainText("It ends at");
+  await expect(page.getByTestId("role-running")).toContainText("first page you have not finished");
+  await expect(page.getByTestId("role-running")).not.toContainText("It ends at");
   await expect(page.getByTestId("role-start")).toHaveText("Return to my running test");
   const history = page.getByTestId("role-result-row");
   await expect(history).toHaveCount(1);
   await expect(history).toContainText(`17 of ${QUESTIONS}`);
+  await expect(history).not.toContainText("Time taken");
   await expect(history.getByTestId("role-result-link")).toHaveAttribute("href", `${rolePath()}/result/${firstId}`);
   await page.getByTestId("role-result-select").check();
   await page.getByTestId("role-delete-selected").click();
@@ -264,7 +294,7 @@ test("a test: ten a page, a countdown, answers kept across pages, Finish asks ab
   expect((await page.goto(`${rolePath()}/result/${firstId}`))?.status()).toBe(404);
 });
 
-test("one running test per person: the start button returns to it; only its owner can open it; a late save (after the server's deadline) is refused and the test is scored as it stands", async ({ page, browser, baseURL }) => {
+test("one running test per person: the start button returns to it; only its owner can open it; it never expires and reopens on the first unanswered page", async ({ page, browser, baseURL }) => {
   await signIn(page, email, rolePath());
   // The test started by "Take it again" is still running: the one button returns to it.
   await expect(page.getByTestId("role-start")).toHaveText("Return to my running test");
@@ -289,52 +319,90 @@ test("one running test per person: the start button returns to it; only its owne
   expect((await otherPage.goto(`${rolePath()}/result/${attemptId}`))?.status()).toBe(404);
   await other.close();
 
-  // 12 answers were saved earlier (48 %). The 90 minutes then run out while the page is open; the next save is refused by the server:
-  // this page's ticks are NOT stored, the test is scored on what was saved, and the person lands on the result.
-  await page.goto(attemptUrl);
+  // 12 answers were saved earlier, and the test was started a month ago: interview practice has NO time limit, so it is still
+  // running, shows no timer, and opens on the first page with an unanswered question (page 2: question 13).
   await saveCorrect(attemptId, 12);
-  await setDeadlineIn(attemptId, -60_000);
-  const questions = page.getByTestId("attempt-question");
-  for (let i = 0; i < 10; i += 1) await questions.nth(i).getByRole("radio").nth(1).check(); // ignored
-  await page.getByTestId("attempt-next").click();
+  await setDeadlineIn(attemptId, -30 * 24 * 60 * 60_000);
+  await page.goto(attemptUrl);
+  await expect(page).toHaveURL(attemptUrl);
+  await expect(page.getByTestId("attempt-title")).toHaveText(`Questions 11–20 of ${QUESTIONS}`);
+  await expect(page.getByTestId("attempt-timer")).toHaveCount(0);
+  await expect(page.getByTestId("attempt-progress")).toContainText("There is no time limit");
+  await page.getByTestId("attempt-finish").click();
+  await expect(page.getByTestId("attempt-finish-confirm")).toBeVisible();
+  await page.getByTestId("attempt-finish-anyway").click();
   await expect(page).toHaveURL(new RegExp(`/result/${attemptId}$`));
   await expect(page.getByTestId("result-title")).toHaveText(`12 of ${QUESTIONS} (48 %)`);
-  await expect(page.getByTestId("result-time-taken")).toHaveText("01:30:00"); // exactly 90 minutes, never more
+  await expect(page.getByTestId("result-time-taken")).toHaveCount(0);
 
-  // The test is over: the role page offers a fresh start again.
+  // The test is finished: the role page offers a fresh start again.
   await page.goto(rolePath());
   await expect(page.getByTestId("role-running")).toHaveCount(0);
   await expect(page.getByTestId("role-start")).toHaveText("Start the test");
   await expect(page.getByTestId("role-result-row")).toHaveCount(1);
 });
 
-test("visiting a test after its 90 minutes settles it (lazy expiry); the countdown's own auto-submit ends at the result too", async ({ page }) => {
+test("view the results of a page (locks it), save and exit and come back, cancel (nothing is kept)", async ({ page }) => {
   await signIn(page, email, rolePath());
   await page.getByTestId("role-start").click();
   await expect(page).toHaveURL(new RegExp(`${rolePath()}/test/[0-9a-f-]{36}$`));
-  const attemptUrl = page.url();
-  const attemptId = attemptIdOf(attemptUrl);
+  const attemptId = attemptIdOf(page.url());
+  const questions = page.getByTestId("attempt-question");
 
-  // Time already up when the page is opened: it is scored as it stands (nothing answered → 0) and shows the result.
-  await setDeadlineIn(attemptId, -1000);
-  await page.goto(attemptUrl);
-  await expect(page).toHaveURL(/\/result\//);
-  await expect(page.getByTestId("result-title")).toHaveText(`0 of ${QUESTIONS} (0 %)`);
-  await expect(page.getByTestId("result-time-taken")).toHaveText("01:30:00");
-  await expect(page.locator('[data-testid="result-question"][data-outcome="unanswered"]')).toHaveCount(QUESTIONS);
+  // Page 1: seven right (A), three wrong (B) — then "View results of this page".
+  await expect(page.getByTestId("view-results-hint")).toContainText("cannot change this page");
+  for (let i = 0; i < 10; i += 1) await questions.nth(i).getByRole("radio").nth(i < 7 ? 0 : 1).check();
+  await page.getByTestId("attempt-view-results").click();
+  await expect(page).toHaveURL(new RegExp(`/test/${attemptId}\\?page=1$`)); // the redirect has landed (not just the page we were already on)
+  await expect(page.getByTestId("page-viewed-note")).toContainText("answers are locked");
+  await expect(page.getByTestId("view-results-hint")).toHaveCount(0);
+  await expect(page.getByTestId("result-question")).toHaveCount(10);
+  await expect(page.getByTestId("attempt-question")).toHaveCount(0); // read-only: no radio buttons
+  await expect(page.getByRole("radio")).toHaveCount(0);
+  await expect(page.getByTestId("attempt-view-results")).toHaveCount(0);
+  await expect(page.getByTestId("result-model-answer").first()).toContainText("Fixture model answer");
+  await expect(page.locator('[data-testid="result-question"][data-outcome="correct"]')).toHaveCount(7);
+  await expect(page.locator('[data-testid="result-question"][data-outcome="wrong"]')).toHaveCount(3);
+  await expectNoAxeViolationsBothThemes(page);
 
-  // The timer: a few seconds left when the page loads → it counts down and submits by itself → the result.
-  await page.goto(rolePath());
+  // Page 2 is untouched: not revealed, editable, and offers its own "View results".
+  await page.getByTestId("attempt-next").click();
+  await expect(page.getByTestId("attempt-title")).toHaveText(`Questions 11–20 of ${QUESTIONS}`);
+  await expect(page.getByTestId("result-question")).toHaveCount(0);
+  await expect(page.getByTestId("attempt-view-results")).toBeVisible();
+  for (let i = 0; i < 4; i += 1) await questions.nth(i).getByRole("radio").nth(0).check();
+
+  // Save and exit → the role page, which says the test is running; returning opens the first page with an unanswered question.
+  await page.getByTestId("attempt-save-exit").click();
+  await expect(page).toHaveURL(new RegExp(`${rolePath()}$`));
+  await expect(page.getByTestId("role-running")).toBeVisible();
   await page.getByTestId("role-start").click();
-  await expect(page).toHaveURL(new RegExp(`${rolePath()}/test/[0-9a-f-]{36}$`));
-  const secondUrl = page.url();
-  const secondId = attemptIdOf(secondUrl);
-  await saveCorrect(secondId, 13); // 52 %
-  await setDeadlineIn(secondId, 9_000);
-  await page.goto(secondUrl);
-  await expect(page.getByTestId("attempt-timer")).toHaveText(/^00:00:0\d$/);
-  await expect(page).toHaveURL(/\/result\//, { timeout: 30_000 });
-  await expect(page.getByTestId("result-title")).toHaveText(`13 of ${QUESTIONS} (52 %)`);
+  await expect(page).toHaveURL(new RegExp(`/test/${attemptId}$`));
+  await expect(page.getByTestId("attempt-title")).toHaveText(`Questions 11–20 of ${QUESTIONS}`); // 14 answered → question 15 is on page 2
+  await expect(questions.nth(0).getByRole("radio").nth(0)).toBeChecked();
+  await expect(page.getByTestId("attempt-progress")).toContainText(`14 of ${QUESTIONS} answered`);
+
+  // The viewed page stays locked and visible when going back.
+  await page.getByTestId("attempt-previous").click();
+  await expect(page.getByTestId("page-viewed-note")).toBeVisible();
+  await expect(page.getByTestId("result-question")).toHaveCount(10);
+  await page.getByTestId("attempt-next").click();
+  await expect(page.getByTestId("attempt-title")).toHaveText(`Questions 11–20 of ${QUESTIONS}`); // wait for the page change before cancelling
+
+  // Cancel: asks first; "No" keeps going; "Yes" deletes the test and leaves no record.
+  await page.getByTestId("cancel-test").click();
+  await expect(page.getByTestId("cancel-confirm")).toContainText("no result is kept");
+  await page.getByTestId("cancel-confirm-no").click();
+  await expect(page.getByTestId("cancel-confirm")).toHaveCount(0);
+  await page.getByTestId("cancel-test").click();
+  await page.getByTestId("cancel-confirm-yes").click();
+  await expect(page).toHaveURL(new RegExp(`${rolePath()}$`));
+  await expect(page.getByTestId("role-running")).toHaveCount(0);
+  await expect(page.getByTestId("role-start")).toHaveText("Start the test");
+  await expect(page.getByTestId("role-result-row")).toHaveCount(1); // only the earlier finished result; the cancelled test left nothing
+  const { getPrisma } = await import("../../src/db/prisma");
+  expect(await getPrisma().roleTestAttempt.count({ where: { id: attemptId } })).toBe(0);
+  expect((await page.goto(`${rolePath()}/test/${attemptId}`))?.status()).toBe(404);
 });
 
 test("the role pages have no horizontal overflow at 375, 768 and 1280 px; the signed-in role page has no WCAG 2.2 AA violations", async ({ page }) => {

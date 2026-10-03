@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { listPublishedSharedRoles } from "@/modules/assessment/roles.repository";
 import { ROLE_TEST_SIZE } from "@/modules/assessment/constants";
-import { plannedTestSize, TEST_MINUTES } from "@/modules/assessment/role-test-scope";
+import { plannedTestSize } from "@/modules/assessment/role-test-scope";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { Chip } from "@/shared/ui/Chip";
@@ -9,14 +9,14 @@ import { Chip } from "@/shared/ui/Chip";
 /*
  * /assessment/interview — Prepare for Interview (CR-2026-10-01-1711, DR-07): one
  * card per role. A person picks the role they are interviewing for and takes
- * that role's test — up to 100 random questions, 90 minutes kept by the portal,
+ * that role's test — up to 100 random questions, no time limit (CR-2026-10-03-2251),
  * a model answer to every question afterwards. Free; signing in is needed to
  * start (the role page asks). A role whose question bank has no reviewed
  * questions yet shows "Coming soon" and is not a link.
  */
 export const metadata: Metadata = {
   title: "Prepare for Interview",
-  description: `Practise for the interview for your role: pick a role, answer up to ${ROLE_TEST_SIZE} questions in ${TEST_MINUTES} minutes, then read a model answer to each one. Free with an account.`,
+  description: `Practise for the interview for your role: pick a role, answer up to ${ROLE_TEST_SIZE} questions at your own pace, then read a model answer to each one. Free with an account.`,
 };
 export const dynamic = "force-dynamic";
 
@@ -31,7 +31,7 @@ export default async function InterviewRolesPage() {
             Prepare for Interview
           </h1>
           <p className="text-body-lg max-w-[680px] text-[var(--color-ink-quiet)]" data-testid="interview-lead">
-            Pick the role you are interviewing for. Answer up to {ROLE_TEST_SIZE} questions in {TEST_MINUTES} minutes, then read a model answer to every one — the way a strong candidate would say it.
+            Pick the role you are interviewing for. Answer up to {ROLE_TEST_SIZE} questions at your own pace: there is no timer, and you can save and come back later. Then read a model answer to every one, the way a strong candidate would say it.
           </p>
         </div>
       </section>
@@ -56,7 +56,7 @@ export default async function InterviewRolesPage() {
                     <h3 className="text-h1 mb-3">{r.name}</h3>
                     {r.description ? <p className="text-body-sm mb-4 text-[var(--color-ink-quiet)]">{r.description}</p> : null}
                     <p className="text-label mb-6 text-[var(--color-ink-faint)]" data-testid={`role-facts-${r.slug}`}>
-                      {ready ? `${size} ${size === 1 ? "question" : "questions"} · ${TEST_MINUTES} minutes · model answers` : "Questions are being prepared"}
+                      {ready ? `${size} ${size === 1 ? "question" : "questions"} · no time limit · model answers` : "Questions are being prepared"}
                     </p>
                     <div className="mt-auto">
                       {ready ? (

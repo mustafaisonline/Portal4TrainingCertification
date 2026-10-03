@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ORG_QUESTION_CAP, ROLE_TEST_SIZE, ROLE_TEST_TIME_LIMIT_MS } from "@/modules/assessment/constants";
+import { ORG_QUESTION_CAP, ROLE_TEST_SIZE } from "@/modules/assessment/constants";
 import { listPublishedSharedRoles } from "@/modules/assessment/roles.repository";
 import { ASSESSMENT_GRADE_BANDS, ASSESSMENT_PASS_PERCENT, ASSESSMENT_SIZE, ASSESSMENT_TIME_LIMIT_MS, attemptDeadline, gradeOfResult } from "@/modules/free-learning/assessment-rules";
 import { bankSize, listAttemptsForUser, settleExpiredAttempts } from "@/modules/free-learning/knowledge-check.repository";
@@ -52,11 +52,11 @@ export default async function AssessmentPage() {
       id: "interview",
       audience: "For job seekers",
       title: "Prepare for Interview",
-      body: `Practise for the interview for your role. Pick a role, answer ${ROLE_TEST_SIZE} questions against the clock, then read a model answer to each — the way a strong candidate would say it. Free, with an account.`,
+      body: `Practise for the interview for your role. Pick a role, answer ${ROLE_TEST_SIZE} questions at your own pace, then read a model answer to each — the way a strong candidate would say it. Free, with an account.`,
       facts: [
         ...(roles.length > 0 ? [{ label: "Roles", text: roles.map((r) => r.name).join(" · ") }] : []),
         { label: `${ROLE_TEST_SIZE} questions`, text: "five options each, drawn fresh for every attempt" },
-        { label: `${ROLE_TEST_TIME_LIMIT_MS / 60_000} minutes`, text: "the portal keeps the time" },
+        { label: "No timer", text: "save and exit any time, or cancel and keep nothing" },
         { label: "Model answers", text: "shown beside your own once you finish" },
       ],
       cta: "Prepare for an interview for Free",

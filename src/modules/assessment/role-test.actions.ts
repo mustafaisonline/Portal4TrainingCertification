@@ -6,7 +6,7 @@ import { withTransaction } from "@/db/prisma";
 import { isUuid } from "@/modules/catalogue/offerings/repository";
 import { getCurrentUser } from "@/modules/identity/session";
 import { OPTIONS_PER_QUESTION } from "./constants";
-import { AssessmentError, deleteOwnRoleResult, finishRoleAttempt, getRoleAttemptForUser, saveRoleAnswers, startRoleAttempt } from "./attempts.repository";
+import { AssessmentError, cancelRoleAttempt, deleteOwnRoleResult, finishRoleAttempt, getRoleAttemptForUser, saveRoleAnswers, startRoleAttempt, viewRolePageResults } from "./attempts.repository";
 import { getOrganisationById } from "./organisations.repository";
 import { roleBasePath, roleResultPath, roleTestPath, scopeOfAttempt } from "./role-test-scope";
 
@@ -23,6 +23,10 @@ import { roleBasePath, roleResultPath, roleTestPath, scopeOfAttempt } from "./ro
  */
 
 export type RoleTestState = { status: "idle" } | { status: "error"; message: string } | { status: "saved"; message: string };
+
+/** A page the person asked for. Page 1 carries `?page=1` explicitly: with no page in the address the test opens on the FIRST
+ *  UNANSWERED page (resume), which is not what "go back to page 1" means. */
+const pagePath = (scope: Parameters<typeof roleTestPath>[0], attemptId: string, page: number) => `${roleTestPath(scope, attemptId)}?page=${Math.max(1, page)}`;
 
 const SESSION_ENDED = "Your session has ended. Please sign in again.";
 
@@ -68,8 +72,10 @@ function answersFrom(formData: FormData): Record<string, number> {
   return answers;
 }
 
-/** Save this page's answers; then continue to the next or previous page, or finish. When the 90 minutes are up the
- *  save is refused, the attempt is scored as it stands (unanswered = wrong) and the person sees the result. */
+/** Save this page's answers; then continue to the next or previous page, finish, save and exit (interview practice — back to the
+ *  role page, where "Return to my running test" resumes), or view this page's results (interview practice — the page's answers are
+ *  then locked). For an ORGANISATION test, when the 90 minutes are up the save is refused, the attempt is scored as it stands
+ *  (unanswered = wrong) and the person sees the result; interview practice has no time limit. */
 export async function saveRoleAnswersAction(_prev: RoleTestState, formData: FormData): Promise<RoleTestState> {
   const user = await getCurrentUser();
   if (!user) return { status: "error", message: SESSION_ENDED };
@@ -80,6 +86,20 @@ export async function saveRoleAnswersAction(_prev: RoleTestState, formData: Form
   const scope = attempt ? await scopeOfAttempt(attempt) : null;
   if (!attempt || !scope) return { status: "error", message: "This test could not be found." };
   if (attempt.finishedAt) redirect(roleResultPath(scope, attempt.id));
+  if (intent === "view") {
+    try {
+      await withTransaction((tx) => viewRolePageResults(tx, { attemptId, userId: user.id, page, answers: answersFrom(formData) }));
+    } catch (err) {
+      if (err instanceof AssessmentError) {
+        if (err.reason === "already_finished") redirect(roleResultPath(scope, attemptId));
+        if (err.reason === "forbidden") return { status: "error", message: "This test does not show results before you finish." };
+        return { status: "error", message: "This page could not be shown. Please try again." };
+      }
+      console.error(`[role-test] view results failed for attempt ${attemptId}:`, err instanceof Error ? err.message : err);
+      return { status: "error", message: "Your answers could not be saved. Please try again." };
+    }
+    redirect(pagePath(scope, attemptId, page));
+  }
   let timeUp = false;
   try {
     try {
@@ -103,8 +123,37 @@ export async function saveRoleAnswersAction(_prev: RoleTestState, formData: Form
     revalidatePath(roleBasePath(scope));
     redirect(roleResultPath(scope, attemptId));
   }
-  if (intent === "previous") redirect(roleTestPath(scope, attemptId, Math.max(1, page - 1)));
-  redirect(roleTestPath(scope, attemptId, page + 1));
+  if (intent === "exit") {
+    revalidatePath(roleBasePath(scope));
+    redirect(roleBasePath(scope));
+  }
+  if (intent === "previous") redirect(pagePath(scope, attemptId, page - 1));
+  redirect(pagePath(scope, attemptId, page + 1));
+}
+
+/** Interview practice: the person cancels their UNFINISHED test at any time — it is deleted and no record of a result is kept
+ *  (CR-2026-10-03-2251). A finished result and an organisation's screening test are refused by the repository. */
+export async function cancelRoleTestAction(_prev: RoleTestState, formData: FormData): Promise<RoleTestState> {
+  const user = await getCurrentUser();
+  if (!user) return { status: "error", message: SESSION_ENDED };
+  const attemptId = String(formData.get("attemptId") ?? "").trim();
+  if (!isUuid(attemptId)) return { status: "error", message: "This test could not be found." };
+  const attempt = await getRoleAttemptForUser(attemptId, user.id);
+  const scope = attempt ? await scopeOfAttempt(attempt) : null;
+  if (!attempt || !scope) return { status: "error", message: "This test could not be found." };
+  try {
+    await withTransaction((tx) => cancelRoleAttempt(tx, { attemptId, userId: user.id }));
+  } catch (err) {
+    if (err instanceof AssessmentError) {
+      if (err.reason === "already_finished") redirect(roleResultPath(scope, attemptId));
+      if (err.reason === "forbidden") return { status: "error", message: "An organisation's screening test cannot be cancelled here." };
+      return { status: "error", message: "This test could not be found." };
+    }
+    console.error(`[role-test] cancel failed for attempt ${attemptId}:`, err instanceof Error ? err.message : err);
+    return { status: "error", message: "The test could not be cancelled. Please try again." };
+  }
+  revalidatePath(roleBasePath(scope));
+  redirect(roleBasePath(scope));
 }
 
 /** The person deletes selected finished results of their OWN (form field `attempt`, repeated). Ownership and the

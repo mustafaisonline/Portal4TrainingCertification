@@ -7,6 +7,7 @@ import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { FormStatus } from "@/shared/ui/forms";
 import { AttemptTimer } from "../../free-learning/knowledge-check/[attemptId]/AttemptTimer";
+import { ResultQuestionCard } from "./ResultQuestionCard";
 
 const LETTERS = ["A", "B", "C", "D", "E"];
 const initial: RoleTestState = { status: "idle" };
@@ -19,8 +20,12 @@ const initial: RoleTestState = { status: "idle" };
  * countdown (the shared `AttemptTimer`, `role="timer"`) counts down from the
  * SERVER's remaining time and submits the form with the finish intent at zero —
  * the server then refuses the late save and scores the test as it stands.
+ *
+ * Interview practice (`practice`, CR-2026-10-03-2251) has NO countdown (`remainingMs` is null) and adds "Save and exit" and
+ * "View results of this page": the page's answers are saved, then locked, and the page shows each question with the correct
+ * answer and the model answer. A viewed page is read-only and still counts in the final score.
  */
-export function RoleTestForm({ attemptId, page, size, remainingMs }: { attemptId: string; page: AttemptPage; size: number; remainingMs: number }) {
+export function RoleTestForm({ attemptId, page, size, remainingMs, practice }: { attemptId: string; page: AttemptPage; size: number; remainingMs: number | null; practice: boolean }) {
   const [state, action, pending] = useActionState(saveRoleAnswersAction, initial);
   const [unanswered, setUnanswered] = useState<number | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
@@ -29,7 +34,8 @@ export function RoleTestForm({ attemptId, page, size, remainingMs }: { attemptId
   const countUnanswered = () => {
     const form = formRef.current;
     const savedElsewhere = page.answered - page.questions.filter((q) => q.chosen !== null).length;
-    const tickedHere = form ? page.questions.filter((q) => (new FormData(form).get(`q-${q.id}`) ?? null) !== null).length : 0;
+    // A viewed page has no radio buttons: its (locked) saved answers are what count.
+    const tickedHere = page.viewed ? page.questions.filter((q) => q.chosen !== null).length : form ? page.questions.filter((q) => (new FormData(form).get(`q-${q.id}`) ?? null) !== null).length : 0;
     return Math.max(0, size - savedElsewhere - tickedHere);
   };
 
@@ -41,12 +47,20 @@ export function RoleTestForm({ attemptId, page, size, remainingMs }: { attemptId
 
   return (
     <form ref={formRef} action={action} className="flex flex-col gap-4" aria-label="Test questions" data-testid="attempt-form">
-      <AttemptTimer remainingMs={remainingMs} onExpire={() => finishRef.current?.click()} />
+      {remainingMs !== null ? <AttemptTimer remainingMs={remainingMs} onExpire={() => finishRef.current?.click()} /> : null}
       <input type="hidden" name="attemptId" value={attemptId} />
       <input type="hidden" name="page" value={page.page} />
+      {page.viewed ? (
+        <p className="text-body-sm text-[var(--color-ink-quiet)]" data-testid="page-viewed-note">
+          You have viewed the results of this page, so its answers are locked. It still counts in your final score.
+        </p>
+      ) : null}
       <ol className="flex list-none flex-col gap-4 p-0">
         {page.questions.map((q) => (
           <li key={q.id}>
+            {q.revealed ? (
+              <ResultQuestionCard q={q.revealed} />
+            ) : (
             <Card variant="panel" className="p-5" data-testid="attempt-question">
               <p className="text-label mb-1 text-[var(--color-ink-faint)]" data-testid="attempt-category">
                 {q.category}
@@ -66,6 +80,7 @@ export function RoleTestForm({ attemptId, page, size, remainingMs }: { attemptId
                 ))}
               </fieldset>
             </Card>
+            )}
           </li>
         ))}
       </ol>
@@ -94,6 +109,21 @@ export function RoleTestForm({ attemptId, page, size, remainingMs }: { attemptId
         {page.page < page.pages ? (
           <Button type="submit" name="intent" value="next" disabled={pending} data-testid="attempt-next">
             Save and continue →
+          </Button>
+        ) : null}
+        {practice && !page.viewed ? (
+          <>
+            <Button type="submit" name="intent" value="view" variant="secondary" disabled={pending} aria-describedby="view-results-hint" data-testid="attempt-view-results">
+              View results of this page
+            </Button>
+            <span id="view-results-hint" className="text-body-sm basis-full text-[var(--color-ink-quiet)]" data-testid="view-results-hint">
+              &ldquo;View results of this page&rdquo; saves it and shows the correct answers. You cannot change this page&rsquo;s answers afterwards.
+            </span>
+          </>
+        ) : null}
+        {practice ? (
+          <Button type="submit" name="intent" value="exit" variant="secondary" disabled={pending} data-testid="attempt-save-exit">
+            Save and exit
           </Button>
         ) : null}
         {/* The visible Finish decides; the hidden submit carries the intent when nothing is unanswered. */}

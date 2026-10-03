@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { getRoleAttemptForUser, roleResultView, settleExpiredRoleAttempts } from "@/modules/assessment/attempts.repository";
+import { QUESTIONS_PER_PAGE } from "@/modules/assessment/constants";
 import { percentOf } from "@/modules/assessment/rules";
 import { roleBasePath, roleResultPath, roleTestPath, scopeOfAttempt, type RoleTestScope } from "@/modules/assessment/role-test-scope";
 import { requireUser } from "@/modules/identity/session";
@@ -9,20 +10,20 @@ import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import { Chip } from "@/shared/ui/Chip";
 import { formatTimestamp } from "@/shared/util/dates";
+import { ResultPager } from "./ResultPager";
+import { ResultQuestionCard } from "./ResultQuestionCard";
 import { RoleStartForm } from "./RoleStartForm";
-
-const LETTERS = ["A", "B", "C", "D", "E"];
 
 /*
  * The result — ONE screen for Prepare for Interview and for an organisation's
  * screening test (CR-2026-10-01-1711): the score, the percentage and the time
  * taken; the score for each topic; then EVERY question with the person's answer,
- * the correct option and the MODEL ANSWER, readable in full. A practice result
+ * the correct option and the MODEL ANSWER, readable in full, ten a page. A practice result
  * has no pass mark and no certificate. Only the attempt's owner can open it; an
  * unfinished attempt goes back to its test, so no answer can leak from a running
  * one.
  */
-export async function RoleResultScreen({ scope, attemptId }: { scope: RoleTestScope; attemptId: string }) {
+export async function RoleResultScreen({ scope, attemptId, pageParam }: { scope: RoleTestScope; attemptId: string; pageParam?: string | undefined }) {
   const user = await requireUser(roleResultPath(scope, attemptId));
   await settleExpiredRoleAttempts(user.id); // a test whose time is up is scored as it stands the moment it is read
   const attempt = await getRoleAttemptForUser(attemptId, user.id);
@@ -32,6 +33,12 @@ export async function RoleResultScreen({ scope, attemptId }: { scope: RoleTestSc
   if (!attempt.finishedAt || attempt.score === null) redirect(roleTestPath(scope, attempt.id));
   const view = await roleResultView(attempt);
   const base = roleBasePath(scope);
+  // The questions are listed ten a page (CR-2026-10-03-2251); the score and the topic breakdown above always cover the whole test.
+  const pages = Math.max(1, Math.ceil(view.questions.length / QUESTIONS_PER_PAGE));
+  const current = Math.min(Math.max(1, Number.parseInt(pageParam ?? "1", 10) || 1), pages);
+  const shown = view.questions.slice((current - 1) * QUESTIONS_PER_PAGE, current * QUESTIONS_PER_PAGE);
+  const pager = { page: current, pages, from: shown.length > 0 ? (current - 1) * QUESTIONS_PER_PAGE + 1 : 0, to: (current - 1) * QUESTIONS_PER_PAGE + shown.length, total: view.questions.length };
+  const resultBase = roleResultPath(scope, attempt.id);
 
   return (
     <section className="bg-[var(--color-ground-tint)]">
@@ -50,7 +57,7 @@ export async function RoleResultScreen({ scope, attemptId }: { scope: RoleTestSc
         </div>
 
         <Card variant="panel" className="p-5 sm:p-6">
-          <dl className="text-body-sm grid gap-x-8 gap-y-3 sm:grid-cols-3">
+          <dl className={`text-body-sm grid gap-x-8 gap-y-3 ${view.timeTakenMs !== null ? "sm:grid-cols-3" : "sm:grid-cols-2"}`}>
             <div>
               <dt className="text-label mb-1">Score</dt>
               <dd data-testid="result-score">
@@ -61,10 +68,12 @@ export async function RoleResultScreen({ scope, attemptId }: { scope: RoleTestSc
               <dt className="text-label mb-1">Finished</dt>
               <dd>{formatTimestamp(attempt.finishedAt)}</dd>
             </div>
-            <div>
-              <dt className="text-label mb-1">Time taken</dt>
-              <dd data-testid="result-time-taken">{formatTimeTaken(view.timeTakenMs)}</dd>
-            </div>
+            {view.timeTakenMs !== null ? (
+              <div>
+                <dt className="text-label mb-1">Time taken</dt>
+                <dd data-testid="result-time-taken">{formatTimeTaken(view.timeTakenMs)}</dd>
+              </div>
+            ) : null}
           </dl>
         </Card>
 
@@ -103,50 +112,19 @@ export async function RoleResultScreen({ scope, attemptId }: { scope: RoleTestSc
           </div>
         </Card>
 
-        <h2 className="text-h1 mb-1 mt-10">Every question, with its model answer</h2>
+        <h2 id="result-questions-heading" className="text-h1 mb-1 mt-10 scroll-mt-24">Every question, with its model answer</h2>
         <p className="text-body-sm mb-4 max-w-[66ch] text-[var(--color-ink-quiet)]">
           Read the model answer to each question — it is the way a strong candidate would answer it in an interview — whether or not you got it right.
         </p>
+        <ResultPager pager={pager} base={resultBase} position="top" />
         <ol className="flex list-none flex-col gap-4 p-0" data-testid="result-questions">
-          {view.questions.map((q) => (
+          {shown.map((q) => (
             <li key={q.number}>
-              <Card variant="panel" className="p-5" data-testid="result-question" data-outcome={q.chosen === null ? "unanswered" : q.correct ? "correct" : "wrong"}>
-                <p className="text-label mb-1 text-[var(--color-ink-faint)]">{q.category}</p>
-                <p className="text-body-lg mb-3 font-medium">
-                  <span className="text-[var(--color-ink-faint)]">{q.number}.</span> {q.stem}
-                </p>
-                <p className="text-body-sm mb-3 font-medium" data-testid="result-outcome">
-                  {q.chosen === null ? (
-                    <span className="text-[var(--color-ink-quiet)]">Not answered</span>
-                  ) : q.correct ? (
-                    <span className="text-[var(--color-success)]">Correct</span>
-                  ) : (
-                    <span className="text-[var(--color-danger)]">Not correct</span>
-                  )}
-                </p>
-                <ul className="flex list-none flex-col gap-2 p-0">
-                  {q.options.map((o, i) => (
-                    <li
-                      key={o.position}
-                      className={`text-body-sm rounded-[var(--radius-plate)] border px-3 py-2 ${o.isCorrect ? "border-[var(--color-success)]" : o.position === q.chosen ? "border-[var(--color-danger)]" : "border-[var(--color-line)]"}`}
-                      data-testid="result-option"
-                      data-correct={o.isCorrect ? "yes" : "no"}
-                      data-chosen={o.position === q.chosen ? "yes" : "no"}
-                    >
-                      <span className="text-[var(--color-ink-faint)]">{LETTERS[i]}.</span> {o.text}
-                      {o.isCorrect ? <span className="ml-2 font-medium text-[var(--color-success)]">— Correct answer</span> : null}
-                      {o.position === q.chosen ? <span className="ml-2 font-medium text-[var(--color-ink)]">— Your answer</span> : null}
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-4 rounded-[var(--radius-plate)] border border-[var(--color-line)] bg-[var(--color-ground-tint)] p-4" data-testid="result-model-answer">
-                  <p className="text-label mb-2 text-[var(--color-ink-quiet)]">Model answer</p>
-                  <p className="text-body-sm whitespace-pre-line">{q.modelAnswer}</p>
-                </div>
-              </Card>
+              <ResultQuestionCard q={q} />
             </li>
           ))}
         </ol>
+        <ResultPager pager={pager} base={resultBase} position="bottom" />
 
         <div className="mt-8 flex flex-wrap items-start gap-3">
           {owner.orgSlug === null ? (

@@ -23,7 +23,8 @@ export type RoleResultRow = {
   size: number;
   percent: number;
   finishedAtLabel: string;
-  timeLabel: string;
+  /** null for interview practice (no time limit — "time taken" is not shown). */
+  timeLabel: string | null;
 };
 
 const initial: RoleTestState = { status: "idle" };
@@ -80,7 +81,7 @@ export function RoleResultsList({ rows, deletable }: { rows: RoleResultRow[]; de
                 </strong>{" "}
                 ({r.percent} %) · {r.finishedAtLabel}
               </span>
-              <span className="text-[var(--color-ink-quiet)]">Time taken {r.timeLabel}</span>
+              {r.timeLabel !== null ? <span className="text-[var(--color-ink-quiet)]">Time taken {r.timeLabel}</span> : null}
             </span>
             <Link href={r.href} className="text-[var(--color-primary)] underline underline-offset-4" data-testid="role-result-link">
               View result

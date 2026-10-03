@@ -110,6 +110,7 @@ export type AuditAction =
   | "organisation_access.revoked"
   | "role_test.finished"
   | "role_test.deleted"
+  | "role_test.cancelled"
   // CR-2026-10-01-2138: "Register your interest" in a training format.
   | "interest.registered"
   | "interest.confirmed"

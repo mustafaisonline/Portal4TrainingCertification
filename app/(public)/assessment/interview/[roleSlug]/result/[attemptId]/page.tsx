@@ -5,7 +5,8 @@ import { RoleResultScreen } from "../../../../_role-test/RoleResultScreen";
 export const metadata: Metadata = { title: "Interview practice result", robots: { index: false, follow: false } };
 export const dynamic = "force-dynamic";
 
-export default async function InterviewResultPage({ params }: { params: Promise<{ roleSlug: string; attemptId: string }> }) {
+export default async function InterviewResultPage({ params, searchParams }: { params: Promise<{ roleSlug: string; attemptId: string }>; searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const { roleSlug, attemptId } = await params;
-  return <RoleResultScreen scope={{ roleSlug, orgSlug: null }} attemptId={attemptId} />;
+  const sp = await searchParams;
+  return <RoleResultScreen scope={{ roleSlug, orgSlug: null }} attemptId={attemptId} pageParam={typeof sp["page"] === "string" ? sp["page"] : undefined} />;
 }

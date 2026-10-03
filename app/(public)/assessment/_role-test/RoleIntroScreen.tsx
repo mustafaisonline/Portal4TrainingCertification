@@ -94,10 +94,17 @@ export async function RoleIntroScreen({
                 {available ? `${plannedSize} ${questionWord}` : "No questions yet"} drawn at random from the {role.name} question bank — a different set every time you start.
               </li>
             )}
-            <li>
-              {TEST_MINUTES} minutes. The portal keeps the time; when it is up, your test is scored as it stands.
-            </li>
+            {organisation ? (
+              <li>
+                {TEST_MINUTES} minutes. The portal keeps the time; when it is up, your test is scored as it stands.
+              </li>
+            ) : (
+              <li data-testid="role-expect-no-timer">
+                No time limit. Use <strong className="text-[var(--color-ink)]">Save and exit</strong> to stop and come back where you left off, or <strong className="text-[var(--color-ink)]">Cancel test</strong> to leave with nothing kept.
+              </li>
+            )}
             <li>Ten questions a page, five answers to choose from. Your answers are saved as you move between pages.</li>
+            {organisation ? null : <li>After any page you can view the results of that page. Its answers are then locked, and it still counts in your final score.</li>}
             <li>
               At the end you see your score, a breakdown by topic, and every question with the correct answer and a <strong className="text-[var(--color-ink)]">model answer</strong> — written the way a
               strong candidate would answer it in an interview.
@@ -116,7 +123,9 @@ export async function RoleIntroScreen({
             <h2 className="text-h1 mb-2">{running ? "Your test is running" : "Start the test"}</h2>
             {running ? (
               <p className="text-body-sm mb-5 text-[var(--color-ink-quiet)]" data-testid="role-running">
-                You started a test on {formatTimestamp(running.startedAt)}. It ends at {formatTimestamp(attemptDeadline(running.startedAt))}; your answers are kept as you go.
+                {organisation
+                  ? `You started a test on ${formatTimestamp(running.startedAt)}. It ends at ${formatTimestamp(attemptDeadline(running.startedAt))}; your answers are kept as you go.`
+                  : `You started a test on ${formatTimestamp(running.startedAt)}. Your answers are kept; it opens on the first page you have not finished.`}
               </p>
             ) : null}
             <RoleStartForm
@@ -149,7 +158,7 @@ export async function RoleIntroScreen({
                 size: a.size,
                 percent: a.percent ?? 0,
                 finishedAtLabel: formatTimestamp(a.finishedAt!),
-                timeLabel: formatTimeTaken(a.timeTakenMs ?? 0),
+                timeLabel: a.timeTakenMs === null ? null : formatTimeTaken(a.timeTakenMs),
               }))}
             />
           </Card>

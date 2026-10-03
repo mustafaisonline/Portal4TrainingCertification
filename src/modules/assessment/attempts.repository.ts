@@ -49,15 +49,31 @@ export type AttemptRecord = {
   startedAt: Date;
   finishedAt: Date | null;
   sharedWithOrganisation: boolean;
+  /** Pages (1-based) whose results the person has viewed mid-test — their answers are locked. Interview practice only. */
+  viewedPages: number[];
 };
+
+/** Reserved key inside the `answers` JSON (question ids are UUIDs, so it can never collide): the pages whose results were viewed.
+ *  Stored beside the answers so no schema change is needed (CR-2026-10-03-2251). */
+const VIEWED_KEY = "_viewedPages";
+
+/** An interview-practice test (no organisation) has NO time limit; an organisation's screening test keeps its 90 minutes. */
+const isTimed = (a: { organisationId: string | null }): boolean => a.organisationId !== null;
+
+function packAnswers(answers: Record<string, number>, viewedPages: readonly number[]): Record<string, number | number[]> {
+  return viewedPages.length > 0 ? { ...answers, [VIEWED_KEY]: [...new Set(viewedPages)].sort((a, b) => a - b) } : { ...answers };
+}
 
 const select = { id: true, userId: true, roleId: true, organisationId: true, size: true, questionIds: true, answers: true, score: true, startedAt: true, finishedAt: true, sharedWithOrganisation: true } as const;
 
 function toRecord(r: { id: string; userId: string; roleId: string; organisationId: string | null; size: number; questionIds: unknown; answers: unknown; score: number | null; startedAt: Date; finishedAt: Date | null; sharedWithOrganisation: boolean }): AttemptRecord {
+  const raw: Record<string, unknown> = r.answers && typeof r.answers === "object" && !Array.isArray(r.answers) ? (r.answers as Record<string, unknown>) : {};
+  const viewed = raw[VIEWED_KEY];
   return {
     ...r,
     questionIds: Array.isArray(r.questionIds) ? (r.questionIds as string[]) : [],
-    answers: r.answers && typeof r.answers === "object" && !Array.isArray(r.answers) ? (r.answers as Record<string, number>) : {},
+    answers: Object.fromEntries(Object.entries(raw).filter(([k, v]) => k !== VIEWED_KEY && typeof v === "number")) as Record<string, number>,
+    viewedPages: Array.isArray(viewed) ? viewed.filter((n): n is number => Number.isInteger(n) && n >= 1) : [],
   };
 }
 
@@ -69,15 +85,15 @@ async function lockUserAttempts(tx: Tx, userId: string): Promise<void> {
 
 /** Finishes, as it stands, every unfinished attempt of `userId` whose deadline has passed. */
 async function settleOpenAttempts(tx: Tx, userId: string, now: Date): Promise<void> {
-  const open = await tx.roleTestAttempt.findMany({ where: { userId, finishedAt: null }, select: { id: true, startedAt: true } });
+  const open = await tx.roleTestAttempt.findMany({ where: { userId, finishedAt: null, organisationId: { not: null } }, select: { id: true, startedAt: true } });
   for (const a of open) if (isExpired(a.startedAt, now)) await finishRoleAttempt(tx, { attemptId: a.id, userId, now });
 }
 
-/** Lazy expiry: scores, as it stands, every unfinished attempt of the person whose 90 minutes are up. Idempotent; returns how many were finished. */
+/** Lazy expiry: scores, as it stands, every unfinished ORGANISATION attempt of the person whose 90 minutes are up (interview practice has no time limit). Idempotent; returns how many were finished. */
 export async function settleExpiredRoleAttempts(userId: string, now: Date = new Date()): Promise<number> {
   if (!isUuid(userId)) return 0;
   const cutoff = new Date(now.getTime() - ROLE_TEST_TIME_LIMIT_MS);
-  const due = await getPrisma().roleTestAttempt.findMany({ where: { userId, finishedAt: null, startedAt: { lte: cutoff } }, select: { id: true } });
+  const due = await getPrisma().roleTestAttempt.findMany({ where: { userId, finishedAt: null, organisationId: { not: null }, startedAt: { lte: cutoff } }, select: { id: true } });
   for (const { id } of due) await withTransaction((tx) => finishRoleAttempt(tx, { attemptId: id, userId, now }));
   return due.length;
 }
@@ -147,53 +163,138 @@ export async function getRoleAttemptForUser(attemptId: string, userId: string, d
   return row ? toRecord(row) : null;
 }
 
-export type AttemptQuestion = { id: string; number: number; category: string; stem: string; options: { position: number; text: string }[]; chosen: number | null };
-export type AttemptPage = { page: number; pages: number; from: number; to: number; answered: number; questions: AttemptQuestion[] };
+export type AttemptQuestion = {
+  id: string;
+  number: number;
+  category: string;
+  stem: string;
+  options: { position: number; text: string }[];
+  chosen: number | null;
+  /** Set ONLY on a page whose results the person asked to see (interview practice): the correct option and the model answer. */
+  revealed: RoleResultQuestion | null;
+};
+export type AttemptPage = { page: number; pages: number; from: number; to: number; answered: number; /** This page's answers are locked and its results are shown. */ viewed: boolean; questions: AttemptQuestion[] };
+
+/** The page (1-based) a question number (1-based) is on. */
+export const pageOfNumber = (n: number): number => Math.floor((n - 1) / QUESTIONS_PER_PAGE) + 1;
+
+/** The page to open when the person returns: the first with an unanswered question that is not locked (a viewed page stays as it is);
+ *  when nothing editable is left unanswered, the last page that is not locked (or the last page when every page was viewed). */
+export function firstUnansweredPage(attempt: Pick<AttemptRecord, "questionIds" | "answers" | "viewedPages">): number {
+  const pages = Math.max(1, Math.ceil(attempt.questionIds.length / QUESTIONS_PER_PAGE));
+  const i = attempt.questionIds.findIndex((id, idx) => attempt.answers[id] === undefined && !attempt.viewedPages.includes(pageOfNumber(idx + 1)));
+  if (i !== -1) return pageOfNumber(i + 1);
+  for (let p = pages; p >= 1; p -= 1) if (!attempt.viewedPages.includes(p)) return p;
+  return pages;
+}
 
 /** One page of an attempt's questions (ten), with the saved answers, WITHOUT the correct options or the model answers. */
 export async function attemptPage(attempt: AttemptRecord, page: number, db: Db = getPrisma()): Promise<AttemptPage> {
   const pages = Math.max(1, Math.ceil(attempt.questionIds.length / QUESTIONS_PER_PAGE));
   const current = Math.min(Math.max(1, Math.floor(page) || 1), pages);
   const ids = attempt.questionIds.slice((current - 1) * QUESTIONS_PER_PAGE, current * QUESTIONS_PER_PAGE);
+  // Results are only ever shown on an interview-practice page the person explicitly viewed; an organisation's test never reveals.
+  const viewed = attempt.organisationId === null && attempt.viewedPages.includes(current);
   const rows = await db.roleQuestion.findMany({
     where: { id: { in: ids } },
-    select: { id: true, category: true, stem: true, options: { orderBy: { position: "asc" }, select: { position: true, text: true } } },
+    select: {
+      id: true,
+      category: true,
+      stem: true,
+      ...(viewed ? { modelAnswer: true } : {}),
+      options: { orderBy: { position: "asc" }, select: { position: true, text: true, ...(viewed ? { isCorrect: true } : {}) } },
+    },
   });
   const byId = new Map(rows.map((r) => [r.id, r]));
-  const questions = ids.flatMap((id, i) => {
+  const questions = ids.flatMap((id, i): AttemptQuestion[] => {
     const r = byId.get(id);
     if (!r) return [];
-    return [{ id, number: (current - 1) * QUESTIONS_PER_PAGE + i + 1, category: r.category, stem: r.stem, options: r.options, chosen: attempt.answers[id] ?? null }];
+    const number = (current - 1) * QUESTIONS_PER_PAGE + i + 1;
+    const chosen = attempt.answers[id] ?? null;
+    let revealed: RoleResultQuestion | null = null;
+    if (viewed) {
+      const withKey = r as unknown as { modelAnswer: string; options: { position: number; text: string; isCorrect: boolean }[] };
+      const correctPos = withKey.options.find((o) => o.isCorrect)?.position;
+      revealed = { number, category: r.category, stem: r.stem, options: withKey.options, chosen, correct: chosen !== null && chosen === correctPos, modelAnswer: withKey.modelAnswer };
+    }
+    return [{ id, number, category: r.category, stem: r.stem, options: r.options.map((o) => ({ position: o.position, text: o.text })), chosen, revealed }];
   });
-  return { page: current, pages, from: (current - 1) * QUESTIONS_PER_PAGE + 1, to: Math.min(attempt.questionIds.length, current * QUESTIONS_PER_PAGE), answered: Object.keys(attempt.answers).length, questions };
+  return { page: current, pages, from: (current - 1) * QUESTIONS_PER_PAGE + 1, to: Math.min(attempt.questionIds.length, current * QUESTIONS_PER_PAGE), answered: Object.keys(attempt.answers).length, viewed, questions };
 }
 
-/** Merge a page's answers into the attempt (only questions the attempt serves; only positions 1–5).
- *  REFUSED once the 90 minutes are up (`time_expired`) — the server, not the browser's clock, decides.
- *  Nothing is written on refusal; the caller then settles the attempt (`finishRoleAttempt`). */
+/** Merge a page's answers into the attempt (only questions the attempt serves; only positions 1–5; never a question on a page whose
+ *  results were viewed — those answers are locked). For an ORGANISATION test, REFUSED once the 90 minutes are up (`time_expired`) —
+ *  the server, not the browser's clock, decides. Interview practice has no time limit. Nothing is written on refusal; the caller then
+ *  settles the attempt (`finishRoleAttempt`). */
 export async function saveRoleAnswers(tx: Tx, input: { attemptId: string; userId: string; answers: Record<string, number>; now?: Date }): Promise<AttemptRecord> {
+  await lockUserAttempts(tx, input.userId); // two tabs cannot overwrite each other's read-modify-write of the answers (or drop a page lock)
   const attempt = await getRoleAttemptForUser(input.attemptId, input.userId, tx);
   if (!attempt) throw new AssessmentError("not_found", `Attempt ${input.attemptId} not found for user.`);
   if (attempt.finishedAt) throw new AssessmentError("already_finished", `Attempt ${attempt.id} is finished.`);
-  if (isExpired(attempt.startedAt, input.now ?? new Date())) throw new AssessmentError("time_expired", `The time for attempt ${attempt.id} is up.`);
-  const served = new Set(attempt.questionIds);
-  const merged: Record<string, number> = { ...attempt.answers };
-  for (const [id, pos] of Object.entries(input.answers)) {
-    if (served.has(id) && Number.isInteger(pos) && pos >= 1 && pos <= OPTIONS_PER_QUESTION) merged[id] = pos;
-  }
-  const row = await tx.roleTestAttempt.update({ where: { id: attempt.id }, data: { answers: merged }, select });
+  if (isTimed(attempt) && isExpired(attempt.startedAt, input.now ?? new Date())) throw new AssessmentError("time_expired", `The time for attempt ${attempt.id} is up.`);
+  const merged = mergeAnswers(attempt, input.answers);
+  const row = await tx.roleTestAttempt.update({ where: { id: attempt.id }, data: { answers: packAnswers(merged, attempt.viewedPages) }, select });
   return toRecord(row);
+}
+
+/** The attempt's answers with `incoming` merged in — served questions only, positions 1–5, never on a viewed (locked) page. */
+function mergeAnswers(attempt: AttemptRecord, incoming: Record<string, number>): Record<string, number> {
+  const served = new Set(attempt.questionIds);
+  const locked = new Set(attempt.questionIds.filter((_, i) => attempt.viewedPages.includes(pageOfNumber(i + 1))));
+  const merged: Record<string, number> = { ...attempt.answers };
+  for (const [id, pos] of Object.entries(incoming)) {
+    if (served.has(id) && !locked.has(id) && Number.isInteger(pos) && pos >= 1 && pos <= OPTIONS_PER_QUESTION) merged[id] = pos;
+  }
+  return merged;
+}
+
+/** Interview practice: save this page's answers, then LOCK the page and show its results (`attemptPage` reveals it). The page still
+ *  counts in the final score. Refusals: `not_found`, `already_finished`, `forbidden` (an organisation's test never reveals answers
+ *  mid-test), `invalid_input` (no such page). Idempotent for a page already viewed. */
+export async function viewRolePageResults(tx: Tx, input: { attemptId: string; userId: string; page: number; answers: Record<string, number> }): Promise<AttemptRecord> {
+  await lockUserAttempts(tx, input.userId);
+  const attempt = await getRoleAttemptForUser(input.attemptId, input.userId, tx);
+  if (!attempt) throw new AssessmentError("not_found", `Attempt ${input.attemptId} not found for user.`);
+  if (attempt.finishedAt) throw new AssessmentError("already_finished", `Attempt ${attempt.id} is finished.`);
+  if (isTimed(attempt)) throw new AssessmentError("forbidden", "An organisation's test does not show results mid-test.");
+  const pages = Math.max(1, Math.ceil(attempt.questionIds.length / QUESTIONS_PER_PAGE));
+  if (!Number.isInteger(input.page) || input.page < 1 || input.page > pages) throw new AssessmentError("invalid_input", `Page ${input.page} does not exist.`);
+  const merged = mergeAnswers(attempt, input.answers);
+  const row = await tx.roleTestAttempt.update({ where: { id: attempt.id }, data: { answers: packAnswers(merged, [...attempt.viewedPages, input.page]) }, select });
+  return toRecord(row);
+}
+
+/** Interview practice: the person cancels an UNFINISHED test — the attempt and its answers are deleted and no record of the result
+ *  exists (only an audit line with no content). Never a finished result (`already_finished`) and never an organisation's test
+ *  (`forbidden`; it is the organisation's screening). Refusals: `not_found`, `already_finished`, `forbidden`. */
+export async function cancelRoleAttempt(tx: Tx, input: { attemptId: string; userId: string }): Promise<void> {
+  await lockUserAttempts(tx, input.userId);
+  const attempt = await getRoleAttemptForUser(input.attemptId, input.userId, tx);
+  if (!attempt) throw new AssessmentError("not_found", `Attempt ${input.attemptId} not found for user.`);
+  if (attempt.finishedAt) throw new AssessmentError("already_finished", "A finished result is not cancelled.");
+  if (isTimed(attempt)) throw new AssessmentError("forbidden", "An organisation's screening test cannot be cancelled here.");
+  await writeAudit(tx, {
+    actorUserId: input.userId,
+    action: "role_test.cancelled",
+    entityType: "role_test_attempt",
+    entityId: attempt.id,
+    before: { roleId: attempt.roleId, size: attempt.size, answered: Object.keys(attempt.answers).length },
+    after: null,
+  });
+  await tx.roleTestAttempt.delete({ where: { id: attempt.id } });
 }
 
 /** Score the attempt as it stands and audit. Idempotent. The finish instant is CAPPED at the deadline
  *  (`started_at` + 90 min), so a test scored after its time ran out reads as taking exactly 90 minutes. */
 export async function finishRoleAttempt(tx: Tx, input: { attemptId: string; userId: string; now?: Date }): Promise<AttemptRecord> {
+  await lockUserAttempts(tx, input.userId);
   const attempt = await getRoleAttemptForUser(input.attemptId, input.userId, tx);
   if (!attempt) throw new AssessmentError("not_found", `Attempt ${input.attemptId} not found for user.`);
   if (attempt.finishedAt) return attempt;
   const requested = input.now ?? new Date();
   const deadline = attemptDeadline(attempt.startedAt);
-  const finishedAt = requested.getTime() > deadline.getTime() ? deadline : requested;
+  // Only an organisation's timed test is capped at its deadline; interview practice has no deadline.
+  const finishedAt = isTimed(attempt) && requested.getTime() > deadline.getTime() ? deadline : requested;
   const correct = await tx.roleQuestionOption.findMany({ where: { questionId: { in: attempt.questionIds }, isCorrect: true }, select: { questionId: true, position: true } });
   const correctBy = new Map(correct.map((c) => [c.questionId, c.position]));
   const score = attempt.questionIds.filter((id) => attempt.answers[id] !== undefined && attempt.answers[id] === correctBy.get(id)).length;
@@ -224,8 +325,8 @@ export type RoleResultView = {
   size: number;
   /** Whole-number percentage, rounded DOWN. */
   percent: number;
-  /** Finish − start, in milliseconds (never more than 90 minutes). */
-  timeTakenMs: number;
+  /** Finish − start, in milliseconds (never more than 90 minutes). null for interview practice — it has no time limit and "time taken" is not shown. */
+  timeTakenMs: number | null;
   breakdown: CategoryScore[];
   questions: RoleResultQuestion[];
 };
@@ -251,7 +352,7 @@ export async function roleResultView(attempt: AttemptRecord, db: Db = getPrisma(
     score: attempt.score,
     size: attempt.size,
     percent: percentOf(attempt.score, attempt.size),
-    timeTakenMs: Math.max(0, attempt.finishedAt.getTime() - attempt.startedAt.getTime()),
+    timeTakenMs: isTimed(attempt) ? Math.max(0, attempt.finishedAt.getTime() - attempt.startedAt.getTime()) : null,
     breakdown: categoryBreakdown(questions.map((q) => ({ category: q.category, correct: q.correct }))),
     questions,
   };
@@ -264,7 +365,7 @@ export type RoleAttemptSummary = AttemptRecord & {
   organisationSlug: string | null;
   /** null while running. */
   percent: number | null;
-  /** null while running. */
+  /** null while running, and always null for interview practice (no time limit). */
   timeTakenMs: number | null;
 };
 
@@ -287,7 +388,7 @@ export async function listRoleAttemptsForUser(userId: string, opts: { roleId?: s
       organisationName: organisation?.name ?? null,
       organisationSlug: organisation?.slug ?? null,
       percent: rec.score === null ? null : percentOf(rec.score, rec.size),
-      timeTakenMs: rec.finishedAt ? Math.max(0, rec.finishedAt.getTime() - rec.startedAt.getTime()) : null,
+      timeTakenMs: rec.finishedAt && isTimed(rec) ? Math.max(0, rec.finishedAt.getTime() - rec.startedAt.getTime()) : null,
     };
   });
 }

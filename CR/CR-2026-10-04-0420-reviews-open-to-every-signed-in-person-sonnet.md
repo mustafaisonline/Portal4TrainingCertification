@@ -1,6 +1,6 @@
 # CR-2026-10-04-0420 — Reviews: anyone who is signed in can share one (always approved by an administrator before the public sees it)
 
-**Received:** 2026-10-04 04:20 MYT · **Status:** BUILT & VERIFIED — in the combined review, then deploy · **Requested by:** founder · **Model:** sonnet
+**Received:** 2026-10-04 04:20 MYT · **Status:** DEPLOYED `v2026.10.04-1` · **Requested by:** founder · **Model:** sonnet
 
 ## 1. Request (verbatim)
 
@@ -35,3 +35,4 @@
 |---|---|
 | 2026-10-04 04:20 | CR created; code inspected read-only; no schema change needed. |
 | 2026-10-04 06:10 | **BUILT & VERIFIED.** The free-learner review is now the always-open section "Not taken a training? You can still review us" (for every signed-in person), its public label is **"Knowledge Hub & free tools"**; same rules (private unless consented; public only after an administrator approves). No schema change. e2e: a person with no training reviews, it is pending and not public, then public after approval. |
+| 2026-10-04 00:37 MYT (16:36 UTC, 2026-10-03) | **DEPLOYED `v2026.10.04-1` (`12a14e2`).** Gate, backup, migration sandbox (`20261004090000_offering_status_pending_review`), promote, validation PASSED, 0 warnings. Live check in a browser at 375 px: no theme icon in the header, theme switch in the menu and the footer, no horizontal overflow; health reports the new migration. |

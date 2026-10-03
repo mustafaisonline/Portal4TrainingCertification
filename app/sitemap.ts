@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { AGENTIC_ITEMS } from "@/content/agentic/catalogue";
 import { listPublishedProgrammes } from "@/modules/catalogue/programmes/repository";
 import { listPublishedTopics } from "@/modules/free-learning/book.repository";
 import { footerExplore, footerLegal, primaryNav } from "@/shared/chrome/site-nav";
@@ -42,5 +43,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...topics.map((t) => ({ url: `${base}/free-learning/topics/${t.slug}`, changeFrequency: "monthly" as const, priority: 0.6 })),
   ];
 
-  return [...staticEntries, ...programmeEntries, ...topicEntries];
+  // CR-2026-10-04-0111/0113: the Agentic AI section, its items and the subscription page (public to read).
+  const agenticEntries: MetadataRoute.Sitemap = [
+    "/agentic-ai",
+    "/agentic-ai/agents",
+    "/agentic-ai/skills",
+    "/agentic-ai/terms",
+    "/subscription",
+    ...AGENTIC_ITEMS.map((i) => `/agentic-ai/${i.kind === "agent" ? "agents" : "skills"}/${i.slug}`),
+  ].map((path) => ({ url: `${base}${path}`, changeFrequency: "monthly" as const, priority: 0.6 }));
+
+  return [...staticEntries, ...programmeEntries, ...topicEntries, ...agenticEntries];
 }

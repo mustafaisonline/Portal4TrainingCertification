@@ -17,7 +17,7 @@ describe("account navigation", () => {
   });
 
   it("lists the tabs in the founder's order (Milestone 13, decisions 5–7): Profile first, no Dashboard, no catalogue tab", () => {
-    expect(accountNavItems.map((i) => i.label)).toEqual(["Profile", "My Trainings", "Certifications", "Reviews", "Orders & receipts", "Skills profile", "Notifications", "Help"]);
+    expect(accountNavItems.map((i) => i.label)).toEqual(["Profile", "My Trainings", "Certifications", "Reviews", "Orders & receipts", "My Agentic AI", "Skills profile", "Notifications", "Help"]);
     expect(accountNavItems[0]!.href).toBe("/account/profile");
     expect(accountNavItems.map((i) => i.href)).not.toContain("/account");
     expect(accountNavItems.map((i) => i.href)).not.toContain("/account/programme");

@@ -32,6 +32,8 @@ export type DataExport = {
   consents: Record<string, unknown>[];
   /** CR-2026-10-01-2138: formats the person registered interest in, with the details they gave. */
   interests: Record<string, unknown>[];
+  /** CR-2026-10-04-0112: Agentic AI items owned, credit packs and access passes. */
+  agentic: { ownerships: Record<string, unknown>[]; creditPacks: Record<string, unknown>[]; passes: Record<string, unknown>[] };
   auditAsActor: Record<string, unknown>[];
 };
 
@@ -167,6 +169,11 @@ export async function buildDataExport(userId: string, db: Db = getPrisma(), now 
   const dateOnly = (d: Date) => d.toISOString().slice(0, 10);
 
   // CR-2026-10-01-2138: the formats the person registered interest in, with the details they gave.
+  const [agenticOwnerships, agenticPacks, agenticPasses] = await Promise.all([
+    db.agenticOwnership.findMany({ where: { userId }, orderBy: { createdAt: "asc" }, select: { itemSlug: true, via: true, orderId: true, createdAt: true } }),
+    db.agenticCreditPack.findMany({ where: { userId }, orderBy: { createdAt: "asc" }, select: { orderId: true, creditsTotal: true, creditsUsed: true, createdAt: true } }),
+    db.accessPass.findMany({ where: { userId }, orderBy: { startsAt: "asc" }, select: { plan: true, orderId: true, startsAt: true, endsAt: true, createdAt: true } }),
+  ]);
   const interests = await db.trainingInterest.findMany({
     where: { userId },
     orderBy: { createdAt: "asc" },
@@ -209,6 +216,7 @@ export async function buildDataExport(userId: string, db: Db = getPrisma(), now 
       certificates.map((c) => ({ ...c, completedOn: dateOnly(c.completedOn), issuedOn: dateOnly(c.issuedOn), expiresOn: dateOnly(c.expiresOn) })),
     ),
     renewals: asRecords(renewals.map((r) => ({ ...r, previousExpiresOn: dateOnly(r.previousExpiresOn), newExpiresOn: dateOnly(r.newExpiresOn) }))),
+    agentic: { ownerships: asRecords(agenticOwnerships), creditPacks: asRecords(agenticPacks), passes: asRecords(agenticPasses) },
     interests: asRecords(
       interests.map(({ programme, deliveryFormat, dateOfBirth, ...i }) => ({ ...i, dateOfBirth: dateOfBirth ? dateOnly(dateOfBirth) : null, programmeTitle: programme.title, formatName: deliveryFormat.name })),
     ),

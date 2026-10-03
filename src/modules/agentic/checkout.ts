@@ -65,7 +65,7 @@ export async function startAgenticCheckout(input: StartAgenticCheckoutInput): Pr
 
   const prisma = getPrisma();
   try {
-    const back = sku.kind === "access_pass" ? "/subscription" : sku.kind === "agentic_item" ? `/agentic-ai` : "/agentic-ai/plans";
+    const back = sku.kind === "access_pass" ? "/subscription" : "/agentic-ai";
     const session = await gateway.createCheckoutSession({
       orderId: order.id,
       amountMinor,

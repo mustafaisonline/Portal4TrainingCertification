@@ -10,6 +10,7 @@ import { CommerceError } from "@/modules/commerce/errors";
 import { listOrdersForUser } from "@/modules/commerce/registrations.service";
 import type { CheckoutSessionInput, PaymentGateway } from "@/modules/commerce/stripe";
 import { verifyStripeSignature } from "@/modules/commerce/stripe";
+import { buildDataExport } from "@/modules/identity/data-export";
 import { unlockStatusForAttempt } from "@/modules/commerce/unlock.service";
 import { handleStripeWebhook } from "@/modules/commerce/webhook.service";
 import { createReview } from "@/modules/reviews/repository";
@@ -144,6 +145,9 @@ describe("buying one item", () => {
     expect(await prisma.outboundEmail.count({ where: { toEmail: buyer.email.toLowerCase(), templateKey: "commerce.agentic-purchase" } })).toBe(1);
     const titles = (await listOrdersForUser(buyer.id)).map((o) => o.programmeTitle);
     expect(titles).toContain("Agentic AI — Impact Analysis");
+    // The person's own data export includes what they own (PDPA).
+    const exported = await buildDataExport(buyer.id);
+    expect(exported!.agentic.ownerships.map((o) => o["itemSlug"])).toContain("impact-analysis");
     // Owning it, the person cannot buy it again.
     await expect(startAgenticCheckout({ userId: buyer.id, sku: skuOfItem("impact-analysis"), acknowledged: true, gateway: fakeGateway() })).rejects.toMatchObject({ code: "agentic_already_owned" });
   });

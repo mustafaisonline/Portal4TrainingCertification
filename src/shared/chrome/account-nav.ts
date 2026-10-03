@@ -25,6 +25,8 @@ export const accountNavItems: readonly AccountNavItem[] = [
   // frame since M13), so this is the one item outside /account.
   { href: "/reviews", label: "Reviews" },
   { href: "/account/orders", label: "Orders & receipts" },
+  // CR-2026-10-04-0112: the person's Agentic AI plan, credits and downloads.
+  { href: "/account/downloads", label: "My Agentic AI" },
   { href: "/account/skills", label: "Skills profile" },
   { href: "/account/notifications", label: "Notifications" },
   { href: "/account/help", label: "Help" },

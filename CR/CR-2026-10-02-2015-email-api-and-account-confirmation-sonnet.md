@@ -1,6 +1,6 @@
 # CR-2026-10-02-2015 — Email API and confirmation email after creating an account — ACTIVATES the deferred provider decision
 
-**Received:** 2026-10-02 20:15 MYT · **Status:** BLOCKED on the founder's provider choice — RED gate (new external service) · **Requested by:** founder · **Recommended model:** Sonnet 5.5 — one transport implementation behind the existing interface (the provider decision itself is the founder's)
+**Received:** 2026-10-02 20:15 MYT · **Status:** PARKED — founder (2026-10-03): "we will look into later"; still a RED gate (provider choice) when resumed · **Requested by:** founder · **Recommended model:** Sonnet 5.5 — one transport implementation behind the existing interface (the provider decision itself is the founder's)
 
 ## 1. Request (verbatim)
 
@@ -45,3 +45,4 @@ Written case for approval (problem, why the existing `log` transport is insuffic
 | 2026-10-02 | run-cr 2026-10-02: kept OPEN (BLOCKED) — RED gate (new external service): the founder must choose the email provider (Resend or Postmark), the sending address, and confirm DNS access. Re-run run-cr after the decision. |
 | 2026-10-02 | Founder: "let this CR there" — kept open and blocked (RED gate: provider not chosen). |
 | 2026-10-03 | Renamed with the model suffix (`…-sonnet`) per the CR convention of 2026-10-03; content unchanged. |
+| 2026-10-03 11:49 | Founder: "Pelase partk these two … As seperate CR we will look into later." Status PARKED. `resume-work`/`run-cr` keep listing it until the founder resumes it. |

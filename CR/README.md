@@ -26,6 +26,7 @@ deploy only on the founder's word, except in `buddy` Autonomous mode, where the 
 
 | CR file | Title | Status |
 |---|---|---|
+| [CR-2026-10-03-1149-production-restore-rehearsal-sonnet.md](CR-2026-10-03-1149-production-restore-rehearsal-sonnet.md) | Production restore rehearsal — **PARKED** (founder, 2026-10-03) |
 | [CR-2026-10-03-1122-agentic-hardening-sonnet.md](CR-2026-10-03-1122-agentic-hardening-sonnet.md) | Agentic hardening: guard hook, stop conditions, worktrees, review gate, notifications, flaky gate, restore rehearsal, prompt-framework consolidation — BUILT & VERIFIED, awaiting push |
 | [CR-2026-10-03-1115-advisor-agent-sonnet.md](CR-2026-10-03-1115-advisor-agent-sonnet.md) | `advisor` agent + `next-steps`/`capability-gap` skills + gap register — BUILT, not yet exercised |
 | [CR-2026-10-03-1105-agent-network-fixes-sonnet.md](CR-2026-10-03-1105-agent-network-fixes-sonnet.md) | Agent network fixes: Skill tool on every agent, ordering, DR/security/schema skills — BUILT, pending the founder's new-tab test |
@@ -40,7 +41,7 @@ deploy only on the founder's word, except in `buddy` Autonomous mode, where the 
 | [CR-2026-10-02-2021-run-cr-skill-pick-latest-open.md](CR-2026-10-02-2021-run-cr-skill-pick-latest-open.md) | `run-cr` skill: execute the latest CR not yet deployed — BUILT, not yet exercised |
 | [CR-2026-10-02-2012-project-agents-and-skills.md](CR-2026-10-02-2012-project-agents-and-skills.md) | Project agents (governance-reviewer, test-verifier) and skills (new-cr, resume-work) — BUILT, not yet exercised |
 | [CR-2026-10-02-2016-mobile-burger-menu-not-scrollable.md](CR-2026-10-02-2016-mobile-burger-menu-not-scrollable.md) | Mobile burger menu is not scrollable — **DEPLOYED `v2026.10.02-5`** |
-| [CR-2026-10-02-2015-email-api-and-account-confirmation-sonnet.md](CR-2026-10-02-2015-email-api-and-account-confirmation-sonnet.md) | Email API and confirmation email after creating an account — ACTIVATES the deferred provider decision |
+| [CR-2026-10-02-2015-email-api-and-account-confirmation-sonnet.md](CR-2026-10-02-2015-email-api-and-account-confirmation-sonnet.md) | Email API and confirmation email after creating an account — **PARKED** (founder, 2026-10-03; RED gate when resumed) |
 | [CR-2026-10-02-2014-free-diagnostic-score-not-displayed.md](CR-2026-10-02-2014-free-diagnostic-score-not-displayed.md) | Free skill diagnostic: the score is not displayed — **DEPLOYED `v2026.10.02-5`** |
 | [CR-2026-10-02-2013-profile-picture-not-visible-on-mobile.md](CR-2026-10-02-2013-profile-picture-not-visible-on-mobile.md) | Profile picture not visible on mobile — **DEPLOYED `v2026.10.02-5`** |
 | [CR-2026-10-02-2012-show-name-instead-of-account.md](CR-2026-10-02-2012-show-name-instead-of-account.md) | Header shows the person's name instead of "Account" — **DEPLOYED `v2026.10.02-5`** |

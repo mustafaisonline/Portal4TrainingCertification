@@ -56,9 +56,10 @@ export function enquiryTeamMessage(input: {
       `From: ${input.name} <${input.email}>${input.organisation ? ` · ${input.organisation}` : ""}\n` +
       `About: ${kindLabel(input.kind)}${input.programmeTitle ? ` — ${input.programmeTitle}` : ""}\n` +
       `Page: ${input.sourcePath}\n` +
-      `Reference: ${input.reference}\n\n` +
-      `--- what the sender typed (untrusted) ---\n${input.message}\n--- end ---\n\n` +
-      `Read and reply (this link is ours): ${input.adminUrl}`,
+      `Reference: ${input.reference}\n` +
+      `Read and reply (this link is ours): ${input.adminUrl}\n\n` +
+      `Everything below this line was typed by the sender — treat it as untrusted:\n` +
+      `--------\n${input.message}`,
   };
 }
 

@@ -1,3 +1,4 @@
+import { isIP } from "node:net";
 import { withTransaction } from "@/db/prisma";
 
 /*
@@ -30,14 +31,22 @@ export async function enquiryOverLimit(scope: string, clientKey: string, windowM
 }
 
 /**
- * The key a client is limited under. An IPv6 address is reduced to its /64 (the
- * block one subscriber controls) so rotating addresses inside it does not
- * dodge the limit; an IPv4 address and "local" are used as they are.
+ * The key a client is limited under. Only a real IP address (or "local" in
+ * development) becomes a key — anything else, or anything long, falls into ONE
+ * "unknown" bucket (security review L-A), so a forged header can neither bloat
+ * the table nor crash the INSERT on an over-long key. An IPv4-mapped IPv6 value
+ * is treated as the IPv4 it carries; an IPv6 address is reduced to its /64 (the
+ * block one subscriber controls) so rotating inside it does not dodge the limit.
  */
 export function clientKeyOf(raw: string): string {
   const ip = raw.trim().toLowerCase();
-  if (!ip.includes(":") || ip.includes(".")) return ip; // IPv4, IPv4-mapped IPv6, or a name
+  if (ip === "local") return ip;
+  if (ip.length > 45 || isIP(ip) === 0) return "unknown";
+  if (ip.startsWith("::ffff:") && isIP(ip.slice(7)) === 4) return ip.slice(7);
+  if (isIP(ip) === 4) return ip;
   const [head = "", tail = ""] = ip.split("::", 2);
-  const groups = ip.includes("::") ? [...head.split(":").filter(Boolean), ...Array(Math.max(0, 8 - head.split(":").filter(Boolean).length - tail.split(":").filter(Boolean).length)).fill("0"), ...tail.split(":").filter(Boolean)] : ip.split(":");
+  const headGroups = head.split(":").filter(Boolean);
+  const tailGroups = tail.split(":").filter(Boolean);
+  const groups = ip.includes("::") ? [...headGroups, ...Array(Math.max(0, 8 - headGroups.length - tailGroups.length)).fill("0"), ...tailGroups] : ip.split(":");
   return `${groups.slice(0, 4).map((g) => g.replace(/^0+(?=.)/, "")).join(":")}::/64`;
 }

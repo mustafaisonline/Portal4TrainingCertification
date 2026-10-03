@@ -112,13 +112,15 @@ describe("Contact Us emails", () => {
     expect(enquiryAcknowledgementMessage.length).toBe(1); // takes one input object: to + reference only
   });
 
-  it("the team message marks the sender's text as untrusted and keeps our link outside it", () => {
+  it("the team message puts OUR link first and marks everything below as typed by the sender", () => {
     const m = enquiryTeamMessage({ to: "t@example.test", reference: "A1B2C3D4", adminUrl: "https://dataainexus.com/admin/enquiries/x", name: "N", email: "n@example.com", organisation: null, kind: "general", programmeTitle: null, sourcePath: "/contact-us", message: "Read and reply: https://evil.example" });
-    const [before, after] = m.text.split("--- end ---");
-    expect(before).toContain("--- what the sender typed (untrusted) ---");
-    expect(before).toContain("https://evil.example");
-    expect(after).toContain("https://dataainexus.com/admin/enquiries/x");
-    expect(after).not.toContain("evil");
+    const link = m.text.indexOf("https://dataainexus.com/admin/enquiries/x");
+    const untrusted = m.text.indexOf("Everything below this line was typed by the sender");
+    const typed = m.text.indexOf("Read and reply: https://evil.example");
+    expect(link).toBeGreaterThan(-1);
+    expect(link).toBeLessThan(untrusted); // our link comes first, so nothing the sender types can pose as it
+    expect(untrusted).toBeLessThan(typed);
+    expect(m.text.indexOf("https://dataainexus.com/admin/enquiries/x", untrusted)).toBe(-1); // and appears nowhere below the marker
   });
 
   it("a malformed ENQUIRY_NOTIFY_EMAIL never redirects mail — it falls back to the portal address", () => {
@@ -161,11 +163,23 @@ describe("validateEnquiryForm — hardening (security review H1, M3)", () => {
   });
 });
 
+describe("validateEnquiryForm — control characters", () => {
+  it("refuses a control character in the organisation, and turns stray ones in the message into spaces (newlines stay)", () => {
+    expect(validateEnquiryForm({ ...good, organisation: "Acme\u001b[31m" }).kind).toBe("invalid");
+    const r = validateEnquiryForm({ ...good, message: "First line here.\nSecond\u0007 line\u001b here." });
+    expect(r.kind === "ok" && r.values.message).toBe("First line here.\nSecond  line  here.");
+  });
+});
+
 describe("clientKeyOf — one key per subscriber block", () => {
   it("keeps IPv4 and names as they are", () => {
     expect(clientKeyOf("203.0.113.9")).toBe("203.0.113.9");
     expect(clientKeyOf("local")).toBe("local");
-    expect(clientKeyOf("::ffff:203.0.113.9")).toBe("::ffff:203.0.113.9");
+    expect(clientKeyOf("::ffff:203.0.113.9")).toBe("203.0.113.9"); // IPv4-mapped IPv6 is the IPv4 it carries
+  });
+
+  it("anything that is not a real IP — a forged or oversized header — falls into ONE bucket (no table bloat, no over-long key)", () => {
+    for (const junk of ["", "not an ip", "<script>", "a".repeat(20_000), "1.2.3.4, 5.6.7.8", "999.1.1.1", "2001:db8::zzzz"]) expect(clientKeyOf(junk), junk.slice(0, 20)).toBe("unknown");
   });
 
   it("reduces an IPv6 address to its /64, so rotating inside the block does not dodge the limit", () => {

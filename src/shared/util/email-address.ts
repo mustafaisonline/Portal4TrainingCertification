@@ -5,7 +5,7 @@
  * crafted string, so one request could freeze the single-threaded server.
  * Everything here is a single linear pass, and the length is checked first.
  *
- * Accepts "local@domain.tld" only: printable ASCII, exactly one "@", no
+ * Accepts "local@domain.tld" only: letters, digits and `. _ + -` in the local part, exactly one "@", no
  * display names, no lists, no quotes, comments or brackets — so what is stored
  * and validated is exactly the one address that mail is sent to (a value like
  * `a,b@c.com` or `<a@b.com>` is refused, never interpreted as several).
@@ -13,7 +13,8 @@
 
 export const EMAIL_MAX_LENGTH = 254;
 
-const LOCAL_EXTRA = new Set("!#$%&*+/=?^_`{|}~.-");
+// Deliberately narrow (security review L-B): letters, digits and . _ + - only — no `%` relay form, pipes, quotes or other legacy-MTA oddities.
+const LOCAL_EXTRA = new Set("._+-");
 const isAlnum = (c: number) => (c >= 48 && c <= 57) || (c >= 65 && c <= 90) || (c >= 97 && c <= 122);
 
 export function isPlainEmailAddress(value: string): boolean {

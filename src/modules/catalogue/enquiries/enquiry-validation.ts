@@ -74,12 +74,14 @@ export function validateEnquiryForm(input: EnquiryFormInput): EnquiryCheck {
   const name = oneLine(input.name);
   const email = input.email.trim().toLowerCase(); // one canonical form for the row, the outbox and the rate limit
   const organisation = oneLine(input.organisation);
-  const message = input.message.replace(/\r\n/g, "\n").trim();
+  // Line breaks and tabs stay; every other control character becomes a space (it would only ever reach an email body).
+  // eslint-disable-next-line no-control-regex
+  const message = input.message.replace(/\r\n/g, "\n").replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, " ").trim();
   const fieldErrors: Partial<Record<EnquiryField, string>> = {};
 
   if (name.length < ENQUIRY_LIMITS.nameMin || name.length > ENQUIRY_LIMITS.nameMax || CONTROL_RE.test(name)) fieldErrors.name = "Please enter your name.";
   if (!isPlainEmailAddress(email)) fieldErrors.email = "Please enter a valid email address.";
-  if (organisation.length > ENQUIRY_LIMITS.organisationMax) fieldErrors.organisation = `Please keep this under ${ENQUIRY_LIMITS.organisationMax} characters.`;
+  if (organisation.length > ENQUIRY_LIMITS.organisationMax || CONTROL_RE.test(organisation)) fieldErrors.organisation = `Please keep this under ${ENQUIRY_LIMITS.organisationMax} characters.`;
   if (message.length < ENQUIRY_LIMITS.messageMin) fieldErrors.message = `Please tell us a little more (at least ${ENQUIRY_LIMITS.messageMin} characters).`;
   else if (message.length > ENQUIRY_LIMITS.messageMax) fieldErrors.message = `Please keep your message under ${ENQUIRY_LIMITS.messageMax} characters.`;
   if (Object.keys(fieldErrors).length > 0) return { kind: "invalid", fieldErrors };

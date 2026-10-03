@@ -10,6 +10,10 @@ describe("isPlainEmailAddress", () => {
     for (const bad of ["a,c@d.com", "a;c@d.com", "<a@b.com>", "Aisha <a@b.com>", '"a b"@c.com', "a@b.com, c@d.com", "(x)a@b.com", "a@b@c.com", "a\\b@c.com", "a[b]@c.com", "a:b@c.com"]) expect(isPlainEmailAddress(bad), bad).toBe(false);
   });
 
+  it("refuses the legacy-MTA characters (%, |, backtick, quotes, braces) in the local part", () => {
+    for (const bad of ["a%x@b.com", "a|b@c.com", "a`b@c.com", "a'b@c.com", "a{b}@c.com", "a!b@c.com", "a=b@c.com", "a/b@c.com", "a?b@c.com", "a~b@c.com", "a$b@c.com"]) expect(isPlainEmailAddress(bad), bad).toBe(false);
+  });
+
   it("refuses whitespace, control characters and non-ASCII", () => {
     for (const bad of ["a b@c.com", "a@b.com ", " a@b.com", "a@b.com\n", "a@b.com\r\nBcc: x@y.com", "a\u0000@b.com", "ä@b.com", "a@bücher.de"]) expect(isPlainEmailAddress(bad), JSON.stringify(bad)).toBe(false);
   });

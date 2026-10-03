@@ -96,7 +96,7 @@ function secret(): string {
 
 /** Keyed hash of the answer, bound to the challenge id so one answer cannot be replayed on another challenge. */
 export function hashAnswer(id: string, answer: string): string {
-  return createHmac("sha256", secret()).update(`${id}:${answer}`).digest("hex");
+  return createHmac("sha256", secret()).update(`human-check:v1:${id}:${answer}`).digest("hex"); // domain-separated from every other use of the secret
 }
 
 /** Creates and stores a challenge; returns only what the browser may see. */
@@ -135,11 +135,18 @@ export async function verifyHumanChallenge(id: unknown, answer: unknown, now: Da
 /**
  * The browser-test escape hatch: the header `x-test-no-human-check: 1` skips the
  * check — but ONLY in the test environment (`APP_ENV=test`, set by
- * playwright.config.ts alone). In any real environment the header is ignored,
- * so it cannot be used to bypass the check.
+ * playwright.config.ts alone) AND with a localhost `APP_BASE_URL`. In any real
+ * environment the header is ignored, so it cannot be used to bypass the check.
  */
 export function humanCheckBypassed(headers: { get(name: string): string | null } | null | undefined, env: Record<string, string | undefined> = process.env): boolean {
-  return env["APP_ENV"] === "test" && headers?.get("x-test-no-human-check") === "1";
+  if (env["APP_ENV"] !== "test" || headers?.get("x-test-no-human-check") !== "1") return false;
+  // Defence in depth (security review): even with APP_ENV=test set by mistake, a real deployment's public https
+  // base URL keeps the bypass closed — only a localhost address (both test harnesses use one) opens it.
+  try {
+    return ["localhost", "127.0.0.1", "[::1]"].includes(new URL(env["APP_BASE_URL"] ?? "").hostname);
+  } catch {
+    return false;
+  }
 }
 
 /** The sign-up body's human-check fields, checked. Returns null when the person passed. */

@@ -65,17 +65,24 @@ describe("normaliseTilesAnswer", () => {
 
 describe("humanCheckBypassed — the test escape hatch cannot be used for real", () => {
   const header = (v: string | null) => ({ get: (n: string) => (n === "x-test-no-human-check" ? v : null) });
-  it("works only in the test environment AND only with the exact header value", () => {
-    expect(humanCheckBypassed(header("1"), { APP_ENV: "test" })).toBe(true);
-    expect(humanCheckBypassed(header("0"), { APP_ENV: "test" })).toBe(false);
-    expect(humanCheckBypassed(header(null), { APP_ENV: "test" })).toBe(false);
+  const local = { APP_ENV: "test", APP_BASE_URL: "http://localhost:3101" };
+  it("works only in the test environment, with a localhost base URL, AND only with the exact header value", () => {
+    expect(humanCheckBypassed(header("1"), local)).toBe(true);
+    expect(humanCheckBypassed(header("1"), { APP_ENV: "test", APP_BASE_URL: "http://127.0.0.1:3101" })).toBe(true);
+    expect(humanCheckBypassed(header("0"), local)).toBe(false);
+    expect(humanCheckBypassed(header(null), local)).toBe(false);
+  });
+  it("stays CLOSED if APP_ENV=test is set by mistake on a real deployment (public base URL, missing or malformed URL)", () => {
+    for (const APP_BASE_URL of ["https://dataainexus.com", "https://localhost.evil.example", "http://198.199.67.177", "", "not a url", undefined]) {
+      expect(humanCheckBypassed(header("1"), { APP_ENV: "test", APP_BASE_URL }), String(APP_BASE_URL)).toBe(false);
+    }
   });
   it("is ignored in production and development, whatever the header says", () => {
     expect(humanCheckBypassed(header("1"), { NODE_ENV: "production" })).toBe(false);
     expect(humanCheckBypassed(header("1"), { NODE_ENV: "development" })).toBe(false);
     expect(humanCheckBypassed(header("1"), {})).toBe(false);
-    expect(humanCheckBypassed(null, { APP_ENV: "test" })).toBe(false);
-    expect(humanCheckBypassed(undefined, { APP_ENV: "test" })).toBe(false);
+    expect(humanCheckBypassed(null, local)).toBe(false);
+    expect(humanCheckBypassed(undefined, local)).toBe(false);
   });
 });
 

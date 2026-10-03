@@ -221,7 +221,9 @@ describe("verification, sign-in, sign-out (criteria 3, 4, 6)", () => {
     expect((await findUserByEmail(email))?.emailVerifiedAt).toBeNull();
 
     const cookie = await verify(email);
-    expect(cookie).toContain("session_token");
+    // The link confirms the address but does NOT sign anyone in (security review, CR-2026-10-03-1245: auto sign-in could
+    // log a victim into an attacker's pre-registered account); the person signs in with their own password.
+    expect(cookie ?? "").not.toContain("session_token");
     const user = await findUserByEmail(email);
     expect(user?.emailVerifiedAt).not.toBeNull();
     const audit = await listAuditForEntity(prisma, "user", user!.id);

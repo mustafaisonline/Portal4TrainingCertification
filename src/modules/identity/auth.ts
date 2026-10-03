@@ -8,6 +8,7 @@ import { writeAudit } from "@/modules/platform/audit/repository";
 import { isCountryCode } from "@/content/countries";
 import { resetPasswordMessage, verifyEmailMessage } from "./emails";
 import { publishedDocuments } from "./legal-documents";
+import { identityEmailAllowed } from "./email-limits";
 import { emailVerificationRequired } from "./email-verification";
 import { signUpHumanCheckProblem } from "./human-check";
 import { LIMITS, validateDateOfBirth } from "./profile-validation";
@@ -52,6 +53,21 @@ export function registrationDetailsProblem(body: Record<string, unknown>): strin
  * Nothing outside src/modules/identity imports this file's session shape;
  * route code uses ./session.ts.
  */
+
+/**
+ * Every activation link — from sign-up, "send a new link" or a blocked sign-in — opens the confirmation page
+ * (CR-2026-10-03-1245), whatever callback the request carried. Only the redirect target changes; the signed
+ * token is untouched.
+ */
+function confirmationLink(url: string): string {
+  try {
+    const u = new URL(url);
+    u.searchParams.set("callbackURL", "/email-confirmed");
+    return u.toString();
+  } catch {
+    return url;
+  }
+}
 
 const APP_NAME = "Data & AI Academy";
 const ONE_HOUR = 60 * 60;
@@ -109,7 +125,10 @@ export const auth = betterAuth({
     sendResetPassword: async ({ user, url }) => {
       // Not awaited on purpose (timing-safe: the response must not reveal
       // whether an address exists). The row records the outcome.
-      void sendEmail(resetPasswordMessage({ to: user.email, name: user.name, url, expiresInMinutes: 60 })).catch((err) => console.error("[email] password-reset email could not be recorded", err));
+      void (async () => {
+        if (!(await identityEmailAllowed("reset", user.email))) return console.warn("[email] password-reset email skipped: per-address cap reached");
+        await sendEmail(resetPasswordMessage({ to: user.email, name: user.name, url, expiresInMinutes: 60 }));
+      })().catch((err) => console.error("[email] password-reset email could not be recorded", err));
     },
     onPasswordReset: async ({ user }) => {
       await withTransaction(async (tx) => {
@@ -130,10 +149,16 @@ export const auth = betterAuth({
     sendOnSignUp: true,
     // With the setting on, a sign-in attempt on an unconfirmed address sends a fresh activation link.
     sendOnSignIn: true,
-    autoSignInAfterVerification: true,
+    // OFF (security review, MEDIUM): with auto sign-in, an attacker who registers someone else's address with the
+    // attacker's own password would sign the VICTIM into the attacker's account when the victim clicks the link.
+    // The person signs in with their own password instead; /email-confirmed then shows the confirmation.
+    autoSignInAfterVerification: false,
     expiresIn: ONE_HOUR,
     sendVerificationEmail: async ({ user, url }) => {
-      void sendEmail(verifyEmailMessage({ to: user.email, name: user.name, url, expiresInMinutes: 60 })).catch((err) => console.error("[email] verification email could not be recorded", err));
+      void (async () => {
+        if (!(await identityEmailAllowed("verify", user.email))) return console.warn("[email] verification email skipped: per-address cap reached");
+        await sendEmail(verifyEmailMessage({ to: user.email, name: user.name, url: confirmationLink(url), expiresInMinutes: 60 }));
+      })().catch((err) => console.error("[email] verification email could not be recorded", err));
     },
     afterEmailVerification: async (user) => {
       await withTransaction((tx) => markEmailVerified(tx, user.id));

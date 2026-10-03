@@ -165,7 +165,7 @@ test.describe("with the check ON", () => {
   });
 });
 
-test("the activation link opens a confirmation page that reads the confirmation from the database; a tampered link is refused kindly", async ({ page }) => {
+test("the activation link opens a confirmation page; signing in with your own password then shows the confirmation READ FROM THE DATABASE; a tampered link is refused kindly", async ({ page }) => {
   const address = fresh("activate");
   await page.goto("/register");
   await fillRegistration(page, address);
@@ -178,19 +178,25 @@ test("the activation link opens a confirmation page that reads the confirmation 
   const mail = await waitForEmail(address, "identity.verify-email");
   const link = firstLink(mail.textBody);
   await page.goto(link);
+  // The link opens the confirmation page and does NOT sign anyone in (security review: auto sign-in could
+  // log a victim into an attacker's pre-registered account) — so it is the neutral, signed-out view.
+  await expect(page).toHaveURL(/\/email-confirmed$/);
+  await expect(page.getByTestId("email-confirmed-signed-out")).toBeVisible();
+  expect((await findUserByEmail(address))!.emailVerifiedAt).not.toBeNull(); // confirmed AT DATABASE LEVEL
+
+  // Sign in with the person's OWN password: the page then shows the confirmation read back from the database.
+  await page.getByTestId("email-confirmed-signed-out").getByRole("link", { name: "Sign in" }).click();
+  await expect(page).toHaveURL(/\/sign-in\?return-to=%2Femail-confirmed$/);
+  await page.getByLabel("Email", { exact: true }).fill(address);
+  await page.getByLabel("Password", { exact: true }).fill(STRONG_PASSWORD);
+  await page.getByRole("button", { name: "Sign in" }).click();
   await expect(page).toHaveURL(/\/email-confirmed$/);
   await expect(page.getByTestId("email-confirmed")).toBeVisible();
   await expect(page.getByTestId("email-confirmed-address")).toHaveText(address.toLowerCase());
   await expect(page.getByTestId("email-confirmed-at")).not.toBeEmpty();
-  const confirmed = (await findUserByEmail(address))!.emailVerifiedAt;
-  expect(confirmed).not.toBeNull(); // confirmed AT DATABASE LEVEL
-
-  // Opened again signed out (the link is a signed token, valid for its 60 minutes): the page is neutral, nothing breaks.
-  await page.context().clearCookies();
-  await page.goto(link);
-  await expect(page.getByTestId("email-confirmed-signed-out")).toBeVisible();
 
   // A tampered link is refused kindly, with a way to get a new one.
+  await page.context().clearCookies();
   await page.goto(link.replace(/token=[^&]+/, "token=not-a-real-token"));
   await expect(page.getByTestId("email-link-invalid")).toBeVisible();
   await expect(page.getByRole("button", { name: "Send a new link" })).toBeVisible();

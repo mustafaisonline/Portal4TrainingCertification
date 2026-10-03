@@ -1,6 +1,6 @@
 # CR-2026-10-03-1149 — Menu item "Free Assessment" → "Assessment"; interview button gets "for Free"
 
-**Received:** 2026-10-03 11:49 MYT · **Status:** BUILT & VERIFIED — committed, NOT deployed (awaits the founder's word) · **Requested by:** founder
+**Received:** 2026-10-03 11:49 MYT · **Status:** VERIFIED and REVIEWED — deploying on the founder's word ("push it and deploy in production", 2026-10-03) · **Requested by:** founder
 
 ## 1. Request (verbatim)
 
@@ -40,3 +40,4 @@ Change the strings above; update the tests that name the label; run tsc, Vitest,
 |---|---|
 | 2026-10-03 11:49 | CR created; occurrences mapped; "Free Assessment Check" product name excluded. |
 | 2026-10-03 12:05 | Built and verified (see tracker). "Free Assessment Check" (the product) deliberately unchanged. Not deployed. |
+| 2026-10-03 13:05 | Founder: "push it and deploy in production". Before deploying, per `deploy-engineer` rule, the two required checks were run on the exact commit `fb76d7d` (project agents are not loaded in this session, so general-purpose agents ran with each agent's definition): **`governance-reviewer` — PASS WITH NOTES** (delta vs live tag `v2026.10.03-1` is 3 string-only source files + tests; no prisma/package/deploy changes; no RED triggers; wording OK — DR-07 already names the menu "Assessment"); **`test-verifier` — PASS** (tsc clean; Vitest 73 files / 725 tests; e2e not run by it — the deploy gate runs the full Playwright suite). Notes fixed: file renamed with the `-sonnet` suffix, spec added (`specs/CR-SPEC-…`). `security-review` not required (no auth, session, payment, upload, env/config or deploy-script change). |

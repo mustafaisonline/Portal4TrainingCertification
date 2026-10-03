@@ -96,7 +96,7 @@ export const privacyPolicy: LegalDocument = {
       bullets: [
         "Stripe — our payment processor. When you pay, you enter your payment details directly with Stripe, which processes the payment under its own privacy policy. We receive confirmation of payment, not your card details.",
         "DigitalOcean — our hosting provider. The servers and database on which the portal and its data run are hosted by DigitalOcean in New York, United States.",
-        "HostGator — our email host. The portal sends its emails (account confirmations, acknowledgements and replies to your messages, and service notices) through a mailbox hosted by HostGator, which therefore handles the sender and recipient addresses and the text of those messages.",
+        "SMTP2GO — our email delivery service. The portal sends its emails (account confirmations, acknowledgements and replies to your messages, and service notices) through SMTP2GO, which therefore handles the sender and recipient addresses and the text of those messages in order to deliver them. HostGator (Titan Email) hosts our mailbox, where the messages and replies addressed to us arrive.",
         "The trainer of an offering you registered for — your name and email address, so that attendance and completion can be recorded and you can be admitted to the sessions.",
         "The trainer of a training you registered interest in, and our administrators — the details you gave when registering interest (email address, and your name, mobile number and date of birth if you gave them), so they can plan the training and email you about its schedule. They are not shared with anyone else, and the trainer sees only the people interested in their own trainings.",
         "An organisation whose screening test you take — your name, email address, the role, your score and the time taken, and only after you have confirmed, before starting, that the result is shared with that organisation. The organisation decides what to do with it under its own privacy practices; it sees only its own candidates' results.",
@@ -117,7 +117,7 @@ export const privacyPolicy: LegalDocument = {
     {
       heading: "7. Where your data is stored, and transfers outside Malaysia",
       paragraphs: [
-        "The portal is hosted by DigitalOcean on servers in New York, United States. Your personal data is therefore stored and processed outside Malaysia, and our payment processor and email host may also process data outside Malaysia.",
+        "The portal is hosted by DigitalOcean on servers in New York, United States. Your personal data is therefore stored and processed outside Malaysia, and our payment processor, email delivery service and email host may also process data outside Malaysia.",
         "Where a transfer outside Malaysia takes place we will rely on one of the grounds permitted by section 129 of the Personal Data Protection Act 2010 (as amended) — such as your consent, the transfer being necessary to perform our agreement with you, or the recipient being bound to protect the data to a standard at least equivalent to the Act — and we will put appropriate contractual and technical safeguards in place.",
       ],
     },

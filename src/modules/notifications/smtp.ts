@@ -5,7 +5,7 @@ import type { EmailTransport } from "./email";
 
 /*
  * The SMTP transport (CR-2026-10-03-1225; founder, 2026-10-03: send through the
- * HostGator mailbox — free, no paid provider). It plugs into the existing
+ * free SMTP2GO relay on port 2525 — DigitalOcean blocks 25/465/587; no paid provider). It plugs into the existing
  * outbox in email.ts: the row is written first, this delivers it, the row is
  * marked `sent` or `failed`.
  *

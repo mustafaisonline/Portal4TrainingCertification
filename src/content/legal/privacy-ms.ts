@@ -91,7 +91,7 @@ export const privacyPolicyMs: LegalDocument = {
       bullets: [
         "Stripe — pemproses pembayaran kami. Apabila anda membayar, anda memasukkan butiran pembayaran terus kepada Stripe, yang memproses pembayaran itu di bawah dasar privasinya sendiri. Kami menerima pengesahan pembayaran, bukan butiran kad anda.",
         "DigitalOcean — penyedia pengehosan kami. Pelayan dan pangkalan data tempat portal dan datanya dijalankan dihoskan oleh DigitalOcean di New York, Amerika Syarikat.",
-        "HostGator — hos e-mel kami. Portal menghantar e-melnya (pengesahan akaun, makluman penerimaan dan balasan kepada mesej anda, serta notis perkhidmatan) melalui peti mel yang dihoskan oleh HostGator, yang oleh itu mengendalikan alamat penghantar dan penerima serta teks mesej tersebut.",
+        "SMTP2GO — perkhidmatan penghantaran e-mel kami. Portal menghantar e-melnya (pengesahan akaun, makluman penerimaan dan balasan kepada mesej anda, serta notis perkhidmatan) melalui SMTP2GO, yang oleh itu mengendalikan alamat penghantar dan penerima serta teks mesej tersebut untuk menghantarnya. HostGator (Titan Email) menghoskan peti mel kami, tempat mesej dan balasan yang ditujukan kepada kami diterima.",
         "Jurulatih bagi sesuatu tawaran yang anda daftar — nama dan alamat e-mel anda, supaya kehadiran dan penyempurnaan dapat direkodkan dan anda dapat dibenarkan masuk ke sesi.",
         "Jurulatih bagi sesuatu latihan yang anda daftarkan minat, dan pentadbir kami — butiran yang anda berikan semasa mendaftar minat (alamat e-mel, dan nama, nombor telefon bimbit serta tarikh lahir anda jika anda memberikannya), supaya mereka dapat merancang latihan itu dan menghantar e-mel kepada anda mengenai jadualnya. Butiran ini tidak dikongsi dengan sesiapa lain, dan jurulatih hanya melihat orang yang berminat terhadap latihan mereka sendiri.",
         "Organisasi yang ujian saringannya anda ambil — nama, alamat e-mel, peranan, markah dan masa yang anda ambil, dan hanya selepas anda mengesahkan, sebelum bermula, bahawa keputusan itu dikongsi dengan organisasi tersebut. Organisasi itu menentukan apa yang akan dilakukan dengannya di bawah amalan privasinya sendiri; ia hanya melihat keputusan calonnya sendiri.",
@@ -112,7 +112,7 @@ export const privacyPolicyMs: LegalDocument = {
     {
       heading: "7. Di mana data anda disimpan, dan pemindahan ke luar Malaysia",
       paragraphs: [
-        "Portal dihoskan oleh DigitalOcean pada pelayan di New York, Amerika Syarikat. Data peribadi anda oleh itu disimpan dan diproses di luar Malaysia, dan pemproses pembayaran serta hos e-mel kami juga mungkin memproses data di luar Malaysia.",
+        "Portal dihoskan oleh DigitalOcean pada pelayan di New York, Amerika Syarikat. Data peribadi anda oleh itu disimpan dan diproses di luar Malaysia, dan pemproses pembayaran, perkhidmatan penghantaran e-mel serta hos e-mel kami juga mungkin memproses data di luar Malaysia.",
         "Apabila pemindahan ke luar Malaysia berlaku, kami akan bergantung pada salah satu asas yang dibenarkan oleh seksyen 129 Akta Perlindungan Data Peribadi 2010 (seperti yang dipinda) — seperti persetujuan anda, pemindahan itu diperlukan untuk melaksanakan perjanjian kami dengan anda, atau penerima terikat untuk melindungi data itu pada tahap yang sekurang-kurangnya setara dengan Akta — dan kami akan meletakkan perlindungan kontrak dan teknikal yang sewajarnya.",
       ],
     },

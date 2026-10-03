@@ -4,8 +4,9 @@ import { createSmtpTransport, smtpConfigFromEnv } from "./smtp";
 /*
  * Transactional email — behind an interface, with a durable record.
  *
- * ADR-015 (provider): decided 2026-10-03 — the founder's own HostGator mailbox
- * over SMTP (smtp.ts), no paid provider. The part below does not change with
+ * ADR-015 (provider): decided 2026-10-03 — a free SMTP relay (SMTP2GO) over
+ * SMTP (smtp.ts), no paid provider; the founder's Titan/HostGator mailbox receives the replies (DigitalOcean
+ * blocks outbound SMTP 25/465/587, so the mailbox itself cannot send from the server). The part below does not change with
  * the transport:
  *
  *  1. Every email the system decides to send is first written to
@@ -20,7 +21,7 @@ import { createSmtpTransport, smtpConfigFromEnv } from "./smtp";
  *                          Tests read the link from the database row.
  *   - `smtp`             — delivers through the SMTP mailbox named by SMTP_HOST,
  *                          SMTP_PORT, SMTP_USER, SMTP_PASSWORD and EMAIL_FROM
- *                          (smtp.ts; founder 2026-10-03: HostGator, no paid
+ *                          (smtp.ts; founder 2026-10-03: SMTP2GO free relay, no paid
  *                          provider). Missing settings throw at first use — there
  *                          is no silent fallback to `log` in production (AP-07).
  */

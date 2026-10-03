@@ -50,11 +50,12 @@ describe("privacy-ms.ts (Bahasa Malaysia DRAFT)", () => {
 
   it("keeps every figure of the English text (periods, ages, ids, contact)", () => {
     ms.forEach((s, i) => {
-      const missing = digits(sectionText(en[i]!)).filter((d) => !digits(sectionText(s)).includes(d) && !["2026", "10", "02", "2"].includes(d));
+      const missing = digits(sectionText(en[i]!)).filter((d) => !digits(sectionText(s)).includes(d) && !["2026", "10", "02", "03", "2", "3"].includes(d));
       expect(missing, `section ${i + 1} is missing figure(s) ${missing.join(", ")}`).toEqual([]);
     });
     const text = ms.map(sectionText).join("\n");
-    expect(text).toContain("sales@yourpartnertechnologies.com");
+    expect(text).not.toContain("@");
+    expect(text).toContain("Hubungi Kami");
     expect(text).toContain("202401023226");
   });
 

@@ -28,7 +28,7 @@ export type CertificateBrand = {
   /** As printed after "Company No." — e.g. "202401023226 (1569075-K)". */
   registrationNumber: string | null;
   address: string | null;
-  /** e.g. "sales@yourpartnertechnologies.com · yourpartnertechnologies.com". */
+  /** e.g. "<contact address> · yourpartnertechnologies.com" — null: no address is printed (CR-2026-10-03-1246). */
   contactLine: string | null;
   /** Professional certificate only — never used on the Free-test certificate. */
   hrdCorpLogoPath: string | null;

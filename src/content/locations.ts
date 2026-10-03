@@ -1,5 +1,4 @@
 import { certificateBrand } from "./certificate-brand";
-import { CONTACT_EMAIL } from "./contact";
 
 /*
  * Company locations shown on /contact-us — CR-2026-10-01-0712 (founder,
@@ -32,7 +31,8 @@ export type OfficeLocation = {
   registration?: string;
   /** `display` as the company writes it; `tel` digits for the tap-to-call link. */
   phone?: { display: string; tel: string };
-  email: string;
+  /** A partner's own address, when it publishes one. The head office shows none: our contact route is the Contact Us form (CR-2026-10-03-1246). */
+  email?: string;
   website: { url: string; label: string };
   /** Where the details were read from, and when — for the next person to re-check. */
   source?: string;
@@ -47,7 +47,6 @@ export const headOffice: OfficeLocation = {
   address: certificateBrand.address ?? "",
   ...(certificateBrand.registrationNumber ? { registration: certificateBrand.registrationNumber } : {}),
   // No telephone: none has been supplied. A line appears here only when the founder gives one.
-  email: CONTACT_EMAIL,
   website: { url: "https://yourpartnertechnologies.com", label: "yourpartnertechnologies.com" },
   source: "Founder's records (2026-09-29): company number, address, sales email; website checked live 2026-10-01.",
 };

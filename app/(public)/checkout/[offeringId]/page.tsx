@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { localPartnerMailto } from "@/content/contact";
+import { contactUsHref } from "@/content/contact";
 import { countryName } from "@/content/countries";
 import { MODALITY_LABEL } from "@/modules/catalogue/offerings/repository";
 import { formatMoney } from "@/modules/catalogue/programmes/types";
@@ -152,7 +152,7 @@ function Unavailable({ preview }: { preview: Exclude<CheckoutPreview, { ok: true
         </p>
         <p className="text-body-sm mb-5 text-[var(--color-ink-quiet)]">{copy.body}</p>
         <div className="flex flex-wrap gap-3">
-          <Button href={localPartnerMailto(o.programmeTitle)}>Email us</Button>
+          <Button href={contactUsHref({ kind: "programme_interest", programmeSlug: o.programmeSlug })}>Contact us</Button>
           <Button variant="secondary" href="/schedule">
             Upcoming dates
           </Button>

@@ -65,3 +65,4 @@ See the spec: [CR-SPEC-2026-10-03-1225-email-platform-foundation-opus](specs/CR-
 |---|---|
 | 2026-10-03 12:25 | CR created from the founder's message; existing code inspected read-only; proposal written. Nothing built. |
 | 2026-10-03 12:40 | Founder answered D1–D6 (see §7): HostGator SMTP, sales@ sender, no public emails, strict activation + human check, tables approved, D5/D6 ok. |
+| 2026-10-03 12:57 | Founder: the portal's address is now `sales@dataainexus.com` (CR-1257) — SMTP login and From use it; HostGator's mail host/port for that domain is typed by the founder in the server env. |

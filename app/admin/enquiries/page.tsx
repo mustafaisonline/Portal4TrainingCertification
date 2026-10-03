@@ -22,7 +22,7 @@ import { formatTimestamp } from "@/shared/util/dates";
  * /admin/enquiries — contact and register-interest submissions (Milestone 8
  * plan §2 item 3): status filter, kind filter, search; newest first. Plain
  * GET parameters, as /admin/reviews. The message itself is on the detail
- * screen. Replies happen from the founder's mailbox — nothing is sent here.
+ * screen, where the team replies (CR-2026-10-03-1226).
  */
 export const metadata: Metadata = { title: "Enquiries" };
 

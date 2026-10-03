@@ -5,7 +5,7 @@ import { regionForCountry } from "@/modules/commerce/pricing";
 import { enabledSupportSetting } from "@/modules/commerce/support.repository";
 import { getProfile } from "@/modules/identity/profile.repository";
 import { getCurrentUser } from "@/modules/identity/session";
-import { organisationMailto } from "@/content/contact";
+import { contactUsHref } from "@/content/contact";
 import { HRD_CLAIM_NOTE } from "@/content/hrd-corp";
 import { CourseCard } from "@/shared/marketing/CourseCard";
 import { HrdCorpSections } from "@/shared/marketing/HrdCorpSections";
@@ -163,7 +163,7 @@ export default async function TrainingsPage() {
             <h2 className="text-h1 mb-3">Team or education enquiry</h2>
             {/* Founder, 2026-09-29: no contact form — the enquiry is an email
                 with the subject pre-set. */}
-            <Button href={organisationMailto()}>Email our team</Button>
+            <Button href={contactUsHref({ kind: "organisation" })}>Contact our team</Button>
           </div>
         </div>
       </section>

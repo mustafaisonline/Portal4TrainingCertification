@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { interestMailto } from "@/content/contact";
+import { contactUsHref } from "@/content/contact";
 import { HRD_CLAIM_NOTE } from "@/content/hrd-corp";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
@@ -233,7 +233,7 @@ export function ProgrammePricing({
   const regions = PRICE_CARD_ORDER.map(priceCardMeta).filter((r) => packages?.some((pkg) => Boolean(pkg.pricing[r.key as CheckoutRegion])) ?? false);
   const [region, setRegion] = useState<CheckoutRegion>((regions[0]?.key as CheckoutRegion | undefined) ?? "malaysia");
   const activeRegion = regions.find((r) => r.key === region) ?? regions[0];
-  const enquiryHref = interestMailto(programmeTitle);
+  const enquiryHref = contactUsHref({ kind: "programme_interest", programmeSlug });
 
   // Training cards, in the founder's order, only for cards with a fee row.
   const cards = PRICE_CARD_ORDER.flatMap((card) => {

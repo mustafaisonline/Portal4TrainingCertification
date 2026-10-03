@@ -22,7 +22,8 @@ describe("locations", () => {
     expect(headOffice.name).toBe(certificateBrand.legalName);
     expect(headOffice.registration).toBe("202401023226 (1569075-K)");
     expect(headOffice.address).toBe(certificateBrand.address);
-    expect(headOffice.email).toBe(CONTACT_EMAIL);
+    // CR-2026-10-03-1246: no email of ours is printed on the page — people use the Contact Us form.
+    expect(headOffice.email).toBeUndefined();
     expect(headOffice.phone).toBeUndefined();
     expect(headOffice.website.url).toBe("https://yourpartnertechnologies.com");
   });
@@ -40,8 +41,8 @@ describe("locations", () => {
   });
 
   it.each(locations.map((l) => [l.id, l] as const))("%s: every field is present and every link is well formed", (_id, l) => {
-    for (const v of [l.id, l.name, l.roleLabel, l.address, l.email, l.logo.alt, l.logo.src]) expect(v.trim().length).toBeGreaterThan(0);
-    expect(l.email).toMatch(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+    for (const v of [l.id, l.name, l.roleLabel, l.address, l.logo.alt, l.logo.src]) expect(v.trim().length).toBeGreaterThan(0);
+    if (l.email) expect(l.email).toMatch(/^[^\s@]+@[^\s@]+\.[^\s@]+$/); // a partner's own published address, when it has one
     expect(l.website.url).toMatch(/^https:\/\/[^\s]+$/); // https only
     if (l.phone) {
       expect(l.phone.tel).toMatch(/^\+\d{8,15}$/); // E.164-style digits for tel:

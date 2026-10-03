@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
-import { interestMailto } from "../../src/content/contact";
+import { contactUsHref } from "../../src/content/contact";
 
 /*
  * Trainings hub and training pages — end to end (founder request 2026-09-26:
@@ -30,9 +30,9 @@ const NO_CARD_ANYWHERE =
  *  fourth "Can't pay by card?" card. */
 async function expectInvestmentCards(page: Page, slug: string, figures: Record<"international" | "malaysia" | "pakistan", { today: string; original: string }>) {
   const investment = page.locator("#investment");
-  // Founder, 2026-09-29: no contact form — the price cards' "Contact us" is an email with the training in the subject.
+  // Founder, 2026-10-03: no email address on the portal — the price cards' "Contact us" leads to the Contact Us form with the training pre-set.
   const { findPublishedProgrammeBySlug } = await import("../../src/modules/catalogue/programmes/repository");
-  const enquiry = interestMailto((await findPublishedProgrammeBySlug(slug))!.title);
+  const enquiry = contactUsHref({ kind: "programme_interest", programmeSlug: (await findPublishedProgrammeBySlug(slug))!.slug });
   await expect(investment.getByRole("heading", { name: "Course investment" })).toBeVisible();
   await expect(investment.getByRole("tab")).toHaveCount(0);
   const cards = investment.getByTestId("price-cards").locator("> *");
@@ -516,7 +516,7 @@ test("/programs/data-blueprint-ai-vibe-coding renders the flagship on the shared
   // flat "75% OFF" and the simple today/original layout everywhere) no
   // longer fits this card set — asserted directly instead.
   const investment = page.locator("#investment");
-  const enquiry = interestMailto(flagship!.title);
+  const enquiry = contactUsHref({ kind: "programme_interest", programmeSlug: flagship!.slug });
   await expect(investment.getByRole("heading", { name: "Course investment" })).toBeVisible();
   await expect(investment.getByRole("tab")).toHaveCount(0);
   const cards = investment.getByTestId("price-cards").locator("> *");

@@ -1,6 +1,6 @@
 # CR-2026-10-03-1246 — No email address on the portal — every contact path leads to the Contact Us form
 
-**Received:** 2026-10-03 12:46 MYT · **Status:** IN PROGRESS · **Requested by:** founder · **Model:** sonnet
+**Received:** 2026-10-03 12:46 MYT · **Status:** BUILT & VERIFIED — awaits deploy + three founder steps · **Requested by:** founder · **Model:** sonnet
 
 ## 1. Request (verbatim)
 
@@ -24,18 +24,19 @@ After the Contact Us form works (CR-1226): replace every `mailto:` button/link a
 
 ## 5. Tracker
 
-Spec: [CR-SPEC-2026-10-03-1246-hide-emails-contact-via-form-sonnet](specs/CR-SPEC-2026-10-03-1246-hide-emails-contact-via-form-sonnet.md).
+Spec: see `specs/`.
 
 | # | Step | Status | Updated |
 |---|---|---|---|
-| 1 | Depends on the Contact Us form (CR-1226) | NOT STARTED | — |
-| 2 | Replace mailto links and printed addresses in pages/components | NOT STARTED | — |
-| 3 | Legal documents: replace the email by the form, new version | NOT STARTED | — |
-| 4 | Tests + sweep for any leftover address | NOT STARTED | — |
-| 5 | Deploy + server `LEGAL_DOCUMENT_VERSIONS` step (founder) | NOT STARTED | — |
+| 1 | Depends on the Contact Us form (CR-1226) | **DONE** | 2026-10-03 |
+| 2 | Replace mailto links and printed addresses in pages/components | **DONE** — `contactUsHref()` replaces the mailto helpers: schedule, Trainings, training pages, price cards, local-partner checkout, account help; head-office card has no email row (a partner's own address is kept); FAQ seed answer | 2026-10-03 |
+| 3 | Legal documents: the form instead of the address | **DONE in code** — Terms, Privacy, Refund (and the unpublished Malay draft) say "through the Contact Us page"; new version **2026-10-03** (effective 3 October 2026). **PDPA flag for the founder:** the Privacy policy is the PDPA notice and names a contact for data requests; a web form is a contact channel but the assistant is not a lawyer — please confirm | 2026-10-03 |
+| 4 | Tests + sweep | **DONE** — no address remains in `app/`, `src/`, `prisma/`, `tests/` except a partner's own (Infocentric) and the internal constant; unit 737/737, e2e 187/187 | 2026-10-03 |
+| 5 | Deploy + founder steps: (a) root: set `LEGAL_DOCUMENT_VERSIONS` to 2026-10-03 for terms/privacy/refund; (b) re-run `npm run db:seed` for the FAQ answer (check it updates the existing row); (c) edit the YPT organisation's contact email in Admin | AWAITING founder's word | — |
 
 ## 6. Progress log
 
 | Date (MYT) | Entry |
 |---|---|
 | 2026-10-03 12:46 | CR created from the founder's answers. |
+| 2026-10-03 13:00 | Built and verified. New address `sales@dataainexus.com` applied (CR-1257). Not deployed. |

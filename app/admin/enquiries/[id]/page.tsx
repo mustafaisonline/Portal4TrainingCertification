@@ -7,13 +7,15 @@ import { listAuditForEntity } from "@/modules/platform/audit/repository";
 import { Card } from "@/shared/ui/Card";
 import { Chip } from "@/shared/ui/Chip";
 import { formatTimestamp } from "@/shared/util/dates";
+import { EnquiryReplyForm } from "../EnquiryReplyForm";
 import { EnquiryStatusActions } from "../EnquiryStatusActions";
 
 /*
  * /admin/enquiries/[id] — one enquiry in full (Milestone 8 plan §2 item 3):
  * the message rendered as TEXT (never HTML), who sent it, the programme and
- * source page, the status controls, and the audit history for this row.
- * Unknown id → 404.
+ * source page, the reply form (CR-2026-10-03-1226: the team replies from here;
+ * the person is emailed through the outbox), the status controls, and the audit
+ * history for this row. Unknown id → 404.
  */
 export const metadata: Metadata = { title: "Enquiry" };
 
@@ -46,9 +48,7 @@ export default async function AdminEnquiryDetailPage({ params }: { params: Promi
           {enquiry.name}
         </h1>
         <p className="text-body-sm mt-1 text-[var(--color-ink-quiet)]">
-          <a href={`mailto:${enquiry.email}`} className="text-[var(--color-primary)] underline underline-offset-4">
-            {enquiry.email}
-          </a>
+          <span data-testid="enquiry-email">{enquiry.email}</span>
           {enquiry.organisation ? ` · ${enquiry.organisation}` : ""}
         </p>
       </header>
@@ -64,8 +64,10 @@ export default async function AdminEnquiryDetailPage({ params }: { params: Promi
             {enquiry.message}
           </p>
           <div className="mt-6 border-t border-[var(--color-line)] pt-4">
+            <EnquiryReplyForm enquiryId={enquiry.id} to={enquiry.email} />
+          </div>
+          <div className="mt-6 border-t border-[var(--color-line)] pt-4">
             <EnquiryStatusActions enquiryId={enquiry.id} status={enquiry.status} />
-            <p className="text-body-sm mt-3 text-[var(--color-ink-faint)]">Reply from your mailbox; nothing is emailed from this screen.</p>
           </div>
         </Card>
 

@@ -9,7 +9,7 @@ import { listUpcomingPublicOfferings } from "@/modules/catalogue/offerings/repos
 import { levelLabel } from "@/modules/catalogue/programmes/types";
 import { isModulePointGroup } from "@/modules/catalogue/programmes/module-points";
 import { listPublishedExperts } from "@/modules/catalogue/experts/repository";
-import { interestMailto } from "@/content/contact";
+import { contactUsHref } from "@/content/contact";
 import { CourseCard } from "@/shared/marketing/CourseCard";
 import { buildInterestSlots } from "@/modules/commerce/components/interest-slots";
 import { DeliveryFormats } from "@/shared/marketing/DeliveryFormats";
@@ -108,7 +108,7 @@ export default async function CourseDetailPage({
   const founder =
     experts.find((e) => course.experts.some((x) => x.id === e.id)) ??
     experts[0];
-  const enquiryHref = interestMailto(course.title);
+  const enquiryHref = contactUsHref({ kind: "programme_interest", programmeSlug: course.slug });
 
   const meta: [string, string][] = [
     ["Level", levelLabel(course.level)],

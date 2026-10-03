@@ -29,9 +29,9 @@ import type { LegalDocument } from "./types";
 export const privacyPolicy: LegalDocument = {
   key: "privacy",
   title: "Privacy policy",
-  version: "2026-10-02",
+  version: "2026-10-03",
   status: "published",
-  lastUpdated: "2026-10-02",
+  lastUpdated: "2026-10-03",
   summary:
     "What personal data the Data & AI Academy collects, why, who it is shared with, where it may be stored, how long it is kept, and your rights under the Personal Data Protection Act 2010.",
   sections: [
@@ -39,7 +39,7 @@ export const privacyPolicy: LegalDocument = {
       heading: "1. Who is responsible for your data",
       paragraphs: [
         "The Data & AI Academy portal is operated by Your Partner Technologies, a training practice in Kuala Lumpur, Malaysia (business registration number 202401023226 (1569075-K); registered address 15-03A, One Jelatek Condominium, Jalan Jelatek, Kementah, 54200 Kuala Lumpur W.P. Kuala Lumpur, Malaysia). Your Partner Technologies decides how and why your personal data is processed, and is the data user for the purposes of the Personal Data Protection Act 2010.",
-        "Questions about this policy, or about your data, go to our Data Protection Contact at sales@yourpartnertechnologies.com.",
+        "Questions about this policy, or about your data, go to our Data Protection Contact through the Contact Us page of this portal.",
       ],
     },
     {
@@ -85,7 +85,7 @@ export const privacyPolicy: LegalDocument = {
     {
       heading: "4. Marketing",
       paragraphs: [
-        "We do not send marketing messages unless you have separately opted in to receive them. If you do opt in, every marketing email carries a way to opt out, and you can also opt out by writing to sales@yourpartnertechnologies.com. Opting out of marketing does not stop the service messages described above, which you need in order to attend what you have registered for.",
+        "We do not send marketing messages unless you have separately opted in to receive them. If you do opt in, every marketing email carries a way to opt out, and you can also opt out by writing to us through the Contact Us page of this portal. Opting out of marketing does not stop the service messages described above, which you need in order to attend what you have registered for.",
       ],
     },
     {
@@ -111,7 +111,7 @@ export const privacyPolicy: LegalDocument = {
         "The portal also offers a public search by name. That search returns only holders who have chosen to be listed in it. Being listed is optional and is off unless you turn it on from your account. When you turn it on we record that choice, with the wording you agreed to and the time. You can withdraw it at any time from your account, and the withdrawal takes effect immediately for name search; the identifier and link continue to work.",
         "A Free Assessment Check result has its own verification page, reached only by its own ID or its link — it is never returned by the name search above. It shows the name on the result, the score, whether it passed, the grade and the date, and says plainly that it is not a Certificate of Completion and not the Academy's earned credential.",
         "Whether reached by identifier, link or name search, a verification page never shows your email address, your country, your contact details or any identity-document details. Dates on it are calendar dates in Malaysia time (Asia/Kuala_Lumpur).",
-        "If you have a concern about how your certificate or Free Assessment Check result can be verified, write to sales@yourpartnertechnologies.com.",
+        "If you have a concern about how your certificate or Free Assessment Check result can be verified, write to us through the Contact Us page of this portal.",
       ],
     },
     {
@@ -164,7 +164,7 @@ export const privacyPolicy: LegalDocument = {
     {
       heading: "12. Your rights",
       paragraphs: [
-        "Under the Personal Data Protection Act 2010 (as amended) you have the following rights. To exercise any of them, write to our Data Protection Contact at sales@yourpartnertechnologies.com. We may ask you to confirm your identity first, and we will respond within the time the Act allows.",
+        "Under the Personal Data Protection Act 2010 (as amended) you have the following rights. To exercise any of them, write to our Data Protection Contact through the Contact Us page of this portal. We may ask you to confirm your identity first, and we will respond within the time the Act allows.",
       ],
       bullets: [
         "Access — to ask for a copy of the personal data we hold about you. The Act permits a modest fee for this; we will tell you before charging one.",
@@ -189,7 +189,7 @@ export const privacyPolicy: LegalDocument = {
     {
       heading: "14. Children",
       paragraphs: [
-        "The portal is intended for adults. We do not knowingly collect personal data from anyone under 18 and our Terms of service require you to be at least 18 to create an account. If you believe someone under 18 has created an account, tell us at sales@yourpartnertechnologies.com and we will delete the account.",
+        "The portal is intended for adults. We do not knowingly collect personal data from anyone under 18 and our Terms of service require you to be at least 18 to create an account. If you believe someone under 18 has created an account, tell us through the Contact Us page and we will delete the account.",
       ],
     },
     {
@@ -202,8 +202,8 @@ export const privacyPolicy: LegalDocument = {
       heading: "16. Contact",
       paragraphs: [
         "Your Partner Technologies (business registration number 202401023226 (1569075-K)), 15-03A, One Jelatek Condominium, Jalan Jelatek, Kementah, 54200 Kuala Lumpur W.P. Kuala Lumpur, Malaysia.",
-        "Data protection: Data Protection Contact. Email: sales@yourpartnertechnologies.com.",
-        "Effective date of this version: 2 October 2026. Version: 2026-10-02.",
+        "Data protection: Data Protection Contact, through the Contact Us page of this portal.",
+        "Effective date of this version: 3 October 2026. Version: 2026-10-03.",
       ],
     },
   ],

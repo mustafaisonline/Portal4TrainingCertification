@@ -1,6 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
-import { CONTACT_EMAIL } from "../../src/content/contact";
 
 /*
  * /contact-us "Our locations" — CR-2026-10-01-0712 (founder, 2026-10-01): the
@@ -36,7 +35,8 @@ test("the head office card is on top with our details; the partner card is under
   await expect(head.getByRole("heading", { level: 3 })).toHaveText("Your Partner Technologies");
   await expect(page.getByTestId("location-your-partner-technologies-registration")).toContainText("202401023226 (1569075-K)");
   await expect(page.getByTestId("location-your-partner-technologies-address")).toContainText("15-03A, One Jelatek Condominium, Jalan Jelatek, Kementah, 54200 Kuala Lumpur");
-  await expect(page.getByTestId("location-your-partner-technologies-email").getByRole("link")).toHaveAttribute("href", `mailto:${CONTACT_EMAIL}`);
+  // CR-2026-10-03-1246: the portal shows no email address of ours — the head office card has no email row.
+  await expect(page.getByTestId("location-your-partner-technologies-email")).toHaveCount(0);
   const ypWeb = page.getByTestId("location-your-partner-technologies-website").getByRole("link");
   await expect(ypWeb).toHaveAttribute("href", "https://yourpartnertechnologies.com");
   await expect(page.getByTestId("location-your-partner-technologies-phone")).toHaveCount(0);

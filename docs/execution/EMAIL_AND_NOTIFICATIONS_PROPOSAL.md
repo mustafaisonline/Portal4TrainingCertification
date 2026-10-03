@@ -11,7 +11,9 @@
 >
 > Provide is hostgator.com. Current email is sales@yourpartnertechnologies.com later we will change to dataasinexus.com email
 
-Applied: **HostGator SMTP** (free, existing `sales@yourpartnertechnologies.com` mailbox; Postmark/Resend dropped — and with them the bounce/complaint webhooks and `email_events`: bounces arrive as mail in that mailbox); sender `sales@yourpartnertechnologies.com` for everything, changed later by one setting; **no email address on the portal** — everything goes through the Contact Us form; tables approved; **strict activation** with an emailed link plus a **human check at sign-up**; trainer-mail rules accepted. Open: the `nodemailer` dependency (RED) needs an explicit yes.
+**Update 2026-10-03 (later): the portal's address is now `sales@dataainexus.com`** (CR-2026-10-03-1257) — it replaces `sales@yourpartnertechnologies.com` everywhere below.
+
+Applied: **HostGator SMTP** (free, the founder's HostGator mailbox — first `sales@yourpartnertechnologies.com`, now `sales@dataainexus.com`; Postmark/Resend dropped — and with them the bounce/complaint webhooks and `email_events`: bounces arrive as mail in that mailbox); sender `sales@yourpartnertechnologies.com` for everything, changed later by one setting; **no email address on the portal** — everything goes through the Contact Us form; tables approved; **strict activation** with an emailed link plus a **human check at sign-up**; trainer-mail rules accepted. Open: the `nodemailer` dependency (RED) needs an explicit yes.
 
 ## 1. What exists today (verified in the repository, 2026-10-03)
 

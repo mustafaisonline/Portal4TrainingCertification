@@ -30,7 +30,7 @@ function allText(doc: LegalDocument): string {
 describe("legal documents (src/content/legal)", () => {
   it.each(documents)("$key is published, dated and versioned", (doc) => {
     expect(doc.status).toBe("published");
-    expect(doc.version).toBe("2026-10-02");
+    expect(doc.version).toBe("2026-10-03");
     expect(doc.lastUpdated).toBe(doc.version);
     expect(doc.summary.trim().length).toBeGreaterThan(0);
   });
@@ -39,8 +39,10 @@ describe("legal documents (src/content/legal)", () => {
     expect(doc.sections[0]?.heading).not.toBe("About this draft");
     const text = allText(doc);
     expect(text).not.toMatch(/not yet in force|DRAFT-|draft prepared for review/i);
-    expect(text).toContain("Effective date of this version: 2 October 2026. Version: 2026-10-02.");
-    expect(text).toContain("sales@yourpartnertechnologies.com");
+    expect(text).toContain("Effective date of this version: 3 October 2026. Version: 2026-10-03.");
+    // CR-2026-10-03-1246: the portal shows no email address — people are sent to the Contact Us page.
+    expect(text).not.toContain("@");
+    expect(text).toContain("Contact Us");
   });
 
   it.each(documents)("$key has at least 8 sections and no empty paragraphs", (doc) => {

@@ -26,12 +26,13 @@ deploy only on the founder's word, except in `buddy` Autonomous mode, where the 
 
 | CR file | Title | Status |
 |---|---|---|
-| [CR-2026-10-03-1246-hide-emails-contact-via-form-sonnet.md](CR-2026-10-03-1246-hide-emails-contact-via-form-sonnet.md) | No email address on the portal — every contact path leads to the Contact Us form — IN PROGRESS |
+| [CR-2026-10-03-1257-portal-email-address-sonnet.md](CR-2026-10-03-1257-portal-email-address-sonnet.md) | The portal's address is sales@dataainexus.com — BUILT |
+| [CR-2026-10-03-1246-hide-emails-contact-via-form-sonnet.md](CR-2026-10-03-1246-hide-emails-contact-via-form-sonnet.md) | No email address on the portal — BUILT & VERIFIED, awaiting deploy |
 | [CR-2026-10-03-1245-signup-activation-link-and-human-check-opus.md](CR-2026-10-03-1245-signup-activation-link-and-human-check-opus.md) | Sign-up: activation link confirmed in the database, plus a human-check game — IN PROGRESS |
 | [CR-2026-10-03-1229-trainer-bulk-and-individual-email-opus.md](CR-2026-10-03-1229-trainer-bulk-and-individual-email-opus.md) | Trainer dashboard: send bulk or individual email to interested / paid people — **BLOCKED on the founder's decisions (RED)** |
 | [CR-2026-10-03-1228-notification-centre-and-header-bell-sonnet.md](CR-2026-10-03-1228-notification-centre-and-header-bell-sonnet.md) | Notification centre page and header bell with unread count — **BLOCKED on the founder's decisions (RED)** |
 | [CR-2026-10-03-1227-event-emails-and-templates-sonnet.md](CR-2026-10-03-1227-event-emails-and-templates-sonnet.md) | Emails on the person's actions (interest, payment, launch) with shared templates and preferences — **BLOCKED on the founder's decisions (RED)** |
-| [CR-2026-10-03-1226-contact-us-form-sonnet.md](CR-2026-10-03-1226-contact-us-form-sonnet.md) | Contact Us form that emails the team — **BLOCKED on the founder's decisions (RED)** |
+| [CR-2026-10-03-1226-contact-us-form-sonnet.md](CR-2026-10-03-1226-contact-us-form-sonnet.md) | Contact Us form — BUILT & VERIFIED, awaiting deploy |
 | [CR-2026-10-03-1225-email-platform-foundation-opus.md](CR-2026-10-03-1225-email-platform-foundation-opus.md) | Email platform foundation — provider, delivery, suppression, email log — **BLOCKED on the founder's decisions (RED)** |
 | [CR-2026-10-03-1149-production-restore-rehearsal-sonnet.md](CR-2026-10-03-1149-production-restore-rehearsal-sonnet.md) | Production restore rehearsal — **PARKED** (founder, 2026-10-03) |
 | [CR-2026-10-03-1122-agentic-hardening-sonnet.md](CR-2026-10-03-1122-agentic-hardening-sonnet.md) | Agentic hardening: guard hook, stop conditions, worktrees, review gate, notifications, flaky gate, restore rehearsal, prompt-framework consolidation — BUILT & VERIFIED, awaiting push |

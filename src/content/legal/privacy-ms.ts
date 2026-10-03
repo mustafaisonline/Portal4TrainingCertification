@@ -24,9 +24,9 @@ import type { LegalDocument } from "./types";
 export const privacyPolicyMs: LegalDocument = {
   key: "privacy",
   title: "Dasar privasi",
-  version: "DRAFT-MS-2026-10-02",
+  version: "DRAFT-MS-2026-10-03",
   status: "draft",
-  lastUpdated: "2026-10-02",
+  lastUpdated: "2026-10-03",
   summary:
     "Apakah data peribadi yang dikumpul oleh Data & AI Academy, mengapa, dengan siapa ia dikongsi, di mana ia mungkin disimpan, berapa lama ia disimpan, dan hak anda di bawah Akta Perlindungan Data Peribadi 2010.",
   sections: [
@@ -34,7 +34,7 @@ export const privacyPolicyMs: LegalDocument = {
       heading: "1. Siapa yang bertanggungjawab ke atas data anda",
       paragraphs: [
         "Portal Data & AI Academy dikendalikan oleh Your Partner Technologies, sebuah amalan latihan di Kuala Lumpur, Malaysia (nombor pendaftaran perniagaan 202401023226 (1569075-K); alamat berdaftar 15-03A, One Jelatek Condominium, Jalan Jelatek, Kementah, 54200 Kuala Lumpur W.P. Kuala Lumpur, Malaysia). Your Partner Technologies menentukan bagaimana dan mengapa data peribadi anda diproses, dan merupakan pengguna data bagi maksud Akta Perlindungan Data Peribadi 2010.",
-        "Pertanyaan mengenai dasar ini, atau mengenai data anda, hendaklah dihantar kepada Pegawai Hubungan Perlindungan Data kami di sales@yourpartnertechnologies.com.",
+        "Pertanyaan mengenai dasar ini, atau mengenai data anda, hendaklah dihantar kepada Pegawai Hubungan Perlindungan Data kami melalui halaman Hubungi Kami (Contact Us) portal ini.",
       ],
     },
     {
@@ -80,7 +80,7 @@ export const privacyPolicyMs: LegalDocument = {
     {
       heading: "4. Pemasaran",
       paragraphs: [
-        "Kami tidak menghantar mesej pemasaran melainkan anda telah memilih secara berasingan untuk menerimanya. Jika anda memilih untuk menerimanya, setiap e-mel pemasaran mempunyai cara untuk anda berhenti menerimanya, dan anda juga boleh berhenti dengan menulis kepada sales@yourpartnertechnologies.com. Berhenti menerima pemasaran tidak menghentikan mesej perkhidmatan yang diterangkan di atas, yang anda perlukan untuk menghadiri apa yang telah anda daftar.",
+        "Kami tidak menghantar mesej pemasaran melainkan anda telah memilih secara berasingan untuk menerimanya. Jika anda memilih untuk menerimanya, setiap e-mel pemasaran mempunyai cara untuk anda berhenti menerimanya, dan anda juga boleh berhenti dengan menulis kepada kami melalui halaman Hubungi Kami (Contact Us) portal ini. Berhenti menerima pemasaran tidak menghentikan mesej perkhidmatan yang diterangkan di atas, yang anda perlukan untuk menghadiri apa yang telah anda daftar.",
       ],
     },
     {
@@ -106,7 +106,7 @@ export const privacyPolicyMs: LegalDocument = {
         "Portal juga menawarkan carian awam mengikut nama. Carian itu hanya memaparkan pemegang yang telah memilih untuk disenaraikan di dalamnya. Disenaraikan adalah pilihan dan ditutup melainkan anda menghidupkannya dari akaun anda. Apabila anda menghidupkannya, kami merekodkan pilihan itu, bersama perkataan yang anda setujui dan masanya. Anda boleh menarik baliknya pada bila-bila masa dari akaun anda, dan penarikan balik itu berkuat kuasa serta-merta bagi carian nama; pengecam dan pautan terus berfungsi.",
         "Keputusan Semakan Penilaian Percuma mempunyai halaman pengesahannya sendiri, yang hanya boleh dicapai melalui ID atau pautannya sendiri — ia tidak pernah dipaparkan oleh carian nama di atas. Ia menunjukkan nama pada keputusan, markah, sama ada lulus, gred dan tarikh, dan menyatakan dengan jelas bahawa ia bukan Sijil Penyempurnaan dan bukan kelayakan yang diperoleh Akademi.",
         "Sama ada dicapai melalui pengecam, pautan atau carian nama, halaman pengesahan tidak pernah menunjukkan alamat e-mel anda, negara anda, butiran hubungan anda atau sebarang butiran dokumen pengenalan diri. Tarikh padanya ialah tarikh kalendar dalam waktu Malaysia (Asia/Kuala_Lumpur).",
-        "Jika anda mempunyai kebimbangan tentang bagaimana sijil atau keputusan Semakan Penilaian Percuma anda boleh disahkan, tulis kepada sales@yourpartnertechnologies.com.",
+        "Jika anda mempunyai kebimbangan tentang bagaimana sijil atau keputusan Semakan Penilaian Percuma anda boleh disahkan, tulis kepada kami melalui halaman Hubungi Kami (Contact Us) portal ini.",
       ],
     },
     {
@@ -159,7 +159,7 @@ export const privacyPolicyMs: LegalDocument = {
     {
       heading: "12. Hak anda",
       paragraphs: [
-        "Di bawah Akta Perlindungan Data Peribadi 2010 (seperti yang dipinda) anda mempunyai hak berikut. Untuk menggunakan mana-mana daripadanya, tulis kepada Pegawai Hubungan Perlindungan Data kami di sales@yourpartnertechnologies.com. Kami mungkin meminta anda mengesahkan identiti anda terlebih dahulu, dan kami akan membalas dalam tempoh yang dibenarkan oleh Akta.",
+        "Di bawah Akta Perlindungan Data Peribadi 2010 (seperti yang dipinda) anda mempunyai hak berikut. Untuk menggunakan mana-mana daripadanya, tulis kepada Pegawai Hubungan Perlindungan Data kami melalui halaman Hubungi Kami (Contact Us) portal ini. Kami mungkin meminta anda mengesahkan identiti anda terlebih dahulu, dan kami akan membalas dalam tempoh yang dibenarkan oleh Akta.",
       ],
       bullets: [
         "Akses — untuk meminta salinan data peribadi yang kami simpan tentang anda. Akta membenarkan fi yang sederhana untuk ini; kami akan memberitahu anda sebelum mengenakannya.",
@@ -184,7 +184,7 @@ export const privacyPolicyMs: LegalDocument = {
     {
       heading: "14. Kanak-kanak",
       paragraphs: [
-        "Portal ini ditujukan kepada orang dewasa. Kami tidak dengan sengaja mengumpul data peribadi daripada sesiapa yang berumur di bawah 18 tahun dan Terma perkhidmatan kami menghendaki anda berumur sekurang-kurangnya 18 tahun untuk mencipta akaun. Jika anda percaya seseorang yang berumur di bawah 18 tahun telah mencipta akaun, beritahu kami di sales@yourpartnertechnologies.com dan kami akan memadam akaun itu.",
+        "Portal ini ditujukan kepada orang dewasa. Kami tidak dengan sengaja mengumpul data peribadi daripada sesiapa yang berumur di bawah 18 tahun dan Terma perkhidmatan kami menghendaki anda berumur sekurang-kurangnya 18 tahun untuk mencipta akaun. Jika anda percaya seseorang yang berumur di bawah 18 tahun telah mencipta akaun, beritahu kami melalui halaman Hubungi Kami (Contact Us) portal ini dan kami akan memadam akaun itu.",
       ],
     },
     {
@@ -197,8 +197,8 @@ export const privacyPolicyMs: LegalDocument = {
       heading: "16. Hubungi kami",
       paragraphs: [
         "Your Partner Technologies (nombor pendaftaran perniagaan 202401023226 (1569075-K)), 15-03A, One Jelatek Condominium, Jalan Jelatek, Kementah, 54200 Kuala Lumpur W.P. Kuala Lumpur, Malaysia.",
-        "Perlindungan data: Pegawai Hubungan Perlindungan Data. E-mel: sales@yourpartnertechnologies.com.",
-        "Tarikh berkuat kuasa versi ini: (draf — belum diterbitkan). Versi: DRAFT-MS-2026-10-02.",
+        "Perlindungan data: Pegawai Hubungan Perlindungan Data, melalui halaman Hubungi Kami (Contact Us) portal ini.",
+        "Tarikh berkuat kuasa versi ini: (draf — belum diterbitkan). Versi: DRAFT-MS-2026-10-03.",
       ],
     },
   ],

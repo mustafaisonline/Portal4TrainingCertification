@@ -35,9 +35,9 @@ import type { LegalDocument } from "./types";
 export const termsOfService: LegalDocument = {
   key: "terms",
   title: "Terms of service",
-  version: "2026-10-02",
+  version: "2026-10-03",
   status: "published",
-  lastUpdated: "2026-10-02",
+  lastUpdated: "2026-10-03",
   summary:
     "The agreement between Your Partner Technologies and anyone who creates an account, registers for a Data & AI Academy training, uses Free Learning or the Free Assessment Check, or makes a one-off payment: registering, paying, cancelling, taking part, and the Certificate of Completion.",
   sections: [
@@ -64,7 +64,7 @@ export const termsOfService: LegalDocument = {
     {
       heading: "3. Your account and who may register",
       paragraphs: [
-        "You need an account to register for a training. An account is created with your name, an email address and a password, and you must keep those details accurate. You are responsible for keeping your password confidential and for everything done under your account; tell us at sales@yourpartnertechnologies.com as soon as you know of any unauthorised use.",
+        "You need an account to register for a training. An account is created with your name, an email address and a password, and you must keep those details accurate. You are responsible for keeping your password confidential and for everything done under your account; tell us through the Contact Us page of this portal as soon as you know of any unauthorised use.",
         "You must be at least 18 years old to create an account and register. We do not accept registrations from anyone under 18.",
         "You may register on behalf of someone else only if you have their permission and provide their correct details; the person who attends is the participant for the purposes of the Certificate of Completion.",
         "We may suspend or close an account that is used in breach of these terms, or where we reasonably believe the details given are false. Section 8 explains the conduct we expect.",
@@ -173,7 +173,7 @@ export const termsOfService: LegalDocument = {
       heading: "16. Governing law and disputes",
       paragraphs: [
         "These terms are governed by the laws of Malaysia, and the courts of Malaysia have jurisdiction over any dispute arising from them, except where the law gives you the right to bring a claim elsewhere.",
-        "If something goes wrong, please contact us first at sales@yourpartnertechnologies.com; most problems can be sorted out directly. If you are a consumer in Malaysia and we cannot resolve a dispute, you may be able to bring a claim before the Tribunal for Consumer Claims Malaysia, which hears consumer claims up to the limit set under the Consumer Protection Act 1999 without the need for a lawyer.",
+        "If something goes wrong, please contact us first through the Contact Us page of this portal; most problems can be sorted out directly. If you are a consumer in Malaysia and we cannot resolve a dispute, you may be able to bring a claim before the Tribunal for Consumer Claims Malaysia, which hears consumer claims up to the limit set under the Consumer Protection Act 1999 without the need for a lawyer.",
         "These terms are written in English. If a translation is provided, the English version prevails where they differ.",
       ],
     },
@@ -181,15 +181,15 @@ export const termsOfService: LegalDocument = {
       heading: "17. General",
       paragraphs: [
         "These terms, the Privacy policy and the Refund & cancellation policy are the whole agreement between you and the Academy about the portal and your registrations. If any part of these terms is found to be unenforceable, the rest still applies. If we do not enforce a term on one occasion, we may still enforce it later. You may not transfer your registration to another person except as the Refund & cancellation policy allows.",
-        "Notices to you are sent to the email address on your account. Notices to us should be sent to sales@yourpartnertechnologies.com.",
+        "Notices to you are sent to the email address on your account. Notices to us should be sent through the Contact Us page of this portal.",
       ],
     },
     {
       heading: "18. Contact",
       paragraphs: [
         "Your Partner Technologies (business registration number 202401023226 (1569075-K)), 15-03A, One Jelatek Condominium, Jalan Jelatek, Kementah, 54200 Kuala Lumpur W.P. Kuala Lumpur, Malaysia.",
-        "Email: sales@yourpartnertechnologies.com.",
-        "Effective date of this version: 2 October 2026. Version: 2026-10-02.",
+        "Contact: use the Contact Us page of this portal.",
+        "Effective date of this version: 3 October 2026. Version: 2026-10-03.",
       ],
     },
   ],

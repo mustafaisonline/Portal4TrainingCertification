@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
-import { CONTACT_EMAIL, contactMailto, interestSubject } from "@/content/contact";
 import { headOffice, partnerLocations } from "@/content/locations";
+import { isEnquiryKindValue, type EnquiryKindValue } from "@/modules/catalogue/enquiries/enquiry-validation";
 import { findPublishedProgrammeBySlug } from "@/modules/catalogue/programmes/repository";
+import { getCurrentUser } from "@/modules/identity/session";
 import { Button } from "@/shared/ui/Button";
 import { LocationCard } from "@/shared/marketing/LocationCard";
 import { Card } from "@/shared/ui/Card";
+import { EnquiryForm } from "./EnquiryForm";
 
 /*
  * PORTED 2026-09-21 from project-artifacts/mockup/app/contact-us/page.tsx (ADR-045)
@@ -81,7 +83,12 @@ export default async function ContactPage({
   const params = await searchParams;
   const programmeSlug = first(params["programme"]);
   const programme = programmeSlug ? await findPublishedProgrammeBySlug(programmeSlug) : null;
-  const subject = programme ? interestSubject(programme.title) : undefined;
+  // CR-2026-10-03-1226: the form replaces the email address (no address is shown anywhere on the portal).
+  // `?kind=` and `?programme=` from other pages pre-set what the message is about.
+  const kindParam = first(params["kind"]);
+  const kind: EnquiryKindValue = kindParam && isEnquiryKindValue(kindParam) ? kindParam : programme ? "programme_interest" : "general";
+  const user = await getCurrentUser();
+  const sourcePath = programmeSlug ? `/contact-us?programme=${encodeURIComponent(programmeSlug)}` : "/contact-us";
 
   return (
     <>
@@ -130,13 +137,13 @@ export default async function ContactPage({
         </div>
       </section>
 
-      {/* ===== Get in touch — the one contact option (founder, 2026-09-29) ===== */}
+      {/* ===== Get in touch — the form is the one contact route; no address is shown (founder, 2026-10-03) ===== */}
       <section className="border-t border-[var(--color-line)] bg-[var(--color-ground-raised)]" data-testid="contact-section">
         <div className="mx-auto max-w-[1280px] px-6 py-16">
           <div className="max-w-[720px]">
             <h2 className="text-display mb-4">Get in touch</h2>
             <p className="text-body-lg mb-8 max-w-[56ch] text-[var(--color-ink-quiet)]">
-              Have a question about our training, certification or enterprise programs? Get in touch with our team.
+              Have a question about our training, certification or enterprise programs? Send us a message and our team will reply.
             </p>
             {programme ? (
               <p className="text-body-sm mb-6 text-[var(--color-ink-quiet)]" data-testid="contact-about">
@@ -144,26 +151,8 @@ export default async function ContactPage({
               </p>
             ) : null}
 
-            <Card variant="panel" className="flex flex-col gap-4 p-6 sm:flex-row sm:items-center sm:gap-6 sm:p-8" data-testid="contact-email-card">
-              <span
-                aria-hidden="true"
-                className="grid h-12 w-12 shrink-0 place-items-center rounded-[var(--radius-plate)] bg-[var(--color-primary)]/12 text-[var(--color-primary)]"
-              >
-                <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
-                  <rect x={3.5} y={5.5} width={17} height={13} rx={2.2} />
-                  <path d="M4.5 7.5l7.5 5.5 7.5-5.5" />
-                </svg>
-              </span>
-              <div className="min-w-0">
-                <p className="text-label mb-1">Email</p>
-                <a
-                  href={contactMailto(subject)}
-                  className="text-h2 break-all text-[var(--color-primary)] underline underline-offset-4"
-                  data-testid="contact-email"
-                >
-                  {CONTACT_EMAIL}
-                </a>
-              </div>
+            <Card variant="panel" className="p-6 sm:p-8" data-testid="contact-form-card">
+              <EnquiryForm kind={kind} programmeId={programme?.id} sourcePath={sourcePath} defaultName={user?.name} defaultEmail={user?.email} />
             </Card>
           </div>
         </div>

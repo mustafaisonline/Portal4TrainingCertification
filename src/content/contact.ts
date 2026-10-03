@@ -1,44 +1,25 @@
 /*
- * Contact details — Milestone 15, Requirement 8 (founder, 2026-09-29).
+ * Contact — the portal shows NO email address (founder, 2026-10-03,
+ * CR-2026-10-03-1246): every way of reaching the team leads to the Contact Us
+ * page and its form, and the team answers by email from Admin → Enquiries.
+ * (History: the form was removed on 2026-09-29 in favour of one email address;
+ * it returned on 2026-10-03.)
  *
- * The contact form was removed: people write to the sales mailbox instead.
- * The address below was SUPPLIED BY THE FOUNDER (2026-09-29) and supersedes
- * the older note that no business email was established. WhatsApp was
- * considered and dropped by the founder the same day — there is no number,
- * link or configuration for it anywhere.
- *
- * `contactMailto` builds the `mailto:` links used by every "Register interest /
- * Send enquiry / Contact us" button, so the training a visitor was looking at
- * travels with them as the subject line instead of being lost.
+ * `CONTACT_EMAIL` is therefore INTERNAL: where the portal announces a new
+ * message to the team (`ENQUIRY_NOTIFY_EMAIL` overrides it) and the address
+ * the mail account sends from. It must not be printed on a page.
  */
 
-export const CONTACT_EMAIL = "sales@yourpartnertechnologies.com";
+// The portal's own mailbox (founder, 2026-10-03: "we got portal email: sales@dataainexus.com"; CR-2026-10-03-1257).
+export const CONTACT_EMAIL = "sales@dataainexus.com";
 
-/** `mailto:` with an optional prefilled subject (and body). Encoded with
- *  `encodeURIComponent` — spaces must be %20 in a mailto, never "+". */
-export function contactMailto(subject?: string, body?: string): string {
-  const parts: string[] = [];
-  if (subject) parts.push(`subject=${encodeURIComponent(subject)}`);
-  if (body) parts.push(`body=${encodeURIComponent(body)}`);
-  return `mailto:${CONTACT_EMAIL}${parts.length ? `?${parts.join("&")}` : ""}`;
-}
+export type ContactKind = "general" | "programme_interest" | "organisation";
 
-/** Subject for "I would like a date for this training". */
-export function interestSubject(trainingTitle?: string | null): string {
-  return trainingTitle ? `Interest: ${trainingTitle}` : "Interest in a training date";
-}
-
-/** "Register interest" — optionally about one named training. */
-export function interestMailto(trainingTitle?: string | null): string {
-  return contactMailto(interestSubject(trainingTitle));
-}
-
-/** Team, education or organisation enquiry. */
-export function organisationMailto(): string {
-  return contactMailto("Organisation enquiry");
-}
-
-/** A participant whose region pays through the local partner (Pakistan). */
-export function localPartnerMailto(trainingTitle: string): string {
-  return contactMailto(`Payment through the local partner: ${trainingTitle}`);
+/** A link to the Contact Us form, optionally pre-setting what it is about and which training. */
+export function contactUsHref(input: { kind?: ContactKind; programmeSlug?: string | null } = {}): string {
+  const params = new URLSearchParams();
+  if (input.kind) params.set("kind", input.kind);
+  if (input.programmeSlug) params.set("programme", input.programmeSlug);
+  const query = params.toString();
+  return query ? `/contact-us?${query}` : "/contact-us";
 }

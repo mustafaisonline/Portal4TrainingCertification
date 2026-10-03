@@ -1,6 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
-import { localPartnerMailto } from "../../src/content/contact";
+import { contactUsHref } from "../../src/content/contact";
 import { completeProfileByEmail, deleteTestUser, resetRateLimits, STRONG_PASSWORD, uniqueEmail } from "../helpers/identity-db";
 
 /*
@@ -28,6 +28,7 @@ function newEmail(prefix: string) {
 
 let offeringId: string;
 let flagshipTitle: string;
+let flagshipSlug: string;
 let usdPriceLabel: string;
 
 test.beforeAll(async () => {
@@ -37,6 +38,7 @@ test.beforeAll(async () => {
   const flagship = await findFlagshipProgramme();
   if (!flagship) throw new Error("seeded flagship programme required");
   flagshipTitle = flagship.title;
+  flagshipSlug = flagship.slug;
   const usd = flagship.prices.find((p) => p.region === "international")!;
   usdPriceLabel = formatMoney(usd.offerAmountMinor, usd.currency);
 
@@ -183,8 +185,8 @@ test("a Pakistan-profile participant sees the local-partner message and no pay b
   await expect(block.getByTestId("checkout-unavailable")).toHaveText("Card payment is not available in Pakistan");
   await expect(block).toContainText(flagshipTitle);
   await expect(block).toContainText("Please contact us — our local partner will contact you to arrange payment through local banks or in cash.");
-  // Founder, 2026-09-29: no contact form — the button is an email naming the training.
-  await expect(block.getByRole("link", { name: "Email us" })).toHaveAttribute("href", localPartnerMailto(flagshipTitle));
+  // Founder, 2026-10-03: no email address on the portal — the button leads to the Contact Us form with the training pre-set.
+  await expect(block.getByRole("link", { name: "Contact us" })).toHaveAttribute("href", contactUsHref({ kind: "programme_interest", programmeSlug: flagshipSlug }));
   await expect(page.getByTestId("pay")).toHaveCount(0);
   await expect(page.getByTestId("checkout-consent")).toHaveCount(0);
   await expect(page.getByTestId("checkout-price")).toHaveCount(0);

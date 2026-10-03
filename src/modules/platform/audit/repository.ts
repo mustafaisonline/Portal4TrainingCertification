@@ -53,6 +53,7 @@ export type AuditAction =
   | "job.run"
   // Milestone 8 — admin operations
   | "enquiry.status_changed"
+  | "enquiry.replied" // CR-2026-10-03-1226: the team replied from Admin → Enquiries
   | "profile.exported"
   // Milestone 12 — trainings managed in the portal (details, editorial
   // content, curriculum, pace formats, the four fee rows, visibility)

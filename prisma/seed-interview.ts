@@ -35,7 +35,7 @@ export const INTERVIEW_ROLE_FILES = ["data-engineer.json", "ai-engineer.json"] a
 export type SeedOrganisation = { name: string; slug: string; type: OrganisationType; contactEmail: string; logoPath: string | null };
 
 /** The first organisation (founder, CR-2026-10-01-1711 R3). */
-export const YPT: SeedOrganisation = { name: "Your Partner Technologies", slug: "ypt", type: "company", contactEmail: "sales@yourpartnertechnologies.com", logoPath: "/brand/ypt-logo.jpg" };
+export const YPT: SeedOrganisation = { name: "Your Partner Technologies", slug: "ypt", type: "company", contactEmail: "sales@dataainexus.com", logoPath: "/brand/ypt-logo.jpg" };
 
 export type InterviewSeedOptions = {
   /** Folder holding the role files (default: prisma/seed-data/interview-questions). */

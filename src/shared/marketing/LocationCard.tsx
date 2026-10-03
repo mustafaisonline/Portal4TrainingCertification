@@ -62,11 +62,13 @@ export function LocationCard({ location: l }: { location: OfficeLocation }) {
               </a>
             </Row>
           ) : null}
-          <Row label="Email" testId={`location-${l.id}-email`}>
-            <a href={`mailto:${l.email}`} className={`${linkClass} break-all`}>
-              {l.email}
-            </a>
-          </Row>
+          {l.email ? (
+            <Row label="Email" testId={`location-${l.id}-email`}>
+              <a href={`mailto:${l.email}`} className={`${linkClass} break-all`}>
+                {l.email}
+              </a>
+            </Row>
+          ) : null}
           <Row label="Website" testId={`location-${l.id}-website`}>
             <a href={l.website.url} target="_blank" rel="noopener noreferrer" className={linkClass}>
               {l.website.label}

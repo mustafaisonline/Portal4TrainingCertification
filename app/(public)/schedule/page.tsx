@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { interestMailto } from "@/content/contact";
+import { contactUsHref } from "@/content/contact";
 import { listUpcomingPublicOfferings, type OfferingRecord } from "@/modules/catalogue/offerings/repository";
 import { findPublishedProgrammeBySlug } from "@/modules/catalogue/programmes/repository";
 import { interestHrefForTraining } from "@/modules/commerce/interest-routing";
@@ -87,7 +87,7 @@ export default async function SchedulePage({ searchParams }: { searchParams: Pro
               Register your interest and we will tell you the moment a date opens.
             </p>
             <div className="mt-5 flex flex-wrap gap-3">
-              <Button href={interestHrefBySlug.get(only.slug) ?? interestMailto(only.title)} data-testid="schedule-register-interest">Register interest</Button>
+              <Button href={interestHrefBySlug.get(only.slug) ?? contactUsHref({ kind: "programme_interest", programmeSlug: only.slug })} data-testid="schedule-register-interest">Register interest</Button>
               <Button variant="secondary" href={`/programs/${only.slug}`}>
                 About this training
               </Button>
@@ -110,7 +110,7 @@ export default async function SchedulePage({ searchParams }: { searchParams: Pro
         ) : (
           <div className="flex flex-col gap-10">
             {groups.map((g) => {
-              const enquiryHref = interestMailto(g.title);
+              const enquiryHref = contactUsHref({ kind: "programme_interest", programmeSlug: g.slug });
               const interestHref = interestHrefBySlug.get(g.slug) ?? null;
               return (
                 <section key={g.slug} aria-labelledby={`schedule-${g.slug}`} data-testid="schedule-group" data-slug={g.slug}>

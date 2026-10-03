@@ -1,5 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
-import { CONTACT_EMAIL, contactMailto, interestSubject } from "../../src/content/contact";
+import { CONTACT_EMAIL } from "../../src/content/contact";
 import { expect, test, type Page } from "@playwright/test";
 import { footerExplore, footerLegal, primaryNav, verifyLink } from "../../src/shared/chrome/site-nav";
 
@@ -104,28 +104,24 @@ test("schedule shows the honest no-dates state and a register-interest path", as
   await expectNoAxeViolations(page);
 });
 
-// Founder, 2026-09-29 (Milestone 15, Req 8): the contact form is gone; the page
-// carries the founder-supplied sales email as its one contact option (WhatsApp
-// was dropped). Every "register interest"-style button is an email with the
-// training in the subject.
-test("contact page: no form, one email option, no WhatsApp; an old context link keeps its subject; no accessibility violations", async ({ page }) => {
+// Founder, 2026-10-03 (CR-2026-10-03-1226): the form is back and the portal shows no email address —
+// every contact route leads here. (2026-09-29: the form had been removed in favour of one email option.)
+test("contact page: a form, no email address, no WhatsApp; an old context link keeps its training; no accessibility violations", async ({ page }) => {
   await page.goto("/contact-us");
-  await expect(page.getByTestId("contact-section")).toBeVisible();
-  // No form inside the page body (the header's search form sits outside <main>).
-  await expect(page.locator("main form")).toHaveCount(0);
-  await expect(page.getByLabel("Your name")).toHaveCount(0);
-
-  const email = page.getByTestId("contact-email");
-  await expect(email).toHaveText(CONTACT_EMAIL);
-  await expect(email).toHaveAttribute("href", `mailto:${CONTACT_EMAIL}`);
+  const section = page.getByTestId("contact-section");
+  await expect(section).toBeVisible();
+  await expect(section.getByTestId("enquiry-form")).toBeVisible();
+  await expect(page.getByLabel("Your name")).toBeVisible();
+  await expect(section.locator("a[href^='mailto:']")).toHaveCount(0);
+  await expect(section).not.toContainText(CONTACT_EMAIL);
   await expect(page.locator("a[href*='wa.me'], a[href*='whatsapp']")).toHaveCount(0);
   await expect(page.locator("body")).not.toContainText(/whatsapp/i);
   await expectNoAxeViolations(page);
 
-  // A link shared before the form was removed still resolves, and the email keeps the training.
+  // A link carrying a training keeps it: the topic is pre-selected and the training is named.
   await page.goto("/contact-us?kind=programme_interest&programme=learn-vibe-coding");
   await expect(page.getByTestId("contact-about")).toContainText("Learn Vibe Coding");
-  await expect(page.getByTestId("contact-email")).toHaveAttribute("href", contactMailto(interestSubject("Learn Vibe Coding")));
+  await expect(page.getByLabel("I am contacting you about")).toHaveValue("programme_interest");
 });
 
 test("public pages have no WCAG 2.2 AA violations", async ({ page }) => {

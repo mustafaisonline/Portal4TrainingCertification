@@ -26,8 +26,14 @@ export type EnquiryFormState =
 
 const TEN_MINUTES = 10 * 60 * 1000;
 const ONE_HOUR = 60 * 60 * 1000;
-/** Every visitor together: HostGator limits how many emails a mailbox may send per hour, and registrations share it. */
-const GLOBAL_PER_HOUR = 60;
+/**
+ * Every visitor together. Each accepted message sends 2 emails (team notice + acknowledgement) through the free SMTP2GO
+ * relay (1,000 emails a month) that registrations and replies share, so a flood must not be able to use up the quota:
+ * at most 20 messages an hour and 40 a day portal-wide.
+ */
+const GLOBAL_PER_HOUR = 20;
+const GLOBAL_PER_DAY = 40;
+const ONE_DAY = 24 * ONE_HOUR;
 const SOURCE_PATH_RE = /^\/[A-Za-z0-9\-._~/?=&%]{0,199}$/;
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -51,8 +57,8 @@ export async function submitEnquiry(_prev: EnquiryFormState, formData: FormData)
 
   const h = await headers();
   const clientKey = clientKeyOf((h.get("x-forwarded-for") ?? h.get("x-real-ip") ?? "local").split(",")[0]!);
-  // Three independent limits (each atomic): this client, this address, and the whole portal (the mailbox has an hourly send cap).
-  const tooMany = (await enquiryOverLimit("ip", clientKey, TEN_MINUTES, 5)) || (await enquiryOverLimit("email", values.email, ONE_HOUR, 3)) || (await enquiryOverLimit("all", "portal", ONE_HOUR, GLOBAL_PER_HOUR));
+  // Three independent limits (each atomic): this client, this address, and the whole portal, per hour and per day (the email quota is shared).
+  const tooMany = (await enquiryOverLimit("ip", clientKey, TEN_MINUTES, 5)) || (await enquiryOverLimit("email", values.email, ONE_HOUR, 3)) || (await enquiryOverLimit("all", "portal", ONE_HOUR, GLOBAL_PER_HOUR)) || (await enquiryOverLimit("all-day", "portal", ONE_DAY, GLOBAL_PER_DAY));
   if (tooMany) return { status: "error", message: "Too many messages in a short time. Please try again in a few minutes.", fieldErrors: {} };
 
   // The training the page was about, when it is a real one.

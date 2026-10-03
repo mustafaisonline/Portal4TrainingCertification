@@ -1,6 +1,6 @@
 # CR-2026-10-04-0113 — Annual subscriptions: Agentic AI unlimited and portal-level unlimited
 
-**Received:** 2026-10-04 01:10 MYT · **Status:** ASSESSED — awaiting the founder's answers (§3) · **Requested by:** founder · **Model:** opus
+**Received:** 2026-10-04 01:10 MYT · **Status:** DECIDED — one question open (the cut-off sentence) · **Requested by:** founder · **Model:** opus
 
 ## 1. Request (verbatim)
 
@@ -50,3 +50,4 @@ Plans page, plan table (proposed schema), checkout (new order kind), entitlement
 | Date (MYT) | Entry |
 |---|---|
 | 2026-10-04 01:10 | CR created from the founder's message (sent while the assistant was building CR-2250); nothing built. The founder went to sleep and asked the assistant to record questions. |
+| 2026-10-04 04:20 | **Founder's answers:** the USD 20/year plan is **everything, including Agentic AI** ("Yes"); "unlimited certificates" = **unlimited unlocks of the paid result documents** ("Yes"); renewal = **one-off 365-day pass, no automatic renewal** ("Ok"); "I approve" the schema and payment work. **Open:** the sentence "where user will get linked" — the founder asked for elaboration (see chat: the assistant proposes a "My subscription" page linked from the account menu and the Subscription item). The renewal terms wording is a DRAFT for the founder (and a lawyer) to review. |

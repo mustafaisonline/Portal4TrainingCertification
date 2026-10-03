@@ -1,6 +1,6 @@
 # CR-2026-10-04-0112 — Agentic AI: paid downloads — single items and packs
 
-**Received:** 2026-10-04 01:10 MYT · **Status:** ASSESSED — awaiting the founder's answers (§3) · **Requested by:** founder · **Model:** opus
+**Received:** 2026-10-04 01:10 MYT · **Status:** DECIDED — schema SQL + design to be written, then built · **Requested by:** founder · **Model:** opus
 
 ## 1. Request (verbatim)
 
@@ -45,3 +45,4 @@ New tables (products, product files, entitlements/credits — proposed in a sche
 | Date (MYT) | Entry |
 |---|---|
 | 2026-10-04 01:10 | CR created from the founder's message (sent while the assistant was building CR-2250); nothing built. The founder went to sleep and asked the assistant to record questions. |
+| 2026-10-04 04:20 | **Founder's answers:** packs — **single item USD 2 and the 10-pack USD 10 now; the 50 and 100 packs later** ("Yes"). **"I approve"** the new database tables and the payment changes for paid downloads (his answer to Q8). Not answered, assistant proceeds with its recommendations and states them: credits do not expire; downloads non-refundable once downloaded (stated before paying); USD only; Stripe receipt + Orders & receipts. The exact schema SQL and payment design are written into this CR before anything is applied, so the founder can see what "approve" covered. |

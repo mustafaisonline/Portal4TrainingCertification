@@ -1,6 +1,6 @@
 # CR-2026-10-04-0111 — New "Agentic AI" pages: list the agents and skills, with manuals and guides
 
-**Received:** 2026-10-04 01:10 MYT · **Status:** ASSESSED — awaiting the founder's answers (§3) · **Requested by:** founder · **Model:** opus
+**Received:** 2026-10-04 01:10 MYT · **Status:** DECIDED — content preparation next · **Requested by:** founder · **Model:** opus
 
 ## 1. Request (verbatim)
 
@@ -42,3 +42,4 @@ New routes under `app/(public)/agentic-ai/…`, a catalogue source (items, categ
 | Date (MYT) | Entry |
 |---|---|
 | 2026-10-04 01:10 | CR created from the founder's message (sent while the assistant was building CR-2250); nothing built. The founder went to sleep and asked the assistant to record questions. |
+| 2026-10-04 04:20 | **Founder approved:** "Yes do that... I approved now." — a **curated, generalised starter set (about 5 agents + 8 skills)**, prepared by the assistant for the founder to approve item by item; the originals stay private; the assistant writes a manual and an install guide per item. Q4 page structure (/agentic-ai → Agents / Skills → detail pages; public to read, sign-in + payment to download) and Q5 licence: not answered; assistant proceeds with the recommendation and a short licence text for the founder to review. |

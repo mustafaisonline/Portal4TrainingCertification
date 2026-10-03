@@ -1,6 +1,6 @@
 # CR-2026-10-04-0110 — "Product" mega-menu in the header (desktop only) and "Professional Trainings" renamed "Trainings"
 
-**Received:** 2026-10-04 01:10 MYT · **Status:** ASSESSED — awaiting the founder's answers (§3) · **Requested by:** founder · **Model:** sonnet
+**Received:** 2026-10-04 01:10 MYT · **Status:** DECIDED — build next (screenshots before deploy) · **Requested by:** founder · **Model:** sonnet
 
 ## 1. Request (verbatim)
 
@@ -51,3 +51,4 @@
 | Date (MYT) | Entry |
 |---|---|
 | 2026-10-04 01:10 | CR created from the founder's message (sent while the assistant was building CR-2250); nothing built. The founder went to sleep and asked the assistant to record questions. |
+| 2026-10-04 04:20 | **Founder's answers (received on waking):** top bar = **Home · Product · Reviews · About Us · Search**, then **Bell · Burger menu** (the avatar/account stays with the bell). Assistant's reading to confirm on screenshots: on a laptop the burger opens a compact menu of the secondary links (More, Legal, theme switch; Sign in when signed out); on phones the burger panel stays the full navigation. Q2 Dashboard category (role-based; Sign in when signed out), Q3 five trainings + "See all trainings →", Q4 click-to-open with Esc / outside-click, Q5 rename to **Trainings** — not answered separately; the assistant proceeds with its recommendations and the founder sees them in screenshots before anything is deployed. |

@@ -35,6 +35,15 @@ describe("legal documents (src/content/legal)", () => {
     expect(doc.summary.trim().length).toBeGreaterThan(0);
   });
 
+  it("the Terms say the 90-minute limit applies to an organisation's screening test only — Prepare for Interview has none (CR-2026-10-04-0607)", () => {
+    const paragraph = termsOfService.sections.flatMap((sec) => sec.paragraphs ?? []).find((p) => p.startsWith("Interview assessments are free practice"));
+    expect(paragraph).toBeDefined();
+    const [practice, screening] = paragraph!.split("An organisation may also offer a screening test");
+    expect(practice).not.toContain("90 minutes");
+    expect(practice).toContain("no time limit");
+    expect(screening).toContain("time limit of 90 minutes");
+  });
+
   it.each(documents)("$key carries no draft section, draft notice or effective-date placeholder", (doc) => {
     expect(doc.sections[0]?.heading).not.toBe("About this draft");
     const text = allText(doc);

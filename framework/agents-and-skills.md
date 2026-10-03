@@ -6,6 +6,7 @@
 
 | Category | Agent | Role |
 |---|---|---|
+| Advisory | `advisor` | What to do next (best practice + framework order, mapped to our agents/skills); names missing agents/skills and advises the human to create them; keeps `capability-gaps.md` |
 | Team lead | `buddy` (= `tl`) | The only agent the founder talks to; guided / autonomous modes; delegates to all others. Default session agent (`.claude/settings.json`) |
 | Business requirements | `br-analyst` | Vision and BRD |
 | Business requirements | `br-impact-analyst` | Whole-workspace impact analysis, recorded in the CR spec |
@@ -23,6 +24,7 @@
 | Area | Skill | Purpose |
 |---|---|---|
 | Session | `resume-work` | Orient: status, open CRs, deferred items |
+| Advisory | `next-steps` · `capability-gap` | Ordered next steps with owners; roster coverage and the gap register |
 | Business requirements | `vision-write` · `brd-write` · `dr-write` | Maintain `vision.md`, `brd.md`; write/update decision records (DR, ADR) |
 | Planning | `milestones-update` · `wbs-update` | Maintain `milestones.md`, `wbs.md` |
 | Impact analysis | `impact-analysis` · `impact-record` | Scan the workspace for every impacted element; record it in the CR spec |

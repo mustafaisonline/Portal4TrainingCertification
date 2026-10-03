@@ -27,6 +27,7 @@ The founder talks only to **Buddy**, the team lead (`tl`). Buddy turns goals int
 | [`guardrails.md`](guardrails.md) | The rules: persistence, no stack changes to fix an issue, approval gates | founder only |
 | [`techstack.md`](techstack.md) | Every tool and technology in use | `exec-developer` (with approval) |
 | [`wireframe.md`](wireframe.md) | Wireframe sign-off gate — no backend before it is signed | `exec-wireframer` |
+| [`capability-gaps.md`](capability-gaps.md) | The advisor's register of gaps in this agentic solution itself | `advisor` |
 | [`prompt-frameworks.md`](prompt-frameworks.md) | Prompt-engineering frameworks catalogue and selection rules | `pe-selector` |
 | [`metadata/`](metadata/README.md) | Business, technical and operational metadata, one `.md` per item | `meta-steward` |
 
@@ -34,7 +35,7 @@ The founder talks only to **Buddy**, the team lead (`tl`). Buddy turns goals int
 1. **Prompt-engineering check.** When the founder shares a substantive request (a goal, requirement, CR or task — not a short reply like "yes"), Buddy first runs `pe-selector`. It reads the text, picks the prompt-engineering framework skill (`pf-*`) with the lowest token cost at the highest accuracy, and returns the rebuilt prompt. Catalogue: [`prompt-frameworks.md`](prompt-frameworks.md).
 2. **Model check.** Before executing any CR or task, Buddy runs the `model-recommend` skill: it names the cheapest Claude model that is sufficient and records it in the CR. Same as the session's model → execute. Different → Buddy asks the founder to open a new terminal on the recommended model (`claude --model <id>`) and execute there; it does not execute here unless the founder says "continue here".
 3. **Several possible actions → ask with a recommendation.** When an agent's step has more than one sensible choice, it never picks silently: it returns the options with its own recommendation to Buddy, who asks the human.
-4. **Routing.** Buddy knows every agent and skill (roster in `.claude/agents/buddy.md`). For a new chat Buddy chooses the agents; each agent chooses the skills it needs. A new requirement always gets an impact analysis (`br-impact-analyst`) before CRs are written.
+4. **Routing.** Buddy asks `advisor` what to do next at the start of every goal and after every CR; the advisor maps the steps to our agents and skills and tells the human when one is missing. Buddy knows every agent and skill (roster in `.claude/agents/buddy.md`). For a new chat Buddy chooses the agents; each agent chooses the skills it needs. A new requirement always gets an impact analysis (`br-impact-analyst`) before CRs are written.
 5. **CRs are split by model; the model is in the file name.** `CR/CR-<stamp>-<title>-<haiku|sonnet|opus|fable>.md`, with one 1:1 spec `CR/specs/CR-SPEC-<stamp>-<title>-<model>.md` holding every impacted element, task status and a "Resume here" section, so a new terminal on the right model can continue where the last stopped.
 
 ## 4. Order of work for a new project

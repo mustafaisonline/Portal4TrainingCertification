@@ -26,6 +26,7 @@ deploy only on the founder's word, except in `buddy` Autonomous mode, where the 
 
 | CR file | Title | Status |
 |---|---|---|
+| [CR-2026-10-03-1420-next-patch-upgrade-sonnet.md](CR-2026-10-03-1420-next-patch-upgrade-sonnet.md) | Next.js 16.3.3 → 16.3.8 (critical advisory) — BUILT & VERIFIED, deploys with the next release |
 | [CR-2026-10-03-1400-incident-empty-smtp-env-outage-sonnet.md](CR-2026-10-03-1400-incident-empty-smtp-env-outage-sonnet.md) | **INCIDENT** 05:35–05:50 UTC: empty SMTP env took the portal down; restored; code safeguard built |
 | [CR-2026-10-03-1257-portal-email-address-sonnet.md](CR-2026-10-03-1257-portal-email-address-sonnet.md) | The portal's address is sales@dataainexus.com — DEPLOYED |
 | [CR-2026-10-03-1246-hide-emails-contact-via-form-sonnet.md](CR-2026-10-03-1246-hide-emails-contact-via-form-sonnet.md) | No email address on the portal — DEPLOYED `v2026.10.03-3` (2 founder steps open) |

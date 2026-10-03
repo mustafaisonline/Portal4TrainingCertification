@@ -1,6 +1,6 @@
 # CR-2026-10-03-2253 — /programs: small dynamic training cards
 
-**Received:** 2026-10-03 22:50 MYT · **Status:** BUILT & VERIFIED — deploy next · **Requested by:** founder · **Model:** sonnet
+**Received:** 2026-10-03 22:50 MYT · **Status:** DEPLOYED `v2026.10.03-11` · **Requested by:** founder · **Model:** sonnet
 
 ## 1. Request (verbatim)
 
@@ -40,3 +40,4 @@
 | 2026-10-03 22:50 | CR created from the founder's message; existing code inspected read-only; nothing built. |
 | 2026-10-03 23:05 | Founder answered the §3 decisions: "I agree with all your recommendation with my few responses." **Item 10:** "Do as per the best practices" — the assistant will use a compact inline-SVG level/duration indicator (no new dependency), title, subhead and the two buttons, in a responsive grid. |
 | 2026-10-04 00:20 | **BUILT & VERIFIED.** /programs now shows small tiles (`TrainingTile`): title, subhead, a graph and the two buttons (View Details / Register), in a responsive grid (1 · 2 · 3 · 4 across). **The graph is a dot row, one dot per pace format — filled = that format has an open date, hollow = no date yet** — drawn as inline SVG with a plain-words label; no chart library, and deliberately NOT a level ladder (DR-01: no ladder, no bands). Prices, timelines and the HRD note stay on each training's own page (their e2e assertions already exist there; the old listing-price assertions were replaced by a tile test). The other pages that use the full `CourseCard` (home, contact) are unchanged. The "new training not on /programs" report was an unpublished draft (see CR-2255); the admin launch e2e (draft → publish → appears on /programs) passes. Full unit/integration suite 848/848; affected e2e specs green. |
+| 2026-10-04 00:36 MYT (15:35 UTC) | **DEPLOYED `v2026.10.03-11` (`ef66d58`).** Gate, backup, migration sandbox, promote, validation PASSED with 0 warnings. Live check: /programs 2 tiles + 2 graphs, no price rows; training page shows Register Interest Only (+ fee note) and Show Current Schedule; /schedule?training= works. |

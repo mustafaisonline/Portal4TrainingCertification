@@ -1,6 +1,6 @@
 # CR-2026-10-03-2255 — Publish error: make "Not ready to publish" say exactly what is missing
 
-**Received:** 2026-10-03 22:50 MYT · **Status:** BUILT & VERIFIED — deploy after review · **Requested by:** founder · **Model:** sonnet
+**Received:** 2026-10-03 22:50 MYT · **Status:** DEPLOYED `v2026.10.03-11` · **Requested by:** founder · **Model:** sonnet
 
 ## 1. Request (verbatim)
 
@@ -40,3 +40,4 @@
 | 2026-10-03 22:50 | CR created from the founder's message; existing code inspected read-only; nothing built. |
 | 2026-10-03 23:05 | Founder answered the §3 decisions: "I agree with all your recommendation with my few responses." Decision 12 as recommended: list exactly what is missing, also check the roles and rationale placeholders, and re-check readiness on the server when publishing. Regions-not-sold stays as is (all four fee rows). |
 | 2026-10-03 23:55 | **BUILT & VERIFIED.** New `publishReadiness()` (one pure check) lists exactly what is missing, each with a link to its tab (Fees: names the missing regions and "N of 4"; Content: Highlights, Who-should-attend intro+roles, Why-this-training; Curriculum: modules); the same check is re-run on the server in `setTrainingStatus` (refuses with the reasons, code `not_ready`). Trainers see the list read-only. Tests: 3 unit + the integration launch sequence now asserts the server refusal. No schema change. **Rollback:** revert the commit. |
+| 2026-10-04 00:36 MYT (15:35 UTC) | **DEPLOYED `v2026.10.03-11` (`ef66d58`).** Gate, backup, migration sandbox, promote, validation PASSED with 0 warnings. Live check: /programs 2 tiles + 2 graphs, no price rows; training page shows Register Interest Only (+ fee note) and Show Current Schedule; /schedule?training= works. |

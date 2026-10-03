@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import { registerInterestAction, type RegisterInterestState } from "@/modules/commerce/interest.actions";
-import { Button } from "@/shared/ui/Button";
+import { Button, buttonClassName } from "@/shared/ui/Button";
 import { Field, FormStatus } from "@/shared/ui/forms";
 
 /*
@@ -34,11 +34,15 @@ export function InterestForm({
 }) {
   const [state, action, pending] = useActionState(registerInterestAction, initial);
   const errors = state.status === "error" ? (state.fieldErrors ?? {}) : {};
-  const buttonLabel = feeLabel ? `Register your interest — ${feeLabel} (non-refundable)` : "Register your interest — free for you";
+  // Founder, 2026-10-03 (CR-2026-10-03-2252): a button named "Register Interest Only"; what it costs is stated right under it.
+  const feeNote = feeLabel ? `${feeLabel}, non-refundable` : "Free for you";
   return (
     <details className="group mt-auto border-t border-[var(--color-line)] pt-4" data-testid={`interest-${formatId}`} open={state.status === "error" ? true : undefined}>
-      <summary className="text-body-sm cursor-pointer list-none font-medium text-[var(--color-primary)] underline underline-offset-4 hover:text-[var(--color-primary-strong)]" data-testid="interest-open">
-        {buttonLabel}
+      <summary className={buttonClassName("secondary", "cursor-pointer list-none flex-col gap-0 text-center")} data-testid="interest-open">
+        <span>Register Interest Only</span>
+        <span className="text-xs font-normal text-[var(--color-ink-quiet)]" data-testid="interest-fee-note">
+          {feeNote}
+        </span>
       </summary>
       {state.status === "registered" ? (
         <div className="mt-4" role="status" data-testid="interest-registered">

@@ -1,8 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState, useId, useState } from "react";
 import { PROGRAMME_STATUS_LABEL } from "@/modules/catalogue/programmes/constants";
 import { setTrainingStatusAction, type FormState } from "@/modules/catalogue/programmes/admin.actions";
+import type { ReadinessProblem } from "@/modules/catalogue/programmes/readiness";
 import type { ProgrammeStatus } from "@/modules/catalogue/programmes/types";
 import { Button } from "@/shared/ui/Button";
 import { FormStatus } from "@/shared/ui/forms";
@@ -15,7 +17,8 @@ import { FormStatus } from "@/shared/ui/forms";
  */
 const initial: FormState<{ status?: string }> = { status: "idle" };
 
-export function TrainingStatusForm({ id, slug, status, ready }: { id: string; slug: string; status: ProgrammeStatus; ready: { ok: boolean; missing: string[] } }) {
+export function TrainingStatusForm({ id, slug, status, problems }: { id: string; slug: string; status: ProgrammeStatus; problems: ReadinessProblem[] }) {
+  const ready = { ok: problems.length === 0 };
   const [state, action, pending] = useActionState(setTrainingStatusAction, initial);
   const [confirmed, setConfirmed] = useState(false);
   const confirmId = useId();
@@ -32,9 +35,19 @@ export function TrainingStatusForm({ id, slug, status, ready }: { id: string; sl
           : "Publishing lists it on the Trainings page and makes its page, prices and open dates public."}
       </p>
       {next === "published" && !ready.ok ? (
-        <p className="text-body-sm text-[var(--color-danger)]" data-testid="training-not-ready">
-          Not ready to publish: {ready.missing.join(" · ")}.
-        </p>
+        <div className="text-body-sm text-[var(--color-danger)]" data-testid="training-not-ready">
+          <p className="font-medium">Not ready to publish yet. Still to do:</p>
+          <ul className="mt-1 list-disc pl-5">
+            {problems.map((p) => (
+              <li key={p.message}>
+                {p.message}{" "}
+                <Link href={`/admin/trainings/${id}${p.tab}`} className="underline underline-offset-4" data-testid="training-not-ready-link">
+                  Open {p.tabLabel}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       ) : null}
       <div className="flex items-start gap-2">
         <input id={confirmId} type="checkbox" checked={confirmed} onChange={(e) => setConfirmed(e.target.checked)} className="mt-1 h-4 w-4" data-testid="training-status-confirm" />

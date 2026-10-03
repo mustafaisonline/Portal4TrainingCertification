@@ -68,10 +68,10 @@ export function OfferingDateCard({ offering, enquiryHref, interestHref, now = ne
             </Button>
           ) : offering.status === "open" ? (
             <Button href={`/checkout/${offering.id}`} data-testid="register">
-              Register
+              Payment
             </Button>
           ) : (
-            <Button href={interestHref ?? enquiryHref}>Register interest</Button>
+            <Button href={interestHref ?? enquiryHref} data-testid="register-interest">Register Interest Only</Button>
           )}
         </div>
       </div>

@@ -133,6 +133,9 @@ describe("the launch sequence through the repository", () => {
     const audit = await listAuditForEntity(prisma, "programme", created.id);
     expect(audit.map((a) => a.action)).toEqual(["programme.created"]);
     expect(audit[0]!.actorUserId).toBe(trainerUser.id);
+    // CR-2026-10-03-2255: the server holds the publish line too — a fresh draft (starter text, no fees, no modules) is refused with the reasons.
+    await expect(withTransaction((tx) => setTrainingStatus(tx, created.id, "published", admin.id))).rejects.toMatchObject({ code: "not_ready", message: expect.stringContaining("Not ready to publish") });
+    expect((await findProgrammeBySlug(created.slug))?.status).toBe("unlisted");
   });
 
   it("validation names every missing field and never creates a row", async () => {

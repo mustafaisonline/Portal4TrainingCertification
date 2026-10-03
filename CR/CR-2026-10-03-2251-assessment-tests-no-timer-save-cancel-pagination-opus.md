@@ -1,6 +1,6 @@
 # CR-2026-10-03-2251 — Interview and organisation tests: no timer, per-page results, cancel, save & exit, paginated results
 
-**Received:** 2026-10-03 22:50 MYT · **Status:** DECIDED except the organisation-timer reading (confirm) — build queued last · **Requested by:** founder · **Model:** opus
+**Received:** 2026-10-03 22:50 MYT · **Status:** DECIDED — build queued last · **Requested by:** founder · **Model:** opus
 
 ## 1. Request (verbatim)
 
@@ -49,3 +49,4 @@
 |---|---|
 | 2026-10-03 22:50 | CR created from the founder's message; existing code inspected read-only; nothing built. |
 | 2026-10-03 23:05 | Founder answered the §3 decisions: "I agree with all your recommendation with my few responses." **Item 5:** "I dont want time taken to remove from Organization test, only remove from Interview preparaton tests." Assistant's reading (to confirm with the founder before building this CR): interview-preparation tests lose the timer and "time taken"; organisation tests keep their timer and "time taken" unchanged and only get paginated results (10 per page). Items 3, 4, 6 as recommended (lock a page's answers after its results are viewed; cancel any unfinished attempt; save & exit stays open until finished or cancelled). |
+| 2026-10-03 23:15 | **Founder confirmed the reading of item 5:** "Agree on these recommendations." Interview-preparation tests: no timer, no time taken, plus per-page results, cancel and save & exit. Organisation tests (YPT and others): unchanged timer and time taken; only results paginated 10 per page. |

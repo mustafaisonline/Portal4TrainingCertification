@@ -117,7 +117,7 @@ async function expectNoAxeViolations(page: Page) {
 test("the schedule offers Register for an open date, leading to its checkout", async ({ page }) => {
   await page.goto("/schedule");
   const register = page.getByTestId("register").first();
-  await expect(register).toHaveText("Register");
+  await expect(register).toHaveText("Payment"); // CR-2026-10-03-2252: an open date offers "Payment" (the checkout review, then Stripe)
   await expect(register).toHaveAttribute("href", `/checkout/${offeringId}`);
 });
 

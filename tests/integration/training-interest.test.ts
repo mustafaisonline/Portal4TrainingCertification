@@ -311,6 +311,11 @@ describe("a participant in Pakistan", () => {
     expect(row.confirmedAt).not.toBeNull();
     expect(await prisma.order.count({ where: { userId: pakistani.id } })).toBe(0);
     expect((await listAuditForEntity(prisma, "training_interest", row.id)).map((a) => a.action)).toEqual(["interest.registered"]);
+    // Founder, 2026-10-03 (CR-2026-10-03-2252): the free path sends the confirmation email too — exactly one per interest.
+    const mails = await prisma.outboundEmail.findMany({ where: { idempotencyKey: `interest-free:${row.id}` } });
+    expect(mails).toHaveLength(1);
+    expect(mails[0]).toMatchObject({ templateKey: "commerce.interest-registered-free", toEmail: pakistani.email.toLowerCase() });
+    expect(mails[0]!.textBody).toContain("No fee applies to you");
     await expect(startInterestRegistration({ userId: pakistani.id, formatId, form: form(pakistani.email), gateway })).rejects.toMatchObject({ code: "interest_already_registered" });
   });
 });

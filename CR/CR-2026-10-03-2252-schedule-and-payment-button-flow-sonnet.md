@@ -1,6 +1,6 @@
 # CR-2026-10-03-2252 — Training card, schedule and training-page buttons (Register · Payment · Register Interest Only · Show Current Schedule)
 
-**Received:** 2026-10-03 22:50 MYT · **Status:** DECIDED — build queued · **Requested by:** founder · **Model:** sonnet
+**Received:** 2026-10-03 22:50 MYT · **Status:** BUILT & VERIFIED — deploy after review · **Requested by:** founder · **Model:** sonnet
 
 ## 1. Request (verbatim)
 
@@ -51,3 +51,4 @@
 |---|---|
 | 2026-10-03 22:50 | CR created from the founder's message; existing code inspected read-only; nothing built. |
 | 2026-10-03 23:05 | Founder answered the §3 decisions: "I agree with all your recommendation with my few responses." Decisions 7-9 as recommended (Payment keeps the checkout review page, then Stripe; planned/full dates keep the interest button labelled "Register Interest Only"). **Decision 9 extended by the founder:** "Please send email for free test as well. This will give me an idea how many are just doing free tests" — the free (fee-waived) interest path will send the same confirmation email, so the Email log and Users Interest show how many people register free. |
+| 2026-10-03 23:55 | **BUILT & VERIFIED.** /programs card "See dates and register" → **Register** (still to `/schedule?training=<slug>`, which already shows only that training); an open date's button "Register" → **Payment** (still via the checkout review page, then Stripe — no payment-logic change); planned/full date → **Register Interest Only**; the interest control on a training page is now a button **Register Interest Only** with the fee under it ("USD 2, non-refundable" / "Free for you"), the signed-out version is the same button ("Sign in first · …"); every format card also has **Show Current Schedule** → `/schedule?training=<slug>`. **Free (fee-waived) interest now sends the confirmation email** (`commerce.interest-registered-free`, one per interest row via an idempotency key; bell notice too). Tests updated/added: integration (email + idempotency), e2e (labels, Show Current Schedule, email row). Full suite green; two unrelated e2e clicks flaked once under load and passed on re-run. **Rollback:** revert the commit. |

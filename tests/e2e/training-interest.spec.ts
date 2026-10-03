@@ -115,6 +115,9 @@ test("signed out: the format says no date is scheduled and offers to sign in; th
   await expect(signin).toContainText("No date is scheduled yet");
   await expect(signin.getByTestId("interest-signin")).toContainText("USD 2, non-refundable");
   await expect(signin.getByTestId("interest-signin")).toHaveAttribute("href", new RegExp(`/sign-in\\?return-to=.*${slug}`));
+  // CR-2026-10-03-2252: every format card also offers "Show Current Schedule" — this training's dates on the schedule page.
+  await expect(page.getByTestId(`show-schedule-${formatCode}`)).toHaveText("Show Current Schedule");
+  await expect(page.getByTestId(`show-schedule-${formatCode}`)).toHaveAttribute("href", `/schedule?training=${slug}`);
 });
 
 test("the hero \"Register your interest\" button leads where the format's \"Sign in to register your interest\" link does; signed in, it lands on the formats (CR-2026-10-02-0721)", async ({ page }) => {
@@ -168,7 +171,8 @@ test("a card payer: the form states the fee is non-refundable, validates, and wi
   await page.goto(`/programs/${slug}`);
   const card = formatCard(page);
   await card.getByTestId("interest-open").click();
-  await expect(card.getByTestId("interest-open")).toContainText("USD 2 (non-refundable)");
+  await expect(card.getByTestId("interest-open")).toContainText("Register Interest Only");
+  await expect(card.getByTestId("interest-fee-note")).toContainText("USD 2, non-refundable");
   await expect(card).toContainText("non-refundable");
   await expect(card).toContainText("does not reserve a seat");
   await expect(card.getByLabel("Email")).toHaveValue(cardEmail);
@@ -195,7 +199,8 @@ test("a participant in Pakistan registers through the real form without the fee;
   await page.goto(`/programs/${slug}`);
   const card = formatCard(page);
   await card.getByTestId("interest-open").click();
-  await expect(card.getByTestId("interest-open")).toContainText("free for you");
+  await expect(card.getByTestId("interest-open")).toContainText("Register Interest Only");
+  await expect(card.getByTestId("interest-fee-note")).toHaveText("Free for you");
   await expect(card).toContainText("No fee applies to participants in Pakistan");
   await card.getByLabel("Full name").fill("Parveen Karachi");
   await card.getByLabel("Mobile number").fill("+92 300 1234567");
@@ -210,6 +215,10 @@ test("a participant in Pakistan registers through the real form without the fee;
   const row = await getPrisma().trainingInterest.findFirstOrThrow({ where: { deliveryFormatId: formatId } });
   expect(row).toMatchObject({ status: "confirmed", feeWaived: true, orderId: null, mobile: "+92 300 1234567", email: pkEmail.toLowerCase(), consent: true });
   expect(await getPrisma().order.count({ where: { user: { email: pkEmail.toLowerCase() } } })).toBe(0);
+  // Founder, 2026-10-03: a free interest gets the confirmation email too (so the Email log shows how many register free).
+  const mail = await getPrisma().outboundEmail.findFirstOrThrow({ where: { toEmail: pkEmail.toLowerCase(), templateKey: "commerce.interest-registered-free" } });
+  expect(mail.subject).toContain("Your interest is registered");
+  expect(mail.textBody).toContain("No fee applies to you");
 
   await page.reload();
   await expect(page.getByTestId(`interest-done-${formatCode}`)).toContainText("Your interest is registered");

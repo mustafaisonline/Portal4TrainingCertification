@@ -9,7 +9,7 @@ import type { ComponentPropsWithoutRef } from "react";
  * text blue vs. AA-safe button fill); outside it they are identical.
  */
 
-type ButtonVariant = "primary" | "secondary" | "text";
+export type ButtonVariant = "primary" | "secondary" | "text";
 
 const base =
   "inline-flex items-center justify-center gap-2 rounded-[var(--radius-plate)] px-5 py-2.5 text-body-sm font-medium transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)] disabled:opacity-50 disabled:pointer-events-none";
@@ -21,6 +21,9 @@ const variants: Record<ButtonVariant, string> = {
     "bg-transparent text-[var(--color-ink)] border border-[var(--color-line-strong)] hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]",
   text: "bg-transparent text-[var(--color-primary)] px-1 py-1 underline underline-offset-4 hover:text-[var(--color-primary-strong)]",
 };
+
+/** The button look for other elements (e.g. a <summary>) so they match exactly. */
+export const buttonClassName = (variant: ButtonVariant = "primary", extra = "") => `${base} ${variants[variant]} ${extra}`;
 
 type ButtonAsButton = ComponentPropsWithoutRef<"button"> & {
   variant?: ButtonVariant;

@@ -24,6 +24,7 @@ const FROM_EMAIL: Record<string, Spec> = {
   "commerce.registration-confirmed": { kind: "registration", body: "Your registration is confirmed. Open My Trainings for the details.", link: "/account/trainings" },
   "commerce.registration-cancelled": { kind: "registration", body: "Your registration was cancelled. Your refund, if any, is in Orders & receipts.", link: "/account/trainings" },
   "commerce.registration-transferred": { kind: "registration", body: "Your registration was moved to a new date.", link: "/account/trainings" },
+  "commerce.interest-registered-free": { kind: "interest", body: "Your interest is registered. The trainer will tell you when a date opens.", link: "/account/trainings#interests" },
   "commerce.interest-registered": { kind: "interest", body: "Your interest is registered. The trainer will tell you when a date opens.", link: "/account/trainings#interests" },
   "commerce.support-received": { kind: "payment", body: "Thank you — your support payment was received.", link: "/account/orders" },
   "commerce.knowledge-check-unlocked": { kind: "assessment", body: "Your Free Assessment Check result document is unlocked.", link: "/assessment" }, // never "certificate": the free result is not a credential (DR-03 §3 / DR-04)

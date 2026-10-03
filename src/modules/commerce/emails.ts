@@ -92,6 +92,21 @@ export function interestRegisteredMessage(input: { to: string; name: string; tra
   };
 }
 
+/** CR-2026-10-03-2252: the free (fee-waived) interest path — same message as the paid one, without a payment line. */
+export function interestRegisteredFreeMessage(input: { to: string; name: string; trainingTitle: string; formatName: string; trainingUrl: string; accountUrl: string }): EmailMessage {
+  return {
+    to: input.to,
+    templateKey: "commerce.interest-registered-free",
+    subject: `Your interest is registered: ${input.trainingTitle} (${input.formatName})`,
+    text:
+      `Hello ${input.name},\n\n` +
+      `Thank you. Your interest in ${input.trainingTitle} — ${input.formatName} is registered. No fee applies to you.\n\n` +
+      `This is not a seat. When the trainer schedules this format, you will be told by email and can register on the portal:\n${input.trainingUrl}\n\n` +
+      `Your interests are listed in your account:\n${input.accountUrl}` +
+      SIGN_OFF,
+  };
+}
+
 export function registrationCancelledMessage(input: {
   to: string;
   name: string;

@@ -5,6 +5,8 @@ import { findUserById } from "@/modules/identity/users.repository";
 import { writeAudit } from "@/modules/platform/audit/repository";
 import { ORDER_HOLD_MINUTES } from "./capacity";
 import { appBaseUrl } from "./checkout.service";
+import { sendEmail } from "@/modules/notifications/email";
+import { interestRegisteredFreeMessage } from "./emails";
 import { CommerceError, PaymentsNotConfiguredError } from "./errors";
 import type { InterestFormValues } from "./interest-rules";
 import { enabledInterestSetting, interestTarget } from "./interest.repository";
@@ -94,7 +96,26 @@ export async function startInterestRegistration(input: StartInterestInput): Prom
     return { kind: "checkout" as const, interestId: row.id, order, label: setting.label, target };
   });
 
-  if (outcome.kind === "registered") return { kind: "registered", interestId: outcome.interestId };
+  if (outcome.kind === "registered") {
+    // Founder, 2026-10-03: a free interest gets the same confirmation email, so the Email log shows how many register free.
+    // After the commit and never able to fail the registration; one email per interest row.
+    try {
+      await sendEmail({
+        idempotencyKey: `interest-free:${outcome.interestId}`,
+        ...interestRegisteredFreeMessage({
+          to: input.form.email,
+          name: input.form.fullName ?? user.name,
+          trainingTitle: outcome.target.programmeTitle,
+          formatName: outcome.target.formatName,
+          trainingUrl: `${baseUrl}/programs/${outcome.target.programmeSlug}`,
+          accountUrl: `${baseUrl}/account/trainings#interests`,
+        }),
+      });
+    } catch (err) {
+      console.error(`[commerce] free-interest email not queued for interest ${outcome.interestId}`, err);
+    }
+    return { kind: "registered", interestId: outcome.interestId };
+  }
 
   const { order, label, target } = outcome;
   const prisma = getPrisma();

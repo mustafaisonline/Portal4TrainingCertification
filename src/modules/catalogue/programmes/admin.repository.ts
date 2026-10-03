@@ -5,6 +5,7 @@ import { FEE_REGIONS, PROGRAMME_LEVELS, PROGRAMME_STATUSES } from "./constants";
 import { textToModulePoints } from "./content-codec";
 import { isUuid } from "@/modules/catalogue/offerings/repository";
 import { normaliseModulePoints } from "./module-points";
+import { publishReadiness } from "./readiness";
 import { findProgrammeBySlug } from "./repository";
 import { PRICE_REGIONS, type PriceRegion, type ProgrammeContent, type ProgrammeLevel, type ProgrammeRecord, type ProgrammeStatus } from "./types";
 
@@ -156,7 +157,7 @@ export class TrainingValidationError<F extends string = string> extends Error {
 }
 
 export class TrainingRefusedError extends Error {
-  readonly code: "forbidden" | "not_found" | "slug_locked" | "format_in_use" | "last_fee_row";
+  readonly code: "forbidden" | "not_found" | "slug_locked" | "format_in_use" | "last_fee_row" | "not_ready";
   constructor(code: TrainingRefusedError["code"], message: string) {
     super(message);
     this.name = "TrainingRefusedError";
@@ -562,6 +563,12 @@ export async function setTrainingStatus(tx: Tx, id: string, status: ProgrammeSta
   const existing = await tx.programme.findUnique({ where: { id }, select: { status: true } });
   if (!existing) throw new TrainingRefusedError("not_found", "This training could not be found.");
   if (existing.status === status) return;
+  if (status === "published") {
+    // The screen disables Publish until ready; the server holds the same line (CR-2026-10-03-2255).
+    const row = await tx.programme.findUnique({ where: { id }, select: { content: true, prices: { select: { region: true } }, _count: { select: { modules: true } } } });
+    const problems = publishReadiness({ moduleCount: row?._count.modules ?? 0, feeRegions: (row?.prices ?? []).map((p) => p.region), content: row?.content as unknown as ProgrammeContent });
+    if (problems.length > 0) throw new TrainingRefusedError("not_ready", `Not ready to publish: ${problems.map((p) => p.message).join(" ")}`);
+  }
   await tx.programme.update({ where: { id }, data: { status } });
   await writeAudit(tx, { actorUserId, action: "programme.status_changed", entityType: "programme", entityId: id, before: { status: existing.status }, after: { status } });
 }

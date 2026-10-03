@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
 import type { DeliveryFormatRecord } from "@/modules/catalogue/programmes/types";
 
@@ -19,11 +20,14 @@ export function DeliveryFormats({
   formats,
   notes,
   slots,
+  scheduleHref,
 }: {
   formats: DeliveryFormatRecord[];
   notes?: string[];
   /** CR-2026-10-01-2138: per-format content under the card (the "Register your interest" action), keyed by format id. */
   slots?: Record<string, ReactNode>;
+  /** CR-2026-10-03-2252: where "Show Current Schedule" goes — this training's dates on the schedule page. */
+  scheduleHref?: string;
 }) {
   if (formats.length === 0) return null;
   return (
@@ -71,7 +75,16 @@ export function DeliveryFormats({
                 </li>
               ))}
             </ul>
-            {slots?.[format.id] ? <div className="mt-5 flex flex-1 flex-col justify-end">{slots[format.id]}</div> : null}
+            {slots?.[format.id] || scheduleHref ? (
+              <div className="mt-5 flex flex-1 flex-col justify-end gap-3">
+                {slots?.[format.id]}
+                {scheduleHref ? (
+                  <Button variant="secondary" href={scheduleHref} className="w-full" data-testid={`show-schedule-${format.code}`}>
+                    Show Current Schedule
+                  </Button>
+                ) : null}
+              </div>
+            ) : null}
           </Card>
         ))}
       </div>

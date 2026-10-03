@@ -272,7 +272,7 @@ export default async function CourseDetailPage({
 
       {/* ===== Delivery formats ===== (shared with the flagship landing) */}
       {interestSlots.banner ? <div className="mx-auto max-w-[1280px] px-6 pt-10">{interestSlots.banner}</div> : null}
-      <DeliveryFormats formats={course.deliveryFormats} notes={content.paceNotes} slots={interestSlots.slots} />
+      <DeliveryFormats formats={course.deliveryFormats} notes={content.paceNotes} slots={interestSlots.slots} scheduleHref={datesHref} />
 
       {/* ===== Learning outcomes ===== */}
       {(content.outcomes || content.outcomeGroups) && (

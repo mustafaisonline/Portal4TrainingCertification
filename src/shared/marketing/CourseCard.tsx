@@ -354,7 +354,7 @@ export function CourseCard({
           View Details<span className="sr-only">: {course.title}</span> <span aria-hidden="true">→</span>
         </Button>
         <Button variant="secondary" href={`/schedule?training=${course.slug}`} data-testid="card-register">
-          See dates and register
+          Register
         </Button>
       </div>
     </Card>

@@ -1,6 +1,6 @@
 # CR-2026-10-03-2255 — Publish error: make "Not ready to publish" say exactly what is missing
 
-**Received:** 2026-10-03 22:50 MYT · **Status:** ASSESSED — awaiting the founder's decisions (§3) · **Requested by:** founder · **Model:** sonnet
+**Received:** 2026-10-03 22:50 MYT · **Status:** DECIDED — building now · **Requested by:** founder · **Model:** sonnet
 
 ## 1. Request (verbatim)
 
@@ -38,3 +38,4 @@
 | Date (MYT) | Entry |
 |---|---|
 | 2026-10-03 22:50 | CR created from the founder's message; existing code inspected read-only; nothing built. |
+| 2026-10-03 23:05 | Founder answered the §3 decisions: "I agree with all your recommendation with my few responses." Decision 12 as recommended: list exactly what is missing, also check the roles and rationale placeholders, and re-check readiness on the server when publishing. Regions-not-sold stays as is (all four fee rows). |

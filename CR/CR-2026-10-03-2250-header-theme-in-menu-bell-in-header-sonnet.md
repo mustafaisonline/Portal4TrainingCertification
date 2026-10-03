@@ -1,6 +1,6 @@
 # CR-2026-10-03-2250 — Header: theme switch into the menu, notification bell in its place
 
-**Received:** 2026-10-03 22:50 MYT · **Status:** ASSESSED — awaiting the founder's decisions (§3) · **Requested by:** founder · **Model:** sonnet
+**Received:** 2026-10-03 22:50 MYT · **Status:** DECIDED — build queued · **Requested by:** founder · **Model:** sonnet
 
 ## 1. Request (verbatim)
 
@@ -38,3 +38,4 @@
 | Date (MYT) | Entry |
 |---|---|
 | 2026-10-03 22:50 | CR created from the founder's message; existing code inspected read-only; nothing built. |
+| 2026-10-03 23:05 | Founder answered the §3 decisions: "I agree with all your recommendation with my few responses." No exception: all recommended (theme switch into burger + avatar menu, footer switch for signed-out laptop visitors; bell shown when it fits, avatar badge only on the narrowest phones). |

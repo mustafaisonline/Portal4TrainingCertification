@@ -1,6 +1,6 @@
 # CR-2026-10-03-2254 — Trainer-created training, formats and dates need admin approval before they go public
 
-**Received:** 2026-10-03 22:50 MYT · **Status:** ASSESSED — awaiting the founder's decisions (§3) · **Requested by:** founder · **Model:** opus
+**Received:** 2026-10-03 22:50 MYT · **Status:** DECIDED — build queued · **Requested by:** founder · **Model:** opus
 
 ## 1. Request (verbatim)
 
@@ -35,3 +35,4 @@
 | Date (MYT) | Entry |
 |---|---|
 | 2026-10-03 22:50 | CR created from the founder's message; existing code inspected read-only; nothing built. |
+| 2026-10-03 23:05 | Founder answered the §3 decisions: "I agree with all your recommendation with my few responses." **Item 11:** "I approved now" — approach A (no schema change): a "Submit for review" button notifies administrators; Trainer-created dates are saved as planned and only an administrator can open them; a Trainer's edits to an already-published training stay allowed as today. |

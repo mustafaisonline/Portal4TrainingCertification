@@ -124,6 +124,10 @@ export async function deleteTestUser(email: string): Promise<void> {
     const registrationIds = (await prisma.registration.findMany({ where: { userId: user.id }, select: { id: true } })).map((r) => r.id);
     const interestIds = (await prisma.trainingInterest.findMany({ where: { userId: user.id }, select: { id: true } })).map((r) => r.id);
     await prisma.$transaction([
+      // CR-2026-10-04-0112: Agentic AI ownership, credit packs and passes restrict their user and their order.
+      prisma.agenticOwnership.deleteMany({ where: { userId: user.id } }),
+      prisma.agenticCreditPack.deleteMany({ where: { userId: user.id } }),
+      prisma.accessPass.deleteMany({ where: { userId: user.id } }),
       // CR-2026-10-01-2138: interest registrations restrict their user, their order and
       // (as the notifier) an administrator; their audit rows go with them.
       prisma.auditLog.deleteMany({ where: { entityType: "training_interest", entityId: { in: interestIds } } }),

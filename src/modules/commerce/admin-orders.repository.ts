@@ -25,8 +25,8 @@ export const ORDER_STATUS_LABEL: Record<OrderStatus, string> = {
   refunded: "Refunded",
   partially_refunded: "Partially refunded",
 };
-export const ORDER_KINDS = ["registration", "certificate_renewal", "support", "knowledge_check_unlock", "interest"] as const satisfies readonly OrderKind[];
-export const ORDER_KIND_LABEL: Record<OrderKind, string> = { registration: "Registration", certificate_renewal: "Certificate renewal", support: "Support payment", knowledge_check_unlock: "Free Assessment Check unlock", interest: "Interest registration" };
+export const ORDER_KINDS = ["registration", "certificate_renewal", "support", "knowledge_check_unlock", "interest", "agentic_item", "agentic_pack", "access_pass"] as const satisfies readonly OrderKind[];
+export const ORDER_KIND_LABEL: Record<OrderKind, string> = { registration: "Registration", certificate_renewal: "Certificate renewal", support: "Support payment", knowledge_check_unlock: "Free Assessment Check unlock", interest: "Interest registration", agentic_item: "Agentic AI — item", agentic_pack: "Agentic AI — pack", access_pass: "Agentic AI / portal pass" };
 export const REFUND_REASON_LABEL: Record<"participant_cancellation" | "academy_cancellation" | "manual", string> = {
   participant_cancellation: "Participant cancellation",
   academy_cancellation: "Academy cancellation",
@@ -145,8 +145,8 @@ export async function listOrdersForAdmin(filters: AdminOrderFilters = {}, db: Db
       userId: o.userId,
       userEmail: o.user.email,
       userName: o.user.name,
-      programmeTitle: o.offering ? o.offering.programme.title : offeringlessOrderTitle(o.kind, o.programme?.title),
-      formatName: o.offering ? (o.offering.deliveryFormat?.name ?? MODALITY_LABEL[o.offering.modality]) : offeringlessOrderFormat(o.kind),
+      programmeTitle: o.offering ? o.offering.programme.title : offeringlessOrderTitle(o.kind, o.programme?.title, o.productSku),
+      formatName: o.offering ? (o.offering.deliveryFormat?.name ?? MODALITY_LABEL[o.offering.modality]) : offeringlessOrderFormat(o.kind, o.productSku),
       startsOn: o.offering?.startsOn ?? null,
       endsOn: o.offering?.endsOn ?? null,
       registrationId: o.registration?.id ?? null,
@@ -249,8 +249,8 @@ export async function getOrderForAdmin(id: string, db: Db = getPrisma()): Promis
     userId: o.userId,
     userEmail: o.user.email,
     userName: o.user.name,
-    programmeTitle: o.offering ? o.offering.programme.title : offeringlessOrderTitle(o.kind, o.programme?.title),
-    formatName: o.offering ? (o.offering.deliveryFormat?.name ?? MODALITY_LABEL[o.offering.modality]) : offeringlessOrderFormat(o.kind),
+    programmeTitle: o.offering ? o.offering.programme.title : offeringlessOrderTitle(o.kind, o.programme?.title, o.productSku),
+    formatName: o.offering ? (o.offering.deliveryFormat?.name ?? MODALITY_LABEL[o.offering.modality]) : offeringlessOrderFormat(o.kind, o.productSku),
     startsOn: o.offering?.startsOn ?? null,
     endsOn: o.offering?.endsOn ?? null,
     registrationId: o.registration?.id ?? null,

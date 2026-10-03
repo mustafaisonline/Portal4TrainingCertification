@@ -50,6 +50,11 @@ export const COMMERCE_MESSAGES: Record<CommerceErrorCode, string> = {
   interest_fee_off: "Registering interest is not available at the moment.",
   interest_already_registered: "You have already registered your interest in this format — see My interests.",
   interest_order_pending: "You already started this payment. Finish it in the Stripe tab, or try again in 30 minutes when that hold expires.",
+  agentic_unknown_product: "That product is not available.",
+  agentic_not_acknowledged: "Please tick the box to confirm that digital downloads are non-refundable once downloaded.",
+  agentic_already_owned: "You already have this download — find it in My downloads.",
+  agentic_covered_by_pass: "Your active pass already includes this — you can download it without paying.",
+  agentic_order_pending: "You already have a payment open for this. Finish it in the Stripe tab, or wait a few minutes and try again.",
 };
 
 export const PAYMENTS_NOT_CONFIGURED_MESSAGE =

@@ -1,3 +1,4 @@
+import { describeSku, isAgenticKind, parseSku } from "@/modules/agentic/products";
 import { getPrisma, withTransaction, type Tx } from "@/db/prisma";
 import {
   findOfferingById,
@@ -44,7 +45,7 @@ export type RegistrationView = {
   refunds: RefundView[];
 };
 
-export type OrderKind = "registration" | "certificate_renewal" | "support" | "knowledge_check_unlock" | "interest";
+export type OrderKind = "registration" | "certificate_renewal" | "support" | "knowledge_check_unlock" | "interest" | "agentic_item" | "agentic_pack" | "access_pass";
 
 export type OrderView = {
   id: string;
@@ -78,13 +79,21 @@ export const UNLOCK_ORDER_TITLE = "Free Assessment Check result document";
 export const INTEREST_ORDER_TITLE = "Register your interest";
 
 /** The title of an order with no offering: the one-off kinds. An interest order names its training when `programmeTitle` is given. */
-export function offeringlessOrderTitle(kind: OrderKind, programmeTitle?: string | null): string {
+export function offeringlessOrderTitle(kind: OrderKind, programmeTitle?: string | null, productSku?: string | null): string {
+  if (isAgenticKind(kind)) {
+    const sku = parseSku(productSku);
+    return sku ? describeSku(sku).title : "Agentic AI";
+  }
   if (kind === "interest") return programmeTitle ? `Interest — ${programmeTitle}` : INTEREST_ORDER_TITLE;
   return kind === "knowledge_check_unlock" ? UNLOCK_ORDER_TITLE : SUPPORT_ORDER_TITLE;
 }
 
 /** The second line of an order with no offering. */
-export function offeringlessOrderFormat(kind: OrderKind): string {
+export function offeringlessOrderFormat(kind: OrderKind, productSku?: string | null): string {
+  if (isAgenticKind(kind)) {
+    const sku = parseSku(productSku);
+    return sku ? describeSku(sku).detail : "One-off payment";
+  }
   return kind === "knowledge_check_unlock" ? "One-time unlock" : kind === "interest" ? "Non-refundable interest fee" : "One-off payment";
 }
 
@@ -173,8 +182,8 @@ export async function listOrdersForUser(userId: string): Promise<OrderView[]> {
     amountMinor: Number(o.amountMinor),
     currency: o.currency,
     region: o.region,
-    programmeTitle: o.offering ? o.offering.programme.title : offeringlessOrderTitle(o.kind, o.programme?.title),
-    formatName: o.offering ? (o.offering.deliveryFormat?.name ?? MODALITY_LABEL[o.offering.modality]) : offeringlessOrderFormat(o.kind),
+    programmeTitle: o.offering ? o.offering.programme.title : offeringlessOrderTitle(o.kind, o.programme?.title, o.productSku),
+    formatName: o.offering ? (o.offering.deliveryFormat?.name ?? MODALITY_LABEL[o.offering.modality]) : offeringlessOrderFormat(o.kind, o.productSku),
     startsOn: o.offering?.startsOn ?? null,
     endsOn: o.offering?.endsOn ?? null,
     receiptUrl: o.payment?.receiptUrl ?? null,

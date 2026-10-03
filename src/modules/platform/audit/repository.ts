@@ -120,7 +120,9 @@ export type AuditAction =
   | "email.suppression_added"
   | "email.suppression_removed"
   // CR-2026-10-03-2254: a Trainer asks an administrator to review a training for publishing.
-  | "programme.review_requested";
+  | "programme.review_requested"
+  // CR-2026-10-04-0112: Agentic AI.
+  | "agentic.credit_spent";
 
 export type AuditEntry = {
   /** Our `users.id`; null when the system acted on its own. */

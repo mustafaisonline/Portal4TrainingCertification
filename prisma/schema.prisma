@@ -171,6 +171,10 @@ model User {
   notifications             Notification[]
   /// Addresses this person added to the do-not-send list (CR-2026-10-03-1225 slice 2).
   emailSuppressions         EmailSuppression[]
+  /// CR-2026-10-04-0112: Agentic AI ownership, credit packs and access passes.
+  agenticOwnerships         AgenticOwnership[]
+  agenticCreditPacks        AgenticCreditPack[]
+  accessPasses              AccessPass[]
   roles                     UserRole[]
   consents                  Consent[]
   orders                    Order[]
@@ -794,6 +798,10 @@ enum OrderKind {
   knowledge_check_unlock
   /// CR-2026-10-01-2138: the non-refundable "Register your interest" payment (USD 2).
   interest
+  /// CR-2026-10-04-0112: Agentic AI — one agent or skill, a 10-item pack, or a one-off 365-day access pass.
+  agentic_item
+  agentic_pack
+  access_pass
 
   @@map("order_kind")
 }
@@ -830,6 +838,8 @@ model Order {
   coupon                  Coupon?                @relation("order_coupon", fields: [couponId], references: [id], onDelete: Restrict)
   couponDiscountPercent   Int?                   @map("coupon_discount_percent")
   amountBeforeCouponMinor BigInt?                @map("amount_before_coupon_minor")
+  /// CR-2026-10-04-0112: what an Agentic AI order buys — `item:<slug>`, `pack:10`, `pass:agentic_unlimited`, `pass:portal_unlimited`. Never taken from the browser.
+  productSku              String?                @map("product_sku")
   stripeCheckoutSessionId String?                @unique @map("stripe_checkout_session_id")
   stripePaymentIntentId   String?                @map("stripe_payment_intent_id")
   expiresAt               DateTime               @map("expires_at") @db.Timestamptz(6)
@@ -838,6 +848,9 @@ model Order {
   updatedAt               DateTime               @updatedAt @map("updated_at") @db.Timestamptz(6)
 
   payment          Payment?
+  agenticOwnerships AgenticOwnership[]
+  agenticCreditPack AgenticCreditPack?
+  accessPass        AccessPass?
   registration     Registration?
   renewal          CertificateRenewal?
   /// The coupon whose redemption THIS order is (set by the webhook when the
@@ -1620,4 +1633,54 @@ model EmailSuppression {
   creator   User?    @relation(fields: [createdBy], references: [id], onDelete: SetNull)
 
   @@map("email_suppressions")
+}
+
+/// CR-2026-10-04-0112: an Agentic AI item (an agent or a skill, identified by its catalogue slug) a person owns —
+/// bought singly, or claimed with a pack credit. One row per person per item.
+model AgenticOwnership {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Restrict)
+  itemSlug  String   @map("item_slug")
+  /// `purchase` (bought on its own) or `pack` (a credit was spent).
+  via       String
+  orderId   String?  @map("order_id") @db.Uuid
+  order     Order?   @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@unique([userId, itemSlug])
+  @@map("agentic_ownerships")
+}
+
+/// CR-2026-10-04-0112: a paid pack of download credits (10 now). One pack per paid order; `credits_used` never exceeds
+/// `credits_total` (a CHECK constraint in the migration).
+model AgenticCreditPack {
+  id           String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId       String   @map("user_id") @db.Uuid
+  user         User     @relation(fields: [userId], references: [id], onDelete: Restrict)
+  orderId      String   @unique @map("order_id") @db.Uuid
+  order        Order    @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  creditsTotal Int      @map("credits_total")
+  creditsUsed  Int      @default(0) @map("credits_used")
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([userId])
+  @@map("agentic_credit_packs")
+}
+
+/// CR-2026-10-04-0112: a one-off 365-day access pass (no automatic renewal). `agentic_unlimited` = every agent and skill;
+/// `portal_unlimited` = everything in that plan plus unlimited unlocks of the paid assessment result documents.
+model AccessPass {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String   @map("user_id") @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Restrict)
+  plan      String
+  orderId   String   @unique @map("order_id") @db.Uuid
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  startsAt  DateTime @map("starts_at") @db.Timestamptz(6)
+  endsAt    DateTime @map("ends_at") @db.Timestamptz(6)
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([userId, endsAt])
+  @@map("access_passes")
 }

@@ -166,7 +166,7 @@ export default async function ResultPage({ params, searchParams }: { params: Pro
           {gate.unlocked ? (
             <>
               <p className="text-body-sm mb-4 text-[var(--color-ink-quiet)]" data-testid="result-document-unlocked">
-                Your printable Certificate of Achievement is ready{gate.fee === "exempt" ? " — no fee applies to you" : ""}.
+                Your printable Certificate of Achievement is ready{gate.fee === "exempt" ? " — no fee applies to you" : gate.fee === "pass" ? " — included in your Portal Unlimited pass" : ""}.
               </p>
               <Button href={`/free-learning/knowledge-check/${attempt.id}/document`} data-testid="result-document-link">
                 View and print the certificate
@@ -192,6 +192,8 @@ export default async function ResultPage({ params, searchParams }: { params: Pro
                 <li data-testid="result-gate-fee" data-fee={gate.fee}>
                   {gate.fee === "paid" ? (
                     <span className="text-[var(--color-success)]">The one-time unlock — paid.</span>
+                  ) : gate.fee === "pass" ? (
+                    <span className="text-[var(--color-success)]">The unlock — included in your Portal Unlimited pass.</span>
                   ) : gate.fee === "exempt" ? (
                     <span className="text-[var(--color-success)]">The one-time unlock — no fee applies to participants in Pakistan.</span>
                   ) : gate.fee === "unavailable" ? (

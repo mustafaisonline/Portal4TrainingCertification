@@ -158,12 +158,14 @@ describe("notifyAdmins", () => {
 });
 
 describe("wording and link guards (governance + security review)", () => {
-  it("no notification text calls the free Assessment Check result a certificate (DR-03 §3 / DR-04)", async () => {
+  it("no notification text calls the free Assessment Check result a Certificate of Completion or a credential (DR-01 / DR-05)", async () => {
     const { NOTIFICATION_SPECS } = await import("@/modules/notifications/notifications.service");
     const spec = NOTIFICATION_SPECS["commerce.knowledge-check-unlocked"]!;
-    expect(spec.body).toMatch(/Free Assessment Check result document/);
-    expect(spec.body.toLowerCase()).not.toContain("certificate");
-    expect(spec.link).not.toContain("certification");
+    expect(spec.body).toBe("Your Certificate of Achievement is unlocked."); // DR-05's name for a PASSED free check
+    for (const s of Object.values(NOTIFICATION_SPECS).filter((x) => x.link.startsWith("/assessment") || x.kind === "assessment")) {
+      expect(s.body.toLowerCase()).not.toContain("completion");
+      expect(s.body.toLowerCase()).not.toContain("credential");
+    }
   });
 
   it("every allow-listed spec has a same-site link and a fixed sentence without a URL", async () => {

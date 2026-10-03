@@ -9,6 +9,7 @@ import { writeAudit } from "@/modules/platform/audit/repository";
 import { ORDER_HOLD_MINUTES } from "./capacity";
 import { appBaseUrl } from "./checkout.service";
 import { CommerceError, PaymentsNotConfiguredError } from "./errors";
+import { hasActivePortalPass } from "@/modules/agentic/entitlements";
 import { paymentsConfigured, stripeGateway, type PaymentGateway } from "./stripe";
 import { enabledUnlockSetting } from "./unlock.repository";
 
@@ -28,7 +29,8 @@ import { enabledUnlockSetting } from "./unlock.repository";
 
 export type UnlockStatus = {
   reviewSatisfied: boolean;
-  fee: "paid" | "exempt" | "required" | "unavailable";
+  /** `pass`: an active Portal Unlimited pass covers the unlock (CR-2026-10-04-0113; DR-05 "Certificate of Achievement"). */
+  fee: "paid" | "pass" | "exempt" | "required" | "unavailable";
   /** A pending, unexpired unlock order for this attempt (the Stripe tab may still be open). */
   pendingOrderId: string | null;
   unlocked: boolean;
@@ -41,20 +43,21 @@ export async function hasFreeLearningReview(userId: string, db: Db = getPrisma()
 }
 
 export async function unlockStatusForAttempt(attempt: AttemptRecord, now = new Date(), db: Db = getPrisma()): Promise<UnlockStatus> {
-  const [reviewSatisfied, profile, paid, pending, setting] = await Promise.all([
+  const [reviewSatisfied, portalPass, profile, paid, pending, setting] = await Promise.all([
     hasFreeLearningReview(attempt.userId, db),
+    hasActivePortalPass(attempt.userId, now, db),
     getProfile(attempt.userId, db),
     db.order.findFirst({ where: { knowledgeCheckAttemptId: attempt.id, kind: "knowledge_check_unlock", status: { in: ["paid", "refunded", "partially_refunded"] } }, select: { id: true } }),
     db.order.findFirst({ where: { knowledgeCheckAttemptId: attempt.id, kind: "knowledge_check_unlock", status: "pending", expiresAt: { gt: now } }, select: { id: true } }),
     enabledUnlockSetting(now, db),
   ]);
   const exempt = profile?.countryCode ? regionForCountry(profile.countryCode) === "pakistan" : false;
-  const fee: UnlockStatus["fee"] = paid ? "paid" : exempt ? "exempt" : setting ? "required" : "unavailable";
+  const fee: UnlockStatus["fee"] = paid ? "paid" : portalPass ? "pass" : exempt ? "exempt" : setting ? "required" : "unavailable";
   return {
     reviewSatisfied,
     fee,
     pendingOrderId: pending?.id ?? null,
-    unlocked: attempt.passed === true && reviewSatisfied && (fee === "paid" || fee === "exempt"),
+    unlocked: attempt.passed === true && reviewSatisfied && (fee === "paid" || fee === "pass" || fee === "exempt"),
     amountMinor: setting?.amountMinor ?? null,
     currency: setting?.currency ?? null,
   };
@@ -79,6 +82,7 @@ export async function startUnlockCheckout(input: StartUnlockInput): Promise<Star
     if (!attempt.passed) throw new CommerceError("unlock_not_passed", `Attempt ${attempt.id} was not passed.`);
     const status = await unlockStatusForAttempt(attempt, now, tx);
     if (status.fee === "paid") throw new CommerceError("unlock_already_paid", `Attempt ${attempt.id} is already unlocked.`);
+    if (status.fee === "pass") throw new CommerceError("unlock_fee_exempt", `User ${user.id} has an active Portal Unlimited pass.`);
     if (status.fee === "exempt") throw new CommerceError("unlock_fee_exempt", `User ${user.id} is exempt from the unlock fee.`);
     if (status.pendingOrderId) throw new CommerceError("unlock_order_pending", `Attempt ${attempt.id} has pending unlock order ${status.pendingOrderId}.`);
     const setting = await enabledUnlockSetting(now, tx);

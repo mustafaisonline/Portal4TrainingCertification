@@ -107,6 +107,29 @@ export function interestRegisteredFreeMessage(input: { to: string; name: string;
   };
 }
 
+/** CR-2026-10-04-0112: an Agentic AI purchase is confirmed — what was bought, where to download it, the non-refundable notice. */
+export function agenticPurchaseMessage(input: { to: string; name: string; title: string; kind: "item" | "pack" | "pass"; orderId: string; amountMinor: number; currency: string; receiptUrl: string | null; downloadsUrl: string; passEnds: string | null }): EmailMessage {
+  const what =
+    input.kind === "pass"
+      ? `Your pass is active${input.passEnds ? ` until ${input.passEnds}` : ""}.`
+      : input.kind === "pack"
+        ? "Your 10 download credits are ready. Each credit unlocks one agent or skill for good."
+        : "It is yours to download now.";
+  return {
+    to: input.to,
+    templateKey: "commerce.agentic-purchase",
+    subject: `Your purchase: ${input.title}`,
+    text:
+      `Hello ${input.name},\n\n` +
+      `Thank you. ${what}\n\n` +
+      `Order ${input.orderId.slice(0, 8).toUpperCase()} · Paid ${formatMoney(input.amountMinor, input.currency)}\n\n` +
+      (input.receiptUrl ? `Your Stripe receipt: ${input.receiptUrl}\n\n` : "") +
+      `Download here (sign in first):\n${input.downloadsUrl}\n\n` +
+      `Digital downloads are non-refundable once downloaded. If something is wrong with a file, reply to this email and we will put it right.` +
+      SIGN_OFF,
+  };
+}
+
 export function registrationCancelledMessage(input: {
   to: string;
   name: string;

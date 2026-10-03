@@ -28,6 +28,12 @@ export type CommerceErrorCode =
   // 2026-09-27 — the "Support the Academy" payment
   | "support_unavailable"
   | "support_order_pending"
+  // CR-2026-10-04-0112: Agentic AI products.
+  | "agentic_unknown_product"
+  | "agentic_not_acknowledged"
+  | "agentic_already_owned"
+  | "agentic_covered_by_pass"
+  | "agentic_order_pending"
   // M14 Phase 5: the Knowledge Check result-document unlock.
   | "unlock_unavailable"
   | "unlock_order_pending"

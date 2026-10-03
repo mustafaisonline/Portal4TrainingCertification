@@ -1,5 +1,7 @@
 import type { JsonInput, Tx } from "@/db/prisma";
 import { getPrisma, withTransaction } from "@/db/prisma";
+import { fulfilPaidAgenticOrder } from "@/modules/agentic/entitlements";
+import { describeSku, isAgenticKind, parseSku } from "@/modules/agentic/products";
 import { MODALITY_LABEL } from "@/modules/catalogue/offerings/repository";
 import { applyPaidRenewal } from "@/modules/certificates/renewal.service";
 import { sendEmail, type EmailMessage } from "@/modules/notifications/email";
@@ -7,7 +9,7 @@ import { writeAudit } from "@/modules/platform/audit/repository";
 import { formatDateRange } from "@/shared/util/dates";
 import { appBaseUrl } from "./checkout.service";
 import { redeemCoupon } from "./coupons.repository";
-import { interestRegisteredMessage, knowledgeCheckUnlockedMessage, registrationConfirmedMessage, supportPaymentReceivedMessage } from "./emails";
+import { agenticPurchaseMessage, interestRegisteredMessage, knowledgeCheckUnlockedMessage, registrationConfirmedMessage, supportPaymentReceivedMessage } from "./emails";
 import { recomputePaymentStatus } from "./payments";
 import { mapRefundStatus, stripeGateway, type PaymentGateway, type Stripe } from "./stripe";
 
@@ -304,6 +306,32 @@ async function sessionPaid(tx: Tx, event: Stripe.Event, session: Stripe.Checkout
           currency,
           receiptUrl: payment.receiptUrl,
           documentUrl: `${appBaseUrl()}/free-learning/knowledge-check/${attempt.id}/document`,
+        }),
+      ],
+    };
+  }
+
+  // CR-2026-10-04-0112: an Agentic AI purchase grants what its SKU names (an item, a 10-credit pack, or a 365-day pass) — in this
+  // same transaction, idempotent (unique rows per user/item and per order), and the amount was fixed by OUR catalogue, not the browser.
+  if (isAgenticKind(order.kind)) {
+    const granted = await fulfilPaidAgenticOrder(tx, order, now);
+    const sku = parseSku(order.productSku)!;
+    const [plan, endsIso] = granted.kind === "pass" ? granted.summary.split("|") : [null, null];
+    return {
+      status: "processed",
+      note: granted.note,
+      emails: [
+        agenticPurchaseMessage({
+          to: order.user.email,
+          name: order.user.name,
+          title: describeSku(sku).title,
+          kind: granted.kind,
+          orderId: order.id,
+          amountMinor,
+          currency,
+          receiptUrl: payment.receiptUrl,
+          downloadsUrl: `${appBaseUrl()}/account/downloads`,
+          passEnds: plan && endsIso ? endsIso.slice(0, 10) : null,
         }),
       ],
     };

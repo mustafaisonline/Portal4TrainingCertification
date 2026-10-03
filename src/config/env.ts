@@ -151,14 +151,17 @@ export function validateEnv(env: EnvLike = process.env, mode: EnvMode = env["NOD
     invalid.push({ name: "EMAIL_TRANSPORT", why: `must be one of ${EMAIL_TRANSPORTS.join(", ")}` });
   }
 
-  // SMTP (CR-2026-10-03-1225): the mailbox settings are required together, and well-formed, when it is the transport.
+  // SMTP (CR-2026-10-03-1225): the settings belong together and must be well-formed when it is the transport — but a
+  // problem here is a WARNING, never a refusal to start. Email is not worth an outage: payments, sign-in and the
+  // webhooks must keep running (incident 2026-10-03, when empty SMTP settings took the whole portal down). Mail then
+  // stays queued/failed with the reason, and screens that promise delivery refuse (`emailDeliveryProblem`).
   if (env["EMAIL_TRANSPORT"] === "smtp") {
-    for (const name of SMTP_VARIABLES) if (!present(env, name)) missing.push(name);
+    for (const name of SMTP_VARIABLES) if (!present(env, name)) warnings.push({ name, why: "is not set — EMAIL_TRANSPORT=smtp cannot deliver; emails will be recorded as failed" });
     if (present(env, "SMTP_PORT")) {
       const port = Number(env["SMTP_PORT"]);
-      if (!(Number.isInteger(port) && port > 0 && port <= 65535)) invalid.push({ name: "SMTP_PORT", why: "must be a port number (2525 for the SMTP2GO relay; 465 or 587 elsewhere)" });
+      if (!(Number.isInteger(port) && port > 0 && port <= 65535)) warnings.push({ name: "SMTP_PORT", why: "must be a port number (2525 for the SMTP2GO relay; 465 or 587 elsewhere); emails will fail until it is" });
     }
-    if (present(env, "EMAIL_FROM") && !isPlainEmailAddress(env["EMAIL_FROM"]!)) invalid.push({ name: "EMAIL_FROM", why: "must be an email address" });
+    if (present(env, "EMAIL_FROM") && !isPlainEmailAddress(env["EMAIL_FROM"]!)) warnings.push({ name: "EMAIL_FROM", why: "must be an email address; emails will fail until it is" });
   }
 
   if (present(env, "JOBS_SECRET") && env["JOBS_SECRET"]!.length < MIN_JOBS_SECRET) {

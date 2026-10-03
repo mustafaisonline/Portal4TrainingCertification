@@ -102,9 +102,10 @@ describe("createSmtpTransport", () => {
 });
 
 describe("emailDeliveryProblem — no false promise of delivery", () => {
-  it("is null whenever a real transport is configured", async () => {
+  it("is null once SMTP is fully configured, and names the problem while it is not", async () => {
     const { emailDeliveryProblem } = await import("@/modules/notifications/email");
-    expect(emailDeliveryProblem({ EMAIL_TRANSPORT: "smtp", NODE_ENV: "production" })).toBeNull();
+    expect(emailDeliveryProblem({ EMAIL_TRANSPORT: "smtp", NODE_ENV: "production", ...env })).toBeNull();
+    expect(emailDeliveryProblem({ EMAIL_TRANSPORT: "smtp", NODE_ENV: "production" })).toMatch(/incomplete/);
   });
 
   it("flags the log-only transport in production, but not in development or the test suite", async () => {

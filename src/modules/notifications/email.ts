@@ -72,6 +72,14 @@ function selectTransport(): EmailTransport {
  */
 export function emailDeliveryProblem(env: Record<string, string | undefined> = process.env): string | null {
   const transport = env["EMAIL_TRANSPORT"] ?? "log";
+  if (transport === "smtp") {
+    try {
+      smtpConfigFromEnv(env);
+      return null;
+    } catch (err) {
+      return `Outgoing email settings are incomplete (${err instanceof Error ? err.message : "SMTP settings"}), so nothing would be delivered.`;
+    }
+  }
   if (transport !== "log") return null;
   if (env["NODE_ENV"] !== "production" || env["APP_ENV"] === "test") return null; // development and the test suite use the log on purpose
   return "Outgoing email is not set up yet (the portal is in log-only mode), so nothing would be delivered.";
@@ -79,8 +87,8 @@ export function emailDeliveryProblem(env: Record<string, string | undefined> = p
 
 /**
  * Record and send one email. Resolves once the row reflects the outcome; it
- * never throws for a delivery failure (the row says `failed`), only for a
- * misconfiguration, which is a deployment defect and should surface.
+ * never throws — a delivery failure and a misconfigured transport both leave
+ * the row `failed` with the reason (and the misconfiguration is logged).
  */
 export async function sendEmail(message: EmailMessage): Promise<{ id: string; status: "sent" | "failed" }> {
   const prisma = getPrisma();
@@ -94,7 +102,19 @@ export async function sendEmail(message: EmailMessage): Promise<{ id: string; st
     select: { id: true },
   });
 
-  const transport = selectTransport();
+  // A transport that cannot be built (missing or malformed SMTP settings) must NEVER take the caller down —
+  // sign-in, payments and webhooks send mail through here. The row is marked failed with the reason (variable
+  // NAMES only, never a value) and the problem is logged loudly; nothing throws. (Incident 2026-10-03: empty SMTP
+  // settings made the whole portal refuse to start; email is not worth an outage.)
+  let transport: EmailTransport;
+  try {
+    transport = selectTransport();
+  } catch (err) {
+    const lastError = err instanceof Error ? `${err.name}: ${err.message}` : String(err);
+    console.error(`[email] cannot send "${message.templateKey}" (id=${row.id}): ${lastError}`);
+    await prisma.outboundEmail.update({ where: { id: row.id }, data: { status: "failed", attempts: { increment: 1 }, lastError } });
+    return { id: row.id, status: "failed" };
+  }
   try {
     const { providerMessageId } = await transport.send({ ...message, id: row.id });
     await prisma.outboundEmail.update({

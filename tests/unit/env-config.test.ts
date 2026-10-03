@@ -200,17 +200,25 @@ describe("validateEnv — EMAIL_TRANSPORT=smtp (CR-2026-10-03-1225)", () => {
     expect(r.invalid).toEqual([]);
   });
 
-  it("the five SMTP settings are required together — each missing one is named, no value is", () => {
+  it("incomplete SMTP settings are a WARNING, never a refusal to start (incident 2026-10-03) — each is named, no value is", () => {
     const { SMTP_HOST: _h, SMTP_PASSWORD: _p, ...partial } = { ...complete(), ...smtp };
     const r = validateEnv(partial, "production");
-    expect(r.ok).toBe(false);
-    expect(r.missing.sort()).toEqual(["SMTP_HOST", "SMTP_PASSWORD"]);
+    expect(r.ok).toBe(true);
+    expect(r.missing).toEqual([]);
+    expect(r.warnings.map((w) => w.name).sort()).toEqual(["SMTP_HOST", "SMTP_PASSWORD"]);
     expect(describeValidation(r)).not.toContain("p".repeat(12));
   });
 
-  it("a malformed port or sender address is invalid", () => {
+  it("EMPTY SMTP settings (the exact incident) start the server with warnings instead of taking it down", () => {
+    const r = validateEnv({ ...complete(), EMAIL_TRANSPORT: "smtp", SMTP_HOST: "", SMTP_PORT: "", SMTP_USER: "", SMTP_PASSWORD: "''", EMAIL_FROM: "sales@dataainexus.com" }, "production");
+    expect(r.ok).toBe(true);
+    expect(r.warnings.map((w) => w.name).sort()).toEqual(["SMTP_HOST", "SMTP_PORT", "SMTP_USER"]);
+  });
+
+  it("a malformed port or sender address is a warning too", () => {
     const r = validateEnv({ ...complete(), ...smtp, SMTP_PORT: "mail", EMAIL_FROM: "not-an-address" }, "production");
-    expect(r.invalid.map((p) => p.name).sort()).toEqual(["EMAIL_FROM", "SMTP_PORT"]);
+    expect(r.ok).toBe(true);
+    expect(r.warnings.map((p) => p.name).sort()).toEqual(["EMAIL_FROM", "SMTP_PORT"]);
   });
 
   it("the log transport needs no SMTP settings; resend and postmark are gone", () => {

@@ -45,6 +45,8 @@ test.afterAll(async () => {
 });
 
 async function expectNoAxeViolations(page: Page) {
+  // The <title> streams in last; axe must not run before it (the same race fixed elsewhere — it failed the v2026.10.03-4 gate).
+  await expect.poll(async () => (await page.title()).trim().length, { timeout: 10_000 }).toBeGreaterThan(0);
   const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]).analyze();
   expect(results.violations, JSON.stringify(results.violations, null, 2)).toEqual([]);
 }

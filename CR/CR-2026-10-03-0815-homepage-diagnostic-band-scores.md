@@ -1,6 +1,6 @@
 # CR-2026-10-03-0815 — Homepage diagnostic band: make it score too
 
-**Received:** 2026-10-03 08:15 MYT · **Status:** BUILT & VERIFIED in dev — not deployed · **Requested by:** founder
+**Received:** 2026-10-03 08:15 MYT · **Status:** DEPLOYED (`v2026.10.03-1`) · **Requested by:** founder
 **Recommended model:** Haiku 4.5 would do (three copy edits plus one test); executed on Sonnet 5.5, this session's model.
 
 ## 1. Request (verbatim)
@@ -29,10 +29,11 @@ Three copy edits; one e2e assertion (homepage band and card no longer say "not a
 |---|---|---|---|
 | 1 | Copy edits (3 strings) | **BUILT** | 2026-10-03 |
 | 2 | Test | **VERIFIED** | 2026-10-03 |
-| 3 | Deploy | NOT STARTED (founder's word) | — |
+| 3 | Deploy | **DEPLOYED** `v2026.10.03-1` | 2026-10-03 |
 
 ## 6. Progress log
 
 | Date (MYT) | Entry |
 |---|---|
 | 2026-10-03 08:15 | CR created. Found the band is teaser-only and already leads to the scored diagnostic; fixed the three "not a score" strings. |
+| 2026-10-03 | Founder: "deploy this and push it". Pushed; tagged and deployed `v2026.10.03-1`: gate PASSED (incl. Playwright on the production build, which asserts the new wording; npm-audit advisory warning), backup/migration/switch OK, health 200, validation PASSED. Live check: the Home card reads "you get a score for each learning area"; "not a score" appears nowhere on the live homepage. |

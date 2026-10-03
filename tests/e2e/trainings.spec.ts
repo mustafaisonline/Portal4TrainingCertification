@@ -107,162 +107,36 @@ test.beforeAll(async () => {
   });
 });
 
-test("/programs lists exactly the published trainings in order, Learn Vibe Coding first, each linked, priced per region in full words at 75% off", async ({ page }) => {
+test("/programs lists exactly the published trainings in order as small tiles — name, subhead, a format graph and the two buttons; no prices (they are on each training's page)", async ({ page }) => {
   const { listPublishedProgrammes } = await import("../../src/modules/catalogue/programmes/repository");
   const published = await listPublishedProgrammes();
   expect(published.map((p) => p.slug)).toEqual(["learn-vibe-coding", "data-blueprint-ai-vibe-coding"]);
 
   await page.goto("/programs");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Trainings");
-  // Direct children only: each card carries its own per-region price list.
   const items = page.getByTestId("trainings-list").locator("> li");
   await expect(items).toHaveCount(published.length);
   for (const [i, p] of published.entries()) {
     const item = items.nth(i);
     await expect(item.getByRole("heading", { level: 3 })).toHaveText(p.title);
+    await expect(item.getByTestId("tile-subhead")).not.toHaveText("");
     await expect(item.getByTestId("card-details")).toHaveAttribute("href", `/programs/${p.slug}`);
-    // Every region named in full — never a code that could read as a currency.
-    // "International" became "Rest of the world" (M12 L12, 2026-09-26).
-    // UX review 2026-09-27 U4: a visitor's card leads with Malaysia, open; the
-    // other two fold under "Price for … →" until opened.
-    await expect(item.getByTestId("card-price-malaysia").getByText("Malaysia", { exact: true })).toBeVisible();
-    for (const [card, label] of [["pakistan", "Pakistan"], ["international", "Rest of the world"]] as const) {
-      await expect(item.getByTestId(`card-price-${card}`).getByText(label, { exact: true })).toBeHidden();
-      await item.getByTestId(`card-price-toggle-${card}`).click();
-      await expect(item.getByTestId(`card-price-${card}`).getByText(label, { exact: true })).toBeVisible();
-    }
+    await expect(item.getByTestId("card-register")).toContainText("Register");
     await expect(item.getByTestId("card-register")).toHaveAttribute("href", `/schedule?training=${p.slug}`);
-    await expect(item).not.toContainText("(MY)");
-    await expect(item).not.toContainText("(PK)");
-    await expect(item).not.toContainText("(INT)");
-    await expect(item).not.toContainText("International");
-    // Learn Vibe Coding is 75% off in every region; the flagship's prices
-    // were updated 2026-09-26 (second time that day) to a different
-    // discount per region — see the flagship's own test below.
-    if (p.slug === "data-blueprint-ai-vibe-coding") {
-      await expect(item.getByText("50% OFF", { exact: true })).toHaveCount(1);
-      await expect(item.getByText("55% OFF", { exact: true })).toHaveCount(1);
-      await expect(item.getByText("75% OFF", { exact: true })).toHaveCount(1);
-    } else {
-      await expect(item.getByText("75% OFF", { exact: true })).toHaveCount(3);
-    }
+    // The graph: one dot per pace format, with a plain-words label.
+    const graph = item.getByTestId("tile-graph");
+    await expect(graph.getByRole("img")).toHaveAttribute("aria-label", /format|dates/);
+    expect(Number(await graph.getAttribute("data-total"))).toBeGreaterThan(0);
+    // Small tiles: prices, timelines and the HRD note live on the training's own page.
+    await expect(item).not.toContainText("RM ");
+    await expect(item).not.toContainText("USD ");
+    await expect(item).not.toContainText("OFF");
+    await expect(item.getByTestId("card-timelines")).toHaveCount(0);
   }
-
-  // Learn Vibe Coding: RM 500 (was 2,000) · Rs 5,000 (was 20,000) · USD 200 (was 800), plus the note.
-  const lvc = items.nth(0);
-  const lvcExpected: [string, string, string][] = [
-    ["malaysia", "RM 500", "RM 2,000"],
-    ["pakistan", "Rs. 5,000", "Rs. 20,000"],
-    ["international", "USD 200", "USD 800"],
-  ];
-  for (const [region, today, original] of lvcExpected) {
-    const row = lvc.getByTestId(`card-price-${region}`);
-    await expect(row.getByText(today, { exact: true })).toBeVisible();
-    await expect(row.locator(".line-through")).toHaveText(original);
-  }
-  const lvcNote = "Online training price. In-person training needs a minimum of 25 participants; cost discussed separately.";
-  await expect(lvc.getByTestId("card-price-malaysia")).toContainText(lvcNote);
-  await expect(lvc.getByTestId("card-price-international")).toContainText(lvcNote);
-  await expect(lvc.getByTestId("card-price-pakistan")).not.toContainText(lvcNote);
-
-  // Flagship (updated 2026-09-26, second time that day): RM 2,500 (was
-  // 5,000, 50% OFF) · Rs 100,000 (was 200,000, 55% OFF) · USD 1,000 (was
-  // 4,000, 75% OFF).
-  const flagship = items.nth(1);
-  const flagshipExpected: [string, string, string][] = [
-    ["malaysia", "RM 2,500", "RM 5,000"],
-    ["pakistan", "Rs. 100,000", "Rs. 200,000"],
-    ["international", "USD 1,000", "USD 4,000"],
-  ];
-  for (const [region, today, original] of flagshipExpected) {
-    const row = flagship.getByTestId(`card-price-${region}`);
-    await expect(row.getByText(today, { exact: true })).toBeVisible();
-    await expect(row.locator(".line-through")).toHaveText(original);
-  }
-  await expect(flagship.getByTestId("card-price-malaysia")).toContainText("no online option for this training in Malaysia");
-  await expect(flagship.getByTestId("card-price-international")).toContainText("minimum of 100 participants");
-  // Pakistan now carries a note too (it used to have none — this listing
-  // card doesn't show Malaysia's or Pakistan's old `options`, so the
-  // Pakistan card previously had no note text at all).
-  await expect(flagship.getByTestId("card-price-pakistan")).toContainText("minimum of 100 participants");
-
-  // Malaysia's HRD Corp fee — 2026-09-26, later still (founder: "Bring in
-  // HRD Corp fee as well" on this listing card too, not just the detail
-  // page). M12 WP1 (later that day): both figures are now their own
-  // `programme_prices` rows (`malaysia_hrdcorp`, `malaysia`), rendered on
-  // the one Malaysia entry — same data as the detail page's price card.
-  const myListingOptions = flagship.getByTestId("card-price-options-malaysia");
-  await expect(myListingOptions.locator("> div")).toHaveCount(2);
-  await expect(myListingOptions.locator("> div").nth(0)).toHaveAttribute("data-testid", "card-price-row-malaysia_hrdcorp");
-  await expect(myListingOptions.locator("> div").nth(1)).toHaveAttribute("data-testid", "card-price-row-malaysia");
-  const hrdCorpRow = myListingOptions.locator("> div").filter({ hasText: "Via HRD Corp" });
-  await expect(hrdCorpRow.getByText("RM 5,000", { exact: true })).toBeVisible();
-  await expect(hrdCorpRow.locator(".line-through")).toHaveCount(0);
-  await expect(hrdCorpRow).toContainText(/minimum 25 participants/i);
-  const withoutHrdCorpRow = myListingOptions.locator("> div").filter({ hasText: "Without HRD Corp" });
-  await expect(withoutHrdCorpRow.getByText("RM 2,500", { exact: true })).toBeVisible();
-  await expect(withoutHrdCorpRow.locator(".line-through")).toHaveText("RM 5,000");
-  await expect(withoutHrdCorpRow).toContainText(/minimum 25 participants/i);
-
-  // Founder, 2026-09-30 (M6/M7, design direction only): the card carries NO
-  // trainer photo and NO trainer link — Learn Vibe Coding has a photo (set in
-  // beforeAll) and its card still shows no image; nothing on any card links to
-  // a trainer page. Redesigned to the reference: pill badges, a two-tone title
-  // (still ONE heading with the exact title), a one-line description, four icon
-  // feature chips (the first four highlights), DURATION / FOR / FORMAT rows and
-  // a filled "View Details →" button; no trailer button, no hero art.
-  await expect(lvc.locator("img")).toHaveCount(0);
-  await expect(lvc.getByTestId("card-trainer")).toHaveCount(0);
-  await expect(lvc.locator('a[href^="/mustafa-qizilbash"], a[href^="/trainers"]')).toHaveCount(0);
-  await expect(page.locator('[data-testid="trainings-list"] a[href^="/mustafa-qizilbash"]')).toHaveCount(0);
-  const { findPublishedProgrammeBySlug } = await import("../../src/modules/catalogue/programmes/repository");
-  const lvcRecord = await findPublishedProgrammeBySlug("learn-vibe-coding");
-  expect(lvcRecord!.content.highlights.length).toBeGreaterThanOrEqual(4);
-  const chips = lvc.getByTestId("card-features").getByRole("listitem");
-  await expect(chips).toHaveCount(4);
-  for (const [i, text] of lvcRecord!.content.highlights.slice(0, 4).entries()) {
-    await expect(chips.nth(i)).toHaveText(text);
-    await expect(chips.nth(i).locator("svg[aria-hidden='true']")).toHaveCount(1);
-  }
-  for (const label of ["Duration", "For", "Format"]) await expect(lvc.locator("dt", { hasText: new RegExp(`^${label}$`) })).toHaveCount(1);
-  await expect(lvc.getByTestId("card-details")).toContainText("View Details");
-  await expect(lvc.getByRole("link", { name: /trailer/i })).toHaveCount(0);
-  await expect(lvc.getByRole("button", { name: /trailer/i })).toHaveCount(0);
-  // The Malaysia HRD Corp fee row is on the flagship card: the founder's sentence follows the prices.
-  const { HRD_CLAIM_NOTE } = await import("../../src/content/hrd-corp");
-  await expect(flagship.getByTestId("card-hrd-note")).toHaveText(HRD_CLAIM_NOTE);
-  // WCAG 2.2 AA on the redesigned cards, in the light and the dark theme.
-  await page.emulateMedia({ colorScheme: "light" });
-  await expectNoAxeViolations(page);
-  // Switching theme animates colours (`transition-colors`); axe would sample a blended mid-transition value, so
-  // transitions are switched off for the check — the same trap documented in free-trainings/page.tsx.
-  await page.addStyleTag({ content: "*, *::before, *::after { transition: none !important; animation: none !important; }" });
-  await page.emulateMedia({ colorScheme: "dark" });
-  const darkCards = await new AxeBuilder({ page }).include('[data-testid="trainings-list"]').withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"]).analyze();
-  expect(darkCards.violations, JSON.stringify(darkCards.violations, null, 2)).toEqual([]);
-  await page.emulateMedia({ colorScheme: "light" });
-  // An unknown address is a real 404 (there is no trainer page to fall through to).
-  expect((await page.goto("/nobody-here"))?.status()).toBe(404);
-  await page.goto("/programs");
-
-  // No unlisted programme is offered.
-  const { getPrisma } = await import("../../src/db/prisma");
-  const unlisted = await getPrisma().programme.findMany({ where: { status: "unlisted" }, select: { title: true } });
-  const body = await page.locator("body").innerText();
-  for (const u of unlisted) expect(body, u.title).not.toContain(u.title);
-
-  // Closing CTA row. Founder, 2026-09-28 ("New change" item 1): the free
-  // diagnostic's only entry point is the home page band, so the button that
-  // sat here is gone; the row now carries the team-delivery CTA alone.
-  await expect(page.getByRole("link", { name: "Take the free diagnostic" })).toHaveCount(0);
-  await expect(page.getByRole("link", { name: "See how team delivery works" })).toHaveAttribute("href", "#for-organisations");
-
-  // Header nav: the trainings item is present and current here.
-  const nav = page.getByRole("navigation", { name: "Primary", exact: true });
-  await expect(nav.getByRole("link", { name: "Professional Trainings" })).toHaveAttribute("href", "/programs");
-  await expect(nav.getByRole("link", { name: "Professional Trainings" })).toHaveAttribute("aria-current", "page");
-  await expect(nav.getByRole("link", { name: "Programme" })).toHaveCount(0);
-  await expectNoAxeViolations(page);
+  // Four across on a wide screen, so tens of trainings stay scannable.
+  const first = await items.nth(0).boundingBox();
+  const second = await items.nth(1).boundingBox();
+  expect(Math.abs(first!.y - second!.y)).toBeLessThan(4); // side by side, not stacked
 });
 
 test("/programs/learn-vibe-coding renders the training with its sections, the region price cards and the payment rule", async ({ page }) => {

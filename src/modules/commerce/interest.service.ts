@@ -99,12 +99,14 @@ export async function startInterestRegistration(input: StartInterestInput): Prom
   if (outcome.kind === "registered") {
     // Founder, 2026-10-03: a free interest gets the same confirmation email, so the Email log shows how many register free.
     // After the commit and never able to fail the registration; one email per interest row.
+    // Security review: it goes to the ACCOUNT's verified address, never to the address typed into the form — the form
+    // address is free text, and a self-chosen Pakistan profile must not be able to make the portal mail strangers.
     try {
       await sendEmail({
         idempotencyKey: `interest-free:${outcome.interestId}`,
         ...interestRegisteredFreeMessage({
-          to: input.form.email,
-          name: input.form.fullName ?? user.name,
+          to: user.email,
+          name: user.name,
           trainingTitle: outcome.target.programmeTitle,
           formatName: outcome.target.formatName,
           trainingUrl: `${baseUrl}/programs/${outcome.target.programmeSlug}`,

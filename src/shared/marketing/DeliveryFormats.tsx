@@ -80,7 +80,7 @@ export function DeliveryFormats({
                 {slots?.[format.id]}
                 {scheduleHref ? (
                   <Button variant="secondary" href={scheduleHref} className="w-full" data-testid={`show-schedule-${format.code}`}>
-                    Show Current Schedule
+                    Show Current Schedule<span className="sr-only"> for the {format.name} format</span>
                   </Button>
                 ) : null}
               </div>

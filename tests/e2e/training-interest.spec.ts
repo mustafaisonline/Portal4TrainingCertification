@@ -116,7 +116,7 @@ test("signed out: the format says no date is scheduled and offers to sign in; th
   await expect(signin.getByTestId("interest-signin")).toContainText("USD 2, non-refundable");
   await expect(signin.getByTestId("interest-signin")).toHaveAttribute("href", new RegExp(`/sign-in\\?return-to=.*${slug}`));
   // CR-2026-10-03-2252: every format card also offers "Show Current Schedule" — this training's dates on the schedule page.
-  await expect(page.getByTestId(`show-schedule-${formatCode}`)).toHaveText("Show Current Schedule");
+  await expect(page.getByTestId(`show-schedule-${formatCode}`)).toContainText("Show Current Schedule");
   await expect(page.getByTestId(`show-schedule-${formatCode}`)).toHaveAttribute("href", `/schedule?training=${slug}`);
 });
 

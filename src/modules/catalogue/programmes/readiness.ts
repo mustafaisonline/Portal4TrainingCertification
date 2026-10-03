@@ -33,6 +33,11 @@ export function publishReadiness(t: { moduleCount: number; feeRegions: readonly 
   }
 
   const c = t.content;
+  // A section that is missing altogether (malformed stored content) counts as unwritten, never as a crash.
+  if (!c || !Array.isArray(c.highlights) || !c.whoShouldAttend || !c.rationale) {
+    problems.push({ message: "The training's sections are incomplete — open the Content tab and save it.", tab: "/content", tabLabel: "Content" });
+    return problems;
+  }
   if (hasPlaceholder(c.highlights)) problems.push({ message: "Replace the starter text in Highlights.", tab: "/content", tabLabel: "Content" });
   if (PLACEHOLDER.test(c.whoShouldAttend.intro) || hasPlaceholder(c.whoShouldAttend.roles)) problems.push({ message: "Replace the starter text in “Who should attend” (the introduction and the roles).", tab: "/content", tabLabel: "Content" });
   if (hasPlaceholder(c.rationale.paragraphs)) problems.push({ message: "Replace the starter text in “Why this training”.", tab: "/content", tabLabel: "Content" });

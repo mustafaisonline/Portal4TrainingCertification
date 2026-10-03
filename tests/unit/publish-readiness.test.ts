@@ -36,4 +36,11 @@ describe("publishReadiness", () => {
     const p = publishReadiness({ moduleCount: 1, feeRegions: all, content: { ...real, whoShouldAttend: { intro: "Fine.", roles: ["To be written"] }, rationale: { heading: "x", paragraphs: ["to BE written"] } } });
     expect(p.map((x) => x.message)).toEqual([expect.stringContaining("Who should attend"), expect.stringContaining("Why this training")]);
   });
+
+  it("malformed stored content is reported as incomplete, never a crash", () => {
+    const p = publishReadiness({ moduleCount: 1, feeRegions: all, content: {} as never });
+    expect(p).toHaveLength(1);
+    expect(p[0]!.tabLabel).toBe("Content");
+    expect(publishReadiness({ moduleCount: 1, feeRegions: all, content: null as never })).toHaveLength(1);
+  });
 });

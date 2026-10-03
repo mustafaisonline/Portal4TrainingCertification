@@ -209,9 +209,7 @@ test("an administrator launches a training from the portal: draft â†’ sections â
   await page.goto("/programs");
   const card = page.getByTestId("trainings-list").locator("> li").filter({ hasText: title });
   await expect(card).toHaveCount(1);
-  await expect(card.getByTestId("card-price-row-malaysia_hrdcorp")).toContainText("RM 5,000");
-  await expect(card.getByTestId("card-price-row-malaysia")).toContainText("RM 2,500");
-  await expect(card.getByTestId("card-price-international")).toContainText("Rest of the world");
+  await expect(card.getByTestId("tile-subhead")).not.toHaveText(""); // CR-2026-10-03-2253: small tiles; the prices are asserted on the training's own page just below
   await page.goto(`/programs/${slug}`);
   await expect(page.getByRole("heading", { level: 1 })).toContainText(title);
   await expect(page.getByText("Hands-on", { exact: true })).toBeVisible();

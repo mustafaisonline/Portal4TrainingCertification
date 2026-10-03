@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
 import { listPublishedProgrammesWithPrices } from "@/modules/catalogue/programmes/repository";
 import { formatMoney } from "@/modules/catalogue/programmes/types";
-import { regionForCountry } from "@/modules/commerce/pricing";
+import { formatIdsWithoutOpenDate } from "@/modules/commerce/interest.repository";
 import { enabledSupportSetting } from "@/modules/commerce/support.repository";
-import { getProfile } from "@/modules/identity/profile.repository";
-import { getCurrentUser } from "@/modules/identity/session";
 import { contactUsHref } from "@/content/contact";
 import { HRD_CLAIM_NOTE } from "@/content/hrd-corp";
-import { CourseCard } from "@/shared/marketing/CourseCard";
+import { TrainingTile } from "@/shared/marketing/TrainingTile";
 import { HrdCorpSections } from "@/shared/marketing/HrdCorpSections";
 import { Button } from "@/shared/ui/Button";
 import { Card } from "@/shared/ui/Card";
@@ -60,10 +58,9 @@ const audiences = [
 ];
 
 export default async function TrainingsPage() {
-  const [programmes, support, user] = await Promise.all([listPublishedProgrammesWithPrices(), enabledSupportSetting(), getCurrentUser()]);
-  // UX review 2026-09-27 U4: lead each card with the visitor's own fee region.
-  const profile = user ? await getProfile(user.id) : null;
-  const leadCard = profile?.countryCode ? regionForCountry(profile.countryCode) : "malaysia";
+  const [programmes, support] = await Promise.all([listPublishedProgrammesWithPrices(), enabledSupportSetting()]);
+  // The tile's graph: which pace formats have no open date yet (one query for the whole list).
+  const noDate = await formatIdsWithoutOpenDate(programmes.flatMap((p) => p.deliveryFormats.map((f) => f.id)));
 
   return (
     <>
@@ -103,11 +100,11 @@ export default async function TrainingsPage() {
         ) : (
           <ol
             data-testid="trainings-list"
-            className="grid list-none gap-6 p-0 md:grid-cols-2"
+            className="grid list-none gap-4 p-0 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
           >
             {programmes.map((p) => (
               <li key={p.slug} className="min-w-0">
-                <CourseCard course={p} showAllRegions leadCard={leadCard} />
+                <TrainingTile course={p} noDate={noDate} />
               </li>
             ))}
           </ol>

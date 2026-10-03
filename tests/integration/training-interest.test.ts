@@ -303,7 +303,7 @@ describe("paying", () => {
 describe("a participant in Pakistan", () => {
   it("registers at once without the fee — no order, no Stripe — and the row says so", async () => {
     const gateway = fakeGateway();
-    const result = await startInterestRegistration({ userId: pakistani.id, formatId, form: form(pakistani.email), gateway });
+    const result = await startInterestRegistration({ userId: pakistani.id, formatId, form: form("typed-elsewhere@example.test"), gateway });
     expect(result.kind).toBe("registered");
     expect(gateway.sessions).toHaveLength(0);
     const row = await prisma.trainingInterest.findFirstOrThrow({ where: { userId: pakistani.id } });
@@ -315,6 +315,8 @@ describe("a participant in Pakistan", () => {
     const mails = await prisma.outboundEmail.findMany({ where: { idempotencyKey: `interest-free:${row.id}` } });
     expect(mails).toHaveLength(1);
     expect(mails[0]).toMatchObject({ templateKey: "commerce.interest-registered-free", toEmail: pakistani.email.toLowerCase() });
+    // Security review: the email goes to the ACCOUNT's address, never to the different address typed into the form.
+    expect(mails[0]!.toEmail).not.toBe("typed-elsewhere@example.test");
     expect(mails[0]!.textBody).toContain("No fee applies to you");
     await expect(startInterestRegistration({ userId: pakistani.id, formatId, form: form(pakistani.email), gateway })).rejects.toMatchObject({ code: "interest_already_registered" });
   });

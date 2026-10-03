@@ -1,5 +1,6 @@
 import { runCertificateReminders } from "@/modules/certificates/reminders.service";
 import { purgeReadBefore } from "@/modules/notifications/notifications.repository";
+import { runPassEndingReminders } from "@/modules/agentic/pass-reminders";
 import { jobsAuthProblem } from "@/modules/platform/jobs-auth";
 
 /*
@@ -31,7 +32,12 @@ export async function POST(req: Request): Promise<Response> {
       console.error("[jobs] notification retention failed", err);
       return 0;
     });
-    return Response.json({ ...result, notificationsPurged }, { status: result.failed > 0 ? 500 : 200 });
+    // CR-2026-10-04-0113: the "your plan ends soon" emails ride on the same daily run (never able to fail it).
+    const passReminders = await runPassEndingReminders().catch((err) => {
+      console.error("[jobs] pass-ending reminders failed", err);
+      return { considered: 0, queued: 0 };
+    });
+    return Response.json({ ...result, notificationsPurged, passReminders }, { status: result.failed > 0 ? 500 : 200 });
   } catch (err) {
     console.error("[jobs] certificate-reminders run failed", err);
     return Response.json({ error: "run_failed" }, { status: 500 });

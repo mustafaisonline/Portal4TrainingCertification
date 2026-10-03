@@ -37,8 +37,9 @@ describe("site navigation", () => {
     // "Free Knowledge Hub" → "Knowledge Hub"; "Paid Trainings" →
     // "Professional Trainings", moved next to Free Certifications. URLs
     // unchanged.
-    expect(primaryNav.map((i) => i.label)).toEqual(["Home", "Knowledge Hub", "Assessment", "Professional Trainings", "Reviews"]);
-    expect(primaryNav).toContainEqual({ href: "/programs", label: "Professional Trainings" });
+    // CR-2026-10-04-0110 (founder, 2026-10-04): "Professional Trainings" is now "Trainings"; Agentic AI and Subscription joined.
+    expect(primaryNav.map((i) => i.label)).toEqual(["Home", "Knowledge Hub", "Assessment", "Trainings", "Agentic AI", "Subscription", "Reviews"]);
+    expect(primaryNav).toContainEqual({ href: "/programs", label: "Trainings" });
     expect(primaryNav).toContainEqual({ href: "/free-trainings", label: "Knowledge Hub" });
     expect(primaryNav).toContainEqual({ href: "/assessment", label: "Assessment" });
     expect(primaryNav.map((i) => i.href)).not.toContain("/trainers");
@@ -47,7 +48,7 @@ describe("site navigation", () => {
     expect(footerExplore).toContainEqual({ href: "/about-us", label: "About Us" });
     expect(footerExplore).toContainEqual({ href: "/free-trainings", label: "Knowledge Hub" });
     expect(footerExplore).toContainEqual({ href: "/assessment", label: "Assessment" });
-    expect(footerExplore).toContainEqual({ href: "/programs", label: "Professional Trainings" });
+    expect(footerExplore).toContainEqual({ href: "/programs", label: "Trainings" });
     // Founder, 2026-09-30 (M7): the trainer's dedicated page is removed, so the
     // footer has no "Trainer" item and nothing in the navigation (or therefore
     // the sitemap, which is built from it) points at a trainer page.
@@ -64,5 +65,16 @@ describe("site navigation", () => {
       expect(item.label, item.href).not.toMatch(/^(Programme|Courses|HRD Corp|Free Diagnostic|Search Candidate)$/);
       expect(item.href).not.toMatch(/DataBlueprint-AIVibeCoding|^\/courses|^\/hrd-corp|^\/diagnostic|^\/free-learning$/);
     }
+  });
+
+  it("the desktop header bar is Home · Product ▾ · Reviews · About Us, and every Product-panel link goes to a page that exists (CR-2026-10-04-0110)", async () => {
+    const { headerBarLinks, productMenuLearning, productMenuAgentic, productMenuMore } = await import("@/shared/chrome/site-nav");
+    expect([headerBarLinks.before.label, ...headerBarLinks.after.map((i) => i.label)]).toEqual(["Home", "Reviews", "About Us"]);
+    const sections = [productMenuLearning, productMenuAgentic, productMenuMore];
+    expect(sections.map((s) => s.title)).toEqual(["Learning", "Agentic AI", "More"]);
+    const assessment = productMenuLearning.links.find((l) => l.label === "Assessment")!;
+    expect(assessment.children?.map((c) => c.label)).toEqual(["Assess your Data Foundation", "Prepare for Interview"]);
+    expect(productMenuAgentic.links.map((l) => l.label)).toEqual(["Overview", "Agents", "Skills", "Subscription"]);
+    for (const l of sections.flatMap((s) => s.links.flatMap((l) => [l, ...(l.children ?? [])]))) expect(l.href, l.label).toMatch(/^\/[a-z0-9/#-]*$/);
   });
 });

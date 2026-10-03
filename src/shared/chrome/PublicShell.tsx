@@ -5,8 +5,10 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import type { ReactNode } from "react";
 import { LogoMark } from "./LogoMark";
+import { ProductMenu } from "./ProductMenu";
+import type { ProductMenuData } from "./product-menu-data";
 import { ThemeToggle } from "./ThemeToggle";
-import { footerExplore, footerLegal, isActive, primaryNav, siteSearch, verifyLink } from "./site-nav";
+import { footerExplore, footerLegal, headerBarLinks, isActive, primaryNav, siteSearch, verifyLink } from "./site-nav";
 
 /** Footer links the primary nav does not already list — the burger menu carries ALL footer links (founder, 2026-10-01). */
 const footerMoreLinks = footerExplore.filter((l) => !primaryNav.some((p) => p.href === l.href));
@@ -60,6 +62,7 @@ export function PublicShell({
   children,
   accountSlot,
   mobileAccountSlot,
+  productMenu,
 }: {
   children: ReactNode;
   /** Header account controls (sign-in link / account menu) — supplied by the
@@ -68,6 +71,8 @@ export function PublicShell({
   /** The same controls for the mobile panel, where the header row is too
    *  tight at 375px. */
   mobileAccountSlot?: ReactNode;
+  /** CR-2026-10-04-0110: what the desktop "Product" panel lists (built per request by the layout); without it the button is not shown. */
+  productMenu?: ProductMenuData;
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname() ?? "/";
@@ -88,26 +93,29 @@ export function PublicShell({
             aria-label="Primary"
             className="hidden items-center gap-5 whitespace-nowrap text-body-sm text-[var(--color-ink-quiet)] lg:flex xl:gap-7"
           >
-            {/* UX review 2026-09-27 D1: the logo is Home, so the desktop bar
-                skips the "Home" item (the phone menu keeps it) and shows from
-                1024 px — at 1280 px the five items collided with the wordmark. */}
-            {primaryNav.filter((item) => item.href !== "/").map((item) => {
-              const active = isActive(pathname, item.href);
+            {/* CR-2026-10-04-0110 (founder): Home · Product ▾ · Reviews · About Us. The Product panel lists everything else by category. */}
+            {(() => {
+              const barLink = (item: { href: string; label: string }) => {
+                const active = isActive(pathname, item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    aria-current={active ? "page" : undefined}
+                    className={`border-b-2 py-1 transition-colors hover:text-[var(--color-ink)] ${active ? "border-[var(--color-cyan)] font-medium text-[var(--color-ink)]" : "border-transparent"}`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              };
               return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  aria-current={active ? "page" : undefined}
-                  className={`border-b-2 py-1 transition-colors hover:text-[var(--color-ink)] ${
-                    active
-                      ? "border-[var(--color-cyan)] font-medium text-[var(--color-ink)]"
-                      : "border-transparent"
-                  }`}
-                >
-                  {item.label}
-                </Link>
+                <>
+                  {barLink(headerBarLinks.before)}
+                  {productMenu ? <ProductMenu data={productMenu} /> : null}
+                  {headerBarLinks.after.map(barLink)}
+                </>
               );
-            })}
+            })()}
           </nav>
           {/* M14 P17: the search bar replaces the "Search Candidate" item.
               Tried as its own full-width second row 2026-09-28 (founder item 7),
@@ -143,14 +151,14 @@ export function PublicShell({
             {/* CR-2026-10-02-2013: shown on phones too (was `hidden sm:inline-flex`). */}
             {accountSlot ? <span className="inline-flex">{accountSlot}</span> : null}
             {/* CR-2026-10-03-2250: the theme switch moved into the menus and the footer; the bell took its place. */}
-            {/* Mobile menu toggle — only where the inline <nav> is hidden. */}
+            {/* Menu toggle — every width (founder, 2026-10-04: "Bell Notice, Burger Menu"). On a laptop it opens a compact menu of the secondary links; on a phone the full navigation. */}
             <button
               type="button"
               onClick={() => setMenuOpen((open) => !open)}
               aria-expanded={menuOpen}
               aria-controls="mobile-nav"
               aria-label={menuOpen ? "Close menu" : "Open menu"}
-              className="grid h-10 w-10 shrink-0 place-items-center rounded-[var(--radius-plate)] border border-[var(--color-line-strong)] text-[var(--color-ink)] lg:hidden"
+              className="grid h-10 w-10 shrink-0 place-items-center rounded-[var(--radius-plate)] border border-[var(--color-line-strong)] text-[var(--color-ink)]"
             >
               {menuOpen ? <IconClose /> : <IconMenu />}
             </button>
@@ -165,7 +173,7 @@ export function PublicShell({
             reached by page scroll. Cap it to the viewport below the 4.5rem header
             bar (dvh follows the mobile browser bar) and scroll inside it;
             overscroll-contain keeps the page behind from scrolling. */
-          <div id="mobile-nav" className="max-h-[calc(100dvh-4.5rem)] overflow-y-auto overscroll-contain border-t border-[var(--color-line)] px-4 pb-4 pt-2 sm:px-6 lg:hidden">
+          <div id="mobile-nav" className="max-h-[calc(100dvh-4.5rem)] overflow-y-auto overscroll-contain border-t border-[var(--color-line)] px-4 pb-4 pt-2 sm:px-6 lg:absolute lg:right-6 lg:top-full lg:w-80 lg:rounded-b-[var(--radius-panel)] lg:border lg:border-t-0 lg:bg-[var(--color-ground)] lg:px-3 lg:shadow-[0_18px_40px_rgba(0,0,0,0.28)]" data-testid="menu-panel">
             <form role="search" action={siteSearch.action} method="get" className="mb-2 flex items-center gap-2 lg:hidden" data-testid="site-search-mobile">
               <label htmlFor="site-search-q-mobile" className="sr-only">
                 {siteSearch.label}
@@ -180,7 +188,7 @@ export function PublicShell({
                 className="text-body-sm w-full rounded-[var(--radius-plate)] border border-[var(--color-line-strong)] bg-[var(--color-ground)] px-3 py-2 text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]"
               />
             </form>
-            <nav aria-label="Primary, mobile" className="flex flex-col">
+            <nav aria-label="Primary, mobile" className="flex flex-col lg:hidden">
               {primaryNav.map((item) => {
                 const active = isActive(pathname, item.href);
                 return (

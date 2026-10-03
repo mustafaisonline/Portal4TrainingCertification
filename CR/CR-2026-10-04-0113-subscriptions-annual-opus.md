@@ -1,6 +1,6 @@
 # CR-2026-10-04-0113 — Annual subscriptions: Agentic AI unlimited and portal-level unlimited
 
-**Received:** 2026-10-04 01:10 MYT · **Status:** DECIDED & APPROVED — building (design in CR-0112) · **Requested by:** founder · **Model:** opus
+**Received:** 2026-10-04 01:10 MYT · **Status:** BUILT & VERIFIED — wording review + live payment test pending (founder) · **Requested by:** founder · **Model:** opus
 
 ## 1. Request (verbatim)
 
@@ -51,3 +51,4 @@ Plans page, plan table (proposed schema), checkout (new order kind), entitlement
 |---|---|
 | 2026-10-04 01:10 | CR created from the founder's message (sent while the assistant was building CR-2250); nothing built. The founder went to sleep and asked the assistant to record questions. |
 | 2026-10-04 04:20 | **Founder's answers:** the USD 20/year plan is **everything, including Agentic AI** ("Yes"); "unlimited certificates" = **unlimited unlocks of the paid result documents** ("Yes"); renewal = **one-off 365-day pass, no automatic renewal** ("Ok"); "I approve" the schema and payment work. **Open:** the sentence "where user will get linked" — the founder asked for elaboration (see chat: the assistant proposes a "My subscription" page linked from the account menu and the Subscription item). The renewal terms wording is a DRAFT for the founder (and a lawyer) to review. |
+| 2026-10-04 11:30 | **BUILT & VERIFIED locally.** `/subscription` (two plans; one-off 365-day passes, no automatic renewal; buying again extends from the end date), **Portal Unlimited unlocks the Certificate of Achievement** (DR-05 name for a passed Free Assessment Check) without the unlock fee (`unlockStatus` fee `pass`; the cheaper Agentic AI pass does not), the plan-ending email (30 days before; one per pass; riding on the daily reminders job), `/account/downloads` (My Agentic AI: plan, credits, downloads) linked from the account menu, the Product panel and the plans. **Open question for the founder:** "where user will get linked" — assumed = the person's plan/downloads page (My Agentic AI) and the Subscription menu item; correct me if you meant something else. **Terms:** a standalone page accepted at checkout by the buyer's tick; the renewal/change wording (30 days' notice for plan holders) is a DRAFT for the founder and a lawyer to review. |

@@ -165,11 +165,10 @@ test("/programs/learn-vibe-coding renders the training with its sections, the re
     new RegExp(`^/sign-in\\?return-to=.*${training!.slug}.*formats$`),
   );
   await expect(hero.getByRole("link", { name: "See dates and register" })).toHaveAttribute("href", "/schedule?training=learn-vibe-coding"); // M13: the page lists no dates; the schedule filtered to this training does
-  // The "Trainings" nav item is current on a training page too.
-  await expect(page.getByRole("navigation", { name: "Primary", exact: true }).getByRole("link", { name: "Professional Trainings" })).toHaveAttribute(
-    "aria-current",
-    "page",
-  );
+  // CR-2026-10-04-0110: the header's Product panel lists the trainings (this one included) and links on to /programs.
+  await page.getByTestId("product-menu-button").click();
+  await expect(page.getByTestId("product-menu").locator(`a[href="/programs/${training!.slug}"]`)).toBeVisible();
+  await expect(page.getByTestId("product-all-trainings")).toHaveAttribute("href", "/programs");
 
   // Who can take this training (renamed; content from the seed) — no coding background needed.
   await expect(page.getByRole("heading", { name: "Who can take this training" })).toBeVisible();

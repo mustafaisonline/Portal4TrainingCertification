@@ -6,6 +6,7 @@ import { AccountControls } from "@/modules/identity/components/AccountControls";
 import { AdminNav } from "@/shared/chrome/AdminNav";
 import { adminNavItems, trainerNavItems } from "@/shared/chrome/admin-nav";
 import { PublicShell } from "@/shared/chrome/PublicShell";
+import { buildProductMenu } from "@/shared/chrome/product-menu-data";
 
 /*
  * Trainer / admin area. SERVER-SIDE gate on every request (ADR-020; ADMIN
@@ -28,7 +29,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
     forbidden();
   }
   return (
-    <PublicShell accountSlot={<AccountControls />} mobileAccountSlot={<AccountControls variant="mobile" />}>
+    <PublicShell accountSlot={<AccountControls />} mobileAccountSlot={<AccountControls variant="mobile" />} productMenu={await buildProductMenu()}>
       <div className="bg-[var(--color-ground-tint)]">
         <div className="mx-auto flex max-w-[1280px] flex-col gap-8 px-4 py-10 sm:px-6 lg:py-14">
           <AdminNav items={access.isAdmin ? adminNavItems : trainerNavItems} />

@@ -24,6 +24,7 @@ const FROM_EMAIL: Record<string, Spec> = {
   "commerce.registration-confirmed": { kind: "registration", body: "Your registration is confirmed. Open My Trainings for the details.", link: "/account/trainings" },
   "commerce.registration-cancelled": { kind: "registration", body: "Your registration was cancelled. Your refund, if any, is in Orders & receipts.", link: "/account/trainings" },
   "commerce.registration-transferred": { kind: "registration", body: "Your registration was moved to a new date.", link: "/account/trainings" },
+  "commerce.agentic-pass-ending": { kind: "payment", body: "Your plan ends soon. Renew to keep unlimited access.", link: "/subscription" },
   "commerce.agentic-purchase": { kind: "payment", body: "Your Agentic AI purchase is ready to download.", link: "/account/downloads" },
   "commerce.interest-registered-free": { kind: "interest", body: "Your interest is registered. The trainer will tell you when a date opens.", link: "/account/trainings#interests" },
   "commerce.interest-registered": { kind: "interest", body: "Your interest is registered. The trainer will tell you when a date opens.", link: "/account/trainings#interests" },

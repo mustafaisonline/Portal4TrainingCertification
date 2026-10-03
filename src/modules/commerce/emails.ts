@@ -130,6 +130,20 @@ export function agenticPurchaseMessage(input: { to: string; name: string; title:
   };
 }
 
+/** CR-2026-10-04-0113: a plan ends within 30 days — once, with the way to continue. It never renews by itself. */
+export function agenticPassEndingMessage(input: { to: string; name: string; planLabel: string; endsOn: string; renewUrl: string }): EmailMessage {
+  return {
+    to: input.to,
+    templateKey: "commerce.agentic-pass-ending",
+    subject: `Your ${input.planLabel} plan ends on ${input.endsOn}`,
+    text:
+      `Hello ${input.name},\n\n` +
+      `Your ${input.planLabel} plan ends on ${input.endsOn}. It does not renew by itself and we will not charge you again.\n\n` +
+      `The items you bought or claimed with credits stay yours. To keep unlimited access, you can buy the plan again now — the new year starts when this one ends, so you lose nothing:\n${input.renewUrl}` +
+      SIGN_OFF,
+  };
+}
+
 export function registrationCancelledMessage(input: {
   to: string;
   name: string;

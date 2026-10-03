@@ -1,6 +1,6 @@
 # CR-2026-10-04-0110 — "Product" mega-menu in the header (desktop only) and "Professional Trainings" renamed "Trainings"
 
-**Received:** 2026-10-04 01:10 MYT · **Status:** DECIDED — build next (screenshots before deploy) · **Requested by:** founder · **Model:** sonnet
+**Received:** 2026-10-04 01:10 MYT · **Status:** BUILT & VERIFIED — deploy next · **Requested by:** founder · **Model:** sonnet
 
 ## 1. Request (verbatim)
 
@@ -52,3 +52,4 @@
 |---|---|
 | 2026-10-04 01:10 | CR created from the founder's message (sent while the assistant was building CR-2250); nothing built. The founder went to sleep and asked the assistant to record questions. |
 | 2026-10-04 04:20 | **Founder's answers (received on waking):** top bar = **Home · Product · Reviews · About Us · Search**, then **Bell · Burger menu** (the avatar/account stays with the bell). Assistant's reading to confirm on screenshots: on a laptop the burger opens a compact menu of the secondary links (More, Legal, theme switch; Sign in when signed out); on phones the burger panel stays the full navigation. Q2 Dashboard category (role-based; Sign in when signed out), Q3 five trainings + "See all trainings →", Q4 click-to-open with Esc / outside-click, Q5 rename to **Trainings** — not answered separately; the assistant proceeds with its recommendations and the founder sees them in screenshots before anything is deployed. |
+| 2026-10-04 11:30 | **BUILT & VERIFIED locally (in the combined review, then deploy).** Desktop header = **Home · Product ▾ · Reviews · About Us**, then search, bell, account and the **burger (every width)**. The **Product** panel (client disclosure; Esc / outside click / link closes it; never wider than the screen; scrolls inside itself on a short screen) shows five categories: **Learning** (Knowledge Hub; Assessment → "Assess your Data Foundation", "Prepare for Interview"), **Trainings** (the first 5 published + "More trainings →"/"See all trainings →"), **Dashboard** (by role; Sign in / Create an account when signed out), **Agentic AI** (Overview, Agents, Skills, Subscription), **More** (Schedule, Reviews, About Us, FAQ, Contact Us). On a laptop the burger opens a compact menu (More, Legal, theme switch); on a phone the full navigation, now including Agentic AI and Subscription; no Product panel on phones. "Professional Trainings" renamed **Trainings** (nav, footer, page title). Tests: unit (nav lists, panel links), e2e `product-menu.spec.ts` (4) + the dependent specs updated; 82 related e2e passed. |

@@ -63,7 +63,9 @@ test("the old addresses redirect to /assessment, and nothing on the page still s
   }
   // The header and the footer link to /assessment, labelled Assessment.
   await page.goto("/assessment");
-  await expect(page.getByRole("navigation", { name: /primary/i }).getByRole("link", { name: "Assessment", exact: true }).first()).toHaveAttribute("href", "/assessment");
+  // CR-2026-10-04-0110: Assessment now lives in the header's Product panel (Learning), with its two sub-items.
+  await page.getByTestId("product-menu-button").click();
+  await expect(page.getByTestId("product-menu").getByRole("link", { name: "Assessment", exact: true })).toHaveAttribute("href", "/assessment");
 });
 
 test("the page is a gateway of three persona cards: Assess your Data Foundation (live), Prepare for Interview and Organisations (both live)", async ({ page }) => {

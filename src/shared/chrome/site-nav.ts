@@ -43,13 +43,74 @@
 
 export type NavItem = { href: string; label: string };
 
+/*
+ * CR-2026-10-04-0110 (founder, 2026-10-04): the DESKTOP header is now Home · Product ▾ · Reviews · About Us · Search, then the
+ * bell, the account control and the burger; the "Product" panel groups everything else by category (see `productMenu`).
+ * "Professional Trainings" is now **Trainings**. `primaryNav` stays the full flat list — it is what the phone menu, the
+ * avatar menu and the sitemap show — so every destination is still one tap away without the panel.
+ */
 export const primaryNav: readonly NavItem[] = [
   { href: "/", label: "Home" },
   { href: "/free-trainings", label: "Knowledge Hub" },
   { href: "/assessment", label: "Assessment" },
-  { href: "/programs", label: "Professional Trainings" },
+  { href: "/programs", label: "Trainings" },
+  { href: "/agentic-ai", label: "Agentic AI" },
+  { href: "/subscription", label: "Subscription" },
   { href: "/reviews", label: "Reviews" }, // founder, 2026-09-23 (M5b D-10's 8th item)
 ];
+
+/** The links that sit directly in the desktop header bar, beside the "Product" panel button (which comes second). */
+export const headerBarLinks = {
+  before: { href: "/", label: "Home" },
+  after: [
+    { href: "/reviews", label: "Reviews" },
+    { href: "/about-us", label: "About Us" },
+  ],
+} as const satisfies { before: NavItem; after: readonly NavItem[] };
+
+export type ProductMenuLink = { href: string; label: string; children?: readonly NavItem[] };
+export type ProductMenuSection = { id: string; title: string; links: readonly ProductMenuLink[] };
+
+/**
+ * The static part of the "Product" panel, in categories. The Trainings list (the first published trainings) and the
+ * Dashboard links (by role) are added per request by `buildProductMenu` (product-menu-data.ts).
+ */
+export const productMenuLearning: ProductMenuSection = {
+  id: "learning",
+  title: "Learning",
+  links: [
+    { href: "/free-trainings", label: "Knowledge Hub" },
+    {
+      href: "/assessment",
+      label: "Assessment",
+      children: [
+        { href: "/assessment#data-foundation", label: "Assess your Data Foundation" },
+        { href: "/assessment/interview", label: "Prepare for Interview" },
+      ],
+    },
+  ],
+};
+export const productMenuAgentic: ProductMenuSection = {
+  id: "agentic-ai",
+  title: "Agentic AI",
+  links: [
+    { href: "/agentic-ai", label: "Overview" },
+    { href: "/agentic-ai/agents", label: "Agents" },
+    { href: "/agentic-ai/skills", label: "Skills" },
+    { href: "/subscription", label: "Subscription" },
+  ],
+};
+export const productMenuMore: ProductMenuSection = {
+  id: "more",
+  title: "More",
+  links: [
+    { href: "/schedule", label: "Schedule" },
+    { href: "/reviews", label: "Reviews" },
+    { href: "/about-us", label: "About Us" },
+    { href: "/faq", label: "FAQ" },
+    { href: "/contact-us", label: "Contact Us" },
+  ],
+};
 
 /** The header search bar (M14 P17): one input for certificates (by ID or
  *  listed holder name) and published trainings; results on /search. */
@@ -58,7 +119,7 @@ export const siteSearch = { action: "/search", placeholder: "Search Candidates o
 export const footerExplore: readonly NavItem[] = [
   { href: "/free-trainings", label: "Knowledge Hub" },
   { href: "/assessment", label: "Assessment" },
-  { href: "/programs", label: "Professional Trainings" },
+  { href: "/programs", label: "Trainings" },
   // Founder, 2026-09-30 (M7): the trainer's dedicated page is removed, so the
   // footer "Trainer" item is gone (the old address redirects to the trainer's
   // external profile — app/(public)/[slug]/page.tsx).

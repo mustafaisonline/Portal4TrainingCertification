@@ -37,7 +37,7 @@ import { Card } from "@/shared/ui/Card";
  */
 
 export const metadata: Metadata = {
-  title: "Professional Trainings",
+  title: "Trainings",
   description:
     "Expert-led trainings, delivered face-to-face and live online, each with its own Certificate of Completion — for individuals, organisations and education, with an honest account of what our trainer's HRD Corp accreditation means.",
 };
@@ -75,7 +75,7 @@ export default async function TrainingsPage() {
           }}
         />
         <div className="relative mx-auto max-w-[1280px] px-6 py-14 lg:py-16">
-          <p className="text-label mb-4 text-[var(--color-primary)]">Professional Trainings</p>
+          <p className="text-label mb-4 text-[var(--color-primary)]">Expert-led trainings</p>
           <h1 className="text-display-lg mb-4 max-w-[820px]">Trainings</h1>
           <p className="text-body-lg max-w-[640px] text-[var(--color-ink-quiet)]">
             Expert-led trainings, delivered face-to-face and live online, each

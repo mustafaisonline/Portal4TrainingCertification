@@ -4,6 +4,7 @@ import { AccountControls } from "@/modules/identity/components/AccountControls";
 import { requireUser } from "@/modules/identity/session";
 import { AccountFrame } from "@/shared/chrome/AccountFrame";
 import { PublicShell } from "@/shared/chrome/PublicShell";
+import { buildProductMenu } from "@/shared/chrome/product-menu-data";
 
 /*
  * Signed-in area. SERVER-SIDE gate: `requireUser` redirects to sign-in (with a
@@ -20,7 +21,7 @@ export default async function AccountLayout({ children }: { children: ReactNode 
   // call requireUser themselves (e.g. /account/trainings/<id>).
   const user = await requireUser("/account");
   return (
-    <PublicShell accountSlot={<AccountControls />} mobileAccountSlot={<AccountControls variant="mobile" />}>
+    <PublicShell accountSlot={<AccountControls />} mobileAccountSlot={<AccountControls variant="mobile" />} productMenu={await buildProductMenu()}>
       <AccountFrame userName={user.name}>{children}</AccountFrame>
     </PublicShell>
   );

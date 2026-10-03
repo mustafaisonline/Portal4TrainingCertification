@@ -5,6 +5,7 @@ import { disconnectPrisma, getPrisma, withTransaction } from "@/db/prisma";
 import { AGENTIC_ITEMS } from "@/content/agentic/catalogue";
 import { startAgenticCheckout } from "@/modules/agentic/checkout";
 import { claimWithCredit, creditsLeft, downloadAccess, fulfilPaidAgenticOrder, hasActivePass, hasActivePortalPass, ownedSlugs } from "@/modules/agentic/entitlements";
+import { runPassEndingReminders } from "@/modules/agentic/pass-reminders";
 import { amountFor, parseSku, skuOfItem, skuOfPass, SKU_PACK10 } from "@/modules/agentic/products";
 import { CommerceError } from "@/modules/commerce/errors";
 import { listOrdersForUser } from "@/modules/commerce/registrations.service";
@@ -264,6 +265,37 @@ describe("annual passes", () => {
       await prisma.payment.deleteMany({ where: { orderId: { in: ids } } });
       await prisma.order.deleteMany({ where: { id: { in: ids } } });
       await deleteTestUser(reviewer.email);
+    }
+  });
+
+  it("a plan ending within 30 days gets ONE reminder email (a re-run sends nothing more); a plan that was already renewed, or ends later, gets none", async () => {
+    const people = await Promise.all([createCertificateUser({ prefix: "agentic-rem-a", legalName: `Ria A ${run}` }), createCertificateUser({ prefix: "agentic-rem-b", legalName: `Rob B ${run}` }), createCertificateUser({ prefix: "agentic-rem-c", legalName: `Rae C ${run}` })]);
+    try {
+      const mk = async (userId: string, plan: "agentic_unlimited" | "portal_unlimited", startsDaysAgo: number, endsInDays: number) => {
+        const o = await prisma.order.create({ data: { userId, kind: "access_pass", productSku: skuOfPass(plan), status: "paid", region: "international", currency: "USD", amountMinor: 1000n, expiresAt: new Date(), paidAt: new Date() } });
+        return prisma.accessPass.create({ data: { userId, plan, orderId: o.id, startsAt: new Date(Date.now() - startsDaysAgo * 86_400_000), endsAt: new Date(Date.now() + endsInDays * 86_400_000) } });
+      };
+      await mk(people[0].id, "agentic_unlimited", 340, 10); // ends in 10 days → reminded
+      await mk(people[1].id, "agentic_unlimited", 340, 10); // ends in 10 days, but renewed (a later pass starts when it ends) → not reminded
+      await mk(people[1].id, "agentic_unlimited", -10, 375);
+      await mk(people[2].id, "portal_unlimited", 100, 265); // ends in 265 days → not yet
+      const first = await runPassEndingReminders();
+      expect(first.queued).toBeGreaterThanOrEqual(1);
+      expect(await prisma.outboundEmail.count({ where: { toEmail: people[0].email.toLowerCase(), templateKey: "commerce.agentic-pass-ending" } })).toBe(1);
+      expect(await prisma.outboundEmail.count({ where: { toEmail: { in: [people[1].email.toLowerCase(), people[2].email.toLowerCase()] }, templateKey: "commerce.agentic-pass-ending" } })).toBe(0);
+      const mail = await prisma.outboundEmail.findFirstOrThrow({ where: { toEmail: people[0].email.toLowerCase(), templateKey: "commerce.agentic-pass-ending" } });
+      expect(mail.textBody).toContain("does not renew by itself");
+      await runPassEndingReminders(); // a second run the same day
+      expect(await prisma.outboundEmail.count({ where: { toEmail: people[0].email.toLowerCase(), templateKey: "commerce.agentic-pass-ending" } })).toBe(1);
+    } finally {
+      for (const u of people) {
+        const ids = (await prisma.order.findMany({ where: { userId: u.id }, select: { id: true } })).map((o) => o.id);
+        await prisma.outboundEmail.deleteMany({ where: { toEmail: u.email.toLowerCase() } });
+        await prisma.notification.deleteMany({ where: { userId: u.id } });
+        await prisma.accessPass.deleteMany({ where: { userId: u.id } });
+        await prisma.order.deleteMany({ where: { id: { in: ids } } });
+        await deleteTestUser(u.email);
+      }
     }
   });
 

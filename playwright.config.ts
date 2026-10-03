@@ -38,6 +38,9 @@ export default defineConfig({
   use: {
     baseURL,
     trace: "retain-on-failure",
+    // The sign-up human check (CR-2026-10-03-1245) is skipped for the browser tests — the server honours this header
+    // ONLY because the test server runs with APP_ENV=test (below). tests/e2e/human-check.spec.ts turns it back on.
+    extraHTTPHeaders: { "x-test-no-human-check": "1" },
   },
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
   webServer: {

@@ -83,6 +83,11 @@ test("register → verify → signed-in account page shows OUR identity and role
   // so the address can be confirmed once an email provider delivers it.
   const mail = await waitForEmail(email, "identity.verify-email");
   await page.goto(firstLink(mail.textBody));
+  // CR-2026-10-03-1245: the activation link opens the confirmation page (it reads the confirmation back from the database)…
+  await expect(page).toHaveURL(/\/email-confirmed$/);
+  await expect(page.getByTestId("email-confirmed")).toBeVisible();
+  // …and from there the person goes on to their account.
+  await page.getByRole("link", { name: "Go to your account" }).click();
   await expect(page).toHaveURL(/\/account\/profile$/);
   await expect(page.getByTestId("account-verified")).toHaveText("Verified");
   await expect(page.getByTestId("account-roles")).toContainText("Participant"); // roles in words since the M12 dashboard rework

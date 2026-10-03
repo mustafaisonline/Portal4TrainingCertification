@@ -33,7 +33,7 @@ export default async function VerifyEmailPage({
     >
       <div className="flex flex-col gap-5">
         <p className="text-body-sm text-[var(--color-ink-quiet)]">
-          The link works once and expires in 60 minutes. If it does not arrive, check your spam folder, then request a
+          The link expires in 60 minutes. If it does not arrive, check your spam folder, then request a
           new one below.
         </p>
         <ResendVerification email={email ?? ""} />

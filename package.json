@@ -19,6 +19,7 @@
     "db:migrate": "prisma migrate dev",
     "db:deploy": "prisma migrate deploy",
     "db:seed": "node --experimental-transform-types --import ./scripts/register-alias.mjs prisma/seed.ts",
+    "email:grandfather": "node --experimental-transform-types --import ./scripts/register-alias.mjs scripts/email-grandfather.ts",
     "email:test": "node --experimental-transform-types --import ./scripts/register-alias.mjs scripts/email-test.ts",
     "db:reset": "prisma migrate reset --force",
     "admin:grant": "node --experimental-transform-types --import ./scripts/register-alias.mjs scripts/grant-admin.ts",

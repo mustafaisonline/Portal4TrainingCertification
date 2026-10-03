@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { emailVerificationRequired } from "@/modules/identity/email-verification";
 import { DOCUMENT_ROUTES, publishedDocuments } from "@/modules/identity/legal-documents";
 import { getCurrentUser } from "@/modules/identity/session";
 import { AuthScreen } from "@/shared/chrome/AuthScreen";
@@ -47,6 +48,7 @@ export default async function RegisterPage() {
     >
       <RegisterForm
         registrationOpen={published !== null}
+        emailVerificationRequired={emailVerificationRequired()}
         documents={Object.values(DOCUMENT_ROUTES)}
       />
     </AuthScreen>

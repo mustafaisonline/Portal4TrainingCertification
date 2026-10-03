@@ -16,8 +16,8 @@ export function verifyEmailMessage(input: { to: string; name: string; url: strin
     subject: "Verify your email address",
     text:
       `Hello ${input.name},\n\n` +
-      `Confirm this email address for your Data & AI Academy account by opening the link below. ` +
-      `It works once and expires in ${input.expiresInMinutes} minutes.\n\n${input.url}\n\n` +
+      `Confirm this email address for your DataAI Nexus account by opening the link below. ` +
+      `It expires in ${input.expiresInMinutes} minutes.\n\n${input.url}\n\n` +
       `If you did not create an account, you can ignore this message; nothing further will happen.` +
       SIGN_OFF,
   };

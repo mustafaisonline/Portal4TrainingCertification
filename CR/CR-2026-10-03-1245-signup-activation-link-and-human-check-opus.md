@@ -1,6 +1,6 @@
 # CR-2026-10-03-1245 — Sign-up: activation link confirmed in the database, plus a human-check game
 
-**Received:** 2026-10-03 12:45 MYT · **Status:** IN PROGRESS · **Requested by:** founder · **Model:** opus
+**Received:** 2026-10-03 12:45 MYT · **Status:** BUILT & VERIFIED — review + deploy next; strict activation stays OFF · **Requested by:** founder · **Model:** opus
 
 ## 1. Request (verbatim)
 
@@ -26,18 +26,22 @@ Decided by the founder on 2026-10-03 (see CR-2026-10-03-1225 §7). Assumptions a
 
 ## 5. Tracker
 
-Spec: [CR-SPEC-2026-10-03-1245-signup-activation-link-and-human-check-opus](specs/CR-SPEC-2026-10-03-1245-signup-activation-link-and-human-check-opus.md).
+Spec: see `specs/`.
 
 | # | Step | Status | Updated |
 |---|---|---|---|
-| 1 | Schema: `human_challenges` (SQL shown; dev/test) | NOT STARTED | — |
-| 2 | Human-check game component + server verification in the sign-up hook | NOT STARTED | — |
-| 3 | Activation confirmation page + flag `REQUIRE_EMAIL_VERIFICATION` | NOT STARTED | — |
-| 4 | Existing accounts plan (founder-approved one-off) | NOT STARTED | — |
-| 5 | Tests + security review | NOT STARTED | — |
+| 1 | Schema: `human_challenges` (new table; keyed hash only, single use, expires after 10 min; **purely additive**, SQL shown in the migration `20261003061100_human_challenges`) — applied to dev + test; production gets it at deploy (backup + migration sandbox first) | **DONE (dev/test)** | 2026-10-03 |
+| 2 | Human-check game (`src/modules/identity/human-check.ts`, `app/api/human-check`, `app/(auth)/register/HumanCheck.tsx`): tap-the-shapes with labelled buttons + a text-question alternative; verified on the server in the sign-up hook BEFORE any lookup; one-time, atomic, honeypot; a test-only bypass honoured solely when `APP_ENV=test` | **DONE** | 2026-10-03 |
+| 3 | Activation: the emailed link opens the new `/email-confirmed` page, which READS the confirmation back from `users.email_verified_at` and shows it; tampered link → kind error + resend; sign-up success leads to "Check your email" when the setting is on | **DONE** | 2026-10-03 |
+| 4 | Strict activation as a SETTING: `REQUIRE_EMAIL_VERIFICATION=true` (default OFF — switching it on before mail delivers would lock everyone out); `sendOnSignIn` re-sends the link on a blocked sign-in | **DONE (off)** | 2026-10-03 |
+| 5 | Existing accounts counted as verified (founder: "Count them as verified"): `npm run email:grandfather` (dry run by default; `-- --apply` marks them in `users` AND the provider's flag Better Auth checks; audited; counts only, no addresses) | **DONE** — to be run on the server just before the setting is switched on | 2026-10-03 |
+| 6 | Tests: unit (puzzle fairness, answer normalisation, bypass cannot work outside the test env, setting off-by-default) + integration against the DB (single use incl. 8 parallel attempts, expiry, replay, malformed input, hash-only storage) + e2e (game on the real form, wrong answer, text alternative, direct-API refusals, replay, rate limit, axe light/dark, activation link, tampered link) | **DONE** — unit/integration 792/792; human-check + identity e2e 17/17 | 2026-10-03 |
+| 7 | Review (governance + security + tests) and deploy | IN PROGRESS | 2026-10-03 |
+| 8 | Founder steps (later, after SMTP2GO delivers): `npm run email:grandfather -- --apply`, then `REQUIRE_EMAIL_VERIFICATION=true` in the server env (guarded one-liner) | AWAITING delivery + founder | — |
 
 ## 6. Progress log
 
 | Date (MYT) | Entry |
 |---|---|
 | 2026-10-03 12:45 | CR created from the founder's answers. |
+| 2026-10-03 16:20 | Built while the founder was away (his go: "go ahead with all of it"; existing accounts = count as verified). Facts found on the way: Better Auth's verification link is a signed token valid for its 60 minutes and is NOT single-use (so "works once" in the email/page was wrong and is fixed to "expires in 60 minutes"); the activation email is branded "DataAI Nexus" in its first line (full template rebrand is CR-1227). Existing e2e/integration tests changed only for the new link target and the test-only bypass. |

@@ -20,7 +20,8 @@ const created: string[] = [];
 type Res = { status: number; json: unknown; cookies: string[]; headers: Headers };
 
 async function call(method: "GET" | "POST", path: string, body?: unknown, cookie?: string): Promise<Res> {
-  const headers = new Headers({ origin: BASE });
+  // The sign-up human check is skipped for these in-process calls (APP_ENV=test + this header); it is tested in human-check.test.ts and the e2e spec.
+  const headers = new Headers({ origin: BASE, "x-test-no-human-check": "1" });
   if (body !== undefined) headers.set("content-type", "application/json");
   if (cookie) headers.set("cookie", cookie);
   const res = await auth.handler(

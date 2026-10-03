@@ -1549,3 +1549,23 @@ model InterestFeeSetting {
   @@index([effectiveFrom])
   @@map("interest_fee_settings")
 }
+
+// ── CR-2026-10-03-1245: sign-up human check ──────────────────────────────────
+
+/// One-time "are you a person" challenge shown on the sign-up form. Kept on the
+/// SERVER so an answer is checked without trusting the browser: it is used at
+/// most once (consumed on the first attempt, right or wrong), expires after a few
+/// minutes, and holds no personal data — only a keyed hash of the correct answer.
+model HumanChallenge {
+  id         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  /// "tiles" (tap the matching shapes) or "sum" (the text alternative).
+  kind       String
+  /// HMAC-SHA-256 of "<id>:<normalised answer>" — never the answer itself.
+  answerHash String    @map("answer_hash")
+  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  expiresAt  DateTime  @map("expires_at") @db.Timestamptz(6)
+  consumedAt DateTime? @map("consumed_at") @db.Timestamptz(6)
+
+  @@index([expiresAt])
+  @@map("human_challenges")
+}

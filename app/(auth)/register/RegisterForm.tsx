@@ -7,6 +7,7 @@ import type { FormEvent } from "react";
 import { COUNTRIES } from "@/content/countries";
 import { authClient } from "@/modules/identity/auth-client";
 import { dobBounds, LIMITS, validateDateOfBirth } from "@/modules/identity/profile-validation";
+import { HumanCheck, type HumanCheckState } from "./HumanCheck";
 import { Button } from "@/shared/ui/Button";
 import { Field, FormStatus, PasswordField, SelectField } from "@/shared/ui/forms";
 
@@ -16,8 +17,11 @@ const AS_ON_ID = "As on your government ID.";
 export function RegisterForm({
   registrationOpen,
   documents,
+  emailVerificationRequired,
 }: {
   registrationOpen: boolean;
+  /** CR-2026-10-03-1245: when true, sign-in waits for the emailed link, so registration leads to "Check your email". */
+  emailVerificationRequired: boolean;
   documents: { href: string; label: string }[];
 }) {
   const router = useRouter();
@@ -25,6 +29,8 @@ export function RegisterForm({
   const reasonId = useId();
   const [consent, setConsent] = useState(false);
   const [pending, setPending] = useState(false);
+  const [human, setHuman] = useState<HumanCheckState>({ status: "loading" });
+  const [humanReset, setHumanReset] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<{ name?: string; dateOfBirth?: string; country?: string; password?: string; confirm?: string }>({});
   const dob = dobBounds();
@@ -60,6 +66,15 @@ export function RegisterForm({
       setError("Please accept the Terms of service and Privacy policy to continue.");
       return;
     }
+    // The human check (CR-2026-10-03-1245): an answer is needed before the request is sent.
+    if (human.status === "loading") {
+      setError("The check is still loading — one moment, then try again.");
+      return;
+    }
+    if (human.status === "ready" && human.answer === "") {
+      setError("Please complete the quick check to show you are a person.");
+      return;
+    }
 
     setPending(true);
     // `consent` is not a stored field: the server's before-hook requires it on
@@ -73,13 +88,18 @@ export function RegisterForm({
       country,
       dateOfBirth,
       consent: true,
-      callbackURL: "/account",
+      // The activation link opens the confirmation page (CR-2026-10-03-1245).
+      callbackURL: "/email-confirmed",
+      humanChallengeId: human.status === "ready" ? human.id : undefined,
+      humanAnswer: human.status === "ready" ? human.answer : undefined,
+      hpCompany: String(form.get("hp-ref-code") ?? ""),
     };
     const { error: err } = await authClient.signUp.email(body);
     setPending(false);
     if (err) {
+      setHumanReset((n) => n + 1); // a challenge is used once, right or wrong — show a fresh one
       setError(
-        err.code === "REGISTRATION_CLOSED" || err.code === "CONSENT_REQUIRED" || err.code === "USER_ALREADY_EXISTS" || err.code === "REGISTRATION_DETAILS_INVALID"
+        err.code === "REGISTRATION_CLOSED" || err.code === "HUMAN_CHECK_FAILED" || err.code === "CONSENT_REQUIRED" || err.code === "USER_ALREADY_EXISTS" || err.code === "REGISTRATION_DETAILS_INVALID"
           ? err.message ?? "Registration is not available."
           : err.status === 429
             ? "Too many attempts. Please wait a minute and try again."
@@ -87,9 +107,9 @@ export function RegisterForm({
       );
       return;
     }
-    // Founder direction 2026-09-21: no email provider yet, so registration
-    // leads straight to sign-in rather than to a "check your email" step.
-    router.push("/sign-in?registered=1");
+    // Sign-in waits for the emailed link only when the setting is on; until mail is proven to deliver,
+    // registration leads straight to sign-in (founder direction 2026-09-21).
+    router.push(emailVerificationRequired ? `/verify-email?email=${encodeURIComponent(email)}` : "/sign-in?registered=1");
   }
 
   const consentSentence = (
@@ -194,6 +214,11 @@ export function RegisterForm({
           )}
         </div>
       </div>
+
+      {/* Honeypot — real people never fill a field they cannot see; named so autofill ignores it. */}
+      <input type="text" name="hp-ref-code" className="hidden" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+
+      <HumanCheck onChange={setHuman} resetKey={humanReset} />
 
       {error && <FormStatus tone="error">{error}</FormStatus>}
 

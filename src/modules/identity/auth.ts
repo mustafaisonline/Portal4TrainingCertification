@@ -8,6 +8,8 @@ import { writeAudit } from "@/modules/platform/audit/repository";
 import { isCountryCode } from "@/content/countries";
 import { resetPasswordMessage, verifyEmailMessage } from "./emails";
 import { publishedDocuments } from "./legal-documents";
+import { emailVerificationRequired } from "./email-verification";
+import { signUpHumanCheckProblem } from "./human-check";
 import { LIMITS, validateDateOfBirth } from "./profile-validation";
 import { createRegisteredIdentity, findUserByAuthSubject, markEmailVerified } from "./users.repository";
 
@@ -100,7 +102,7 @@ export const auth = betterAuth({
     // verification email is still recorded in the outbox (sendOnSignUp) and
     // `users.email_verified_at` still records a verified address, so this
     // can be switched back to `true` the day a provider is wired.
-    requireEmailVerification: false,
+    requireEmailVerification: emailVerificationRequired(),
     autoSignIn: false,
     revokeSessionsOnPasswordReset: true,
     resetPasswordTokenExpiresIn: ONE_HOUR,
@@ -126,6 +128,8 @@ export const auth = betterAuth({
 
   emailVerification: {
     sendOnSignUp: true,
+    // With the setting on, a sign-in attempt on an unconfirmed address sends a fresh activation link.
+    sendOnSignIn: true,
     autoSignInAfterVerification: true,
     expiresIn: ONE_HOUR,
     sendVerificationEmail: async ({ user, url }) => {
@@ -158,6 +162,12 @@ export const auth = betterAuth({
   hooks: {
     before: createAuthMiddleware(async (ctx) => {
       if (ctx.path === "/sign-up/email") {
+        // The human check comes FIRST (CR-2026-10-03-1245): before any lookup, so a script learns nothing — not
+        // even whether an address is taken — until it has passed. One-time challenge, checked on the server.
+        const humanProblem = await signUpHumanCheckProblem((ctx.body ?? {}) as Record<string, unknown>, ctx.headers ?? ctx.request?.headers);
+        if (humanProblem) {
+          throw new APIError("BAD_REQUEST", { code: humanProblem, message: "Please complete the check to show you are a person, then try again." });
+        }
         // Consent gate (plan §6.9). Enforced HERE, on the endpoint, so a direct
         // POST cannot bypass the form: registration is closed until the legal
         // documents are published, and requires explicit acceptance.

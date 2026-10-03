@@ -15,7 +15,7 @@ export function ResendVerification({ email }: { email: string }) {
     const address = String(new FormData(e.currentTarget).get("email") ?? "").trim();
     if (!address) return;
     setPending(true);
-    const { error } = await authClient.sendVerificationEmail({ email: address, callbackURL: "/account" });
+    const { error } = await authClient.sendVerificationEmail({ email: address, callbackURL: "/email-confirmed" });
     setPending(false);
     setStatus(error ? (error.status === 429 ? "limited" : "error") : "sent");
   }

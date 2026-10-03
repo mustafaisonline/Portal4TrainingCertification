@@ -180,3 +180,9 @@ export async function markEmailVerified(tx: Tx, subject: string): Promise<UserRe
   });
   return updated;
 }
+
+/** When the person's address was confirmed — the database's own record, read fresh (null: not confirmed). */
+export async function emailVerifiedAtFor(userId: string, db: Db = getPrisma()): Promise<Date | null> {
+  const row = await db.user.findUnique({ where: { id: userId }, select: { emailVerifiedAt: true } });
+  return row?.emailVerifiedAt ?? null;
+}

@@ -64,7 +64,13 @@ export function NotificationBell({ initialUnread, initialLatest }: { initialUnre
   }, []);
 
   useEffect(() => {
-    const tick = () => document.visibilityState === "visible" && void refresh();
+    let last = 0;
+    const tick = () => {
+      // Returning to the tab fires both `focus` and `visibilitychange`: one request, not two.
+      if (document.visibilityState !== "visible" || Date.now() - last < 5_000) return;
+      last = Date.now();
+      void refresh();
+    };
     const timer = window.setInterval(tick, POLL_MS);
     window.addEventListener("focus", tick);
     document.addEventListener("visibilitychange", tick);

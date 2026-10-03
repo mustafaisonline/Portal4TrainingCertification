@@ -86,18 +86,18 @@ export async function submitEnquiry(_prev: EnquiryFormState, formData: FormData)
   const reference = enquiryReference(enquiry.id);
   const base = (process.env["APP_BASE_URL"] ?? "http://localhost:3100").replace(/\/+$/, "");
 
-  // Tell the administrators in-app (their bell) — independent of any email; never able to fail the submission.
-  void notifyAdmins({ kind: "enquiry", title: `New message from ${values.name}`, body: `${kindLabel(values.kind)}${programme?.title ? ` — ${programme.title}` : ""}. Reference ${reference}.`, link: `/admin/enquiries/${enquiry.id}`, dedupeKey: `enquiry:${enquiry.id}` }).catch((err) => console.error("[notifications] admin notice failed for", reference, err));
-
-  // The message is safe in the database. The portal-wide caps now decide only whether the two emails go out (each counts,
-  // so every accepted message is counted once); over a cap the team simply reads it in Admin → Enquiries.
+  // The portal-wide caps (security review): they bound what one flood can cost — emails AND the administrators' unread
+  // notices. The message itself is always stored; over a cap the team simply reads it in Admin → Enquiries.
   const overHour = await enquiryOverLimit("all", "portal", ONE_HOUR, EMAIL_CAP_PER_HOUR);
   const overDay = await enquiryOverLimit("all-day", "portal", ONE_DAY, EMAIL_CAP_PER_DAY);
   const overMonth = await enquiryOverLimit("all-month", "portal", THIRTY_DAYS, EMAIL_CAP_PER_30_DAYS);
   if (overHour || overDay || overMonth) {
-    console.warn(`[enquiries] portal-wide email cap reached (${overHour ? "hour" : overDay ? "day" : "30 days"}): ${reference} is stored and visible in Admin, no email was sent`);
+    console.warn(`[enquiries] portal-wide cap reached (${overHour ? "hour" : overDay ? "day" : "30 days"}): ${reference} is stored and visible in Admin, no email or bell notice was sent`);
     return { status: "sent", reference };
   }
+
+  // Tell the administrators in-app (their bell) — independent of any email; never able to fail the submission.
+  void notifyAdmins({ kind: "enquiry", title: `New message from ${values.name}`, body: `${kindLabel(values.kind)}${programme?.title ? ` — ${programme.title}` : ""}. Reference ${reference}.`, link: `/admin/enquiries/${enquiry.id}`, dedupeKey: `enquiry:${enquiry.id}` }).catch((err) => console.error("[notifications] admin notice failed for", reference, err));
 
   // Mail is best-effort and recorded in the outbox either way.
   const sent = await Promise.allSettled([

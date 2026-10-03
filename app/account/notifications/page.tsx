@@ -28,7 +28,7 @@ export default async function NotificationsPage({ searchParams }: { searchParams
   const sp = await searchParams;
   const rawFilter = one(sp["filter"]);
   const filter: NotificationFilter = rawFilter === "unread" ? "unread" : isNotificationKind(rawFilter) ? rawFilter : "all";
-  const page = Math.max(1, Number.parseInt(one(sp["page"]) || "1", 10) || 1);
+  const page = Math.min(10_000, Math.max(1, Number.parseInt(one(sp["page"]) || "1", 10) || 1));
   const { items, total, unread, pageCount } = await listNotifications(user.id, { filter, page });
 
   const href = (f: string, p = 1) => `/account/notifications?${new URLSearchParams({ ...(f !== "all" ? { filter: f } : {}), ...(p > 1 ? { page: String(p) } : {}) }).toString()}`.replace(/\?$/, "");

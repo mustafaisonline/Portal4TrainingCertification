@@ -156,3 +156,32 @@ describe("notifyAdmins", () => {
     expect(again).toBeGreaterThanOrEqual(1);
   });
 });
+
+describe("wording and link guards (governance + security review)", () => {
+  it("no notification text calls the free Assessment Check result a certificate (DR-03 §3 / DR-04)", async () => {
+    const { NOTIFICATION_SPECS } = await import("@/modules/notifications/notifications.service");
+    const spec = NOTIFICATION_SPECS["commerce.knowledge-check-unlocked"]!;
+    expect(spec.body).toMatch(/Free Assessment Check result document/);
+    expect(spec.body.toLowerCase()).not.toContain("certificate");
+    expect(spec.link).not.toContain("certification");
+  });
+
+  it("every allow-listed spec has a same-site link and a fixed sentence without a URL", async () => {
+    const { NOTIFICATION_SPECS } = await import("@/modules/notifications/notifications.service");
+    for (const [key, spec] of Object.entries(NOTIFICATION_SPECS)) {
+      expect(isSafeLink(spec.link), key).toBe(true);
+      expect(spec.body, key).not.toMatch(/https?:\/\//);
+    }
+  });
+
+  it("a stored link that is not a plain path is dropped on READ too", async () => {
+    const a = await person();
+    await getPrisma().notification.create({ data: { userId: a.id, kind: "system", title: "t", body: "b", link: "https://evil.example" } });
+    expect((await latestNotifications(a.id))[0]!.link).toBeNull();
+  });
+
+  it("a huge page number is clamped, not an error", async () => {
+    const a = await person();
+    expect((await listNotifications(a.id, { page: 99999999999999999999 })).items).toEqual([]);
+  });
+});

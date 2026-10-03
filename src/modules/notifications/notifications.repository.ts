@@ -49,7 +49,7 @@ const toRecord = (r: { id: string; kind: string; title: string; body: string; li
   kind: isNotificationKind(r.kind) ? r.kind : "system",
   title: r.title,
   body: r.body,
-  link: r.link,
+  link: isSafeLink(r.link) ? r.link : null, // checked again on read, not only on write
   read: r.readAt !== null,
   createdAt: r.createdAt,
 });
@@ -66,7 +66,7 @@ export async function latestNotifications(userId: string, n: number = BELL_LATES
 export type NotificationFilter = "all" | "unread" | NotificationKind;
 export async function listNotifications(userId: string, opts: { filter?: NotificationFilter; page?: number } = {}, db: Db = getPrisma()) {
   const filter = opts.filter ?? "all";
-  const page = Math.max(1, Math.floor(opts.page ?? 1));
+  const page = Math.min(10_000, Math.max(1, Math.floor(opts.page ?? 1))); // a huge ?page= cannot overflow the query's skip
   const where = { userId, ...(filter === "unread" ? { readAt: null } : filter !== "all" ? { kind: filter } : {}) };
   const [total, rows, unread] = await Promise.all([
     db.notification.count({ where }),

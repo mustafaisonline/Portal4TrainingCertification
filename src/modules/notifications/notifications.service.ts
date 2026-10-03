@@ -26,7 +26,7 @@ const FROM_EMAIL: Record<string, Spec> = {
   "commerce.registration-transferred": { kind: "registration", body: "Your registration was moved to a new date.", link: "/account/trainings" },
   "commerce.interest-registered": { kind: "interest", body: "Your interest is registered. The trainer will tell you when a date opens.", link: "/account/trainings#interests" },
   "commerce.support-received": { kind: "payment", body: "Thank you — your support payment was received.", link: "/account/orders" },
-  "commerce.knowledge-check-unlocked": { kind: "assessment", body: "Your certificate document is unlocked.", link: "/account/certifications" },
+  "commerce.knowledge-check-unlocked": { kind: "assessment", body: "Your Free Assessment Check result document is unlocked.", link: "/assessment" }, // never "certificate": the free result is not a credential (DR-03 §3 / DR-04)
   "certificate.issued": { kind: "certificate", body: "Your certificate was issued. It is listed under Certifications.", link: "/account/certifications" },
   "certificate.renewed": { kind: "certificate", body: "Your certificate was renewed.", link: "/account/certifications" },
   "certificate.reminder.before_30": { kind: "certificate", body: "A certificate expires in about 30 days — you can renew it.", link: "/account/certifications" },
@@ -37,6 +37,7 @@ const FROM_EMAIL: Record<string, Spec> = {
 
 /** The templates that become notifications (exported for the test that guards the allow-list). */
 export const NOTIFIABLE_TEMPLATES = Object.keys(FROM_EMAIL);
+export const NOTIFICATION_SPECS: Readonly<Record<string, Spec>> = FROM_EMAIL;
 
 export async function notifyFromEmail(message: Pick<EmailMessage, "to" | "templateKey" | "subject">, outboxId: string): Promise<boolean> {
   const spec = FROM_EMAIL[message.templateKey];
